@@ -3,6 +3,7 @@
  */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import FeatureSections from '@app/utilities/enum/feature-sections.enum';
 import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
@@ -278,13 +279,25 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     accountNumber: 'SA380019000500000000263180002',
     icon: images.snb,
   },
+  SUCCESS_BENEFICIARY_DETAILS: [
+    // { title: 'Amount', subTitle: 3000, currency: 'SAR' },
+    { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
+    { title: 'Transfer By', subTitle: '', icon: images.sarie },
+    { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
+    // { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
+    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    { title: 'Fees', subTitle: 10, currency: 'SAR', icon: '' },
+    { title: 'VAT (15%)', subTitle: 40, currency: 'SAR', icon: '' },
+    { title: 'Total Amount', subTitle: 3050, currency: 'SAR', icon: '' },
+  ],
   BENEFICIARY_DETAILS: [
-    { title: 'Amount', subTitle: 3000 },
+    { title: 'Amount', subTitle: 3000, currency: 'SAR' },
     { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
     { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
     { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
-    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
-    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    // { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    // { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
   ],
   OTHER_BILL_TYPES: [
     { id: 1, title: 'Government Payments (MOI)', icon: images.moiLogo },
@@ -684,6 +697,14 @@ const SNAP_POINT = {
 };
 const NO_INVOICE_ACCOUNT_NUMBER = '1234567890';
 const TOTAL_AMOUNT = '3000';
+const MAX_CONTACTS = 5;
+const DASHBOARD_ITEMS = [
+  FeatureSections.ACTION_SECTIONS,
+  FeatureSections.SUGGESTED_FOR_YOU,
+  FeatureSections.TRANSACTION_HISTORY,
+  FeatureSections.LATEST_OFFERS,
+];
+
 export {
   ACTIVE_SADAD_BILLS,
   ALINMA_REFERENCE_NUM,
@@ -697,9 +718,11 @@ export {
   COUNTRIES_DATA,
   CURRENCIES,
   CUSTOM_SNAP_POINT,
+  DASHBOARD_ITEMS,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
+  MAX_CONTACTS,
   NO_INVOICE_ACCOUNT_NUMBER,
   PROGRESS_INCREMENT_FACTOR,
   RELATIONSHIPS,

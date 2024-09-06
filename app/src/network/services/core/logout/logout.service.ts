@@ -1,9 +1,10 @@
-import constants from '@app/constants/constants';
+import constants, { DASHBOARD_ITEMS } from '@app/constants/constants';
 import { setToken } from '@app/network/client';
 import requestType from '@app/network/request-types.network';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
+import { resetWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store } from '@app/store/store';
 import { EncryptedService } from '@app/utilities/enum/encrypted-keys.enum';
 import { deleteData } from '@app/utilities/keychain.utils';
@@ -44,9 +45,12 @@ const clearSession = async (isDelink: boolean) => {
         isAuthenticated: false,
         hideBalance: false,
         passCode: '',
+        hasVistedDashboard: false,
+        allowEyeIconFunctionality: false,
       }),
     );
-    dispatch(setUserInfo(undefined));
+    dispatch(resetWalletInfo());
+    dispatch(setRearrangedItems(DASHBOARD_ITEMS));
   }
 
   dispatch(

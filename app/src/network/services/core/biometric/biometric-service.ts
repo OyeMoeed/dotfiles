@@ -77,13 +77,37 @@ const useBiometricService = () => {
     }
   };
 
+  const handleSetupBiomatricForSettings = async (): Promise<boolean> => {
+    const biometricKeys = await checkBiometrics();
+
+    if (biometricKeys) {
+      try {
+        await new Promise<void>((resolve) => {
+          resolve();
+        });
+        return true;
+      } catch (error) {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
+  const resetBiometricConfig = () => {
+    dispatch(setAppData({ biomatricEnabled: false }));
+    handleRemovePasscode();
+  };
+
   return {
     handleStorePasscode,
     handleSetupBiomatric,
+    handleSetupBiomatricForSettings,
     handleRemovePasscode,
     handleFaceID,
     savePasscodeState,
     isDataStore,
+    resetBiometricConfig,
   };
 };
 

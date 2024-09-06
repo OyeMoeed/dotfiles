@@ -24,7 +24,7 @@ const IPayToggleButton: React.FC<IPayToggleButtonProps> = ({
     if (toggleState !== undefined) {
       setIsOn(toggleState);
     }
-  }, [toggleState]);
+  }, [isOn, toggleState]);
 
   const onPress = () => {
     setIsOn((prevState: boolean) => {

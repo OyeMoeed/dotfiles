@@ -23,7 +23,7 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
-import constants, { SNAP_POINT } from '@app/constants/constants';
+import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
 import { permissionsStatus } from '@app/enums/permissions-status.enum';
 import PermissionTypes from '@app/enums/permissions-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
@@ -47,7 +47,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const isKeyboardOpen = useKeyboardStatus();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
@@ -63,7 +63,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [containerWidth, setContainerWidth] = useState(0);
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
-  const MAX_CONTACT = 5;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
   const handleSubmitTransfer = () => {
     switch (from) {
@@ -128,13 +127,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
         });
-
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
           ...item,
-          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''} ${item.familyName}`,
+          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
           recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
         }));
-
         setContacts(listWithUniqueId);
       });
     }
@@ -149,7 +146,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         const unSelectedContacts = prevSelectedContacts.filter((con) => con.recordID !== contact.recordID);
         return unSelectedContacts;
       }
-      if (prevSelectedContacts.length >= MAX_CONTACT) {
+      if (prevSelectedContacts.length >= MAX_CONTACTS) {
         return prevSelectedContacts;
       }
       return [...prevSelectedContacts, contact];
@@ -194,22 +191,24 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setContainerWidth(width);
   };
 
-  const renderItem = ({ item }: { item: Contact }) => {
-    const hasChecked = selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID);
-    return (
-      <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
-        <IPayCheckbox isCheck={hasChecked} onPress={() => handleSelect(item)} />
-        <IPayView style={styles.itemInfo}>
-          {item?.givenName && <IPayFootnoteText text={item?.givenName} />}
-          {item?.phoneNumbers[0]?.number && <IPayCaption1Text text={item?.phoneNumbers[0]?.number} regular />}
-        </IPayView>
-      </IPayPressable>
-    );
-  };
+  const renderItem = ({ item }: { item: Contact }) => (
+    <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
+      <IPayCheckbox
+        isCheck={selectedContacts.some((selectedContact) => selectedContact.recordID === item.recordID)}
+        onPress={() => handleSelect(item)}
+      />
+      <IPayView style={styles.itemInfo}>
+        {item?.givenName && <IPayFootnoteText color={colors.natural.natural900} text={item?.givenName} />}
+        {item?.phoneNumbers[0]?.number && (
+          <IPayCaption1Text color={colors.natural.natural500} text={item?.phoneNumbers[0]?.number} regular />
+        )}
+      </IPayView>
+    </IPayPressable>
+  );
 
   const renderSelectedItem = ({ item }: { item: Contact }) => (
     <IPayChip
-      textValue={item?.givenName}
+      textValue={item?.givenName || item?.phoneNumbers[0]?.number}
       variant={States.PRIMARY}
       isShowIcon
       containerStyle={styles.selectedContactChip}
@@ -271,6 +270,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const onCloseSaveContact = () => {
     setUnSavedVisible(false);
   };
+
+  const renderFooterItem = () => <IPayView style={styles.emptyItemStyle} />;
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -335,6 +336,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           keyExtractor={(item) => item.recordID}
           showsVerticalScrollIndicator={false}
           style={styles.contactList}
+          ListFooterComponent={renderFooterItem}
         />
       </IPayView>
 
@@ -346,7 +348,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                 <IPayView style={styles.contactCount}>
                   <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
                   <IPayFootnoteText
-                    text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                    text={`${MAX_CONTACTS} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
                     color={colors.natural.natural500}
                   />
                 </IPayView>

@@ -31,6 +31,8 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
+  const [showBackground, setShowBackground] = useState(true);
+
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
     setActivateHeight(SNAP_POINTS.SMALL);
@@ -41,6 +43,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
     activateBeneficiary?.current?.close();
+    setShowBackground(false);
     setTimeout(() => {
       actionSheetRef.current.show();
     }, 500);
@@ -78,6 +81,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   };
 
   const hideContactUs = () => {
+    setShowBackground(true);
     setTimeout(() => {
       actionSheetRef.current.hide();
     }, 0);
@@ -105,52 +109,56 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
-      <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles} />} />
-      <IPayView style={styles.container}>
-        <IPayView style={styles.linearGradientView}>
-          <IPayLinearGradientView
-            style={styles.innerLinearGradientView}
-            gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
-          >
-            <IPaySuccess
-              testID="ipay-success"
-              headingStyle={styles.headingStyle}
-              descriptionStyle={styles.descriptionStyle}
-              headingText={
-                type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
-                  ? localizationText.NEW_BENEFICIARY.BENEFECIARY_UPDATED
-                  : localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY
-              }
-              descriptionText={
-                type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
-                  ? localizationText.NEW_BENEFICIARY.NOW_MAKE_TRANSFER
-                  : localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY
-              }
-            />
-            <IPayView style={styles.buttonWrapper}>
-              <IPayButton
-                btnType="primary"
-                btnText={localizationText.NEW_BENEFICIARY.ACTIVATE_BENEFICIARY}
-                medium
-                btnIconsDisabled
-                onPress={handleActivateBeneficiary}
-              />
-              <IPayButton
-                btnType="outline"
-                btnText={
-                  type === ScreenNames.INTERNATIONAL_TRANSFER ||
-                  type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
-                    ? localizationText.NEW_BENEFICIARY.INTERNATIONAL_TRANSFER_PAGE
-                    : localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE
-                }
-                medium
-                btnIconsDisabled
-                onPress={hanldePageNavigation}
-              />
+      {showBackground && (
+        <>
+          <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles} />} />
+          <IPayView style={styles.container}>
+            <IPayView style={styles.linearGradientView}>
+              <IPayLinearGradientView
+                style={styles.innerLinearGradientView}
+                gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
+              >
+                <IPaySuccess
+                  testID="ipay-success"
+                  headingStyle={styles.headingStyle}
+                  descriptionStyle={styles.descriptionStyle}
+                  headingText={
+                    type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                      ? localizationText.NEW_BENEFICIARY.BENEFECIARY_UPDATED
+                      : localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY
+                  }
+                  descriptionText={
+                    type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                      ? localizationText.NEW_BENEFICIARY.NOW_MAKE_TRANSFER
+                      : localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY
+                  }
+                />
+                <IPayView style={styles.buttonWrapper}>
+                  <IPayButton
+                    btnType="primary"
+                    btnText={localizationText.NEW_BENEFICIARY.ACTIVATE_BENEFICIARY}
+                    medium
+                    btnIconsDisabled
+                    onPress={handleActivateBeneficiary}
+                  />
+                  <IPayButton
+                    btnType="outline"
+                    btnText={
+                      type === ScreenNames.INTERNATIONAL_TRANSFER ||
+                      type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                        ? localizationText.NEW_BENEFICIARY.INTERNATIONAL_TRANSFER_PAGE
+                        : localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE
+                    }
+                    medium
+                    btnIconsDisabled
+                    onPress={hanldePageNavigation}
+                  />
+                </IPayView>
+              </IPayLinearGradientView>
             </IPayView>
-          </IPayLinearGradientView>
-        </IPayView>
-      </IPayView>
+          </IPayView>
+        </>
+      )}
       <IPayBottomSheet
         heading={
           currentOption === ActivateViewTypes.ACTIVATE_OPTIONS

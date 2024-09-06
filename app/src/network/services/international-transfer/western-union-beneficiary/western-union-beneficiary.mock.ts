@@ -1,4 +1,3 @@
-import images from '@app/assets/images';
 import WesternUnionBeneficiariesProps from './western-union-beneficiary.interface';
 
 const westernUnionBeneficiariesData: WesternUnionBeneficiariesProps = {
@@ -19,10 +18,9 @@ const westernUnionBeneficiariesData: WesternUnionBeneficiariesProps = {
         beneficiaryCode: '10587981-5',
         beneficiaryStatus: 'inactive',
         nickname: 'ramesh preprod PK',
-        fullName: 'habibspecial pakspecial',
+        fullName: 'Adel Sami',
         countryCode: 'PK',
         countryDesc: 'Pakistan',
-        countryFlag: images.pakFlag, // TODO needt to update
         currency: 'PKR',
         currencyDesc: 'PAKISTAN RUPEE',
         remittanceType: '500',
@@ -42,10 +40,9 @@ const westernUnionBeneficiariesData: WesternUnionBeneficiariesProps = {
         beneficiaryCode: '10587981-4',
         beneficiaryStatus: 'active',
         nickname: 'AA',
-        fullName: 'asd asd asd asd',
+        fullName: 'Mohamed Nassar',
         countryCode: 'EG',
         countryDesc: 'Egypt',
-        countryFlag: images.egyFlag,
         currency: 'USD',
         currencyDesc: 'US DOLLAR',
         remittanceType: '000',

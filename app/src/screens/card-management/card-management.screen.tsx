@@ -1,7 +1,5 @@
-import React, { useRef, useState } from 'react';
 import icons from '@app/assets/icons';
-import useTheme from '@app/styles/hooks/theme.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import images from '@app/assets/images';
 import {
   IPayFlatlist,
   IPayFootnoteText,
@@ -11,22 +9,25 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPaySafeAreaView } from '@components/templates';
-import IPayCardListItem from '@app/components/molecules/ipay-card-list-item/ipay-card-list-item.component';
-import images from '@app/assets/images';
-import { verticalScale } from 'react-native-size-matters';
-import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
-import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
+import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
+import IPayCardListItem from '@app/components/molecules/ipay-card-list-item/ipay-card-list-item.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
+import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
+import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import { IPaySafeAreaView } from '@components/templates';
+import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
+import React, { useRef, useState } from 'react';
+import { verticalScale } from 'react-native-size-matters';
 import cardManagementStyles from './card-management.style';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
+import checkUserAccess from '@app/utilities/check-user-access';
 
 const DUMMY_CARDS = [
   {
@@ -57,7 +58,7 @@ const CardManagementScreen: React.FC = () => {
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const editNickNameSheet = useRef<bottomSheetModal>(null);
   const [selectedCardName, setSelectedCardName] = useState(cards[selectedCardIndex].name);
-  const isKeyboardOpen = useKeyboardStatus();
+  const { isKeyboardOpen } = useKeyboardStatus();
 
   const styles = cardManagementStyles(colors);
 
@@ -144,7 +145,10 @@ const CardManagementScreen: React.FC = () => {
   );
 
   const onNavigateToAddCard = () => {
-    navigate(ScreenNames.ADD_CARD);
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      navigate(ScreenNames.ADD_CARD);
+    }
   };
 
   const onPressSave = () => {

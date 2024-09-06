@@ -17,6 +17,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import atmWithdrawalConfirm from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-confirm/atm-cash-withdrawal-confirm.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 import { Crc } from './crc.util';
 import { ATMWithdrawQRCodeScannerScreenProps } from './atm-withdraw-qrcode-scanner.interface';
@@ -29,8 +30,19 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannedCode] = useState('');
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { showToast } = useToastContext();
 
   const styles = qrCodeScannerStyles();
+
+  const onReadQrCodeFaild = () => {
+    hideSpinner();
+    showToast({
+      title: localizationText.ATM.SCAN_UNSUCCESSFUL,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+    goBack();
+  };
 
   const onReadQrCode = async (code: string) => {
     try {
@@ -57,14 +69,15 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
             referenceNumber: confirmApiResponse?.response?.referenceNumber,
           });
         } else {
-          goBack();
+          onReadQrCodeFaild();
         }
       } else {
-        goBack();
+        onReadQrCodeFaild();
       }
       hideSpinner();
     } catch (error) {
-      goBack();
+      hideSpinner();
+      onReadQrCodeFaild();
     }
   };
 

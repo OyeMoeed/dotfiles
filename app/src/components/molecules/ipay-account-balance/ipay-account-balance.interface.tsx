@@ -47,11 +47,9 @@ export interface IPayAccountBalanceProps {
    * Style for the gradient bg.
    */
   gradientBgStyle?: StyleProp<ViewStyle>;
-  /**
-   * Style for the top up button.
-   */
-  topUpButtonStyles?: StyleProp<ViewStyle>;
 
   dailyRemainingOutgoingAmount?: string;
   monthlyIncomingLimit: string;
+
+  topUpBtnStyle?: StyleProp<ViewStyle>;
 }

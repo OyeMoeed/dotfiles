@@ -1,5 +1,5 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -13,6 +13,7 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       fontFamily: fonts.REGULAR,
       color: colors.natural.natural900,
       top: scaleFont(10),
+      paddingLeft: 0,
     },
     errorTextView: {
       width: '70%',
