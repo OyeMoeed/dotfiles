@@ -1,6 +1,5 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale } from 'react-native-size-matters';
 
 const moiPaymentRefundStyls = (themeColors: typeof colors) =>
