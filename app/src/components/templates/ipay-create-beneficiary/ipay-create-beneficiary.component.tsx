@@ -18,7 +18,7 @@ import {
   BeneficiaryBankDetailsRes,
   LocalTransferBeneficiaryBankMockProps,
 } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
-import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
+import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { AddBeneficiary, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
@@ -157,7 +157,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     };
     if (REGEX.IBAN.test(ibanNumber)) {
       renderSpinner(true);
-      const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
+      const apiResponse: LocalTransferBeneficiaryBankMockProps = await validateIBAN(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName ?? '');
         setBeneficiaryBankDetails(apiResponse?.data);
@@ -225,7 +225,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   }}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.iban}
-                  maxLength={34}
                   testID="iban"
                   assistiveText={errors?.iban && errors?.iban?.message}
                 />

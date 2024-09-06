@@ -6,7 +6,7 @@ interface Response {
 
 interface ValidateIBANResponseReq {
   iban: string;
-  countryCode?: string;
+  countryCode: string;
 }
 
 interface ValidateIBANResponse {
