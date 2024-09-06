@@ -232,6 +232,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           ref_number: item.realTransactionRefNumber,
         };
       case MoneyRequestStatus.PENDING:
+      case MoneyRequestStatus.INITIATED:
         return {
           ...baseMapping,
           ref_number: item.realTransactionRefNumber,

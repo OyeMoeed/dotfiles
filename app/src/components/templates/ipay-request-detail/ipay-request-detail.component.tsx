@@ -182,7 +182,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
           </IPayView>
           <IPayView style={styles.buttonWrapper}>
             {transaction?.type === TransactionOperations.CREDIT &&
-              transaction.status === MoneyRequestStatus.PENDING && (
+              (transaction.status === MoneyRequestStatus.PENDING || MoneyRequestStatus.INITIATED) && (
                 <IPayButton
                   btnType="outline"
                   onPress={onPressCancel}
@@ -192,27 +192,28 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                   leftIcon={<IPayIcon icon={icons.remove} size={18} color={colors.primary.primary500} />}
                 />
               )}
-            {transaction?.type === TransactionOperations.DEBIT && transaction.status === MoneyRequestStatus.PENDING && (
-              <>
-                <IPayButton
-                  btnType={buttonVariants.PRIMARY}
-                  onPress={onPressPay}
-                  btnText={localizationText.REQUEST_MONEY.PAY}
-                  large
-                  btnIconsDisabled
-                  btnStyle={styles.button}
-                />
-                <IPayButton
-                  btnType="outline"
-                  onPress={showActionSheet}
-                  btnText={localizationText.REQUEST_MONEY.REJECT}
-                  large
-                  btnIconsDisabled
-                  btnStyle={styles.rejectButton}
-                  textColor={colors.error.error500}
-                />
-              </>
-            )}
+            {transaction?.type === TransactionOperations.DEBIT &&
+              (transaction.status === MoneyRequestStatus.PENDING || MoneyRequestStatus.INITIATED) && (
+                <>
+                  <IPayButton
+                    btnType={buttonVariants.PRIMARY}
+                    onPress={onPressPay}
+                    btnText={localizationText.REQUEST_MONEY.PAY}
+                    large
+                    btnIconsDisabled
+                    btnStyle={styles.button}
+                  />
+                  <IPayButton
+                    btnType="outline"
+                    onPress={showActionSheet}
+                    btnText={localizationText.REQUEST_MONEY.REJECT}
+                    large
+                    btnIconsDisabled
+                    btnStyle={styles.rejectButton}
+                    textColor={colors.error.error500}
+                  />
+                </>
+              )}
           </IPayView>
         </>
       </IPayScrollView>

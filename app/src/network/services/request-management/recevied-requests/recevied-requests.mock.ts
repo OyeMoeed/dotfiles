@@ -52,6 +52,17 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
         transactionDescription: 'Pending transaction',
         request_date: '2008-04-08T09:00:00',
       },
+      {
+        transactionId: 'EPY08099PENDING',
+        transactionState: 'initiated',
+        transactionTime: '2008-04-08T10:00:00',
+        targetWalletNumber: '10142',
+        targetFullName: 'Zubair bin Waqas',
+        targetMobileNumber: '0501234567',
+        targetAmount: '50.00',
+        transactionDescription: 'Initiated transaction',
+        request_date: '2008-04-08T09:00:00',
+      },
 
       {
         transactionId: 'EPY08099REJECTED',

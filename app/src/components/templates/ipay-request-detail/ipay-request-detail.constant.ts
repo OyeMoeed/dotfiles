@@ -30,6 +30,14 @@ const typeFieldMapping: MappingType = {
     'send_date',
     'request_date',
   ],
+  [MoneyRequestStatus.INITIATED]: [
+    'status',
+    'sender_mobile_number',
+    'receiver_mobile_number',
+    'note',
+    'send_date',
+    'request_date',
+  ],
   [MoneyRequestStatus.REJECTED]: [
     'status',
     'sender_mobile_number',
@@ -45,7 +53,7 @@ const typeFieldMapping: MappingType = {
 const heightMapping = {
   [MoneyRequestStatus.PAID]: isAndroidOS ? '80%' : '87%',
   [MoneyRequestStatus.PENDING]: isAndroidOS ? '80%' : '87%',
-  [MoneyRequestStatus.INITIATED] : isAndroidOS ? '80%' : '87%',
+  [MoneyRequestStatus.INITIATED]: isAndroidOS ? '80%' : '87%',
   [MoneyRequestStatus.REJECTED]: isAndroidOS ? '75%' : '82%',
   [MoneyRequestStatus.CANCEL]: isAndroidOS ? '70%' : '77%',
 };
