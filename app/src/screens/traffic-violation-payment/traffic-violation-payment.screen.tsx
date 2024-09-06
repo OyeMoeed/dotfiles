@@ -47,7 +47,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           availableBalance={availableBalance ?? 0}
           showRemainingAmount
           balance={balance ?? 0}
-          topUpButtonStyles={styles.topUpButton}
+          topUpBtnStyle={styles.topUpButton}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>

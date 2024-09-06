@@ -52,7 +52,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
           balance={availableBalance}
           availableBalance={currentBalance}
           showRemainingAmount
-          topUpButtonStyles={styles.topUpButton}
+          topUpBtnStyle={styles.topUpButton}
         />
         <IPayBillDetailsOption
           data={moiPaymentDetailes}
