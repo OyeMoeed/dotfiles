@@ -84,7 +84,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
         </IPayView>
         <IPayFootnoteText
           regular={false}
-          text={`${amount} ${localizationText.COMMON.SAR}`}
+          text={`${status === MoneyRequestStatus.PAID ? '+' : ''}${amount} ${localizationText.COMMON.SAR}`}
           color={colors.natural.natural900}
         />
       </IPayView>

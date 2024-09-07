@@ -283,7 +283,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
-    renderSpinner(true);
+    // TODO: Add Spinner After API Integration
+    // renderSpinner(true);
     setIsLoadingW2W(true);
     setTransactionsData([]);
     setFilteredData([]);

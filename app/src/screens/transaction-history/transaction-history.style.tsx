@@ -15,7 +15,7 @@ const transactionsStyles = (colors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
       paddingBottom: moderateScale(25),
-      marginTop: verticalScale(20),
+      marginTop: moderateScale(15, 0.3),
     },
     cardContainerStyleParent: {
       marginHorizontal: moderateScale(24, 0.3),
@@ -101,6 +101,8 @@ const transactionsStyles = (colors: any) =>
       marginHorizontal: moderateScale(24),
       gap: moderateScale(8),
       marginTop: moderateScale(14),
+      borderWidth: 0,
+      backgroundColor: colors.transparent,
     },
     unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
   });

@@ -34,7 +34,7 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
       marginHorizontal: moderateScale(22),
     },
     listView: {
-      marginBottom: moderateScale(8),
+      marginBottom: moderateScale(12),
     },
     filterWrapper: {
       height: verticalScale(20),
