@@ -16,10 +16,7 @@ const getlocalTransferBeneficiaries = async (): Promise<LocalTransferBeneficiari
       method: requestType.GET,
     });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
-    }
-    return { apiResponseNotOk: true, apiResponse };
+    return apiResponse;
   } catch (error) {
     const { response } = error;
     return response || 'Unknown error';

@@ -28,7 +28,6 @@ import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import {
-  ApiResponseStatusType,
   BeneficiaryTypes,
   alertType,
   alertVariant,
@@ -92,20 +91,10 @@ const LocalTransferScreen: React.FC = () => {
     renderSpinner(true);
     try {
       const apiResponse: LocalTransferBeneficiariesMockProps = await getlocalTransferBeneficiaries();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryData(apiResponse?.data?.beneficiaries);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
+      if (apiResponse?.successfulResponse) {
+        setBeneficiaryData(apiResponse?.response?.beneficiaries);
+        renderSpinner(false);
       }
-      renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -315,7 +304,6 @@ const LocalTransferScreen: React.FC = () => {
             <IPayView style={styles.searchWrapper}>
               <IPayTextInput
                 text={search}
-
                 onChangeText={handleSearchChange}
                 placeholder={localizationText.COMMON.SEARCH}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
