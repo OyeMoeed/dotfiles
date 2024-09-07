@@ -48,7 +48,8 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       actionSheetRef.current.show();
     }, 500);
   };
-  const { type } = route?.params;
+ const { type = '', response = {} } = route?.params || {};
+
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);
@@ -130,7 +131,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                   descriptionText={
                     type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
                       ? localizationText.NEW_BENEFICIARY.NOW_MAKE_TRANSFER
-                      : localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY
+                      : response?.status?.desc
                   }
                 />
                 <IPayView style={styles.buttonWrapper}>
