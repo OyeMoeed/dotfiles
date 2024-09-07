@@ -3,8 +3,8 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import localBeneficiaryMetaDataMock from './local-beneficiary-metadata';
 import LocalBeneficiaryMetaMockProps from './local-beneficiary-metadata.interface';
+import localBeneficiaryMetaDataMock from './local-beneficiary-metadata.mock';
 
 const getlocalBeneficiaryMetaData = async (): Promise<LocalBeneficiaryMetaMockProps> => {
   if (constants.MOCK_API_RESPONSE) {

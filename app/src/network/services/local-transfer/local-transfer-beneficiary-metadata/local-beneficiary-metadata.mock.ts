@@ -11,7 +11,7 @@ const localBeneficiaryMetaDataMock: LocalBeneficiaryMetaMockProps = {
   response: {
     localBanks: [
       {
-        code: '1530',
+        code: '999999',
         desc: 'Albilad Bank',
         addtionalAttribute1: 'بنك البلاد',
         addtionalAttribute2: '1440',

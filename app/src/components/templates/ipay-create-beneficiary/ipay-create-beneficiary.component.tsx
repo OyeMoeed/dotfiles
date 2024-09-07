@@ -18,12 +18,14 @@ import {
   BeneficiaryBankDetailsRes,
   LocalTransferBeneficiaryBankMockProps,
 } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
+import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
+import { ValidateIBANResponse } from '@app/network/services/local-transfer/validate-iban/validate-iban.interface';
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { AddBeneficiary, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
@@ -41,6 +43,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
+  const [bankList, setBankList] = useState();
   const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetailsRes>();
   const currency = 'SAR';
   const countryCode = 'SA';
@@ -101,6 +104,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       hideSpinner();
     }
   }, []);
+  useEffect(() => {
+    getBankList();
+  }, []);
 
   const onSubmitData = async (values: FormValues) => {
     const payload: BeneficiaryInfo = {
@@ -150,6 +156,18 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     );
   };
 
+  const getBankList = async () => {
+    const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalBeneficiaryMetaData();
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setBankList(apiResponse.response.localBanks);
+    }
+  };
+  const getBankDetails = (bankCode: string) => {
+    const bankDetails = bankList?.find((bank) => bank.code === bankCode);
+    setValue(AddBeneficiary.BANK_NAME, bankDetails.desc);
+    setBeneficiaryBankDetails(bankDetails);
+  };
+
   const onIBanChange = async (ibanNumber: string) => {
     const params: BeneficiaryBankDetailsReq = {
       iban: ibanNumber,
@@ -157,10 +175,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     };
     if (REGEX.IBAN.test(ibanNumber)) {
       renderSpinner(true);
-      const apiResponse: LocalTransferBeneficiaryBankMockProps = await validateIBAN(params);
+      const apiResponse: ValidateIBANResponse = await validateIBAN(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-        setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName ?? '');
-        setBeneficiaryBankDetails(apiResponse?.data);
+        getBankDetails(apiResponse.response.bankCode);
         renderSpinner(false);
       } else {
         renderSpinner(false);
