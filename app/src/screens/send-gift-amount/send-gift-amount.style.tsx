@@ -1,6 +1,13 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import {
+  FONT_SIZE_17,
+  FONT_SIZE_20,
+  FONT_SIZE_33,
+  FONT_SIZE_34,
+  FONT_WEIGHT_BOLD,
+} from '@app/styles/typography.styles';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -138,7 +145,15 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     manualInput: {
       fontSize: FONT_SIZE_20,
       alignSelf: 'center',
-      lineHeight: 0,
+      ...Platform.select({
+        android: {
+          lineHeight: moderateScale(30),
+        },
+        ios: {
+          lineHeight: 0,
+        },
+      }),
+      minWidth: scaleSize(42),
     },
     chipColors: {
       alignSelf: 'stretch',
@@ -150,7 +165,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(16),
     },
     currencyText: {
-      fontSize: FONT_SIZE_33,
+      fontSize: FONT_SIZE_34,
       fontWeight: FONT_WEIGHT_BOLD,
       ...Platform.select({
         android: {
@@ -158,7 +173,8 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
           lineHeight: moderateScale(30),
         },
         ios: {
-          lineHeight: moderateScale(0),
+          lineHeight: 0,
+          marginBottom: moderateScale(2),
         },
       }),
     },
@@ -173,6 +189,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
         },
       }),
       alignSelf: 'center',
+      marginBottom: moderateScale(3),
     },
     contactInfoContainer: {
       marginTop: moderateScale(6),
@@ -188,6 +205,19 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     sar: { fontSize: FONT_SIZE_33 },
     btnText: {
       justifyContent: 'center',
+    },
+    inputStyle: {
+      minWidth: scaleSize(65),
+    },
+    inputActiveStyle: {
+      ...Platform.select({
+        android: {
+          marginBottom: moderateScale(5),
+        },
+        ios: {
+          marginBottom: moderateScale(7),
+        },
+      }),
     },
   });
 

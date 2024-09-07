@@ -1,5 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17 } from '@app/styles/typography.styles';
+import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const transferInformationStyles = () =>
@@ -32,6 +33,16 @@ const transferInformationStyles = () =>
     },
     currency: {
       fontSize: FONT_SIZE_17,
+    },
+    inputActiveStyle: {
+      ...Platform.select({
+        android: {
+          marginBottom: moderateScale(1),
+        },
+        ios: {
+          marginBottom: 0,
+        },
+      }),
     },
   });
 
