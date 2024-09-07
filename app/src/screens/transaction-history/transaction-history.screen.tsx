@@ -239,7 +239,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getTransactionsData = async (filtersData?: any) => {
-    renderSpinner(true);
+    // TODO: Add Spinner After API Integration
+    // renderSpinner(true);
     setIsLoading(true);
     try {
       const payload: TransactionsProp = {
