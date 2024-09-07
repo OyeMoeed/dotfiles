@@ -120,7 +120,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         correspondingBankCode: beneficiaryBankDetails?.correspondingBankCode ?? '',
         bankName: beneficiaryBankDetails?.bankName ?? '',
       },
+      remittanceType: '500',
     };
+    console.log('payload', payload);
+    
     if (isValid) {
       renderSpinner(true);
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
@@ -162,10 +165,15 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       setBankList(apiResponse.response.localBanks);
     }
   };
-  const getBankDetails = (bankCode: string) => {
+  const getBankDetails = (bankCode: string, ibanNumber:string) => {
     const bankDetails = bankList?.find((bank) => bank.code === bankCode);
     setValue(AddBeneficiary.BANK_NAME, bankDetails.desc);
-    setBeneficiaryBankDetails(bankDetails);
+    setBeneficiaryBankDetails({
+      bankCode: bankCode,
+      correspondingBankCode: bankCode,
+      bankName: bankDetails.desc,
+      beneficiaryAccountNo: ibanNumber,
+    });
   };
 
   const onIBanChange = async (ibanNumber: string) => {
@@ -177,7 +185,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       renderSpinner(true);
       const apiResponse: ValidateIBANResponse = await validateIBAN(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-        getBankDetails(apiResponse.response.bankCode);
+        getBankDetails(apiResponse.response.bankCode, ibanNumber);
         renderSpinner(false);
       } else {
         renderSpinner(false);
