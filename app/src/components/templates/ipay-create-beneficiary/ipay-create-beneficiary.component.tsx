@@ -122,14 +122,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       },
       remittanceType: '500',
     };
-    console.log('payload', payload);
-    
+
     if (isValid) {
       renderSpinner(true);
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setBeneficiaryData(values);
-        setIsBeneficiaryCreated(true);
+        navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, {});
         renderSpinner(false);
       } else {
         renderSpinner(false);
@@ -138,6 +137,12 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     }
   };
 
+  const onPrepareData = async (values: FormValues) => {
+    if (isValid) {
+      setBeneficiaryData(values);
+      setIsBeneficiaryCreated(true);
+    }
+  };
   const renderTitle = (title: string) => title?.split('_').join(' ');
 
   const renderItem = (item: ListOption) => {
@@ -165,7 +170,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       setBankList(apiResponse.response.localBanks);
     }
   };
-  const getBankDetails = (bankCode: string, ibanNumber:string) => {
+  const getBankDetails = (bankCode: string, ibanNumber: string) => {
     const bankDetails = bankList?.find((bank) => bank.code === bankCode);
     setValue(AddBeneficiary.BANK_NAME, bankDetails.desc);
     setBeneficiaryBankDetails({
@@ -214,7 +219,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             large
             btnIconsDisabled
             btnStyle={styles.btnStyle}
-            onPress={() => navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, {})}
+            onPress={handleSubmit(onSubmitData)}
             testID="confirm-btn"
           />
         </IPayView>
@@ -287,7 +292,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             />
           </IPayView>
           <IPayButton
-            onPress={handleSubmit(onSubmitData)}
+            onPress={handleSubmit(onPrepareData)}
             disabled={!watch(AddBeneficiary.BENEFICIARY_NAME) || !watch(AddBeneficiary.IBAN)}
             btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
             btnType={buttonVariants.PRIMARY}
