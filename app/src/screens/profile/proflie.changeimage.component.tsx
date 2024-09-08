@@ -70,7 +70,7 @@ const useChangeImage = (): UseChangeImageReturn => {
         includeBase64: true,
       }).then((image: any) => {
         if (image.data) {
-           setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
+          setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
           hideActionSheet();
         }
       });

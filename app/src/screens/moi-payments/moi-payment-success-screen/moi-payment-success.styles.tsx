@@ -107,6 +107,14 @@ const moiPaymentSuccessStyles = (themeColor: typeof colors) =>
       width: scaleSize(27),
       height: moderateScale(18),
     },
+    iconStyle: {
+      width: moderateScale(14),
+      height: moderateScale(14),
+    },
+    homeIcon: {
+      width: moderateScale(20),
+      height: moderateScale(20),
+    },
   });
 
 export default moiPaymentSuccessStyles;

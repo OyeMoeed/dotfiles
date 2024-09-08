@@ -22,7 +22,7 @@ describe('IPayToast', () => {
         isShowDetail
         viewText="View"
         titleColor={colors.primary.primary500}
-      />
+      />,
     );
 
     const IPayToastId = getByTestId('IPayToastId-pressable');

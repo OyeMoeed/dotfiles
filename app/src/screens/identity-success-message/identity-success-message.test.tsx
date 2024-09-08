@@ -10,13 +10,13 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       gradientTertiary: ['#ffffff', '#eeeeee'], // Mocked gradient colors
       tertiary: { tertiary400: '#cccccc', primary500: '#aaaaaa' }, // Mocked tertiary colors
       primary: { primary50: '#dddddd', primary800: '#bbbbbb' }, // Mocked primary colors
-      secondary: { secondary50: '#999999' } // Mocked secondary colors
+      secondary: { secondary50: '#999999' }, // Mocked secondary colors
     },
     icons: {
       logoAlinmaPay: jest.fn(),
       successIconGif: jest.fn(),
-    }
-  })
+    },
+  }),
 }));
 
 jest.mock('@app/localization/hooks/localization.hook', () => ({
@@ -25,7 +25,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
     identity_confirmation: 'Identity successful!',
     utilize_app_feature: 'Explore and enjoy our features.',
     done: 'Done',
-  })
+  }),
 }));
 
 describe('IdentitySuccessMessage', () => {

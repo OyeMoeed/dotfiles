@@ -21,7 +21,7 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   leftIcon,
   rightIcon,
   textColor,
-  textStyle
+  textStyle,
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -36,7 +36,7 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
-    [disabled, arrowIconColor, colors]
+    [disabled, arrowIconColor, colors],
   );
 
   const ButtonText = useMemo(() => {
@@ -51,12 +51,12 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
 
   const justifyContent: ViewStyle['justifyContent'] = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between'),
-    [btnIconsDisabled, leftIcon, rightIcon]
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
 
   const alignItemsStyle = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
-    [btnIconsDisabled, leftIcon, rightIcon]
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
 
   return (

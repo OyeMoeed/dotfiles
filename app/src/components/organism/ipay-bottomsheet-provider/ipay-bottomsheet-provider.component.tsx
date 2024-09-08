@@ -3,7 +3,6 @@ import { IPayNafathVerification } from '@app/components/templates';
 import IPayIdRenewalSheet from '@app/components/templates/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { setNafathSheetVisibility, setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
-import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { AppDispatch, RootState, useTypedSelector } from '@store/store';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -17,9 +16,6 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
     (state: RootState) => state.nafathVerificationReducer.isProfileSheetVisible,
   );
   const isNafathSheetVisible = useTypedSelector((state) => state.nafathVerificationReducer.isNafathSheetVisible);
-  const isIdRenewalSheetVisible = useTypedSelector(
-    (state) => state.walletInfoReducer.walletInfo.isIdRenewalSheetVisible,
-  );
 
   const onCloseProfileSheet = () => {
     dispatch(setProfileSheetVisibility(false));
@@ -31,10 +27,6 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
 
   const onCloseNafathSheet = () => {
     dispatch(setNafathSheetVisibility(false));
-  };
-
-  const onCloseRenewalIdSheet = () => {
-    dispatch(closeIdRenewalSheet());
   };
 
   return (
@@ -66,7 +58,7 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
         <IPayNafathVerification onComplete={onCloseNafathSheet} />
       </IPayPortalBottomSheet>
 
-      <IPayIdRenewalSheet onClose={onCloseRenewalIdSheet} visible={isIdRenewalSheetVisible} />
+      <IPayIdRenewalSheet />
     </>
   );
 };

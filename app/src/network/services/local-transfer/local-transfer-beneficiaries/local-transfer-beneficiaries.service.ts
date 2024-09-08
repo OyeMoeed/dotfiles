@@ -12,14 +12,18 @@ const getlocalTransferBeneficiaries = async (): Promise<unknown> => {
     const apiResponse = await apiCall({
       endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries(),
       method: requestType.GET,
+      // example hide error message
+      headers: {
+        hide_error_response: true,
+      },
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.status) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
+  } catch (error: any) {
+    return { error: error?.message || 'Unknown error' };
   }
 };
 

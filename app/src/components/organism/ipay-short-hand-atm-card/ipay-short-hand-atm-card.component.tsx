@@ -57,11 +57,7 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, car
           <IPayView>
             <IPayView style={styles.titleAndCardNumberView}>
               <IPayFootnoteText regular={false} text={cardData.name} color={textColor} />
-              <IPayCaption2Text
-                text={cardData?.maskedCardNumber}
-                style={styles.cardNumberText}
-                color={textColor}
-              />
+              <IPayCaption2Text text={cardData?.maskedCardNumber} style={styles.cardNumberText} color={textColor} />
             </IPayView>
             <IPayCaption2Text text={cardData.cardClassDesc} color={textColor} />
           </IPayView>
