@@ -25,10 +25,8 @@ import amountStyles from './ipay-amount-component.styles';
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
-  onPressAddCards,
   openPressExpired,
   walletInfo,
-  handleCardSelect,
   openExpirationBottomSheet,
   openExpiredDateBottomSheet,
   openCvvBottomSheet,
@@ -85,7 +83,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const deviceInfo = await getDeviceInfo();
     const body: any = {
       amount: topUpAmount,
-      deviceInfo: deviceInfo,
+      deviceInfo,
       paymentDescription: 'nothing',
     };
     if (selectedCardObj.registrationId) {
@@ -106,7 +104,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     switch (apiResponse?.status?.type) {
       case ApiResponseStatusType.SUCCESS:
-        let paymentGateway = apiResponse?.response?.paymentGateway;
+        const paymentGateway = apiResponse?.response?.paymentGateway;
         setRedirectUrl(apiResponse?.response?.redirectUrl);
         if (paymentGateway == 'CLICKPAY') {
           navigate(screenNames.CARD_VERIFICATION, {

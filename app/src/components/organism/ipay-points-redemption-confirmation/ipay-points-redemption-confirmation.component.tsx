@@ -1,4 +1,4 @@
-import { IPayFootnoteText, IPayLinearGradientView, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayFootnoteText, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import IPayPointRedemptionCard from '@app/components/atoms/ipay-point-redemption-card/ipay-point-redemption-card.component';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';

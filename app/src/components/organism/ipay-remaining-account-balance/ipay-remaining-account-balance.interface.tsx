@@ -35,4 +35,4 @@ interface IPayRemainingBalanceProps {
   onPressIcon?: () => void;
   onPressQR?: () => void;
 }
-export { IPayRemainingBalanceProps };
+export default IPayRemainingBalanceProps;

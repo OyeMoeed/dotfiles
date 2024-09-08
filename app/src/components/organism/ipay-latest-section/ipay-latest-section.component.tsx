@@ -126,7 +126,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (
-                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item ? item : []} />
+                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} />
                   )}
                 />
               </IPayView>

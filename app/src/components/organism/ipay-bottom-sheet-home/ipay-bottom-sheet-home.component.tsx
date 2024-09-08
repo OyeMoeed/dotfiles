@@ -61,7 +61,7 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
         <BottomSheetModal
           enableContentPanningGesture={false}
           style={styles.bottmModalStyle}
-          name={'BottomSheet'}
+          name="BottomSheet"
           enableDismissOnClose={false}
           enableHandlePanningGesture={enableClose}
           onDismiss={() => bottomSheetModalRef.current?.close()}

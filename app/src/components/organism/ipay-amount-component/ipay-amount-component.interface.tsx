@@ -1,7 +1,7 @@
 import { GetWalletResponse } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import { payChannel } from '@app/utilities/enums.util';
 
-export default interface IPayAmountProps {
+interface IPayAmountProps {
   testID?: string;
   amounts?: { text: string; value: number }[];
   expiryOnPress: () => void;
@@ -16,3 +16,5 @@ export default interface IPayAmountProps {
   openExpirationBottomSheet: () => void;
   openCvvBottomSheet: () => void;
 }
+
+export default IPayAmountProps;

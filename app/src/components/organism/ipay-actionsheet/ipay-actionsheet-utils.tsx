@@ -33,8 +33,8 @@ export const calculateHeight = ({
     return combinedStyles;
   };
 
-  // Combined styles for the action sheet
   const styles = getStyles();
+  // Combined styles for the action sheet
 
   // Function to calculate the height of a specific style component
   const getHeight = (styleName: keyof ActionSheetStyles): number => {

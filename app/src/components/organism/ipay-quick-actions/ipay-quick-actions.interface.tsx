@@ -8,4 +8,4 @@ interface IPayQuickActionsProps {
   monthlyRemainingOutgoingAmount: string;
   setTopUpAmount?: (text: string) => void;
 }
-export { IPayQuickActionsProps };
+export default IPayQuickActionsProps;

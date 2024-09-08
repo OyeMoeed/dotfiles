@@ -499,7 +499,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
-    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
+    const doneTextValue = doneText || localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {

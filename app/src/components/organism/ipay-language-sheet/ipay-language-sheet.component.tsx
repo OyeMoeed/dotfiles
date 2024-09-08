@@ -11,7 +11,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { LanguageCode } from '@app/utilities/enums.util';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { forwardRef, useState } from 'react';
+import React, { JSX, forwardRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import styles from './ipay-language-sheet.styles';
@@ -34,12 +34,12 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
       const deviceInfo = await getDeviceInfo();
 
       const payLoad: ChangeLangPayloadProps = {
-        walletNumber: walletNumber,
+        walletNumber,
         body: {
           userContactInfo: {
             preferedLanguage: code,
           },
-          deviceInfo: deviceInfo,
+          deviceInfo,
         },
       };
       const apiResponse: any = await changeLanguage(payLoad);
@@ -58,8 +58,8 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
 
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
 
-  const RenderView = () => {
-    return languagesAll.map((item, index) => (
+  const RenderView = () =>
+    languagesAll.map((item, index) => (
       <IPayPressable
         key={index}
         style={sheetStyles.buttonBox}
@@ -76,7 +76,6 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
         </IPayView>
       </IPayPressable>
     ));
-  };
 
   return (
     <IPayBottomSheet

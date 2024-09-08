@@ -134,33 +134,31 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
           <IPayShareableImageView
             otherView={
-              <>
-                {variants === TopupStatus.SUCCESS && (
-                  <IPayView>
-                    <IPayView style={styles.bottomActions}>
-                      <IPayButton
-                        onPress={navigateTOAktharPoints}
-                        btnType="link-button"
-                        btnText={localizationText.TOP_UP.NEW_TOP_UP}
-                        leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
-                      />
-                      <IPayButton
-                        btnType="link-button"
-                        btnText={localizationText.TOP_UP.SHARE}
-                        leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
-                      />
-                    </IPayView>
+              variants === TopupStatus.SUCCESS && (
+                <IPayView>
+                  <IPayView style={styles.bottomActions}>
                     <IPayButton
-                      btnType="primary"
-                      leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
-                      btnText={localizationText.COMMON.HOME}
-                      onPress={goBackToHome}
-                      large
-                      btnStyle={styles.btnStyle}
+                      onPress={navigateTOAktharPoints}
+                      btnType="link-button"
+                      btnText={localizationText.TOP_UP.NEW_TOP_UP}
+                      leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
+                    />
+                    <IPayButton
+                      btnType="link-button"
+                      btnText={localizationText.TOP_UP.SHARE}
+                      leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
                     />
                   </IPayView>
-                )}
-              </>
+                  <IPayButton
+                    btnType="primary"
+                    leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
+                    btnText={localizationText.COMMON.HOME}
+                    onPress={goBackToHome}
+                    large
+                    btnStyle={styles.btnStyle}
+                  />
+                </IPayView>
+              )
             }
             style={styles.shareView}
           >
@@ -182,7 +180,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                 </IPayView>
 
                 {successDetail.map(({ title, value, icon, pressIcon }, index) => (
-                  <IPayView style={styles.listContainer} key={index}>
+                  <IPayView style={styles.listContainer} key={`${`${index}SuccessDetail`}`}>
                     <IPayView style={styles.listView}>
                       <IPayFootnoteText text={title} color={colors.natural.natural900} />
                       <IPayView style={styles.listDetails}>

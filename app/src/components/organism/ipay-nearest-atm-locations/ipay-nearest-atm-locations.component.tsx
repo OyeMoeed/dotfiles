@@ -28,7 +28,7 @@ const IPayNearestAtmLocations: React.FC<IPayNearestAtmLocationsProps> = ({ testI
         ref={mapRef}
         initialRegion={initialRegion}
         testID={`${testID}-map-view`}
-        showsUserLocation={true}
+        showsUserLocation
         showsMyLocationButton={false}
       >
         {nearestAtms &&

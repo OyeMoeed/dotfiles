@@ -39,13 +39,11 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
     );
   };
 
-  const ContactListOptions = () => {
-    return (
-      <IPayView style={styles.childrenStyles}>
-        {contactList?.map((item: ContactItem) => <ContactItemComponent item={item} />)}
-      </IPayView>
-    );
-  };
+  const ContactListOptions = () => (
+    <IPayView style={styles.childrenStyles}>
+      {contactList?.map((item: ContactItem) => <ContactItemComponent item={item} />)}
+    </IPayView>
+  );
 
   const renderGuideStepItem = ({
     item: { title, pressNumber, extraText, stepNumber, isContactList },

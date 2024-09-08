@@ -55,7 +55,7 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(
               <IMAGE
                 isFocused={isFocused}
                 color={isFocused ? colors.primary.primary500 : colors.natural.natural500}
-                filled={true}
+                filled
               />
 
               <IPayCaption1Text style={[styles.captionTextStyle, isFocused ? styles.focusedText : styles.blurText]}>

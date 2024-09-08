@@ -14,9 +14,10 @@ const IPayBalanceProgressbar: React.FC<IPayBalanceProgressbarProps> = ({
   const { colors } = useTheme();
   const styles = ipayBalanceProgressStyles(colors);
   const localizationText = useLocalization();
-  const remainingProgress: string = useMemo(() => {
-    return calculateProgress(parseFloat(monthlyRemainingOutgoingAmount), parseFloat(monthlyOutgoingLimit));
-  }, [monthlyRemainingOutgoingAmount, monthlyOutgoingLimit]);
+  const remainingProgress: string = useMemo(
+    () => calculateProgress(parseFloat(monthlyRemainingOutgoingAmount), parseFloat(monthlyOutgoingLimit)),
+    [monthlyRemainingOutgoingAmount, monthlyOutgoingLimit],
+  );
   return (
     <>
       <IPayProgressBar

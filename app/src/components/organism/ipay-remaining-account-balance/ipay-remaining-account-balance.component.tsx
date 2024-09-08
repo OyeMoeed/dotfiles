@@ -10,7 +10,7 @@ import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
 import ipayRemainingAccountBalanceStyles from './ipay-remaining-account-balance.component.styles';
-import { IPayRemainingBalanceProps } from './ipay-remaining-account-balance.interface';
+import IPayRemainingBalanceProps from './ipay-remaining-account-balance.interface';
 
 const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,

@@ -207,7 +207,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     keyboardType="numeric"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {' ' + localizationText.COMMON.SAR}
+                    {` ${localizationText.COMMON.SAR}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -238,7 +238,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     keyboardType="number-pad"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {' ' + localizationText.COMMON.POINT}
+                    {` ${localizationText.COMMON.POINT}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -247,7 +247,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
               <IPayChip
                 textValue={errorMessage}
                 variant={States.WARNING}
-                isShowIcon={true}
+                isShowIcon
                 containerStyle={styles.chipContainer}
                 icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={scaleSize(16)} />}
               />
@@ -295,7 +295,8 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
           />
         </IPayView>
       );
-    } else if (isEligible === false) {
+    }
+    if (isEligible === false) {
       return (
         <IPayView style={styles.notEnrolled}>
           <IPayView style={styles.iconContainer}>
@@ -309,9 +310,8 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
           <IPayImage style={styles.image} image={images.blackLogo3x} />
         </IPayView>
       );
-    } else {
-      return <IPayView />;
     }
+    return <IPayView />;
   };
 
   return (
