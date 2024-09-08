@@ -21,7 +21,6 @@ import deviceDelink from '@app/network/services/core/delink/delink.service';
 import logOut from '@app/network/services/core/logout/logout.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import clearSession from '@app/network/utilities/network-session-helper';
-import { resetUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
@@ -85,9 +84,6 @@ const MenuScreen: FC = () => {
 
   const delinkSuccessfullyDone = () => {
     clearSession(true);
-    setTimeout(() => {
-      dispatch(resetUserInfo());
-    }, 500);
   };
 
   const delinkDevice = async () => {

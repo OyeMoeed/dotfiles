@@ -47,7 +47,9 @@ const Home: React.FC = () => {
   const topUpSelectionRef = React.createRef<any>();
 
   const dispatch = useTypedDispatch();
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
@@ -90,7 +92,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: TransactionsProp = {
-        walletNumber: walletInfo?.walletNumber,
+        walletNumber,
         maxRecords: '3',
         offset: '1',
       };
@@ -116,7 +118,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
-        walletNumber: walletInfo?.walletNumber,
+        walletNumber,
         isHome: 'true',
       };
 
@@ -155,7 +157,7 @@ const Home: React.FC = () => {
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
     });
-    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
@@ -207,7 +209,7 @@ const Home: React.FC = () => {
 
   const getUpadatedWalletData = async () => {
     const payload = {
-      walletNumber: walletInfo?.walletNumber as string,
+      walletNumber: walletNumber as string,
     };
     const apiResponse: any = await getWalletInfo(payload);
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
@@ -222,7 +224,7 @@ const Home: React.FC = () => {
       }
       getUpadatedWalletData();
     }
-  }, [isFocused, walletInfo?.walletNumber]);
+  }, [isFocused, walletNumber]);
 
   const saveRearrangedItems = () => {
     if (tempreArrangedItems?.length > 0) dispatch(setRearrangedItems(tempreArrangedItems));
@@ -233,19 +235,19 @@ const Home: React.FC = () => {
       <>
         {/* ---------Top Navigation------------- */}
         <IPayView style={styles.topNavCon}>
-          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={walletInfo?.firstName} />
+          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={firstName} />
         </IPayView>
         {/* ----------BalanceBox------------ */}
         <IPayView style={styles.balanceCon}>
           <IPayBalanceBox
-            balance={walletInfo?.availableBalance}
-            totalBalance={walletInfo?.currentBalance}
+            balance={availableBalance}
+            totalBalance={currentBalance}
             hideBalance={appData?.hideBalance}
             walletInfoPress={() => navigate(ScreenNames.WALLET)}
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
-            monthlyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyOutgoingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+            monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}
