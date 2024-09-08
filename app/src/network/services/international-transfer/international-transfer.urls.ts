@@ -8,6 +8,9 @@ const INTERNATIONAL_TRANSFERS_URLS = {
   alinma_express_beneficiaries_metadata: () =>
     '/alinmapay/transfer-management/v1/beneficiaries/alinma-express/metadata',
   alinma_express: () => '/alinmapay/transfer-management/v1/beneficiaries/alinma-express',
+  delete_beneficiary: (beneficiaryCode: string) => `/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
+  activate_beneficiary: () => '/v1/alinma-pay/beneficiaries/activation/mark',
+  edit_beneficiary: (beneficiaryCode: string) => `/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
 };
 
 export default INTERNATIONAL_TRANSFERS_URLS;

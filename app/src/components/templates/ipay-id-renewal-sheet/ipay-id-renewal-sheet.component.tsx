@@ -181,11 +181,11 @@ const IPayIdRenewalSheet: React.FC = () => {
           showSuccessAlert();
         } else if (apiResponse?.apiResponseNotOk) {
           setOtpError(true);
-          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
           setOtpError(true);
-          otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
+          otpVerificationRef.current?.triggerToast(apiResponse?.error);
         }
       } catch (error: any) {
         renderSpinner(false);
@@ -198,7 +198,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       getOtpData();
     }
