@@ -15,8 +15,8 @@ const IPaySkeletonViewMeta: Meta<typeof IPaySkeletonView> = {
       width: 300,
       alignItems: 'center',
       justifyContent: 'center',
-      flex: 1
-    }
+      flex: 1,
+    },
   },
   decorators: [
     (Story) => (
@@ -25,8 +25,8 @@ const IPaySkeletonViewMeta: Meta<typeof IPaySkeletonView> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPaySkeletonViewMeta;
@@ -40,15 +40,15 @@ export const Basic: StoryObj<typeof IPaySkeletonView> = {
           Other content
         </IPayText>
       </>
-    )
-  }
+    ),
+  },
 };
 
 export const Loading: StoryObj<typeof IPaySkeletonView> = {
   args: {
     isLoading: true,
-    children: <IPayText style={{ fontSize: SCALE_16, color: colors.natural.natural1000 }}>Loading content</IPayText>
-  }
+    children: <IPayText style={{ fontSize: SCALE_16, color: colors.natural.natural1000 }}>Loading content</IPayText>,
+  },
 };
 
 export const NotLoading: StoryObj<typeof IPaySkeletonView> = {
@@ -61,6 +61,6 @@ export const NotLoading: StoryObj<typeof IPaySkeletonView> = {
           Other content
         </IPayText>
       </>
-    )
-  }
+    ),
+  },
 };

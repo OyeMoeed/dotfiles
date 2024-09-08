@@ -10,7 +10,7 @@ describe('IPayAnimatedView', () => {
     const { getByTestId } = render(
       <IPayAnimatedView style={style} animationStyles={animationStyles}>
         <IPayView />
-      </IPayAnimatedView>
+      </IPayAnimatedView>,
     );
 
     const animatedView = getByTestId('animated-view');

@@ -87,7 +87,7 @@
   "ID_RENEWAL": {
     "TITLE": "ID کی تجدید",
     "ID_ABOUT_EXPIRE": "آپ کی ID ختم ہونے والی ہے!",
-    "ID_UPDATION_DES": "آپ کی ID کی میعاد ختم ہونے کی تاریخ ${DATE} کو ${DAYS} دن کے اندر ہے۔\\nبراہ کرم اس کی تجدید یقینی بنائیں تاکہ آپ اب بھی AlinmaPay\\n ایپلیکیشن استعمال کر سکیں۔",
+    "ID_UPDATION_DES": "آپ کی ID کی میعاد ختم ہونے کی تاریخ {{DATE}} کو {{DAYS}} دن کے اندر ہے۔\\nبراہ کرم اس کی تجدید یقینی بنائیں تاکہ آپ اب بھی AlinmaPay\\n ایپلیکیشن استعمال کر سکیں۔",
     "REMIND_ME_LATER": "مجھے بعد میں یاد کروانا",
     "DONT_SHOW": "اسے دوبارہ مت دکھائیں۔",
     "ID_EXPIRED": "آپ کی ID کی میعاد ختم ہو گئی ہے!",
@@ -183,9 +183,10 @@
     "REMAINING": "باقی ماہانہ ٹاپ اپ",
     "LIMIT_REACHED": "حد ہو گئی، کوئی ٹاپ اپ باقی نہیں رہا۔",
     "AMOUNT_EXCEEDS_CURRENT": "رقم ماہانہ حد سے زیادہ ہے۔",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "روزانہ کی حد سے تجاوز: 3000 SAR",
     "TOPUP_SUCCESS": "ٹاپ اپ کامیاب",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "ٹاپ اپ کی قسم",
     "TOPUP_DATE": "ٹاپ اپ ڈیٹ",
     "NEW_TOP_UP": "نیا ٹاپ اپ",
@@ -603,6 +604,7 @@
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "مرحلہ وار ویڈیو گائیڈ",
     "CODE_SCANNED_SUCCESSFULLY": "کوڈ کامیابی کے ساتھ اسکین کیا گیا",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful",
     "MULTIPLE_OF_HUNDERED": "رقم 100 کے ضرب ہونی چاہیے",
     "CHECK_NEAREST_ATM": "قریب ترین اے ٹی ایم چیک کریں",
     "NEAREST_ATM": "قریب ترین اے ٹی ایم",
@@ -661,10 +663,10 @@
     "ALINMA_ATM": "الانما اے ٹی ایم",
     "GET_DIRECTION": "ہدایت حاصل کریں",
     "SUCCESS_SCREEN": {
-      "TRANSACTION_TYPE":"Transaction Type",
-      "ATM_WITHDRAWAL":"ATM Withdrawal",
-      "REF_NUMBER":"Ref. Number",
-      "TRANSACTION_DATE":"Transaction Date"
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
     }
   },
   "CARD_RENEWAL_SUCCESS": {

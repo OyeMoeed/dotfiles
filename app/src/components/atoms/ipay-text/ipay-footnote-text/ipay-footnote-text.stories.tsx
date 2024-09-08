@@ -13,8 +13,8 @@ const IPayFootnoteTextMeta: Meta<typeof IPayFootnoteText> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_16,
-      fontWeight: '500'
-    }
+      fontWeight: '500',
+    },
   },
   decorators: [
     (Story) => (
@@ -23,8 +23,8 @@ const IPayFootnoteTextMeta: Meta<typeof IPayFootnoteText> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayFootnoteTextMeta;
@@ -37,9 +37,9 @@ export const FootnoteRegular: StoryObj<typeof IPayFootnoteText> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_13,
-      fontWeight: '400'
-    }
-  }
+      fontWeight: '400',
+    },
+  },
 };
 
 export const FootnoteBold: StoryObj<typeof IPayFootnoteText> = {
@@ -48,7 +48,7 @@ export const FootnoteBold: StoryObj<typeof IPayFootnoteText> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_13,
-      fontWeight: '700'
-    }
-  }
+      fontWeight: '700',
+    },
+  },
 };

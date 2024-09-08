@@ -55,10 +55,12 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
     <IPayList
       key={title}
       title={
-        <IPayFootnoteText>
+        <IPayFootnoteText color={colors.primary.primary800}>
           {title}
-          <IPayFootnoteText regular={false}> {pressNumber}</IPayFootnoteText>
-          <IPayFootnoteText> {extraText}</IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800} regular={false}>
+            {pressNumber}
+          </IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800}> {extraText}</IPayFootnoteText>
         </IPayFootnoteText>
       }
       textStyle={styles.stepStyle}

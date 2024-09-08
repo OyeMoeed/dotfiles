@@ -9,20 +9,13 @@ export interface IPayIdRenewalSheetProps {
   /**
    * function on Press the button.
    */
-  confirm: () => {};
+  confirm: () => void;
   /**
    * function on CLOSE Press the button.
    */
-  onClose: () => {};
+  onClose: () => void;
   /**
    * boolean to show alert on Press the button.
    */
   visible: boolean;
-  aboutToExpireInfo?: IAboutToExpireInfo;
-}
-
-export interface IAboutToExpireInfo {
-  isAboutToExpire: boolean;
-  remaningNumberOfDaysToExpire: string;
-  expiryDate: string;
 }

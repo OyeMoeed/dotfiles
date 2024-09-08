@@ -3,8 +3,9 @@ import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayPressable, IPayView }
 import icons from '@app/assets/icons';
 import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayNotificationCardProps } from './ipay-notification-card.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { formatDate } from '@app/utilities/date-helper.util';
+import { IPayNotificationCardProps } from './ipay-notification-card.interface';
 import getNotificationCardStyles from './ipay-notification-card.styles';
 
 const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
@@ -18,6 +19,7 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
   onDeleteNotification = () => {},
   onMarkAsRead = () => {},
 }) => {
+  const formattedDate = formatDate(date);
   const actionSheetRef = useRef<any>(null);
   const localization = useLocalization();
   const { colors } = useTheme();
@@ -52,7 +54,7 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
           <IPayFootnoteText color={colors.natural.natural900} style={styles.message}>
             {message}
           </IPayFootnoteText>
-          <IPayCaption2Text color={dateColor}>{date}</IPayCaption2Text>
+          <IPayCaption2Text color={dateColor}>{formattedDate}</IPayCaption2Text>
         </IPayView>
         <IPayPressable onPress={handleMorePress} style={styles.moreIconContainer}>
           <IPayIcon icon={icons.more_option} size={18} color={colors.natural.natural500} />

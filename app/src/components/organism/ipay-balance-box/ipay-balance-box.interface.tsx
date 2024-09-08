@@ -7,10 +7,6 @@ export interface IPayBalanceBoxProps {
    */
   balance?: string;
   /**
-   * Total Account balance
-   */
-  totalBalance?: string;
-  /**
    * When clicked on the ‘i’ icon should display the respective wallet information (refer to US:)
    */
   hideBalance?: boolean;

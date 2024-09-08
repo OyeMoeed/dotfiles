@@ -61,7 +61,7 @@ const animateValue = (sharedValue: SharedValue<number>, toValue: number, duratio
 };
 
 // Generic animation function for scaling with reanimated
-const animateValueSpring = (sharedValue: { value: any; }, toValue: any, config = {}) => {
+const animateValueSpring = (sharedValue: { value: any }, toValue: any, config = {}) => {
   'worklet';
   return (sharedValue.value = withSpring(toValue, {
     damping: 10,
