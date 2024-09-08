@@ -20,6 +20,7 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
   const localizationText = useLocalization();
+
   const ContactItemComponent = ({ item }: ContactItem) => {
     const { title, phone_number } = item;
     return (
@@ -41,7 +42,7 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
 
   const ContactListOptions = () => (
     <IPayView style={styles.childrenStyles}>
-      {contactList?.map((item: ContactItem) => <ContactItemComponent item={item} />)}
+      {contactList?.map((item: ContactItem) => <ContactItemComponent key={`${item.title}`} item={item} />)}
     </IPayView>
   );
 

@@ -3,19 +3,20 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import calculateProgress from '@app/utilities/calculate-progress.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import { useMemo } from 'react';
-import { IPayBalanceProgressbarProps } from './ipay-balance-progressbar.interface';
+import { useMemo, FC } from 'react';
+import IPayBalanceProgressbarProps from './ipay-balance-progressbar.interface';
 import ipayBalanceProgressStyles from './ipay-balance-progressbar.styles';
 
-const IPayBalanceProgressbar: React.FC<IPayBalanceProgressbarProps> = ({
-  monthlyRemainingOutgoingAmount,
-  monthlyOutgoingLimit,
+const IPayBalanceProgressbar: FC<IPayBalanceProgressbarProps> = ({
+  monthlyRemainingOutgoingAmount = '',
+  monthlyOutgoingLimit = '',
 }) => {
   const { colors } = useTheme();
   const styles = ipayBalanceProgressStyles(colors);
   const localizationText = useLocalization();
   const remainingProgress: string = useMemo(
-    () => calculateProgress(parseFloat(monthlyRemainingOutgoingAmount), parseFloat(monthlyOutgoingLimit)),
+    () =>
+      calculateProgress(parseFloat(String(monthlyRemainingOutgoingAmount)), parseFloat(String(monthlyOutgoingLimit))),
     [monthlyRemainingOutgoingAmount, monthlyOutgoingLimit],
   );
   return (

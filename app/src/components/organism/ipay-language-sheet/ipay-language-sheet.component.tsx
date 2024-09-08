@@ -19,14 +19,13 @@ import { IPayLanguageSheetProps } from './ipay-language.interface';
 import { languagesAll } from './languagesData';
 import { useLanguageChange, useModalActions } from './useLanguageChange';
 
-const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageSheetProps>(({ testID }, ref) => {
-  const { bottomSheetModalRef, isOpen, handleClosePress } = useModalActions(ref);
+const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((_, ref) => {
+  const { bottomSheetModalRef, handleClosePress } = useModalActions(ref);
   const { colors } = useTheme();
   const sheetStyles = styles(colors);
   const localizationText = useLocalization();
   const handleLanguagePress = useLanguageChange(handleClosePress);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const [apiError, setAPIError] = useState<string>('');
+  const [, setAPIError] = useState<string>('');
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const changeLangugae = async (language: string, isRTL: boolean, code: LanguageCode) => {
@@ -58,25 +57,6 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
 
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
 
-  const RenderView = () =>
-    languagesAll.map((item, index) => (
-      <IPayPressable
-        key={index}
-        style={sheetStyles.buttonBox}
-        onPress={() => {
-          changeLangugae(item.language, item.isRTL, item.code);
-        }}
-      >
-        <IPayView style={sheetStyles.row}>
-          <IPayView style={sheetStyles.rowInner}>
-            <IpayFlagIcon country={item.code} />
-            <IPayFootnoteText style={sheetStyles.languageTextStyle} text={item.language} />
-          </IPayView>
-          {(selectedLanguage === item.code && <IPayIcon icon={icon.tick_check_mark_default} />) as JSX.Element}
-        </IPayView>
-      </IPayPressable>
-    ));
-
   return (
     <IPayBottomSheet
       heading={localizationText.COMMON.LANGUAGE}
@@ -91,7 +71,23 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
       <IPayView style={sheetStyles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
           <IPayView style={sheetStyles.renderLanguage}>
-            <RenderView />
+            {languagesAll.map((item, index) => (
+              <IPayPressable
+                key={`${`${index}IPayPressable`}`}
+                style={sheetStyles.buttonBox}
+                onPress={() => {
+                  changeLangugae(item.language, item.isRTL, item.code);
+                }}
+              >
+                <IPayView style={sheetStyles.row}>
+                  <IPayView style={sheetStyles.rowInner}>
+                    <IpayFlagIcon country={item.code} />
+                    <IPayFootnoteText style={sheetStyles.languageTextStyle} text={item.language} />
+                  </IPayView>
+                  {(selectedLanguage === item.code && <IPayIcon icon={icon.tick_check_mark_default} />) as JSX.Element}
+                </IPayView>
+              </IPayPressable>
+            ))}
           </IPayView>
         </ScrollView>
       </IPayView>

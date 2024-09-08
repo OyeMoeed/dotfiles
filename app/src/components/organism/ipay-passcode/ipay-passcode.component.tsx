@@ -40,7 +40,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
     if (pin.length < 4) {
       setPin((prevPin) => [...prevPin, digit]);
       const newCode = [...pin, digit].join('');
-      onEnterPassCode(newCode);
+      onEnterPassCode?.(newCode);
     }
   };
   const localizationText = useLocalization();
@@ -65,7 +65,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
           ) : loginViaPasscode ? (
             <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={40} />
           ) : (
-            <></>
+            <IPayView />
           )}
         </IPayPressable>
       );
@@ -91,11 +91,11 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
       <IPayView style={[styles.pinContainer, pinContainerMargin]}>
         {Array.from({ length: 4 }).map((_, index) => (
           <IPayView
-            key={index}
+            key={`${`${index}IPayView`}`}
             testID={`${testID}-pin-box-${index}`}
             style={[
               styles.pinBox,
-              pin[index] && styles.pinBoxFilled,
+              pin?.[index] ? styles.pinBoxFilled : {},
               passcodeError && { borderColor: colors.error.error500 },
             ]}
           />

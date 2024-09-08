@@ -26,15 +26,18 @@ export const calculateHeight = ({
     const combinedStyles: Record<keyof ActionSheetStyles, any[]> = {} as Record<keyof ActionSheetStyles, any[]>;
     (Object.keys(sheetStyles) as Array<keyof ActionSheetStyles>).forEach((key) => {
       combinedStyles[key] = [sheetStyles[key]];
+      // TODO: Fix styles no-use-before-define
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       if (styles && styles[key]) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         combinedStyles[key].push(styles[key]);
       }
     });
     return combinedStyles;
   };
 
-  const styles = getStyles();
   // Combined styles for the action sheet
+  const styles = getStyles();
 
   // Function to calculate the height of a specific style component
   const getHeight = (styleName: keyof ActionSheetStyles): number => {
@@ -44,13 +47,13 @@ export const calculateHeight = ({
     return attributes.reduce((totalHeight, attrName) => totalHeight + (style[attrName] || 0), moderateScale(0));
   };
 
+  // Initial height set to 0
+  let height = 0;
+
   // Helper function to add height of a specific component to the total height
   const addHeight = (name: keyof ActionSheetStyles) => {
     height += getHeight(name);
   };
-
-  // Initial height set to 0
-  let height = 0;
 
   // Define the sections to add height based on their conditions
   const sectionsToAddHeight = [
@@ -81,9 +84,13 @@ export const calculateHeight = ({
 
   // Check if the calculated height exceeds the maximum height and adjust if necessary
   if (height > MAX_HEIGHT) {
+    // TODO: Fix props reassign
+    // eslint-disable-next-line no-param-reassign
     scrollEnabledRef.current = true;
     height = MAX_HEIGHT;
   } else {
+    // TODO: Fix props reassign
+    // eslint-disable-next-line no-param-reassign
     scrollEnabledRef.current = false;
   }
 

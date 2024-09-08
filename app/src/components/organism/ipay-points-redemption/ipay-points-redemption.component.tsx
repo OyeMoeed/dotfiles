@@ -30,7 +30,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
 import { States } from '@app/utilities/enums.util';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, JSX } from 'react';
 import { useDispatch } from 'react-redux';
 import pointRedemption from './ipay-points-redemption.style';
 
