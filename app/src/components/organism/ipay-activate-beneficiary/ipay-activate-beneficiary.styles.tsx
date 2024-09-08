@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 const activateBeneficiaryStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
@@ -13,6 +13,10 @@ const activateBeneficiaryStyles = (colors: typeof themeColors) =>
       marginVertical: verticalScale(8),
     },
     callBtn: { width: '100%' },
+    callIcon: {
+      width: moderateScale(20),
+      height: moderateScale(20),
+    },
   });
 
 export default activateBeneficiaryStyles;

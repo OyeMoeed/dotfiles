@@ -1,7 +1,7 @@
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_8 } from '@app/styles/spacing.const';
+import { SCALE_10 } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
 import { FONT_SIZE_10, fonts } from '@app/styles/typography.styles';
 import { isTablet } from '@app/utilities/constants';
@@ -21,15 +21,15 @@ const genratedStyles = (colors: typeof themeColors) =>
     tagViewContainer: {
       backgroundColor: colors.secondary.secondary100,
       paddingHorizontal: moderateScale(8),
-      paddingVertical: verticalScale(3),
-      borderRadius: 100,
+      paddingVertical: verticalScale(2),
+      borderRadius: scale(8),
       position: 'absolute',
       right: scale(6),
       top: scale(0),
       zIndex: 1111,
     },
     tagViewText: {
-      fontSize: SCALE_8,
+      fontSize: SCALE_10,
       color: colors.secondary.secondary500,
     },
     eyeCon: {

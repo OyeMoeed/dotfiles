@@ -15,11 +15,11 @@ import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
-  const { isSaveOnly, isPayOnly, isPayPartially } = route.params;
+  const { isSaveOnly, isPayOnly, isPayPartially, billPayDetailes, billHeaderDetail, totalAmount } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
   const localizationText = useLocalization();
-  const { goToHome, billPayDetailes, billHeaderDetail, billSaveDetails } = usePayBillSuccess();
+  const { goToHome, billSaveDetails } = usePayBillSuccess();
   // TODO will be updated basis of API.
   const billStatus = {
     paid: '1 Paid Bills',
@@ -39,7 +39,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
         <IPaySuccess
           style={styles.minFlex}
           headingText={successMessage}
-          descriptionText={`300 ${localizationText.COMMON.SAR}`}
+          descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
           headingStyle={styles.headingStyle}
         />

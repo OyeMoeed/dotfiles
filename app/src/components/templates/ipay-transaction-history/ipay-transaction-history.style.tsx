@@ -40,7 +40,6 @@ const transactionHistoryStyle = (colors: any) =>
     },
     cardStyle: {
       flexDirection: 'row',
-      width: CUSTOME_SCALE(311),
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: colors.natural.natural0,

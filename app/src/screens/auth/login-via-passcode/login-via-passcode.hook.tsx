@@ -3,11 +3,17 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import { DeviceInfoProps } from '@app/network/services/authentication/login/login.interface';
-import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
-import { validateForgetPasscodeOtp } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
+import {
+  PrepareForgetPasscodeProps,
+  validateForgetPasscodeOtpReq,
+} from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
+import {
+  prepareForgetPasscode,
+  validateForgetPasscodeOtp,
+} from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { useLocationPermission } from '@app/services/location-permission.service';
-import { useTypedSelector } from '@app/store/store';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useNavigation } from '@react-navigation/native';
@@ -15,6 +21,7 @@ import { useEffect, useRef, useState } from 'react';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
 
 const useLogin = () => {
+  const dispatch = useTypedDispatch();
   const [componentToRender, setComponentToRender] = useState<string>('');
   const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
     iqamaId: '',
@@ -30,6 +37,7 @@ const useLogin = () => {
   const localizationText = useLocalization();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
+  const [resendOtpPayload, setResendOtpPayload] = useState<PrepareForgetPasscodeProps>();
   const [apiError, setAPIError] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -41,7 +49,7 @@ const useLogin = () => {
     if (isVisbile) {
       showSpinner({
         variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
+        hasBackgroundColor: true,
       });
     } else {
       hideSpinner();
@@ -104,6 +112,19 @@ const useLogin = () => {
     renderSpinner(false);
   };
 
+  const resendForgetPasscodeOtp = async () => {
+    renderSpinner(true);
+    try {
+      const apiResponse = await prepareForgetPasscode(resendOtpPayload as PrepareForgetPasscodeProps, dispatch);
+      if (apiResponse?.status.type === 'SUCCESS') {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+      }
+      renderSpinner(false);
+    } catch (error) {
+      renderSpinner(false);
+    }
+  };
+
   return {
     setForgetPasswordFormData,
     onConfirm,
@@ -116,6 +137,8 @@ const useLogin = () => {
     componentToRender,
     forgetPasswordFormData,
     setOtpRef,
+    setResendOtpPayload,
+    resendForgetPasscodeOtp,
     checkAndHandlePermission,
   };
 };

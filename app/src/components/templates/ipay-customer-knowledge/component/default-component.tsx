@@ -48,17 +48,17 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: true }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.EMPLOYEE_NAME}
+            label={localizationText.PROFILE.EMPLOYER_NAME}
             editable
             value={value}
             onChangeText={onChange}
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             containerStyle={styles.inputContainerStyle}
-            isError={!!errors?.employee_name}
-            assistiveText={errors?.employee_name && localizationText.COMMON.REQUIRED_FIELD}
+            isError={!!errors?.employer_name}
+            assistiveText={errors?.employer_name && localizationText.COMMON.REQUIRED_FIELD}
           />
         )}
-        name="employee_name"
+        name="employer_name"
       />
       <Controller
         control={control}
