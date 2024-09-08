@@ -236,7 +236,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
     } else {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     }
     setIsLoading(false);
   };
@@ -244,7 +244,7 @@ const TransferSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       verifyOtp();
     }
