@@ -992,9 +992,8 @@
     "MINUTES": "Minutes",
     "SECONDS": "Seconds",
     "IN_STORES": "In-Stores",
-    "THEATRE": "Theatre",
     "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
+    "THEATRE": "Theatre",
     "GAMES": "Games",
     "CLOTHES": "Clothes"
   },
@@ -1359,6 +1358,11 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {

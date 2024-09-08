@@ -1,3 +1,4 @@
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 import '@testing-library/react-native';
 import 'lottie-react-native';
 import 'react-native-gesture-handler/jestSetup';
@@ -21,6 +22,10 @@ jest.mock('react-native-share', () => ({
     WHATSAPP: '',
   },
 }));
+
+// Mock NetInfo
+
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
 jest.mock('react-native-device-info', () => {
   return {

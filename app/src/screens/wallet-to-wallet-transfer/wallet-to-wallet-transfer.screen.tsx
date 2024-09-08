@@ -31,7 +31,7 @@ import usePermissions from '@app/hooks/permissions.hook';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { default as screenNames } from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
@@ -67,24 +67,24 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, {
-          selectedContacts: selectedContacts,
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
         });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
+        navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
-      case screenNames.TOP_UP_SUCCESS:
+      case ScreenNames.TOP_UP_SUCCESS:
         setSelectedContacts([]);
         break;
-      case screenNames.SEND_GIFT_AMOUNT:
+      case ScreenNames.SEND_GIFT_AMOUNT:
         setSelectedContacts([]);
         break;
 
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, {
-          selectedContacts: selectedContacts,
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          selectedContacts,
           heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
           from: TRANSFERTYPE.REQUEST_MONEY,
         });
@@ -236,7 +236,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     });
   };
   const history = () => {
-    navigate(screenNames.TRANSACTIONS_HISTORY, {
+    navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
@@ -317,7 +317,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           <IPayView style={styles.qr} />
           <IPayPressable
             onPress={() =>
-              navigate(screenNames.SEND_MONEY_QRCODE_SCANNER, {
+              navigate(ScreenNames.SEND_MONEY_QRCODE_SCANNER, {
                 onGoBack: qrCodeCallBack,
               })
             }
@@ -403,29 +403,27 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onCloseBottomSheet={onCloseSaveContact}
       >
         <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
-          {({ handleSubmit }) => {
-            return (
-              <IPayView style={styles.unsavedBottomSheet}>
-                <IPayRHFAnimatedTextInput
-                  name="mobileNumber"
-                  label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-                  keyboardType="phone-pad"
-                  rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-                  containerStyle={styles.phoneInputStyle}
-                  mainContainerStyles={styles.phoneInputStyleMain}
-                  maxLength={constants.MOBILE_NUMBER_LENGTH}
-                />
-                <IPayButton
-                  medium
-                  btnIconsDisabled
-                  btnStyle={styles.unsavedButton}
-                  btnText={localizationText.COMMON.DONE}
-                  onPress={handleSubmit(addUnsavedNumber)}
-                  btnType="primary"
-                />
-              </IPayView>
-            );
-          }}
+          {({ handleSubmit }) => (
+            <IPayView style={styles.unsavedBottomSheet}>
+              <IPayRHFAnimatedTextInput
+                name="mobileNumber"
+                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                keyboardType="phone-pad"
+                rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                containerStyle={styles.phoneInputStyle}
+                mainContainerStyles={styles.phoneInputStyleMain}
+                maxLength={constants.MOBILE_NUMBER_LENGTH}
+              />
+              <IPayButton
+                medium
+                btnIconsDisabled
+                btnStyle={styles.unsavedButton}
+                btnText={localizationText.COMMON.DONE}
+                onPress={handleSubmit(addUnsavedNumber)}
+                btnType="primary"
+              />
+            </IPayView>
+          )}
         </IPayFormProvider>
       </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
