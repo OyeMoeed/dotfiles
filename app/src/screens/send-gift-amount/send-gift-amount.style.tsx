@@ -15,7 +15,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     recipientsContainer: {
       backgroundColor: colors.secondary.secondary100,
-      marginTop: moderateScale(12),
+      marginTop: moderateScale(6),
       alignSelf: 'center',
     },
 
@@ -62,6 +62,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(16),
     },
     buttonContainer: {
+      marginHorizontal: moderateScale(24),
       gap: moderateScale(16),
       bottom: moderateScale(0),
       left: moderateScale(0),
@@ -135,7 +136,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
     },
     remove: {
-      marginTop: moderateScale(16),
+      marginTop: moderateScale(6),
     },
 
     input: {

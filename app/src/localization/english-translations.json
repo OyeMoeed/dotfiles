@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "CONTACTS_LIMIT_REACHED": "Contacts Limit Reached",
+    "INVALID_NUMBER": "Invalid Number",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
     "CHOOSE_BENEFICIARY": "Choose Beneficiary",
     "PRICE_VARY": "Prices vary depending on the bank.",

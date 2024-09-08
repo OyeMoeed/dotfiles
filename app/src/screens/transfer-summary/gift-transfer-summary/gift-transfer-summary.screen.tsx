@@ -8,6 +8,7 @@ import {
   IPayImage,
   IPayLinearGradientView,
   IPayPressable,
+  IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
@@ -265,32 +266,34 @@ const TransferSummaryScreen: React.FC = () => {
         {giftMessage()}
       </IPayView>
       <IPayView style={styles.container}>
-        <IPayView>
-          {transfersRequestsList?.map((item) => {
-            if (item[0].isAlinma) {
+        <IPayScrollView>
+          <IPayView>
+            {transfersRequestsList?.map((item) => {
+              if (item[0].isAlinma) {
+                return (
+                  <IPayView style={styles.walletBackground} key={item[0].value}>
+                    <IPayFlatlist
+                      style={styles.detailesFlex}
+                      scrollEnabled={false}
+                      data={item}
+                      renderItem={renderWalletPayItem}
+                    />
+                  </IPayView>
+                );
+              }
               return (
                 <IPayView style={styles.walletBackground} key={item[0].value}>
                   <IPayFlatlist
                     style={styles.detailesFlex}
                     scrollEnabled={false}
                     data={item}
-                    renderItem={renderWalletPayItem}
+                    renderItem={renderNonAlinmaPayItem}
                   />
                 </IPayView>
               );
-            }
-            return (
-              <IPayView style={styles.walletBackground} key={item[0].value}>
-                <IPayFlatlist
-                  style={styles.detailesFlex}
-                  scrollEnabled={false}
-                  data={item}
-                  renderItem={renderNonAlinmaPayItem}
-                />
-              </IPayView>
-            );
-          })}
-        </IPayView>
+            })}
+          </IPayView>
+        </IPayScrollView>
         <IPayLinearGradientView style={styles.buttonContainer}>
           <IPayList
             title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}

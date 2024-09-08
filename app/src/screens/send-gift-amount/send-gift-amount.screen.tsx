@@ -17,7 +17,6 @@ import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-cont
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -163,9 +162,13 @@ const SendGiftAmountScreen = ({ route }) => {
                   <IPaySubHeadlineText text={givenName} regular color={colors.natural.natural900} />
                 </IPayView>
               </IPayView>
-              <IPayImage image={images.alinmaP} resizeMode="contain" style={styles.image} />
+              <IPayImage
+                image={!isAlinma ? images.nonAlinma : images.alinmaP}
+                resizeMode="contain"
+                style={styles.image}
+              />
             </IPayView>
-            {isAlinma && (
+            {!isAlinma && (
               <IPayView style={styles.chipContainer}>
                 <IPayChip
                   containerStyle={styles.chipColors}
@@ -200,7 +203,7 @@ const SendGiftAmountScreen = ({ route }) => {
           </IPayView>
         ) : (
           <IPayView style={styles.nonAlinmaList}>
-            {isAlinma && (
+            {!isAlinma && (
               <IPayView style={styles.chipContainer2}>
                 <IPayChip
                   containerStyle={styles.chipColors}
@@ -358,10 +361,16 @@ const SendGiftAmountScreen = ({ route }) => {
       hideSpinner();
     }
   };
+  const areAllManualAmountsFilled = () => {
+    const amounts = Object.values(contactAmounts);
+    return amounts.length === contacts.length && amounts.every((amount) => amount && parseFloat(amount) > 0);
+  };
+
   const isDisabled =
     parseFloat(amountToShow) <= 0 ||
     isNaN(parseFloat(amountToShow)) ||
-    parseFloat(amountToShow) > monthlyRemainingOutgoingAmount;
+    parseFloat(amountToShow) > monthlyRemainingOutgoingAmount ||
+    (selectedTab === localizationText.SEND_GIFT.MANUAL && !areAllManualAmountsFilled());
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
