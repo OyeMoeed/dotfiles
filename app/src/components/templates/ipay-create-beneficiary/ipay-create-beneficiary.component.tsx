@@ -62,9 +62,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         containerStyle={styles.listContainerStyle}
         title={renderTitle(key)}
         textStyle={[styles.listTitleText, key === AddBeneficiary.IBAN && styles.capitalizeText]}
+        rightContainerStyles={styles.rightContainer}
         rightText={
           <IPayView testID={key} style={styles.rightTextStyle}>
-            <IPaySubHeadlineText color={colors.primary.primary800} regular>
+            <IPaySubHeadlineText numberOfLines={2} color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
             {key === AddBeneficiary.BANK_NAME && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
@@ -97,7 +98,11 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       // TODO Invalid IBAN Number Validation will be updated on basis of API
       minLength: {
         value: 10,
-        message: localizationText.ERROR.INVALID_IBAN,
+        message: localizationText.ERROR.TOO_LONG,
+      },
+      pattern: {
+        value: /^[a-zA-Z0-9]+$/,
+        message: localizationText.ERROR.SPECIAL_CHARACTERS,
       },
     },
     beneficiaryNickName: {
@@ -152,6 +157,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               rules={ruleConfig.iban}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
+                  maxLength={22}
                   label={localizationText.COMMON.IBAN}
                   value={value}
                   onChangeText={onChange}
@@ -163,7 +169,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               )}
             />
             <IPayList
-              containerStyle={styles.listContainerStyle}
+              containerStyle={watch(AddBeneficiary.IBAN).length > 9 ? styles.listContainerStyle : styles.inputVariant}
               title={localizationText.COMMON.BANK_NAME}
               rightText={
                 <IPayView style={styles.rightTextStyle}>

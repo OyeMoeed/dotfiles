@@ -4,7 +4,7 @@ import { ApiResponse, IApiStatus } from '@app/network/services/services.interfac
 import CARDS_MANAGEMENT_URLS from './../cards-management.urls';
 import { CardStatusReq, CardStatusRes } from './card-status.interface';
 
-const changeCardStatus = async ( walletNumber: string,  body: CardStatusReq): Promise<ApiResponse<CardStatusRes>> => {
+const changeCardStatus = async (walletNumber: string, body: CardStatusReq): Promise<ApiResponse<CardStatusRes>> => {
   try {
     const apiResponse = await apiCall<CardStatusRes>({
       endpoint: CARDS_MANAGEMENT_URLS.changeCardStatus(walletNumber),

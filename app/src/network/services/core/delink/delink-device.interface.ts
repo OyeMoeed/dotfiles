@@ -12,7 +12,6 @@ type DeviceInfoProps = {
   platform: string;
 };
 
-
 type DelinkPayload = {
   delinkReq: any;
   walletNumber?: string;
@@ -40,4 +39,3 @@ interface DelinkDeviceMockProps extends MockAPIOkProp {
 }
 
 export { DelinkDeviceDataProps, DelinkDeviceMockProps, DelinkPayload, DeviceInfoProps, delinkApiResponse };
-

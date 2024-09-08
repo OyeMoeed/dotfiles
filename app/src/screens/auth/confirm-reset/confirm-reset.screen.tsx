@@ -59,47 +59,39 @@ const ConfirmPasscode = forwardRef((props) => {
 
   const changePasscode = async (passCode: string) => {
     renderSpinner(true);
-    try {
-      const payload: ChangePasswordProps = {
-        body: {
-          passCode:
-            encryptData(
-              `${appData?.encryptionData?.passwordEncryptionPrefix}${passCode}`,
-              appData?.encryptionData?.passwordEncryptionKey as string,
-            ) || '',
-          oldPassword:
-            encryptData(
-              `${appData?.encryptionData?.passwordEncryptionPrefix}${props?.currentPasscode}`,
-              appData?.encryptionData?.passwordEncryptionKey as string,
-            ) || '',
-          mobileNumber:
-            encryptData(
-              `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber}`,
-              appData?.encryptionData?.passwordEncryptionKey as string,
-            ) || '',
-          authentication: {
-            transactionId: appData?.transactionId,
-          },
-          deviceInfo: appData?.deviceInfo,
-        },
-        walletNumber,
-      };
 
-      const apiResponse: any = await changePasscodeReq(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        resetBiometricConfig();
-        savePasscodeState(passCode);
-        redirectToOtp();
-      } else if (apiResponse?.apiResponseNotOk) {
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        renderToast(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const payload: ChangePasswordProps = {
+      body: {
+        passCode:
+          encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${passCode}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+        oldPassword:
+          encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${props?.currentPasscode}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+        mobileNumber:
+          encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+        authentication: {
+          transactionId: appData?.transactionId,
+        },
+        deviceInfo: appData?.deviceInfo,
+      },
+      walletNumber,
+    };
+
+    const apiResponse: any = await changePasscodeReq(payload);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      resetBiometricConfig();
+      savePasscodeState(passCode);
+      redirectToOtp();
     }
+    renderSpinner(false);
   };
 
   const onEnterPassCode = (newCode: string) => {

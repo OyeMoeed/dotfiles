@@ -28,6 +28,7 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -210,7 +211,10 @@ const Home: React.FC = () => {
     const payload = {
       walletNumber: walletNumber as string,
     };
-    await getWalletInfo(payload, dispatch);
+    const apiResponse: any = await getWalletInfo(payload);
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      dispatch(setWalletInfo(apiResponse?.response));
+    }
   };
 
   useEffect(() => {

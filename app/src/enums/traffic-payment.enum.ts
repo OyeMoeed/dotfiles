@@ -10,11 +10,9 @@ enum TrafficPaymentType {
   ID_TYPE = 'idType',
   DURATION = 'duration',
   VOILATION_NUMBER = 'voilationNumber',
-  
 }
 
 enum TrafficPaymentFormFields {
-
   MY_ID_CHECK = 'myIdCheck',
   MY_ID = 'myId',
   ID_TYPE = 'idType',

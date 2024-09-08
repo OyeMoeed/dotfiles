@@ -38,7 +38,7 @@ import filtersStyles from './ipay-filter-bottom-sheet.style';
  * @returns {JSX.Element} - The rendered component.
  */
 
-const IPayControlledInput = ({ control, label, message, isError, name, required }: ControlFormField) => {
+const IPayControlledInput = ({ control, label, message, isError, name, required, suffix }: ControlFormField) => {
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
 
@@ -52,6 +52,7 @@ const IPayControlledInput = ({ control, label, message, isError, name, required 
           editable
           inputMode="numeric"
           value={value}
+          suffix={suffix}
           onChangeText={onChange}
           containerStyle={styles.amount}
           isError={isError}
@@ -116,6 +117,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       heading,
       applySearchOn = [],
       inputStyle,
+      doneText,
       customFiltersValue,
       handleCallback,
     },
@@ -315,6 +317,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.FROM}
                 control={control}
+                suffix={localizationText.COMMON.SAR}
                 isError={!!errors?.amountFrom}
                 message={localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_FROM}
@@ -323,6 +326,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 control={control}
+                suffix={localizationText.COMMON.SAR}
                 isError={!!amountError || !!errors?.amountTo}
                 message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
@@ -495,6 +499,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
+    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {
@@ -527,7 +532,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneBtn={currentView === CurrentViewTypes.FILTERS}
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
-        doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS}
+        doneText={doneTextValue}
+        disabled={!isDirty}
         onDone={onPressDone}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}

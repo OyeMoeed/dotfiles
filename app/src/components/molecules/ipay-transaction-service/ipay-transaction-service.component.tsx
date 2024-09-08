@@ -44,7 +44,11 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
       <IPayView style={styles.rowStyles}>
         <IPayFootnoteText style={styles.textColor} text={total} regular={false} />
         <IPayFootnoteText style={styles.textColor} text={currency} regular />
-        <IPayCheckbox style={styles.marginLeft} isCheck={selectedService === recordID} onPress={() => setSelectedService(recordID)} />
+        <IPayCheckbox
+          style={styles.marginLeft}
+          isCheck={selectedService === recordID}
+          onPress={() => setSelectedService(recordID)}
+        />
       </IPayView>
     </IPayView>
   );

@@ -2,7 +2,7 @@ import { DeviceInfoProps, MockAPIDataProps, MockAPIOkProp } from '@network/servi
 
 interface LoginViaPasscodeProps {
   password: string;
-  userName: string;
+  username: string;
   transactionId: string;
   deviceInfo: DeviceInfoProps;
 }

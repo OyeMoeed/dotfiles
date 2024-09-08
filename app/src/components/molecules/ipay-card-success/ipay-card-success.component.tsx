@@ -50,7 +50,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
         name: 'Adam Ahmed', // TODO: will change api response
       },
     });
-  }
+  };
   return (
     <IPaySafeAreaView
       testID={`${testID}-success-component`}

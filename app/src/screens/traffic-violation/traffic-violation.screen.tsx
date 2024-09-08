@@ -25,7 +25,6 @@ const TrafficViolationScreen: React.FC = () => {
     handleInquire,
   } = useTrafficViolation();
 
-
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle} />

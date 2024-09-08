@@ -111,8 +111,6 @@ const CardVerificationScreen: React.FC = () => {
   };
 
   const onNavigationStateChange = (event: WebViewNavigation) => {
-  
-
     if (event?.url?.indexOf('result') != -1) {
       setShowWebView(false);
       renderSpinner(true);

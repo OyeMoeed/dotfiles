@@ -383,6 +383,7 @@
     "POINTS_REDEMPTION": "Points Redemption",
     "ADD_MONEY_USING": "Add money using",
     "ENTER_AMOUNT": "Enter the Amount",
+    "ENTER_AMOUNT2": "Enter the amount",
     "REMAINING": "Remaining Monthly Top up",
     "LIMIT_REACHED": "Limit reached, no top-ups left",
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
@@ -443,7 +444,7 @@
     "TRANSACTION_TYPE": "Transaction Type",
     "SENDER": "Sender",
     "RECEIVER": "Receiver",
-    "TRANSFER_REASON": "Reason for transfer",
+    "TRANSFER_REASON": "Reason for Transfer",
     "NOTE": "Note",
     "REF_NUMBER": "Ref. Number",
     "TRANSACTION_DATE": "Transaction Date",
@@ -456,7 +457,7 @@
     "BANK_NAME": "Bank Name",
     "RECEIVERS_IBAN": "Receiver's IBAN",
     "VAT_INVOICE": "VAT Invoice",
-    "CLEAR_FILTERS": "Clear Filter",
+    "CLEAR_FILTER": "Clear filter",
     "FILTERS": "Filters",
     "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
@@ -807,6 +808,7 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "SPECIAL_CHARACTERS": "Can't use special characters",
     "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
@@ -823,6 +825,13 @@
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
+    "INVESTMENT": "Investment",
+    "TUITION": "Tuition Expenses",
+    "TRAVEL": "Travel Expenses",
+    "TREATMENT": "Treatment",
+    "PURCHASES": "Purchases",
+    "FIRENDS_AND_FAMILY": "Friends and Family Expenses",
+    "DONATION": "Donation",
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",
@@ -903,7 +912,6 @@
     "BIRTHDAY": "Birthday",
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
-    "NEW_BABY": "New Baby",
     "GIFTS": "Gifts",
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
@@ -922,7 +930,10 @@
     "SAY_THANKS": "Say Thanks",
     "RECEIVER_MOBILE": "Receiver Number",
     "AMOUNT": "Amount",
-    "TRANSACTION_DATE_TIME": "Transfer Date"
+    "TRANSACTION_DATE_TIME": "Transfer Date",
+    "TRANSFER": "Transfer",
+    "NEW_BABY": "New baby",
+    "PREVIEW_GIFT_2": "Preview Gift"
   },
   "NEW_BENEFICIARY": {
     "NOW_MAKE_TRANSFER": "Now you can make international transfer for this Beneficiary",
@@ -986,7 +997,8 @@
     "THEATRE": "Theatre",
     "ELECTRONICS": "Electronics",
     "THEATER": "Theatre",
-    "GAMES": "Games"
+    "GAMES": "Games",
+    "CLOTHES": "Clothes"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
