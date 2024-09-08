@@ -28,6 +28,7 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       paddingHorizontal: scaleSize(18),
       justifyContent: 'space-between',
       flexDirection: 'row',
+      gap: 8,
     },
     detailesFlex: {
       flex: 0,
@@ -41,6 +42,8 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     listDetails: {
       flexDirection: 'row',
       alignItems: 'center',
+      flex: 1,
+      justifyContent: 'flex-end',
     },
     container: {
       marginTop: moderateScale(12),

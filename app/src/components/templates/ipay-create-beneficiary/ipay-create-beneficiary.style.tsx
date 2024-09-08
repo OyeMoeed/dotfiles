@@ -79,6 +79,10 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
     toast: {
       bottom: isIosOS ? verticalScale(80) : verticalScale(24),
     },
+    rightContainer: {
+      width: '50%',
+      justifyContent: 'flex-end',
+    },
   });
 
 export default createBeneficiaryStyles;

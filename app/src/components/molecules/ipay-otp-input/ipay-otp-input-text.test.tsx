@@ -21,5 +21,4 @@ describe('IPayOtpInputText', () => {
 
     const input = getByTestId('otp-input-otp-input');
   });
-
 });

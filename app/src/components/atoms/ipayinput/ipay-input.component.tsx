@@ -43,7 +43,7 @@ const IPayInput: React.FC<IPayInputProps> = ({
   handleFocus,
   handleBlur,
   editable = true,
-  blurOnSubmit
+  blurOnSubmit,
 }: IPayInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();

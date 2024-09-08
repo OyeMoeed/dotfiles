@@ -4,11 +4,11 @@ import { getHash, requestHint, startOtpListener } from 'react-native-otp-verify'
 export const fetchOtpDetails = async () => {
   try {
     const hash = await getHash().catch((error) => {
-      console.error("Error fetching hash:", error);
+      console.error('Error fetching hash:', error);
       return null;
     });
     const hint = await requestHint().catch((error) => {
-      console.error("Error fetching hint:", error);
+      console.error('Error fetching hint:', error);
       return null;
     });
 
@@ -27,7 +27,7 @@ export const fetchOtpDetails = async () => {
         }
       });
     }).catch((error) => {
-      console.error("Error receiving OTP:", error);
+      console.error('Error receiving OTP:', error);
       return null;
     });
 
@@ -38,9 +38,7 @@ export const fetchOtpDetails = async () => {
       otp: otp || '',
     };
   } catch (error) {
-    console.error("Error fetching OTP details:", error);
+    console.error('Error fetching OTP details:', error);
     return null; // Return null in case of a critical failure
   }
 };
-
-
