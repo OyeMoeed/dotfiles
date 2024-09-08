@@ -6,6 +6,8 @@ const LOCAL_TRANSFERS_URLS = {
     `/alinmapay/transfer-management/v1/alinma-pay/${walletNumber}/express/transfer/prepare`,
   local_transfer_confirm: (walletNumber: string) =>
     `/alinmapay/transfer-management/v1/alinma-pay/${walletNumber}/express/transfer/confirm`,
+  get_local_beneficiaries_bank_details: () => '/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/',
+  add_local_transfer_beneficiary: () => '/alinmapay-soft/transfer-management/v1/alinma-pay/beneficiaries/local',
   activate_beneficiary: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries/activation/mark',
   get_transaction: (walletNumber: string) => `/v1/${walletNumber}/transaction`,
 };

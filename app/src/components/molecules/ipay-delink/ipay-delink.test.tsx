@@ -56,7 +56,7 @@ describe('IPayDelink', () => {
           onPress: defaultProps.delink,
         },
       }),
-      {}
+      {},
     );
   });
 
@@ -128,7 +128,7 @@ describe('IPayDelink', () => {
           onPress: defaultProps.delink,
         },
       }),
-      {}
+      {},
     );
   });
 });

@@ -22,7 +22,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setOtpError,
       otpError,
       isLoading,
-      apiError,
       isBottomSheet = true,
       handleOnPressHelp,
       showHelp = true,
@@ -37,10 +36,10 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const styles = otpVerificationStyles(colors);
     const { showToast } = useToastContext();
     const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
-    const renderToast = (toastMsg: string, hideSubtitle?: boolean) => {
+    const renderToast = (toastMsg: string) => {
       showToast({
         title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-        subTitle: !hideSubtitle ? apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY : '',
+        subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
         borderColor: colors.error.error25,
         isShowRightIcon: false,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
@@ -55,8 +54,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       resetInterval: () => {
         handleRestart();
       },
-      triggerToast: (toastMsg: string, hideSubtitle: boolean) => {
-        renderToast(toastMsg, hideSubtitle);
+      triggerToast: (toastMsg: string) => {
+        renderToast(toastMsg);
       },
     }));
 

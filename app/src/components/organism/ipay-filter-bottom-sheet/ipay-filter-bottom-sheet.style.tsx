@@ -80,7 +80,6 @@ const filtersStyles = (colors: typeof themeColors) =>
     },
     dropdownIcon: {
       paddingLeft: scaleSize(2),
-      marginHorizontal: scaleSize(-10),
     },
     datePickerContainer: {
       marginRight: scaleSize(-20),

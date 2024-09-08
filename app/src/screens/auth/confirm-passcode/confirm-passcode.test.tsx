@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react-native';
-import ConfirmPasscode from './confirm-passcode.screen';
+import ConfirmPasscodeScreen from './confirm-passcode.screen';
 
 // Mock the navigation service
 jest.mock('@app/navigation/navigation-service.navigation', () => ({
@@ -15,7 +15,7 @@ jest.mock('@app/components/molecules', () => ({
 }));
 jest.mock('@app/components/organism', () => ({
   IPayPasscode: ({ onEnterPassCode }: any) => (
-    <input testID="passcode-input" onChange={(e) => onEnterPassCode(e.target.value)} />
+    <input  onChange={(e) => onEnterPassCode(e.target.value)} />
   ),
 }));
 jest.mock('@app/components/templates', () => ({
@@ -39,7 +39,7 @@ describe('ConfirmPasscode Component', () => {
   const route = { params: { passcode: '1234' } };
 
   it('renders correctly', () => {
-    const { getByTestId } = render(<ConfirmPasscode route={route} />);
+    const { getByTestId } = render(<ConfirmPasscodeScreen  />);
     expect(getByTestId('passcode-input')).toBeTruthy();
   });
 });

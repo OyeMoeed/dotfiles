@@ -7,28 +7,28 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       overlay: {
-        primaryBackDrop: '#000000' // Provide a mock color value
+        primaryBackDrop: '#000000', // Provide a mock color value
       },
       primary: {
-        primary900: '#0000'
+        primary900: '#0000',
       },
       natural: {
-        natural0: '#0000'
+        natural0: '#0000',
       },
       redShades: {
-        red500: '#0000'
+        red500: '#0000',
       },
       greyShades: {
-        grey100: '#0000'
-      }
-    }
-  })
+        grey100: '#0000',
+      },
+    },
+  }),
 }));
 
 describe('IPayActionSheet', () => {
   it('renders correctly', () => {
     const rendered = render(
-      <IPayActionSheet testID="actionSheet" title="Sample Chip" message="Hello" options={['hello']} />
+      <IPayActionSheet testID="actionSheet" title="Sample Chip" message="Hello" options={['hello']} />,
     );
     expect(rendered).toBeTruthy();
   });

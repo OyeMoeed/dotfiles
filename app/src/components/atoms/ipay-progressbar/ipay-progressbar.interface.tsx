@@ -38,5 +38,5 @@ export interface ProgressBarProps {
    */
   intervalTime?: number;
 
-  compeleted?: boolean
+  compeleted?: boolean;
 }
