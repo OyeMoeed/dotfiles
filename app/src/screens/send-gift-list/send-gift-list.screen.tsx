@@ -125,16 +125,12 @@ const SendGiftListScreen: React.FC = () => {
         case apiResponse?.apiResponseNotOk:
           renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
           break;
-        case ApiResponseStatusType.ERROR:
-          renderToast(apiResponse?.status?.desc || localizationText.ERROR.SOMETHING_WENT_WRONG);
-          break;
         default:
           break;
       }
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
