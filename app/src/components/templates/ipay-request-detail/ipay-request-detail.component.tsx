@@ -17,6 +17,7 @@ import {
   LocalizationKeysMapping,
   MoneyRequestStatus,
 } from '@app/enums/money-request-status.enum';
+import SummaryType from '@app/enums/summary-type';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -97,7 +98,10 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
 
   const onPressPay = () => {
     if (onCloseBottomSheet) onCloseBottomSheet();
-    navigate(ScreenNames.REQUEST_SUMMARY);
+    navigate(ScreenNames.REQUEST_SUMMARY, {
+      heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
+      screen: SummaryType.MONEY_REQUEST_SUMMARY,
+    });
   };
 
   const renderItem = (field: keyof IPayRequestMoneyProps, index: number) => {
