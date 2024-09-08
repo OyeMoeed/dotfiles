@@ -19,11 +19,11 @@ import { getCards } from '@app/network/services/core/transaction/transactions.se
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   CAROUSEL_MODES,
-  CardCategories,
   CardOptions,
   CardStatusNumber,
   CardTypes,
@@ -54,14 +54,17 @@ const CardsScreen: React.FC = () => {
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const [cardsData, setCardssData] = useState<CardInterface[]>([]);
+  const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
   const openCardSheet = () => {
-    cardSheetRef.current.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      cardSheetRef.current.present();
+    }
   };
   const closeCardSheet = () => {
     cardSheetRef.current.close();
@@ -74,9 +77,7 @@ const CardsScreen: React.FC = () => {
       navigate(screenNames.PHYSICAL_CARD_MAIN);
     }
   };
-  useEffect(() => {
-    getCardsData();
-  }, []);
+
   const handleCardSelection = (cardType: CardOptions) => {
     setSelectedCard(cardType);
   };
@@ -109,6 +110,7 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
+    console.log(index);
     setCurrentCard(cardsData[index]);
   };
 
@@ -189,23 +191,26 @@ const CardsScreen: React.FC = () => {
             );
           });
 
-          await setCardssData(mapCardData(availableCards));
-          if (cardsData?.length) {
+          if (availableCards?.length) {
+            setCardsData(mapCardData(availableCards));
             setCurrentCard(mapCardData(availableCards)[0]);
-            setCardssData(mapCardData([availableCards]));
+            setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
           } else {
             setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           }
           break;
         case apiResponse?.apiResponseNotOk:
+          renderSpinner(false);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         case ApiResponseStatusType.FAILURE:
+          renderSpinner(false);
           setAPIError(apiResponse?.error);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
         default:
+          renderSpinner(false);
           setCardsCurrentState(CardScreenCurrentState.NO_DATA);
           break;
       }
@@ -239,6 +244,7 @@ const CardsScreen: React.FC = () => {
               btnText={localizationText.CARDS.CREATE_NEW_CARD}
               btnType="primary"
               large
+              onPress={openCardSheet}
               leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
             />
           </IPayView>
@@ -266,7 +272,7 @@ const CardsScreen: React.FC = () => {
             </IPayView>
             {boxHeight > 0 && currentCard && (
               <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-                <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
+                <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} cards={cardsData} />
               </IPayCustomSheet>
             )}
           </>

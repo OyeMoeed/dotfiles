@@ -42,7 +42,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
-            <IPayBillDetailsOption showHeader={false} data={billPayDetailes}  style={styles.top}/>
+            <IPayBillDetailsOption showHeader={false} data={billPayDetailes} style={styles.top} />
             <IPayBillDetailsOption showHeader={false} data={extraDetails} style={styles.listBottomView} />
           </>
         </IPayScrollView>

@@ -14,15 +14,18 @@ const getlocalTransferBeneficiaries = async (): Promise<LocalTransferBeneficiari
     const apiResponse: ApiResponse<LocalTransferBeneficiariesMockProps> = await apiCall({
       endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries(),
       method: requestType.GET,
+      // example hide error message
+      headers: {
+        hide_error_response: true,
+      },
     });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
+    if (apiResponse?.status) {
+      return apiResponse;
     }
-    return { apiResponseNotOk: true, apiResponse };
-  } catch (error) {
-    const { response } = error;
-    return response || 'Unknown error';
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error?.message || 'Unknown error' };
   }
 };
 

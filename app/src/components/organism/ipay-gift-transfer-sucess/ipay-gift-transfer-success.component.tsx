@@ -22,6 +22,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { typography } from '@app/styles/typography.styles';
 import { copyText } from '@app/utilities/clip-board.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
@@ -212,19 +213,25 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
         customSnapPoint={SNAP_POINTS.MID_LARGE}
         enablePanDownToClose
         cancelBnt
+        simpleBar
       >
         <IPayView style={styles.bottomSheetContainer}>
           <IPayView style={styles.previewContainer}>
-            <IPayImage image={images.logo} style={styles.logoStyles} />
+            <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
             <IPayImage image={images.eidMubarak} style={styles.image} />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
               <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
             </IPayView>
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText style={styles.messagePreviewText} text={notes} />
+              <IPayFootnoteText color={colors.primary.primary950} style={styles.messagePreviewText} text={notes} />
             </IPayScrollView>
-            <IPayFootnoteText style={styles.messagePreviewText} text={`${localizationText.SEND_GIFT.FROM}: ${name}`} />
+            <IPayFootnoteText
+              color={colors.primary.primary950}
+              style={styles.messagePreviewText}
+              text={`${localizationText.SEND_GIFT.FROM}: ${name}`}
+              fontWeight={typography.FONT_WEIGHT_NORMAL}
+            />
           </IPayView>
         </IPayView>
       </IPayBottomSheet>

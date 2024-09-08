@@ -40,9 +40,9 @@ const useIdRenewal = (state: IdRenewalState, colors: any) => {
         };
       default:
         return {
-          title: localizationText.id_status_unknown,
-          subtitle: localizationText.id_status_unknown,
-          primaryButtonText: localizationText.action_unknown,
+          title: localizationText.ID_RENEWAL.STATUS_UNKOWN,
+          subtitle: localizationText.ID_RENEWAL.STATUS_UNKOWN,
+          primaryButtonText: localizationText.ID_RENEWAL.STATUS_UNKOWN,
           secondaryButtonText: localizationText.ID_RENEWAL.DONT_SHOW,
           icon: <IPayIcon icon={icons.forbidden} size={64} />,
           buttonIcon: icons.clock_1,

@@ -8,7 +8,7 @@ interface IPayRemainingBalanceProps {
   testID?: string;
   currencyStyle: ViewStyle;
   inputStyles: ViewStyle;
-defaultValue: string;
+  defaultValue: string;
   walletInfoPress?: () => void;
   topUpPress?: () => void;
   payChannelType?: payChannel;

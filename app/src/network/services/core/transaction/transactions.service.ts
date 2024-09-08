@@ -42,7 +42,7 @@ const getTransactionTypes = async (): Promise<unknown> => {
   }
 };
 
-const getCards = async (payload: CardsProp): Promise<CardListResponse> => {
+const getCards = async (payload: CardsProp): Promise<any> => {
   if (constants.MOCK_API_RESPONSE) {
     return cardsListMock;
   }
@@ -50,8 +50,10 @@ const getCards = async (payload: CardsProp): Promise<CardListResponse> => {
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
       method: requestType.GET,
+      headers: {
+        'api-version': 'v2',
+      },
     });
-
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }

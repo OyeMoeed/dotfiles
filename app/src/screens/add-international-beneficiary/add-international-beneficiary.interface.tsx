@@ -4,6 +4,7 @@ interface ServiceData {
   serviceLogo: string;
   type?: string;
 }
+
 interface AddBeneficiaryValues {
   currency: string;
   country: string;
@@ -19,4 +20,3 @@ interface ServiceDataProps {
 }
 
 export { AddBeneficiaryFields, AddBeneficiaryValues, ServiceData, ServiceDataProps };
-

@@ -83,7 +83,7 @@ const styles = (colors: any) =>
     },
     flexRow: {
       flexDirection: 'row',
-      gap: moderateScale(2),
+      // gap: moderateScale(2),
       alignItems: 'center',
     },
     adjacentTitleStyle: {
