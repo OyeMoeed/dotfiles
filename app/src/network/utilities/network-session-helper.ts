@@ -6,6 +6,8 @@ import { clearAsyncStorage } from '@app/utilities/storage-helper.util';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import { DASHBOARD_ITEMS } from '@app/constants/constants';
 import { resetWalletInfo } from '@app/store/slices/wallet-info-slice';
+import { setAuth } from '@app/store/slices/auth-slice';
+import { setToken } from '../client';
 
 const clearSession = async (isDelink: boolean) => {
   const { dispatch } = store || {};
@@ -26,6 +28,15 @@ const clearSession = async (isDelink: boolean) => {
     dispatch(resetWalletInfo());
     dispatch(setRearrangedItems(DASHBOARD_ITEMS));
   }
+  dispatch(
+    setAppData({
+      isAuthenticated: false,
+      hideBalance: false,
+    }),
+  );
+  dispatch(setAuth(false));
+
+  setToken(undefined);
 };
 
 export default clearSession;
