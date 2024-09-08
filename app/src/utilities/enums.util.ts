@@ -155,16 +155,14 @@ enum CardTypes {
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
 }
-enum CardStatusNumber{
-    ActiveWithoutOnlinePurchase = '0',
-    ActiveWithOnlinePurchase = '100',
-    Stolen = '700',
-    Freezed = '850'
-
-
+enum CardStatusNumber {
+  ActiveWithoutOnlinePurchase = '0',
+  ActiveWithOnlinePurchase = '100',
+  Stolen = '700',
+  Freezed = '850',
 }
 
-enum CardTypesCodes{
+enum CardTypesCodes {
   MADA = 'IPMC',
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
@@ -273,6 +271,7 @@ enum GiftCardStatus {
 enum ApiResponseStatusType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
+  ERROR = 'ERROR',
 }
 
 enum MoiPaymentTypes {
@@ -310,8 +309,10 @@ export {
   CardDetailsSegment,
   CardOptions,
   CardStatusIndication,
+  CardStatusNumber,
   CardStatusType,
   CardTypes,
+  CardTypesCodes,
   Filter,
   FilterValue,
   FiltersType,
@@ -338,6 +339,4 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  CardStatusNumber,
-  CardTypesCodes
 };

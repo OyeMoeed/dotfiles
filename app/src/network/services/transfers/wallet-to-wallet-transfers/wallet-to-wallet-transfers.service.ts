@@ -18,7 +18,7 @@ const getWalletToWalletTransfers = async (payload: WalletNumberProp): Promise<un
     if (apiResponse?.ok) {
       return apiResponse;
     }
-    return { apiResponseNotOk: true };
+    return { apiResponseNotOk: true, ...apiResponse };
   } catch (error) {
     return { error: error.message || 'Unknown error' };
   }

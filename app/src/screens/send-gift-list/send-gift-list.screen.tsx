@@ -123,10 +123,10 @@ const SendGiftListScreen: React.FC = () => {
           setWalletTransferData(apiResponse.data.transferRequestsResult.groupedCategories);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
           break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
+        case ApiResponseStatusType.ERROR:
+          renderToast(apiResponse?.status?.desc || localizationText.ERROR.SOMETHING_WENT_WRONG);
           break;
         default:
           break;
