@@ -17,6 +17,7 @@ import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
 import styles from './ipay-id-renewal-sheet.style';
@@ -36,6 +37,7 @@ const IPayIdRenewalSheet: React.FC = () => {
     aboutToExpire: isAboutToExpire,
     remainingNumberOfDaysToExpire,
     expiryDate,
+    idExpired,
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
 
@@ -207,9 +209,13 @@ const IPayIdRenewalSheet: React.FC = () => {
     setIsHelpBottomSheetVisible(true); // Show the help bottom sheet
   };
 
-  const formattedSubtitle = isAboutToExpire
-    ? t('ID_RENEWAL.ID_UPDATION_DES', { DAYS: remainingNumberOfDaysToExpire, DATE: expiryDate })
-    : subtitle;
+  const formattedSubtitle =
+    isAboutToExpire && !idExpired
+      ? t('ID_RENEWAL.ID_UPDATION_DES', {
+          DAYS: remainingNumberOfDaysToExpire,
+          DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
+        })
+      : subtitle;
 
   return (
     <>
@@ -238,9 +244,9 @@ const IPayIdRenewalSheet: React.FC = () => {
           />
         ) : (
           <IPayView style={styles.profileContainer}>
-            {isAboutToExpire ? ID_ABOUT_EXPIRE.icon : icon}
+            {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.icon : icon}
             <IPayTitle2Text style={styles.titleTextStyle}>
-              {isAboutToExpire ? ID_ABOUT_EXPIRE.title : title}
+              {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
             <IPayCaption1Text style={styles.captionTextStyle}>{formattedSubtitle}</IPayCaption1Text>
             <IPayButton
