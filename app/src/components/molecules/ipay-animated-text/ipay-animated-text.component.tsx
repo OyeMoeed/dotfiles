@@ -53,8 +53,8 @@ const IPayAnimatedText: React.FC<IPayAnimatedTextProps> = ({ type, styles, title
         </Animated.View>
       )}
 
-      <Animated.View style={[{ opacity: fadeAnim3 }]}>
-        <IPayTitle1Text style={[styles.title]} regular text={title} />
+      <Animated.View style={{ opacity: fadeAnim3 }}>
+        <IPayTitle1Text style={styles.title} regular text={title} />
       </Animated.View>
 
       <IPaySubHeadlineText regular style={[styles.subtitle, styles.topMargins]} text={description} />

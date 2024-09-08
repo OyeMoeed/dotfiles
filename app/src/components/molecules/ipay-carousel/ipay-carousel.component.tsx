@@ -1,6 +1,6 @@
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayPressable, IPayView } from '@components/atoms';
-import { useRef, useState } from 'react';
+import { JSX, useRef, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import { IPayCarouselProps } from './ipay-carousel.interface';
 import carouselStyles from './ipay-carousel.style';
@@ -25,7 +25,7 @@ const IPayCarousel = <T,>({
 }: IPayCarouselProps<T>): JSX.Element => {
   const carouselRef = useRef(null);
   const { colors } = useTheme();
-  const styles = carouselStyles(colors);
+  const styles = carouselStyles();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const onPressPaging = (index: number) => {
     setCurrentIndex(index);
@@ -61,7 +61,7 @@ const IPayCarousel = <T,>({
           {data.map((item: any, index: number) => (
             <IPayPressable
               testID={`${index}-carousel-item`}
-              key={`${index}`}
+              key={`${`${index}IPayPressable`}`}
               onPress={() => onPressPaging(index)}
               style={[
                 styles.paginationDot,

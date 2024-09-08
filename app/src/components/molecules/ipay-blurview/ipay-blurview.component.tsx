@@ -1,4 +1,4 @@
-//IPayBlurView.tsx
+// IPayBlurView.tsx
 import useAppState from '@app/hooks/use-appstate.hook';
 import { BlurView } from '@react-native-community/blur';
 import React from 'react';

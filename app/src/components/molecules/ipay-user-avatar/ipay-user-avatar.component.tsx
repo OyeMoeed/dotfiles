@@ -8,34 +8,30 @@ import UserProfileImageProps from './ipay-user-avatar.interface';
 import userAvatarStyles from './ipay-user-avatar.styles';
 
 const IPayUserAvatar: React.FC<UserProfileImageProps> = ({ image, name, style }) => {
-  const getInitialLetterOfName = useCallback((name: string) => {
-    const words = name.split(' ');
+  const getInitialLetterOfName = useCallback((textName: string) => {
+    const words = textName.split(' ');
     return words ? `${words[0][0]}${words[1] ? words[1][0] : ''}` : '';
   }, []);
   const { profileImage, fullName } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const styles = userAvatarStyles(colors);
 
-  return (
-    <>
-      {image || profileImage ? (
-        <IPayImage
-          image={{
-            uri: image || profileImage,
-          }}
-          style={[styles.image, style]}
+  return image || profileImage ? (
+    <IPayImage
+      image={{
+        uri: image || profileImage,
+      }}
+      style={[styles.image, style]}
+    />
+  ) : (
+    <IPayView style={[styles.image, style]}>
+      <IPayGradientTextMasked colors={colors.gradientPrimary}>
+        <IPayTitle2Text
+          regular={false}
+          text={getInitialLetterOfName(name || fullName || '')}
+          style={styles.innerText}
         />
-      ) : (
-        <IPayView style={[styles.image, style]}>
-          <IPayGradientTextMasked colors={colors.gradientPrimary}>
-            <IPayTitle2Text
-              regular={false}
-              text={getInitialLetterOfName(name || fullName || '')}
-              style={styles.innerText}
-            />
-          </IPayGradientTextMasked>
-        </IPayView>
-      )}
-    </>
+      </IPayGradientTextMasked>
+    </IPayView>
   );
 };
 

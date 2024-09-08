@@ -60,7 +60,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
           )}
         </IPayView>
         {isShowProgressBar && (
-          <IPayView style={[styles.gap]}>
+          <IPayView style={styles.gap}>
             <IPayProgressBar
               gradientWidth={`${balancePercentage(monthlyTopupLimit, remainingTopupLimit)}%`}
               colors={colors.gradientSecondary}

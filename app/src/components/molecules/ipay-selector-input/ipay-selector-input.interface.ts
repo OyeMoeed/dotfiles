@@ -1,4 +1,4 @@
-import { inputtypess } from '@app/utilities/enums.util';
+import { inputType } from '@app/utilities/enums.util';
 import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
 
 /**

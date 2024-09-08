@@ -1,9 +1,10 @@
+import React, { JSX, useEffect, useState } from 'react';
 import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { dayPeriod, pickerVariant } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+
 import { IPayPickerButtonProps } from './ipay-picker-button.interface';
 import pickerStyles from './ipay-picker-button.style';
 

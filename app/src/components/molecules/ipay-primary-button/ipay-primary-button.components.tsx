@@ -32,6 +32,7 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
     if (small) return [styles.btnSmall, { width, backgroundColor: buttonBackgroundColor }];
     if (medium) return [styles.btnMedium, { width, backgroundColor: buttonBackgroundColor }];
     if (large) return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
+    return {};
   }, [small, medium, large, width, buttonBackgroundColor]);
 
   const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor || colors.natural.natural0;
