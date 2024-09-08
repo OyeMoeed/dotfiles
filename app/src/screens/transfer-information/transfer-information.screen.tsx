@@ -88,7 +88,7 @@ const TransferInformation: React.FC = () => {
             <IPayTransferInformation
               style={styles.transferContainer}
               amount={transferAmount}
-              currencyStyle={styles.currency}
+              currencyStyle={[styles.currency, transferAmount && styles.inputActiveStyle]}
               setAmount={setAmount}
               setSelectedItem={setSelectedReason}
               selectedItem={selectedReason}
