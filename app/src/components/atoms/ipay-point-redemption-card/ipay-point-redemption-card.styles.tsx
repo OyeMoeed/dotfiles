@@ -50,7 +50,7 @@ const pointRedemptionCard = (themeColors: typeof colors) =>
       paddingHorizontal: moderateScale(24, 0.3), // Ensure the SVG has proper padding
     },
     pointsValueContainer: {
-      marginTop: moderateScale(8)
+      marginTop: moderateScale(8),
     },
     pointsValueText: {
       fontSize: SCALE_12,

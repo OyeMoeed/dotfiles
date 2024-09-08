@@ -33,7 +33,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   onPressPartialPay,
   showButtonOnly,
   textColor,
-  totalAmountText
+  totalAmountText,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
