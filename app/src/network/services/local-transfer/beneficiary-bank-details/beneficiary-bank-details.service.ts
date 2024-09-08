@@ -9,8 +9,8 @@ import localTransferBeneficiaryBankDetailsMock from './beneficiary-bank-details.
 const getlocalTransferBeneficiaryBankDetails = async (
   params: BeneficiaryBankDetailsReq,
 ): Promise<LocalTransferBeneficiaryBankMockProps> => {
-  const { countryCode, bankCode, iban, beneficiaryType }: BeneficiaryBankDetailsReq = params;
-  const paramsUrl = `${iban}?country-code=${countryCode}&bank-code=${bankCode}&beneficiary-type=${beneficiaryType}`;
+  const { countryCode, iban }: BeneficiaryBankDetailsReq = params;
+  const paramsUrl = `${iban}?country-code=${countryCode}`;
   if (constants.MOCK_API_RESPONSE) {
     return localTransferBeneficiaryBankDetailsMock;
   }
@@ -23,7 +23,7 @@ const getlocalTransferBeneficiaryBankDetails = async (
     if (apiResponse?.response?.ok) {
       return apiResponse?.response;
     }
-    return { apiResponseNotOk: true, apiResponse };
+    return { apiResponseNotOk: true, ...apiResponse };
   } catch (error) {
     const { response } = error;
     return response || 'Unknown error';

@@ -24,9 +24,9 @@ interface BeneficiaryInfo {
   nickname?: string;
   fullName: string;
   beneficiaryAccountNumber: string;
-  dynamicFields: DynamicField[];
+  dynamicFields?: DynamicField[];
   currency: string;
-  remittanceType: string;
+  remittanceType?: string;
 }
 
 // Define the LocalTransferAddBeneficiary interface

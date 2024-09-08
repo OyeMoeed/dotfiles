@@ -20,6 +20,7 @@ import {
   IPayTextInput,
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
@@ -61,6 +62,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const { showToast } = useToastContext();
+
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
@@ -147,6 +150,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         return unSelectedContacts;
       }
       if (prevSelectedContacts.length >= MAX_CONTACTS) {
+        renderToast();
         return prevSelectedContacts;
       }
       return [...prevSelectedContacts, contact];
@@ -189,6 +193,15 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const handleLayout = (event: LayoutChangeEvent) => {
     const { width } = event.nativeEvent.layout;
     setContainerWidth(width);
+  };
+
+  const renderToast = () => {
+    showToast({
+      title: localizationText.WALLET_TO_WALLET.CONTACT_LIMIT,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainer,
+    });
   };
 
   const renderItem = ({ item }: { item: Contact }) => (

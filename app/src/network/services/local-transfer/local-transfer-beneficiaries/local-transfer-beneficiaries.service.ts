@@ -19,7 +19,6 @@ const getlocalTransferBeneficiaries = async (): Promise<LocalTransferBeneficiari
         hide_error_response: true,
       },
     });
-
     if (apiResponse?.status) {
       return apiResponse;
     }
