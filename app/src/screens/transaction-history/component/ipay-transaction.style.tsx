@@ -9,7 +9,8 @@ const transactionItemStyles = (colors: any) =>
   createStyleSheet({
     historyContStyle: {
       width: '100%',
-      paddingHorizontal: moderateScale(16),
+      paddingLeft: moderateScale(16),
+      paddingRight: moderateScale(24),
       paddingVertical: moderateScale(16),
       borderRadius: moderateScale(28),
       backgroundColor: colors.natural.natural0,
@@ -49,7 +50,7 @@ const transactionItemStyles = (colors: any) =>
       backgroundColor: colors.natural.natural100,
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: moderateScale(8),
+      marginRight: moderateScale(12),
     },
     footnoteBoldTextStyle: {
       fontWeight: constants.FONT_WEIGHT_BOLD,
@@ -81,7 +82,7 @@ const transactionItemStyles = (colors: any) =>
     dateStyle: {
       color: colors.natural.natural500,
       fontSize: FONT_SIZE_11,
-      marginTop: verticalScale(6),
+      marginTop: moderateScale(2, 0.3),
     },
     leftImageStyle: {
       height: verticalScale(18),
@@ -90,7 +91,7 @@ const transactionItemStyles = (colors: any) =>
     },
     textContainer: {
       flexDirection: 'column',
-      gap: verticalScale(4),
+      gap: verticalScale(2),
       justifyContent: 'space-between',
     },
   });
