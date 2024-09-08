@@ -44,7 +44,12 @@ import changeCardStatus from '@app/network/services/cards-management/card-status
 import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard, cards}) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
+  testID,
+  onOpenOTPSheet,
+  currentCard,
+  cards,
+}) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
@@ -184,7 +189,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
         onFreezeCard(type.toLowerCase());
         currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
         console.log();
-        
+
         actionTypeRef.current =
           apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
             ? CardActiveStatus.UNFREEZE
@@ -349,17 +354,17 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             navigate(ScreenNames.TRANSACTIONS_HISTORY, {
               isShowCard: true,
               currentCard,
-              cards
+              cards,
             })
           }
           style={styles.commonContainerStyle}
+        ></IPayPressable>
+        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
+          {localizationText.COMMON.VIEW_ALL}
+        </IPaySubHeadlineText>
+        <IPayPressable
+          onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
         >
-
-        </IPayPressable>
-          <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-            {localizationText.COMMON.VIEW_ALL}
-          </IPaySubHeadlineText>
-          <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}>
           <IPayView>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayView>

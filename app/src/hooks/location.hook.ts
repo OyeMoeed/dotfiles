@@ -11,7 +11,6 @@ import axios from 'axios';
 import CONFIG from 'react-native-config';
 import { IlocationDetails } from '@app/network/services/services.interface';
 
-
 const useLocation = () => {
   const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
   const localizationText = useLocalization();
@@ -28,15 +27,13 @@ const useLocation = () => {
       setPermissionStatus(permissionsStatus.UNAVAILABLE);
       return false;
     }
-  }
-
+  };
 
   useEffect(() => {
-    checkPermission()
-  }, [])
-  
+    checkPermission();
+  }, []);
 
-  const handlePermissionStatus =  (status: string): boolean => {
+  const handlePermissionStatus = (status: string): boolean => {
     switch (status) {
       case permissionsStatus.GRANTED:
         setPermissionStatus(permissionsStatus.GRANTED);
@@ -60,9 +57,8 @@ const useLocation = () => {
         setPermissionStatus(permissionsStatus.UNAVAILABLE);
         return false;
     }
-  }
+  };
 
-  
   const requestLocationPermission = useCallback(async (): Promise<string> => {
     if (Platform.OS === osTypes.ANDROID) {
       return await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
@@ -72,18 +68,17 @@ const useLocation = () => {
   }, []);
 
   const fetchLocation = useCallback(async (): Promise<IlocationDetails | null> => {
-
-     const hasPermission = await checkPermission()
+    const hasPermission = await checkPermission();
 
     if (hasPermission) {
       setIsFetchingLocation(true);
       try {
         const position = await new Promise<Geolocation.GeoPosition>((resolve, reject) => {
-          Geolocation.getCurrentPosition(
-            resolve,
-            reject,
-            { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-          );
+          Geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 10000,
+          });
         });
 
         const { latitude, longitude } = position.coords;
@@ -147,7 +142,14 @@ const useLocation = () => {
     fetchAndSetLocation();
   }, [permissionStatus, fetchLocation]);
 
-  return { permissionStatus, location, retryPermission: checkPermission, isFetchingLocation, checkPermission , fetchLocation };
+  return {
+    permissionStatus,
+    location,
+    retryPermission: checkPermission,
+    isFetchingLocation,
+    checkPermission,
+    fetchLocation,
+  };
 };
 
 export default useLocation;

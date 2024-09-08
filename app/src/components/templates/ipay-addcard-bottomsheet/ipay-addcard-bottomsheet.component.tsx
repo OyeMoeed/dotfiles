@@ -68,22 +68,22 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
     setSaveCardEnabled(!isSaveCardEnabled);
   };
 
-const buttonColor = (type: 'button' | 'text') => {
-  const hasCardNumberError = isCardNumberError || cardNumber === '';
-  const hasCvvError = isCvvError || cvv === '';
-  const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
+  const buttonColor = (type: 'button' | 'text') => {
+    const hasCardNumberError = isCardNumberError || cardNumber === '';
+    const hasCvvError = isCvvError || cvv === '';
+    const needsCardName = isSaveCardEnabled && cardNamePrimary === '';
 
-  const hasErrors = hasCardNumberError || needsCardName || !cardNamePrimary || (!isEditingMode && hasCvvError);
+    const hasErrors = hasCardNumberError || needsCardName || !cardNamePrimary || (!isEditingMode && hasCvvError);
 
-  switch (type) {
-    case 'button':
-      return hasErrors ? colors.natural.natural200 : colors.primary.primary500;
-    case 'text':
-      return hasErrors ? colors.natural.natural300 : colors.natural.natural0;
-    default:
-      return colors.natural.natural100
-  }
-};
+    switch (type) {
+      case 'button':
+        return hasErrors ? colors.natural.natural200 : colors.primary.primary500;
+      case 'text':
+        return hasErrors ? colors.natural.natural300 : colors.natural.natural0;
+      default:
+        return colors.natural.natural100;
+    }
+  };
 
   return (
     <IPayView style={[styles.container, containerStyles]}>

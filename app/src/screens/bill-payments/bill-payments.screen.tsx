@@ -60,12 +60,12 @@ const BillPaymentsScreen: React.FC = () => {
               />
             </IPayView>
             <IPayButton
-              large
+              medium
               onPress={onPressAddNewBill}
               btnStyle={styles.addNewBillBtn}
               btnType={buttonVariants.OUTLINED}
               btnText={localizationText.SADAD.ADD_NEW_BILL}
-              leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
+              leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
             />
           </IPayView>
         ) : (

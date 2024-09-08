@@ -12,7 +12,16 @@ import styles from './ipay-scrollview.style';
  */
 const IPayScrollView = forwardRef<RNScrollView, IPayScrollViewProps>(
   (
-    { testID, children, style, horizontal, refreshControl, isGHScrollView, showsVerticalScrollIndicator=false, ...rest },
+    {
+      testID,
+      children,
+      style,
+      horizontal,
+      refreshControl,
+      isGHScrollView,
+      showsVerticalScrollIndicator = false,
+      ...rest
+    },
     ref,
   ): JSX.Element => {
     const ScrollViewComponent = isGHScrollView ? GHScrollView : RNScrollView;

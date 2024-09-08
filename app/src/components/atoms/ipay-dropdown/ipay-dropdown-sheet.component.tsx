@@ -28,7 +28,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
   const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
-      setSearchText('');
+    setSearchText('');
   }, []);
 
   const handleClosePress = useCallback(() => {
