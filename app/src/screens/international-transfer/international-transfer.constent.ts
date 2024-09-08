@@ -135,7 +135,17 @@ const internationalTransferBeneficiaryDetails = {
   ],
 };
 
+const dynamicFormFields = {
+  'BEN.FRST.NAME': 'firstName',
+  'BEN.THIRD.NAME': 'thirdName',
+  'BEN.SECOND.NAME': 'secondName',
+  'BEN.LAST.NAME': 'lastName',
+  'BEN.NATIONALITY': 'beneficiaryNationality',
+  'BEN.RELATION': 'relationship',
+};
+
 export {
+  dynamicFormFields,
   internationalBeneficiaryData,
   internationalTransferBeneficiaryDetails,
   internationalTransferData,

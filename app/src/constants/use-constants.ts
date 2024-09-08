@@ -729,15 +729,6 @@ const useConstantData = () => {
     beneficiaryType: 'westernUnion',
   };
 
-  const dynamicFieldNames = [
-    'firstName',
-    'thirdName',
-    'secondName',
-    'lastName',
-    'beneficiaryNationality',
-    'relationship',
-  ];
-
   const transactionHistoryFilterDefaultValuesWithoudCard = {
     [FiltersType.TRANSACTION_TYPE]: '',
     [FiltersType.AMOUNT_FROM]: '',
@@ -1627,7 +1618,6 @@ const useConstantData = () => {
     AlinmaDirectData,
     WesternUnionData,
     activeBillDetails,
-    dynamicFieldNames,
     localTransferReasonData,
   };
 };

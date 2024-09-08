@@ -20,23 +20,22 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { DynamicField } from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.interface';
 import { AddWUBeneficiaryProps } from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.interface';
 import addWUbeneficiary from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.service';
-import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, States, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useState } from 'react';
 import * as Yup from 'yup';
+import { dynamicFormFields } from '../international-transfer/international-transfer.constent';
 import useInternationalTransferHook from './international-beneficiary-transfer-form.hook';
 import {
   BeneficiaryFields,
   BeneficiaryTransferFormValues,
-  DynamicFieldsKeys,
-  DynamicFieldsKeysSwapped,
   TransferService,
   TransferTypes,
 } from './international-beneficiary-transfer-form.interface';
@@ -45,7 +44,6 @@ import beneficiaryTransferStyles from './international-beneficiary-transfer-form
 const IBeneficiaryTransferScreen: React.FC = () => {
   const route = useRoute();
   const { colors } = useTheme();
-  const { dynamicFieldNames } = useConstantData();
   const { transferService, dynamicFieldsData } = route?.params;
   const styles = beneficiaryTransferStyles(colors);
   const localizationText = useLocalization();
@@ -53,11 +51,12 @@ const IBeneficiaryTransferScreen: React.FC = () => {
   const [beneficiariesWURes, setBeneficiariesWURes] = useState();
 
   const { cities } = useInternationalTransferHook();
-  const {} = getValidationSchemas(localizationText);
   const transferType = transferService?.transferType;
   const validationSchema = Yup.object().shape({});
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
+
+  const dynamicFieldKeys = Object.keys(dynamicFormFields);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -80,13 +79,14 @@ const IBeneficiaryTransferScreen: React.FC = () => {
     }
   }, []);
 
-  const postBeneficiariesWU = async (payload) => {
+  const addWUBeneficiary = async (payload) => {
     renderSpinner(true);
     try {
       const apiResponse: AddWUBeneficiaryProps = await addWUbeneficiary(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           setBeneficiariesWURes(apiResponse);
+          navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { type: ScreenNames.INTERNATIONAL_TRANSFER });
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -105,14 +105,20 @@ const IBeneficiaryTransferScreen: React.FC = () => {
     }
   };
 
-  const getKeyByValue = (submitData: BeneficiaryTransferFormValues, value: string) =>
-    Object.keys(submitData).find((key) => submitData[key as keyof BeneficiaryTransferFormValues] === value);
+  const getValueByKey = (submitData: BeneficiaryTransferFormValues, key: string) => {
+    const value = submitData[key as keyof BeneficiaryTransferFormValues];
+    return value;
+  };
 
   const onSubmit = (data: BeneficiaryTransferFormValues) => {
-    const dynamicFields = dynamicFieldNames?.map((name) => ({
-      index: DynamicFieldsKeysSwapped[getKeyByValue(data, data?.[name])] ?? '',
-      value: data?.[name] ?? '',
-    }));
+    const dynamicFields = dynamicFieldKeys?.map((name) => {
+      const key = dynamicFormFields?.[name] ?? '';
+      const value = getValueByKey(data, key) ?? '';
+      return {
+        index: key,
+        value,
+      };
+    });
 
     const payload = {
       beneficiaryBankDetail: {
@@ -126,7 +132,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
       currency: transferService?.currencyCode,
       remittanceType: transferService?.remittanceType,
     };
-    postBeneficiariesWU(payload);
+    addWUBeneficiary(payload);
   };
 
   return (
@@ -182,7 +188,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                       dynamicFieldsData?.map((item: DynamicField) => (
                         <IPayAnimatedTextInput
                           key={item?.label}
-                          name={DynamicFieldsKeys[item?.index]}
+                          name={dynamicFormFields[item?.index] ?? ''}
                           label={item?.label}
                         />
                       ))}

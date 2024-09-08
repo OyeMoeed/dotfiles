@@ -232,9 +232,15 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
 
   useEffect(() => {
     getWUBeneficiaryMetaDataData();
-    getWUBeneficiaryCurrenciesData();
-    getWURemittanceTypesData();
   }, []);
+
+  useEffect(() => {
+    getWUBeneficiaryCurrenciesData();
+  }, [countryCode]);
+
+  useEffect(() => {
+    getWURemittanceTypesData();
+  }, [currencyCode]);
 
   const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {
     renderSpinner(true);

@@ -28,24 +28,6 @@ enum TransferService {
   ALINMAPAY_DIRECT = 'AlinmaPay Direct',
 }
 
-enum DynamicFieldsKeys {
-  'BEN.FRST.NAME' = 'firstName',
-  'BEN.THIRD.NAME' = 'thirdName',
-  'BEN.SECOND.NAME' = 'secondName',
-  'BEN.LAST.NAME' = 'lastName',
-  'BEN.NATIONALITY' = 'beneficiaryNationality',
-  'BEN.RELATION' = 'relationship',
-}
-
-enum DynamicFieldsKeysSwapped {
-  'firstName' = 'BEN.FRST.NAME',
-  'thirdName' = 'BEN.THIRD.NAME',
-  'secondName' = 'BEN.SECOND.NAME',
-  'lastName' = 'BEN.LAST.NAME',
-  'beneficiaryNationality' = 'BEN.NATIONALITY',
-  'relationship' = 'BEN.RELATION',
-}
-
 interface BeneficiaryTransferFormValues {
   beneficiaryName: string;
   iban: string;
@@ -62,12 +44,4 @@ interface BeneficiaryTransferFormValues {
   beneficiaryNationality: string;
 }
 
-export {
-  BeneficiaryFields,
-  BeneficiaryInformation,
-  BeneficiaryTransferFormValues,
-  DynamicFieldsKeys,
-  DynamicFieldsKeysSwapped,
-  TransferService,
-  TransferTypes,
-};
+export { BeneficiaryFields, BeneficiaryInformation, BeneficiaryTransferFormValues, TransferService, TransferTypes };

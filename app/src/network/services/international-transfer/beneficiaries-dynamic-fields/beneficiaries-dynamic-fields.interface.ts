@@ -8,13 +8,13 @@ interface DynamicField {
   required: boolean;
 }
 
-interface Response {
+interface DynamicFieldsResponse {
   dynamicFields: DynamicField[];
 }
 
 interface BeneficiariesFieldsProps {
   status: MockAPIStatusProps;
-  response: Response;
+  response: DynamicFieldsResponse;
   successfulResponse: boolean;
   ok?: boolean;
   apiResponseNotOk?: boolean;
