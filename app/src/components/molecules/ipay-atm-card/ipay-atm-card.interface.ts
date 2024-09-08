@@ -47,6 +47,8 @@ export interface CardInterface {
    * expiration date
    */
   expiryDate?: string;
+  reissueDue?: boolean;
+  cardStatus?: string;
   /**
    * card printing status
    */

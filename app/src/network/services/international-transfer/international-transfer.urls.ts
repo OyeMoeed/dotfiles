@@ -6,6 +6,9 @@ const INTERNATIONAL_TRANSFERS_URLS = {
   western_union_beneficiaries: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries',
   western_union_transfer: () => '/alinmapay/transfer-management/v1/alinma-pay/beneficiaries',
   alinma_express_transfer: () => '/alinmapay/transfer-management/v1/alinma-pay',
+  delete_beneficiary: (beneficiaryCode: string) => `/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
+  activate_beneficiary: () => '/v1/alinma-pay/beneficiaries/activation/mark',
+  edit_beneficiary: (beneficiaryCode: string) => `/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
 };
 
 export default INTERNATIONAL_TRANSFERS_URLS;

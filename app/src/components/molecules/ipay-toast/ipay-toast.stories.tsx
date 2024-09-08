@@ -14,7 +14,7 @@ const IPayToastMeta: Meta<typeof IPayToast> = {
     subTitle: 'This is a subtitle',
     isShowLeftIcon: true,
     isShowSubTitle: true,
-    isShowRightIcon: true
+    isShowRightIcon: true,
   },
   decorators: [
     (Story) => (
@@ -25,8 +25,8 @@ const IPayToastMeta: Meta<typeof IPayToast> = {
           </IPayView>
         </ToastProvider>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayToastMeta;
@@ -35,38 +35,38 @@ export const Basic: StoryObj<typeof IPayToast> = {};
 
 export const WithLeftIcon: StoryObj<typeof IPayToast> = {
   args: {
-    isShowLeftIcon: true
-  }
+    isShowLeftIcon: true,
+  },
 };
 
 export const WithoutLeftIcon: StoryObj<typeof IPayToast> = {
   args: {
-    isShowLeftIcon: false
-  }
+    isShowLeftIcon: false,
+  },
 };
 
 export const WithSubtitle: StoryObj<typeof IPayToast> = {
   args: {
     subTitle: 'This is a subtitle',
-    isShowSubTitle: true
-  }
+    isShowSubTitle: true,
+  },
 };
 
 export const WithoutSubtitle: StoryObj<typeof IPayToast> = {
   args: {
     subTitle: '',
-    isShowSubTitle: false
-  }
+    isShowSubTitle: false,
+  },
 };
 
 export const WithRightIcon: StoryObj<typeof IPayToast> = {
   args: {
-    isShowRightIcon: true
-  }
+    isShowRightIcon: true,
+  },
 };
 
 export const WithoutRightIcon: StoryObj<typeof IPayToast> = {
   args: {
-    isShowRightIcon: false
-  }
+    isShowRightIcon: false,
+  },
 };

@@ -66,8 +66,9 @@ export {
   ApiError,
   ApiResponse,
   ApiResponseNotOk,
-  DeviceInfoProps, IApiStatus, MockAPIDataProps,
+  DeviceInfoProps,
+  IApiStatus,
+  MockAPIDataProps,
   MockAPIOkProp,
-  MockAPIStatusProps
+  MockAPIStatusProps,
 };
-

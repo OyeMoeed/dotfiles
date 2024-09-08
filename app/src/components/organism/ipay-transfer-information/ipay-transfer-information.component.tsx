@@ -35,6 +35,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   transferInfo,
   chipValue,
   transferInfoData,
+  maxLength = 70,
   subtitle,
   hasWallet,
   inputFieldStyle,
@@ -48,7 +49,6 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   const notesText = localizationText.TRANSACTION_HISTORY.NOTE;
   const optionalText = localizationText.COMMON.OPTIONAL;
   const notesLabel = `${notesText} ${transferInfo ? `(${optionalText})` : ''}`;
-  const maxLength: number = 70;
   const defaultValue: string = '0.00';
 
   const getLetterCount = () => `${notes?.length}/${maxLength}`;

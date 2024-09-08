@@ -89,4 +89,5 @@ export interface ControlFormField {
   message?: string;
   required?: boolean;
   showFocusStyle?: boolean;
+  suffix?: string;
 }

@@ -75,6 +75,10 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
     flatListWrapper: {
       gap: moderateScale(8),
     },
+    rightContainer: {
+      width: '50%',
+      justifyContent: 'flex-end',
+    },
   });
 
 export default createBeneficiaryStyles;

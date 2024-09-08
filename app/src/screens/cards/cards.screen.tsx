@@ -244,6 +244,7 @@ const CardsScreen: React.FC = () => {
               btnText={localizationText.CARDS.CREATE_NEW_CARD}
               btnType="primary"
               large
+              onPress={openCardSheet}
               leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
             />
           </IPayView>
