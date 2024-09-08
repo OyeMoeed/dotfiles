@@ -2,7 +2,7 @@ import { Platform } from 'react-native';
 
 import { scaleFont } from '@app/styles/mixins';
 import { moderateScale } from 'react-native-size-matters';
-import { constants } from '../constants.text';
+import { FONT_WEIGHT_BOLD, FONT_WEIGHT_NORMAL } from '@app/styles/typography.styles';
 
 // const FONT_FAMILY = helper.getFonts();
 
@@ -108,11 +108,11 @@ export const typography = {
   CUSTOM_FONT_SIZE: createCustomFontScale,
 
   BOLD_TEXT_STYLES: {
-    fontWeight: constants.FONT_WEIGHT_BOLD,
+    fontWeight: FONT_WEIGHT_BOLD,
     letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
   },
   REGULAR_TEXT_STYLES: {
-    fontWeight: constants.FONT_WEIGHT_NORMAL,
+    fontWeight: FONT_WEIGHT_NORMAL,
     letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
   },
 };

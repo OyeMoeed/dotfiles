@@ -5,7 +5,6 @@ import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
@@ -919,7 +918,7 @@ const useConstantData = () => {
       type: FiltersType.CONTACT_NUMBER,
       searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
       dropdownIcon: icons.user_search,
-      listTitleStyle: { fontWeight: constants.FONT_WEIGHT_BOLD },
+      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
       filterValues: [
         {
           id: '1',

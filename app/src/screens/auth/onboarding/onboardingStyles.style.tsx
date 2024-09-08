@@ -1,6 +1,6 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 
 export const onboardingStyles = (colors: any) =>
   createStyleSheet({
@@ -37,7 +37,7 @@ export const onboardingStyles = (colors: any) =>
       marginBottom: scaleSize(20),
     },
     title: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       color: colors.natural.natural900,
       lineHeight: undefined,
     },
