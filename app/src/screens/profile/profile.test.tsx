@@ -38,9 +38,7 @@ describe('Profile Component', () => {
       },
       gradientTertiary: ['#FFFFFF', '#000000'],
     },
-    icons: {
-  
-    },
+    icons: {},
   };
 
   beforeEach(() => {

@@ -6,7 +6,7 @@ interface WalletNumberProp {
 
 interface CheckOutProp {
   walletNumber?: string;
-  checkOutBody?: ICheckOutIdReq
+  checkOutBody?: ICheckOutIdReq;
 }
 
 interface CheckStatusProp {
@@ -15,11 +15,11 @@ interface CheckStatusProp {
 }
 
 interface ICheckOutIdReq {
-  cardBrand?: string,
-  amount?: string
-  cardRegistrationId?:string
-  deviceInfo?: any 
-  paymentDescription?: string
+  cardBrand?: string;
+  amount?: string;
+  cardRegistrationId?: string;
+  deviceInfo?: any;
+  paymentDescription?: string;
 }
 // Define the CardItem interface
 interface CardItem {

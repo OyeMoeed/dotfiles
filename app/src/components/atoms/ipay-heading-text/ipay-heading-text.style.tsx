@@ -10,7 +10,7 @@ const headingTextStyles = (colors: any) =>
       fontSize: typography.FONT_VARIANTS.TITLE2.FONT_SIZE,
       lineHeight: typography.FONT_VARIANTS.TITLE2.LINE_HEIGHT,
       letterSpacing: typography.FONT_VARIANTS.TITLE2.LETTER_SPACING,
-      textAlign: 'center'
+      textAlign: 'center',
     },
     subHeading: {
       marginTop: spacing.SCALE_4,
@@ -18,8 +18,8 @@ const headingTextStyles = (colors: any) =>
       fontSize: typography.FONT_VARIANTS.CAPTION1.FONT_SIZE,
       lineHeight: typography.FONT_VARIANTS.CAPTION1.LINE_HEIGHT,
       letterSpacing: typography.FONT_VARIANTS.CAPTION1.LETTER_SPACING,
-      textAlign: 'center'
-    }
+      textAlign: 'center',
+    },
   });
 
 export default headingTextStyles;

@@ -6,7 +6,7 @@ import AUTHENTICATION_URLS from '../authentication.urls';
 import { LoginResponseDetails, LoginUserPayloadProps } from './login.interface';
 import loginMock from './login.mock';
 
-type LoginUserResponse = ApiResponse<LoginResponseDetails> 
+type LoginUserResponse = ApiResponse<LoginResponseDetails>;
 
 const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserResponse> => {
   if (constants.MOCK_API_RESPONSE) {
@@ -24,9 +24,9 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserRespo
 
     return apiResponse;
   } catch (error: any) {
-    const status:IApiStatus = {
+    const status: IApiStatus = {
       code: 'NETWORK_ERROR',
-      type: "ERROR" ,
+      type: 'ERROR',
       desc: error.message || 'Unknown network error',
     };
     return {

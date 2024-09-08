@@ -34,7 +34,7 @@ const reducers = {
   dropdownReducer,
   permissionAlertReducer,
   resetStateSlice,
-  nafathVerificationReducer
+  nafathVerificationReducer,
 };
 
 /**
