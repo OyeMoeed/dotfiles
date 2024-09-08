@@ -27,7 +27,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
   const handleLanguagePress = useLanguageChange(handleClosePress);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [apiError, setAPIError] = useState<string>('');
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const changeLangugae = async (language: string, isRTL: boolean, code: LanguageCode) => {
     try {

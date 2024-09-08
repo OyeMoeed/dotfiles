@@ -20,6 +20,7 @@ import { getTransactions } from '@app/network/services/core/transaction/transact
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -28,7 +29,6 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
-import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -47,9 +47,7 @@ const Home: React.FC = () => {
   const topUpSelectionRef = React.createRef<any>();
 
   const dispatch = useTypedDispatch();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
@@ -92,7 +90,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: TransactionsProp = {
-        walletNumber,
+        walletNumber: walletInfo?.walletNumber,
         maxRecords: '3',
         offset: '1',
       };
@@ -118,7 +116,7 @@ const Home: React.FC = () => {
     renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
-        walletNumber,
+        walletNumber: walletInfo?.walletNumber,
         isHome: 'true',
       };
 
@@ -209,7 +207,7 @@ const Home: React.FC = () => {
 
   const getUpadatedWalletData = async () => {
     const payload = {
-      walletNumber: walletNumber as string,
+      walletNumber: walletInfo?.walletNumber as string,
     };
     const apiResponse: any = await getWalletInfo(payload);
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
@@ -224,7 +222,7 @@ const Home: React.FC = () => {
       }
       getUpadatedWalletData();
     }
-  }, [isFocused, walletNumber]);
+  }, [isFocused, walletInfo?.walletNumber]);
 
   const saveRearrangedItems = () => {
     if (tempreArrangedItems?.length > 0) dispatch(setRearrangedItems(tempreArrangedItems));
@@ -235,7 +233,7 @@ const Home: React.FC = () => {
       <>
         {/* ---------Top Navigation------------- */}
         <IPayView style={styles.topNavCon}>
-          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
+          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={walletInfo?.firstName} />
         </IPayView>
         {/* ----------BalanceBox------------ */}
         <IPayView style={styles.balanceCon}>

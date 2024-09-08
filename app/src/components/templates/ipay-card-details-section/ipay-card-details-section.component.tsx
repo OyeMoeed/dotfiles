@@ -8,8 +8,11 @@ import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
@@ -40,9 +43,6 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
-import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   testID,
@@ -68,8 +68,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       setStatusIndication(undefined);
     }
   }, [currentCard]);
-
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
@@ -235,7 +233,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     renderSpinner(true);
     try {
       const payload: TransactionsProp = {
-        walletNumber,
+        walletNumber: walletInfo.walletNumber,
         maxRecords: '10',
         offset: '1',
         cardIndex: currentCard?.cardIndex,
