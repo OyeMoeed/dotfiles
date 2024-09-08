@@ -570,7 +570,8 @@
     "TYPE_MOBILE_NUMBER": "Type mobile number",
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
-    "CONTACT_NAME": "Contact Name"
+    "CONTACT_NAME": "Contact Name",
+    "CONTACT_LIMIT": "Contacts limit reached"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
