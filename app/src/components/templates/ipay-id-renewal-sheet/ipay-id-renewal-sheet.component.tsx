@@ -41,7 +41,6 @@ const IPayIdRenewalSheet: React.FC = () => {
 
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
   const { t } = useTranslation();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const dispatch = useTypedDispatch();
@@ -82,30 +81,20 @@ const IPayIdRenewalSheet: React.FC = () => {
 
   const handleRenewalId = async () => {
     if (idRenewalState === IdRenewalState.EXPIRE_FLAG_REACHED) {
-      try {
-        const idRenewalPrepareBody = await getDeviceInfo();
-        const payload: PrepareIdRenewalProp = {
-          deviceInfo: idRenewalPrepareBody,
-          walletNumber,
-        };
-        renderSpinner(true);
-        const apiResponse: any = await prepareRenewId(payload);
+      const idRenewalPrepareBody = await getDeviceInfo();
+      const payload: PrepareIdRenewalProp = {
+        deviceInfo: idRenewalPrepareBody,
+        walletNumber,
+      };
+      renderSpinner(true);
+      const apiResponse: any = await prepareRenewId(payload);
 
-        if (apiResponse?.status?.type === 'SUCCESS') {
-          setOTPRef(apiResponse?.response?.otpRef);
-          setRenewId(true);
-          setCustomSnapPoints(['95%', '95%']);
-        } else if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        } else {
-          setAPIError(apiResponse?.error);
-        }
-        renderSpinner(false);
-      } catch (error: any) {
-        renderSpinner(false);
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        setOTPRef(apiResponse?.response?.otpRef);
+        setRenewId(true);
+        setCustomSnapPoints(['95%', '95%']);
       }
+      renderSpinner(false);
     }
   };
 
@@ -132,63 +121,40 @@ const IPayIdRenewalSheet: React.FC = () => {
     setRenewalAlertVisible(false);
   };
   const handleRenewalIdResendOtp = async () => {
-    try {
-      const idRenewalPrepareBody = await getDeviceInfo();
-      const payload: PrepareIdRenewalProp = {
-        deviceInfo: idRenewalPrepareBody,
-        walletNumber,
-      };
-      renderSpinner(true);
-      const apiResponse: any = await prepareRenewId(payload);
+    const idRenewalPrepareBody = await getDeviceInfo();
+    const payload: PrepareIdRenewalProp = {
+      deviceInfo: idRenewalPrepareBody,
+      walletNumber,
+    };
+    renderSpinner(true);
+    const apiResponse: any = await prepareRenewId(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        otpVerificationRef?.current?.resetInterval();
-        setOTPRef(apiResponse?.response?.otpRef);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      otpVerificationRef?.current?.resetInterval();
+      setOTPRef(apiResponse?.response?.otpRef);
     }
+    renderSpinner(false);
   };
 
   const getOtpData = async () => {
     const OTP_LENGHT = 4;
     renderSpinner(true);
     if (otp?.length === OTP_LENGHT) {
-      try {
-        const idRenewalPrepareBody = await getDeviceInfo();
-        const payload: ConfirmIdRenewalProp = {
-          confirmBody: {
-            otpRef,
-            otp,
-            mobileNumber,
-            deviceInfo: idRenewalPrepareBody,
-          },
-          walletNumber,
-        };
+      const idRenewalPrepareBody = await getDeviceInfo();
+      const payload: ConfirmIdRenewalProp = {
+        confirmBody: {
+          otpRef,
+          otp,
+          mobileNumber,
+          deviceInfo: idRenewalPrepareBody,
+        },
+        walletNumber,
+      };
 
-        const apiResponse: any = await confirmRenewId(payload);
-        renderSpinner(false);
-        if (apiResponse?.status?.type === 'SUCCESS') {
-          showSuccessAlert();
-        } else if (apiResponse?.apiResponseNotOk) {
-          setOtpError(true);
-          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        } else {
-          setOtpError(true);
-          otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
-        }
-      } catch (error: any) {
-        renderSpinner(false);
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      const apiResponse: any = await confirmRenewId(payload);
+      renderSpinner(false);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        showSuccessAlert();
       }
     }
   };

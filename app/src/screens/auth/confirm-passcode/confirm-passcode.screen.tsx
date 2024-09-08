@@ -59,45 +59,6 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
-  const setNewPasscode = async (newCode: string) => {
-    renderSpinner(true);
-    try {
-      const payload: SetPasscodeServiceProps = {
-        passCode:
-          encryptData(
-            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + newCode,
-            isExist(appData?.encryptionData?.passwordEncryptionKey),
-          ) || '',
-        authentication: { transactionId: appData?.transactionId },
-        deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        mobileNumber:
-          encryptData(
-            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.mobileNumber),
-            isExist(appData?.encryptionData?.passwordEncryptionKey),
-          ) || '',
-        poiNumber:
-          encryptData(
-            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.poiNumber),
-            isExist(appData?.encryptionData?.passwordEncryptionKey),
-          ) || '',
-      };
-
-      const apiResponse: any = await setPasscode(payload, dispatch);
-      if (apiResponse.status.type === 'SUCCESS') {
-        getWalletInformation(apiResponse?.response?.walletNumber);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
   const getWalletInformation = async (walletNumber: string) => {
     try {
       const payload = {
@@ -123,6 +84,38 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+  };
+
+  const setNewPasscode = async (newCode: string) => {
+    renderSpinner(true);
+
+    const payload: SetPasscodeServiceProps = {
+      passCode:
+        encryptData(
+          isExist(appData?.encryptionData?.passwordEncryptionPrefix) + newCode,
+          isExist(appData?.encryptionData?.passwordEncryptionKey),
+        ) || '',
+      authentication: { transactionId: appData?.transactionId },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
+      mobileNumber:
+        encryptData(
+          isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.mobileNumber),
+          isExist(appData?.encryptionData?.passwordEncryptionKey),
+        ) || '',
+      poiNumber:
+        encryptData(
+          isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.poiNumber),
+          isExist(appData?.encryptionData?.passwordEncryptionKey),
+        ) || '',
+    };
+
+    const apiResponse: any = await setPasscode(payload, dispatch);
+
+    if (apiResponse.status.type === 'SUCCESS') {
+      getWalletInformation(apiResponse?.response?.walletNumber);
+    }
+
+    renderSpinner(false);
   };
 
   const validatePasscode = (newCode: string) => {

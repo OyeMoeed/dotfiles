@@ -90,7 +90,7 @@ const SendMoneyFormScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await getCoreLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo)
         setTransferReasonData(
           apiResponse?.response?.lovInfo.map((item) => ({

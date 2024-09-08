@@ -110,9 +110,6 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
           });
         }
         if (onConfirmPress) onConfirmPress();
-      } else {
-        setOtpError(true);
-        renderToast();
       }
     };
 

@@ -78,32 +78,29 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       `${encryptedData.passwordEncryptionPrefix}${iqamaId}`,
       encryptedData.passwordEncryptionKey,
     );
-    try {
-      const payload = {
-        poiNumber: encryptedPoiNumber,
-        authentication: { transactionId },
-        deviceInfo: appData.deviceInfo,
-      } as PrepareForgetPasscodeProps;
-      const apiResponse = await prepareForgetPasscode(payload, dispatch);
-      if (apiResponse?.status.type === APIResponseType.SUCCESS && onCallback) {
-        onCallback({
-          nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
-          data: {
-            iqamaId,
-            otpRef: apiResponse?.response?.otpRef,
-            transactionId,
-            resendOtpPayload: payload,
-          },
-        });
-      } else {
-        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      }
-    } catch (error) {
-      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      Keyboard.dismiss();
+
+    const payload = {
+      poiNumber: encryptedPoiNumber,
+      authentication: { transactionId },
+      deviceInfo: appData.deviceInfo,
+    } as PrepareForgetPasscodeProps;
+    const apiResponse = await prepareForgetPasscode(payload, dispatch);
+
+    if (apiResponse?.status.type === APIResponseType.SUCCESS && onCallback) {
+      onCallback({
+        nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
+        data: {
+          iqamaId,
+          otpRef: apiResponse?.response?.otpRef,
+          transactionId,
+          resendOtpPayload: payload,
+        },
+      });
+
+      return;
     }
+
+    Keyboard.dismiss();
   };
 
   const prepareEncryptionData = async (iqamaId: string) => {

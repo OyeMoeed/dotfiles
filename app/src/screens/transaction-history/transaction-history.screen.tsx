@@ -202,30 +202,16 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const getCardsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: CardsProp = {
-        walletNumber,
-      };
-      const apiResponse: any = await getCards(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setCardssData(apiResponse?.response?.cards);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const payload: CardsProp = {
+      walletNumber,
+    };
+    const apiResponse: any = await getCards(payload);
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setCardssData(apiResponse?.response?.cards);
     }
+
+    renderSpinner(false);
   };
 
   const getTrxReqTypeCode = (trxTypeName: string) => {
@@ -241,45 +227,28 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const getTransactionsData = async (filtersData?: any) => {
     renderSpinner(true);
     setIsLoading(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '50',
-        offset: '1',
-        fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
-        toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
-        cardIndex: selectedCard ? selectedCard?.cardIndex : '',
-        trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transaction_type) : '',
-      };
 
-      const apiResponse: any = await getTransactions(payload);
+    const payload: TransactionsProp = {
+      walletNumber,
+      maxRecords: '50',
+      offset: '1',
+      fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
+      toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
+      cardIndex: selectedCard ? selectedCard?.cardIndex : '',
+      trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transaction_type) : '',
+    };
 
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          if (apiResponse?.response?.transactions?.length) {
-            setTransactionsData(apiResponse?.response?.transactions);
-          } else {
-            setTransactionsData([]);
-            setNoFilterResult(true);
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      setIsLoading(false);
-      renderSpinner(false);
-    } catch (error: any) {
-      setIsLoading(false);
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const apiResponse: any = await getTransactions(payload);
+
+    if (apiResponse?.response?.transactions?.length) {
+      setTransactionsData(apiResponse?.response?.transactions);
+    } else {
+      setTransactionsData([]);
+      setNoFilterResult(true);
     }
+
+    setIsLoading(false);
+    renderSpinner(false);
   };
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
@@ -287,41 +256,24 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     setIsLoadingW2W(true);
     setTransactionsData([]);
     setFilteredData([]);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '100',
-        offset: '1',
-        trxReqType: 'PAY_WALLET',
-        trxType,
-        fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        fromAmount: filterData?.amountFrom,
-        toAmount: filterData?.amountTo,
-      };
-      const apiResponse: any = await getTransactions(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setTransactionsData(apiResponse?.response?.transactions);
-          setFilteredData(apiResponse?.response?.transactions);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      setIsLoadingW2W(false);
-      renderSpinner(false);
-    } catch (error: any) {
-      setIsLoadingW2W(false);
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+
+    const payload: TransactionsProp = {
+      walletNumber,
+      maxRecords: '100',
+      offset: '1',
+      trxReqType: 'PAY_WALLET',
+      trxType,
+      fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+      toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+      fromAmount: filterData?.amountFrom,
+      toAmount: filterData?.amountTo,
+    };
+    const apiResponse: any = await getTransactions(payload);
+
+    setTransactionsData(apiResponse?.response?.transactions);
+    setFilteredData(apiResponse?.response?.transactions);
+    setIsLoadingW2W(false);
+    renderSpinner(false);
   };
 
   const mapFiltersTypes = (transactionTypesRes: []) => {
@@ -361,30 +313,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const getTransactionTypesData = async () => {
     renderSpinner(true);
-    try {
-      const apiResponse: any = await getTransactionTypes();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const apiResponse: any = await getTransactionTypes();
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
     }
+
+    renderSpinner(false);
   };
 
   useEffect(() => {

@@ -44,27 +44,21 @@ const getOffers = async (payload: GetOffersPayload): Promise<OffersResponseDetai
     }
     return getOffersMock;
   }
-  try {
-    const apiResponse: OffersResponseDetails = await apiCall({
-      endpoint: getQueryURL(
-        CORE_URLS.GET_HOME_OFFERS(payload.walletNumber),
-        payload.offset,
-        payload.maxRecords,
-        payload.fromDate,
-        payload.toDate,
-        payload.id,
-        payload.home,
-      ),
-      method: requestType.GET,
-    });
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse: OffersResponseDetails = await apiCall({
+    endpoint: getQueryURL(
+      CORE_URLS.GET_HOME_OFFERS(payload.walletNumber),
+      payload.offset,
+      payload.maxRecords,
+      payload.fromDate,
+      payload.toDate,
+      payload.id,
+      payload.home,
+    ),
+    method: requestType.GET,
+  });
+
+  return apiResponse;
 };
 
 export default getOffers;

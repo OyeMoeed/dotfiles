@@ -85,7 +85,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const deviceInfo = await getDeviceInfo();
     const body: any = {
       amount: topUpAmount,
-      deviceInfo: deviceInfo,
+      deviceInfo,
       paymentDescription: 'nothing',
     };
     if (selectedCardObj.registrationId) {
@@ -104,35 +104,24 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     const apiResponse: any = await topupCheckout(payload);
 
-    switch (apiResponse?.status?.type) {
-      case ApiResponseStatusType.SUCCESS:
-        let paymentGateway = apiResponse?.response?.paymentGateway;
-        setRedirectUrl(apiResponse?.response?.redirectUrl);
-        if (paymentGateway == 'CLICKPAY') {
-          navigate(screenNames.CARD_VERIFICATION, {
-            redirectUrl: apiResponse?.response?.redirectUrl,
-            transactionRefNumber: apiResponse?.response?.transactionRefNumber,
-            paymentGateway,
-          });
-        } else {
-          navigate(screenNames.CARD_VERIFICATION, {
-            redirectUrl: apiResponse?.response?.redirectUrl,
-            paymentGateway,
-          });
-        }
-        break;
-      case apiResponse?.apiResponseNotOk:
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        break;
-      case ApiResponseStatusType.FAILURE:
-        setAPIError(apiResponse?.error);
-        break;
-      default:
-        break;
+    const paymentGateway = apiResponse?.response?.paymentGateway;
+    setRedirectUrl(apiResponse?.response?.redirectUrl);
+    if (paymentGateway === 'CLICKPAY') {
+      navigate(screenNames.CARD_VERIFICATION, {
+        redirectUrl: apiResponse?.response?.redirectUrl,
+        transactionRefNumber: apiResponse?.response?.transactionRefNumber,
+        paymentGateway,
+      });
+    } else {
+      navigate(screenNames.CARD_VERIFICATION, {
+        redirectUrl: apiResponse?.response?.redirectUrl,
+        paymentGateway,
+      });
     }
 
     renderSpinner(false);
   };
+
   const createPaymentRequest = (): PaymentRequest => {
     setError('');
     setResponse(undefined);

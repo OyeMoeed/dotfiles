@@ -44,7 +44,12 @@ import changeCardStatus from '@app/network/services/cards-management/card-status
 import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard, cards}) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
+  testID,
+  onOpenOTPSheet,
+  currentCard,
+  cards,
+}) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
@@ -184,7 +189,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
         onFreezeCard(type.toLowerCase());
         currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
         console.log();
-        
+
         actionTypeRef.current =
           apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
             ? CardActiveStatus.UNFREEZE
@@ -228,38 +233,19 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
 
   const getTransactionsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '10',
-        offset: '1',
-        cardIndex: currentCard?.cardIndex,
-        fromDate: '',
-        toDate: '',
-      };
-      const apiResponse: any = await getTransactions(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          renderSpinner(false);
-          setTransactionsData(apiResponse?.response?.transactions);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderSpinner(false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderSpinner(true);
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+
+    const payload: TransactionsProp = {
+      walletNumber,
+      maxRecords: '10',
+      offset: '1',
+      cardIndex: currentCard?.cardIndex,
+      fromDate: '',
+      toDate: '',
+    };
+    const apiResponse: any = await getTransactions(payload);
+
+    setTransactionsData(apiResponse?.response?.transactions);
+    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -349,17 +335,17 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
             navigate(ScreenNames.TRANSACTIONS_HISTORY, {
               isShowCard: true,
               currentCard,
-              cards
+              cards,
             })
           }
           style={styles.commonContainerStyle}
+        ></IPayPressable>
+        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
+          {localizationText.COMMON.VIEW_ALL}
+        </IPaySubHeadlineText>
+        <IPayPressable
+          onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
         >
-
-        </IPayPressable>
-          <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-            {localizationText.COMMON.VIEW_ALL}
-          </IPaySubHeadlineText>
-          <IPayPressable onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}>
           <IPayView>
             <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
           </IPayView>

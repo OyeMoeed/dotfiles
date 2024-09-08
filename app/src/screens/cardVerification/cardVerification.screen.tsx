@@ -76,14 +76,12 @@ const CardVerificationScreen: React.FC = () => {
       refNumber: transactionRefNumber,
     };
 
-    // console.log(payload);
-
     const apiResponse: any = await topupCheckStatus(payload);
 
-    if (apiResponse.response.pmtResultCd == 'P') {
+    if (apiResponse.response.pmtResultCd === 'P') {
       if (trial < 3) {
-        trial = trial + 1;
-        setTimeout(function () {
+        trial += 1;
+        setTimeout(() => {
           checkStatus();
         }, 3000);
       } else {
@@ -95,24 +93,17 @@ const CardVerificationScreen: React.FC = () => {
           summaryData: apiResponse,
         });
       }
-    } else {
-      if (apiResponse?.status?.type == ApiResponseStatusType.SUCCESS) {
-        renderSpinner(false);
-        navigate(screenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.CARD,
-          topupStatus: TopupStatus.SUCCESS,
-          summaryData: apiResponse,
-        });
-      } else {
-        renderSpinner(false);
-        setAPIError(apiResponse?.error || setAPIError(localizationText.ERROR.API_ERROR_RESPONSE));
-      }
+    } else if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      renderSpinner(false);
+      navigate(screenNames.TOP_UP_SUCCESS, {
+        topupChannel: payChannel.CARD,
+        topupStatus: TopupStatus.SUCCESS,
+        summaryData: apiResponse,
+      });
     }
   };
 
   const onNavigationStateChange = (event: WebViewNavigation) => {
-  
-
     if (event?.url?.indexOf('result') != -1) {
       setShowWebView(false);
       renderSpinner(true);

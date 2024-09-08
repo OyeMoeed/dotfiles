@@ -79,8 +79,6 @@ const MenuScreen: FC = () => {
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       hideLogout();
       clearSession(false);
-    } else if (apiResponse?.apiResponseNotOk) {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -108,7 +106,6 @@ const MenuScreen: FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

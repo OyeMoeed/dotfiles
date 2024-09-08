@@ -175,50 +175,28 @@ const CardsScreen: React.FC = () => {
   };
   const getCardsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: CardsProp = {
-        walletNumber,
-      };
-      const apiResponse: any = await getCards(payload);
-      renderSpinner(false);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          let availableCards = apiResponse?.response?.cards.filter((card: any) => {
-            return (
-              card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
-              card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
-              card.cardStatus == CardStatusNumber.Freezed
-            );
-          });
 
-          if (availableCards?.length) {
-            setCardsData(mapCardData(availableCards));
-            setCurrentCard(mapCardData(availableCards)[0]);
-            setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
-          } else {
-            setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderSpinner(false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderSpinner(false);
-          setAPIError(apiResponse?.error);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
-        default:
-          renderSpinner(false);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
+    const payload: CardsProp = {
+      walletNumber,
+    };
+    const apiResponse: any = await getCards(payload);
+    renderSpinner(false);
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      const availableCards = apiResponse?.response?.cards.filter(
+        (card: any) =>
+          card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.Freezed,
+      );
+
+      if (availableCards?.length) {
+        setCardsData(mapCardData(availableCards));
+        setCurrentCard(mapCardData(availableCards)[0]);
+        setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
+      } else {
+        setCardsCurrentState(CardScreenCurrentState.NO_DATA);
       }
-    } catch (error: any) {
-      renderSpinner(false);
-      setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

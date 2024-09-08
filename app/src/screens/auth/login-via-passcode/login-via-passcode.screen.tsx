@@ -166,7 +166,7 @@ const LoginViaPasscode: React.FC = () => {
 
     const apiResponse = await forgetPasscode(payload);
 
-    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
@@ -337,13 +337,10 @@ const LoginViaPasscode: React.FC = () => {
       const apiResponse: any = await deviceDelink(payload);
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
-      } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

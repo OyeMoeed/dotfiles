@@ -118,29 +118,19 @@ const NotificationCenterScreen: React.FC = () => {
   /**
    * Handle delete notification
    * @param id - Notification ID
-   */ const handleDeleteNotification = async (id: string) => {
+   */
+  const handleDeleteNotification = async (id: string) => {
     renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       messageId: id,
     };
 
-    try {
-      const apiResponse = await deleteSingleNotification(payload);
+    const apiResponse = await deleteSingleNotification(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        renderSpinner(false);
-        // remove the deleted notification from the list
-        setNotifications((prevNotifications) =>
-          prevNotifications?.filter((notification) => notification.messageId !== id),
-        );
-        return apiResponse;
-      }
-      return { apiResponseNotOk: true };
-    } catch (error: any) {
-      renderSpinner(false);
-      return { error: error.message || 'Unknown error' };
-    }
+    renderSpinner(false);
+    setNotifications((prevNotifications) => prevNotifications?.filter((notification) => notification.messageId !== id));
+    return apiResponse;
   };
 
   /**
@@ -157,25 +147,19 @@ const NotificationCenterScreen: React.FC = () => {
       },
     };
 
-    try {
-      const apiResponse = await readSingleNotification(payload);
+    const apiResponse = await readSingleNotification(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        renderSpinner(false);
-        // mark the notification as read
-        setNotifications((prevNotifications) =>
-          prevNotifications?.map((notification) =>
-            notification.messageId === id ? { ...notification, read: true } : notification,
-          ),
-        );
-        return apiResponse;
-      }
-      return { apiResponseNotOk: true };
-    } catch (error: any) {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       renderSpinner(false);
-
-      return { error: error.message || 'Unknown error' };
+      // mark the notification as read
+      setNotifications((prevNotifications) =>
+        prevNotifications?.map((notification) =>
+          notification.messageId === id ? { ...notification, read: true } : notification,
+        ),
+      );
+      return apiResponse;
     }
+    renderSpinner(false);
   };
 
   /**
@@ -194,47 +178,27 @@ const NotificationCenterScreen: React.FC = () => {
       currentPage: page,
       pageSize,
     };
-    try {
-      const apiResponse = await getAllRetainedMessages(payload);
 
-      switch (apiResponse?.status?.type) {
-        case 'SUCCESS': {
-          const newNotifications = apiResponse?.response?.retainedMessages || [];
-          const start = (page - 1) * pageSize;
-          const end = page * pageSize;
-          const paginatedData = newNotifications.slice(start, end);
-          const hasMore = newNotifications.length > end;
+    const apiResponse: any = await getAllRetainedMessages(payload);
 
-          if (page === 1) {
-            setNotifications(paginatedData);
-          } else {
-            setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
-          }
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      const newNotifications = apiResponse?.response?.retainedMessages || [];
+      const start = (page - 1) * pageSize;
+      const end = page * pageSize;
+      const paginatedData = newNotifications.slice(start, end);
+      const hasMore = newNotifications.length > end;
 
-          renderSpinner(false);
-          return { data: paginatedData, hasMore };
-        }
-
-        case 'apiResponseNotOk':
-          renderToast({
-            title: localization.ERROR.API_ERROR_RESPONSE,
-            toastType: 'WARNING',
-          });
-          break;
-
-        case 'FAILURE':
-          renderToast(apiResponse?.error);
-          break;
-
-        default:
-          break;
+      if (page === 1) {
+        setNotifications(paginatedData);
+      } else {
+        setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
       }
-    } catch (error: any) {
-      renderToast(error?.message || localization.ERROR.SOMETHING_WENT_WRONG);
-    } finally {
+
       renderSpinner(false);
+      return { data: paginatedData, hasMore };
     }
 
+    renderSpinner(false);
     return { data: [], hasMore: false };
   };
 

@@ -109,12 +109,9 @@ const Profile = () => {
     );
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
-      renderSpinner(false);
       renderUploadSuccessToast();
-    } else {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderSpinner(false);
     }
+    renderSpinner(false);
   };
 
   useEffect(() => {

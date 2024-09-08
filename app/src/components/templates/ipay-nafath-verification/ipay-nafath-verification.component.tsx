@@ -120,20 +120,16 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       setNafathRequestId(apiResponse.response.nafathRequestId);
       setNafathNumber(
-        isNaN(apiResponse.response.token) ? atob(apiResponse.response.token) : apiResponse.response.token,
+        Number.isNaN(apiResponse.response.token) ? atob(apiResponse.response.token) : apiResponse.response.token,
       );
       setCounter(apiResponse.response.waitingTimeSeconds);
       setDuration(apiResponse.response.waitingTimeSeconds * 10);
-      if (step == 2) {
+      if (step === 2) {
         setIsExpired(false);
       } else {
         setStep(2);
       }
       setStartInqiryInterval(true);
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
     renderSpinner(false);
@@ -152,10 +148,10 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const { dispatch } = store || {};
 
     const deviceInfo = await getDeviceInfo();
-    let nafathObj = nafathRes.response.mainInfo;
+    const nafathObj = nafathRes.response.mainInfo;
 
-    let body: IActivationAbsherReq = {
-      walletNumber: walletNumber,
+    const body: IActivationAbsherReq = {
+      walletNumber,
       walletTier: 'G',
       poiNumber: userInfo?.poiNumber,
       poiExpiryDate: nafathObj.idExpiryDate,
@@ -180,7 +176,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         familyName: nafathObj.arabicName.familyName,
         fullName: nafathObj.arabicName.fullName,
       },
-      deviceInfo: deviceInfo,
+      deviceInfo,
     };
     const apiResponse = await updateWalletTierReq(body);
 
@@ -199,20 +195,19 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
       onCloseNafathVerificationSheet();
       navigate(screenNames.IDENTITY_SUCCESSFUL);
-    } else if (apiResponse?.apiResponseNotOk) {
-      const updatedValues = {
-        walletTier: 'B',
-      };
-      dispatch(
-        setUserInfo({
-          ...userInfo,
-          ...updatedValues,
-        }),
-      );
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
+      renderSpinner(false);
+      return;
     }
+
+    const updatedValues = {
+      walletTier: 'B',
+    };
+    dispatch(
+      setUserInfo({
+        ...userInfo,
+        ...updatedValues,
+      }),
+    );
     renderSpinner(false);
   };
 
@@ -223,7 +218,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     };
     const apiResponse: any = await getNafathInquiry(payLoad);
 
-    if (apiResponse?.status?.type == APIResponseType.SUCCESS) {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       switch (apiResponse?.response?.status) {
         case NAFATH_STATUSES.ACCEPTED:
           setStartInqiryInterval(false);
@@ -241,10 +236,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         default:
           break;
       }
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
   };
