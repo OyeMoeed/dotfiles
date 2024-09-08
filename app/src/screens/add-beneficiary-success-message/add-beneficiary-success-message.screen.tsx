@@ -131,7 +131,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                   descriptionText={
                     type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
                       ? localizationText.NEW_BENEFICIARY.NOW_MAKE_TRANSFER
-                      : response?.status?.desc
+                      : localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY
                   }
                 />
                 <IPayView style={styles.buttonWrapper}>
