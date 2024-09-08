@@ -30,7 +30,7 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
     assistiveText: '',
     editable: true,
     showLeftIcon: true,
-    onClearInput: () => {}
+    onClearInput: () => {},
   },
   decorators: [
     (Story) => (
@@ -39,8 +39,8 @@ const IPayTextInputMeta: Meta<typeof IPayTextInput> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayTextInputMeta;
@@ -49,34 +49,34 @@ export const Basic: StoryObj<typeof IPayTextInput> = {};
 
 export const BasicTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
-    text: 'Primary Input'
-  }
+    text: 'Primary Input',
+  },
 };
 
 export const TextInputWithBackground: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Secondary Input',
-    containerStyle: { backgroundColor: '#f0f0f0' }
-  }
+    containerStyle: { backgroundColor: '#f0f0f0' },
+  },
 };
 
 export const FocusedTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
-    text: 'Focused Input'
-  }
+    text: 'Focused Input',
+  },
 };
 
 export const DisabledTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Disabled Input',
-    editable: false
-  }
+    editable: false,
+  },
 };
 
 export const ErrorTextInput: StoryObj<typeof IPayTextInput> = {
   args: {
     text: 'Error State',
     isError: true,
-    assistiveText: 'Please enter valid information'
-  }
+    assistiveText: 'Please enter valid information',
+  },
 };

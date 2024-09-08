@@ -38,4 +38,6 @@ export interface IPayTextProps {
    */
 
   isAmount?: boolean;
+
+  fontWeight?: string;
 }

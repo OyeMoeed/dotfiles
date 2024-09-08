@@ -16,10 +16,10 @@ const changeLanguage = async (payload: ChangeLangPayloadProps): Promise<object> 
       payload: payload?.body,
     });
 
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
-    
+
     return { apiResponseNotOk: true, apiResponse };
   } catch (error: any) {
     return { error: error.message || 'Unknown error' };

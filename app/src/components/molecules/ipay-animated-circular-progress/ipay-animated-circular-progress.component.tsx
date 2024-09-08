@@ -53,7 +53,11 @@ const IPayAnimatedCircularProgress: React.FC<IPayAnimatedCircularProgressProps> 
 
   return (
     <View style={dynamicStyles.container}>
-      <Svg width={size + padding * 2} height={size + padding * 2} viewBox={`0 0 ${size + padding * 2} ${size + padding * 2}`}>
+      <Svg
+        width={size + padding * 2}
+        height={size + padding * 2}
+        viewBox={`0 0 ${size + padding * 2} ${size + padding * 2}`}
+      >
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
             {gradientColors.map((color, index) => (
@@ -76,11 +80,7 @@ const IPayAnimatedCircularProgress: React.FC<IPayAnimatedCircularProgressProps> 
           animatedProps={strokeDashoffset}
           fill="none"
         />
-        {children && (
-          <View style={dynamicStyles.childrenContainer}>
-            {children}
-          </View>
-        )}
+        {children && <View style={dynamicStyles.childrenContainer}>{children}</View>}
       </Svg>
     </View>
   );

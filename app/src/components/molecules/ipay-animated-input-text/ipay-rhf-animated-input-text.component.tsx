@@ -13,7 +13,7 @@ interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProp
   name: string;
   defaultValue?: string;
   onMaxLengthReach?: (value: string, maxLength: number) => void;
-  mainContainerStyles?:   StyleProp<ViewStyle>;
+  mainContainerStyles?: StyleProp<ViewStyle>;
 }
 
 const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(
@@ -24,7 +24,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
       label,
       rightIcon,
       isError,
-      editable=true,
+      editable = true,
       containerStyle,
       actionDisabled,
       onClearInput,
@@ -137,7 +137,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
         {(errors[name]?.message || assistiveText) && (
           <IPayCaption1Text
             style={errors[name]?.message ? styles.errorAssistiveTextText : styles.assistiveText}
-            text={errors[name]?.message ? errors[name]?.message as string :assistiveText}
+            text={errors[name]?.message ? (errors[name]?.message as string) : assistiveText}
             regular
           />
         )}

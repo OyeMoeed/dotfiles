@@ -88,11 +88,11 @@ const transactionsStyles = (colors: any) =>
     atmCardImg: {
       height: moderateScale(75, 0.4),
       width: '100%',
-      alignItems: 'centers',
+      alignItems: 'center',
     },
     cartInfoView: {
       flexDirection: 'row',
-      alignItems: 'cneter',
+      alignItems: 'center',
       justifyContent: 'space-between',
       paddingHorizontal: moderateScale(24, 0.3),
       paddingVertical: verticalScale(16),

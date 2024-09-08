@@ -6,7 +6,7 @@ enum PermissionTypes {
   NOTIFICATION = 'notification',
   CAMERA = 'camera',
   CONTACTS = 'contacts',
-  READ_MEDIA_IMAGES='media_access',
+  READ_MEDIA_IMAGES = 'media_access',
   BIOMETRIC = 'biometric',
 }
 

@@ -1,4 +1,3 @@
-
 interface TransactionDetails {
   serviceName: string;
   conversionRate: string;

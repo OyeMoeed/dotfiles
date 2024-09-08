@@ -6,14 +6,14 @@ import themeColors from './theme-colors';
 
 const theme = {
   lightTheme: {
-    colors: themeColors
+    colors: themeColors,
   },
   darkTheme: {
-    colors: themeColors
+    colors: themeColors,
   },
   nationalDay: {
-    colors: themeColors
-  }
+    colors: themeColors,
+  },
 };
 
 export default theme;

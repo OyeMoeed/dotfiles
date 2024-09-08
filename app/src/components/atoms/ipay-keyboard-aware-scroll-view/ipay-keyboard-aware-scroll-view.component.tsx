@@ -1,7 +1,7 @@
 import React, { forwardRef } from 'react';
 import { KeyboardAwareScrollView, KeyboardAwareScrollViewProps } from 'react-native-keyboard-aware-scroll-view';
-import { IPayKeyboardAwareScrollViewProps } from './ipay-keyboard-aware-scroll-view.interface'
-import styles from './ipay-keyboard-aware-scroll-view.styles'
+import { IPayKeyboardAwareScrollViewProps } from './ipay-keyboard-aware-scroll-view.interface';
+import styles from './ipay-keyboard-aware-scroll-view.styles';
 
 /**
  * A customizable KeyboardAwareScrollView component.

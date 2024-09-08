@@ -95,6 +95,10 @@ const transferSuccessStyles = (colors: any) =>
       width: scaleSize(27),
       height: moderateScale(18),
     },
+    iconStyle: {
+      width: moderateScale(14),
+      height: moderateScale(14),
+    },
   });
 
 export default transferSuccessStyles;
