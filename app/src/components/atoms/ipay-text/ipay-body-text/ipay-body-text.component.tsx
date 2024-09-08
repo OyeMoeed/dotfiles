@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import IPayText from '../ipay-base-text/ipay-text.component';
 import { typography } from '../utilities/typography-helper.util';
 import { IPayBodyTextProps } from './ipay-body-text.interface';

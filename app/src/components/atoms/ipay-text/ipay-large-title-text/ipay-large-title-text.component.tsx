@@ -1,6 +1,6 @@
+import React, { JSX } from 'react';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IPayText } from '@components/atoms/index';
-import React from 'react';
 import { IPayLargeTitleTextProps } from './ipay-large-title-text.interface';
 import styles from './ipay-large-title-text.styles';
 

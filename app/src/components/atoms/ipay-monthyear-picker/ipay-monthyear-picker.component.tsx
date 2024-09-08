@@ -38,13 +38,13 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
 
   const handleMonthChange = (month: string) => {
     setSelectedMonth(month);
-    onDateChange && onDateChange(`${month}/${formatYearToLastTwoDigits(selectedYear)}`);
+    onDateChange?.(`${month}/${formatYearToLastTwoDigits(selectedYear)}`);
   };
 
   const handleYearChange = (year: string) => {
     const formatedYear = formatYearToLastTwoDigits(year);
     setSelectedYear(formatedYear);
-    onDateChange && onDateChange(`${selectedMonth}/${formatedYear}`);
+    onDateChange?.(`${selectedMonth}/${formatedYear}`);
   };
   const styles = datePickerStyles(colors);
   return (

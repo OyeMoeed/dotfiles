@@ -116,5 +116,5 @@ props for is focus
   */
   isFocused?: boolean;
   blurOnSubmit?: boolean;
-  selectionColor: typeof colors;
+  selectionColor: typeof colors | undefined;
 }

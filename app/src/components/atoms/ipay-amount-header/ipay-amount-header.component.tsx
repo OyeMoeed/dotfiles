@@ -14,7 +14,7 @@ const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({ testID, title, chan
   const localizationText = useLocalization();
 
   return (
-    <IPayView testID={`${testID}-amount-header`} style={[styles.cardHeader]}>
+    <IPayView testID={`${testID}-amount-header`} style={styles.cardHeader}>
       <IPayIcon
         icon={channel === payChannel.APPLE ? icons.apple_pay : icons.cards}
         size={24}
@@ -24,7 +24,7 @@ const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({ testID, title, chan
         {title && (
           <IPayCaption1Text
             text={channel === payChannel.APPLE ? localizationText.TOP_UP.APPLE_PAY : localizationText.TOP_UP.CARD_TITLE}
-            style={[styles.headerText]}
+            style={styles.headerText}
           />
         )}
       </IPayView>

@@ -17,6 +17,8 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({
   const [currentProgress, setCurrentProgress] = useState(reverse ? 1 : 0);
   const [isCompleted, setIsCompleted] = useState(false);
 
+  const gradientWidthStyle = { width: reverse ? `${currentProgress * 100}%` : gradientWidth };
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentProgress((prev) => {
@@ -24,7 +26,7 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({
         if (reverse ? newProgress <= 0 : newProgress >= 1) {
           clearInterval(interval);
           setIsCompleted(true);
-          onComplete && onComplete();
+          onComplete?.();
           return reverse ? 0 : 1;
         }
         return newProgress;
@@ -45,9 +47,9 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({
         end={{ x: 1, y: 0 }}
         style={[
           styles.progress,
-          styles.expireStyle,
+          // styles.expireStyle,
           reverse && styles.reverseStyle,
-          { width: reverse ? `${currentProgress * 100}%` : gradientWidth },
+          gradientWidthStyle,
         ]}
       />
     </IPayView>
