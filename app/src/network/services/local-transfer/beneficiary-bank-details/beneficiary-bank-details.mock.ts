@@ -9,6 +9,7 @@ const localTransferBeneficiaryBankDetailsMock: LocalTransferBeneficiaryBankMockP
     correspondingBankCode: '9000',
     beneficiaryType: 'active',
     bankLogo: images.alinmaBankLogo,
+    beneficiaryAccountNo: '000983321290777',
   },
   status: {
     code: 'I000000',

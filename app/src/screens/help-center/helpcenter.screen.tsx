@@ -4,12 +4,11 @@ import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-sectio
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/index';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import getFAQ from '@app/network/services/core/faq/faq.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   IPayCaption1Text,
-  IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
   IPayInput,
@@ -22,7 +21,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-import getFAQ from '@app/network/services/core/faq/faq.service';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
@@ -35,7 +33,7 @@ const HelpCenter: React.FC = () => {
   const localizationText = useLocalization();
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const inside_sa_phone = '(+966)8004339000'; // need to replace with API
-  const outside_sa_phone = '(+966)90000670'; // need to replace with API
+  const outside_sa_phone = '(+966)920000670'; // need to replace with API
   const scrollViewRef = useRef<ScrollView>(null);
   const sectionListRef = useRef<SectionList<any>>(null);
   const [currentTab, setCurrentTab] = useState<number>(0);

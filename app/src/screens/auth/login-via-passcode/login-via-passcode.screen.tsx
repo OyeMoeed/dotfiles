@@ -44,6 +44,8 @@ import { onCall } from '@app/utilities/call-helper.util';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
+import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -92,7 +94,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const { fetchLocation } = useLocation();
 
-  const renderToast = (apiError: string) => {
+  const renderToast = (apiError : string) => {
     setPasscodeError(true);
     showToast({
       title: localizationText.COMMON.INCORRECT_CODE,
@@ -101,16 +103,7 @@ const LoginViaPasscode: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
-  const renderErrorToast = (apiError: string) => {
-    // to be removed
-    setPasscodeError(true);
-    showToast({
-      title: '',
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
+
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -175,10 +168,6 @@ const LoginViaPasscode: React.FC = () => {
     renderSpinner(false);
   };
 
-  const handelPasscodeReacted = () => {
-    resetPasscode();
-  };
-
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
     setShowForgotSheet(false);
@@ -193,26 +182,27 @@ const LoginViaPasscode: React.FC = () => {
     dispatch(setAuth(true));
   };
 
-  const getWalletInformation = async (idExpired?: boolean) => {
-    // renderSpinner(true);
-    try {
-      const payload = {
-        walletNumber,
-      };
-
-      const apiResponse = await getWalletInfo(payload, dispatch);
-
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        saveProfileImage(apiResponse?.response);
-        redirectToHome(idExpired);
-      } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      }
-      renderSpinner(false);
-    } catch (error) {
-      renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+  const saveProfileImage = (response: any) => {
+    if (response?.profileImage) {
+      dispatch(setUserInfo({ profileImage: response?.profileImage }));
     }
+  };
+
+  const getWalletInformation = async (idExpired?: boolean) => {
+    renderSpinner(true);
+
+    const payload: WalletNumberProp = {
+      walletNumber: walletNumber as string,
+    };
+
+    const apiResponse: any = await getWalletInfo(payload);
+
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      dispatch(setWalletInfo(apiResponse?.response));
+      saveProfileImage(apiResponse?.response);
+      redirectToHome(idExpired);
+    }
+    renderSpinner(false);
   };
 
   const loginUsingPasscode = async (
@@ -245,20 +235,6 @@ const LoginViaPasscode: React.FC = () => {
       );
       saveProfileImage(loginApiResponse?.response);
       await getWalletInformation(loginApiResponse?.response?.idExpired);
-    } else {
-      setPasscodeError(true);
-
-      if (loginApiResponse['apiResponse'].status.code == 'E430185')
-        renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
-            'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
-        );
-      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184')
-        renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
-            'Your wallet is locked, Please try again after 5 minutes.',
-        );
-      else renderErrorToast(localizationText.ERROR.INVALID_PASSCODE);
     }
   };
 
@@ -267,18 +243,17 @@ const LoginViaPasscode: React.FC = () => {
     if (!hasLocation) {
       setPasscodeError(true);
       return;
-    } else {
-      setPasscodeError(false);
     }
+    setPasscodeError(false);
+
     renderSpinner(true);
     const location = await fetchLocation();
     if (!location) {
       setPasscodeError(true);
       renderSpinner(false);
       return;
-    } else {
-      setPasscodeError(false);
     }
+    setPasscodeError(false);
 
     try {
       const deviceInfo = getDeviceInfo();
@@ -369,7 +344,7 @@ const LoginViaPasscode: React.FC = () => {
             setOtpError={setOtpError}
             otpError={otpError}
             apiError={apiError}
-            showHelp={true}
+            showHelp
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
@@ -419,12 +394,6 @@ const LoginViaPasscode: React.FC = () => {
 
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
-
-  const saveProfileImage = (response) => {
-    if (response?.profileImage) {
-      dispatch(setUserInfo({ profileImage: response?.profileImage }));
-    }
-  };
 
   return (
     <IPaySafeAreaView>

@@ -18,6 +18,7 @@ import { spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
 
 const useLogin = () => {
@@ -114,15 +115,15 @@ const useLogin = () => {
 
   const resendForgetPasscodeOtp = async () => {
     renderSpinner(true);
-    try {
-      const apiResponse = await prepareForgetPasscode(resendOtpPayload as PrepareForgetPasscodeProps, dispatch);
-      if (apiResponse?.status.type === 'SUCCESS') {
-        setOtpRef(apiResponse?.response?.otpRef as string);
-      }
-      renderSpinner(false);
-    } catch (error) {
-      renderSpinner(false);
+
+    const apiResponse = await prepareForgetPasscode(resendOtpPayload as PrepareForgetPasscodeProps);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      const { otpRef: otpRefValue, walletNumber } = apiResponse?.data?.response || {};
+      dispatch(setAppData({ otpRefValue, walletNumber }));
+
+      setOtpRef(otpRefValue);
     }
+    renderSpinner(false);
   };
 
   return {

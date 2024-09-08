@@ -218,7 +218,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
   const { limitsDetails } = walletInfo;
   useEffect(() => {
-    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
+    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingIncomingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingIncomingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
 
@@ -280,6 +280,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             showIcon={currentState !== TopUpStates.INITAL_STATE}
             isEditable={currentState === TopUpStates.INITAL_STATE}
             onPressIcon={handleIconPress}
+            balanceType="Incoming"
           />
 
           {channel === payChannel.APPLE ? (

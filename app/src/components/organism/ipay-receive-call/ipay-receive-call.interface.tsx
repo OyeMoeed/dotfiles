@@ -1,6 +1,9 @@
+import { ApiResponseStatusType } from '@app/utilities/enums.util';
+
 interface IPayReceiveCallProps {
   testID?: string;
   guideToReceiveCall: GuideStep[];
+  activateInternationalBeneficiary: () => Promise<ApiResponseStatusType | void>;
 }
 
 interface GuideStep {

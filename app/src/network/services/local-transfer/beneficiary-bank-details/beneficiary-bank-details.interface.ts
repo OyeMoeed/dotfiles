@@ -8,6 +8,7 @@ interface BeneficiaryBankDetailsRes {
   bankName: string;
   beneficiaryType: string;
   bankLogo: string;
+  beneficiaryAccountNo: string;
 }
 
 // Define the LocalTransferBeneficiaryBankDetails interface
@@ -19,8 +20,8 @@ interface LocalTransferBeneficiaryBankDetails {
 interface BeneficiaryBankDetailsReq {
   iban: string;
   countryCode: string;
-  bankCode: string;
-  beneficiaryType: string;
+  bankCode?: string;
+  beneficiaryType?: string;
 }
 
 // Extend the LocalTransferBeneficiaryBankMockProps interface from LocalTransferBeneficiaryBankDetails and MockAPIOkProp
