@@ -18,40 +18,34 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { clearSession, logOut } from '@app/network/services/core/logout/logout.service';
+import logOut from '@app/network/services/core/logout/logout.service';
+import clearSession from '@app/network/utilities/network-session-helper';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { resetUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useRef } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
-const MenuScreen: React.FC = () => {
+const MenuScreen: FC = () => {
   const { colors } = useTheme();
   const styles = menuStyles(colors);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
-  const [setAPIError] = useState<string>('');
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-  const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  useEffect(() => {
-    setDelinkFLag(appData.isLinkedDevice);
-  }, [appData, appData.isLinkedDevice]);
-
   const { showToast } = useToastContext();
 
-  const renderToast = (apiError: string) => {
+  const renderToast = (error: string) => {
     showToast({
-      title: localizationText.api_request_failed,
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      title: localizationText.COMMON.TRY_AGAIN,
+      subTitle: error || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
@@ -86,10 +80,6 @@ const MenuScreen: React.FC = () => {
       hideLogout();
       clearSession(false);
     } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-    } else {
-      setAPIError(apiResponse?.error);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -114,15 +104,10 @@ const MenuScreen: React.FC = () => {
 
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
       }
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -135,7 +120,7 @@ const MenuScreen: React.FC = () => {
     actionSheetRef.current.hide();
   };
 
-  const delinkSuccessfully = useCallback((index: number) => {
+  const delinkSuccessfully = useCallback((index?: number) => {
     if (index === 1) {
       delinkDevice();
     }

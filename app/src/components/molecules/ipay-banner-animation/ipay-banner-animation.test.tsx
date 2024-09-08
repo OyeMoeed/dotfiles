@@ -18,7 +18,7 @@ describe('RNCounterButton', () => {
         onPressUp={() => console.log('pressedUp')}
         testID="isCountDownButton"
         onPressDown={() => console.log('PressedDown')}
-        onVerify={()=>console.log('overlay')}
+        onVerify={() => console.log('overlay')}
       />,
     );
 

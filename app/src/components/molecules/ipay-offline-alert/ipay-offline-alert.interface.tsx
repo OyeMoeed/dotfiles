@@ -1,6 +1,5 @@
-
 export interface IPayOfflineAlertProps {
-  testID?:string;
+  testID?: string;
   onClose: () => void;
   visible: boolean;
 }

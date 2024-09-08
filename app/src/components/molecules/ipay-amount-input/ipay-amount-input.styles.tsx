@@ -27,7 +27,6 @@ const amountInputStyles = (colors) =>
       color: colors.natural.natural1000,
       lineHeight: moderateScale(20),
       alignSelf: 'flex-end',
-      marginBottom: moderateScale(3),
     },
     textAmount: {
       color: colors.natural.natural1000,

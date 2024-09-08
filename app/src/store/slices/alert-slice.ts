@@ -1,15 +1,18 @@
 // src/store/alertSlice.ts
 
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
+
 interface AlertState {
   visible: boolean;
   sessionTimeout: boolean;
+  serviceCallError: string;
 }
 
 const initialState: AlertState = {
   visible: false,
   sessionTimeout: false,
+  serviceCallError: '',
 };
 
 const alertSlice = createSlice({
@@ -28,9 +31,13 @@ const alertSlice = createSlice({
     hideSessionTimeoutAlert: (state) => {
       state.sessionTimeout = false;
     },
+    showServiceCallErrorToast: (state, action: PayloadAction<string>) => {
+      state.serviceCallError = action.payload;
+    },
   },
 });
 
-export const { showAlert, hideAlert, showSessionTimeoutAlert, hideSessionTimeoutAlert } = alertSlice.actions;
+export const { showAlert, hideAlert, showSessionTimeoutAlert, hideSessionTimeoutAlert, showServiceCallErrorToast } =
+  alertSlice.actions;
 
 export default alertSlice.reducer;
