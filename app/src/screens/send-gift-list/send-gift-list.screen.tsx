@@ -51,15 +51,7 @@ const SendGiftListScreen: React.FC = () => {
   const handleSubmit = (data: SubmitEvent) => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
-      const {
-         contactNumber,
-        amountFrom,
-         amountTo,
-        dateFrom,
-         dateTo,
-        status,
-        occasion,
-      } = data;
+      const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status, occasion } = data;
       const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
 
@@ -171,7 +163,7 @@ const SendGiftListScreen: React.FC = () => {
   };
 
   const selectedTabData =
-    selectedTab === localizationText.SEND_GIFT.SEND ? walletTransferData?.SENT : walletTransferData.RECEIVED;
+    selectedTab === localizationText.SEND_GIFT.SENT ? walletTransferData?.SENT : walletTransferData.RECEIVED;
 
   return (
     <IPaySafeAreaView>

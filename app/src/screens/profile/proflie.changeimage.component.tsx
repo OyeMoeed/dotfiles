@@ -11,8 +11,7 @@ import { alertType, alertVariant } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
-import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { removeProfileImage } from '@app/network/services/core/update-wallet/update-wallet.service';
 import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import profileStyles from './profile.style';
@@ -71,22 +70,16 @@ const useChangeImage = (): UseChangeImageReturn => {
         includeBase64: true,
       }).then((image: any) => {
         if (image.data) {
-           setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
+          setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
           hideActionSheet();
         }
       });
     }, 100);
   };
 
-  const removeProfileImage = async () => {
+  const onRemoveProfileImage = async () => {
     setIsLoading(true);
-    const apiResponse = await walletUpdate(
-      {
-        deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        profileImage: '',
-      },
-      walletInfo.walletNumber,
-    );
+    const apiResponse = await removeProfileImage(walletInfo.walletNumber);
     if (apiResponse?.status?.type === 'SUCCESS') {
       dispatch(setUserInfo({ profileImage: '' }));
       setIsLoading(false);
@@ -98,7 +91,7 @@ const useChangeImage = (): UseChangeImageReturn => {
   const handleRemoveImg = useCallback(() => {
     setSelectedImage(null);
     setAlertVisible(false);
-    removeProfileImage();
+    onRemoveProfileImage();
   }, []);
 
   const handleActionPress = useCallback(

@@ -9,53 +9,53 @@ const styles = createStyleSheet({
     height: spacing.CUSTOME_SCALE(270),
     borderRadius: SCALE_48,
     marginVertical: SCALE_16,
-    marginHorizontal: SCALE_10
+    marginHorizontal: SCALE_10,
   },
   container: {
     paddingVertical: SCALE_28,
     paddingHorizontal: spacing.CUSTOME_SCALE(23),
     borderRadius: SCALE_48,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   commonConStyle: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   imagContainer: {
     width: '100%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   imageStyle: {
     width: spacing.CUSTOME_SCALE(192),
-    height: spacing.CUSTOME_SCALE(153)
+    height: spacing.CUSTOME_SCALE(153),
   },
   footnoteTextStyle: {
     fontWeight: '400',
     fontSize: FONT_SIZE_12,
-    color: colors.natural.natural900
+    color: colors.natural.natural900,
   },
   captionTextStyle: {
     fontSize: FONT_SIZE_11,
     alignSelf: 'center',
-    marginTop: SCALE_4
+    marginTop: SCALE_4,
   },
   largeTextStyle: {
     fontWeight: '700',
-    color: colors.natural.natural900
+    color: colors.natural.natural900,
   },
   subHeadingTextStyle: {
     fontSize: FONT_SIZE_14,
     fontWeight: '400',
-    color: colors.natural.natural900
+    color: colors.natural.natural900,
   },
   historyContStyle: {
     width: '100%',
     height: SCALE_70,
     borderRadius: SCALE_28,
     backgroundColor: colors.white,
-    marginVertical: SCALE_16
-  }
+    marginVertical: SCALE_16,
+  },
 });
 
 export default styles;

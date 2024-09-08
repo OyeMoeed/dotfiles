@@ -117,7 +117,7 @@ interface CardListResponse {
   response: {
     referenceNumber: string;
     transactionDate: string;
-    cardList: CardListItem;
+    cards: CardListItem;
   };
   successfulResponse: boolean;
 }

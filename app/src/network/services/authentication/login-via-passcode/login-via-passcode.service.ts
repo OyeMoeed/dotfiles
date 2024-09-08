@@ -14,14 +14,14 @@ const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object>
       endpoint: AUTHENTICATION_URLS.LOGIN_VIA_PASSCODE,
       method: requestType.POST,
       payload,
-      headers:{
-        "Api-Version": "v2"
+      headers: {
+        'Api-Version': 'v2',
       },
     });
     if (apiResponse?.status.type == 'SUCCESS') {
       return apiResponse;
     }
-    return { apiResponseNotOk: true };
+    return { apiResponseNotOk: true, apiResponse: apiResponse };
   } catch (error) {
     return { error: error.message || 'Unknown error' };
   }

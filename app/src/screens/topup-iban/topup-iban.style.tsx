@@ -1,6 +1,8 @@
+import { SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
+const innerWidth = SCREEN_WIDTH - moderateScale(40);
 const topupIbanStyles = (colors: any) =>
   createStyleSheet({
     mainWrapper: {
@@ -19,10 +21,12 @@ const topupIbanStyles = (colors: any) =>
       color: colors.primary.primary900,
     },
     toastContainer: {
+      width: innerWidth,
       bottom: verticalScale(90),
-
       borderColor: colors.success.success500,
       backgroundColor: colors.success.success500,
+      left: 0,
+      marginLeft: moderateScale(20),
     },
     textStyle: {
       color: colors.natural.natural500,

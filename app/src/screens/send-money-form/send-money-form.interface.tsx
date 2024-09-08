@@ -6,6 +6,7 @@ type SendMoneyFormType = {
   selectedItem?: { id?: string | number; text: string };
   mobileNumber?: string;
   name?: string;
+  hasWallet?: boolean;
 };
 
 type SendMoneyFormSheet = {

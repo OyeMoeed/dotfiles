@@ -37,18 +37,18 @@ export interface IGetCoreManagementLovResponse {
 }
 
 export interface CoreManagementLovInfo {
-  recTypeCode: string;//code
-  recDesc: string;//name
-  attribute1: string;// translated name
-  attribute2: string;//number maybe city id
-  attribute3: string;// lang
-  attribute4: string;// lat 
-  attribute5: string;//directions
-  attribute6: string;//number maybe filter id
+  recTypeCode: string; //code
+  recDesc: string; //name
+  attribute1: string; // translated name
+  attribute2: string; //number maybe city id
+  attribute3: string; // lang
+  attribute4: string; // lat
+  attribute5: string; //directions
+  attribute6: string; //number maybe filter id
   attribute7: string;
   attribute8: string;
   attribute9: string;
-  recDescription: string;// name
+  recDescription: string; // name
 }
 
 export interface IGetCoreManagementLovPayload {

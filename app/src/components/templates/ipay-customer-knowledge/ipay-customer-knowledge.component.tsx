@@ -79,7 +79,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
       'monthly_income',
       monthlyIncomeKeys.filter((el) => el.code === walletInfo.accountBasicInfo.monthlyIncomeAmount)[0],
     );
-    setValue('employee_name', walletInfo.workDetails.industry);
+    setValue('employer_name', walletInfo.workDetails.industry);
     setValue('district', walletInfo.addressDetails.district);
     setValue('street_name', walletInfo.addressDetails.street);
     setValue('postal_code', walletInfo.addressDetails.poBox);
@@ -127,6 +127,10 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     getCitiessLovs();
     setDefaultValues();
   }, []);
+
+  useEffect(() => {
+    setSearch('');
+  }, [category]);
 
   const onSubmitEvent = (formData: IFormData) => {
     if (onSubmit) onSubmit(formData);

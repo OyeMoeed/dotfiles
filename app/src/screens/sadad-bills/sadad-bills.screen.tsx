@@ -155,7 +155,11 @@ const SadadBillsScreen: React.FC = () => {
 
   const handelEditOrDelete = (index: number) => {
     if (index === 0) {
-      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, { billData: billToEditRef.current, setEditBillSuccessToast });
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
+        billData: billToEditRef.current,
+        setEditBillSuccessToast,
+        billId: '1', // TODO: once api implemented on this screen will update it
+      });
     } else {
       setActionSheetOptions(deleteBillOptions);
     }

@@ -21,6 +21,13 @@ const internationalTrHistoryStyles = (themeColors: typeof colors) =>
       paddingVertical: verticalScale(7),
       paddingEnd: moderateScale(18, 0.3),
     },
+    filterWrapper: {
+      height: verticalScale(21),
+      marginTop: moderateScale(16, 0.3),
+    },
+    filterItemSeparator: {
+      width: moderateScale(8, 0.35),
+    },
     actionSheetView: {
       marginBottom: verticalScale(22),
     },

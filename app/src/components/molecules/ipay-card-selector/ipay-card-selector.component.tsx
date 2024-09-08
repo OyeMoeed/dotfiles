@@ -94,7 +94,9 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
       };
     });
   };
-
+  useEffect(() => {
+    if (topupCards.length == 1) setSelectedCard(topupCards[0].key);
+  }, [topupCards]);
   const getTopupCardsData = async () => {
     renderSpinner(true);
     try {
@@ -107,8 +109,9 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           if (apiResponse?.response?.cardList && apiResponse?.response?.cardList?.length) {
-            setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
+            await setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
           }
+
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);

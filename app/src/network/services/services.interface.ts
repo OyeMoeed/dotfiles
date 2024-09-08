@@ -24,7 +24,7 @@ type DeviceInfoProps = {
   deviceName?: string;
   platform?: string;
   deviceInfo?: any;
-  locationDetails: IlocationDetails;
+  locationDetails?: IlocationDetails;
   hashCode?: string;
 };
 
@@ -67,8 +67,8 @@ export {
   ApiResponse,
   ApiResponseNotOk,
   DeviceInfoProps,
+  IApiStatus,
   MockAPIDataProps,
   MockAPIOkProp,
   MockAPIStatusProps,
-  IApiStatus,
 };

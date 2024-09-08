@@ -5,7 +5,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { FC } from 'react';
 import { IPayIdRenewalSheetProps } from './ipay-id-renewal-sheet.interface';
 
-const IPayRenewalIdAlert: FC<IPayIdRenewalSheetProps> = ({ onClose, visible }) => {
+const IPayRenewalIdAlert: FC<Pick<IPayIdRenewalSheetProps, 'visible' | 'onClose'>> = ({ onClose, visible }) => {
   const localizationText = useLocalization();
 
   return (
@@ -19,7 +19,7 @@ const IPayRenewalIdAlert: FC<IPayIdRenewalSheetProps> = ({ onClose, visible }) =
       icon={<IPayIcon icon={icons.tick_square1} size={64} />}
       primaryAction={{
         text: localizationText.COMMON.DONE,
-        onPress: onClose
+        onPress: onClose,
       }}
     />
   );

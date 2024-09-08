@@ -1,6 +1,5 @@
-
 export interface IPayPermissionAlertProps {
-  testID?:string;
+  testID?: string;
   onClose: () => void;
   visible: boolean;
 }

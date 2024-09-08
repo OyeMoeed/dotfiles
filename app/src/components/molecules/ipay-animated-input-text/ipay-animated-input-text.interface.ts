@@ -118,4 +118,5 @@ export interface AnimatedTextInputProps extends TextInputProps {
   actionDisabled?: boolean;
   errorMessageViewStyle?: StyleProp<ViewStyle>;
   errorMessageStyle?: StyleProp<ViewStyle>;
+  suffix?: string;
 }
