@@ -30,6 +30,7 @@ import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import editLocalTransferBeneficiary from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.service';
 import { ActivationMethods } from '@app/network/services/local-transfer/local-transfer-activate-beneficiary/local-transfer-activate-beneficiary.interface';
 import activateLocalBeneficiary from '@app/network/services/local-transfer/local-transfer-activate-beneficiary/local-transfer-activate-beneficiary.service';
 import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
@@ -135,6 +136,7 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const onPressMenuOption = (item: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = item;
     setNickName(item?.nickname ?? '');
     setselectedBeneficiary(item);
     setTimeout(() => {
@@ -170,9 +172,30 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const handleChangeBeneficiaryName = () => {
-    showUpdateBeneficiaryToast();
-    editNickNameSheetRef?.current?.close();
+  const handleChangeBeneficiaryName = async () => {
+    const activateBeneficiaryPayload = {
+      beneficiaryCode: selectedBeneficiaryRef.current?.beneficiaryCode,
+      nickName: nickName,
+    };
+
+    try {
+      const apiResponse = await editLocalTransferBeneficiary(activateBeneficiaryPayload);
+      console.log('apiResponse', apiResponse);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          showUpdateBeneficiaryToast();
+          editNickNameSheetRef?.current?.close();
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const showDeleteBeneficiaryToast = () => {
