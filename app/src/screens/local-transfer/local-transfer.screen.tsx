@@ -175,12 +175,12 @@ const LocalTransferScreen: React.FC = () => {
   const handleChangeBeneficiaryName = async () => {
     const activateBeneficiaryPayload = {
       beneficiaryCode: selectedBeneficiaryRef.current?.beneficiaryCode,
-      nickName: nickName,
+      nickname: nickName,
     };
 
     try {
       const apiResponse = await editLocalTransferBeneficiary(activateBeneficiaryPayload);
-      console.log('apiResponse', apiResponse);
+
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           showUpdateBeneficiaryToast();
@@ -194,8 +194,9 @@ const LocalTransferScreen: React.FC = () => {
       }
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    showUpdateBeneficiaryToast();
+    editNickNameSheetRef?.current?.close();
   };
 
   const showDeleteBeneficiaryToast = () => {

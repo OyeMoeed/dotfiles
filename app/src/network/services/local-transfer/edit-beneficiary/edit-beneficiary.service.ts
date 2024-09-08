@@ -12,12 +12,12 @@ const editLocalTransferBeneficiary = async (payload: editBeneficiaryPayload): Pr
   }
   try {
     const apiResponse: ApiResponse<editBeneficiaryResponse> = await apiCall({
-      endpoint: `${LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary()}${payload.beneficiaryCode}`,
+      endpoint: LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary(payload.beneficiaryCode),
       method: requestType.PUT,
       payload,
     });
 
-    return apiResponse?.response;
+    return apiResponse;
   } catch (error) {
     const { response } = error;
     return response || 'Unknown error';
