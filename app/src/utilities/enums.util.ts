@@ -221,7 +221,8 @@ enum AddBeneficiary {
 }
 enum BeneficiaryTypes {
   ACTIVE = 'active',
-  INACTIVE = 'NEW_BENEFICIARY'
+  INACTIVE = 'inactive',
+  NEW_BENEFICIARY = 'NEW_BENEFICIARY'
 }
 
 enum APIResponseType {
