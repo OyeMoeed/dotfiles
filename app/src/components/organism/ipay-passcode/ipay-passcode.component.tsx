@@ -8,6 +8,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useState } from 'react';
 import { ListRenderItem } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { IPayPasscodeProps } from './ipay-passcode.interface';
 import ipayPasscodeStyles from './ipay-passcode.style';
 
@@ -29,7 +30,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
   const [pin, setPin] = useState<string[]>([]);
 
   useEffect(() => {
-    passcodeError && setPin([]);
+    if (passcodeError) setPin([]);
   }, [passcodeError]);
 
   useEffect(() => {
@@ -53,6 +54,12 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
       return <IPayView testID={`${testID}-${index}`} style={styles.transparentView} />;
     }
     if (item === '' || item === 'back') {
+      const isLoginVia = loginViaPasscode ? (
+        <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={40} />
+      ) : (
+        <IPayView />
+      );
+
       return (
         <IPayPressable
           activeOpacity={0.8}
@@ -62,10 +69,8 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
         >
           {item === 'back' ? (
             <IPayIcon icon={icons.backspaceIcon} color={colors.primary.primary800} size={20} />
-          ) : loginViaPasscode ? (
-            <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={40} />
           ) : (
-            <IPayView />
+            isLoginVia
           )}
         </IPayPressable>
       );
@@ -81,6 +86,9 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
       </IPayPressable>
     );
   };
+
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ItemSeparatorComponent = () => <IPayView style={styles.itemSeparator} />;
 
   const pinContainerMargin = forgetPasswordBtn
     ? { marginBottom: moderateScale(16) }
@@ -103,7 +111,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
       </IPayView>
       {forgetPasswordBtn && (
         <IPayButton
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           btnIconsDisabled
           btnText={localizationText.LOGIN.FORGOT_PASSCODE_QUESTION}
           small
@@ -116,7 +124,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
         data={data}
         renderItem={renderItem}
         keyExtractor={(item, index) => index.toString()}
-        ItemSeparatorComponent={() => <IPayView style={styles.itemSeparator} />}
+        ItemSeparatorComponent={ItemSeparatorComponent}
       />
     </IPayView>
   );

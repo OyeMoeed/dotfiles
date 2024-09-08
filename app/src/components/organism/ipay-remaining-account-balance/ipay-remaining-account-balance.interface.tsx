@@ -1,7 +1,7 @@
 // actionSheetProps.ts
 
 import { GetWalletResponse } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import { buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { buttonVariants, payChannel, TopUpStates } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native-size-matters';
 
 interface IPayRemainingBalanceProps {
@@ -20,7 +20,7 @@ interface IPayRemainingBalanceProps {
   showProgress?: boolean;
   showIcon?: boolean;
   qrScanBtn?: boolean;
-  topUpAmount?: string;
+  topUpAmount?: number | string;
   setTopUpAmount?: (text: string) => void;
   onPressAddCards?: () => void;
   chipValue?: string;
@@ -28,7 +28,7 @@ interface IPayRemainingBalanceProps {
   openPressExpired?: () => void;
   handleCardSelect?: (card?: any) => void;
   selectedCard?: () => void;
-  currentState?: string;
+  currentState?: TopUpStates;
   showQuickAmount?: () => void;
   isQrBtnDisabled?: boolean;
   isEditable?: boolean;

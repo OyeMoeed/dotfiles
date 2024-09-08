@@ -56,6 +56,19 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
         onCloseBottomSheet?.();
       }
     };
+
+    const handleComponent = () => (
+      <>
+        <IPayLinearGradientView
+          gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
+          style={styles.logoContainer}
+        >
+          <LogoIcon />
+        </IPayLinearGradientView>
+        <IPayBlurView />
+      </>
+    );
+
     const content = (
       <BottomSheetModalProvider>
         <BottomSheetModal
@@ -74,17 +87,7 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
-          handleComponent={() => (
-            <>
-              <IPayLinearGradientView
-                gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
-                style={styles.logoContainer}
-              >
-                <LogoIcon />
-              </IPayLinearGradientView>
-              <IPayBlurView />
-            </>
-          )}
+          handleComponent={handleComponent}
         >
           <IPayLinearGradientView
             style={styles.bottomSheetStyle}

@@ -132,9 +132,9 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     <IPayView style={styles.itemContainer}>
       <IPayPressable
         onPress={() => {
-          onCardSelect(item);
+          onCardSelect?.(item);
           if (item.expired) {
-            openPressExpired();
+            openPressExpired?.();
           } else {
             handleCardSelect(item.key);
             handleCardSelectObj(item);

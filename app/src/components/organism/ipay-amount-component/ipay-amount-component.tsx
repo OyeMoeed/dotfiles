@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -22,9 +21,13 @@ import {
   payChannel,
   spinnerVariant,
 } from '@app/utilities/enums.util';
+
+// TODO: fix no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { getErrorMessage } from '@rnw-community/shared';
+
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
-import { getErrorMessage } from '@rnw-community/shared';
 import React, { useCallback, useEffect, useState } from 'react';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
@@ -59,7 +62,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const methodData = [
+  const methodData: PaymentMethodData[] = [
     {
       supportedMethods: PaymentMethodNameEnum.ApplePay,
       data: {
@@ -150,7 +153,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
         return paymentResponse.complete(PaymentComplete.SUCCESS);
       })
-      .catch((err: unknown) => void setError(getErrorMessage(err)));
+      .catch((err: unknown) => setError(getErrorMessage(err)));
   };
 
   const handlePressPay = async () => {
@@ -188,10 +191,11 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const apiResponse: any = await topupCheckout(payload);
 
     switch (apiResponse?.status?.type) {
-      case ApiResponseStatusType.SUCCESS:
+      case ApiResponseStatusType.SUCCESS: {
         const paymentGateway = apiResponse?.response?.paymentGateway;
+
         setRedirectUrl(apiResponse?.response?.redirectUrl);
-        if (paymentGateway == 'CLICKPAY') {
+        if (paymentGateway === 'CLICKPAY') {
           navigate(screenNames.CARD_VERIFICATION, {
             redirectUrl: apiResponse?.response?.redirectUrl,
             transactionRefNumber: apiResponse?.response?.transactionRefNumber,
@@ -204,6 +208,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           });
         }
         break;
+      }
       case apiResponse?.apiResponseNotOk:
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         break;
@@ -284,6 +289,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             showIcon={currentState !== TopUpStates.INITAL_STATE}
             isEditable={currentState === TopUpStates.INITAL_STATE}
             onPressIcon={handleIconPress}
+            currencyStyle={undefined}
+            inputStyles={undefined}
+            defaultValue=""
           />
 
           {channel === payChannel.APPLE ? (
