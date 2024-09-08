@@ -62,9 +62,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         containerStyle={styles.listContainerStyle}
         title={renderTitle(key)}
         textStyle={[styles.listTitleText, key === AddBeneficiary.IBAN && styles.capitalizeText]}
+        rightContainerStyles={styles.rightContainer}
         rightText={
           <IPayView testID={key} style={styles.rightTextStyle}>
-            <IPaySubHeadlineText color={colors.primary.primary800} regular>
+            <IPaySubHeadlineText numberOfLines={2} color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
             {key === AddBeneficiary.BANK_NAME && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}

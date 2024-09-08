@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { Home2, Refresh2Icon, Send2Icon } from '@app/assets/svgs';
 import {
   IPayFlatlist,
   IPayFootnoteText,
@@ -136,14 +137,14 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   onPress={onPressPayOtherBill}
-                  leftIcon={<IPayIcon icon={icons.refresh2} size={14} color={colors.primary.primary500} />}
+                  leftIcon={<Refresh2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
                   btnText={localizationText.BILL_PAYMENTS.PAY_ANOTHER_BILL}
                 />
                 <IPayButton
                   onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
-                  leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                  leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
                   btnText={localizationText.TOP_UP.SHARE}
                 />
               </IPayView>
@@ -151,7 +152,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 onPress={onPressHome}
                 btnType={buttonVariants.PRIMARY}
                 large
-                leftIcon={<IPayIcon icon={icons.HOME_2} size={14} color={colors.natural.natural0} />}
+                leftIcon={<Home2 style={styles.homeIcon} color={colors.natural.natural0} />}
                 btnText={localizationText.COMMON.HOME}
               />
             </IPayView>

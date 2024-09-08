@@ -1,15 +1,8 @@
 import { AxiosResponse } from 'axios';
 import { ApiResponse, IApiStatus } from './services.interface';
 
-const handleApiResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiResponse<T> => {
-  const { status, successfulResponse, authentication, response: responseData } = response.data;
-
-  if (status.type === 'ERROR' || !successfulResponse) {
-    return {
-      status,
-      successfulResponse: false,
-    };
-  }
+const handleApiResponse = (response: AxiosResponse): ApiResponse<any> => {
+  const { status, authentication, response: responseData } = response.data;
 
   return {
     status,
@@ -20,11 +13,12 @@ const handleApiResponse = <T>(response: AxiosResponse<ApiResponse<T>>): ApiRespo
   };
 };
 
-const handleApiError = (error: any): ApiResponse<any> => {
-  const status: IApiStatus = error.response?.data?.status || {
-    code: 'NETWORK_ERROR',
-    type: 'ERROR',
-    desc: error.message || 'Unknown network error',
+const mapApiError = (error: any): ApiResponse<any> => {
+  const result = error?.response?.data || error?.data;
+  const status: IApiStatus = {
+    code: result?.status?.code || 'NETWORK_ERROR',
+    type: result?.status?.type || 'ERROR',
+    desc: result?.status?.translation || 'SOMETHING_WENT_WRONG',
   };
 
   return {
@@ -33,4 +27,4 @@ const handleApiError = (error: any): ApiResponse<any> => {
   };
 };
 
-export { handleApiError, handleApiResponse };
+export { mapApiError, handleApiResponse };

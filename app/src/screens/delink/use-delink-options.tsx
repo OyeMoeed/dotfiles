@@ -1,10 +1,11 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import React from 'react';
 
 interface ActionSheetOptions {
   title: string;
-  customImage: JSX.Element;
+  customImage: React.JSX.Element;
   showIcon: boolean;
   message: string;
   options: string[];
@@ -14,7 +15,7 @@ interface ActionSheetOptions {
   onPress: () => void;
 }
 
-const useActionSheetOptions = (delinkSucessfully: () => void): ActionSheetOptions => {
+const useActionSheetOptions = (delinkSucessfully: (index?: number) => void): ActionSheetOptions => {
   const localizationText = useLocalization();
 
   return {
