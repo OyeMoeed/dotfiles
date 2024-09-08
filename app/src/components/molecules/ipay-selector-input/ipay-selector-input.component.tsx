@@ -1,5 +1,5 @@
 import { IPayCaption1Text, IPayIcon, IPayImage, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
-import React, { useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import icons from '@app/assets/icons';
@@ -61,7 +61,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
             {variant === inputType.PHONE_NUMBER ? (
               <IPayImage image={flagImage} style={styles.flag} />
             ) : (
-              <IPayCaption1Text text={currency} style={[styles.numberValue]} />
+              <IPayCaption1Text text={currency} style={styles.numberValue} />
             )}
             {showIcon && (
               <IPayIcon
@@ -80,7 +80,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
             />
             <IPayView style={styles.rowStyles}>
               {variant === inputType.PHONE_NUMBER && (
-                <IPayCaption1Text text={countryCode} style={[styles.numberValue]} regular />
+                <IPayCaption1Text text={countryCode} style={styles.numberValue} regular />
               )}
               <IPayInput
                 isFocused={isFocused}

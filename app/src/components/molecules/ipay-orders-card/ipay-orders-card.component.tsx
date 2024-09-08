@@ -1,3 +1,4 @@
+import React from 'react';
 import icons from '@app/assets/icons';
 import {
   IPayCaption2Text,

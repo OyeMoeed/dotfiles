@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import {
-  IPayBodyText,
   IPayCaption2Text,
   IPayIcon,
   IPayPressable,
@@ -34,7 +33,6 @@ const IPayToast: React.FC<IPayToastProps> = ({
   onPress,
   titleColor,
   containerStyle,
-  borderColor,
   isShowRightIcon,
   rightIcon,
   isBottomSheet,
@@ -43,10 +41,8 @@ const IPayToast: React.FC<IPayToastProps> = ({
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles({
-    colors,
     bgColor: bgColor || colors.error.error500,
     titleColor: titleColor || colors.primary.primary800,
-    borderColor: borderColor || colors.secondary.secondary200,
   });
   const bottonStyle = { bottom: verticalScale(isBottomSheet ? 105 : 40) };
   const textViewWidth = { width: isShowRightIcon ? '80%' : '90%' };
@@ -74,11 +70,15 @@ const IPayToast: React.FC<IPayToastProps> = ({
         title && !subTitle && dynamicStyles.onlyTitleContainer,
       ]}
     >
-      <IPayView style={[dynamicStyles.commonContainer]}>
+      <IPayView style={dynamicStyles.commonContainer}>
         <IPayView style={dynamicStyles.leftIconContainer}>
-          {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.warning} color={colors.natural.natural0} /> : <></>}
+          {isShowLeftIcon ? (
+            leftIcon || <IPayIcon icon={icons.warning} color={colors.natural.natural0} />
+          ) : (
+            <IPayView />
+          )}
         </IPayView>
-        <IPayView style={[textViewWidth, { justifyContent: 'center' }]}>
+        <IPayView style={[textViewWidth, dynamicStyles.justifyContentCenter]}>
           {title && !subTitle && (
             <IPaySubHeadlineText regular style={[dynamicStyles.onlyTitleText, titleStyle]} text={title} />
           )}

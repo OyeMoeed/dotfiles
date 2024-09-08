@@ -5,7 +5,7 @@ import { SCALE_1, SCALE_10, SCALE_5 } from '@app/styles/spacing.const';
 import { FONT_SIZE_14 } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const styles = ({ _, bgColor, titleColor, borderColor }) =>
+const styles = ({ bgColor, titleColor }: { bgColor?: string; titleColor?: string }) =>
   createStyleSheet({
     mainContiner: {
       backgroundColor: 'transparent',
@@ -83,6 +83,7 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       top: scaleSize(6),
       fontSize: FONT_SIZE_14,
     },
+    justifyContentCenter: { justifyContent: 'center' },
   });
 
 export default styles;
