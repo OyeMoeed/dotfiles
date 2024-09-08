@@ -116,11 +116,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo ?? '',
       currency,
       beneficiaryBankDetail: {
-        bankCode: beneficiaryBankDetails?.bankCode ?? '',
-        correspondingBankCode: beneficiaryBankDetails?.correspondingBankCode ?? '',
-        bankName: beneficiaryBankDetails?.bankName ?? '',
-      },
-      remittanceType: '500',
+        bankCode: beneficiaryBankDetails.bankCode ,
+        bankName: beneficiaryBankDetails.bankName,
+      }
     };
 
     if (isValid) {
