@@ -15,7 +15,6 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import physicalCardMainStyles from './physical-card-main-style';
 
-
 const PhysicalCardMainScreen: React.FC = () => {
   const { colors } = useTheme();
   const { CARD_DATA } = useCardsData();

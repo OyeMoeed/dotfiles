@@ -248,15 +248,17 @@ const LoginViaPasscode: React.FC = () => {
     } else {
       setPasscodeError(true);
 
-      if (loginApiResponse['apiResponse'].status.code == 'E430185')
+      const errorCode = loginApiResponse.apiResponse.status.code;
+
+      if (errorCode === 'E430185')
         renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
-            'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
+          `${errorCode} :You've reached the maximum attempts to login to your wallet, to activate please click forget passcode`,
         );
-      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184')
+      else if (errorCode === 'E430183' || errorCode === 'E430184')
+        renderErrorToast(`${errorCode} :Your wallet is locked, Please try again after 5 minutes.`);
+      else if (errorCode === 'E430170')
         renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
-            'Your wallet is locked, Please try again after 5 minutes.',
+          `${errorCode} :Dear customer,The device is linked to other wallet, please call 920000670 to delink the device.`,
         );
       else renderErrorToast(localizationText.ERROR.INVALID_PASSCODE);
     }

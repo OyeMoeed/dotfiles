@@ -1,5 +1,4 @@
-
 export interface IPaySessionTimeoutAlertProps {
-  testID?:string;
+  testID?: string;
   visible: boolean;
 }

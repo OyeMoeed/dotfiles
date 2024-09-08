@@ -13,7 +13,6 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   }),
 }));
 
-
 describe('IPayStepIndicator', () => {
   it('renders the correct number of steps', () => {
     const steps = 5;

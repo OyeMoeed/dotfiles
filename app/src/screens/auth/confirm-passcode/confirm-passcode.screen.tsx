@@ -73,7 +73,7 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
             isLinkedDevice: true,
           }),
         );
-        dispatch(setWalletInfo({ walletNumber: walletNumber }));
+        dispatch(setWalletInfo({ walletNumber }));
         dispatch(
           setUserInfo({ fullName: apiResponse?.response?.fullName, firstName: apiResponse?.response?.fullName }),
         );

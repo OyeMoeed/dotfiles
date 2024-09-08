@@ -60,7 +60,7 @@ const useBillPaymentConfirmation = () => {
 
   const onConfirm = () => {
     otpRef?.current?.close();
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly:variant? false:true});
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: variant ? false : true });
   };
   const handlePay = () => {
     if (otp === '' || otp.length < 4) {
