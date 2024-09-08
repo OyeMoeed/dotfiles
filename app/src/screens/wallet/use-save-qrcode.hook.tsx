@@ -24,7 +24,7 @@ const useSaveQRCode = () => {
     name: userInfo?.fullName,
     IBAN: userInfo?.viban,
     contact: userInfo?.mobileNumber,
-   reference: ALINMA_REFERENCE_NUM,
+    reference: ALINMA_REFERENCE_NUM,
   };
   const qrData = JSON.stringify(qrDataObject);
 

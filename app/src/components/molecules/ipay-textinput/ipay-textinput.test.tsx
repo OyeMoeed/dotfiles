@@ -8,7 +8,7 @@ jest.mock(
   () =>
     function () {
       return <IPayIcon icon={icons.SEARCH} size={18} />;
-    }
+    },
 );
 
 // Mock the useTheme hook
@@ -17,16 +17,16 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       primary: {
-        primary500: 'blue'
+        primary500: 'blue',
       },
       natural: {
-        natural300: 'gray'
+        natural300: 'gray',
       },
       error: {
-        error500: 'red'
-      }
-    }
-  })
+        error500: 'red',
+      },
+    },
+  }),
 }));
 
 describe('IPayTextInput Component', () => {
@@ -41,7 +41,7 @@ describe('IPayTextInput Component', () => {
         onChangeText={() => {}}
         label="Label"
         rightIcon={<IPayIcon icon={icons.SEARCH} size={18} />} // Use your SVG icon component with testID
-      />
+      />,
     );
 
     expect(getByDisplayValue('Input Labels')).toBeTruthy();
@@ -56,7 +56,7 @@ describe('IPayTextInput Component', () => {
         rightIcon={rightIcon}
         onFocus={onFocusMock}
         onBlur={onBlurMock}
-      />
+      />,
     );
 
     const inputElement = getByDisplayValue('Enter text...');
@@ -71,7 +71,7 @@ describe('IPayTextInput Component', () => {
     const onChangeTextMock = jest.fn();
     const { getByDisplayValue } = render(
       <IPayTextInput text="Enter text..." onChangeText={onChangeTextMock} label={label} rightIcon={rightIcon} />,
-      <IPayTextInput text="Enter text..." onChangeText={onChangeTextMock} label={label} rightIcon={rightIcon} />
+      <IPayTextInput text="Enter text..." onChangeText={onChangeTextMock} label={label} rightIcon={rightIcon} />,
     );
 
     const inputElement = getByDisplayValue('Enter text...');
@@ -89,7 +89,7 @@ describe('IPayTextInput Component', () => {
         onChangeText={() => {}}
         rightIcon={<IPayIcon icon={icons.SEARCH} size={18} />} // Use your SVG icon component with testID
         label={label}
-      />
+      />,
     );
 
     // Verify that the right icon is rendered

@@ -31,11 +31,10 @@ import ProfileIcon from './profile-circle.svg';
 import ReceiptIcon from './receipt-item1.svg';
 import Refresh2Icon from './refresh-2.svg';
 import IncomingCall from './incoming.svg';
-import RefreshIcon from './refresh.svg';
 import Send2Icon from './send-2.svg';
+import RefreshIcon from './refresh.svg';
 import ShoppingCartIcon from './shopping-cart.svg';
 import TrashIcon from './trash.svg';
-
 
 export {
   AlimapayLogo,
@@ -55,6 +54,7 @@ export {
   GradientCvv,
   Home2,
   IncomingCall,
+  Send2Icon,
   Login,
   Logo,
   LogoBlueIcon,
@@ -72,7 +72,6 @@ export {
   ReceiptIcon,
   Refresh2Icon,
   RefreshIcon,
-  Send2Icon,
   ShoppingCartIcon,
   TrashIcon,
   UserTick,

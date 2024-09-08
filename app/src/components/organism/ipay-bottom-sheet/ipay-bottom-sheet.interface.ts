@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 type CommonPros = {
-  isVisible?:boolean;
+  isVisible?: boolean;
   heading?: string;
   simpleBar?: boolean;
   gradientBar?: boolean;
@@ -47,7 +47,6 @@ export interface IPayBottomSheetHandleProps extends CommonPros {
   bold?: boolean;
 }
 
-
 export interface IPayPortalBottomSheetProps extends CommonPros {
   testId?: string;
   children?: React.JSX.Element | React.JSX.Element[];
@@ -68,4 +67,3 @@ export interface IPayPortalBottomSheetProps extends CommonPros {
   noGradient?: boolean;
   testID?: string;
 }
-

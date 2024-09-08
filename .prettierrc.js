@@ -5,7 +5,9 @@ module.exports = {
   semi: true,
   singleQuote: true,
   trailingComma: 'all',
+
   // Rule extracted from the document
   endOfLine: 'auto',
+  // TODO: this rule is not working: "[warn] Ignored unknown option { importOrderSeparation: true }."
   importOrderSeparation: true,
 };

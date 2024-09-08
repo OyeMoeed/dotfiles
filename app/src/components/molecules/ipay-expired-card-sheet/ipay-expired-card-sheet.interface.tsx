@@ -1,4 +1,4 @@
-import CardItemProps from "../ipay-card-selector/ipay-card.interface";
+import CardItemProps from '../ipay-card-selector/ipay-card.interface';
 
 interface IPayExpiredCardSheetProps {
   testID?: string;
@@ -6,6 +6,6 @@ interface IPayExpiredCardSheetProps {
   openExpiredDateBottomSheet?: () => void;
   openCvvBottomSheet?: () => void;
   selectedDate?: string;
-  selectedCard?:CardItemProps
+  selectedCard?: CardItemProps;
 }
 export default IPayExpiredCardSheetProps;
