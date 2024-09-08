@@ -705,6 +705,26 @@ const DASHBOARD_ITEMS = [
   FeatureSections.LATEST_OFFERS,
 ];
 
+export enum DYNAMIC_FIELDS_TYPES {
+  TEXT = 'text',
+  ALPHA_NO_DIGITS = 'alphaNoDigits',
+  ENGLISH_CHARACTERS = 'englishCharacters',
+  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+  LIST_OF_VALUE = 'listOfValue',
+  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
+  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
+  NUMBER = 'number',
+  DATE = 'date',
+  GREGORIAN_DATE = 'gregorianDate',
+  GREGORIAN_DATE_PAST = 'gregorianDatePast',
+  GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
+  HIJRI_DATE = 'hijriDate',
+  HIJRI_DATE_PAST = 'hijriDatePast',
+  HIJRI_DATE_FUTURE = 'hijriDateFuture',
+  BOOLEAN_TYPE = 'booleanType',
+  ENUMERATION = 'enumeration',
+}
+
 export {
   ACTIVE_SADAD_BILLS,
   ALINMA_REFERENCE_NUM,
