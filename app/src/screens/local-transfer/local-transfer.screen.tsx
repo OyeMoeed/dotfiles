@@ -1,11 +1,9 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import { TrashIcon } from '@app/assets/svgs';
 import {
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPayScrollView,
   IPaySubHeadlineText,
@@ -215,10 +213,10 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
-    const { beneficiaryBankDetail, fullName, bankLogo, beneficiaryAccountNumber, beneficiaryStatus } = item;
+    const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
       <IPayList
-        style={styles.listContainer}
+        containerStyle={styles.listContainer}
         textStyle={styles.textStyle}
         title={fullName}
         subTitle={beneficiaryAccountNumber}
@@ -227,7 +225,7 @@ const LocalTransferScreen: React.FC = () => {
         subTitleLines={1}
         adjacentTitle={beneficiaryBankDetail?.bankName}
         centerContainerStyles={styles.listCenterContainer}
-        leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo ?? images.alinmaBankLogo} />}
+        leftIcon={<IPayIcon icon={item?.beneficiaryBankDetail?.bankCode} size={30} />}
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
@@ -499,10 +497,7 @@ const LocalTransferScreen: React.FC = () => {
                           )
                         }
                         ListFooterComponent={() =>
-                          renderFooter(
-                            BeneficiaryTypes.INACTIVE,
-                            getSortedData(BeneficiaryTypes.INACTIVE)?.length,
-                          )
+                          renderFooter(BeneficiaryTypes.INACTIVE, getSortedData(BeneficiaryTypes.INACTIVE)?.length)
                         }
                       />
                     )}

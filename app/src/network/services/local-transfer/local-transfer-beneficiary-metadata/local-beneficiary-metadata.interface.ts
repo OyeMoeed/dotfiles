@@ -3,10 +3,10 @@ import { MockAPIStatusProps } from "../../services.interface";
  interface LocalBank {
   code: string;
   desc: string;
-  addtionalAttribute1: string;
-  addtionalAttribute2: string; 
-  addtionalAttribute3: string; 
-  addtionalAttribute4: string; 
+  addtionalAttribute1?: string;
+  addtionalAttribute2?: string; 
+  addtionalAttribute3?: string; 
+  addtionalAttribute4?: string; 
 }
 
  interface Response {
