@@ -55,7 +55,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const { showToast } = useToastContext();
   const styles = cardBalanceSectionStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const [isAdded, setIsAdded] = React.useState(false); // TODO will be handle on the basis of api
   const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
   const [statusIndication, setStatusIndication] = useState<CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY>();
 
@@ -286,7 +285,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
-        <IPayAddAppleWalletButton onPress={() => setIsAdded(!isAdded)} isAdded={isAdded} />
+        <IPayAddAppleWalletButton selectedCard={currentCard} />
       </IPayView>
       <IPayList
         testID="cashback-list"
