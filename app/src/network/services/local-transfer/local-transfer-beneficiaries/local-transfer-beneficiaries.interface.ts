@@ -14,7 +14,7 @@ interface Beneficiary {
   beneficiaryStatus: string;
   fullName: string;
   isIBAN: boolean;
-  nickname: string;
+  nickname?: string;
 }
 
 interface Response {
