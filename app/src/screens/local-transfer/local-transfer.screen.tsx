@@ -192,7 +192,6 @@ const LocalTransferScreen: React.FC = () => {
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-
   };
 
   const showDeleteBeneficiaryToast = () => {
@@ -590,6 +589,7 @@ const LocalTransferScreen: React.FC = () => {
       >
         <IPayView style={styles.editStyles}>
           <IPayTextInput
+            maxLength={50}
             containerStyle={styles.inputStyles}
             onChangeText={setNickName}
             label={localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_NICK_NAME}
