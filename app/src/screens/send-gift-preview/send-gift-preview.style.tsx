@@ -40,7 +40,6 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
       width: moderateScale(75),
     },
     previewContainer: {
-      backgroundColor: colors.backgrounds.skyBlue,
       borderRadius: moderateScale(12),
       alignItems: 'center',
       marginHorizontal: moderateScale(36),

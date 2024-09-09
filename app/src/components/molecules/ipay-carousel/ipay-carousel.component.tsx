@@ -1,6 +1,6 @@
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayPressable, IPayView } from '@components/atoms';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Carousel from 'react-native-reanimated-carousel';
 import { IPayCarouselProps } from './ipay-carousel.interface';
 import carouselStyles from './ipay-carousel.style';
@@ -35,6 +35,12 @@ const IPayCarousel = <T,>({
     setCurrentIndex(index);
     onChangeIndex?.(index);
   };
+
+  useEffect(() => {
+    if (carouselRef.current) {
+      carouselRef.current?.scrollTo({ index: 0, animated: true });
+    }
+  }, [data]);
 
   return (
     <IPayView style={[styles.defaultCarousel, carouselContainerStyle]}>

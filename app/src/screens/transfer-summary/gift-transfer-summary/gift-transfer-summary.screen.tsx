@@ -233,6 +233,7 @@ const TransferSummaryScreen: React.FC = () => {
           transferDetails: {
             formData: transfersDetails.formInstances,
             apiData: apiResponse?.response.transferRequestsResult,
+            selectedCard: giftDetails?.selectedCard,
           },
           totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
         });
