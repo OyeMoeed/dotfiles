@@ -8,12 +8,19 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
-  BillProps,
-  GetSadadBillProps,
-} from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
-import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
+  GetSadadBillByStatusProps,
+  PaymentInfoProps,
+} from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
+import getSadadBillsByStatus from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, BillPaymentOptions, BillStatus, buttonVariants } from '@app/utilities/enums.util';
+import {
+  ApiResponseStatusType,
+  BillingStatus,
+  BillPaymentOptions,
+  BillStatus,
+  buttonVariants,
+} from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import billPaymentsStyles from './bill-payments.style';
 import IPayBillPaymentNoResultsComponent from './component/ipay-bill-payment-no-results.component';
@@ -25,9 +32,10 @@ const BillPaymentsScreen: React.FC = () => {
   const styles = billPaymentsStyles();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
-  const [billsData, setBillsData] = useState<BillProps[]>([]);
-  const [sadadBills, setSadadBillsData] = useState<BillProps[]>([]);
+  const [billsData, setBillsData] = useState<PaymentInfoProps[]>([]);
+  const [sadadBills, setSadadBillsData] = useState<PaymentInfoProps[]>([]);
   const [unpaidBillsCount, setUnpaidBillsCount] = useState<number>(0);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -52,7 +60,7 @@ const BillPaymentsScreen: React.FC = () => {
     }
   };
 
-  const addStatusToData = async (newBills: BillProps[]) => {
+  const addStatusToData = async (newBills: PaymentInfoProps[]) => {
     const newData = newBills.map((element) => ({
       ...element,
       selected: false,
@@ -63,19 +71,20 @@ const BillPaymentsScreen: React.FC = () => {
 
   const getBills = async () => {
     try {
-      const payload: GetSadadBillProps = {
-        filterType: 'payment',
-        offset: 1,
-        maxRecords: 20,
+      const payload: GetSadadBillByStatusProps = {
+        walletNumber,
+        billStatus: BillingStatus.ENABLED,
         showloader: true,
       };
-      const apiResponse: any = await getSadadBills(payload);
+      const apiResponse: any = await getSadadBillsByStatus(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS: {
-          const newBills = apiResponse?.response?.bills || [];
-          const updatedData = await addStatusToData(newBills);
-          setSadadBillsData(updatedData.slice(0, 3));
-          setBillsData(updatedData);
+          if (apiResponse?.response?.paymentInfoList.length > 0) {
+            const newBills = apiResponse?.response?.paymentInfoList || [];
+            const updatedData = await addStatusToData(newBills);
+            setSadadBillsData(updatedData.slice(0, 3));
+            setBillsData(updatedData);
+          }
           break;
         }
         case apiResponse?.apiResponseNotOk:

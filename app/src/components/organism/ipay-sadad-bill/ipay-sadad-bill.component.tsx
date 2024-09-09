@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption2Text,
   IPayCheckbox,
@@ -28,15 +29,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   onPressMoreOptions,
   showMoreOption = true,
 }) => {
-  const {
-    billIndex,
-    nickName,
-    biller: { billerDesc, imageURL },
-    dueAmount,
-    dueDateTime,
-    billStatusDesc,
-    selected = false,
-  } = billDetails;
+  const { billId, billerName, amount, billDesc, dueDateTime, billStatusDesc, selected = false } = billDetails;
 
   const { colors } = useTheme();
   const styles = sadadBillStyles(colors);
@@ -48,8 +41,8 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   );
 
   const billingAmountColor = useMemo(
-    () => (Number(dueAmount) > 0 ? colors.natural.natural900 : colors.natural.natural300),
-    [dueAmount],
+    () => (Number(amount) > 0 ? colors.natural.natural900 : colors.natural.natural300),
+    [amount],
   );
 
   const dueDateColor = useMemo(() => {
@@ -58,15 +51,15 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
     return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
   }, [dueDateTime]);
 
-  const billingAmount = `${dueAmount} ${localizationText.COMMON.SAR}`;
+  const billingAmount = `${amount} ${localizationText.COMMON.SAR}`;
   const billingDueDate = `${localizationText.SADAD.DUE} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
 
   const onPressCheckBox = () => {
-    if (onSelectBill) onSelectBill(billIndex);
+    if (onSelectBill) onSelectBill(billId);
   };
 
   const onPressMore = () => {
-    if (onPressMoreOptions) onPressMoreOptions(billIndex);
+    if (onPressMoreOptions) onPressMoreOptions(billId);
   };
 
   return (
@@ -74,9 +67,9 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
       {showCheckBox && <IPayCheckbox isCheck={selected} onPress={onPressCheckBox} />}
       <IPayView style={styles.contentView}>
         <IPayView>
-          <IPayImage image={imageURL} style={styles.vendorIcon} />
-          <IPaySubHeadlineText text={nickName} color={colors.natural.natural900} />
-          <IPayCaption2Text text={billerDesc} color={colors.natural.natural900} style={styles.vendorText} />
+          <IPayImage image={images.logoTab} style={styles.vendorIcon} />
+          <IPaySubHeadlineText text={billDesc} color={colors.natural.natural900} />
+          <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>
         <IPayView style={styles.contentChildView}>
           <IPayChip
