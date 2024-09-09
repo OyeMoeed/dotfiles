@@ -9,6 +9,8 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
+    listTextStyle: { color: colors.primary.primary800 },
+
     listContainer: {
       backgroundColor: themeColors.natural.natural0,
       width: '100%',
@@ -54,8 +56,8 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     },
     detailsText: { color: themeColors.primary.primary800 },
     alinmaLogo: {
-      height: moderateScale(24),
-      width: moderateScale(24),
+      height: moderateScale(18),
+      width: moderateScale(18),
     },
     chipContainer: {
       marginBottom: moderateScale(8),
@@ -109,6 +111,20 @@ const transferSummaryStyles = (themeColors: typeof colors) =>
     },
     confirmButton: {
       borderRadius: moderateScale(22),
+    },
+    buttonContainer: {
+      flex: 0,
+      padding: moderateScale(16),
+      gap: moderateScale(16),
+      marginTop: moderateScale(24),
+      backgroundColor: themeColors.appGradient.buttonBackground,
+      borderRadius: moderateScale(28),
+    },
+    btn: {
+      paddingVertical: moderateScale(14),
+      paddingHorizontal: moderateScale(14),
+      backgroundColor: themeColors.primary.primary500,
+      borderRadius: moderateScale(16),
     },
   });
 

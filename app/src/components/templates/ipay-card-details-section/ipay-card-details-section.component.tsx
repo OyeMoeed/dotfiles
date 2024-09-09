@@ -71,6 +71,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
+  const [isCardPrinted, setIsCardPrinted] = useState();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -310,18 +311,24 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           keyExtractor={(item) => item.key.toString()}
           contentContainerStyle={styles.flatlistContainerStyle}
         />
-        <IPayButton
-          onPress={() => {
-            navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-              currentCard,
-            });
-          }}
-          btnType="primary"
-          leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
-          medium
-          btnText={localizationText.CARDS.PRINT_CARD}
-          btnStyle={styles.printBtn}
-        />
+        {!isCardPrinted && (
+          <IPayButton
+            onPress={() => {
+              setIsCardPrinted((prevState) => ({
+                ...prevState,
+                [currentCard.id]: true,
+              }));
+              navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+                currentCard,
+              });
+            }}
+            btnType="primary"
+            leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
+            medium
+            btnText={localizationText.CARDS.PRINT_CARD}
+            btnStyle={styles.printBtn}
+          />
+        )}
       </IPayView>
       <IPayView style={styles.headingsContainer}>
         <IPayView style={styles.commonContainerStyle}>
