@@ -174,6 +174,7 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const handleChangeBeneficiaryName = async () => {
+    renderSpinner(true);
     const activateBeneficiaryPayload = {
       nickname: nickName,
     };
@@ -189,6 +190,7 @@ const LocalTransferScreen: React.FC = () => {
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    renderSpinner(false);
   };
 
   const showDeleteBeneficiaryToast = () => {
