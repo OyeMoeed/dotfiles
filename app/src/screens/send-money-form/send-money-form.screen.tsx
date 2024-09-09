@@ -19,7 +19,6 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -54,7 +53,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
@@ -199,16 +198,6 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
-    if (constants.MOCK_API_RESPONSE) {
-      // Mock API response
-      navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.WALLET,
-        topupStatus: TopupStatus.SUCCESS,
-        amount: totalAmount,
-      });
-      return;
-    }
-
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,

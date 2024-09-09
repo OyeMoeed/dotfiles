@@ -21,9 +21,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       onCloseBottomSheet,
       simpleHeaderBar,
       containerStyle,
-      simpleTitleStyle
+      simpleTitleStyle,
     },
-    ref
+    ref,
   ) => {
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const { colors } = useTheme();
@@ -55,7 +55,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
       expand: () => bottomSheetModalRef.current?.expand(),
       collapse: () => bottomSheetModalRef.current?.collapse(),
-      forceClose: () => bottomSheetModalRef.current?.forceClose() // Add forceClose method
+      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
     }));
 
     const onAnimate = (fromIndex: number, toIndex: number) => {
@@ -100,7 +100,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         </BottomSheetModalProvider>
       </IPayView>
     );
-  }
+  },
 );
 
 export default IPayBottomSheet;

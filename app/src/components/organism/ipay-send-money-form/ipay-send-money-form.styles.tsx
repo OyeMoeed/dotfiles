@@ -37,7 +37,7 @@ const sendMoneyFormStyles = (themeColors: typeof colors) =>
     },
     currencyStyle: {
       fontSize: FONT_SIZE_16,
-      marginHorizontal: moderateScale(3),
+      marginBottom: moderateScale(2),
     },
     inputField: {
       backgroundColor: themeColors.natural.natural0,

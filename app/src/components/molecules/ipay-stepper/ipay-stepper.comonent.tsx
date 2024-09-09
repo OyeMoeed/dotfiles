@@ -8,11 +8,7 @@ import styles from './ipay-stepper.style';
  * @param {RNSwitchProps} props - The props for the IPayText component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayStepper: React.FC<IPayStepperProps> = ({
-  testID,
-  onPressUp,
-  onPressDown,
-}: IPayStepperProps): JSX.Element => (
+const IPayStepper: React.FC<IPayStepperProps> = ({ testID, onPressUp, onPressDown }: IPayStepperProps): JSX.Element => (
   <IPayView testID={testID} style={[styles.counterContainerStyle]}>
     <IPayPressable onPress={onPressUp} style={styles.counterButtonContainer}>
       <IPayText style={styles.counterTextStyle}>-</IPayText>

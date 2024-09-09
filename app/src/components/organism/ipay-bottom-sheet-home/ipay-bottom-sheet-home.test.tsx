@@ -9,9 +9,9 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   __esModule: true,
   default: () => ({
     colors: {
-      bottomsheetGradient: ['#000000', '#FFFFFF']
-    }
-  })
+      bottomsheetGradient: ['#000000', '#FFFFFF'],
+    },
+  }),
 }));
 
 jest.mock('@app/styles/hooks/theme.hook', () => ({
@@ -21,11 +21,11 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
       natural: {
         natural0: '#F5F5F5',
         natural500: '#4CAF50',
-        natural300: ''
+        natural300: '',
       },
-      redPalette: { red500: '' }
-    }
-  })
+      redPalette: { red500: '' },
+    },
+  }),
 }));
 
 // Mock the FullWindowOverlay component
@@ -40,7 +40,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     expect(getByText('Test Child')).toBeTruthy();
@@ -53,7 +53,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.present();
@@ -67,7 +67,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.close();
@@ -81,7 +81,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.snapToIndex(1);
@@ -95,7 +95,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.snapToPosition(200);
@@ -109,7 +109,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.expand();
@@ -123,7 +123,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.collapse();
@@ -137,7 +137,7 @@ describe('IPayBottomSheetHome', () => {
         <IPayBottomSheetHome ref={ref}>
           <IPayText>Test Child</IPayText>
         </IPayBottomSheetHome>
-      </BottomSheetModalProvider>
+      </BottomSheetModalProvider>,
     );
 
     ref.current.forceClose();

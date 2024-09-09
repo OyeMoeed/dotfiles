@@ -19,7 +19,7 @@ const IPayRenewalIdAlert: FC<Pick<IPayIdRenewalSheetProps, 'visible' | 'onClose'
       icon={<IPayIcon icon={icons.tick_square1} size={64} />}
       primaryAction={{
         text: localizationText.COMMON.DONE,
-        onPress: onClose
+        onPress: onClose,
       }}
     />
   );

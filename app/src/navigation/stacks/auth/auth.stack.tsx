@@ -1,5 +1,5 @@
 import screenNames from '@app/navigation/screen-names.navigation';
-import ConfirmPasscode from '@app/screens/auth/confirm-passcode/confirm-passcode.screen';
+import ConfirmPasscodeScreen from '@app/screens/auth/confirm-passcode/confirm-passcode.screen';
 import PasscodeRecreatedSuccessfuly from '@app/screens/auth/forgot-passcode/passcode-recreated.screen';
 import LoginViaPasscode from '@app/screens/auth/login-via-passcode/login-via-passcode.screen';
 import UserOnBoarding from '@app/screens/auth/onboarding/user-onboarding.screen';
@@ -28,7 +28,7 @@ const AuthStackNavigator: React.FC = () => (
     <AuthStack.Screen name={screenNames.ONBOARDING} options={screenOption} component={UserOnBoarding} />
     <AuthStack.Screen name={screenNames.MOBILE_IQAMA_VERIFICATION} component={MobileAndIqamaVerification} />
     <AuthStack.Screen name={screenNames.SET_PASSCODE} component={SetPasscode} />
-    <AuthStack.Screen name={screenNames.CONFIRM_PASSCODE} component={ConfirmPasscode} />
+    <AuthStack.Screen name={screenNames.CONFIRM_PASSCODE} component={ConfirmPasscodeScreen} />
     <AuthStack.Screen name={screenNames.REGISTRATION_SUCCESSFUL} component={RegistrationSuccessful} />
     <AuthStack.Screen name={screenNames.LOGIN_VIA_PASSCODE} component={LoginViaPasscode} />
     <AuthStack.Screen name={screenNames.PASSCODE_RECREATED} component={PasscodeRecreatedSuccessfuly} />

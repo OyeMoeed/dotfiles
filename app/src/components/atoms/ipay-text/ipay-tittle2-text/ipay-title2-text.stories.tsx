@@ -13,8 +13,8 @@ const IPayTitle2TextMeta: Meta<typeof IPayTitle2Text> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_16,
-      fontWeight: '500'
-    }
+      fontWeight: '500',
+    },
   },
   decorators: [
     (Story) => (
@@ -23,8 +23,8 @@ const IPayTitle2TextMeta: Meta<typeof IPayTitle2Text> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayTitle2TextMeta;
@@ -37,9 +37,9 @@ export const Ttile2Regular: StoryObj<typeof IPayTitle2Text> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_22,
-      fontWeight: '400'
-    }
-  }
+      fontWeight: '400',
+    },
+  },
 };
 
 export const Title2Bold: StoryObj<typeof IPayTitle2Text> = {
@@ -48,7 +48,7 @@ export const Title2Bold: StoryObj<typeof IPayTitle2Text> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_22,
-      fontWeight: '700'
-    }
-  }
+      fontWeight: '700',
+    },
+  },
 };
