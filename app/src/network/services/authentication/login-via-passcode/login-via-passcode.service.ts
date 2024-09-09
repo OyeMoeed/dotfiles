@@ -5,26 +5,20 @@ import AUTHENTICATION_URLS from '../authentication.urls';
 import { LoginViaPasscodeProps } from './login-via-passcode.interface';
 import loginViaPasscodeMock from './login-via-passcode.mock';
 
-const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object> => {
+const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return loginViaPasscodeMock;
   }
-  try {
-    const apiResponse = await apiCall({
-      endpoint: AUTHENTICATION_URLS.LOGIN_VIA_PASSCODE,
-      method: requestType.POST,
-      payload,
-      headers: {
-        'Api-Version': 'v2',
-      },
-    });
-    if (apiResponse?.status.type == 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true, apiResponse: apiResponse };
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
-  }
+
+  const apiResponse = await apiCall({
+    endpoint: AUTHENTICATION_URLS.LOGIN_VIA_PASSCODE,
+    method: requestType.POST,
+    payload,
+    headers: {
+      'Api-Version': 'v2',
+    },
+  });
+  return apiResponse;
 };
 
 export default loginViaPasscode;

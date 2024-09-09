@@ -15,6 +15,7 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import moment from 'moment';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
@@ -27,8 +28,6 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [renewId, setRenewId] = useState(false);
   const [otpRef, setOTPRef] = useState<string>('');
   const [isHelpBottomSheetVisible, setIsHelpBottomSheetVisible] = useState(false);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showToast } = useToastContext();
   const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
@@ -36,6 +35,9 @@ const IPayIdRenewalSheet: React.FC = () => {
     aboutToExpire: isAboutToExpire,
     remainingNumberOfDaysToExpire,
     expiryDate,
+    idExpired,
+    walletNumber,
+    mobileNumber,
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
 
@@ -179,11 +181,11 @@ const IPayIdRenewalSheet: React.FC = () => {
           showSuccessAlert();
         } else if (apiResponse?.apiResponseNotOk) {
           setOtpError(true);
-          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
         } else {
           setOtpError(true);
-          otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
+          otpVerificationRef.current?.triggerToast(apiResponse?.error);
         }
       } catch (error: any) {
         renderSpinner(false);
@@ -196,7 +198,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       getOtpData();
     }
@@ -207,9 +209,13 @@ const IPayIdRenewalSheet: React.FC = () => {
     setIsHelpBottomSheetVisible(true); // Show the help bottom sheet
   };
 
-  const formattedSubtitle = isAboutToExpire
-    ? t('ID_RENEWAL.ID_UPDATION_DES', { DAYS: remainingNumberOfDaysToExpire, DATE: expiryDate })
-    : subtitle;
+  const formattedSubtitle =
+    isAboutToExpire && !idExpired
+      ? t('ID_RENEWAL.ID_UPDATION_DES', {
+          DAYS: remainingNumberOfDaysToExpire,
+          DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
+        })
+      : subtitle;
 
   return (
     <>
@@ -238,9 +244,9 @@ const IPayIdRenewalSheet: React.FC = () => {
           />
         ) : (
           <IPayView style={styles.profileContainer}>
-            {isAboutToExpire ? ID_ABOUT_EXPIRE.icon : icon}
+            {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.icon : icon}
             <IPayTitle2Text style={styles.titleTextStyle}>
-              {isAboutToExpire ? ID_ABOUT_EXPIRE.title : title}
+              {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
             <IPayCaption1Text style={styles.captionTextStyle}>{formattedSubtitle}</IPayCaption1Text>
             <IPayButton
@@ -248,9 +254,15 @@ const IPayIdRenewalSheet: React.FC = () => {
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
               btnType="primary"
-              btnText={primaryButtonText}
+              btnText={isAboutToExpire ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
               textColor={colors.natural.natural0}
-              rightIcon={<IPayIcon icon={buttonIcon} size={20} color={colors.natural.natural0} />}
+              rightIcon={
+                <IPayIcon
+                  icon={isAboutToExpire ? ID_ABOUT_EXPIRE.buttonIcon : buttonIcon}
+                  size={20}
+                  color={colors.natural.natural0}
+                />
+              }
             />
             <IPayButton
               onPress={closeBottomSheet}
