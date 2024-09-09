@@ -195,7 +195,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             </IPayView>
           </IPayShareableImageView>
 
-          <IPayLinearGradientView style={styles.btnBackground}>
+          <IPayView style={styles.btnBackground}>
             {renderActionLabel()}
             <IPayButton
               large
@@ -206,7 +206,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
               onPress={onHome}
               textStyle={styles.btnStyle}
             />
-          </IPayLinearGradientView>
+          </IPayView>
         </IPayLinearGradientView>
       </IPayView>
       <IPayBottomSheet

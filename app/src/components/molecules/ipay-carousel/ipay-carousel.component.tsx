@@ -22,11 +22,13 @@ const IPayCarousel = <T,>({
   modeConfig,
   onChangeIndex,
   carouselContainerStyle,
+  resetOnDataChange,
 }: IPayCarouselProps<T>): JSX.Element => {
   const carouselRef = useRef(null);
   const { colors } = useTheme();
   const styles = carouselStyles(colors);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
+
   const onPressPaging = (index: number) => {
     setCurrentIndex(index);
   };
@@ -36,10 +38,15 @@ const IPayCarousel = <T,>({
     onChangeIndex?.(index);
   };
 
-  useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current?.scrollTo({ index: 0, animated: true });
+  const getDefaultIndex = () => {
+    if (resetOnDataChange) {
+      return currentIndex >= 0 && currentIndex < data?.length ? currentIndex : 0;
     }
+    return currentIndex;
+  };
+
+  useEffect(() => {
+    if (resetOnDataChange) setCurrentIndex(0);
   }, [data]);
 
   return (
@@ -54,7 +61,7 @@ const IPayCarousel = <T,>({
         loop={loop}
         scrollAnimationDuration={scrollAnimationDuration}
         autoPlayReverse={autoPlayReverse}
-        defaultIndex={currentIndex}
+        defaultIndex={getDefaultIndex()}
         mode={mode}
         pagingEnabled
         data={data}

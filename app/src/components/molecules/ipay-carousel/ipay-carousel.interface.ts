@@ -34,6 +34,7 @@ export interface IPayCarouselProps<T> {
   mode?: CarouselMode;
   style?: StyleProp<ViewStyle>;
   loop?: boolean;
+  resetOnDataChange?: boolean;
   autoPlay?: boolean;
   autoPlayReverse?: boolean;
   scrollAnimationDuration?: number;

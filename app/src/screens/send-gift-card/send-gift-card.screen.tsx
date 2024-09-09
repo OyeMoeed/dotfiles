@@ -82,6 +82,7 @@ const SendGiftCard = () => {
           style={styles.carouselStyle}
           renderItem={renderCarouselItem}
           onChangeIndex={onChangeIndex}
+          resetOnDataChange
         />
       </IPayView>
       <IPayButton

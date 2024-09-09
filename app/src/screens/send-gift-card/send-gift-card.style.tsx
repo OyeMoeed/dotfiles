@@ -29,7 +29,7 @@ const sendGiftCard = (colors) =>
     image: { width: '100%', height: '60%' },
     carouselView: { marginTop: moderateScale(24) },
     carouselStyle: { width: '100%', flex: 1, paddingLeft: 0, marginLeft: moderateScale(12) },
-    carouselContainer: { height: WINDOW_HEIGHT / moderateScale(1.75), },
+    carouselContainer: { height: WINDOW_HEIGHT / moderateScale(1.65) },
     nextButton: {
       paddingHorizontal: moderateScale(20),
       paddingVertical: moderateScale(14),
