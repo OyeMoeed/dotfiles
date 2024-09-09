@@ -17,21 +17,21 @@ import {
   IPayTitle1Text,
   IPayView,
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
+import { useTypedSelector } from '@app/store/store';
 import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import offerDetailsStyles from './offer-details.style';
 import { NearestStoreSheetTypes } from './offer-details.interface';
+import offerDetailsStyles from './offer-details.style';
 
 // Added dummy details for now because there is no following details key in offer details response
 const DUMMY_DETAILS =
@@ -49,7 +49,7 @@ const OfferDetailsScreen: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: { id: string } }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);

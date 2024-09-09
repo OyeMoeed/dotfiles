@@ -1,21 +1,20 @@
-import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayHeadlineText, IPayIcon, IPayView, IPayWebView } from '@app/components/atoms';
-import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
+import { IPayView, IPayWebView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, payChannel, spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
-import React, { useCallback, useState } from 'react';
-import cardVerificationStyles from './cardVerification.styles';
-import { useRoute } from '@react-navigation/core';
-import { WebViewNavigation } from 'react-native-webview';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { CheckStatusProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
-import { useTypedSelector } from '@app/store/store';
 import { topupCheckStatus } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { ApiResponseStatusType, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { useRoute } from '@react-navigation/core';
+import React, { useCallback, useState } from 'react';
+import { WebViewNavigation } from 'react-native-webview';
+import cardVerificationStyles from './cardVerification.styles';
 
 const CardVerificationScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -27,7 +26,7 @@ const CardVerificationScreen: React.FC = () => {
   const route: any = useRoute();
   const { redirectUrl, transactionRefNumber } = route.params;
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   // const [trials, setTrials] = useState<number>(0);
   const [showWebView, setShowWebView] = useState<boolean>(true);

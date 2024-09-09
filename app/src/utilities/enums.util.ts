@@ -271,6 +271,7 @@ enum GiftCardStatus {
 enum ApiResponseStatusType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
+  ERROR = 'ERROR',
 }
 
 enum MoiPaymentTypes {
@@ -308,8 +309,10 @@ export {
   CardDetailsSegment,
   CardOptions,
   CardStatusIndication,
+  CardStatusNumber,
   CardStatusType,
   CardTypes,
+  CardTypesCodes,
   Filter,
   FilterValue,
   FiltersType,
@@ -336,6 +339,4 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  CardStatusNumber,
-  CardTypesCodes,
 };
