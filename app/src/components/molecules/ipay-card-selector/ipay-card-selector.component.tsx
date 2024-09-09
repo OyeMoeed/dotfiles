@@ -7,20 +7,19 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
-import { CARDS_MOCK_DATA } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useCallback, useEffect, useState } from 'react';
-import IPayButton from '../ipay-button/ipay-button.component';
-import IPayCardSelectorProps from './ipay-card-selector.interface';
-import IPayCardSelectorStyles from './ipay-card-selector.styles';
-import IPayCardItemProps from './ipay-card.interface';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useState } from 'react';
+import IPayButton from '../ipay-button/ipay-button.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
+import IPayCardSelectorProps from './ipay-card-selector.interface';
+import IPayCardSelectorStyles from './ipay-card-selector.styles';
+import IPayCardItemProps from './ipay-card.interface';
 
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   testID,
@@ -34,11 +33,10 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   const [topupCards, setTopupcards] = useState<any[]>([]);
   const { showToast } = useToastContext();
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const handleCardSelect = (key: number) => {
     setSelectedCard(key);

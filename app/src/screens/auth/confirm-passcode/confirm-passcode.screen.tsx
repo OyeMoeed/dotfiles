@@ -14,7 +14,6 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
@@ -89,9 +88,8 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
             isLinkedDevice: true,
           }),
         );
-        dispatch(setWalletInfo({ walletNumber }));
+        dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
         // TODO: replace with real user data
-        dispatch(setUserInfo({ fullName: 'Alinma', firstName: 'Pay' }));
         navigate(screenNames.REGISTRATION_SUCCESSFUL);
       }
       renderSpinner(false);

@@ -20,6 +20,7 @@ import { getTransactions } from '@app/network/services/core/transaction/transact
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -28,7 +29,6 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
-import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -47,9 +47,9 @@ const Home: React.FC = () => {
   const topUpSelectionRef = React.createRef<any>();
 
   const dispatch = useTypedDispatch();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
@@ -157,7 +157,7 @@ const Home: React.FC = () => {
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
     });
-    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
@@ -235,19 +235,19 @@ const Home: React.FC = () => {
       <>
         {/* ---------Top Navigation------------- */}
         <IPayView style={styles.topNavCon}>
-          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
+          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={firstName} />
         </IPayView>
         {/* ----------BalanceBox------------ */}
         <IPayView style={styles.balanceCon}>
           <IPayBalanceBox
-            balance={walletInfo?.availableBalance}
-            totalBalance={walletInfo?.currentBalance}
+            balance={availableBalance}
+            totalBalance={currentBalance}
             hideBalance={appData?.hideBalance}
             walletInfoPress={() => navigate(ScreenNames.WALLET)}
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
-            monthlyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyOutgoingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+            monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}

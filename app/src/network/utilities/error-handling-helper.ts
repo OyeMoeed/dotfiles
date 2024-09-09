@@ -24,8 +24,8 @@ const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
   if ((error as AxiosError)?.response?.status === constants.ERROR_CODES.FORBIDDEN) {
     if (auth?.isAuthorized) {
       store.dispatch(showSessionTimeoutAlert());
+      return;
     }
-    return;
   }
   const mappedError = mapApiError(error);
   if (hideErrorResponse(error)) return;
