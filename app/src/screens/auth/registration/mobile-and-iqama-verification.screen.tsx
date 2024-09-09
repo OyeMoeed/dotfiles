@@ -51,7 +51,6 @@ const MobileAndIqamaVerification: React.FC = () => {
     isLoading,
     setOtp,
     otpVerificationRef,
-    apiError,
     resendOtp,
   } = useMobileAndIqamaVerification();
 
@@ -160,7 +159,6 @@ const MobileAndIqamaVerification: React.FC = () => {
                 setOtp={setOtp}
                 setOtpError={setOtpError}
                 otpError={otpError}
-                apiError={apiError}
                 showHelp={false}
                 timeout={otpConfig.login.otpTimeout}
               />

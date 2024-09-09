@@ -44,8 +44,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
-  const { myBeneficiaryId } = userInfo;
+  const { myBeneficiaryId } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =

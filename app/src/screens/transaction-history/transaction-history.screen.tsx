@@ -10,16 +10,8 @@ import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import {
-  CardsProp,
-  FilterFormDataProp,
-  TransactionsProp,
-} from '@app/network/services/core/transaction/transaction.interface';
-import {
-  getCards,
-  getTransactionTypes,
-  getTransactions,
-} from '@app/network/services/core/transaction/transactions.service';
+import { FilterFormDataProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getTransactionTypes, getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -52,7 +44,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [appliedFilters, setAppliedFilters] = useState<SubmitEvent | null>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -60,7 +52,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [, setIsLoadingW2W] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
-  const [, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
   const [selectedCard, setSelectedCard] = useState<any>(currentCard);
 
@@ -305,7 +296,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     });
 
     if (selectedCard && cards?.length) {
-      const cardsFilterMap = cards.map((card: CardInterface, index: number) => ({
+      const cardsFilterMap = cards.map((card: CardInterface) => ({
         id: card.cardIndex,
         key: card.cardIndex,
         value: card?.maskedCardNumber,
@@ -323,30 +314,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const getTransactionTypesData = async () => {
     renderSpinner(true);
-    try {
-      const apiResponse: any = await getTransactionTypes();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const apiResponse: any = await getTransactionTypes();
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
     }
+
+    renderSpinner(false);
   };
 
   useEffect(() => {

@@ -49,7 +49,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const [, setIskeyboardOpen] = useState(false);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
@@ -347,7 +347,7 @@ const SendGiftAmountScreen = ({ route }) => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
     };
-    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    const apiResponse = await walletToWalletCheckActive(walletNumber as string, payload);
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       if (apiResponse?.response?.friends) {
         navigate(ScreenNames.GIFT_TRANSFER_SUMMARY, {

@@ -34,5 +34,6 @@ interface IPayRemainingBalanceProps {
   isEditable?: boolean;
   onPressIcon?: () => void;
   onPressQR?: () => void;
+  balanceType?: 'Incoming' | 'Outgoing';
 }
 export default IPayRemainingBalanceProps;

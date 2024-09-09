@@ -1,20 +1,20 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SadadEditBillFields } from '@app/enums/edit-sadad-bill.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
+import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
+import editBillService from '@app/network/services/bills-management/edit-bill/edit-bill.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import editBillService from '@app/network/services/bills-management/edit-bill/edit-bill.service';
-import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
-import { useTypedSelector } from '@app/store/store';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
 
 const SadadEditBillsScreen: React.FC = ({ route }) => {
@@ -30,7 +30,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   const styles = sadadEditBillsStyles(colors);
   const localizationText = useLocalization();
   const [showAlert, setShowAlert] = useState(false);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { getValues, control, setValue, watch } = useForm();
 

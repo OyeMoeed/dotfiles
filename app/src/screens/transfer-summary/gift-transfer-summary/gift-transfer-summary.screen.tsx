@@ -11,6 +11,7 @@ import {
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
@@ -54,9 +55,9 @@ const TransferSummaryScreen: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const [expandMsg, setExpandMsg] = useState<boolean>(false);
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { showToast } = useToastContext();
   const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
@@ -75,6 +76,15 @@ const TransferSummaryScreen: React.FC = () => {
       return false;
     }
     return true;
+  };
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
   };
 
   const transfersRequestsList = transfersDetails?.formInstances?.map((item) => {
@@ -190,63 +200,80 @@ const TransferSummaryScreen: React.FC = () => {
 
   const prepareOtp = async () => {
     sendMoneyBottomSheetRef.current?.present();
-
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
     });
-    const payload: IW2WTransferPrepareReq = {
-      requests: transfersDetails?.formInstances?.map((item) => ({
-        mobileNumber: item.mobileNumber,
-        amount: item.amount,
-        note: item.notes,
-        transferPurpose: item?.transferPurpose,
-      })),
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
-    if (apiResponse.status.type === ApiResponseStatusType.SUCCESS) {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      setTransactionId(apiResponse?.authentication?.transactionId);
-      sendMoneyBottomSheetRef.current?.present();
+    try {
+      const payload: IW2WTransferPrepareReq = {
+        requests: transfersDetails?.formInstances?.map((item) => ({
+          mobileNumber: item.mobileNumber,
+          amount: item.amount,
+          note: item.notes,
+          transferPurpose: item?.transferPurpose,
+        })),
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      };
+      const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setOtpRef(apiResponse?.response?.otpRef as string);
+          setTransactionId(apiResponse?.authentication?.transactionId);
+          sendMoneyBottomSheetRef.current?.present();
+          break;
+        case apiResponse?.apiResponseNotOk:
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        default:
+          break;
+      }
+      hideSpinner();
+    } catch (error) {
+      hideSpinner();
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    hideSpinner();
   };
 
   const verifyOtp = async () => {
     setIsLoading(true);
-    const payload: IW2WTransferConfirmReq = {
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      otp,
-      otpRef,
-      authentication: {
-        transactionId: transactionId as string,
-      },
-    };
-
-    const apiResponse = await walletToWalletTransferConfirm(walletInfo.walletNumber, payload);
-
-    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      if (apiResponse?.response) {
-        sendMoneyBottomSheetRef.current?.close();
-        navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
-          transferDetails: {
-            formData: transfersDetails.formInstances,
-            apiData: apiResponse?.response.transferRequestsResult,
-          },
-          totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
-        });
+    try {
+      const payload: IW2WTransferConfirmReq = {
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        otp,
+        otpRef,
+        authentication: {
+          transactionId: transactionId as string,
+        },
+      };
+      const apiResponse = await walletToWalletTransferConfirm(walletInfo.walletNumber, payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          sendMoneyBottomSheetRef.current?.close();
+          navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
+            transferDetails: {
+              formData: transfersDetails.formInstances,
+              apiData: apiResponse?.response?.transferRequestsResult,
+            },
+            totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
+          });
+          break;
+        case apiResponse?.apiResponseNotOk:
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        default:
+          break;
       }
-    } else {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    setIsLoading(false);
   };
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       verifyOtp();
     }
@@ -312,7 +339,7 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber as string}
+          mobileNumber={walletInfo?.mobileNumber as string}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}

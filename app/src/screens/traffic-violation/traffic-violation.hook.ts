@@ -1,14 +1,11 @@
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getTrafficViolationData from '@app/network/services/core/traffic-violation/traffic-violation.service';
-import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { useEffect, useMemo, useState } from 'react';
 
 const useTrafficViolation = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>();
-  const [, setAPIError] = useState<string>('');
   const selectedBillsAmount = useMemo(
     () =>
       (billsData ?? [])
@@ -42,30 +39,12 @@ const useTrafficViolation = () => {
     navigate(ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN);
   };
 
-  const localizationText = useLocalization();
-
   const getTrafficVoilationData = async () => {
-    try {
-      const apiResponse: any = await getTrafficViolationData();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS: {
-          const bills = apiResponse?.response?.trafficViolationList;
-          setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
-          break;
-        }
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+    const apiResponse: any = await getTrafficViolationData();
+    const bills = apiResponse?.response?.trafficViolationList;
+    setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
   };
+
   useEffect(() => {
     getTrafficVoilationData();
   }, []);

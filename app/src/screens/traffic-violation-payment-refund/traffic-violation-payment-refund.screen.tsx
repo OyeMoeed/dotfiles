@@ -33,7 +33,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
   const { otpConfig } = useConstantData();
   const { calculatedBill } = balanceData;
   const { colors } = useTheme();
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = billPaymentStyles();
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -66,7 +66,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={handlePay}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={walletInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}

@@ -21,14 +21,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import {
-  ApiResponseStatusType,
-  CarouselModes,
-  CardOptions,
-  CardStatusNumber,
-  CardTypes,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
+import { CarouselModes, CardOptions, CardStatusNumber, CardTypes, spinnerVariant } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
@@ -53,9 +46,9 @@ const CardsScreen: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
   const { showToast } = useToastContext();
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
@@ -110,7 +103,6 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
-    console.log(index);
     setCurrentCard(cardsData[index]);
   };
 
@@ -125,15 +117,6 @@ const CardsScreen: React.FC = () => {
     }
   }, []);
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
@@ -150,8 +133,6 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const currentYear: number = new Date().getFullYear();
-
   const mapCardData = (cards: CardListItem[]) => {
     let mappedCards = [];
     mappedCards = cards.map((card: any) => ({
@@ -159,7 +140,7 @@ const CardsScreen: React.FC = () => {
       cardType: card?.cardTypeId,
       cardHeaderText: getCardDesc(card?.cardTypeId),
       expired: card?.reissueDue,
-      frozen: card.cardStatus == CardStatusNumber.Freezed,
+      frozen: card.cardStatus === CardStatusNumber.Freezed,
       suspended: false,
       maskedCardNumber: `**** **** **** **${card.lastDigits}`,
       cardNumber: card.lastDigits,
@@ -173,49 +154,28 @@ const CardsScreen: React.FC = () => {
   };
   const getCardsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: CardsProp = {
-        walletNumber,
-      };
-      const apiResponse: any = await getCards(payload);
-      renderSpinner(false);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          const availableCards = apiResponse?.response?.cards.filter(
-            (card: any) =>
-            card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
-              card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
-              card.cardStatus == CardStatusNumber.Freezed,
-          ));
 
-          if (availableCards?.length) {
-            setCardsData(mapCardData(availableCards));
-            setCurrentCard(mapCardData(availableCards)[0]);
-            setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
-          } else {
-            setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderSpinner(false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderSpinner(false);
-          setAPIError(apiResponse?.error);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
-        default:
-          renderSpinner(false);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
+    const payload: CardsProp = {
+      walletNumber,
+    };
+    const apiResponse: any = await getCards(payload);
+    renderSpinner(false);
+
+    if (apiResponse) {
+      const availableCards = apiResponse?.response?.cards.filter(
+        (card: any) =>
+          card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.Freezed,
+      );
+
+      if (availableCards?.length) {
+        setCardsData(mapCardData(availableCards));
+        setCurrentCard(mapCardData(availableCards)[0]);
+        setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
+      } else {
+        setCardsCurrentState(CardScreenCurrentState.NO_DATA);
       }
-    } catch (error: any) {
-      renderSpinner(false);
-      setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

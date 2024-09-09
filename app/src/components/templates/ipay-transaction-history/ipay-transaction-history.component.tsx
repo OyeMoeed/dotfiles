@@ -27,7 +27,7 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({ transaction, isDe
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const multiTransactionTypes =
     (transaction?.transactionRequestType === TransactionTypes.COUT_SARIE ||
@@ -46,11 +46,58 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({ transaction, isDe
         {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
       </IPayFootnoteText>
       <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-        {userInfo?.fullName}
+        {fullName}
       </IPaySubHeadlineText>
     </IPayView>
   ) : (
     <IPayView />
+  );
+};
+
+const IPayShareableOtherView = ({
+  showSplitButton,
+  onPressPrint,
+  onPressShare,
+  isBeneficiaryHistory,
+  isBKFTransfer,
+}) => {
+  const { colors } = useTheme();
+  const localizationText = useLocalization();
+  const styles = transactionHistoryStyle(colors);
+
+  return (
+    <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
+      {showSplitButton && (
+        <IPayButton
+          btnType={buttonVariants.PRIMARY}
+          btnText={localizationText.TRANSACTION_HISTORY.SPLIT_BILL}
+          medium
+          btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
+          leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
+          onPress={onPressPrint}
+        />
+      )}
+      {!isBeneficiaryHistory && (
+        <IPayButton
+          btnType={buttonVariants.OUTLINED}
+          onPress={onPressShare}
+          btnText={localizationText.TOP_UP.SHARE}
+          medium
+          btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
+          leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
+        />
+      )}
+      {isBKFTransfer && (
+        <IPayButton
+          btnType={buttonVariants.PRIMARY}
+          btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+          medium
+          btnStyle={styles.button}
+          rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
+          onPress={() => {}}
+        />
+      )}
+    </IPayView>
   );
 };
 
@@ -80,8 +127,10 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const isPayOneCard = transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD;
   const isCountWu = transaction?.transactionRequestType === TransactionTypes.COUT_WU;
   const isCountExpress = transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS;
+  const isBKFTransfer = transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER;
+  const isPayBill = transaction?.transactionRequestType === TransactionTypes.PAY_BILL;
 
-  const showSplitButton = transaction?.transactionRequestType === TransactionTypes.PAY_BILL || isCountExpress;
+  const showSplitButton = isPayBill || isCountExpress;
   const isNotPayVCardVisa = transaction?.transactionRequestType !== TransactionTypes.PAY_VCARD_ECOM_VISA;
 
   const transactionJustification =
@@ -134,38 +183,13 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
         <IPayShareableImageView
           isShareable={isShareable}
           otherView={
-            <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
-              {showSplitButton && (
-                <IPayButton
-                  btnType={buttonVariants.PRIMARY}
-                  btnText={localizationText.TRANSACTION_HISTORY.SPLIT_BILL}
-                  medium
-                  btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                  leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
-                  onPress={onPressPrint}
-                />
-              )}
-              {!isBeneficiaryHistory && (
-                <IPayButton
-                  btnType={buttonVariants.OUTLINED}
-                  onPress={onPressShare}
-                  btnText={localizationText.TOP_UP.SHARE}
-                  medium
-                  btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
-                  leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
-                />
-              )}
-              {transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER && (
-                <IPayButton
-                  btnType={buttonVariants.PRIMARY}
-                  btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
-                  medium
-                  btnStyle={styles.button}
-                  rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
-                  onPress={() => {}}
-                />
-              )}
-            </IPayView>
+            <IPayShareableOtherView
+              isBKFTransfer={isBKFTransfer}
+              isBeneficiaryHistory={isBeneficiaryHistory}
+              onPressPrint={onPressPrint}
+              onPressShare={onPressShare}
+              showSplitButton={showSplitButton}
+            />
           }
         >
           <IPayView>
@@ -316,6 +340,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPaySubHeadlineText>
                 )}
               </IPayView>
+
               <MultiTransactions
                 transaction={transaction}
                 isDebit={isDebit}
@@ -459,7 +484,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
 
               {(transaction?.transactionRequestType === TransactionTypes.PAY_MOI ||
-                transaction?.transactionRequestType === TransactionTypes.PAY_BILL ||
+                isPayBill ||
                 transaction?.transactionRequestType === TransactionTypes.PAY_VCARD ||
                 transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_POS ||
                 transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_ECOM ||
@@ -558,6 +583,54 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
 
               {!isPayOneCard && !isCountMusaned && (
+                <IPayView style={styles.cardStyle}>
+                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                    {localizationText.TRANSACTION_HISTORY.AMOUNT}
+                  </IPayFootnoteText>
+                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    {transaction?.amount + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                  </IPaySubHeadlineText>
+                </IPayView>
+              )}
+
+              {transaction?.transactionDescription &&
+                transaction?.transactionJustfication !== '0' &&
+                transaction?.transactionJustfication !== '2' && (
+                  <IPayView style={styles.cardStyle}>
+                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                      {localizationText.TRANSACTION_HISTORY.NOTES}
+                    </IPayFootnoteText>
+                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                      {transaction?.transactionDescription}
+                    </IPaySubHeadlineText>
+                  </IPayView>
+                )}
+
+              {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA &&
+                transaction?.transactionRequestType !== TransactionTypes.PAY_ONECARD && (
+                  <IPayView style={styles.cardStyle}>
+                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                      {localizationText.TRANSACTION_HISTORY.FEES}
+                    </IPayFootnoteText>
+                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                      {(transaction?.feesAmount || '0.00') + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                    </IPaySubHeadlineText>
+                  </IPayView>
+                )}
+
+              {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA &&
+                transaction?.transactionRequestType !== TransactionTypes.PAY_ONECARD && (
+                  <IPayView style={styles.cardStyle}>
+                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                      {localizationText.TRANSACTION_HISTORY.VAT}
+                    </IPayFootnoteText>
+                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                      {(transaction?.vatAmount || '0.00') + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                    </IPaySubHeadlineText>
+                  </IPayView>
+                )}
+
+              {transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD && (
                 <IPayView style={styles.cardStyle}>
                   <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
                     {localizationText.TRANSACTION_HISTORY.AMOUNT}
@@ -678,14 +751,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 </IPayView>
               )}
 
-              <IPayView style={styles.cardStyle}>
-                <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                  {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
-                </IPayFootnoteText>
-                <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                  {getDate(transaction?.transactionDateTime)}
-                </IPaySubHeadlineText>
-              </IPayView>
+              {transaction?.transactionRequestType !== TransactionTypes.PAY_WALLET &&
+                transaction?.transactionType === TransactionOperations.DEBIT && (
+                  <IPayView style={styles.cardStyle}>
+                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                      {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
+                    </IPayFootnoteText>
+                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                      {getDate(transaction?.transactionDateTime)}
+                    </IPaySubHeadlineText>
+                  </IPayView>
+                )}
             </IPayView>
           </IPayView>
         </IPayShareableImageView>
