@@ -20,7 +20,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import { GiftCardStatus, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, ToastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
@@ -86,7 +86,11 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     };
     Share.open(shareOptions);
   };
-
+  const getDynamicStyles = (styles, details, item) => [
+    styles.subTitle,
+    details[item]?.length > 20 && styles.condtionalWidthSubtitle,
+    item === GiftCardDetailsKey.AMOUNT && details?.status === GiftCardStatus.EXPIRED && styles.textStyle,
+  ];
   const titleText = useCallback(
     (value: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
@@ -161,9 +165,9 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             text={titleText(details[item])}
             color={getTitleColor(details[item])}
             numberOfLines={1}
-            style={[styles.subTitle, details[item]?.length > 20 && styles.condtionalWidthSubtitle]}
+            style={getDynamicStyles(styles, details, item)}
           />
-          {item === 'refNumber' && (
+          {item === GiftCardDetailsKey.REF_NUMBER && (
             <IPayPressable style={styles.icon} onPress={() => onPressCopy(details[item])}>
               <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
             </IPayPressable>
@@ -188,6 +192,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
+            isExpired={details?.status === GiftCardStatus.EXPIRED}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton

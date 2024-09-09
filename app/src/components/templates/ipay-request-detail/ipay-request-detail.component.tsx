@@ -63,7 +63,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
-          text: localizationText.REQUEST_MONEY.CANCEL,
+          text: localizationText.REQUEST_MONEY.CANCELLED,
           backgroundColor: colors.natural.natural100,
         };
       case MoneyRequestStatus.PAID:

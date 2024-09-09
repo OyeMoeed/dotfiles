@@ -30,6 +30,7 @@ const sadadBillDetailBoxStyles = (themeColors: typeof colors) =>
       color: themeColors.error.error500,
     },
     listContainer: {
+      marginBottom: moderateScale(8),
       backgroundColor: themeColors.primary.primary10,
     },
     declinedContainer: {

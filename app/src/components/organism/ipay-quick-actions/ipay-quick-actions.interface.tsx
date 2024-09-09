@@ -4,7 +4,7 @@ import { PayChannel } from '@app/utilities/enums.util';
 
 interface IPayQuickActionsProps {
   testID?: string;
-  PayChannelType?: PayChannel;
+  payChannelType?: PayChannel;
   monthlyRemainingOutgoingAmount: string;
   setTopUpAmount?: (text: string) => void;
 }

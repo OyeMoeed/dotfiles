@@ -52,7 +52,7 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
     image: { width: moderateScale(130), height: moderateScale(120), marginBottom: verticalScale(25) },
     amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2) },
     messagePreview: {
-      marginTop: moderateScale(50),
+      paddingVertical: moderateScale(50),
       marginHorizontal: moderateScale(24),
     },
 

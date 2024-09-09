@@ -135,7 +135,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             showIcon={false}
             qrScanBtn
             chipValue={chipValue}
-            PayChannelType={PayChannel.ATM}
+            payChannelType={PayChannel.ATM}
             showQuickAmount
             isQrBtnDisabled={isQrBtnDisabled}
             topUpAmount={topUpAmount}
