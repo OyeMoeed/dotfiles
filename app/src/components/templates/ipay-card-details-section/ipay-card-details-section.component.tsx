@@ -170,39 +170,47 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   };
 
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
   const onFreeze = async (type: string) => {
     renderSpinner(true);
     const cardStatusPayload: CardStatusReq = {
       status:
-        type.toLowerCase() == CardActiveStatus.UNFREEZE
+        type.toLowerCase() === CardActiveStatus.UNFREEZE
           ? CardStatusNumber.ActiveWithOnlinePurchase
           : CardStatusNumber.Freezed,
       cardIndex: currentCard?.cardIndex,
       deviceInfo: await getDeviceInfo(),
     };
-    try {
-      const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        actionSheetRef.current.hide();
-        onFreezeCard(type.toLowerCase());
-        currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
-        console.log();
 
-        actionTypeRef.current =
-          apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
-            ? CardActiveStatus.UNFREEZE
-            : CardActiveStatus.FREEZE;
-        setTimeout(() => {
-          renderToast(localizationText.CARDS.DEBIT_CARD + `${currentCard.maskedCardNumber}`, type.toLowerCase());
-        }, 500);
-        renderSpinner(false);
-      }
-    } catch (error: any) {
+    const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
+    if (apiResponse?.status?.type === 'SUCCESS') {
       actionSheetRef.current.hide();
+      onFreezeCard(type.toLowerCase());
+      currentCard.frozen = apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed;
+
+      actionTypeRef.current =
+        apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed
+          ? CardActiveStatus.UNFREEZE
+          : CardActiveStatus.FREEZE;
+      setTimeout(() => {
+        renderToast(`${localizationText.CARDS.DEBIT_CARD} ${currentCard.maskedCardNumber}`, type.toLowerCase());
+      }, 500);
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      return;
     }
+
+    renderSpinner(false);
+    actionSheetRef.current.hide();
   };
 
   const handleFinalAction = useCallback((index: number, type: string) => {
@@ -215,17 +223,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         break;
       default:
         break;
-    }
-  }, []);
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
     }
   }, []);
 

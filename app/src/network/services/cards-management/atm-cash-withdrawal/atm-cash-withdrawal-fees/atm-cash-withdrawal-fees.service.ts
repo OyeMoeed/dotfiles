@@ -8,7 +8,7 @@ const getAtmWithdrawalFees = async (
   walletNumber: string,
   amount: string,
 ): Promise<ApiResponse<IAtmWithdrawalFeesRes>> => {
-  const apiResponse = await apiCall<IAtmWithdrawalFeesRes>({
+  const apiResponse: any = await apiCall<IAtmWithdrawalFeesRes>({
     endpoint: CARDS_MANAGEMENT_URLS.atm_withdrawal_fees(walletNumber, amount),
     method: requestType.GET,
   });
