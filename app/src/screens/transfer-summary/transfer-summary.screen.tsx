@@ -55,7 +55,8 @@ const TransferSummaryScreen: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
@@ -106,7 +107,7 @@ const TransferSummaryScreen: React.FC = () => {
     if (transfersDetails.formInstances[index]?.selectedItem) {
       summeryArray.push({
         id: '3',
-        label: localizationText.TRANSFER_SUMMARY.REASON,
+        // label: localizationText.TRANSFER_SUMMARY.REASON,
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
       });
     }
@@ -140,10 +141,10 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayView style={styles.walletListBackground}>
           <IPayView style={styles.iconLabel}>
             {renderLeftIcon()}
-            <IPayFootnoteText text={item?.label} style={styles.label} />
+            <IPayFootnoteText text={item?.label} style={styles.label} numberOfLines={2} />
           </IPayView>
           <IPayView style={styles.listDetails}>
-            <IPayFootnoteText text={item?.value} style={styles.detailsText} />
+            <IPayFootnoteText text={item?.value} style={styles.detailsText} numberOfLines={2} />
             {item?.icon && (
               <IPayPressable style={styles.appleIcon} onPress={item?.onPress}>
                 <IPayIcon icon={item?.icon} style={styles.appleIcon} color={item?.color} size={scaleSize(18)} />
@@ -232,7 +233,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
     } else {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     }
     setIsLoading(false);
   };
@@ -240,7 +241,7 @@ const TransferSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       verifyOtp();
     }
@@ -261,7 +262,7 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>
             <>
-              {transfersRequestsList.map((item) => {
+              {transfersRequestsList?.map((item) => {
                 if (item[0].isAlinma) {
                   return (
                     <IPayView style={styles.walletBackground} key={item[0].value}>
@@ -325,7 +326,7 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={walletInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
@@ -333,7 +334,7 @@ const TransferSummaryScreen: React.FC = () => {
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          timeout={+userInfo?.otpTimeout}
+          timeout={+walletInfo?.otpTimeout}
           onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>

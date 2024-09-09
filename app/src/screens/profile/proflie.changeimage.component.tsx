@@ -12,7 +12,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { removeProfileImage } from '@app/network/services/core/update-wallet/update-wallet.service';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import profileStyles from './profile.style';
 
@@ -39,7 +39,6 @@ const useChangeImage = (): UseChangeImageReturn => {
       actionSheetRef.current.show();
     }
   }, []);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const hideActionSheet = useCallback(() => {
     if (actionSheetRef.current) {
       actionSheetRef.current.hide();
@@ -70,7 +69,7 @@ const useChangeImage = (): UseChangeImageReturn => {
         includeBase64: true,
       }).then((image: any) => {
         if (image.data) {
-           setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
+          setSelectedImage(`data:image/jpeg;base64,${image?.data}`);
           hideActionSheet();
         }
       });
@@ -81,7 +80,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     setIsLoading(true);
     const apiResponse = await removeProfileImage(walletInfo.walletNumber);
     if (apiResponse?.status?.type === 'SUCCESS') {
-      dispatch(setUserInfo({ profileImage: '' }));
+      dispatch(setWalletInfo({ profileImage: '' }));
       setIsLoading(false);
     } else {
       setIsLoading(false);
@@ -104,7 +103,7 @@ const useChangeImage = (): UseChangeImageReturn => {
           handleImagePicker();
           break;
         case 2:
-          if (selectedImage || userInfo.profileImage) {
+          if (selectedImage || walletInfo.profileImage) {
             hideActionSheet();
             setAlertVisible(true);
           } else {
@@ -127,7 +126,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     customImage: <ProfileIcon />,
     message: localizationText.PROFILE.SELECT_OPTION,
     options:
-      selectedImage || userInfo.profileImage
+      selectedImage || walletInfo.profileImage
         ? [
             localizationText.PROFILE.TAKE_PHOTO,
             localizationText.PROFILE.UPLOAD_PHOTO,
@@ -135,9 +134,9 @@ const useChangeImage = (): UseChangeImageReturn => {
             localizationText.COMMON.CANCEL,
           ]
         : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],
-    cancelButtonIndex: selectedImage || userInfo.profileImage ? 3 : 2,
+    cancelButtonIndex: selectedImage || walletInfo.profileImage ? 3 : 2,
     showCancel: true,
-    destructiveButtonIndex: selectedImage || userInfo.profileImage ? 2 : undefined,
+    destructiveButtonIndex: selectedImage || walletInfo.profileImage ? 2 : undefined,
     onPress: handleActionPress,
   };
 

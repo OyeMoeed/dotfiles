@@ -61,7 +61,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [appliedFilters, setAppliedFilters] = useState<SubmitEvent | null>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();

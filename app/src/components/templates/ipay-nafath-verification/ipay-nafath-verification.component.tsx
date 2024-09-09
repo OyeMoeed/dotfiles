@@ -29,7 +29,7 @@ import {
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
@@ -51,8 +51,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const [nafathRequestId, setNafathRequestId] = useState<string>('');
   const [duration, setDuration] = useState<number>();
   const [waitngScnds, setWaitngScnds] = useState<number>(20);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
 
@@ -155,9 +154,9 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     let nafathObj = nafathRes.response.mainInfo;
 
     let body: IActivationAbsherReq = {
-      walletNumber: walletNumber,
+      walletNumber: walletInfo.walletNumber,
       walletTier: 'G',
-      poiNumber: userInfo?.poiNumber,
+      poiNumber: walletInfo?.poiNumber,
       poiExpiryDate: nafathObj.idExpiryDate,
       poiExpiryDateHijri: nafathObj.idExpiryDateHijri,
       birthDate: nafathObj.dateOfBirth,
@@ -191,8 +190,8 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         poiType: nafathObj.idNumber,
       };
       dispatch(
-        setUserInfo({
-          ...userInfo,
+        setWalletInfo({
+          ...walletInfo,
           ...updatedValues,
         }),
       );
@@ -204,8 +203,8 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         walletTier: 'B',
       };
       dispatch(
-        setUserInfo({
-          ...userInfo,
+        setWalletInfo({
+          ...walletInfo,
           ...updatedValues,
         }),
       );

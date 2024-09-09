@@ -1,8 +1,10 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17 } from '@app/styles/typography.styles';
 import { moderateScale, moderateVerticalScale, verticalScale } from 'react-native-size-matters';
+
+const innerWidth = SCREEN_WIDTH - scaleSize(40);
 
 const walletTransferStyles = (themeColors: typeof colors, selectedContact: boolean) =>
   createStyleSheet({
@@ -103,6 +105,7 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     textInputContainerStyle: {
       marginVertical: verticalScale(-12),
     },
+    toastContainer: { width: innerWidth, marginLeft: moderateScale(5) },
   });
 
 export default walletTransferStyles;

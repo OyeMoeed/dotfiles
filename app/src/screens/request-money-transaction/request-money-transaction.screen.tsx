@@ -71,14 +71,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const handleSubmit = (data: FilterSelectedValue) => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
-      const {
-        contactNumber,
-        amountFrom,
-        amountTo,
-        dateFrom,
-        dateTo,
-        status,
-      } = data;
+      const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status } = data;
       const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
       filtersArray = [contactNumber, amountRange, dateRange, status];
@@ -184,7 +177,9 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             {renderChip()}
           </IPayScrollView>
         </IPayView>
-      ) : (<IPayView />)}
+      ) : (
+        <IPayView />
+      )}
       <IPaySegmentedControls
         onSelect={handleSelectedTab}
         selectedTab={selectedTab}
