@@ -56,7 +56,7 @@ const SendGiftPreview: FC = ({ route }) => {
     });
   };
 
-  // to chnage text color on basis of card theme.
+  // to change text color on basis of card theme.
   const isDarkCard = darkCards.includes(selectedCard?.id);
 
   return (
@@ -115,7 +115,7 @@ const SendGiftPreview: FC = ({ route }) => {
               />
             </IPayScrollView>
             <IPayFootnoteText
-              style={[styles.messagePreviewText]}
+              style={styles.messagePreviewText}
               text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
               color={isDarkCard ? colors.natural.natural0 : colors.primary.primary950}
