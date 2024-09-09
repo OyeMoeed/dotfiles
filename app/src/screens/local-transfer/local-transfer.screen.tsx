@@ -192,8 +192,7 @@ const LocalTransferScreen: React.FC = () => {
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    showUpdateBeneficiaryToast();
-    editNickNameSheetRef?.current?.close();
+
   };
 
   const showDeleteBeneficiaryToast = () => {
