@@ -1,5 +1,4 @@
-import images from '@app/assets/images';
-import { IPayFootnoteText, IPayImage, IPayTitle3Text, IPayView } from '@app/components/atoms';
+import { IPayFootnoteText, IPayLottieAnimation, IPayTitle3Text, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -11,53 +10,50 @@ import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
-import { RenderItemProps } from './send-gift-card.interface';
+import giftsCardData from './send-gift-card.constants';
+import { GiftDetails } from './send-gift-card.interface';
 import sendGiftCard from './send-gift-card.style';
 
 const SendGiftCard = () => {
   const { colors } = useTheme();
-  const carouselData = [
-    {
-      image: images.eidMubarak,
-      background: colors.backgrounds.skyBlue,
-    },
-    {
-      image: images.eidMubarak,
-      background: colors.backgrounds.yellowish,
-    },
-  ];
+  const [carouselData, setCarouselData] = useState<GiftDetails[]>(giftsCardData?.eidGiftList);
 
   const localizationText = useLocalization();
 
   const {
-    SEND_GIFT: {
-      EIYDIAH,
-      BIRTHDAY,
-      CONGRATULATIONS,
-      NEW_BABY,
-      SEND_GIFT,
-      SEND_GIFT_CARD_DETAIL,
-      SEND_GIFT_CARD_DESCRIPTION,
-    },
+    SEND_GIFT: { EIYDIAH, BIRTHDAY, CONGRATULATIONS, SEND_GIFT, SEND_GIFT_CARD_DETAIL, SEND_GIFT_CARD_DESCRIPTION },
     COMMON: { NEXT },
   } = localizationText;
-  const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS, NEW_BABY];
+  const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS];
   const styles = sendGiftCard(colors);
 
   const [selectedTab, setSelectedTab] = useState<string>(SEND_GIFT_TABS[0]);
+  const [selectedCard, setSelectedCard] = useState(carouselData[0] || {});
 
   const onSelectTab = (tab: string) => {
     setSelectedTab(tab);
+    switch (tab) {
+      case EIYDIAH:
+        return setCarouselData(giftsCardData?.eidGiftList);
+      case BIRTHDAY:
+        return setCarouselData(giftsCardData?.birthdayGiftList);
+      case CONGRATULATIONS:
+        return setCarouselData(giftsCardData?.congratulationsGiftList);
+      default:
+        return setCarouselData(giftsCardData?.eidGiftList);
+    }
   };
 
-  const renderCarouselItem = ({ item }: RenderItemProps) => (
-    <IPayView style={[styles.carouselItem, { backgroundColor: item.background }]}>
-      <IPayImage image={item.image} style={styles.image} />
+  const renderCarouselItem = ({ item }: any) => (
+    <IPayView style={[styles.carouselItem, { backgroundColor: item.bgColor }]}>
+      <IPayLottieAnimation source={item.path} style={styles.image} loop />
     </IPayView>
   );
 
+  const onChangeIndex = (index: number) => setSelectedCard(carouselData[index]);
+
   const onNext = () => {
-    navigate(ScreenNames.SEND_GIFT_PREVIEW, { occasion: selectedTab });
+    navigate(ScreenNames.SEND_GIFT_PREVIEW, { occasion: selectedTab, selectedCard });
   };
 
   return (
@@ -85,6 +81,7 @@ const SendGiftCard = () => {
           loop={false}
           style={styles.carouselStyle}
           renderItem={renderCarouselItem}
+          onChangeIndex={onChangeIndex}
         />
       </IPayView>
       <IPayButton

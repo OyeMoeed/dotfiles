@@ -218,9 +218,9 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
         simpleBar
       >
         <IPayView style={styles.bottomSheetContainer}>
-          <IPayView style={styles.previewContainer}>
+          <IPayView style={[styles.previewContainer, { backgroundColor: transferDetails?.selectedCard?.bgColor }]}>
             <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
-            <IPayImage image={images.eidMubarak} style={styles.image} />
+            <IPayLottieAnimation source={transferDetails?.selectedCard?.path ?? ''} style={styles.image} loop />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
               <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />

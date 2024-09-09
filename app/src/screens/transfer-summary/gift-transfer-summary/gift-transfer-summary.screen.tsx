@@ -231,6 +231,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
       hideSpinner();
     } catch (error) {
+      setAPIError(error?.message);
       hideSpinner();
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -255,6 +256,7 @@ const TransferSummaryScreen: React.FC = () => {
             transferDetails: {
               formData: transfersDetails.formInstances,
               apiData: apiResponse?.response?.transferRequestsResult,
+              selectedCard: giftDetails?.selectedCard,
             },
             totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
           });

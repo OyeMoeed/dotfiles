@@ -4,6 +4,7 @@ import {
   IPayCaption1Text,
   IPayFootnoteText,
   IPayImage,
+  IPayLottieAnimation,
   IPayScrollView,
   IPayTitle1Text,
   IPayView,
@@ -26,7 +27,7 @@ import { Keyboard } from 'react-native';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
 const SendGiftPreview: FC = ({ route }) => {
-  const { occasion = '' } = { ...route?.params };
+  const { occasion = '', selectedCard } = { ...route?.params };
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = sendGiftPreviewStyles(colors);
@@ -50,7 +51,7 @@ const SendGiftPreview: FC = ({ route }) => {
       from: TRANSFERTYPE.SEND_GIFT,
       heading: localizationText.SEND_GIFT.SEND_GIFT,
       showHistory: false,
-      giftDetails: { message, occasion },
+      giftDetails: { message, occasion, selectedCard },
     });
   };
 
@@ -99,10 +100,9 @@ const SendGiftPreview: FC = ({ route }) => {
         simpleBar
       >
         <IPayView style={styles.bottomSheetContainer}>
-          <IPayView style={styles.previewContainer}>
+          <IPayView style={[styles.previewContainer, { backgroundColor: selectedCard?.bgColor }]}>
             <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
-            <IPayImage image={images.eidMubarak} style={styles.image} />
-
+            <IPayLottieAnimation source={selectedCard?.path} style={styles.image} loop />
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
               <IPayFootnoteText style={styles.messageText} color={colors.primary.primary950} text={message} />
             </IPayScrollView>
