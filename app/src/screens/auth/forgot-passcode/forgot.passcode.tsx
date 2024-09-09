@@ -62,7 +62,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
               <icons.userTick />
             </IPayView>
 
-            <IPayView style={styles.headingView}>
+            <IPayView>
               <IPayPageDescriptionText
                 heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
                 text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}

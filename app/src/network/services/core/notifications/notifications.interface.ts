@@ -19,11 +19,14 @@ interface GetAllRetainedMessagesItem {
   deleted: boolean;
 }
 
+// Define the RetainedMessages interface
+interface RetainedMessages {
+  retainedMessages: GetAllRetainedMessagesItem[];
+}
+
 // Define the GetAllRetainedMessagesDetails interface that extends MockAPIDataProps with a specific response
 interface GetAllRetainedMessagesDetails extends MockAPIDataProps {
-  response: {
-    retainedMessages: GetAllRetainedMessagesItem[]; // Define 'RetainedMessages' here
-  };
+  response: RetainedMessages;
   paginationInfo: {
     matchedRecords: string;
     sentRecords: string;
@@ -93,4 +96,5 @@ export {
   ReadSingleNotificationMockProps,
   DeleteSingleNotificationResponse,
   DeleteSingleNotificationMockProps,
+  RetainedMessages,
 };

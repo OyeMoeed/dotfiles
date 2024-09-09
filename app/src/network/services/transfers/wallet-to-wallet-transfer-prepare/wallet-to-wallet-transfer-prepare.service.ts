@@ -14,7 +14,10 @@ const walletToWalletTransferPrepare = async (
       method: requestType.POST,
       payload,
     });
-    return apiResponse;
+    if (apiResponse?.status) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true, ...apiResponse };
   } catch (error: any) {
     const status: IApiStatus = {
       code: 'NETWORK_ERROR',
