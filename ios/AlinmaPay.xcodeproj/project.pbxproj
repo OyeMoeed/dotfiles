@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* AlinmaPayTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* AlinmaPayTests.m */; };
-		0C80B921A6F3F58F76C31292 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		0C80B921A6F3F58F76C31292 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
@@ -16,6 +16,12 @@
 		26A7B39A766C4569853BAB42 /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7816505103CB41729426DCD0 /* Inter-SemiBold.ttf */; };
 		2C04C185CC9742D8BB325DF0 /* Inter-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5D111001238F4D92A9D19D79 /* Inter-Bold.ttf */; };
 		2E5C7404DAE24F10A445F231 /* Inter-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B4F10BB507D044AF87ECC3EB /* Inter-ExtraLight.ttf */; };
+		3235ED9E2C89F38300D17AEE /* AppleWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3235ED9C2C89F38300D17AEE /* AppleWallet.m */; };
+		3235ED9F2C89F38300D17AEE /* AppleWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3235ED9C2C89F38300D17AEE /* AppleWallet.m */; };
+		3235EDA02C89F38300D17AEE /* AppleWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3235ED9C2C89F38300D17AEE /* AppleWallet.m */; };
+		3235EDA12C89F38300D17AEE /* AppleWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3235ED9C2C89F38300D17AEE /* AppleWallet.m */; };
+		3235EDA22C89F38300D17AEE /* AppleWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3235ED9C2C89F38300D17AEE /* AppleWallet.m */; };
+		3235EDA32C89F38300D17AEE /* AppleWallet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3235ED9C2C89F38300D17AEE /* AppleWallet.m */; };
 		7699B88040F8A987B510C191 /* libPods-AlinmaPay-AlinmaPayTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-AlinmaPay-AlinmaPayTests.a */; };
 		79FEFF932AF1A0D8EAD916D2 /* libPods-AlinmaPay-AlinmaPayDev.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 429315912A68134CAA6409C5 /* libPods-AlinmaPay-AlinmaPayDev.a */; };
 		7D0B60EF3255431E8EAEEA32 /* Inter-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D6F93B09F2E64DF2B10E5362 /* Inter-Thin.ttf */; };
@@ -108,6 +114,8 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-AlinmaPay-AlinmaPayTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D91B2DEEC7E19A0CAF64429 /* Pods-AlinmaPay-AlinmaPayDev.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayDev.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev.release.xcconfig"; sourceTree = "<group>"; };
 		21316906E892999672FD552F /* Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit.debug.xcconfig"; sourceTree = "<group>"; };
+		3235ED9C2C89F38300D17AEE /* AppleWallet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppleWallet.m; sourceTree = "<group>"; };
+		3235ED9D2C89F38300D17AEE /* AppleWallet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppleWallet.h; sourceTree = "<group>"; };
 		38DA97FF088DD9A645CD2045 /* Pods-AlinmaPay-AlinmaPayUat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay-AlinmaPayUat.release.xcconfig"; path = "Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat.release.xcconfig"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-AlinmaPay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlinmaPay.debug.xcconfig"; path = "Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay.debug.xcconfig"; sourceTree = "<group>"; };
 		429315912A68134CAA6409C5 /* libPods-AlinmaPay-AlinmaPayDev.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlinmaPay-AlinmaPayDev.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -157,7 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* BuildFile in Frameworks */,
+				0C80B921A6F3F58F76C31292 /* (null) in Frameworks */,
 				AEA302DBC044BCEF948E6955 /* libPods-AlinmaPay.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -217,6 +225,8 @@
 		13B07FAE1A68108700A75B9A /* AlinmaPay */ = {
 			isa = PBXGroup;
 			children = (
+				3235ED9D2C89F38300D17AEE /* AppleWallet.h */,
+				3235ED9C2C89F38300D17AEE /* AppleWallet.m */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
@@ -1013,6 +1023,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* AlinmaPayTests.m in Sources */,
+				3235ED9F2C89F38300D17AEE /* AppleWallet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1021,6 +1032,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */,
+				3235ED9E2C89F38300D17AEE /* AppleWallet.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1030,6 +1042,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84267A802BC1AFA20024F0EA /* AppDelegate.mm in Sources */,
+				3235EDA02C89F38300D17AEE /* AppleWallet.m in Sources */,
 				84267A812BC1AFA20024F0EA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1039,6 +1052,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84267A922BC1B5C00024F0EA /* AppDelegate.mm in Sources */,
+				3235EDA12C89F38300D17AEE /* AppleWallet.m in Sources */,
 				84267A932BC1B5C00024F0EA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1048,6 +1062,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84267AA42BC1B65E0024F0EA /* AppDelegate.mm in Sources */,
+				3235EDA22C89F38300D17AEE /* AppleWallet.m in Sources */,
 				84267AA52BC1B65E0024F0EA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1057,6 +1072,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84267AB62BC1B6D20024F0EA /* AppDelegate.mm in Sources */,
+				3235EDA32C89F38300D17AEE /* AppleWallet.m in Sources */,
 				84267AB72BC1B6D20024F0EA /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

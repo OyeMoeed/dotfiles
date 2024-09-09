@@ -29,7 +29,7 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
 
   const goBackQr = debounce(() => {
     goBack();
-  }, 500);
+  }, 100);
 
   const renderComponent = () => {
     switch (permissionStatusCheck) {

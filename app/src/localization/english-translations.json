@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "CONTACTS_LIMIT_REACHED": "Contacts Limit Reached",
+    "INVALID_NUMBER": "Invalid Number",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
     "CHOOSE_BENEFICIARY": "Choose Beneficiary",
     "PRICE_VARY": "Prices vary depending on the bank.",
@@ -421,6 +423,7 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "The Ref. Number has been copied!",
+    "TRANSACTION_ID_COPIED": "The Transaction Id has been copied",
     "TRANSFER_TO": "Transfer To",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
@@ -725,7 +728,7 @@
     "FIRST_TIME_CODE": "You will use this code for the first time using this card",
     "HEADER": "Virtual Card",
     "CLASSIC_DEBIT_CARD": "Classic Debit Card",
-    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "DESCRIPTION": "your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
     "VIEW_DETAILS": "View all Details",
     "CLOSE_DETAILS": "Close Details",
     "ISSUE_CARD": "Issue Card",
@@ -825,6 +828,7 @@
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
+    "AMOUNT": "Amount",
     "INVESTMENT": "Investment",
     "TUITION": "Tuition Expenses",
     "TRAVEL": "Travel Expenses",
@@ -1295,8 +1299,10 @@
     "NO_REMAINING_AMOUNT": "No Remaining Amount "
   },
   "REQUEST_MONEY": {
+    "MAKE_NEW_REQUEST": "Make new Request",
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
+    "SENT_REQUEST": "Send Request",
     "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
@@ -1305,6 +1311,7 @@
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
     "CANCEL": "Cancel",
+    "CANCELLED": "Cancelled",
     "PAID": "Paid",
     "SEND_REQUEST_TO": "Send Request to",
     "REJECTED": "Rejected",

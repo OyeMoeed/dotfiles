@@ -41,13 +41,14 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
       marginBottom: scaleSize(24),
-      backgroundColor: colors.transparent,
       overflow: 'hidden',
-      padding: scaleSize(20),
+      paddingHorizontal: scaleSize(16),
+      backgroundColor: colors.appGradient.buttonBackground,
+      paddingVertical: moderateScale(16),
       justifyContent: 'center',
-      flex: !selectedContact ? 0.1 : 0.2,
-      borderRadius: scaleSize(16),
-      marginHorizontal: scaleSize(20),
+      flex: selectedContact ? 0.2 : 0,
+      borderRadius: scaleSize(28),
+      marginHorizontal: scaleSize(24),
       alignSelf: 'stretch',
     },
     checkmarkPoints: {
@@ -97,6 +98,7 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     inputStyle: {
       fontSize: FONT_SIZE_17,
       paddingBottom: moderateScale(5),
+      height: verticalScale(40),
     },
     topMargin: {
       top: verticalScale(4),

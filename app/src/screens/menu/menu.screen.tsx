@@ -74,11 +74,9 @@ const MenuScreen: FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       hideLogout();
       clearSession(false);
-    } else if (apiResponse?.apiResponseNotOk) {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -103,7 +101,6 @@ const MenuScreen: FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

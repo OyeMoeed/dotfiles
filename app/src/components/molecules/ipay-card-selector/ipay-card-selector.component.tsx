@@ -95,37 +95,21 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   useEffect(() => {
     if (topupCards.length == 1) setSelectedCard(topupCards[0].key);
   }, [topupCards]);
+
   const getTopupCardsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: WalletNumberProp = {
-        walletNumber,
-      };
 
-      const apiResponse: any = await getTopupCards(payload);
+    const payload: WalletNumberProp = {
+      walletNumber,
+    };
 
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          if (apiResponse?.response?.cardList && apiResponse?.response?.cardList?.length) {
-            await setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
-          }
+    const apiResponse: any = await getTopupCards(payload);
 
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    if (apiResponse) {
+      await setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
     }
+
+    renderSpinner(false);
   };
 
   useEffect(() => {
