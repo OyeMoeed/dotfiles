@@ -318,7 +318,10 @@ const LocalTransferScreen: React.FC = () => {
     viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 3);
 
   const hasBeneficiariesData = () =>
-    [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.INACTIVE)]?.length;
+    [
+      ...getSortedData(BeneficiaryTypes.ACTIVE),
+      ...getSortedData(BeneficiaryTypes.NEW_BENEFICIARY),
+    ]?.length;
 
   //IVR
   const currentOptionText =
@@ -459,7 +462,7 @@ const LocalTransferScreen: React.FC = () => {
                   <IPayView
                     style={[
                       styles.activeInactiveListWrapper,
-                      sortBy === BeneficiaryTypes.INACTIVE && styles.reverseList,
+                      sortBy === BeneficiaryTypes.NEW_BENEFICIARY && styles.reverseList,
                     ]}
                   >
                     {!!getSortedData(BeneficiaryTypes.ACTIVE)?.length && (
@@ -476,20 +479,20 @@ const LocalTransferScreen: React.FC = () => {
                         ListFooterComponent={() => renderFooter(BeneficiaryTypes.ACTIVE, getSortedData(sortBy)?.length)}
                       />
                     )}
-                    {!!getSortedData(BeneficiaryTypes.INACTIVE)?.length && (
+                    {!!getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length && (
                       <IPayFlatlist
-                        data={listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)}
+                        data={listData(viewAll.inactive, BeneficiaryTypes.NEW_BENEFICIARY)}
                         renderItem={beneficiaryItem}
                         keyExtractor={(item) => item.id}
                         ListHeaderComponent={() =>
                           renderHeader(
-                            BeneficiaryTypes.INACTIVE,
-                            listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)?.length,
-                            getSortedData(BeneficiaryTypes.INACTIVE)?.length,
+                            BeneficiaryTypes.NEW_BENEFICIARY,
+                            listData(viewAll.inactive, BeneficiaryTypes.NEW_BENEFICIARY)?.length,
+                            getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length,
                           )
                         }
                         ListFooterComponent={() =>
-                          renderFooter(BeneficiaryTypes.INACTIVE, getSortedData(BeneficiaryTypes.INACTIVE)?.length)
+                          renderFooter(BeneficiaryTypes.INACTIVE, getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length)
                         }
                       />
                     )}
