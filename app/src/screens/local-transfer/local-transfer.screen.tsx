@@ -523,7 +523,7 @@ const LocalTransferScreen: React.FC = () => {
                 <IPayButton
                   btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
                   medium
-                  onPress={() => navigate(ScreenNames.INACTIVE, {})}
+                  onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.btnStyle}
                   leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
@@ -538,7 +538,7 @@ const LocalTransferScreen: React.FC = () => {
               btnType={buttonVariants.OUTLINED}
               medium
               leftIcon={<IPayIcon icon={icons.add_bold} size={24} color={colors.primary.primary500} />}
-              onPress={() => navigate(ScreenNames.INACTIVE, {})}
+              onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
               btnStyle={styles.addBtn}
             />
           ) : (
