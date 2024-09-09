@@ -41,7 +41,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -68,7 +67,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
-  const { showToast } = useToastContext();
 
   const handleSubmitTransfer = () => {
     switch (from) {
@@ -114,15 +112,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       return `0${mobileWithoutSpaces.substr(5)}`;
     }
     return mobileWithoutSpaces;
-  };
-
-  const renderToast = () => {
-    showToast({
-      title: localizationText.WALLET_TO_WALLET.CONTACT_LIMIT_REACHED,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   useEffect(() => {
