@@ -27,12 +27,20 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import {
+  alertType,
+  alertVariant,
+  ApiResponseStatusType,
+  buttonVariants,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
+
+const defaultValue = '0.00';
 
 const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
@@ -40,7 +48,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const [topUpAmount, setTopUpAmount] = useState('');
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
-  const [isKeyboardOpen, setIskeyboardOpen] = useState(false);
+  const [, setIskeyboardOpen] = useState(false);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -218,7 +226,6 @@ const SendGiftAmountScreen = ({ route }) => {
     );
   };
 
-  const defaultValue = '0.00';
   const renderAmountInput = () => {
     switch (selectedTab) {
       case localizationText.SEND_GIFT.EQUALLY:
@@ -356,7 +363,7 @@ const SendGiftAmountScreen = ({ route }) => {
       hideSpinner();
     }
   };
-  const isDisabled = parseFloat(amountToShow) <= 0 || isNaN(parseFloat(amountToShow));
+  const isDisabled = parseFloat(amountToShow) <= 0 || Number.isNaN(parseFloat(amountToShow));
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />

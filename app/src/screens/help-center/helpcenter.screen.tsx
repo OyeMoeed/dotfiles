@@ -95,9 +95,9 @@ const HelpCenter: React.FC = () => {
     if (!searchText) {
       setFaqData(allFaqItems);
     } else {
-      let filteredData = [];
+      const filteredData = [];
       for (let i = 0; i < allFaqItems.length; i++) {
-        let filteredQuestions = allFaqItems[i].data.filter((el) =>
+        const filteredQuestions = allFaqItems[i].data.filter((el) =>
           el.question.toUpperCase().includes(searchText.toUpperCase()),
         );
         if (filteredQuestions.length > 0) {
@@ -170,20 +170,18 @@ const HelpCenter: React.FC = () => {
     setSearchText(text);
   };
 
-  const renderHelpCenterHeader = ({ item, index }: { item: string; index: number }) => {
-    return (
-      <IPayPressable
-        onPress={() => onPressHeaderTab(index)}
-        style={currentTab === index ? styles.headerTabSelected : styles.headerTabUnSelected}
-      >
-        <IPayFootnoteText
-          regular={currentTab !== index}
-          text={item}
-          color={currentTab === index ? colors.natural.natural0 : colors.natural.natural500}
-        />
-      </IPayPressable>
-    );
-  };
+  const renderHelpCenterHeader = ({ item, index }: { item: string; index: number }) => (
+    <IPayPressable
+      onPress={() => onPressHeaderTab(index)}
+      style={currentTab === index ? styles.headerTabSelected : styles.headerTabUnSelected}
+    >
+      <IPayFootnoteText
+        regular={currentTab !== index}
+        text={item}
+        color={currentTab === index ? colors.natural.natural0 : colors.natural.natural500}
+      />
+    </IPayPressable>
+  );
 
   const contactList = [
     { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: inside_sa_phone },

@@ -73,18 +73,16 @@ const CardIssuanceConfirmationScreen = () => {
     openBottomSheet.current?.close();
   };
 
-  const renderItem = ({ item }: IPayListItemProps) => {
-    return (
-      <IPayList
-        detailTextStyle={styles.detailsText}
-        textStyle={styles.titleText}
-        title={item.title}
-        detailText={item.detailText}
-        style={item.style}
-        showDetail
-      />
-    );
-  };
+  const renderItem = ({ item }: IPayListItemProps) => (
+    <IPayList
+      detailTextStyle={styles.detailsText}
+      textStyle={styles.titleText}
+      title={item.title}
+      detailText={item.detailText}
+      style={item.style}
+      showDetail
+    />
+  );
 
   const renderToast = () => {
     showToast({
@@ -155,7 +153,7 @@ const CardIssuanceConfirmationScreen = () => {
         customSnapPoint={['1%', '100%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent testID={'help-center-bottom-sheet'} />
+        <HelpCenterComponent testID="help-center-bottom-sheet" />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

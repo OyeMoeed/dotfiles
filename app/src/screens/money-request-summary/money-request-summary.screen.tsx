@@ -121,32 +121,34 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     [chipValue, localizationText, topUpAmount, colors, icons],
   );
 
-  const renderPayItem = useMemo(() => {
-    return ({ item }: { item: PayData }) => {
-      const { detailsText, leftIcon, label } = item;
-      return (
-        <IPayView style={styles.listContainer}>
-          <IPayView style={styles.listView}>
-            <IPayView style={styles.iconLabel}>
-              {leftIcon && (
-                <IPayView style={styles.leftIcon}>
-                  <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
-                </IPayView>
-              )}
-              <IPayFootnoteText color={colors.natural.natural900} text={label} />
-            </IPayView>
-            <IPayView style={styles.listDetails}>
-              {detailsText ? (
-                <IPayFootnoteText text={detailsText} style={styles.detailsText} />
-              ) : (
-                <IPayFootnoteText text={`${topUpAmount} ${localizationText.COMMON.SAR}`} style={styles.detailsText} />
-              )}
+  const renderPayItem = useMemo(
+    () =>
+      ({ item }: { item: PayData }) => {
+        const { detailsText, leftIcon, label } = item;
+        return (
+          <IPayView style={styles.listContainer}>
+            <IPayView style={styles.listView}>
+              <IPayView style={styles.iconLabel}>
+                {leftIcon && (
+                  <IPayView style={styles.leftIcon}>
+                    <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
+                  </IPayView>
+                )}
+                <IPayFootnoteText color={colors.natural.natural900} text={label} />
+              </IPayView>
+              <IPayView style={styles.listDetails}>
+                {detailsText ? (
+                  <IPayFootnoteText text={detailsText} style={styles.detailsText} />
+                ) : (
+                  <IPayFootnoteText text={`${topUpAmount} ${localizationText.COMMON.SAR}`} style={styles.detailsText} />
+                )}
+              </IPayView>
             </IPayView>
           </IPayView>
-        </IPayView>
-      );
-    };
-  }, [topUpAmount, localizationText, colors, images]);
+        );
+      },
+    [topUpAmount, localizationText, colors, images],
+  );
 
   return (
     <IPaySafeAreaView>

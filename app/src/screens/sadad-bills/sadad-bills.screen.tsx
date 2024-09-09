@@ -109,7 +109,7 @@ const SadadBillsScreen: React.FC = () => {
         billNumOrBillingAcct: accountNumber,
         billId: id,
         billNickname: vendor,
-        walletNumber: walletNumber,
+        walletNumber,
         deviceInfo,
       };
 
@@ -151,20 +151,6 @@ const SadadBillsScreen: React.FC = () => {
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
     });
-  };
-
-  const handelEditOrDelete = (index: number) => {
-    if (index === 0) {
-      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
-        billData: billToEditRef.current,
-        setEditBillSuccessToast,
-        billId: '1', // TODO: once api implemented on this screen will update it
-      });
-    } else {
-      setActionSheetOptions(deleteBillOptions);
-    }
-    sadadActionSheetRef?.current?.hide();
-    showActionSheet();
   };
 
   const deleteBillOptions = {
@@ -210,6 +196,20 @@ const SadadBillsScreen: React.FC = () => {
     } else {
       setActionSheetOptions(activeBillOptions);
     }
+    showActionSheet();
+  };
+
+  const handelEditOrDelete = (index: number) => {
+    if (index === 0) {
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
+        billData: billToEditRef.current,
+        setEditBillSuccessToast,
+        billId: '1', // TODO: once api implemented on this screen will update it
+      });
+    } else {
+      setActionSheetOptions(deleteBillOptions);
+    }
+    sadadActionSheetRef?.current?.hide();
     showActionSheet();
   };
 

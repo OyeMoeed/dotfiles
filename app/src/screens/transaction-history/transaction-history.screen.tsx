@@ -34,15 +34,7 @@ import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const {
-    isW2WTransactions,
-    isShowCard,
-    isShowTabs = false,
-    currentCard,
-    cards,
-    contacts,
-    isShowAmount = true,
-  } = route.params;
+  const { isW2WTransactions, isShowTabs = false, currentCard, cards, contacts, isShowAmount = true } = route.params;
   const { transactionHistoryFilterDefaultValues, W2WFilterData, W2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
@@ -57,7 +49,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const filterRef = useRef<bottomSheetTypes>(null);
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
-  const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const [appliedFilters, setAppliedFilters] = useState<SubmitEvent | null>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
@@ -66,10 +57,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingW2W, setIsLoadingW2W] = useState<boolean>(false);
+  const [, setIsLoadingW2W] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
-  const [cardsData, setCardssData] = useState<IPayTransactionItemProps[]>([]);
+  const [, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
   const [selectedCard, setSelectedCard] = useState<any>(currentCard);
 
@@ -92,17 +83,135 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }, [transactionsData]);
 
   // Function to apply filters dynamically
+
+  const getCardInfo = (card: string) => {
+    if (cards?.length) {
+      const foundCard = cards.find((item: CardInterface) => item?.maskedCardNumber === card);
+      return foundCard;
+    }
+    return '';
+  };
+
+  const getTrxReqTypeCode = (trxTypeName: string) => {
+    if (transactionHistoryFilterData) {
+      const foundReqType = transactionHistoryFilterData[0]?.filterValues?.find(
+        (type: any) => type?.value === trxTypeName,
+      );
+      return foundReqType?.key;
+    }
+    return '';
+  };
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const getTransactionsData = async (filtersData?: any) => {
+    renderSpinner(true);
+    setIsLoading(true);
+    try {
+      const payload: TransactionsProp = {
+        walletNumber,
+        maxRecords: '50',
+        offset: '1',
+        fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
+        cardIndex: selectedCard ? selectedCard?.cardIndex : '',
+        trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transaction_type) : '',
+      };
+
+      const apiResponse: any = await getTransactions(payload);
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          if (apiResponse?.response?.transactions?.length) {
+            setTransactionsData(apiResponse?.response?.transactions);
+          } else {
+            setTransactionsData([]);
+            setNoFilterResult(true);
+          }
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      setIsLoading(false);
+      renderSpinner(false);
+    } catch (error: any) {
+      setIsLoading(false);
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
   const applyFilters = (filtersArray: FiltersArrayProps) => {
     setNoFilterResult(false);
     getTransactionsData(filtersArray);
   };
 
-  const getCardInfo = (card: string) => {
-    if (cards?.length) {
-      const foundCard = cards.find((item: CardInterface) => item?.maskedCardNumber == card);
-      return foundCard;
+  const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
+    renderSpinner(true);
+    setIsLoadingW2W(true);
+    setTransactionsData([]);
+    setFilteredData([]);
+    try {
+      const payload: TransactionsProp = {
+        walletNumber,
+        maxRecords: '100',
+        offset: '1',
+        trxReqType: 'PAY_WALLET',
+        trxType,
+        fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        fromAmount: filterData?.amountFrom,
+        toAmount: filterData?.amountTo,
+      };
+      const apiResponse: any = await getTransactions(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setTransactionsData(apiResponse?.response?.transactions);
+          setFilteredData(apiResponse?.response?.transactions);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      setIsLoadingW2W(false);
+      renderSpinner(false);
+    } catch (error: any) {
+      setIsLoadingW2W(false);
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    return '';
   };
 
   const handleSubmit = (data: any) => {
@@ -149,8 +258,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     const isDateRange = filter.includes('-') && !filter.includes('SAR');
 
     if (isDateRange) {
-      const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
-
       updatedFilters = {
         ...updatedFilters,
         dateFrom: '',
@@ -177,151 +284,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
-  };
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
-  const getCardsData = async () => {
-    renderSpinner(true);
-    try {
-      const payload: CardsProp = {
-        walletNumber,
-      };
-      const apiResponse: any = await getCards(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setCardssData(apiResponse?.response?.cards);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  const getTrxReqTypeCode = (trxTypeName: string) => {
-    if (transactionHistoryFilterData) {
-      const foundReqType = transactionHistoryFilterData[0]?.filterValues?.find(
-        (type: any) => type?.value == trxTypeName,
-      );
-      return foundReqType?.key;
-    }
-    return '';
-  };
-
-  const getTransactionsData = async (filtersData?: any) => {
-    renderSpinner(true);
-    setIsLoading(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '50',
-        offset: '1',
-        fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
-        toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
-        cardIndex: selectedCard ? selectedCard?.cardIndex : '',
-        trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transaction_type) : '',
-      };
-
-      const apiResponse: any = await getTransactions(payload);
-
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          if (apiResponse?.response?.transactions?.length) {
-            setTransactionsData(apiResponse?.response?.transactions);
-          } else {
-            setTransactionsData([]);
-            setNoFilterResult(true);
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      setIsLoading(false);
-      renderSpinner(false);
-    } catch (error: any) {
-      setIsLoading(false);
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
-    renderSpinner(true);
-    setIsLoadingW2W(true);
-    setTransactionsData([]);
-    setFilteredData([]);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '100',
-        offset: '1',
-        trxReqType: 'PAY_WALLET',
-        trxType,
-        fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        fromAmount: filterData?.amountFrom,
-        toAmount: filterData?.amountTo,
-      };
-      const apiResponse: any = await getTransactions(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setTransactionsData(apiResponse?.response?.transactions);
-          setFilteredData(apiResponse?.response?.transactions);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      setIsLoadingW2W(false);
-      renderSpinner(false);
-    } catch (error: any) {
-      setIsLoadingW2W(false);
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
   };
 
   const mapFiltersTypes = (transactionTypesRes: []) => {

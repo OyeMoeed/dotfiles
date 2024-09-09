@@ -59,6 +59,33 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
+  const getWalletInformation = async (walletNumber: string) => {
+    try {
+      const payload = {
+        walletNumber,
+      };
+
+      const apiResponse = await getWalletInfo(payload, dispatch);
+      renderSpinner(false);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        dispatch(
+          setAppData({
+            isLinkedDevice: true,
+          }),
+        );
+        dispatch(setWalletInfo({ walletNumber }));
+        dispatch(
+          setUserInfo({ fullName: apiResponse?.response?.fullName, firstName: apiResponse?.response?.fullName }),
+        );
+        navigate(screenNames.REGISTRATION_SUCCESSFUL);
+      }
+    } catch (error) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
   const setNewPasscode = async (newCode: string) => {
     renderSpinner(true);
     try {
@@ -92,33 +119,6 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
       }
       renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  const getWalletInformation = async (walletNumber: string) => {
-    try {
-      const payload = {
-        walletNumber,
-      };
-
-      const apiResponse = await getWalletInfo(payload, dispatch);
-      renderSpinner(false);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        dispatch(
-          setAppData({
-            isLinkedDevice: true,
-          }),
-        );
-        dispatch(setWalletInfo({ walletNumber: walletNumber }));
-        dispatch(
-          setUserInfo({ fullName: apiResponse?.response?.fullName, firstName: apiResponse?.response?.fullName }),
-        );
-        navigate(screenNames.REGISTRATION_SUCCESSFUL);
-      }
-    } catch (error) {
       renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);

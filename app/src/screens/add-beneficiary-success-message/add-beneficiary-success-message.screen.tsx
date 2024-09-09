@@ -19,7 +19,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { openPhoneNumber } from '@app/utilities';
-import { ActivateViewTypes } from './add-beneficiary-success-message.enum';
+import ActivateViewTypes from './add-beneficiary-success-message.enum';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
 const AddBeneficiarySuccessScreen: React.FC = () => {
@@ -49,7 +49,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       actionSheetRef.current.show();
     }, 500);
   };
-  const { type } = route?.params;
+  const type = (route?.params as { type: string })?.type || '';
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);

@@ -219,7 +219,7 @@ const Profile = () => {
         </IPayFootnoteText>
       </IPayView>
       {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
-        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED}></IPayChip>
+        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED} />
       ) : (
         <IPayOutlineButton
           rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}

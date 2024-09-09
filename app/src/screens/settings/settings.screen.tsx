@@ -41,7 +41,7 @@ const Settings: React.FC = () => {
   const dispatch = useTypedDispatch();
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  //use setting hook
+  // use setting hook
   const {
     onEnterPassCode,
     passcodeError,

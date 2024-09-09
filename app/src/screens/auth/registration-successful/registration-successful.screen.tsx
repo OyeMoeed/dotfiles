@@ -82,7 +82,7 @@ const RegistrationSuccessful: React.FC = () => {
           <IPayView style={styles.container}>
             <IPayView style={styles.linearGradientView}>
               <IPayLinearGradientView
-                style={[styles.innerLinearGradientView]}
+                style={styles.innerLinearGradientView}
                 gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
               >
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />

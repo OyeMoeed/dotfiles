@@ -154,23 +154,21 @@ const CardsScreen: React.FC = () => {
 
   const mapCardData = (cards: CardListItem[]) => {
     let mappedCards = [];
-    mappedCards = cards.map((card: any) => {
-      return {
-        name: card?.linkedName?.embossingName,
-        cardType: card?.cardTypeId,
-        cardHeaderText: getCardDesc(card?.cardTypeId),
-        expired: card?.reissueDue,
-        frozen: card.cardStatus == CardStatusNumber.Freezed,
-        suspended: false,
-        maskedCardNumber: `**** **** **** **${card.lastDigits}`,
-        cardNumber: card.lastDigits,
-        creditCardDetails: {
-          availableBalance: '5200.40',
-        },
-        totalCashbackAmt: card.totalCashbackAmt,
-        ...card,
-      };
-    });
+    mappedCards = cards.map((card: any) => ({
+      name: card?.linkedName?.embossingName,
+      cardType: card?.cardTypeId,
+      cardHeaderText: getCardDesc(card?.cardTypeId),
+      expired: card?.reissueDue,
+      frozen: card.cardStatus == CardStatusNumber.Freezed,
+      suspended: false,
+      maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      cardNumber: card.lastDigits,
+      creditCardDetails: {
+        availableBalance: '5200.40',
+      },
+      totalCashbackAmt: card.totalCashbackAmt,
+      ...card,
+    }));
     return mappedCards;
   };
   const getCardsData = async () => {
@@ -183,13 +181,12 @@ const CardsScreen: React.FC = () => {
       renderSpinner(false);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          let availableCards = apiResponse?.response?.cards.filter((card: any) => {
-            return (
-              card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
+          const availableCards = apiResponse?.response?.cards.filter(
+            (card: any) =>
+            card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
               card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
-              card.cardStatus == CardStatusNumber.Freezed
-            );
-          });
+              card.cardStatus == CardStatusNumber.Freezed,
+          ));
 
           if (availableCards?.length) {
             setCardsData(mapCardData(availableCards));

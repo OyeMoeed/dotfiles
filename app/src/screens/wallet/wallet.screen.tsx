@@ -35,7 +35,6 @@ const WalletScreen = () => {
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const [isNameCopied, setIsNameCopied] = useState(false);
   const [isIbanCopied, setIsIbanCopied] = useState(false);
@@ -101,6 +100,11 @@ const WalletScreen = () => {
     const balancePercentage = (remainingSpendingLimit / monthlySpendingLimit) * 100;
     return Math.ceil(balancePercentage);
   }
+
+  const QRCodeRef = (ref: any) => {
+    qrRef.current = ref;
+    return null;
+  };
 
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
@@ -173,7 +177,7 @@ const WalletScreen = () => {
           onPressSaveQR={saveQrToDisk}
           icon={
             <QRCode
-              getRef={(ref) => (qrRef.current = ref)}
+              getRef={QRCodeRef}
               value={qrData}
               logo={images.gradientAppIcon}
               size={moderateScale(76)}

@@ -32,13 +32,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   const [showAlert, setShowAlert] = useState(false);
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
-  const {
-    getValues,
-    control,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm();
+  const { getValues, control, setValue, watch } = useForm();
 
   const onSubmit = async () => {
     // Handle form submission here

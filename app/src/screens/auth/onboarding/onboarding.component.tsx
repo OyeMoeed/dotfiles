@@ -10,7 +10,7 @@ import {
 } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { OnboardingSteps } from './onboarding-enum.util';
+import OnboardingSteps from './onboarding-enum.util';
 import { OnboardingScreenProps } from './onboarding.interface';
 import { onboardingStyles } from './onboardingStyles.style';
 

@@ -9,13 +9,13 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, PayChannel, spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
-import cardVerificationStyles from './cardVerification.styles';
 import { useRoute } from '@react-navigation/core';
 import { WebViewNavigation } from 'react-native-webview';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { CheckStatusProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { useTypedSelector } from '@app/store/store';
 import { topupCheckStatus } from '@app/network/services/core/topup-cards/topup-cards.service';
+import cardVerificationStyles from './cardVerification.styles';
 
 const CardVerificationScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -82,8 +82,8 @@ const CardVerificationScreen: React.FC = () => {
 
     if (apiResponse.response.pmtResultCd == 'P') {
       if (trial < 3) {
-        trial = trial + 1;
-        setTimeout(function () {
+        trial += 1;
+        setTimeout(() => {
           checkStatus();
         }, 3000);
       } else {
@@ -95,18 +95,16 @@ const CardVerificationScreen: React.FC = () => {
           summaryData: apiResponse,
         });
       }
+    } else if (apiResponse?.status?.type == ApiResponseStatusType.SUCCESS) {
+      renderSpinner(false);
+      navigate(screenNames.TOP_UP_SUCCESS, {
+        topupChannel: PayChannel.CARD,
+        topupStatus: TopupStatus.SUCCESS,
+        summaryData: apiResponse,
+      });
     } else {
-      if (apiResponse?.status?.type == ApiResponseStatusType.SUCCESS) {
-        renderSpinner(false);
-        navigate(screenNames.TOP_UP_SUCCESS, {
-          topupChannel: PayChannel.CARD,
-          topupStatus: TopupStatus.SUCCESS,
-          summaryData: apiResponse,
-        });
-      } else {
-        renderSpinner(false);
-        setAPIError(apiResponse?.error || setAPIError(localizationText.ERROR.API_ERROR_RESPONSE));
-      }
+      renderSpinner(false);
+      setAPIError(apiResponse?.error || setAPIError(localizationText.ERROR.API_ERROR_RESPONSE));
     }
   };
 
@@ -115,7 +113,6 @@ const CardVerificationScreen: React.FC = () => {
       setShowWebView(false);
       renderSpinner(true);
       checkStatus();
-      return;
     }
   };
 

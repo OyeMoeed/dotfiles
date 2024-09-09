@@ -19,7 +19,7 @@ interface BalanceData {
   calculatedBill: string;
 }
 
-//TODO wiill be replaced by API
+// TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
   const { billPayDetailsData } = useConstantData();
@@ -27,18 +27,18 @@ const useBillPaymentConfirmation = () => {
   const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiError] = useState<string>('');
+  const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const route = useRoute();
-  const variant = route?.params?.variant;
+  const variant = (route?.params as { variant: string })?.variant;
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
   const handleOtpVerification = () => {
     otpRef?.current?.present();
   };
-  const [balanceData, setBalanceData] = useState<BalanceData>({
+  const [balanceData] = useState<BalanceData>({
     availableBalance: '0',
     balance: '0',
     calculatedBill: '3000',
@@ -60,7 +60,7 @@ const useBillPaymentConfirmation = () => {
 
   const onConfirm = () => {
     otpRef?.current?.close();
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: variant ? false : true });
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !variant });
   };
   const handlePay = () => {
     if (otp === '' || otp.length < 4) {

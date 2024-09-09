@@ -31,7 +31,7 @@ import usePermissions from '@app/hooks/permissions.hook';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { default as screenNames } from '@app/navigation/screen-names.navigation';
+import screenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
@@ -40,7 +40,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
+import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
@@ -68,7 +68,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, {
-          selectedContacts: selectedContacts,
+          selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
         });
         break;
@@ -84,7 +84,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
       case TRANSFERTYPE.REQUEST_MONEY:
         navigate(screenNames.SEND_MONEY_FORM, {
-          selectedContacts: selectedContacts,
+          selectedContacts,
           heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
           from: TRANSFERTYPE.REQUEST_MONEY,
         });
@@ -403,29 +403,27 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onCloseBottomSheet={onCloseSaveContact}
       >
         <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
-          {({ handleSubmit }) => {
-            return (
-              <IPayView style={styles.unsavedBottomSheet}>
-                <IPayRHFAnimatedTextInput
-                  name="mobileNumber"
-                  label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-                  keyboardType="phone-pad"
-                  rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-                  containerStyle={styles.phoneInputStyle}
-                  mainContainerStyles={styles.phoneInputStyleMain}
-                  maxLength={constants.MOBILE_NUMBER_LENGTH}
-                />
-                <IPayButton
-                  medium
-                  btnIconsDisabled
-                  btnStyle={styles.unsavedButton}
-                  btnText={localizationText.COMMON.DONE}
-                  onPress={handleSubmit(addUnsavedNumber)}
-                  btnType="primary"
-                />
-              </IPayView>
-            );
-          }}
+          {({ handleSubmit }) => (
+            <IPayView style={styles.unsavedBottomSheet}>
+              <IPayRHFAnimatedTextInput
+                name="mobileNumber"
+                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                keyboardType="phone-pad"
+                rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                containerStyle={styles.phoneInputStyle}
+                mainContainerStyles={styles.phoneInputStyleMain}
+                maxLength={constants.MOBILE_NUMBER_LENGTH}
+              />
+              <IPayButton
+                medium
+                btnIconsDisabled
+                btnStyle={styles.unsavedButton}
+                btnText={localizationText.COMMON.DONE}
+                onPress={handleSubmit(addUnsavedNumber)}
+                btnType="primary"
+              />
+            </IPayView>
+          )}
         </IPayFormProvider>
       </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />

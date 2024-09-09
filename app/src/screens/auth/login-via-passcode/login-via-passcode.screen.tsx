@@ -248,15 +248,14 @@ const LoginViaPasscode: React.FC = () => {
     } else {
       setPasscodeError(true);
 
-      if (loginApiResponse['apiResponse'].status.code == 'E430185')
+      if (loginApiResponse.apiResponse.status.code === 'E430185')
         renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
+          `${loginApiResponse.apiResponse.status.code} :` +
             'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
         );
-      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184')
+      else if (loginApiResponse.apiResponse.status.code === 'E430183' || 'E430184')
         renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
-            'Your wallet is locked, Please try again after 5 minutes.',
+          `${loginApiResponse.apiResponse.status.code} : Your wallet is locked, Please try again after 5 minutes.`,
         );
       else renderErrorToast(localizationText.ERROR.INVALID_PASSCODE);
     }
@@ -267,18 +266,17 @@ const LoginViaPasscode: React.FC = () => {
     if (!hasLocation) {
       setPasscodeError(true);
       return;
-    } else {
-      setPasscodeError(false);
     }
+    setPasscodeError(false);
+
     renderSpinner(true);
     const location = await fetchLocation();
     if (!location) {
       setPasscodeError(true);
       renderSpinner(false);
       return;
-    } else {
-      setPasscodeError(false);
     }
+    setPasscodeError(false);
 
     try {
       const deviceInfo = getDeviceInfo();
@@ -369,7 +367,7 @@ const LoginViaPasscode: React.FC = () => {
             setOtpError={setOtpError}
             otpError={otpError}
             apiError={apiError}
-            showHelp={true}
+            showHelp
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}

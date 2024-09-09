@@ -8,12 +8,14 @@ import { useEffect, useMemo, useState } from 'react';
 
 const useTrafficViolation = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>();
-  const [apiError, setAPIError] = useState<string>('');
-  const selectedBillsAmount = useMemo(() => {
-    return (billsData ?? [])
-      .filter(({ selected }) => selected)
-      .reduce((total, { amount }) => total + (amount ? parseFloat(amount) : 0), 0);
-  }, [billsData]);
+  const [, setAPIError] = useState<string>('');
+  const selectedBillsAmount = useMemo(
+    () =>
+      (billsData ?? [])
+        .filter(({ selected }) => selected)
+        .reduce((total, { amount }) => total + (amount ? parseFloat(amount) : 0), 0),
+    [billsData],
+  );
 
   const selectedBillsCount = useMemo(() => billsData?.filter(({ selected }) => selected).length ?? 0, [billsData]);
 
@@ -46,10 +48,11 @@ const useTrafficViolation = () => {
     try {
       const apiResponse: any = await getTrafficViolationData();
       switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
+        case ApiResponseStatusType.SUCCESS: {
           const bills = apiResponse?.response?.trafficViolationList;
           setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
           break;
+        }
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           break;

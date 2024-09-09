@@ -32,7 +32,7 @@ const SendGiftListScreen: React.FC = () => {
   const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
   const GIFT_TABS = [localizationText.SEND_GIFT.SENT, localizationText.SEND_GIFT.RECEIVED];
-  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData, giftData } = useConstantData();
+  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [walletTransferData, setWalletTransferData] = useState({});
@@ -175,9 +175,9 @@ const SendGiftListScreen: React.FC = () => {
         rightComponent={
           <IPayPressable onPress={applyFilter}>
             <IPayIcon
-              icon={!!filters.length ? icons.filter_edit_purple : icons.filter}
+              icon={filters.length ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={!!filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }

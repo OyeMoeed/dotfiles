@@ -2,7 +2,7 @@ import icon from '@app/assets/icons';
 import { IPayAnimatedView, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { animateValue } from '@app/ipay-animations/ipay-animations';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import { onboardingStyles } from '@app/screens/auth/onboarding/onboardingStyles.style';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';

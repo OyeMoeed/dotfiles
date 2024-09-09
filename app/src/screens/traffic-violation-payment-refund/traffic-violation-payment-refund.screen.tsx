@@ -31,7 +31,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
     otpVerificationRef,
   } = useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
-  const { availableBalance, balance, calculatedBill } = balanceData;
+  const { calculatedBill } = balanceData;
   const { colors } = useTheme();
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const styles = billPaymentStyles();
@@ -72,7 +72,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
           otpError={otpError}
           isLoading={isLoading}
           apiError={apiError}
-          showHelp={true}
+          showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
         />

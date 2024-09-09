@@ -105,7 +105,7 @@ const SendGiftPreview: FC = ({ route }) => {
               <IPayFootnoteText style={styles.messageText} color={colors.primary.primary950} text={message} />
             </IPayScrollView>
             <IPayFootnoteText
-              style={[styles.messagePreviewText]}
+              style={styles.messagePreviewText}
               text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
               color={colors.primary.primary950}

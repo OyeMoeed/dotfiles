@@ -11,6 +11,7 @@ import { useState } from 'react';
 import { internationalBeneficiaryData } from '../international-transfer/international-transfer.constent';
 import { BeneficiaryDetailsProps } from '../international-transfer/international-transfer.interface';
 import chooseBeneficiaryStyles from './choose-beneficiary.styles';
+
 const ChooseBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = chooseBeneficiaryStyles(colors);
