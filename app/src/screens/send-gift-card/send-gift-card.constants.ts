@@ -17,7 +17,7 @@ import colors from '@app/styles/colors.const';
 import { GiftsCardDataProps, GiftTypes } from './send-gift-card.interface';
 
 const giftsCardData: GiftsCardDataProps = {
-  eidGiftList: (themeColors: typeof colors) => [
+  eid: (themeColors: typeof colors) => [
     {
       bgColor: themeColors.primary.primary950,
       path: eidCard1,
@@ -39,7 +39,7 @@ const giftsCardData: GiftsCardDataProps = {
       id: GiftTypes.Eid_4,
     },
   ],
-  birthdayGiftList: (themeColors: typeof colors) => [
+  birthday: (themeColors: typeof colors) => [
     {
       bgColor: themeColors.backgrounds.lightPurple,
       path: birthdayCard1,
@@ -66,7 +66,7 @@ const giftsCardData: GiftsCardDataProps = {
       id: GiftTypes.Birthday_5,
     },
   ],
-  congratulationsGiftList: (themeColors: typeof colors) => [
+  congrat: (themeColors: typeof colors) => [
     {
       bgColor: themeColors.backgrounds.purpleBlue,
       path: congratulationsCard1,
