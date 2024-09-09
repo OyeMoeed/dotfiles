@@ -1,5 +1,4 @@
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
-import { CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
 
 interface IPayCardDetailsSectionProps {
   testID?: string;

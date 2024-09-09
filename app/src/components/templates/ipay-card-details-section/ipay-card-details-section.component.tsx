@@ -16,6 +16,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   ApiResponseStatusType,
+  buttonVariants,
   CardActiveStatus,
   CardStatusIndication,
   CardStatusNumber,
@@ -33,16 +34,16 @@ import {
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
+import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import cardBalanceSectionStyles from './ipay-card-details-section.style';
 import {
   IPayCardDetailsSectionProps,
   Option,
   SheetVariants,
   ToastVariants,
 } from './ipay-card-details-section.interface';
-import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
-import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   testID,
@@ -104,7 +105,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     {
       icon: icons.freeze_icon,
       text:
-        actionTypeRef.current == CardActiveStatus.FREEZE
+        actionTypeRef.current === CardActiveStatus.FREEZE
           ? localizationText.CARDS.FREEZE_CARD
           : localizationText.CARDS.UNFREEZE_CARD,
       key: '1',
@@ -172,11 +173,22 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   };
 
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
   const onFreeze = async (type: string) => {
     renderSpinner(true);
     const cardStatusPayload: CardStatusReq = {
       status:
-        type.toLowerCase() == CardActiveStatus.UNFREEZE
+        type.toLowerCase() === CardActiveStatus.UNFREEZE
           ? CardStatusNumber.ActiveWithOnlinePurchase
           : CardStatusNumber.Freezed,
       cardIndex: currentCard?.cardIndex,
@@ -187,15 +199,16 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       if (apiResponse?.status?.type === 'SUCCESS') {
         actionSheetRef.current.hide();
         onFreezeCard(type.toLowerCase());
-        currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
-        console.log();
+        // TODO: fix no-param-reassign
+        // eslint-disable-next-line no-param-reassign
+        currentCard.frozen = apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed;
 
         actionTypeRef.current =
-          apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
+          apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed
             ? CardActiveStatus.UNFREEZE
             : CardActiveStatus.FREEZE;
         setTimeout(() => {
-          renderToast(localizationText.CARDS.DEBIT_CARD + `${currentCard.maskedCardNumber}`, type.toLowerCase());
+          renderToast(`${localizationText.CARDS.DEBIT_CARD}${currentCard.maskedCardNumber}`, type.toLowerCase());
         }, 500);
         renderSpinner(false);
       }
@@ -217,17 +230,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         break;
       default:
         break;
-    }
-  }, []);
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
     }
   }, []);
 
@@ -336,7 +338,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
               currentCard,
             });
           }}
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
           medium
           btnText={localizationText.CARDS.PRINT_CARD}
@@ -358,7 +360,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             })
           }
           style={styles.commonContainerStyle}
-        ></IPayPressable>
+        />
         <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
           {localizationText.COMMON.VIEW_ALL}
         </IPaySubHeadlineText>
