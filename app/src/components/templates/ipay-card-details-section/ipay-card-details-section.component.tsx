@@ -8,8 +8,11 @@ import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
@@ -40,9 +43,6 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
-import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   testID,
@@ -68,8 +68,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       setStatusIndication(undefined);
     }
   }, [currentCard]);
-
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
@@ -230,38 +228,23 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 
   const getTransactionsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '10',
-        offset: '1',
-        cardIndex: currentCard?.cardIndex,
-        fromDate: '',
-        toDate: '',
-      };
-      const apiResponse: any = await getTransactions(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          renderSpinner(false);
-          setTransactionsData(apiResponse?.response?.transactions);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderSpinner(false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderSpinner(true);
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
+
+    const payload: TransactionsProp = {
+      walletNumber: walletInfo.walletNumber,
+      maxRecords: '10',
+      offset: '1',
+      cardIndex: currentCard?.cardIndex,
+      fromDate: '',
+      toDate: '',
+    };
+    const apiResponse: any = await getTransactions(payload);
+
+    if (apiResponse) {
       renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setTransactionsData(apiResponse?.response?.transactions);
     }
+
+    renderSpinner(false);
   };
 
   useEffect(() => {

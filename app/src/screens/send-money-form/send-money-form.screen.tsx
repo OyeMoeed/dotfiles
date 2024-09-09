@@ -55,7 +55,6 @@ const SendMoneyFormScreen: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
@@ -90,7 +89,7 @@ const SendMoneyFormScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await getCoreLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo)
         setTransferReasonData(
           apiResponse?.response?.lovInfo.map((item) => ({
@@ -171,7 +170,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const getSelectedItem = () => {
     const selectedObject = formInstances?.find((item) => item?.id === selectedId);
-    return selectedObject?.selectedItem;
+    return selectedObject?.selectedItem?.text;
   };
 
   const isTransferButtonDisabled = () => {
@@ -211,8 +210,8 @@ const SendMoneyFormScreen: React.FC = () => {
         transferPurpose: item.selectedItem.id as string,
       })),
     };
-    const apiResponse = await getWalletToWalletFees(userInfo.walletNumber as string, payload);
-    if (apiResponse?.status.type === 'SUCCESS') {
+    const apiResponse = await getWalletToWalletFees(walletInfo.walletNumber as string, payload);
+    if (apiResponse) {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
         data: {
@@ -233,7 +232,7 @@ const SendMoneyFormScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
     };
-    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
         getW2WTransferFees(apiResponse.response?.friends);
@@ -332,7 +331,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 dailySpendingLimit={Number(dailyOutgoingLimit)}
               />
               <IPayButton
-                disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
+                disabled={isTransferButtonDisabled() || !totalAmount || !!warningStatus}
                 btnIconsDisabled
                 medium
                 btnType="primary"

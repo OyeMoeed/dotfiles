@@ -9,52 +9,31 @@ const getTopupCards = async (payload: WalletNumberProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return topupCardsMock;
   }
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.GET_TOPUP_CARDS(payload?.walletNumber),
-      method: requestType.GET,
-    });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.GET_TOPUP_CARDS(payload?.walletNumber),
+    method: requestType.GET,
+  });
+  return apiResponse;
 };
 
 const topupCheckout = async (payload: CheckOutProp): Promise<unknown> => {
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.TOPUP_CHECK_OUT(payload?.walletNumber),
-      method: requestType.POST,
-      payload: payload?.checkOutBody,
-    });
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.TOPUP_CHECK_OUT(payload?.walletNumber),
+    method: requestType.POST,
+    payload: payload?.checkOutBody,
+  });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 const topupCheckStatus = async (payload: CheckStatusProp): Promise<unknown> => {
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.CHECK_STATUS(payload?.walletNumber, payload?.refNumber),
-      method: requestType.GET,
-    });
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.CHECK_STATUS(payload?.walletNumber, payload?.refNumber),
+    method: requestType.GET,
+  });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export { getTopupCards, topupCheckout, topupCheckStatus };
