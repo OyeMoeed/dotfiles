@@ -79,8 +79,9 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const [apiError] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string | undefined>('');
 
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { otpConfig } = useConstantData();
 
   // Prepare OTP for sending requested money
   const prepareOtp = async (showOtpSheet: boolean = true) => {
@@ -123,6 +124,8 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       if (apiResponse?.response) {
+        hideSpinner();
+
         createRequestBottomSheetRef.current?.close();
         navigate(ScreenNames.TOP_UP_SUCCESS, {
           topupChannel: payChannel.REQUEST_ACCEPT,
@@ -310,7 +313,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          timeout={+userInfo?.otpTimeout}
+          timeout={otpConfig.transaction.otpTimeout}
           onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>
