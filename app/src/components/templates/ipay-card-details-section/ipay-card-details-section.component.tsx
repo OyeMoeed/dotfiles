@@ -43,10 +43,6 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
-import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { useRoute } from '@react-navigation/core';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   testID,

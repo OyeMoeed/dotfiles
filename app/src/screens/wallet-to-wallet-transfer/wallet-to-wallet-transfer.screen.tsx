@@ -49,7 +49,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
-
   const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const unsavedBottomSheetRef = useRef<any>();
@@ -64,7 +63,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
-  const { showToast } = useToastContext();
 
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
@@ -101,14 +99,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   };
 
-  const renderToast = () => {
-    showToast({
-      title: localizationText.COMMON.CONTACTS_LIMIT_REACHED,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
   const formatMobileNumber = (mobile: string): string => {
     const mobileWithoutSpaces = mobile.replace(/ /g, '');
     if (REGEX.LongSaudiMobileNumber.test(mobileWithoutSpaces)) {

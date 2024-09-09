@@ -32,7 +32,6 @@ import React from 'react';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
 import { typeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
-import SummaryType from '@app/enums/summary-type';
 
 const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   testID,
