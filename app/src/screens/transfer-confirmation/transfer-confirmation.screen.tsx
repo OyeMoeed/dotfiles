@@ -154,7 +154,7 @@ const TransferConfirmation: React.FC = () => {
       </IPayScrollView>
 
       <IPayView style={styles.bottomChild}>
-        <IPayLinearGradientView gradientColors={footerParentViewGradient} style={styles.bottomView}>
+        <IPayView style={styles.bottomView}>
           <IPayLinearGradientView gradientColors={footerGradientColors} style={styles.footerView}>
             <IPayView style={styles.transferInfoView}>
               <IPayIcon icon={icons.clock_circle} size={24} color={colors.primary.primary900} />
@@ -180,7 +180,7 @@ const TransferConfirmation: React.FC = () => {
               btnText={localizationText.COMMON.TRANSFER_TEXT}
             />
           </IPayLinearGradientView>
-        </IPayLinearGradientView>
+        </IPayView>
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.LOCAL_TRANSFER.TRANSFER}

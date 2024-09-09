@@ -7,6 +7,12 @@ const printCardConfirmationStyles = (colors: typeof themeColors) =>
     container: {
       flex: 1,
     },
+    iconStyle:{
+      marginLeft:moderateScale(2),
+    },
+    header: {
+      marginBottom: moderateScale(8),
+    },
     childContainer: {
       marginHorizontal: moderateScale(24, 0.3),
       flex: 1,
@@ -50,7 +56,8 @@ const printCardConfirmationStyles = (colors: typeof themeColors) =>
       color: colors.natural.natural900,
     },
     footNoteTextStyle: {
-      marginTop: moderateScale(16),
+      marginTop: moderateScale(20),
+      marginBottom: moderateScale(8),
     },
     addressStyle: {
       flexDirection: 'row',
@@ -59,6 +66,9 @@ const printCardConfirmationStyles = (colors: typeof themeColors) =>
     },
     toastContainerStyle: {
       bottom: verticalScale(30),
+    },
+    confirmButton: {
+      justifyContent: 'center',
     },
   });
 

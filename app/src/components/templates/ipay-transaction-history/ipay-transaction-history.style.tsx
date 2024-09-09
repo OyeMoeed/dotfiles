@@ -86,6 +86,7 @@ const transactionHistoryStyle = (colors: any) =>
       fontWeight: FONT_WEIGHT_BOLD,
     },
     containerToastIosStyle: {
+      position: 'absolute',
       bottom: verticalScale(120),
     },
     fullFlex: {

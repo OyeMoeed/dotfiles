@@ -52,7 +52,6 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
             <IPayButton
               btnStyle={styles.topUpButtonStyle}
               onPress={onTopUpPress}
-              small
               btnType="outline"
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
               btnText={localizationText.TOPUP_CONFIRMATION.TOP_UP}
