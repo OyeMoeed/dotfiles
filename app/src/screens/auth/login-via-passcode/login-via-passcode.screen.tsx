@@ -186,11 +186,10 @@ const LoginViaPasscode: React.FC = () => {
     }
   };
 
-  const getWalletInformation = async (idExpired?: boolean) => {
+  const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
     renderSpinner(true);
-
     const payload: WalletNumberProp = {
-      walletNumber: walletNumber as string,
+      walletNumber: resWalletNumber as string,
     };
 
     const apiResponse: any = await getWalletInfo(payload);
@@ -232,7 +231,7 @@ const LoginViaPasscode: React.FC = () => {
         }),
       );
       saveProfileImage(loginApiResponse?.response);
-      await getWalletInformation(loginApiResponse?.response?.idExpired);
+      await getWalletInformation(loginApiResponse?.response?.idExpired, loginApiResponse?.response?.walletNumber);
     }
   };
 
