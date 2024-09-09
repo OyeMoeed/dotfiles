@@ -272,6 +272,7 @@ enum GiftCardStatus {
 enum ApiResponseStatusType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
+  ERROR = 'ERROR',
 }
 
 enum MoiPaymentTypes {
