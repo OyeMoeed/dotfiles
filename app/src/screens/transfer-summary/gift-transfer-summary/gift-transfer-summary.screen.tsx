@@ -56,7 +56,6 @@ const TransferSummaryScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [expandMsg, setExpandMsg] = useState<boolean>(false);
@@ -242,7 +241,10 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const verifyOtp = async () => {
-    setIsLoading(true);
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
     try {
       const payload: IW2WTransferConfirmReq = {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
@@ -260,7 +262,7 @@ const TransferSummaryScreen: React.FC = () => {
             transferDetails: {
               formData: transfersDetails.formInstances,
               apiData: apiResponse?.response?.transferRequestsResult,
-              selectedCard: giftDetails?.selectedCard,
+              selectedCard: giftDetails?.selectedCard?.id,
             },
             totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
           });
@@ -271,9 +273,9 @@ const TransferSummaryScreen: React.FC = () => {
         default:
           break;
       }
-      setIsLoading(false);
+      hideSpinner();
     } catch (error) {
-      setIsLoading(false);
+      hideSpinner();
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };

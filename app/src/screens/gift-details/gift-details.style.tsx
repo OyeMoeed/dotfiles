@@ -83,7 +83,6 @@ const giftDetailsStyles = (themeColors: typeof colors) =>
     },
     messagePreviewText: {
       textAlign: 'center',
-      color: themeColors.primary.primary950,
     },
     swipeBtnView: {
       width: isTablet ? '95%' : '100%',
