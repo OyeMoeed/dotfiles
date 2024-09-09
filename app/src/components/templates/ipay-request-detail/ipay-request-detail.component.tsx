@@ -37,7 +37,8 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   testID,
   transaction,
   onCloseBottomSheet,
-  showActionSheet,
+  showRejectActionSheet,
+  showCancelActionSheet,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -186,7 +187,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
               (transaction.status === MoneyRequestStatus.PENDING || MoneyRequestStatus.INITIATED) && (
                 <IPayButton
                   btnType="outline"
-                  onPress={onPressCancel}
+                  onPress={showCancelActionSheet}
                   btnText={localizationText.REQUEST_MONEY.CANCEL_REQUEST}
                   medium
                   btnStyle={[styles.button]}
@@ -206,7 +207,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                   />
                   <IPayButton
                     btnType="outline"
-                    onPress={showActionSheet}
+                    onPress={showRejectActionSheet}
                     btnText={localizationText.REQUEST_MONEY.REJECT}
                     large
                     btnIconsDisabled

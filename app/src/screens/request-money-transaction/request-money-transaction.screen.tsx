@@ -35,6 +35,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
   const requestdetailRef = React.createRef<bottomSheetTypes>();
   const rejectRequestRef = React.createRef<bottomSheetTypes>();
+  const cancelRequestRef = React.createRef<bottomSheetTypes>();
   const {
     REQUEST_MONEY: {
       REQUEST_MONEY,
@@ -201,9 +202,16 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     requestdetailRef.current?.forceClose();
   };
 
-  const showActionSheet = () => {
+  // function to open reject action sheet
+  const showRejectActionSheet = () => {
     requestdetailRef.current?.forceClose();
     rejectRequestRef.current?.show();
+  };
+
+  // function to open cancel action sheet
+  const showCancelActionSheet = () => {
+    requestdetailRef.current?.forceClose();
+    cancelRequestRef.current?.show();
   };
 
   const mapTransactionKeys = (item: any) => {
@@ -260,8 +268,20 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
     requestdetailRef.current?.present();
   };
-  const onPressActionSheet = () => {
-    rejectRequestRef.current?.hide();
+  const onPressRejectActionSheet = (index: number) => {
+    if (index === 0) {
+      rejectRequestRef.current?.hide();
+    } else {
+      // call api to reject request
+    }
+  };
+
+  const onPressCancelActionSheet = (index: number) => {
+    if (index === 0) {
+      cancelRequestRef.current?.hide();
+    } else {
+      // call api to cancel request
+    }
   };
 
   const createRequest = () => {
@@ -393,7 +413,16 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel
-        onPress={onPressActionSheet}
+        onPress={onPressRejectActionSheet}
+      />
+      <IPayActionSheet
+        ref={cancelRequestRef}
+        testID="reject-card-action-sheet"
+        options={[localizationText.COMMON.CANCEL, localizationText.REQUEST_MONEY.CANCEL_REQUEST]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={1}
+        showCancel
+        onPress={onPressCancelActionSheet}
       />
       <IPayBottomSheet
         heading={localizationText.REQUEST_MONEY.REQUEST_DETAILS}
@@ -408,7 +437,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         <IPayRequestDetails
           transaction={requestDetail}
           onCloseBottomSheet={closeBottomSheet}
-          showActionSheet={showActionSheet}
+          showRejectActionSheet={showRejectActionSheet}
+          showCancelActionSheet={showCancelActionSheet}
         />
       </IPayBottomSheet>
       <IPayFilterBottomSheet
