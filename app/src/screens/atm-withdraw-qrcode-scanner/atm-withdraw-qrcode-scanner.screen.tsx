@@ -56,7 +56,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
     const terminal = crc?.scanData?.scannedData?.ID;
     const feesApiResponse = await getAtmWithdrawalFees(walletNumber as string, route?.params?.amount);
 
-    if (feesApiResponse.status.type === 'SUCCESS') {
+    if (feesApiResponse?.status?.type === 'SUCCESS') {
       const confirmApiResponse = await atmWithdrawalConfirm(walletNumber as string, {
         amount: route?.params?.amount,
         terminal,
@@ -65,13 +65,14 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       });
 
-      if (confirmApiResponse.status.type === 'SUCCESS') {
+      if (confirmApiResponse?.status?.type === 'SUCCESS') {
         navigate(ScreenNames.ATM_WITHDRAW_SUCCESSFUL, {
           amount: route?.params?.amount,
           referenceNumber: confirmApiResponse?.response?.referenceNumber,
         });
       }
 
+      hideSpinner();
       return;
     }
 
