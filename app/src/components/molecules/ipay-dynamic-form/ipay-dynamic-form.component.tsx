@@ -22,6 +22,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, s
     // Api Returns nested object , which we first convert to flat object and handles everything
     // then revert it back to origional state
     const originalData = revertFlatKeys(data);
+    console.log({ originalData }); //log to check data
     return originalData;
   };
 
