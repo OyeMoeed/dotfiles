@@ -43,8 +43,6 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   const { availableBalance, balance } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
 
@@ -166,7 +164,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={handlePay}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}

@@ -16,7 +16,7 @@ import { BeneficiaryFields, BeneficiaryTransferFormValues } from './edit-interna
 import beneficiaryTransferStyles from './edit-international-beneficiary-transfer.style';
 
 const EditIBeneficiaryTransferScreen: React.FC = () => {
-  const route = useRoute();
+  const { params: { selectedBeneficiary } = {} } = useRoute();
   const { colors } = useTheme();
 
   const styles = beneficiaryTransferStyles(colors);
@@ -30,19 +30,16 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
     <IPayFormProvider<BeneficiaryTransferFormValues>
       validationSchema={validationSchema}
       defaultValues={{
-        beneficiaryName: '',
-        iban: '',
-        bankName: '',
+        beneficiaryName: selectedBeneficiary?.fullName,
+        iban: selectedBeneficiary?.beneficiaryAccountNumber,
+        bankName: selectedBeneficiary?.beneficiaryBankDetail?.bankName,
         relationship: '',
         city: '',
         address: '',
-        beneficiaryNickName: '',
+        beneficiaryNickName: selectedBeneficiary?.nickname,
         walletType: '',
-        firstName: '',
-        thirdName: '',
-        secondName: '',
-        lastName: '',
         beneficiaryNationality: '',
+        beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
       }}
     >
       {({ handleSubmit }) => (

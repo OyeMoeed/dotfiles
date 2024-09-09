@@ -14,7 +14,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getWalletToWalletTransfers from '@app/network/services/transfers/wallet-to-wallet-transfers/wallet-to-wallet-transfers.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, buttonVariants, FiltersType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, FiltersType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import sendGiftStyles from './send-gift-list.style';
@@ -40,7 +40,7 @@ const SendGiftListScreen: React.FC = () => {
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
 
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
@@ -163,7 +163,7 @@ const SendGiftListScreen: React.FC = () => {
   };
 
   const selectedTabData =
-    selectedTab === localizationText.SEND_GIFT.SEND ? walletTransferData?.SENT : walletTransferData.RECEIVED;
+    selectedTab === localizationText.SEND_GIFT.SENT ? walletTransferData?.SENT : walletTransferData.RECEIVED;
 
   return (
     <IPaySafeAreaView>

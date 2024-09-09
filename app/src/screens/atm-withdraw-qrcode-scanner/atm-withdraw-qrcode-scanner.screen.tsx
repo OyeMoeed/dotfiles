@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
 
 import icons from '@app/assets/icons';
+import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { IPayHeader } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayIcon, IPayPressable } from '@app/components/atoms';
-import { IPayHeader } from '@app/components/molecules';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import atmWithdrawalConfirm from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-confirm/atm-cash-withdrawal-confirm.service';
+import getAtmWithdrawalFees from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-fees/atm-cash-withdrawal-fees.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant, spinnerVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
-import getAtmWithdrawalFees from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-fees/atm-cash-withdrawal-fees.service';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import atmWithdrawalConfirm from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-confirm/atm-cash-withdrawal-confirm.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { ATMWithdrawQRCodeScannerScreenProps } from './atm-withdraw-qrcode-scanner.interface';
 import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 import { Crc } from './crc.util';
-import { ATMWithdrawQRCodeScannerScreenProps } from './atm-withdraw-qrcode-scanner.interface';
 
 const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenProps> = ({ route }) => {
   const localizationText = useLocalization();
@@ -28,9 +29,20 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannedCode] = useState('');
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { showToast } = useToastContext();
 
   const styles = qrCodeScannerStyles();
+
+  const onReadQrCodeFaild = () => {
+    hideSpinner();
+    showToast({
+      title: localizationText.ATM.SCAN_UNSUCCESSFUL,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+    goBack();
+  };
 
   const onReadQrCode = async (code: string) => {
     try {
@@ -57,14 +69,15 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
             referenceNumber: confirmApiResponse?.response?.referenceNumber,
           });
         } else {
-          goBack();
+          onReadQrCodeFaild();
         }
       } else {
-        goBack();
+        onReadQrCodeFaild();
       }
       hideSpinner();
     } catch (error) {
-      goBack();
+      hideSpinner();
+      onReadQrCodeFaild();
     }
   };
 

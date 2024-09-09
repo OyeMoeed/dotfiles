@@ -4,12 +4,15 @@ import { ApiResponse, IApiStatus } from '@app/network/services/services.interfac
 import CARDS_MANAGEMENT_URLS from '../../cards-management.urls';
 import { ApplePayCheckOutReq, ApplePayCheckOutRes } from './apple-pay-check-out.interface';
 
-const applePayCheckout = async (walletNumber: string , applePayCheckOutPayload : ApplePayCheckOutReq): Promise<ApiResponse<ApplePayCheckOutRes>> => {
+const applePayCheckout = async (
+  walletNumber: string,
+  applePayCheckOutPayload: ApplePayCheckOutReq,
+): Promise<ApiResponse<ApplePayCheckOutRes>> => {
   try {
     const apiResponse = await apiCall<ApplePayCheckOutRes>({
       endpoint: CARDS_MANAGEMENT_URLS.applePayCheckOut(walletNumber),
       method: requestType.POST,
-      payload : applePayCheckOutPayload
+      payload: applePayCheckOutPayload,
     });
     return apiResponse;
   } catch (error: any) {

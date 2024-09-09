@@ -25,7 +25,7 @@ const statusStyles = {
 
 const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
   const { isPending, description, dateTime } = props;
-  const localization =  useLocalization();
+  const localization = useLocalization();
   const { colors } = useTheme();
   const styles = getRequestCardStyles(colors);
 

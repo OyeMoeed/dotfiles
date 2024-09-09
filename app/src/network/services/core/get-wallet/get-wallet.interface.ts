@@ -106,6 +106,17 @@ interface GetWalletResponse {
   remainingNumberOfDaysToExpire: string;
   walletRisk: string;
   workDetails: WorkDetails;
+  isIdRenewalSheetVisible: boolean;
+  mobileNumber?: string;
+  nickName?: string;
+  poiNumber?: string;
+  correctDeviceId?: boolean;
+  newMember?: boolean;
+  hasInmaAccount?: boolean;
+  hasErsalAccount?: boolean;
+  profileImage?: string;
+  myBeneficiaryId: string;
+  otpTimeout: string;
 }
 
 // Define the Data interface

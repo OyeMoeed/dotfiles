@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { FONT_SIZE_15, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const localTransferStyles = (themeColors: typeof colors) =>
@@ -28,6 +28,7 @@ const localTransferStyles = (themeColors: typeof colors) =>
     btnStyle: {
       width: scaleSize(227),
       height: verticalScale(34),
+      borderRadius: moderateScale(12),
     },
     searchInputStyle: {
       height: verticalScale(36),
@@ -59,7 +60,7 @@ const localTransferStyles = (themeColors: typeof colors) =>
     },
     textStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
-      marginRight: moderateScale(4),
+      // marginRight: moderateScale(4),
       textTransform: 'capitalize',
     },
     bankLogo: {
@@ -144,6 +145,28 @@ const localTransferStyles = (themeColors: typeof colors) =>
     },
     activeInactiveListWrapper: {
       gap: moderateScale(12),
+    },
+    toast: {
+      marginBottom: moderateScale(72),
+      width: SCREEN_WIDTH - moderateScale(48),
+      marginLeft: moderateScale(24),
+      margin: 0,
+      left: 0,
+      borderRadius: moderateScale(12),
+      paddingVertical: moderateScale(12),
+    },
+    toastTitle: {
+      fontSize: FONT_SIZE_15,
+    },
+    trashIcon: {
+      width: moderateScale(22),
+      height: moderateScale(22),
+    },
+    addBtn: {
+      marginBottom: moderateScale(33),
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(20),
+      height: verticalScale(42),
     },
   });
 

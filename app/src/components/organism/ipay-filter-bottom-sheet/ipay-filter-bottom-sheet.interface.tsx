@@ -42,6 +42,7 @@ export interface IPayFilterProps {
   isSearchShow?: boolean;
   applySearchOn?: string[];
   inputStyle?: StyleProp<ViewStyle>;
+  doneText?: string;
   customFiltersValue?: boolean;
   handleCallback?: (sheetName: string) => void;
 }
@@ -88,4 +89,5 @@ export interface ControlFormField {
   message?: string;
   required?: boolean;
   showFocusStyle?: boolean;
+  suffix?: string;
 }

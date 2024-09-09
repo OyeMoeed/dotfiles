@@ -19,7 +19,7 @@ export const calculateHeight = ({
   sheetStyles,
   showIcon,
   showCancel,
-  scrollEnabledRef
+  scrollEnabledRef,
 }: CalculateHeightProps): number => {
   // Function to combine styles from sheetStyles and any additional styles
   const getStyles = (): Record<keyof ActionSheetStyles, any[]> => {
@@ -61,7 +61,7 @@ export const calculateHeight = ({
     { condition: showIcon, styleName: 'rightSvg' },
     { condition: showCancel, styleName: 'cancelBody' },
     { condition: showCancel, styleName: 'innerSpacing' },
-    { condition: showCancel, styleName: 'cancelSpacing' }
+    { condition: showCancel, styleName: 'cancelSpacing' },
   ];
 
   // Loop through each section and add its height if the condition is met
@@ -88,5 +88,5 @@ export const calculateHeight = ({
   }
 
   // Return the calculated height
-  return height 
+  return height;
 };

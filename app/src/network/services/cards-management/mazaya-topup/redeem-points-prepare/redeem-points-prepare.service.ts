@@ -11,9 +11,8 @@ const redeemPointsPrepare = async (
   body: IRedeemPointsPrepareReq,
 ): Promise<ApiResponse<IRedeemPointsPrepareRes>> => {
   try {
-
-    if(constants.MOCK_API_RESPONSE){
-      return preparePointMock
+    if (constants.MOCK_API_RESPONSE) {
+      return preparePointMock;
     }
 
     const apiResponse = await apiCall<IRedeemPointsPrepareRes>({
