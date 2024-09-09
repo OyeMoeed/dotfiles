@@ -11,11 +11,11 @@ const getWalletToWalletTransfers = async (payload: WalletNumberProp): Promise<un
   }
   try {
     const apiResponse = await apiCall({
-      endpoint: TRANSFERS_URLS.GET_WALLET_TO_WALLET_TRANSFERS(payload.walletNumber),
+      endpoint: TRANSFERS_URLS.get_wallet_to_wallet_transfer(payload.walletNumber),
       method: requestType.GET,
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.status) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };

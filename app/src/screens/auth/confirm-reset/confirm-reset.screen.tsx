@@ -27,8 +27,7 @@ const ConfirmPasscode = forwardRef((props) => {
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { mobileNumber, walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {

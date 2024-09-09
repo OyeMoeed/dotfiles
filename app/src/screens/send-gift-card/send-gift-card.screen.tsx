@@ -67,8 +67,8 @@ const SendGiftCard = () => {
         preSelectedTab={selectedTab}
       />
       <IPayView style={styles.giftCardDetail}>
-        <IPayTitle3Text text={SEND_GIFT_CARD_DETAIL} regular={false} />
-        <IPayFootnoteText text={SEND_GIFT_CARD_DESCRIPTION} color={colors.primary.primary900} />
+        <IPayTitle3Text text={SEND_GIFT_CARD_DETAIL} regular={false} color={colors.primary.primary900} />
+        <IPayFootnoteText text={SEND_GIFT_CARD_DESCRIPTION} color={colors.primary.primary800} />
       </IPayView>
       <IPayView style={styles.carouselView}>
         <IPayCarousel
@@ -86,7 +86,6 @@ const SendGiftCard = () => {
       </IPayView>
       <IPayButton
         btnType={buttonVariants.PRIMARY}
-        large
         btnText={NEXT}
         btnIconsDisabled
         btnStyle={styles.nextButton}

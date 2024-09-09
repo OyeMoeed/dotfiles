@@ -8,8 +8,11 @@ import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
@@ -40,9 +43,6 @@ import {
   ToastVariants,
 } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
-import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
-import { CardStatusReq, CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   testID,
@@ -69,10 +69,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   }, [currentCard]);
 
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
+  const [isCardPrinted, setIsCardPrinted] = useState();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -172,39 +171,47 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   };
 
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
   const onFreeze = async (type: string) => {
     renderSpinner(true);
     const cardStatusPayload: CardStatusReq = {
       status:
-        type.toLowerCase() == CardActiveStatus.UNFREEZE
+        type.toLowerCase() === CardActiveStatus.UNFREEZE
           ? CardStatusNumber.ActiveWithOnlinePurchase
           : CardStatusNumber.Freezed,
       cardIndex: currentCard?.cardIndex,
       deviceInfo: await getDeviceInfo(),
     };
-    try {
-      const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        actionSheetRef.current.hide();
-        onFreezeCard(type.toLowerCase());
-        currentCard.frozen = apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed;
-        console.log();
 
-        actionTypeRef.current =
-          apiResponse.response?.cardInfo.cardStatus == CardStatusNumber.Freezed
-            ? CardActiveStatus.UNFREEZE
-            : CardActiveStatus.FREEZE;
-        setTimeout(() => {
-          renderToast(localizationText.CARDS.DEBIT_CARD + `${currentCard.maskedCardNumber}`, type.toLowerCase());
-        }, 500);
-        renderSpinner(false);
-      }
-    } catch (error: any) {
+    const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
+    if (apiResponse?.status?.type === 'SUCCESS') {
       actionSheetRef.current.hide();
+      onFreezeCard(type.toLowerCase());
+      currentCard.frozen = apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed;
+
+      actionTypeRef.current =
+        apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed
+          ? CardActiveStatus.UNFREEZE
+          : CardActiveStatus.FREEZE;
+      setTimeout(() => {
+        renderToast(`${localizationText.CARDS.DEBIT_CARD} ${currentCard.maskedCardNumber}`, type.toLowerCase());
+      }, 500);
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      return;
     }
+
+    renderSpinner(false);
+    actionSheetRef.current.hide();
   };
 
   const handleFinalAction = useCallback((index: number, type: string) => {
@@ -220,51 +227,25 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   }, []);
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getTransactionsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '10',
-        offset: '1',
-        cardIndex: currentCard?.cardIndex,
-        fromDate: '',
-        toDate: '',
-      };
-      const apiResponse: any = await getTransactions(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          renderSpinner(false);
-          setTransactionsData(apiResponse?.response?.transactions);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderSpinner(false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderSpinner(true);
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
+
+    const payload: TransactionsProp = {
+      walletNumber: walletInfo.walletNumber,
+      maxRecords: '10',
+      offset: '1',
+      cardIndex: currentCard?.cardIndex,
+      fromDate: '',
+      toDate: '',
+    };
+    const apiResponse: any = await getTransactions(payload);
+
+    if (apiResponse) {
       renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setTransactionsData(apiResponse?.response?.transactions);
     }
+
+    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -330,18 +311,24 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           keyExtractor={(item) => item.key.toString()}
           contentContainerStyle={styles.flatlistContainerStyle}
         />
-        <IPayButton
-          onPress={() => {
-            navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-              currentCard,
-            });
-          }}
-          btnType="primary"
-          leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
-          medium
-          btnText={localizationText.CARDS.PRINT_CARD}
-          btnStyle={styles.printBtn}
-        />
+        {!isCardPrinted && (
+          <IPayButton
+            onPress={() => {
+              setIsCardPrinted((prevState) => ({
+                ...prevState,
+                [currentCard.id]: true,
+              }));
+              navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+                currentCard,
+              });
+            }}
+            btnType="primary"
+            leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
+            medium
+            btnText={localizationText.CARDS.PRINT_CARD}
+            btnStyle={styles.printBtn}
+          />
+        )}
       </IPayView>
       <IPayView style={styles.headingsContainer}>
         <IPayView style={styles.commonContainerStyle}>

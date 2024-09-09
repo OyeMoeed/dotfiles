@@ -40,7 +40,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const showSplitButton =
     transaction?.transactionRequestType === TransactionTypes.PAY_BILL ||
     transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS;
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const isCoutMusaned = transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED;
 
   const renderToast = (value: string) => {
@@ -296,7 +296,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
                     </IPayFootnoteText>
                     <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {userInfo?.fullName}
+                      {fullName}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}
