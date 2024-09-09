@@ -53,7 +53,7 @@ const CardsScreen: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();

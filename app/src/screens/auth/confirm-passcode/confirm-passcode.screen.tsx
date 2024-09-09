@@ -14,7 +14,6 @@ import setPasscode from '@app/network/services/core/set-passcode/set-passcode.se
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { setAppData } from '@app/store/slices/app-data-slice';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -60,29 +59,21 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
   const getWalletInformation = async (walletNumber: string) => {
-    try {
-      const payload = {
-        walletNumber,
-      };
+    const payload = {
+      walletNumber,
+    };
 
-      const apiResponse = await getWalletInfo(payload, dispatch);
-      renderSpinner(false);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        dispatch(
-          setAppData({
-            isLinkedDevice: true,
-          }),
-        );
-        dispatch(setWalletInfo({ walletNumber }));
-        dispatch(
-          setUserInfo({ fullName: apiResponse?.response?.fullName, firstName: apiResponse?.response?.fullName }),
-        );
-        navigate(screenNames.REGISTRATION_SUCCESSFUL);
-      }
-    } catch (error) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const apiResponse = await getWalletInfo(payload);
+    renderSpinner(false);
+    if (apiResponse) {
+      dispatch(
+        setAppData({
+          isLinkedDevice: true,
+        }),
+      );
+      // TODO: replace with real user data
+      dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
+      navigate(screenNames.REGISTRATION_SUCCESSFUL);
     }
   };
 
@@ -120,7 +111,7 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
       );
       dispatch(setWalletInfo({ walletNumber }));
       // TODO: replace with real user data
-      dispatch(setUserInfo({ fullName: 'Alinma', firstName: 'Pay' }));
+      dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
       navigate(screenNames.REGISTRATION_SUCCESSFUL);
     }
 

@@ -50,7 +50,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const { showToast } = useToastContext();
 
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   const [redirectUrl, setRedirectUrl] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
