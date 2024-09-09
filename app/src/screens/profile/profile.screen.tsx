@@ -27,7 +27,7 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { isBasicTierSelector, setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { APIResponseType, States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
+import { States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
@@ -106,14 +106,12 @@ const Profile = () => {
       },
       walletInfo.walletNumber,
     );
-    if (apiResponse?.status?.type === 'SUCCESS') {
+    if (apiResponse) {
       dispatch(setWalletInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
       renderUploadSuccessToast();
-    } else {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderSpinner(false);
     }
+    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -244,15 +242,13 @@ const Profile = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    // renderSpinner(true);
     const payload = {
       walletNumber,
     };
     const apiResponse: any = await getWalletInfo(payload);
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
     }
-    // renderSpinner(false);
   };
 
   const updateWalletKYC = async (formData: IFormData) => {

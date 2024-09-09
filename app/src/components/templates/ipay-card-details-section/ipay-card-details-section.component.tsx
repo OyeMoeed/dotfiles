@@ -231,38 +231,23 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 
   const getTransactionsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber: walletInfo.walletNumber,
-        maxRecords: '10',
-        offset: '1',
-        cardIndex: currentCard?.cardIndex,
-        fromDate: '',
-        toDate: '',
-      };
-      const apiResponse: any = await getTransactions(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          renderSpinner(false);
-          setTransactionsData(apiResponse?.response?.transactions);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderSpinner(false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderSpinner(true);
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
+
+    const payload: TransactionsProp = {
+      walletNumber: walletInfo.walletNumber,
+      maxRecords: '10',
+      offset: '1',
+      cardIndex: currentCard?.cardIndex,
+      fromDate: '',
+      toDate: '',
+    };
+    const apiResponse: any = await getTransactions(payload);
+
+    if (apiResponse) {
       renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToastMsg(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setTransactionsData(apiResponse?.response?.transactions);
     }
+
+    renderSpinner(false);
   };
 
   useEffect(() => {
