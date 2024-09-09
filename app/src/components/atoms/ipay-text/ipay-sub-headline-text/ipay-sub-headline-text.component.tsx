@@ -18,7 +18,7 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   children,
   color,
 }: IPaySubHeadlineTextProps): JSX.Element => {
-  const textColor = color ?  { color } : {};
+  const textColor = color ? { color } : {};
   return (
     <IPayText
       testID={`${testID}-sub-headline-text`}

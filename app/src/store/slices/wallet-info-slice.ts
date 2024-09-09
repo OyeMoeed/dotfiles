@@ -121,13 +121,17 @@ const walletInfoSlice = createSlice({
     closeIdRenewalSheet: (state) => {
       state.walletInfo.isIdRenewalSheetVisible = false;
     },
+
+    resetWalletInfo(state) {
+      state.walletInfo = initialState.walletInfo;
+    },
   },
 });
 
 /**
  * Action creators for setting the wallet info and login data.
  */
-export const { setWalletInfo, openIdRenewalSheet, closeIdRenewalSheet } = walletInfoSlice.actions;
+export const { setWalletInfo, openIdRenewalSheet, closeIdRenewalSheet, resetWalletInfo } = walletInfoSlice.actions;
 
 /**
  * Reducer function for the wallet info slice.

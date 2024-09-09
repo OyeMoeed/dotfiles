@@ -42,6 +42,7 @@ interface LocalTransferBeneficiariesMockProps extends MockAPIOkProp {
   successfulResponse: LocalTransferBeneficiariesDetails['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
   paginationInfo: PaginationInfo; // Pagination
+  apiResponseNotOk: boolean;
 }
 
 export default LocalTransferBeneficiariesMockProps;

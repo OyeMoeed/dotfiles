@@ -315,7 +315,6 @@ const LocalTransferScreen: React.FC = () => {
             <IPayView style={styles.searchWrapper}>
               <IPayTextInput
                 text={search}
-
                 onChangeText={handleSearchChange}
                 placeholder={localizationText.COMMON.SEARCH}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}

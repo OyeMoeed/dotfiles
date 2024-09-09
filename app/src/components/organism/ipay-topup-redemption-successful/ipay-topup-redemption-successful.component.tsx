@@ -31,6 +31,7 @@ import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
 
@@ -77,8 +78,9 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       const payload = {
         walletNumber: walletInfo?.walletNumber,
       };
-      const walletInfoResponse = await getWalletInfo(payload, dispatch);
+      const walletInfoResponse: any = await getWalletInfo(payload);
       if (walletInfoResponse?.status?.type === 'SUCCESS') {
+        dispatch(setWalletInfo(walletInfoResponse?.response));
         navigate(screenNames.POINTS_REDEMPTIONS, {
           aktharPointsInfo: aktharPointsResponse?.response,
           isEligible: true,
@@ -134,33 +136,31 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
           <IPayShareableImageView
             otherView={
-              <>
-                {variants === TopupStatus.SUCCESS && (
-                  <IPayView>
-                    <IPayView style={styles.bottomActions}>
-                      <IPayButton
-                        onPress={navigateTOAktharPoints}
-                        btnType="link-button"
-                        btnText={localizationText.TOP_UP.NEW_TOP_UP}
-                        leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
-                      />
-                      <IPayButton
-                        btnType="link-button"
-                        btnText={localizationText.TOP_UP.SHARE}
-                        leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
-                      />
-                    </IPayView>
+              variants === TopupStatus.SUCCESS && (
+                <IPayView>
+                  <IPayView style={styles.bottomActions}>
                     <IPayButton
-                      btnType="primary"
-                      leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
-                      btnText={localizationText.COMMON.HOME}
-                      onPress={goBackToHome}
-                      large
-                      btnStyle={styles.btnStyle}
+                      onPress={navigateTOAktharPoints}
+                      btnType="link-button"
+                      btnText={localizationText.TOP_UP.NEW_TOP_UP}
+                      leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
+                    />
+                    <IPayButton
+                      btnType="link-button"
+                      btnText={localizationText.TOP_UP.SHARE}
+                      leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
                     />
                   </IPayView>
-                )}
-              </>
+                  <IPayButton
+                    btnType="primary"
+                    leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
+                    btnText={localizationText.COMMON.HOME}
+                    onPress={goBackToHome}
+                    large
+                    btnStyle={styles.btnStyle}
+                  />
+                </IPayView>
+              )
             }
             style={styles.shareView}
           >
@@ -172,7 +172,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                     text={localizationText.TOP_UP.TOPUP_REDEMPTION_SUCESS}
                     gradientColors={gradientColors}
                     style={styles.gradientTextSvg}
-                    fontSize={styles.linearGradientText.fontSize}
+                    fontSize={styles.linearGradientText?.fontSize}
                     fontFamily={styles.linearGradientText.fontFamily}
                   />
                   <IPaySubHeadlineText

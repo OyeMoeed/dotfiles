@@ -13,7 +13,6 @@ interface LocalBeneficiaryMetaDetails extends MockAPIDataProps {
     localBanks: LocalBank[];
   };
   successfulResponse: boolean;
-  status: MockAPIStatusProps;
 }
 
 // Extend the LocalBeneficiaryMetaMockProps interface from LocalBeneficiaryMetaDetails and MockAPIOkProp
@@ -21,6 +20,7 @@ interface LocalBeneficiaryMetaMockProps extends MockAPIOkProp {
   data: LocalBeneficiaryMetaDetails['data']; // Reference 'data' directly without nesting again
   successfulResponse: LocalBeneficiaryMetaDetails['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
+  apiResponseNotOk: boolean;
 }
 
 export default LocalBeneficiaryMetaMockProps;

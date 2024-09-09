@@ -42,4 +42,3 @@ AnotherCustomCountry.args = {
   country: 'ur',
   testID: 'fr-flag-svg',
 };
-

@@ -1,4 +1,5 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { Platform } from 'react-native';
@@ -37,7 +38,8 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     },
     inputText: {
       fontSize: FONT_SIZE_20,
-      lineHeight: moderateScale(22),
+      lineHeight: moderateScale(30),
+      minWidth: scaleSize(45),
     },
     inputContainer: {
       alignItems: 'center',
@@ -66,7 +68,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
           marginVertical: 0,
         },
       }),
-      lineHeight: moderateScale(22),
+      lineHeight: moderateScale(30),
     },
     reasonsView: {
       marginVertical: moderateScale(8),
