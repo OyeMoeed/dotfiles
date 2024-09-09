@@ -49,4 +49,4 @@ interface LoginApiMockResponseProps extends MockAPIOkProp {
   data: LoginDataProps;
 }
 
-export { AuthApiResponse, DeviceInfoProps, LoginApiMockResponseProps, LoginUserPayloadProps ,LoginResponseDetails };
+export { AuthApiResponse, DeviceInfoProps, LoginApiMockResponseProps, LoginUserPayloadProps, LoginResponseDetails };

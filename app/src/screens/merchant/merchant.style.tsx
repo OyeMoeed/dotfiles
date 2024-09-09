@@ -1,7 +1,9 @@
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
+
+const innerWidth = SCREEN_WIDTH - moderateScale(48);
 
 const merchantStyles = (theme: typeof themeColors) =>
   createStyleSheet({
@@ -23,10 +25,15 @@ const merchantStyles = (theme: typeof themeColors) =>
       flex: 0,
     },
     containerWrapper: {
-      flexDirection: 'row',
       gap: scaleSize(12),
-      flexWrap: 'wrap',
-      justifyContent: 'flex-start',
+    },
+
+    columnWrapper: {
+      gap: innerWidth * 0.035,
+    },
+
+    cardContainer: {
+      width: innerWidth * 0.31,
     },
   });
 

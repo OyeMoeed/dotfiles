@@ -56,7 +56,6 @@ const TransferSummaryScreen: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const [expandMsg, setExpandMsg] = useState<boolean>(false);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig } = useConstantData();
@@ -248,7 +247,7 @@ const TransferSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       verifyOtp();
     }
@@ -324,7 +323,7 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber as string}
+          mobileNumber={walletInfo?.mobileNumber as string}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}

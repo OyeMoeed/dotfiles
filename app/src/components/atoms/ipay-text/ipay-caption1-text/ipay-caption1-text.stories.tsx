@@ -13,8 +13,8 @@ const IPayCaption1TextMeta: Meta<typeof IPayCaption1Text> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_16,
-      fontWeight: '500'
-    }
+      fontWeight: '500',
+    },
   },
   decorators: [
     (Story) => (
@@ -23,8 +23,8 @@ const IPayCaption1TextMeta: Meta<typeof IPayCaption1Text> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayCaption1TextMeta;
@@ -37,9 +37,9 @@ export const Caption1Regular: StoryObj<typeof IPayCaption1Text> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_12,
-      fontWeight: '400'
-    }
-  }
+      fontWeight: '400',
+    },
+  },
 };
 
 export const Caption1Bold: StoryObj<typeof IPayCaption1Text> = {
@@ -48,7 +48,7 @@ export const Caption1Bold: StoryObj<typeof IPayCaption1Text> = {
     style: {
       color: colors.natural.natural1000,
       fontSize: SCALE_12,
-      fontWeight: '700'
-    }
-  }
+      fontWeight: '700',
+    },
+  },
 };

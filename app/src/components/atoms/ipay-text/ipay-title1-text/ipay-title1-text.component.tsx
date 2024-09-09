@@ -18,7 +18,7 @@ const IPayTitle1Text: React.FC<IPayTitle1TextProps> = ({
   children,
   color,
 }: IPayTitle1TextProps) => {
-  const textColor = color ? { color } : {}; 
+  const textColor = color ? { color } : {};
   return (
     <IPayText
       testID={`${testID}-title-text`}

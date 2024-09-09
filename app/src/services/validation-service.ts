@@ -32,6 +32,14 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
     .min(STANDARD_MAX_LENGTH, localizationText.ERROR.INCORRECT_ACCOUNT_NUMBER),
   billName: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
   required: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
+  beneficiaryNameSchema: Yup.string()
+    .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
+    .max(50, localizationText.ERROR.TOO_LONG),
+  ibanSchema: Yup.string()
+    .matches(REGEX.IBAN, localizationText.ERROR.INVALID_IBAN)
+    .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE),
+  beneficiaryNickNameSchema: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
+  bankNameSchema: Yup.string(),
 });
 
 function validateSAID(id: string): number {

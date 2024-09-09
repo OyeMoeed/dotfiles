@@ -58,7 +58,6 @@ const SendMoneyFormScreen: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts, from, heading, showHistory } = route.params;
@@ -245,7 +244,7 @@ const SendMoneyFormScreen: React.FC = () => {
         transferPurpose: item.selectedItem.id as string,
       })),
     };
-    const apiResponse = await getWalletToWalletFees(userInfo.walletNumber as string, payload);
+    const apiResponse = await getWalletToWalletFees(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
@@ -267,7 +266,7 @@ const SendMoneyFormScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
     };
-    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
         getW2WTransferFees(apiResponse.response?.friends);

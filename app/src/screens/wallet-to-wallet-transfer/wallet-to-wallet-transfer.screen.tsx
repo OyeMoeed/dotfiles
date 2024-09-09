@@ -32,7 +32,7 @@ import usePermissions from '@app/hooks/permissions.hook';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { default as screenNames } from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
@@ -43,7 +43,6 @@ import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
-import { locale } from 'moment';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
@@ -65,31 +64,33 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const { showToast } = useToastContext();
+
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, {
-          selectedContacts: selectedContacts,
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
           showReason: true,
         });
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(screenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
+        navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
         break;
-      case screenNames.TOP_UP_SUCCESS:
+      case ScreenNames.TOP_UP_SUCCESS:
         setSelectedContacts([]);
         break;
-      case screenNames.SEND_GIFT_AMOUNT:
+      case ScreenNames.SEND_GIFT_AMOUNT:
         setSelectedContacts([]);
         break;
 
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(screenNames.SEND_MONEY_FORM, {
-          selectedContacts: selectedContacts,
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          selectedContacts,
           heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
           from: TRANSFERTYPE.REQUEST_MONEY,
           showHistory: false,
@@ -215,6 +216,15 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     setContainerWidth(width);
   };
 
+  const renderToast = () => {
+    showToast({
+      title: localizationText.WALLET_TO_WALLET.CONTACT_LIMIT,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainer,
+    });
+  };
+
   const renderItem = ({ item }: { item: Contact }) => (
     <IPayPressable style={styles.checkmarkPoints} onPress={() => handleSelect(item)}>
       <IPayCheckbox
@@ -267,7 +277,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   };
   const history = () => {
-    navigate(screenNames.TRANSACTIONS_HISTORY, {
+    navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
@@ -348,7 +358,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           <IPayView style={styles.qr} />
           <IPayPressable
             onPress={() =>
-              navigate(screenNames.SEND_MONEY_QRCODE_SCANNER, {
+              navigate(ScreenNames.SEND_MONEY_QRCODE_SCANNER, {
                 onGoBack: qrCodeCallBack,
               })
             }

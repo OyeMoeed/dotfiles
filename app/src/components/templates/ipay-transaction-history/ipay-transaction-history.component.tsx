@@ -40,7 +40,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const showSplitButton =
     transaction?.transactionRequestType === TransactionTypes.PAY_BILL ||
     transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS;
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const isCoutMusaned = transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED;
 
   const renderToast = (value: string) => {
@@ -296,7 +296,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
                     </IPayFootnoteText>
                     <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {userInfo?.fullName}
+                      {fullName}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}
@@ -571,7 +571,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {localizationText.TRANSACTION_HISTORY.FEES}
                     </IPayFootnoteText>
                     <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {transaction?.feesAmount || '' + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                      {(transaction?.feesAmount || '0.00') + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}
@@ -583,7 +583,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {localizationText.TRANSACTION_HISTORY.VAT}
                     </IPayFootnoteText>
                     <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {transaction?.vatAmount || '' + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                      {(transaction?.vatAmount || '0.00') + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}
@@ -666,14 +666,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPayView>
                 )}
 
-              <IPayView style={styles.cardStyle}>
-                <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                  {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
-                </IPayFootnoteText>
-                <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                  {getDate(transaction?.transactionDateTime)}
-                </IPaySubHeadlineText>
-              </IPayView>
+              {transaction?.transactionRequestType !== TransactionTypes.PAY_WALLET &&
+                transaction?.transactionType === TransactionOperations.DEBIT && (
+                  <IPayView style={styles.cardStyle}>
+                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                      {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
+                    </IPayFootnoteText>
+                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                      {getDate(transaction?.transactionDateTime)}
+                    </IPaySubHeadlineText>
+                  </IPayView>
+                )}
             </IPayView>
           </IPayView>
         </IPayShareableImageView>

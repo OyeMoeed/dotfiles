@@ -11,25 +11,25 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
     useTheme: () => ({
       colors: {
         primary: {
-          primary500: 'blue' // Mock primary color for testing
-        }
-      }
-    })
-  }
+          primary500: 'blue', // Mock primary color for testing
+        },
+      },
+    }),
+  },
 }));
 
 jest.mock('@app/localization/hooks/localization.hook', () => ({
   __esModule: true,
   default: () => ({
-    share: 'Share' // Mock localization text
-  })
+    share: 'Share', // Mock localization text
+  }),
 }));
 
 jest.mock('react-native-share', () => ({
   __esModule: true,
   default: {
-    open: jest.fn() // Mock Share.open function
-  }
+    open: jest.fn(), // Mock Share.open function
+  },
 }));
 // Mock NativeModules.SettingsManager for iOS
 jest.mock('react-native', () => ({
@@ -37,13 +37,13 @@ jest.mock('react-native', () => ({
     SettingsManager: {
       settings: {
         AppleLocale: 'en_US', // Mock the AppleLocale value
-        AppleLanguages: ['en', 'fr', 'de'] // Mock the AppleLanguages array
-      }
+        AppleLanguages: ['en', 'fr', 'de'], // Mock the AppleLanguages array
+      },
     },
     Platform: {
-      OS: 'ios' // Mock Platform.OS as 'ios'
-    }
-  }
+      OS: 'ios', // Mock Platform.OS as 'ios'
+    },
+  },
 }));
 
 describe('IPayShareableImageView', () => {
@@ -51,15 +51,15 @@ describe('IPayShareableImageView', () => {
     const { getByTestId } = render(
       <IPayShareableImageView testID="shareButton" shareButtonStyles={{ backgroundColor: 'red' }}>
         <IPayView></IPayView>
-      </IPayShareableImageView>
+      </IPayShareableImageView>,
     );
 
     // Mock capture function of ViewShot
     const mockCapture = jest.fn(() => Promise.resolve('/mock/image-uri.png'));
     const mockViewShotRef = {
       current: {
-        capture: mockCapture
-      }
+        capture: mockCapture,
+      },
     };
 
     // Simulate button press to trigger shareImage function
@@ -77,7 +77,7 @@ describe('IPayShareableImageView', () => {
       title: 'Share file',
       message: 'Share captured image /mock/image-uri.png',
       subject: 'nmnm',
-      failOnCancel: false
+      failOnCancel: false,
     });
   });
 });

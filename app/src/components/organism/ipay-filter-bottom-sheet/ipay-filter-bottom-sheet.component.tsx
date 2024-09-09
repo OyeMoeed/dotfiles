@@ -38,7 +38,7 @@ import filtersStyles from './ipay-filter-bottom-sheet.style';
  * @returns {JSX.Element} - The rendered component.
  */
 
-const IPayControlledInput = ({ control, label, message, isError, name, required }: ControlFormField) => {
+const IPayControlledInput = ({ control, label, message, isError, name, required, suffix }: ControlFormField) => {
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
 
@@ -52,6 +52,7 @@ const IPayControlledInput = ({ control, label, message, isError, name, required 
           editable
           inputMode="numeric"
           value={value}
+          suffix={suffix}
           onChangeText={onChange}
           containerStyle={styles.amount}
           isError={isError}
@@ -256,7 +257,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       closeFilter,
       getChildFilterType: () => getFilterType()?.filterValues,
       setCurrentViewAndSearch: (categoryType: FiltersType, value: string, type?: string) => {
-        if (type !== 'Digital Wallet') setValue('transactionType', type);
+        setValue('transactionType', type);
         setValue(categoryType, value);
         setCurrentView(CurrentViewTypes.FILTERS); // Ensure CurrentViewTypes.FILTERS is a valid enum value
         setSearch('');
@@ -316,6 +317,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.FROM}
                 control={control}
+                suffix={localizationText.COMMON.SAR}
                 isError={!!errors?.amountFrom}
                 message={localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_FROM}
@@ -324,6 +326,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 control={control}
+                suffix={localizationText.COMMON.SAR}
                 isError={!!amountError || !!errors?.amountTo}
                 message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
@@ -496,7 +499,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
-    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS;
+    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {
