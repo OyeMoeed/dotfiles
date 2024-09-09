@@ -19,7 +19,7 @@ const editLocalTransferBeneficiary = async (
       method: requestType.PUT,
       payload,
     });
-console.log('apiResponse', apiResponse);
+
 
     return apiResponse;
   } catch (error) {
