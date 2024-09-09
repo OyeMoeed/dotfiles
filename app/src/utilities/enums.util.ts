@@ -221,8 +221,7 @@ enum AddBeneficiary {
 }
 enum BeneficiaryTypes {
   ACTIVE = 'ACTIVATE',
-  INACTIVE = 'inactive',
-  NEW_BENEFICIARY = 'NEW_BENEFICIARY',
+  INACTIVE = 'NEW_BENEFICIARY',
 }
 
 enum APIResponseType {
@@ -339,5 +338,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes,
+  toastTypes
 };
+

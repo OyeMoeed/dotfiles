@@ -320,7 +320,7 @@ const LocalTransferScreen: React.FC = () => {
     viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 3);
 
   const hasBeneficiariesData = () =>
-    [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)]?.length;
+    [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.INACTIVE)]?.length;
 
   //IVR
   const currentOptionText =
@@ -469,7 +469,7 @@ const LocalTransferScreen: React.FC = () => {
                   <IPayView
                     style={[
                       styles.activeInactiveListWrapper,
-                      sortBy === BeneficiaryTypes.NEW_BENEFICIARY && styles.reverseList,
+                      sortBy === BeneficiaryTypes.INACTIVE && styles.reverseList,
                     ]}
                   >
                     {!!getSortedData(BeneficiaryTypes.ACTIVE)?.length && (
@@ -486,22 +486,22 @@ const LocalTransferScreen: React.FC = () => {
                         ListFooterComponent={() => renderFooter(BeneficiaryTypes.ACTIVE, getSortedData(sortBy)?.length)}
                       />
                     )}
-                    {!!getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length && (
+                    {!!getSortedData(BeneficiaryTypes.INACTIVE)?.length && (
                       <IPayFlatlist
-                        data={listData(viewAll.inactive, BeneficiaryTypes.NEW_BENEFICIARY)}
+                        data={listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)}
                         renderItem={beneficiaryItem}
                         keyExtractor={(item) => item.id}
                         ListHeaderComponent={() =>
                           renderHeader(
-                            BeneficiaryTypes.NEW_BENEFICIARY,
-                            listData(viewAll.inactive, BeneficiaryTypes.NEW_BENEFICIARY)?.length,
-                            getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length,
+                            BeneficiaryTypes.INACTIVE,
+                            listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)?.length,
+                            getSortedData(BeneficiaryTypes.INACTIVE)?.length,
                           )
                         }
                         ListFooterComponent={() =>
                           renderFooter(
                             BeneficiaryTypes.INACTIVE,
-                            getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length,
+                            getSortedData(BeneficiaryTypes.INACTIVE)?.length,
                           )
                         }
                       />
@@ -523,7 +523,7 @@ const LocalTransferScreen: React.FC = () => {
                 <IPayButton
                   btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
                   medium
-                  onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
+                  onPress={() => navigate(ScreenNames.INACTIVE, {})}
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.btnStyle}
                   leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
@@ -538,7 +538,7 @@ const LocalTransferScreen: React.FC = () => {
               btnType={buttonVariants.OUTLINED}
               medium
               leftIcon={<IPayIcon icon={icons.add_bold} size={24} color={colors.primary.primary500} />}
-              onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
+              onPress={() => navigate(ScreenNames.INACTIVE, {})}
               btnStyle={styles.addBtn}
             />
           ) : (
