@@ -20,9 +20,10 @@ import {
   IPayBottomSheet,
   IPayReceiveCall,
 } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -35,7 +36,6 @@ import activateLocalBeneficiary from '@app/network/services/local-transfer/local
 import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isIosOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   BeneficiaryTypes,
@@ -48,7 +48,7 @@ import {
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ViewStyle } from 'react-native';
+import { Keyboard, ViewStyle } from 'react-native';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
@@ -83,7 +83,7 @@ const LocalTransferScreen: React.FC = () => {
   });
   const [sortBy, setSortBy] = useState<string>(BeneficiaryTypes.ACTIVE);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
-
+  const [showEditSheet, setShowEditSheet] = useState<boolean>(false);
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -128,7 +128,7 @@ const LocalTransferScreen: React.FC = () => {
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
-    editNickNameSheetRef?.current?.present();
+    setShowEditSheet(true);
   };
 
   const handleDelete = () => {
@@ -175,6 +175,7 @@ const LocalTransferScreen: React.FC = () => {
 
   const handleChangeBeneficiaryName = async () => {
     renderSpinner(true);
+
     const activateBeneficiaryPayload = {
       nickname: nickName,
     };
@@ -190,6 +191,8 @@ const LocalTransferScreen: React.FC = () => {
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    setShowEditSheet(false);
+
     renderSpinner(false);
   };
 
@@ -589,13 +592,16 @@ const LocalTransferScreen: React.FC = () => {
         bodyStyle={styles.actionSheetStyle}
         onPress={(index) => handleBeneficiaryActions(index)}
       />
-      <IPayBottomSheet
+
+      <IPayPortalBottomSheet
+        onCloseBottomSheet={() => setShowEditSheet(false)}
         heading={localizationText.BENEFICIARY_OPTIONS.EDIT_NICK_NAME}
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={['1%', isIosOS && isKeyboardOpen ? '63%' : '35%']}
+        customSnapPoint={SNAP_POINT.MEDIUM}
         ref={editNickNameSheetRef}
+        isVisible={showEditSheet}
       >
         <IPayView style={styles.editStyles}>
           <IPayTextInput
@@ -610,10 +616,13 @@ const LocalTransferScreen: React.FC = () => {
             large
             btnText={localizationText.COMMON.DONE}
             btnIconsDisabled
-            onPress={handleChangeBeneficiaryName}
+            onPress={() => {
+              Keyboard.dismiss();
+              handleChangeBeneficiaryName();
+            }}
           />
         </IPayView>
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading={currentOptionText}
         onCloseBottomSheet={closeActivateBeneficiary}
