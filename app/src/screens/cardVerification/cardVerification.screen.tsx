@@ -7,7 +7,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, payChannel, spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, PayChannel, spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import cardVerificationStyles from './cardVerification.styles';
 import { useRoute } from '@react-navigation/core';
@@ -35,9 +35,9 @@ const CardVerificationScreen: React.FC = () => {
 
   // const handlePressPay = () => {
   //   setProcessToast(false);
-  //   if (channel === payChannel.APPLE) {
+  //   if (channel === PayChannel.APPLE) {
   //     setTopUpAmount('');
-  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
+  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: PayChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
   //   } else {
   //     navigate(screenNames.CARD_VERIFICATION);
   //   }
@@ -62,7 +62,7 @@ const CardVerificationScreen: React.FC = () => {
     if (cvv === constants.MOCK_CVV) {
       setIsCvvError(false);
       setCvv('');
-      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: TopupStatus.SUCCESS });
+      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: PayChannel.CARD, topupStatus: TopupStatus.SUCCESS });
     } else {
       setIsCvvError(true);
     }
@@ -89,7 +89,7 @@ const CardVerificationScreen: React.FC = () => {
       } else {
         renderSpinner(false);
         navigate(screenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.CARD,
+          topupChannel: PayChannel.CARD,
           topupStatus: TopupStatus.SUCCESS,
           isUnderProccess: true,
           summaryData: apiResponse,
@@ -99,7 +99,7 @@ const CardVerificationScreen: React.FC = () => {
       if (apiResponse?.status?.type == ApiResponseStatusType.SUCCESS) {
         renderSpinner(false);
         navigate(screenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.CARD,
+          topupChannel: PayChannel.CARD,
           topupStatus: TopupStatus.SUCCESS,
           summaryData: apiResponse,
         });

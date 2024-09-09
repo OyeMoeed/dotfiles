@@ -13,7 +13,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatAmount } from '@app/utilities/currency-helper.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import getTransationIcon from '@app/utilities/transation-types-helper.util';
 import React from 'react';
 import { IPayTransactionProps } from './ipay-transaction.interface';

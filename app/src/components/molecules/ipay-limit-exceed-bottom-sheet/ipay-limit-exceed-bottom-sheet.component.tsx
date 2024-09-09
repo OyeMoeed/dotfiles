@@ -4,7 +4,7 @@ import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
 import IPayButton from '../ipay-button/ipay-button.component';

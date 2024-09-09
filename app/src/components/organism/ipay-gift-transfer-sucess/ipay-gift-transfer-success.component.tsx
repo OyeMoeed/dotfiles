@@ -23,7 +23,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';

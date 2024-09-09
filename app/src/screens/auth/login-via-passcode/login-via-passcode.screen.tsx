@@ -8,6 +8,7 @@ import {
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
+import { openPhoneNumber } from '@app/utilities';
 import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -40,7 +41,6 @@ import { setAuth } from '@app/store/slices/auth-slice';
 import { resetUserInfo, setUserInfo } from '@app/store/slices/user-information-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { onCall } from '@app/utilities/call-helper.util';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
@@ -424,6 +424,10 @@ const LoginViaPasscode: React.FC = () => {
     if (response?.profileImage) {
       dispatch(setUserInfo({ profileImage: response?.profileImage }));
     }
+  };
+
+  const onCall = (phoneNumber: string) => {
+    openPhoneNumber(phoneNumber, colors, showToast, localizationText);
   };
 
   return (

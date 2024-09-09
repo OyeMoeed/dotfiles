@@ -8,7 +8,7 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { toastTypes } from '@app/utilities/enums.util';
+import { ToastTypes } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import { IPayToastProps } from './ipay-toast.interface';
@@ -47,11 +47,11 @@ const IPayToast: React.FC<IPayToastProps> = ({
   const bottonStyle = { bottom: verticalScale(isBottomSheet ? 105 : 40) };
   const textViewWidth = { width: isShowRightIcon ? '80%' : '90%' };
 
-  const toastTypeStyles = useCallback(() => {
+  const ToastTypestyles = useCallback(() => {
     switch (toastType) {
-      case toastTypes.INFORMATION:
+      case ToastTypes.INFORMATION:
         return dynamicStyles.toastInformation;
-      case toastTypes.SUCCESS:
+      case ToastTypes.SUCCESS:
         return dynamicStyles.toastSuccess;
       default:
         return dynamicStyles.toastError;
@@ -65,7 +65,7 @@ const IPayToast: React.FC<IPayToastProps> = ({
       style={[
         dynamicStyles.constainer,
         bottonStyle,
-        toastTypeStyles(),
+        ToastTypestyles(),
         containerStyle,
         title && !subTitle && dynamicStyles.onlyTitleContainer,
       ]}

@@ -29,7 +29,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
 
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import offerDetailsStyles from './offer-details.style';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 

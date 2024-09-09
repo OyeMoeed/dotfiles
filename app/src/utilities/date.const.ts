@@ -2,7 +2,7 @@
  * Defines variants types used for date time formats.
  */
 
-enum dateTimeFormat {
+enum DateTimeFormat {
   // Date formats
   FullDate = 'dddd, MMMM D, YYYY', // Format date to "Monday, June 15, 2023"
   TimeAndDate = 'HH:mm - DD/MM/YYYY',
@@ -33,4 +33,4 @@ enum dateTimeFormat {
   ShortMilitaryTime = 'H:mm', // Format time to "8:00" in 24-hour format
 }
 
-export default dateTimeFormat;
+export default DateTimeFormat;

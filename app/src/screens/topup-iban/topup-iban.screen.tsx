@@ -5,8 +5,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { ToastTypes } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import React from 'react';
 import Share from 'react-native-share';
@@ -51,7 +51,7 @@ const TopUpIBAN = () => {
 
   const renderToast = (toast: number) => {
     showToast({
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
       title: toast === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER,
       containerStyle: styles.toastContainer,
       leftIcon: <IPayIcon icon={icons.copy_success} size={moderateScale(18)} color={colors.natural.natural0} />,

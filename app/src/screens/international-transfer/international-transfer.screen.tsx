@@ -39,7 +39,7 @@ import {
   ApiResponseStatusType,
   buttonVariants,
   spinnerVariant,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -212,7 +212,7 @@ const InternationalTransferScreen: React.FC = () => {
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
     });
   };
 

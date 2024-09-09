@@ -7,7 +7,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { shareOptions } from '@app/utilities/shared.util';
 import {

@@ -26,23 +26,28 @@ enum BarStyle {
 
 /**
  * Defines button variants types used in application.
+ * note if remove disable you need to fix/change more than 200 files
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum buttonVariants {
   OUTLINED = 'outline',
   LINK_BUTTON = 'link-button',
   PRIMARY = 'primary',
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum alertVariant {
   DEFAULT = 'default',
   DESTRUCTIVE = 'destructive',
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum alertType {
   DEFAULT = 'default',
   SIDE_BY_SIDE = 'sideByside',
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum spinnerVariant {
   TEXT = 'text',
   DEFAULT = 'default',
@@ -51,7 +56,7 @@ enum spinnerVariant {
 /**
  * Defines variants types used for timePeriod.
  */
-enum dayPeriod {
+enum DayPeriod {
   AM = 'AM',
   PM = 'PM',
 }
@@ -59,31 +64,31 @@ enum dayPeriod {
 /**
  * Defines variants types used for picker button.
  */
-enum pickerVariant {
+enum PickerVariant {
   Date = 'date',
   Text = 'text',
   Time = 'time',
   DateAndTime = 'dateAndTime',
 }
 
-enum inputType {
+enum InputType {
   CURRENCY = 'Currency',
   PHONE_NUMBER = 'PhoneNumber',
 }
 
-enum CAROUSEL_MODES {
+enum CarouselModes {
   DEFAULT = 'default',
   STACK = 'stack',
   PARALLAX = 'parallax',
 }
 
-enum fallbackVariants {
+enum FallbackVariants {
   IMAGE = 'image',
   LOADER = 'loader',
   LOGO = 'logo',
 }
 
-enum payChannel {
+enum PayChannel {
   REQUEST_ACCEPT = 'request_accept',
   MONEY = 'money',
   REQUEST = 'request',
@@ -135,7 +140,7 @@ enum TopupStatus {
   FAILED = 'failed',
 }
 
-enum toastTypes {
+enum ToastTypes {
   WARNING = 'warning',
   SUCCESS = 'success',
   INFORMATION = 'information',
@@ -190,7 +195,7 @@ enum CardDetailsSegment {
   CARD_FEES = 'Card Fees',
 }
 
-enum dashboardOptions {
+enum DashboardOptions {
   SEND_MONEY = 'Send Money',
   REQUEST_MONEY = 'Request Money',
   SEND_GIFT = 'Send Gift',
@@ -302,7 +307,7 @@ export {
   BillStatus,
   BillsStatusTypes,
   BiometricErrorTypes,
-  CAROUSEL_MODES,
+  CarouselModes,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
@@ -328,14 +333,14 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  dashboardOptions,
-  dayPeriod,
-  fallbackVariants,
-  inputType,
-  payChannel,
-  pickerVariant,
+  DashboardOptions,
+  DayPeriod,
+  FallbackVariants,
+  InputType,
+  PayChannel,
+  PickerVariant,
   spinnerVariant,
-  toastTypes,
+  ToastTypes,
   CardStatusNumber,
   CardTypesCodes,
 };

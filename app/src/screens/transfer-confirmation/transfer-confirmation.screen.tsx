@@ -23,8 +23,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
 import React, { useRef } from 'react';
 import { StyleSheet } from 'react-native';
@@ -67,7 +67,7 @@ const TransferConfirmation: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const onCloseBottomSheet = () => {

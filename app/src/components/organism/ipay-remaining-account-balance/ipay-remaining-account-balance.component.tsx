@@ -4,7 +4,7 @@ import { IPayAmountInput, IPayButton, IPayCardSelector, IPayChip } from '@app/co
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { States, TopUpStates, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { States, TopUpStates, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { isMultipleOfHundred, removeCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
@@ -20,7 +20,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   walletInfo,
   onPressAddCards,
   chipValue,
-  payChannelType = payChannel.ATM,
+  PayChannelType = PayChannel.ATM,
   openPressExpired,
   currentState,
   handleCardSelect,
@@ -87,7 +87,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           }
         />
       )}
-      {!isMultipleOfHundred(Number(topUpAmount)) && payChannelType === payChannel.ATM && (
+      {!isMultipleOfHundred(Number(topUpAmount)) && PayChannelType === PayChannel.ATM && (
         <IPayCaption2Text
           regular={false}
           text={localizationText.ATM.MULTIPLE_OF_HUNDERED}
@@ -104,7 +104,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
             />
           )}
           <IPayQuickActions
-            payChannelType={payChannelType}
+            PayChannelType={PayChannelType}
             setTopUpAmount={setTopUpAmount}
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
           />

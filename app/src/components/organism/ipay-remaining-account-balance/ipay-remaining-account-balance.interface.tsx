@@ -1,7 +1,7 @@
 // actionSheetProps.ts
 
 import { GetWalletResponse } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import { buttonVariants, payChannel, TopUpStates } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel, TopUpStates } from '@app/utilities/enums.util';
 import { ViewStyle } from 'react-native-size-matters';
 
 interface IPayRemainingBalanceProps {
@@ -11,7 +11,7 @@ interface IPayRemainingBalanceProps {
   defaultValue: string;
   walletInfoPress?: () => void;
   topUpPress?: () => void;
-  payChannelType?: payChannel;
+  PayChannelType?: PayChannel;
   quickAction?: () => void;
   showHideBalanceOption?: boolean;
   showWalletOption?: boolean;

@@ -15,7 +15,7 @@ import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { APIResponseType, BillsStatusTypes, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
@@ -122,7 +122,7 @@ const SadadBillsScreen: React.FC = () => {
           renderToast({
             title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
             subTitle: billToDelete?.billTitle,
-            toastType: toastTypes.SUCCESS,
+            toastType: ToastTypes.SUCCESS,
           });
 
           return updatedBillsData;
@@ -149,7 +149,7 @@ const SadadBillsScreen: React.FC = () => {
       title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
       subTitle: billSubTitle,
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
     });
   };
 
