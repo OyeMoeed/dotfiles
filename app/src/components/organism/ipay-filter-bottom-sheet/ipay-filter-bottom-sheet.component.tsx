@@ -257,7 +257,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       closeFilter,
       getChildFilterType: () => getFilterType()?.filterValues,
       setCurrentViewAndSearch: (categoryType: FiltersType, value: string, type?: string) => {
-        if (type !== 'Digital Wallet') setValue('transactionType', type);
+        setValue('transactionType', type);
         setValue(categoryType, value);
         setCurrentView(CurrentViewTypes.FILTERS); // Ensure CurrentViewTypes.FILTERS is a valid enum value
         setSearch('');
