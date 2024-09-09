@@ -58,25 +58,6 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
-  const getWalletInformation = async (walletNumber: string) => {
-    const payload = {
-      walletNumber,
-    };
-
-    const apiResponse = await getWalletInfo(payload);
-    renderSpinner(false);
-    if (apiResponse) {
-      dispatch(
-        setAppData({
-          isLinkedDevice: true,
-        }),
-      );
-      // TODO: replace with real user data
-      dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
-      navigate(screenNames.REGISTRATION_SUCCESSFUL);
-    }
-  };
-
   const setNewPasscode = async (newCode: string) => {
     renderSpinner(true);
 
@@ -109,7 +90,6 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
           isLinkedDevice: true,
         }),
       );
-      dispatch(setWalletInfo({ walletNumber }));
       // TODO: replace with real user data
       dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
       navigate(screenNames.REGISTRATION_SUCCESSFUL);
