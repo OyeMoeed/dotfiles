@@ -15,7 +15,7 @@ const getWalletToWalletTransfers = async (payload: WalletNumberProp): Promise<un
       method: requestType.GET,
     });
 
-    if (apiResponse?.ok) {
+    if (apiResponse?.status) {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
