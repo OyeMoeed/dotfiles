@@ -317,7 +317,7 @@ const LocalTransferScreen: React.FC = () => {
     );
 
   const listData = (viewAllStatus: boolean, sort: string) =>
-    viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 3);
+    viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 4);
 
   const hasBeneficiariesData = () =>
     [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.INACTIVE)]?.length;
