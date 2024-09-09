@@ -5,6 +5,6 @@ export enum ChangeCardPinViewTypes {
 }
 
 export interface ChangeCardPinProps {
-  onSuccess?: () => void;
+  onSuccess?: any;
   currentCard?: any
 }

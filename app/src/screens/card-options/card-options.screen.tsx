@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
@@ -12,15 +12,25 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { toastTypes } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { IPaySafeAreaView } from '@components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
 import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
 import cardOptionsStyles from './card-options.style';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { useTypedSelector } from '@app/store/store';
+import useConstantData from '@app/constants/use-constants';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import { activateOnlinePurchaseProp, resetPinCodeProp } from '@app/network/services/core/transaction/transaction.interface';
+import { activateOnlinePurchase, prepareResetCardPinCode, resetPinCode } from '@app/network/services/core/transaction/transactions.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { encryptData } from '@app/network/utilities/encryption-helper';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -29,7 +39,7 @@ const CardOptionsScreen: React.FC = () => {
 
   const {
     currentCard,
-    currentCard: { cardType, cardHeaderText, name, maskedCardNumber},
+    currentCard: { cardType, cardHeaderText, name, maskedCardNumber, cardIndex},
   } = route.params;
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
@@ -46,7 +56,23 @@ const CardOptionsScreen: React.FC = () => {
 
   const [isOnlinePurchase, setIsOnlinePurchase] = useState(false);
   const [isATMWithDraw, setIsATMWithDraw] = useState(false);
+  const otpVerificationRef: any = useRef(null);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
+  const [otp, setOtp] = useState<string>('');
+  const [otpError, setOtpError] = useState<boolean>(false);
+  const { otpConfig } = useConstantData();
+  const [apiError, setAPIError] = useState<string>('');
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const helpCenterRef = useRef(null);
+  const [otpRef, setOtpRef] = useState<string>('');
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const [pin, setPin] = useState("");
+  const [cardStatus, setCardStatus] = useState<string>();
+
+  
   const getToastSubTitle = () =>
     `${cardType} ${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
 
@@ -60,16 +86,64 @@ const CardOptionsScreen: React.FC = () => {
     });
   };
 
+  const changeOnlinePurchase = async (isOn?:boolean, newStatus?: string) => {
+    renderSpinner(true);
+    const payload: activateOnlinePurchaseProp = {
+      walletNumber: walletNumber,
+      body: {
+        status: newStatus,
+        cardIndex: currentCard?.cardIndex,
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps
+      }
+    };
+    const apiResponse:any = await activateOnlinePurchase(payload);
+    switch (apiResponse?.status?.type) {
+      case ApiResponseStatusType.SUCCESS:
+        setIsOnlinePurchase((prev) => !prev);
+        renderToast(
+          isOn
+            ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
+            : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
+          isOn || true,
+          icons.receipt_item,
+          false,
+        );
+        break;
+      case apiResponse?.apiResponseNotOk:
+        renderToast(
+          localizationText.ERROR.API_ERROR_RESPONSE,
+          false,
+          icons.warning,
+          false,
+        );
+        break;
+      case ApiResponseStatusType.FAILURE:
+        renderToast(
+          localizationText.ERROR.API_ERROR_RESPONSE,
+          false,
+          icons.warning,
+          false,
+        );
+        break;
+      default:
+        renderToast(
+          localizationText.ERROR.API_ERROR_RESPONSE,
+          false,
+          icons.warning,
+          false,
+        );
+        break;
+    }
+    renderSpinner(false);
+  }
+
   const toggleOnlinePurchase = (isOn: boolean) => {
-    setIsOnlinePurchase((prev) => !prev);
-    renderToast(
-      isOn
-        ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
-        : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
-      isOn,
-      icons.receipt_item,
-      false,
-    );
+    if (currentCard?.cardStatus == '0'){
+      changeOnlinePurchase(true, '100') ;
+    }else if (currentCard?.cardStatus == '100'){
+      changeOnlinePurchase(false, '0');
+    }
+    
   };
 
   const toggleATMWithdraw = (isOn: boolean) => {
@@ -113,9 +187,137 @@ const CardOptionsScreen: React.FC = () => {
     navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
   };
 
-  const onNavigateToSuccess = () => {
+  const onNavigateToSuccess = (pin:string) => {
+    setPin(pin)
     onCloseBottomSheet();
-    navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
+    prepareOtp(true);
+  };
+
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
+
+
+  const isExist = (checkStr: string | undefined) => checkStr || '';
+
+
+  const resetPassCode = async () => {
+    renderSpinner(true);
+    try {
+      const payload: resetPinCodeProp = {
+        walletNumber,
+        cardIndex: currentCard?.cardIndex,
+        body:{
+          cardPinCode: encryptData(
+            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + pin,
+            isExist(appData?.encryptionData?.passwordEncryptionKey),
+          ) || '',
+          otp: otp,
+          otpRef: otpRef,
+          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        }
+      };
+      const apiResponse: any = await resetPinCode(payload);
+      renderSpinner(false);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          otpVerificationRef?.current?.resetInterval();
+          setOtpSheetVisible(false);
+          navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
+          break;
+        case apiResponse?.apiResponseNotOk:
+          renderToast(
+            localizationText.ERROR.API_ERROR_RESPONSE,
+            false,
+            icons.warning,
+            false,
+          );
+          break;
+        case ApiResponseStatusType.FAILURE:
+          renderToast(
+            localizationText.ERROR.API_ERROR_RESPONSE,
+            false,
+            icons.warning,
+            false,
+          );
+          break;
+        default:
+          renderToast(
+            localizationText.ERROR.API_ERROR_RESPONSE,
+            false,
+            icons.warning,
+            false,
+          );
+          break;
+      }
+
+      renderSpinner(false);
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(
+        localizationText.ERROR.SOMETHING_WENT_WRONG,
+        false,
+        icons.warning,
+        false,
+      );
+    }
+  }
+
+
+  function onOtpCloseBottomSheet(): void {
+    otpVerificationRef?.current?.resetInterval();
+    setOtpSheetVisible(false);
+  }
+
+  function onConfirmOtp(): void {
+    if (otp === '' || otp.length < 4) {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+    } else {
+      resetPassCode();
+    }
+  }
+
+  function handleOnPressHelp(): void {
+    helpCenterRef?.current?.present();
+
+  }
+
+ 
+
+  const onResendCodePress = () => {
+    prepareOtp(false);
+  };
+
+
+  const prepareOtp = async (showOtpSheet: boolean = true) => {
+    renderSpinner(true);
+    const payload: resetPinCodeProp= {
+      walletNumber: walletNumber,
+      cardIndex: currentCard?.cardIndex,
+      body: {
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps
+      }
+    };
+    const apiResponse:any = await prepareResetCardPinCode(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setOtpRef(apiResponse?.response?.otpRef as string);
+      if (showOtpSheet) {
+        setOtpSheetVisible(true);
+        otpVerificationRef?.current?.present();
+      }
+    }
+    otpVerificationRef?.current?.resetInterval();
+    renderSpinner(false);
   };
 
   return (
@@ -160,7 +362,7 @@ const CardOptionsScreen: React.FC = () => {
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
-
+          {currentCard?.cardStatus != '850' &&  
           <IPayCardOptionsIPayListToggle
             leftIcon={icons.receipt_item}
             title={
@@ -170,7 +372,8 @@ const CardOptionsScreen: React.FC = () => {
             }
             onToggleChange={toggleOnlinePurchase}
             toggleState={isOnlinePurchase}
-          />
+          /> }
+         
 
           <IPayCardOptionsIPayListToggle
             leftIcon={icons.moneys}
@@ -214,6 +417,45 @@ const CardOptionsScreen: React.FC = () => {
         onPress={onClickDeleteCardSheet}
         bodyStyle={styles.bottomMarginStyles}
       />
+
+
+      <IPayPortalBottomSheet
+        heading={localizationText.CARD_OPTIONS.CHANGE_PIN
+        }
+        enablePanDownToClose
+        simpleBar
+        bold
+        cancelBnt
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={onOtpCloseBottomSheet}
+        isVisible={isOtpSheetVisible}
+      >
+        <IPayOtpVerification
+          ref={otpVerificationRef}
+          onPressConfirm={onConfirmOtp}
+          mobileNumber={userInfo?.mobileNumber}
+          setOtp={setOtp}
+          setOtpError={setOtpError}
+          otpError={otpError}
+          apiError={apiError}
+          isBottomSheet={false}
+          handleOnPressHelp={handleOnPressHelp}
+          timeout={otpConfig.transaction.otpTimeout}
+          onResendCodePress={onResendCodePress}
+        />
+      </IPayPortalBottomSheet>
+
+      <IPayBottomSheet
+        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        enablePanDownToClose
+        simpleBar
+        backBtn
+        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
+        ref={helpCenterRef}
+        testID="transfer-details-help-center"
+      >
+        <HelpCenterComponent testID="help-center-bottom-sheet" />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

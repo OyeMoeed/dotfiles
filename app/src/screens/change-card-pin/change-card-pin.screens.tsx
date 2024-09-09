@@ -1,4 +1,4 @@
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
@@ -8,7 +8,7 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
-import { forwardRef, useCallback, useState } from 'react';
+import { forwardRef, useCallback, useRef, useState } from 'react';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './change-card-pin.interface';
 import changeCardPinStyles from './change-card-pin.style';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
@@ -18,19 +18,21 @@ import { useTypedSelector } from '@app/store/store';
 import { resetPinCode } from '@app/network/services/core/transaction/transactions.service';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import useConstantData from '@app/constants/use-constants';
 
 const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
-  const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.CurrentPin);
+  const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const [apiError, setAPIError] = useState<string>('');
   const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const getTitle = () => {
     switch (currentView) {
@@ -93,6 +95,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
 
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
   
+
 
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
@@ -193,7 +196,9 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
         break;
       case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
-          resetPassCode(enteredCode)
+          if (onSuccess) {
+            onSuccess(enteredCode);
+          }
           
         } else {
           setPasscodeError(true);
@@ -203,6 +208,22 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
       default:
     }
   };
+
+  function onCloseBottomSheet(): void {
+    throw new Error('Function not implemented.');
+  }
+
+  function onConfirmOtp(): void {
+    throw new Error('Function not implemented.');
+  }
+
+  function handleOnPressHelp(): void {
+    throw new Error('Function not implemented.');
+  }
+
+  function onResendCodePress(): void {
+    throw new Error('Function not implemented.');
+  }
 
   return (
     <IPayView style={styles.container}>
@@ -220,6 +241,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
           onEnterPassCode={onEnterPassCode}
         />
       </IPayView>
+
     </IPayView>
   );
 });

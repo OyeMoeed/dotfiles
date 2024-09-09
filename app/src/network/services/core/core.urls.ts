@@ -44,6 +44,7 @@ const CORE_URLS = {
   CHANGE_LANGUAGE: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/update`,
   GET_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards`,
   ACTIVATE_ONLINE_PURCHASE: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/status`,
+  PREPARE_CARD_RESET: (walletNumber?: string, cardIndex?: string) => `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin/prepare`,
   RESET_PINCODE: (walletNumber?: string, cardIndex?: string) => `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin`,
   GET_TRANSACTION_TYPES: 'core-management/v1/transactionRequestTypes',
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,

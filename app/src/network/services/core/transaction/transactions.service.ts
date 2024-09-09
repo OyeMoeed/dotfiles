@@ -98,4 +98,20 @@ const activateOnlinePurchase = async (payload: activateOnlinePurchaseProp): Prom
   }
 };
 
-export { getCards, getTransactionTypes, getTransactions, resetPinCode, activateOnlinePurchase };
+
+const prepareResetCardPinCode = async (payload: resetPinCodeProp): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.PREPARE_CARD_RESET(payload?.walletNumber, payload?.cardIndex),
+      method: requestType.POST,
+      payload: payload?.body
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+export { getCards, getTransactionTypes, getTransactions, resetPinCode, activateOnlinePurchase, prepareResetCardPinCode };

@@ -603,7 +603,8 @@
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
     "GO_TO_CARD": "Go to Card",
-    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted",
+    "CHANGE_PIN": "Change pincode"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",

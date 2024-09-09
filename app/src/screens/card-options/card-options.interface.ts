@@ -31,5 +31,7 @@ export interface RouteParams {
     cardHeaderText: string;
     name: string;
     maskedCardNumber?: string
+    cardIndex?: string,
+    cardStatus?: string
   };
 }
