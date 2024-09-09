@@ -34,7 +34,6 @@ export interface IPayCarouselProps<T> {
   mode?: CarouselMode;
   style?: StyleProp<ViewStyle>;
   loop?: boolean;
-  resetOnDataChange?: boolean;
   autoPlay?: boolean;
   autoPlayReverse?: boolean;
   scrollAnimationDuration?: number;
@@ -44,4 +43,9 @@ export interface IPayCarouselProps<T> {
   modeConfig?: CarouselModeConfig;
   onChangeIndex?: (index: number) => void;
   carouselContainerStyle?: StyleProp<ViewStyle>;
+  /**
+   * reset indexes states and paginator to 0 when data
+   * changes incase of multiple list of source data
+   */
+  resetOnDataChange?: boolean;
 }
