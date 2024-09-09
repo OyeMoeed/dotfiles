@@ -33,7 +33,7 @@ import offersListStyles from './offers-list.style';
 const OffersListScreen: React.FC = () => {
   const { colors } = useTheme();
   const { offerFilterData, offerFilterDefaultValues } = useConstantData();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);

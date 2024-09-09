@@ -15,9 +15,9 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import moment from 'moment';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
 import styles from './ipay-id-renewal-sheet.style';
@@ -28,8 +28,6 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [renewId, setRenewId] = useState(false);
   const [otpRef, setOTPRef] = useState<string>('');
   const [isHelpBottomSheetVisible, setIsHelpBottomSheetVisible] = useState(false);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showToast } = useToastContext();
   const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
@@ -38,6 +36,8 @@ const IPayIdRenewalSheet: React.FC = () => {
     remainingNumberOfDaysToExpire,
     expiryDate,
     idExpired,
+    walletNumber,
+    mobileNumber,
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
 
