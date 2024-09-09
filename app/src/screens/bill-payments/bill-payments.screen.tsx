@@ -105,7 +105,7 @@ const BillPaymentsScreen: React.FC = () => {
               style={styles.headerStyles}
             />
             <IPayView style={styles.listView}>
-              {sadadBills.length > 0 && (
+              {sadadBills.length > 0 ? (
                 <IPayFlatlist
                   testID="ipay-flatlist"
                   data={sadadBills}
@@ -114,6 +114,8 @@ const BillPaymentsScreen: React.FC = () => {
                   showsVerticalScrollIndicator={false}
                   renderItem={({ item }) => <IPaySadadBill billDetails={item} showMoreOption={false} />}
                 />
+              ) : (
+                <IPayView />
               )}
             </IPayView>
             <IPayButton

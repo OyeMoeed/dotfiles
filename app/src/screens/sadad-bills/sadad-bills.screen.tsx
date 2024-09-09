@@ -361,28 +361,6 @@ const SadadBillsScreen: React.FC = ({ route }) => {
               )}
               fetchData={getBills}
             />
-            {/* <IPayFlatlist
-              testID="ipay-flatlist"
-              data={sadadBillsData}
-              keyExtractor={(_, index) => index.toString()}
-              itemSeparatorStyle={styles.itemSeparatorStyle}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item, index }) => (
-                <IPayView>
-                  <IPaySadadBill
-                    billDetails={item}
-                    onSelectBill={onSelectBill}
-                    onPressMoreOptions={(id) => onPressMoreOptions(Number(id), item)}
-                    showCheckBox={selectedTab === BillsStatusTypes.ACTIVE_BILLS}
-                  />
-                  {index === activeBillsData.length - 1 && selectedBillsCount > 0 && (
-                    <IPayView
-                      style={selectedBillsCount > 1 ? styles.listBottomConditionalView : styles.listBottomView}
-                    />
-                  )}
-                </IPayView>
-              )}
-            /> */}
           </IPayView>
           {selectedBillsCount > 0 && (
             <IPayView style={styles.footerView}>
