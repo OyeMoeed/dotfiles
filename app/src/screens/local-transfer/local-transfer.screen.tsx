@@ -30,7 +30,6 @@ import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import LocalTransferDeleteBeneficiaryMockProps from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.interface';
 import deleteLocalTransferBeneficiary from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.service';
 import editLocalTransferBeneficiary from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.service';
 import { ActivationMethods } from '@app/network/services/local-transfer/local-transfer-activate-beneficiary/local-transfer-activate-beneficiary.interface';
@@ -419,9 +418,8 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
   const onDeleteBeneficiary = async () => {
-    const apiResponse: LocalTransferDeleteBeneficiaryMockProps = await deleteLocalTransferBeneficiary(
-      selectedBeneficiaryRef.current?.beneficiaryCode,
-    );
+    const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
+    console.log('rea', apiResponse);
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       setDeleteBeneficiary(false);
@@ -564,7 +562,7 @@ const LocalTransferScreen: React.FC = () => {
         }}
         secondaryAction={{
           text: localizationText.COMMON.DELETE,
-          onPress: onDeleteBeneficiary
+          onPress: onDeleteBeneficiary,
         }}
       />
       <IPayActionSheet
