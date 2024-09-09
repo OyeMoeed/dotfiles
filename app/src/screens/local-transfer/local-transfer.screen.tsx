@@ -175,11 +175,14 @@ const LocalTransferScreen: React.FC = () => {
 
   const handleChangeBeneficiaryName = async () => {
     const activateBeneficiaryPayload = {
-      beneficiaryCode: selectedBeneficiaryRef.current?.beneficiaryCode,
       nickname: nickName,
     };
     try {
-      const apiResponse = await editLocalTransferBeneficiary(activateBeneficiaryPayload);
+      const apiResponse = await editLocalTransferBeneficiary(
+        selectedBeneficiaryRef.current?.beneficiaryCode,
+        ,activateBeneficiaryPayload,
+      );
+      
       if (ApiResponseStatusType.SUCCESS) {
         showUpdateBeneficiaryToast();
         editNickNameSheetRef?.current?.close();

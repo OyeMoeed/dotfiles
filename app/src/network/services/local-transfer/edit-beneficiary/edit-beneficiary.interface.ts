@@ -1,8 +1,7 @@
 import { MockAPIStatusProps } from '../../services.interface';
 
 export interface editBeneficiaryPayload {
-  beneficiaryCode: string;
-  nickname?: string;
+  nickname: string;
 }
 
 export interface editBeneficiaryResponse {

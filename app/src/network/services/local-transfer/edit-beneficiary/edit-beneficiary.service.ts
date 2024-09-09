@@ -6,16 +6,20 @@ import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
 import { editBeneficiaryPayload, editBeneficiaryResponse } from './edit-beneficiary.interface';
 import localTransferEditBeneficiaryMock from './edit-beneficiary.mock';
 
-const editLocalTransferBeneficiary = async (payload: editBeneficiaryPayload): Promise<editBeneficiaryResponse> => {
+const editLocalTransferBeneficiary = async (
+  beneficiaryCode: string,
+  payload: editBeneficiaryPayload,
+): Promise<editBeneficiaryResponse> => {
   if (constants.MOCK_API_RESPONSE) {
     return localTransferEditBeneficiaryMock;
   }
   try {
     const apiResponse: ApiResponse<editBeneficiaryResponse> = await apiCall({
-      endpoint: LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary(payload.beneficiaryCode),
+      endpoint: LOCAL_TRANSFERS_URLS.edit_local_transfer_beneficiary(beneficiaryCode),
       method: requestType.PUT,
       payload,
     });
+console.log('apiResponse', apiResponse);
 
     return apiResponse;
   } catch (error) {
