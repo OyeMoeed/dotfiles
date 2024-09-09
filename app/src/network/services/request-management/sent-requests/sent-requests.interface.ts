@@ -3,6 +3,8 @@ import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/se
 
 interface WalletNumberProp {
   walletNumber: string;
+  currentPage: number;
+  pageSize?: number;
 }
 
 //* ******************GetAllRequests****************************//

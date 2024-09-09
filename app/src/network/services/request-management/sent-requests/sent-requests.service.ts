@@ -22,6 +22,7 @@ const getAllSentRequests = async (payload: WalletNumberProp): Promise<unknown> =
       method: requestType.GET,
       headers: {
         mode: 'TO',
+        offset: payload.currentPage,
         // eslint-disable-next-line @typescript-eslint/naming-convention
         'max-record': 100,
       },

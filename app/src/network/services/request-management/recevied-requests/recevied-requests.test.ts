@@ -25,14 +25,15 @@ describe('Request Service', () => {
   describe('getAllRetainedMessages', () => {
     it('should return mock data when MOCK_API_RESPONSE is true', async () => {
       constants.MOCK_API_RESPONSE = true;
-      const payload = { walletNumber: '12345' };
+      const payload = { walletNumber: '12345', currentPage: 1 };
+
       const result = await getAllRecivedRequests(payload);
       expect(result).toBe(getAllRequestsMock);
     });
 
     it('should return API response when MOCK_API_RESPONSE is false and API call is successful', async () => {
       constants.MOCK_API_RESPONSE = false;
-      const payload = { walletNumber: '12345' };
+      const payload = { walletNumber: '12345', currentPage: 1 };
       const mockApiResponse = { status: { type: 'SUCCESS' } };
       (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
@@ -43,6 +44,7 @@ describe('Request Service', () => {
         method: requestType.GET,
         headers: {
           mode: 'FROM',
+          offset: payload.currentPage,
           // eslint-disable-next-line @typescript-eslint/naming-convention
           'max-record': 100,
         },
@@ -51,7 +53,7 @@ describe('Request Service', () => {
 
     it('should return error object when API call fails', async () => {
       constants.MOCK_API_RESPONSE = false;
-      const payload = { walletNumber: '12345' };
+      const payload = { walletNumber: '12345', currentPage: 1 };
       const mockError = new Error('API Error');
       (apiCall as jest.Mock).mockRejectedValue(mockError);
 

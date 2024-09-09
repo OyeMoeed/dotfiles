@@ -8,6 +8,8 @@ import {
 
 interface WalletNumberProp {
   walletNumber: string;
+  currentPage: number;
+  pageSize?: number;
 }
 
 //* ******************GetAllRequests****************************//
