@@ -19,9 +19,8 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import logOut from '@app/network/services/core/logout/logout.service';
-import clearSession from '@app/network/utilities/network-session-helper';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { resetUserInfo } from '@app/store/slices/user-information-slice';
+import clearSession from '@app/network/utilities/network-session-helper';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
@@ -32,12 +31,11 @@ import menuStyles from './menu.style';
 const MenuScreen: FC = () => {
   const { colors } = useTheme();
   const styles = menuStyles(colors);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
+  const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { showToast } = useToastContext();
@@ -76,19 +74,14 @@ const MenuScreen: FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       hideLogout();
       clearSession(false);
-    } else if (apiResponse?.apiResponseNotOk) {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const delinkSuccessfullyDone = () => {
     clearSession(true);
-    setTimeout(() => {
-      dispatch(resetUserInfo());
-    }, 500);
   };
 
   const delinkDevice = async () => {
@@ -108,7 +101,6 @@ const MenuScreen: FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -159,7 +151,7 @@ const MenuScreen: FC = () => {
                   <IPayHeadlineText
                     numberOfLines={2}
                     regular={false}
-                    text={userInfo?.fullName}
+                    text={fullName}
                     color={colors.primary.primary900}
                     style={styles.profileNameText}
                   />

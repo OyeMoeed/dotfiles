@@ -34,8 +34,6 @@ const WalletScreen = () => {
   const { qrRef, qrData, saveQrToDisk } = useSaveQRCode();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const [isNameCopied, setIsNameCopied] = useState(false);
   const [isIbanCopied, setIsIbanCopied] = useState(false);
@@ -48,7 +46,7 @@ const WalletScreen = () => {
     const nameLabel = localizationText.COMMON.NAME;
     const ibanLabel = localizationText.COMMON.IBAN;
 
-    return `${appTitle}\n${walletInfoLabel}\n${nameLabel} : ${userInfo?.fullName}\n${ibanLabel} : ${walletInfo?.viban}`;
+    return `${appTitle}\n${walletInfoLabel}\n${nameLabel} : ${walletInfo?.fullName}\n${ibanLabel} : ${walletInfo?.viban}`;
   };
 
   const bottonSheetOpen = async () => {
@@ -140,10 +138,10 @@ const WalletScreen = () => {
         </IPayView>
         <IPayFootnoteText color={colors.natural.natural500}>{localizationText.HOME.WALLET_INFO}</IPayFootnoteText>
         <IPayList
-          onPressIcon={() => handleClickOnCopy(1, userInfo?.fullName)}
+          onPressIcon={() => handleClickOnCopy(1, walletInfo?.fullName)}
           title={localizationText.COMMON.NAME}
           isShowSubTitle
-          subTitle={userInfo?.fullName}
+          subTitle={walletInfo?.fullName}
           isShowIcon
           isShowDetail
           textStyle={styles.titleStyle}

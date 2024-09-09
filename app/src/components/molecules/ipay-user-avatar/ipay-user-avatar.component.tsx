@@ -12,7 +12,7 @@ const IPayUserAvatar: React.FC<UserProfileImageProps> = ({ image, name, style })
     const words = textName.split(' ');
     return words ? `${words[0][0]}${words[1] ? words[1][0] : ''}` : '';
   }, []);
-  const { profileImage, fullName } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { profileImage, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = userAvatarStyles(colors);
 
   return image || profileImage ? (

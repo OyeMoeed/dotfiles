@@ -1,5 +1,5 @@
 import requestType from '@app/network/request-types.network';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import apiCall from '@network/services/api-call.service';
 import otpVerification from './otp-verification.service';
 
@@ -32,7 +32,7 @@ describe('otpVerification', () => {
     });
 
     // Check if the dispatch function was called with the correct argument
-    expect(mockDispatch).toHaveBeenCalledWith(setUserInfo(mockApiResponse.data.response));
+    expect(mockDispatch).toHaveBeenCalledWith(setWalletInfo(mockApiResponse.data.response));
 
     // Check if the result matches the mock API response
     expect(result).toEqual(mockApiResponse);

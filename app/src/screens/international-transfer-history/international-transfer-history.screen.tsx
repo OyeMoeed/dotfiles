@@ -118,7 +118,9 @@ const InternationalTransferHistory: React.FC = () => {
       // Check transaction type match
       const isTransactionTypeMatch =
         !transactionType ||
-        localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[item?.transaction_type ?? '']] === transactionType;
+        localizationText.TRANSACTION_HISTORY[
+          LocalizationKeysMapping[item?.transactionType] as keyof typeof localizationText.TRANSACTION_HISTORY
+        ] === deliveryType;
 
       // Check beneficiary name match
       const isNameMatch = !beneficiaryNameList || beneficiaryNameList === item?.receiver;
@@ -126,7 +128,9 @@ const InternationalTransferHistory: React.FC = () => {
       // Check delivery type match
       const isTransactionMediumMatch =
         !deliveryType ||
-        localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[item?.transaction_medium ?? '']] === deliveryType;
+        localizationText.TRANSACTION_HISTORY[
+          LocalizationKeysMapping[item?.transactionMedium] as keyof typeof localizationText.TRANSACTION_HISTORY
+        ] === transactionType;
 
       // Return true if all conditions are met
       return isAmountInRange && isDateInRange && isTransactionTypeMatch && isNameMatch && isTransactionMediumMatch;
@@ -189,7 +193,7 @@ const InternationalTransferHistory: React.FC = () => {
 
   const onPressFilterTab = (filterKey: string, deletedFilters?: string[]) => {
     if (filterKey === 'All') {
-      if (deletedFilters && deletedFilters.length > 0) {
+      if (deletedFilters && deletedFilters.length > 0 && deletedFilters !== 'All') {
         applyFilters(appliedFilters);
       } else {
         setFilteredData(internationalTransferHistoryData);
@@ -445,7 +449,7 @@ const InternationalTransferHistory: React.FC = () => {
               selectTransactionType={getValues('transactionType')}
               onPressListItem={(title, type) => {
                 onChange(title);
-                if (type !== 'Digital Wallet') setValue('transactionType', type);
+                setValue('transactionType', type);
                 filterRef?.current?.setCurrentViewAndSearch(FiltersType.DELIVERY_TYPE, title, type);
                 deliveryTypeBottomSheetRef?.current?.close();
               }}

@@ -832,53 +832,45 @@ const useConstantData = () => {
       filterValues: [
         {
           id: '1',
-          title: 'Digital Wallet',
+          title: 'AlinmaPay Direct',
+          image: images.alinmaPayDirectLogo,
           data: [
             {
               id: '1',
-              title: 'Digital Wallet',
+              title: 'Bank Transfer',
               amount: '10',
-              type: 'Digital Wallet',
+              type: 'AlinmaPay Direct',
+            },
+            {
+              id: '2',
+              title: 'Cash Pickup',
+              amount: '10',
+              type: 'AlinmaPay Direct',
             },
           ],
         },
         {
           id: '2',
-          title: 'Bank Transfer',
+          title: 'Western Union',
+          image: images.westernUnionLogo,
           data: [
             {
               id: '1',
-              title: 'Western Union',
+              title: 'Degitial Wallet',
               amount: '10',
-              type: 'Bank Transfer',
-              image: images.westernUnionLogo,
+              type: 'Western Union',
             },
             {
               id: '2',
-              title: 'AlinmaPay Direct',
+              title: 'Bank Transfer',
               amount: '10',
-              type: 'Bank Transfer',
-              image: images.alinmaPayDirectLogo,
-            },
-          ],
-        },
-        {
-          id: '3',
-          title: 'Cash Pickup',
-          data: [
-            {
-              id: '1',
-              title: 'Western Union',
-              amount: '10',
-              type: 'Cash Pickup',
-              image: images.westernUnionLogo,
+              type: 'Western Union',
             },
             {
-              id: '2',
-              title: 'AlinmaPay Direct',
+              id: '3',
+              title: 'Cash Pickup',
               amount: '10',
-              type: 'Cash Pickup',
-              image: images.alinmaPayDirectLogo,
+              type: 'Western Union',
             },
           ],
         },
@@ -1541,7 +1533,7 @@ const useConstantData = () => {
 
   const contactusList = [
     { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '(+966)8004339000' },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)90000670' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)920000670' },
   ];
 
   return {

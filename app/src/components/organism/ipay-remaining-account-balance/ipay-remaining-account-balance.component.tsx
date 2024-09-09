@@ -34,6 +34,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   currencyStyle,
   inputStyles,
   defaultValue = '0',
+  balanceType = 'Outgoing',
 }) => {
   const { colors } = useTheme();
   const styles = ipayRemainingAccountBalanceStyles(colors);
@@ -99,8 +100,14 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
         <>
           {showProgress && (
             <IPayBalanceProgressbar
-              monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
-              monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
+              monthlyRemainingOutgoingAmount={
+                balanceType === 'Outgoing'
+                  ? limitsDetails.monthlyRemainingOutgoingAmount
+                  : limitsDetails.monthlyRemainingIncomingAmount
+              }
+              monthlyOutgoingLimit={
+                balanceType === 'Outgoing' ? limitsDetails.monthlyOutgoingLimit : limitsDetails.monthlyIncomingLimit
+              }
             />
           )}
           <IPayQuickActions

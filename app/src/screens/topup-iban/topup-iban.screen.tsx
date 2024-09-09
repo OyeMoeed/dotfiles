@@ -19,9 +19,9 @@ const TopUpIBAN = () => {
   const styles = topupIbanStyles(colors);
   const { showToast } = useToastContext();
   const [toast, setShowToast] = React.useState<number>(0);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
-  const username = userInfo?.fullName;
-  const iban = userInfo?.viban;
+  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const username = walletInfo?.fullName;
+  const iban = walletInfo?.viban;
 
   const getShareableMessage = () => {
     const appTitle = 'AlinmaPay';
