@@ -102,7 +102,7 @@ const LocalTransferScreen: React.FC = () => {
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       isShowLeftIcon: true,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
@@ -416,12 +416,21 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
   const onDeleteBeneficiary = async () => {
-    const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
+    try {
+      const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
 
-    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      getBeneficiariesData();
-      setDeleteBeneficiary(false);
-      showDeleteBeneficiaryToast();
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        getBeneficiariesData();
+        setDeleteBeneficiary(false);
+        showDeleteBeneficiaryToast();
+      } else {
+        setDeleteBeneficiary(false);
+        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      }
+    } catch (error: any) {
+      renderSpinner(false);
+      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
   return (
