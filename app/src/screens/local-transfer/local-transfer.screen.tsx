@@ -183,12 +183,9 @@ const LocalTransferScreen: React.FC = () => {
         activateBeneficiaryPayload,
       );
 
-      if (ApiResponseStatusType.SUCCESS) {
-        showUpdateBeneficiaryToast();
-        editNickNameSheetRef?.current?.close();
-      } else {
-        setAPIError(apiResponse?.error);
-      }
+      showUpdateBeneficiaryToast();
+      editNickNameSheetRef?.current?.close();
+      getBeneficiariesData();
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -422,6 +419,7 @@ const LocalTransferScreen: React.FC = () => {
     const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      getBeneficiariesData();
       setDeleteBeneficiary(false);
       showDeleteBeneficiaryToast();
     }
