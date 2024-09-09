@@ -77,6 +77,8 @@ const NotificationCenterScreen: React.FC = () => {
   const hasPendingRequest = pendingNotificationsCount > 0;
   const hasNotifications = notifications.length > 0;
   const unreadNotificationCount = notifications.filter((notification) => !notification.read).length;
+  const notificationSubText =
+    unreadNotificationCount > 0 ? `${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}` : undefined;
 
   const styles = getNotificationCenterStyles(colors);
 
@@ -304,11 +306,7 @@ const NotificationCenterScreen: React.FC = () => {
             subTextColor={colors.primary.primary500}
             showDotBeforeSubtext
             leftText={localization.NOTIFICATION_CENTER.NOTIFICATIONS}
-            subText={
-              unreadNotificationCount > 0
-                ? `${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}`
-                : undefined
-            }
+            subText={notificationSubText}
             rightText={localization.NOTIFICATION_CENTER.READ_ALL}
             onRightOptionPress={handleAllMarkAsRead}
           />

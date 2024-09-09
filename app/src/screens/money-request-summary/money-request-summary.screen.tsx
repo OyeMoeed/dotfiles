@@ -82,6 +82,10 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig } = useConstantData();
+  const textValue =
+    screen === SummaryType.MONEY_REQUEST_SUMMARY
+      ? receviedRequestSummaryData && receviedRequestSummaryData[0].amount
+      : chipValue;
 
   // Prepare OTP for sending requested money
   const prepareOtp = async (showOtpSheet: boolean = true) => {
@@ -195,11 +199,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     () =>
       chipValue ? (
         <IPayChip
-          textValue={
-            screen === SummaryType.MONEY_REQUEST_SUMMARY
-              ? receviedRequestSummaryData && receviedRequestSummaryData[0].amount
-              : chipValue
-          }
+          textValue={textValue}
           variant={States.WARNING}
           isShowIcon
           containerStyle={styles.chipContainer}

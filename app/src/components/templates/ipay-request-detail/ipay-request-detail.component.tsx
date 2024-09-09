@@ -46,6 +46,25 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   const copiableItems: (keyof IPayTransactionItemProps)[] = [CopiableKeys.REF_NUMBER];
   const { showToast } = useToastContext();
 
+  const receviedRequestSummaryData = [
+    {
+      id: 1,
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      detailsText: transaction.title,
+      leftIcon: true,
+    },
+    {
+      id: 2,
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      detailsText: transaction.receiver_mobile_number,
+    },
+    {
+      id: 3,
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      detailsText: transaction.amount,
+    },
+  ];
+
   const renderToast = (value: string) => {
     showToast({
       title: localizationText.TOP_UP.COPIED,
@@ -101,25 +120,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     if (onCloseBottomSheet) onCloseBottomSheet();
     navigate(ScreenNames.REQUEST_SUMMARY, {
       screen: SummaryType.MONEY_REQUEST_SUMMARY,
-
-      receviedRequestSummaryData: [
-        {
-          id: 1,
-          label: localizationText.REQUEST_SUMMARY.PAY_TO,
-          detailsText: transaction.title,
-          leftIcon: true,
-        },
-        {
-          id: 2,
-          label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
-          detailsText: transaction.receiver_mobile_number,
-        },
-        {
-          id: 3,
-          label: localizationText.REQUEST_SUMMARY.AMOUNT,
-          detailsText: transaction.amount,
-        },
-      ],
+      receviedRequestSummaryData,
       transId: transaction.id,
       heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
     });
