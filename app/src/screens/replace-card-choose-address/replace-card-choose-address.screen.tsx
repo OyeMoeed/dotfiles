@@ -81,7 +81,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD} backBtn applyFlex />
+      <IPayHeader title={localizationText.CARD_OPTIONS.PRINT_CARD} backBtn applyFlex />
       <IPayView style={styles.contentContainer}>
         <IPayCardDetails
           containerStyle={styles.zeroMargin}

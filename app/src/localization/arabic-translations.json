@@ -1164,7 +1164,9 @@
     "TRAFFIC_NUMBER": "رقم المرور"
   },
   "REQUEST_MONEY": {
+    "MAKE_NEW_REQUEST": "قم بعمل طلب جديد",
     "REQUEST_MONEY": "طلب مال",
+    "CANCELLED": "ملغى",
     "SEND_REQUESTS": "طلبات مرسلة",
     "RECEIVED_REQUESTS": "طلبات مستلمة",
     "CREATE_REQUEST": "إنشاء طلب",
