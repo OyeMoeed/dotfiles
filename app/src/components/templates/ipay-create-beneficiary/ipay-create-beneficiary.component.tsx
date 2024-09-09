@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
-import { IPayFlatlist, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -161,7 +160,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             <IPaySubHeadlineText numberOfLines={2} color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
-            {key === AddBeneficiary.BANK_NAME && <IPayImage image={images.alinmaBankLogo} style={styles.imgStyle} />}
+            {key === AddBeneficiary.BANK_NAME && getBankIconByCode(beneficiaryBankDetails?.bankCode, 40)}
           </IPayView>
         }
       />
@@ -273,8 +272,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                       <IPaySubHeadlineText color={colors.primary.primary800} regular>
                         {beneficiaryBankDetails?.bankName}
                       </IPaySubHeadlineText>
-                      {getBankIconByCode(beneficiaryBankDetails?.bankCode)}
-                      <IPayImage image={beneficiaryBankDetails?.bankLogo} style={styles.imgStyle} />
+                      {getBankIconByCode(beneficiaryBankDetails?.bankCode, 40)}
                     </>
                   )}
                 </IPayView>
