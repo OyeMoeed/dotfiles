@@ -19,7 +19,10 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
@@ -37,7 +40,7 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -57,8 +60,8 @@ const SendMoneyFormScreen: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
-  const { selectedContacts } = route.params;
-  // const { transferReasonData } = useConstantData();
+  const { selectedContacts, from, heading, showHistory } = route.params;
+  const { transferReasonData } = useConstantData();
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
@@ -145,6 +148,10 @@ const SendMoneyFormScreen: React.FC = () => {
       }
     }
     removeFormRef?.current?.hide();
+    if (formInstances.length === 0) {
+      navigate(ScreenNames.WALLET_TRANSFER);
+    }
+
     setSelectedId('');
   };
 
@@ -174,9 +181,18 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const isTransferButtonDisabled = () => {
-    const hasValidAmount = totalAmount > 0;
-    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
-    return !hasValidAmount || !hasValidReason;
+    // Check if the transfer type is REQUEST_MONEY
+    if (from === TRANSFERTYPE.REQUEST_MONEY) {
+      // Validate amount and reason
+      const hasValidAmount = totalAmount > 0;
+      return !hasValidAmount;
+    } else {
+      const hasValidAmount = totalAmount > 0;
+      const hasValidReason = formInstances.every(
+        (instance) => instance.selectedItem?.id && instance.selectedItem?.text,
+      );
+      return !hasValidAmount || !hasValidReason;
+    }
   };
 
   const addForm = () => {
@@ -197,6 +213,24 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
+    if (constants.MOCK_API_RESPONSE) {
+      // Mock API response
+      if (from === TRANSFERTYPE.REQUEST_MONEY) {
+        navigate(ScreenNames.TOP_UP_SUCCESS, {
+          topupChannel: payChannel.REQUEST,
+          topupStatus: TopupStatus.SUCCESS,
+          amount: totalAmount,
+        });
+      } else {
+        navigate(ScreenNames.TOP_UP_SUCCESS, {
+          topupChannel: payChannel.WALLET,
+          topupStatus: TopupStatus.SUCCESS,
+          amount: totalAmount,
+        });
+      }
+      return;
+    }
+
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -269,22 +303,29 @@ const SendMoneyFormScreen: React.FC = () => {
       isShowCard: false,
     });
   };
-
+  const btnText =
+    from === TRANSFERTYPE.REQUEST_MONEY
+      ? localizationText.REQUEST_MONEY.SENT_REQUEST
+      : localizationText.COMMON.TRANSFER;
   return (
     <IPaySafeAreaView style={styles.container}>
       <>
         <IPayHeader
           backBtn
-          title={localizationText.HOME.SEND_MONEY}
+          title={heading}
           rightComponent={
-            <IPayPressable style={styles.history} onPress={history}>
-              <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-              <IPaySubHeadlineText
-                text={localizationText.WALLET_TO_WALLET.HISTORY}
-                regular
-                color={colors.primary.primary500}
-              />
-            </IPayPressable>
+            showHistory ? (
+              <IPayPressable style={styles.history} onPress={history}>
+                <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
+                <IPaySubHeadlineText
+                  text={localizationText.WALLET_TO_WALLET.HISTORY}
+                  regular
+                  color={colors.primary.primary500}
+                />
+              </IPayPressable>
+            ) : (
+              <IPayView />
+            )
           }
           applyFlex
         />
@@ -299,18 +340,35 @@ const SendMoneyFormScreen: React.FC = () => {
           />
 
           {getContactInfoText()}
-          <IPaySendMoneyForm
-            subtitle={selectedContacts[0].givenName}
-            openReason={openReason}
-            setAmount={handleAmountChange}
-            showRemoveFormOption={showRemoveFormOption}
-            addForm={addForm}
-            formInstances={formInstances}
-            notes=""
-            setNotes={handleNotesChange}
-            selectedItem={selectedItem}
-            setSelectedItem={setSelectedItem}
-          />
+          {from === TRANSFERTYPE.REQUEST_MONEY ? (
+            <IPaySendMoneyForm
+              showReason={false}
+              subtitle={selectedContacts[0].givenName}
+              openReason={openReason}
+              setAmount={handleAmountChange}
+              showRemoveFormOption={showRemoveFormOption}
+              addForm={addForm}
+              formInstances={formInstances}
+              notes=""
+              setNotes={handleNotesChange}
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+            />
+          ) : (
+            <IPaySendMoneyForm
+              showReason={true}
+              subtitle={selectedContacts[0].givenName}
+              openReason={openReason}
+              setAmount={handleAmountChange}
+              showRemoveFormOption={showRemoveFormOption}
+              addForm={addForm}
+              formInstances={formInstances}
+              notes=""
+              setNotes={handleNotesChange}
+              selectedItem={selectedItem}
+              setSelectedItem={setSelectedItem}
+            />
+          )}
           {!isKeyboardWillOpen && !isKeyboardOpen && (
             <IPayLinearGradientView style={styles.buttonBackground}>
               <IPayList
@@ -336,7 +394,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 medium
                 btnType="primary"
                 onPress={onConfirm}
-                btnText={localizationText.COMMON.TRANSFER_TEXT}
+                btnText={btnText}
               />
             </IPayLinearGradientView>
           )}

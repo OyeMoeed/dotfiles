@@ -162,38 +162,40 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                   style={styles.headlineText}
                 />
               </IPayView>
-              {formattedTransferDetails.map((item, index) => {
-                const { isAlinma, value } = item[0];
-                const isFirstItem = index === 0;
-                return (
-                  <IPayView key={value} style={styles.walletBackground}>
-                    {isFirstItem && !isAlinma && (
-                      <IPayView style={styles.chipContainer}>
-                        <IPayChip
-                          containerStyle={styles.chipColors}
-                          icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-                          textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
-                          headingStyles={styles.chipColors}
-                        />
-                      </IPayView>
-                    )}
-                    <IPayFlatlist
-                      style={styles.detailesFlex}
-                      scrollEnabled={false}
-                      data={item}
-                      renderItem={renderWallerPaymentItem}
-                    />
-                    <IPayPressable style={styles.newTopup}>
-                      <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                      <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-                    </IPayPressable>
-                  </IPayView>
-                );
-              })}
+              <IPayScrollView style={{ flex: 0 }} scrollEnabled>
+                {formattedTransferDetails.map((item, index) => {
+                  const { isAlinma, value } = item[0];
+                  const isFirstItem = index === 0;
+                  return (
+                    <IPayView key={value} style={styles.walletBackground}>
+                      {isFirstItem && !isAlinma && (
+                        <IPayView style={styles.chipContainer}>
+                          <IPayChip
+                            containerStyle={styles.chipColors}
+                            icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
+                            textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+                            headingStyles={styles.chipColors}
+                          />
+                        </IPayView>
+                      )}
+                      <IPayFlatlist
+                        style={styles.detailesFlex}
+                        scrollEnabled={true}
+                        data={item}
+                        renderItem={renderWallerPaymentItem}
+                      />
+                      <IPayPressable style={styles.newTopup}>
+                        <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
+                        <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
+                      </IPayPressable>
+                    </IPayView>
+                  );
+                })}
+              </IPayScrollView>
             </IPayView>
           </IPayShareableImageView>
 
-          <IPayView>
+          <IPayLinearGradientView style={styles.btnBackground}>
             {renderActionLabel()}
             <IPayButton
               large
@@ -204,7 +206,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
               onPress={onHome}
               textStyle={styles.btnStyle}
             />
-          </IPayView>
+          </IPayLinearGradientView>
         </IPayLinearGradientView>
       </IPayView>
       <IPayBottomSheet

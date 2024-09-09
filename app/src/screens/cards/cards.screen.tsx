@@ -34,6 +34,7 @@ import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import { CardScreenCurrentState } from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
+import { SNAP_POINTS } from '@app/constants/constants';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -304,7 +305,7 @@ const CardsScreen: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
         onCloseBottomSheet={closeCardSheet}
-        customSnapPoint={['20%', '70%']}
+        customSnapPoint={SNAP_POINTS.MID_MEDUIM}
         ref={cardSheetRef}
         enablePanDownToClose
         simpleHeader
