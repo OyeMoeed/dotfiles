@@ -422,7 +422,6 @@ const LocalTransferScreen: React.FC = () => {
   }, []);
   const onDeleteBeneficiary = async () => {
     const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
-    console.log('rea', apiResponse);
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       setDeleteBeneficiary(false);
