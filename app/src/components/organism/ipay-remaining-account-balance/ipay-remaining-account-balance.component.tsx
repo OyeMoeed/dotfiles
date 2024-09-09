@@ -20,7 +20,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   walletInfo,
   onPressAddCards,
   chipValue,
-  PayChannelType = PayChannel.ATM,
+  payChannelType = PayChannel.ATM,
   openPressExpired,
   currentState,
   handleCardSelect,
@@ -88,7 +88,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           }
         />
       )}
-      {!isMultipleOfHundred(Number(topUpAmount)) && PayChannelType === PayChannel.ATM && (
+      {!isMultipleOfHundred(Number(topUpAmount)) && payChannelType === PayChannel.ATM && (
         <IPayCaption2Text
           regular={false}
           text={localizationText.ATM.MULTIPLE_OF_HUNDERED}
@@ -111,7 +111,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
             />
           )}
           <IPayQuickActions
-            PayChannelType={PayChannelType}
+            payChannelType={payChannelType}
             setTopUpAmount={setTopUpAmount}
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
           />

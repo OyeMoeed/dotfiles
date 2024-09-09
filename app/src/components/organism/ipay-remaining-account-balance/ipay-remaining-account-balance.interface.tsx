@@ -11,7 +11,7 @@ interface IPayRemainingBalanceProps {
   defaultValue: string;
   walletInfoPress?: () => void;
   topUpPress?: () => void;
-  PayChannelType?: PayChannel;
+  payChannelType?: PayChannel;
   quickAction?: () => void;
   showHideBalanceOption?: boolean;
   showWalletOption?: boolean;

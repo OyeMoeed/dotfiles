@@ -53,7 +53,7 @@ const IPayToast: React.FC<IPayToastProps> = ({
   const bottonStyle = { bottom: verticalScale(isBottomSheet ? 105 : 40) };
   const textViewWidth: ViewStyle = { width: isShowRightIcon ? '80%' : '90%' };
 
-  const ToastTypestyles = useCallback(() => {
+  const toastTypeStyles = useCallback(() => {
     switch (toastType) {
       case ToastTypes.INFORMATION:
         return dynamicStyles.toastInformation;
@@ -72,7 +72,7 @@ const IPayToast: React.FC<IPayToastProps> = ({
         style={[
           dynamicStyles.constainer,
           bottonStyle,
-          ToastTypestyles(),
+          toastTypeStyles(),
           containerStyle,
           title && !subTitle ? dynamicStyles.onlyTitleContainer : null,
         ]}

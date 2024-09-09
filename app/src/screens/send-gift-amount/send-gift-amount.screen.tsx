@@ -224,7 +224,7 @@ const SendGiftAmountScreen = ({ route }) => {
       case localizationText.SEND_GIFT.EQUALLY:
         return (
           <IPayRemainingAccountBalance
-            PayChannelType={TransactionTypes.SEND_GIFT}
+            payChannelType={TransactionTypes.SEND_GIFT}
             currencyStyle={[styles.currencyText, topUpAmount && styles.inputActiveStyle]}
             defaultValue={defaultValue}
             showProgress={false}
@@ -239,7 +239,7 @@ const SendGiftAmountScreen = ({ route }) => {
       case localizationText.SEND_GIFT.SPLIT:
         return (
           <IPayRemainingAccountBalance
-            PayChannelType={TransactionTypes.SEND_GIFT}
+            payChannelType={TransactionTypes.SEND_GIFT}
             topUpAmount={topUpAmount}
             currencyStyle={[styles.currencyText, topUpAmount && styles.inputActiveStyle]}
             setTopUpAmount={setTopUpAmount}
