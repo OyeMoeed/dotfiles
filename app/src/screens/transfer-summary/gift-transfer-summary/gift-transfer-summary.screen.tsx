@@ -231,6 +231,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
       hideSpinner();
     } catch (error) {
+      setAPIError(error?.message);
       hideSpinner();
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -238,28 +239,33 @@ const TransferSummaryScreen: React.FC = () => {
 
   const verifyOtp = async () => {
     setIsLoading(true);
-    const payload: IW2WTransferConfirmReq = {
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      otp,
-      otpRef,
-      authentication: {
-        transactionId: transactionId as string,
-      },
-    };
-
-    const apiResponse = await walletToWalletTransferConfirm(walletInfo.walletNumber, payload);
-
-    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      if (apiResponse?.response) {
-        sendMoneyBottomSheetRef.current?.close();
-        navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
-          transferDetails: {
-            formData: transfersDetails.formInstances,
-            apiData: apiResponse?.response.transferRequestsResult,
-            selectedCard: giftDetails?.selectedCard,
-          },
-          totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
-        });
+    try {
+      const payload: IW2WTransferConfirmReq = {
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        otp,
+        otpRef,
+        authentication: {
+          transactionId: transactionId as string,
+        },
+      };
+      const apiResponse = await walletToWalletTransferConfirm(walletInfo.walletNumber, payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          sendMoneyBottomSheetRef.current?.close();
+          navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
+            transferDetails: {
+              formData: transfersDetails.formInstances,
+              apiData: apiResponse?.response?.transferRequestsResult,
+              selectedCard: giftDetails?.selectedCard,
+            },
+            totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
+          });
+          break;
+        case apiResponse?.apiResponseNotOk:
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        default:
+          break;
       }
       setIsLoading(false);
     } catch (error) {

@@ -25,7 +25,7 @@ const SendGiftCard = () => {
     COMMON: { NEXT },
   } = localizationText;
   const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS];
-  const styles = sendGiftCard();
+  const styles = sendGiftCard(colors);
 
   const [selectedTab, setSelectedTab] = useState<string>(SEND_GIFT_TABS[0]);
   const [selectedCard, setSelectedCard] = useState(carouselData[0] || {});
