@@ -7,29 +7,29 @@ import DynamicFieldRendererProps from './ipay-field-renderer.interface';
 
 const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control }) => {
   const renderField = () => {
+    // Replace "." with "_" to flatten the name
+    const flatKey = field.index.replace(/\./g, '_');
+
     switch (field.type) {
       case DYNAMIC_FIELDS_TYPES.TEXT:
       case DYNAMIC_FIELDS_TYPES.NUMBER:
         return (
           <Controller
-            name={field.index}
+            name={flatKey} // Use the flattened key
             control={control}
             render={({ field: { onChange, value }, formState: { errors } }) => {
-              const errorMessage = get(errors, `${field.index}.message`, '');
-
+              const errorMessage = get(errors, `${flatKey}.message`, '');
               return (
                 <IPayAnimatedTextInput
                   label={field.label}
                   value={value}
                   maxLength={field.maxWidth}
-                  onChangeText={(text) => {
-                    onChange(text);
-                  }}
+                  onChangeText={onChange}
                   keyboardType={field.type === DYNAMIC_FIELDS_TYPES.NUMBER ? 'number-pad' : 'default'}
-                  isError={!!get(errors, field.index)}
+                  isError={!!get(errors, flatKey)} // Use flattened key for errors
                   editable
                   assistiveText={errorMessage as string}
-                  testID={`${field.index}-text-input`}
+                  testID={`${flatKey}-text-input`}
                 />
               );
             }}

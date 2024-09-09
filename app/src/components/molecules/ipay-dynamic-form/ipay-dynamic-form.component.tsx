@@ -1,4 +1,4 @@
-import { IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayScrollView, IPayText, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
@@ -10,11 +10,28 @@ import dynamicFormoStyles from './ipay-dynamic-form.styles';
 import DynamicFieldRenderer from './ipay-field-renderer/ipay-field-renderer.component';
 
 const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, serviceId, walletNumber }) => {
-  const { fields, defaultValues, validationSchema } = useDynamicForm(billerId, serviceId, walletNumber);
+  const { fields, defaultValues, validationSchema, isLoading, revertFlatKeys } = useDynamicForm(
+    billerId,
+    serviceId,
+    walletNumber,
+  );
   const localization = useLocalization();
   const styles = dynamicFormoStyles();
 
-  const onSubmit = (data: any) => {};
+  const onSubmit = (data: any) => {
+    // Api Returns nested object , which we first convert to flat object and handles everything
+    // then revert it back to origional state
+    const originalData = revertFlatKeys(data);
+    return originalData;
+  };
+
+  if (isLoading) {
+    return (
+      <IPayView>
+        <IPayText>Loading...</IPayText>
+      </IPayView>
+    );
+  }
 
   return (
     <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
