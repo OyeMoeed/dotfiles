@@ -1,25 +1,28 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
+import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
 import localBeneficiaryMetaDataMock from './local-beneficiary-metadata';
+import LocalBeneficiaryMetaMockProps from './local-beneficiary-metadata.interface';
 
-const getlocalBeneficiaryMetaData = async (): Promise<unknown> => {
+const getlocalBeneficiaryMetaData = async (): Promise<LocalBeneficiaryMetaMockProps> => {
   if (constants.MOCK_API_RESPONSE) {
     return localBeneficiaryMetaDataMock;
   }
   try {
-    const apiResponse = await apiCall({
+    const apiResponse: ApiResponse<LocalBeneficiaryMetaMockProps> = await apiCall({
       endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries_metadata(),
       method: requestType.GET,
     });
 
-    if (apiResponse?.ok) {
-      return apiResponse;
+    if (apiResponse?.response?.ok) {
+      return apiResponse?.response;
     }
-    return { apiResponseNotOk: true };
+    return { apiResponseNotOk: true, apiResponse };
   } catch (error) {
-    return { error: error.message || 'Unknown error' };
+    const { response } = error;
+    return response || 'Unknown error';
   }
 };
 
