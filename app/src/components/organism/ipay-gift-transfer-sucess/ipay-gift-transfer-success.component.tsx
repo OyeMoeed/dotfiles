@@ -21,6 +21,7 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
 import { copyText } from '@app/utilities/clip-board.util';
@@ -137,6 +138,8 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     </IPayView>
   );
 
+  // to chnage text color on basis of card theme.
+  const isDarkCard = darkCards.includes(transferDetails?.selectedCard?.id);
   return (
     <IPayView style={styles.container}>
       <IPayView style={styles.contentContainer}>
@@ -219,17 +222,21 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
       >
         <IPayView style={styles.bottomSheetContainer}>
           <IPayView style={[styles.previewContainer, { backgroundColor: transferDetails?.selectedCard?.bgColor }]}>
-            <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
+            <IPayImage image={isDarkCard ? images.textLogoLight : images.logo} style={styles.smallAlinmaLogo} />
             <IPayLottieAnimation source={transferDetails?.selectedCard?.path ?? ''} style={styles.image} loop />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
               <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
             </IPayView>
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText color={colors.primary.primary950} style={styles.messagePreviewText} text={notes} />
+              <IPayFootnoteText
+                color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
+                style={styles.messagePreviewText}
+                text={notes}
+              />
             </IPayScrollView>
             <IPayFootnoteText
-              color={colors.primary.primary950}
+              color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
               style={styles.messagePreviewText}
               text={`${localizationText.SEND_GIFT.FROM}: ${name}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}

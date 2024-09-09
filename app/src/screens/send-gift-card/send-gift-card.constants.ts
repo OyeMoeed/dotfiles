@@ -17,77 +17,79 @@ import colors from '@app/styles/colors.const';
 import { GiftsCardDataProps, GiftTypes } from './send-gift-card.interface';
 
 const giftsCardData: GiftsCardDataProps = {
-  eidGiftList: [
+  eidGiftList: (themeColors: typeof colors) => [
     {
-      bgColor: colors.primary.primary950,
+      bgColor: themeColors.primary.primary950,
       path: eidCard1,
       id: GiftTypes.Eid_1,
     },
     {
-      bgColor: colors.backgrounds.yellowish,
+      bgColor: themeColors.backgrounds.yellowish,
       path: eidCard2,
       id: GiftTypes.Eid_2,
     },
     {
-      bgColor: colors.primary.primary650,
+      bgColor: themeColors.primary.primary650,
       path: eidCard3,
       id: GiftTypes.Eid_3,
     },
     {
-      bgColor: colors.backgrounds.lightRed,
+      bgColor: themeColors.backgrounds.lightRed,
       path: eidCard4,
       id: GiftTypes.Eid_4,
     },
   ],
-  birthdayGiftList: [
+  birthdayGiftList: (themeColors: typeof colors) => [
     {
-      bgColor: colors.backgrounds.lightPurple,
+      bgColor: themeColors.backgrounds.lightPurple,
       path: birthdayCard1,
       id: GiftTypes.Birthday_1,
     },
     {
-      bgColor: colors.backgrounds.mildRed,
+      bgColor: themeColors.backgrounds.mildRed,
       path: birthdayCard2,
       id: GiftTypes.Birthday_2,
     },
     {
-      bgColor: colors.backgrounds.mildBlue,
+      bgColor: themeColors.backgrounds.mildBlue,
       path: birthdayCard3,
       id: GiftTypes.Birthday_3,
     },
     {
-      bgColor: colors.backgrounds.skin,
+      bgColor: themeColors.backgrounds.skin,
       path: birthdayCard4,
       id: GiftTypes.Birthday_4,
     },
     {
-      bgColor: colors.backgrounds.yellow,
+      bgColor: themeColors.backgrounds.yellow,
       path: birthdayCard5,
       id: GiftTypes.Birthday_5,
     },
   ],
-  congratulationsGiftList: [
+  congratulationsGiftList: (themeColors: typeof colors) => [
     {
-      bgColor: colors.backgrounds.purpleBlue,
+      bgColor: themeColors.backgrounds.purpleBlue,
       path: congratulationsCard1,
       id: GiftTypes.Congrat_1,
     },
     {
-      bgColor: colors.backgrounds.mildPurple,
+      bgColor: themeColors.backgrounds.mildPurple,
       path: congratulationsCard2,
       id: GiftTypes.Congrat_2,
     },
     {
-      bgColor: colors.backgrounds.lightBlue,
+      bgColor: themeColors.backgrounds.lightBlue,
       path: congratulationsCard3,
       id: GiftTypes.Congrat_3,
     },
     {
-      bgColor: colors.backgrounds.palePink,
+      bgColor: themeColors.backgrounds.palePink,
       path: congratulationsCard4,
       id: GiftTypes.Congrat_4,
     },
   ],
 };
 
-export default giftsCardData;
+const darkCards: string[] = [GiftTypes.Eid_1];
+
+export { darkCards, giftsCardData };
