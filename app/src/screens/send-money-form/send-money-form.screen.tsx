@@ -170,7 +170,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const getSelectedItem = () => {
     const selectedObject = formInstances?.find((item) => item?.id === selectedId);
-    return selectedObject?.selectedItem;
+    return selectedObject?.selectedItem?.text;
   };
 
   const isTransferButtonDisabled = () => {
@@ -331,7 +331,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 dailySpendingLimit={Number(dailyOutgoingLimit)}
               />
               <IPayButton
-                disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
+                disabled={isTransferButtonDisabled() || !totalAmount || !!warningStatus}
                 btnIconsDisabled
                 medium
                 btnType="primary"
