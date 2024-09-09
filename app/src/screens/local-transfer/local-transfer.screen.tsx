@@ -180,9 +180,9 @@ const LocalTransferScreen: React.FC = () => {
     try {
       const apiResponse = await editLocalTransferBeneficiary(
         selectedBeneficiaryRef.current?.beneficiaryCode,
-        ,activateBeneficiaryPayload,
+        activateBeneficiaryPayload,
       );
-      
+
       if (ApiResponseStatusType.SUCCESS) {
         showUpdateBeneficiaryToast();
         editNickNameSheetRef?.current?.close();
