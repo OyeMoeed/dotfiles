@@ -44,7 +44,6 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
-      case MoneyRequestStatus.INITIATED:
         return {
           color: colors.critical.critical800,
           text: localizationText.REQUEST_MONEY.PENDING,

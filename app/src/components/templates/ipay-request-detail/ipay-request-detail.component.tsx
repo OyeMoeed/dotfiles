@@ -30,7 +30,7 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import SummaryType from '@app/enums/summary-type';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
-import { typeFieldMapping } from './ipay-request-detail.constant';
+import { getTypeFieldMapping, typeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
 
 const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
@@ -90,7 +90,6 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
-      case MoneyRequestStatus.INITIATED:
         return {
           color: colors.critical.critical800,
           text: localizationText.REQUEST_MONEY.PENDING,
@@ -179,12 +178,12 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
             </IPayView>
             {transaction &&
               Object.keys(transaction)
-                .filter((key) => typeFieldMapping[transaction.status].includes(key))
+                .filter((key) => getTypeFieldMapping(transaction.status, transaction.type).includes(key))
                 .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
           </IPayView>
           <IPayView style={styles.buttonWrapper}>
             {transaction?.type === TransactionOperations.CREDIT &&
-              (transaction.status === MoneyRequestStatus.PENDING || MoneyRequestStatus.INITIATED) && (
+              transaction.status === MoneyRequestStatus.PENDING && (
                 <IPayButton
                   btnType="outline"
                   onPress={onPressCancel}
@@ -194,28 +193,27 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                   leftIcon={<IPayIcon icon={icons.remove} size={18} color={colors.primary.primary500} />}
                 />
               )}
-            {transaction?.type === TransactionOperations.DEBIT &&
-              (transaction.status === MoneyRequestStatus.PENDING || MoneyRequestStatus.INITIATED) && (
-                <>
-                  <IPayButton
-                    btnType={buttonVariants.PRIMARY}
-                    onPress={onPressPay}
-                    btnText={localizationText.REQUEST_MONEY.PAY}
-                    large
-                    btnIconsDisabled
-                    btnStyle={styles.button}
-                  />
-                  <IPayButton
-                    btnType="outline"
-                    onPress={showActionSheet}
-                    btnText={localizationText.REQUEST_MONEY.REJECT}
-                    large
-                    btnIconsDisabled
-                    btnStyle={styles.rejectButton}
-                    textColor={colors.error.error500}
-                  />
-                </>
-              )}
+            {transaction?.type === TransactionOperations.DEBIT && transaction.status === MoneyRequestStatus.PENDING && (
+              <>
+                <IPayButton
+                  btnType={buttonVariants.PRIMARY}
+                  onPress={onPressPay}
+                  btnText={localizationText.REQUEST_MONEY.PAY}
+                  large
+                  btnIconsDisabled
+                  btnStyle={styles.button}
+                />
+                <IPayButton
+                  btnType="outline"
+                  onPress={showActionSheet}
+                  btnText={localizationText.REQUEST_MONEY.REJECT}
+                  large
+                  btnIconsDisabled
+                  btnStyle={styles.rejectButton}
+                  textColor={colors.error.error500}
+                />
+              </>
+            )}
           </IPayView>
         </>
       </IPayScrollView>

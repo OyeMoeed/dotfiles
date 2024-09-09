@@ -1,9 +1,8 @@
 export enum MoneyRequestStatus {
-  CANCEL = 'cancel',
-  PAID = 'paid',
-  PENDING = 'pending',
+  CANCEL = 'cancelled',
+  PAID = 'executed',
+  PENDING = 'initiated',
   REJECTED = 'rejected',
-  INITIATED = 'initiated',
 }
 
 export enum KeysToProcess {

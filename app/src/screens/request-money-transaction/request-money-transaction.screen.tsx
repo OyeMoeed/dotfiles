@@ -233,7 +233,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           ref_number: item.realTransactionRefNumber,
         };
       case MoneyRequestStatus.PENDING:
-      case MoneyRequestStatus.INITIATED:
         return {
           ...baseMapping,
           ref_number: item.realTransactionRefNumber,
@@ -244,8 +243,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           rejection_date: item.rejection_date,
           ref_number: item.realTransactionRefNumber,
         };
-      case MoneyRequestStatus.INITIATED:
-        return baseMapping;
       default:
         return baseMapping;
     }
