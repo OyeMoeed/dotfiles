@@ -11,6 +11,8 @@ return {
       window = {
         width = 25, -- Set the width of the Neo-Tree window
       },
+      visible = true,
+      hide_dotfiles = false,
     })
 
     vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
