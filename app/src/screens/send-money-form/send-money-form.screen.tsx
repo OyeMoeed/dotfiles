@@ -212,7 +212,7 @@ const SendMoneyFormScreen: React.FC = () => {
       })),
     };
     const apiResponse = await getWalletToWalletFees(userInfo.walletNumber as string, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
         data: {

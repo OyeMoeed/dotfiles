@@ -84,7 +84,7 @@ const useLogin = () => {
     };
     const validateOtpRes = await validateForgetPasscodeOtp(body);
 
-    if (validateOtpRes.status.type === 'SUCCESS') {
+    if (validateOtpRes) {
       onCallbackHandle({
         nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE,
         data: { otp, walletNumber: validateOtpRes?.response?.walletNumber },

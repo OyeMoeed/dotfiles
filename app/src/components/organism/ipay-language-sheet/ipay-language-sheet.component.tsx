@@ -42,7 +42,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
     };
     const apiResponse: any = await changeLanguage(payLoad);
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
+    if (apiResponse) {
       handleLanguagePress(language, isRTL, code);
     }
   };

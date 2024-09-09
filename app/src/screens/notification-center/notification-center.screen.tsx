@@ -128,8 +128,13 @@ const NotificationCenterScreen: React.FC = () => {
 
     const apiResponse = await deleteSingleNotification(payload);
 
+    if (apiResponse) {
+      setNotifications((prevNotifications) =>
+        prevNotifications?.filter((notification) => notification.messageId !== id),
+      );
+    }
+
     renderSpinner(false);
-    setNotifications((prevNotifications) => prevNotifications?.filter((notification) => notification.messageId !== id));
     return apiResponse;
   };
 

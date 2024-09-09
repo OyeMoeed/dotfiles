@@ -111,8 +111,17 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
     const apiResponse: any = await setPasscode(payload, dispatch);
 
-    if (apiResponse.status.type === 'SUCCESS') {
-      getWalletInformation(apiResponse?.response?.walletNumber);
+    if (apiResponse) {
+      const walletNumber = apiResponse?.response?.walletNumber;
+      dispatch(
+        setAppData({
+          isLinkedDevice: true,
+        }),
+      );
+      dispatch(setWalletInfo({ walletNumber }));
+      // TODO: replace with real user data
+      dispatch(setUserInfo({ fullName: 'Alinma', firstName: 'Pay' }));
+      navigate(screenNames.REGISTRATION_SUCCESSFUL);
     }
 
     renderSpinner(false);

@@ -242,9 +242,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       fromDate: '',
       toDate: '',
     };
+
     const apiResponse: any = await getTransactions(payload);
 
-    setTransactionsData(apiResponse?.response?.transactions);
+    if (apiResponse) {
+      setTransactionsData(apiResponse?.response?.transactions);
+    }
     renderSpinner(false);
   };
 

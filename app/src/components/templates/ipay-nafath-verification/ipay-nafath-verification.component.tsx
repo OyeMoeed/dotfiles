@@ -180,7 +180,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     };
     const apiResponse = await updateWalletTierReq(body);
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       const updatedValues = {
         walletTier: 'G',
         poiNumber: nafathObj.idNumber,

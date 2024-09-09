@@ -85,7 +85,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       deviceInfo: appData.deviceInfo,
     } as PrepareForgetPasscodeProps;
     const apiResponse: any = await prepareForgetPasscode(payload);
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS && onCallback) {
+    if (apiResponse && onCallback) {
       const { otpRef, walletNumber } = apiResponse?.data?.response || {};
       dispatch(setAppData({ otpRef, walletNumber }));
       onCallback({
@@ -98,8 +98,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         },
       });
     }
-
-    Keyboard.dismiss();
   };
 
   const prepareEncryptionData = async (iqamaId: string) => {

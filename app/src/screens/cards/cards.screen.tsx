@@ -182,7 +182,7 @@ const CardsScreen: React.FC = () => {
     const apiResponse: any = await getCards(payload);
     renderSpinner(false);
 
-    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+    if (apiResponse) {
       const availableCards = apiResponse?.response?.cards.filter(
         (card: any) =>
           card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||

@@ -142,7 +142,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse?.status.type === 'SUCCESS') {
+    if (apiResponse) {
       if (apiResponse?.response?.lovInfo) {
         setCities(
           apiResponse?.response?.lovInfo.map((item) => ({

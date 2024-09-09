@@ -95,13 +95,14 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     };
 
     const apiResponse = await getLov(payload);
-    if (apiResponse?.status.type === 'SUCCESS') {
+    if (apiResponse) {
       setOccupationLov(apiResponse?.response?.lovInfo as LovInfo[]);
       setValue(
         'occupation',
         apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
       );
     }
+    
     renderSpinner(false);
   };
 

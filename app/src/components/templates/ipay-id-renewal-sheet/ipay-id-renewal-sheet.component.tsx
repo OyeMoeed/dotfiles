@@ -91,7 +91,7 @@ const IPayIdRenewalSheet: React.FC = () => {
       renderSpinner(true);
       const apiResponse: any = await prepareRenewId(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse) {
         setOTPRef(apiResponse?.response?.otpRef);
         setRenewId(true);
         setCustomSnapPoints(['95%', '95%']);

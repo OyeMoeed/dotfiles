@@ -106,7 +106,10 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     };
 
     const apiResponse: any = await getTopupCards(payload);
-    await setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
+
+    if (apiResponse) {
+      await setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
+    }
 
     renderSpinner(false);
   };

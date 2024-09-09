@@ -104,19 +104,21 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     const apiResponse: any = await topupCheckout(payload);
 
-    const paymentGateway = apiResponse?.response?.paymentGateway;
-    setRedirectUrl(apiResponse?.response?.redirectUrl);
-    if (paymentGateway === 'CLICKPAY') {
-      navigate(screenNames.CARD_VERIFICATION, {
-        redirectUrl: apiResponse?.response?.redirectUrl,
-        transactionRefNumber: apiResponse?.response?.transactionRefNumber,
-        paymentGateway,
-      });
-    } else {
-      navigate(screenNames.CARD_VERIFICATION, {
-        redirectUrl: apiResponse?.response?.redirectUrl,
-        paymentGateway,
-      });
+    if (apiResponse) {
+      const paymentGateway = apiResponse?.response?.paymentGateway;
+      setRedirectUrl(apiResponse?.response?.redirectUrl);
+      if (paymentGateway === 'CLICKPAY') {
+        navigate(screenNames.CARD_VERIFICATION, {
+          redirectUrl: apiResponse?.response?.redirectUrl,
+          transactionRefNumber: apiResponse?.response?.transactionRefNumber,
+          paymentGateway,
+        });
+      } else {
+        navigate(screenNames.CARD_VERIFICATION, {
+          redirectUrl: apiResponse?.response?.redirectUrl,
+          paymentGateway,
+        });
+      }
     }
 
     renderSpinner(false);

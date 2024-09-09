@@ -102,7 +102,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
       };
       const validateOtpRes = await validateForgetPasscodeOtp(body);
-      if (validateOtpRes.status.type === 'SUCCESS') {
+      if (validateOtpRes?.status?.type === 'SUCCESS') {
         if (onCallback) {
           onCallback({
             nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE,

@@ -94,7 +94,7 @@ const LoginViaPasscode: React.FC = () => {
 
   const { fetchLocation } = useLocation();
 
-  const renderToast = (apiError : string) => {
+  const renderToast = (apiError: string) => {
     setPasscodeError(true);
     showToast({
       title: localizationText.COMMON.INCORRECT_CODE,
@@ -197,7 +197,7 @@ const LoginViaPasscode: React.FC = () => {
 
     const apiResponse: any = await getWalletInfo(payload);
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
       saveProfileImage(apiResponse?.response);
       redirectToHome(idExpired);

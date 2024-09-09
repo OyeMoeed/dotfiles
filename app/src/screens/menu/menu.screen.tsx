@@ -76,7 +76,7 @@ const MenuScreen: FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       hideLogout();
       clearSession(false);
     }

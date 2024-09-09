@@ -45,7 +45,7 @@ const getOffers = async (payload: GetOffersPayload): Promise<OffersResponseDetai
     return getOffersMock;
   }
 
-  const apiResponse: OffersResponseDetails = await apiCall({
+  const apiResponse: any = await apiCall({
     endpoint: getQueryURL(
       CORE_URLS.GET_HOME_OFFERS(payload.walletNumber),
       payload.offset,

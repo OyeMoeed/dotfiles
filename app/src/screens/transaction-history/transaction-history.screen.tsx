@@ -207,7 +207,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     };
     const apiResponse: any = await getCards(payload);
 
-    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+    if (apiResponse) {
       setCardssData(apiResponse?.response?.cards);
     }
 

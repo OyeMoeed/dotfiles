@@ -202,7 +202,7 @@ const Home: React.FC = () => {
       walletNumber: walletNumber as string,
     };
     const apiResponse: any = await getWalletInfo(payload);
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
     }
   };
