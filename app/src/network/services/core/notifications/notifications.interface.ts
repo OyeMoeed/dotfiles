@@ -40,10 +40,10 @@ interface GetAllRetainedMessagesMockProps extends MockAPIOkProp {
   status: MockAPIStatusProps; // Include status directly
 }
 
-//* ******************ReadSingleNotification****************************//
+//* ******************ReadNotification****************************//
 
-// Define the ReadSingleNotificationPayload interface
-interface ReadSingleNotificationPayload {
+// Define the ReadNotificationPayload interface
+interface ReadNotificationPayload {
   deviceInfo: {
     platformVersion: string;
     deviceId: string;
@@ -53,23 +53,23 @@ interface ReadSingleNotificationPayload {
   messageIds: string[];
 }
 
-// Define the ReadSingleNotificationResponse interface that extends MockAPIDataProps
-interface ReadSingleNotificationResponse extends MockAPIDataProps {
+// Define the ReadNotificationResponse interface that extends MockAPIDataProps
+interface ReadNotificationResponse extends MockAPIDataProps {
   response: {};
   successfulResponse: boolean;
   status: MockAPIStatusProps;
 }
 
-// Extend the ReadSingleNotificationMockProps interface from ReadSingleNotificationResponse and MockAPIOkProp
-interface ReadSingleNotificationMockProps extends MockAPIOkProp {
-  response: ReadSingleNotificationResponse['response']; // Adjust to directly reference 'data' without nesting it again
-  successfulResponse: ReadSingleNotificationResponse['successfulResponse']; // Include successfulResponse directly
+// Extend the ReadNotificationMockProps interface from ReadNotificationResponse and MockAPIOkProp
+interface ReadNotificationMockProps extends MockAPIOkProp {
+  response: ReadNotificationResponse['response']; // Adjust to directly reference 'data' without nesting it again
+  successfulResponse: ReadNotificationResponse['successfulResponse']; // Include successfulResponse directly
   status: MockAPIStatusProps; // Include status directly
 }
 
-//* ******************DeleteSingleNotification****************************//
+//* ******************DeleteNotification****************************//
 
-// Define the DeleteSingleNotificationResponse interface that extends MockAPIDataProps
+// Define the DeleteNotificationResponse interface that extends MockAPIDataProps
 interface DeleteSingleNotificationResponse extends MockAPIDataProps {
   response: {};
   successfulResponse: boolean;
@@ -88,9 +88,9 @@ export {
   WalletNumberProp,
   GetAllRetainedMessagesDetails,
   GetAllRetainedMessagesItem,
-  ReadSingleNotificationPayload,
-  ReadSingleNotificationResponse,
-  ReadSingleNotificationMockProps,
+  ReadNotificationPayload,
+  ReadNotificationResponse,
+  ReadNotificationMockProps,
   DeleteSingleNotificationResponse,
   DeleteSingleNotificationMockProps,
 };

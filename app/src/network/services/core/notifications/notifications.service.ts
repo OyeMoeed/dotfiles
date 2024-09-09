@@ -1,11 +1,7 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import { WalletNumberProp } from './notifications.interface';
-import {
-  deleteSingleNotificationMock,
-  getAllRetainedMessagesMock,
-  readSingleNotificationsMock,
-} from './notifications.mock';
+import { deleteSingleNotificationMock, getAllRetainedMessagesMock, readNotificationsMock } from './notifications.mock';
 import apiCall from '../../api-call.service';
 import CORE_URLS from '../core.urls';
 import { DeviceInfoProps } from '../../services.interface';
@@ -36,7 +32,7 @@ const getAllRetainedMessages = async (payload: WalletNumberProp): Promise<unknow
 };
 
 /**
- * Marks a single notification as read for a given wallet number.
+ * Marks a notification as read for a given wallet number.
  *
  * @param {Object} payload - The payload containing the wallet number and API payload.
  * @param {string} payload.walletNumber - The wallet number.
@@ -45,7 +41,7 @@ const getAllRetainedMessages = async (payload: WalletNumberProp): Promise<unknow
  * @param {string[]} payload.apiPayload.messageIds - The message IDs to mark as read.
  * @returns {Promise<unknown>} - A promise that resolves to the API response or mock data.
  */
-const readSingleNotification = async (payload: {
+const readNotification = async (payload: {
   walletNumber: string;
   apiPayload: {
     deviceInfo: DeviceInfoProps;
@@ -53,7 +49,7 @@ const readSingleNotification = async (payload: {
   };
 }): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
-    return readSingleNotificationsMock;
+    return readNotificationsMock;
   }
   try {
     const apiResponse: any = await apiCall({
@@ -98,4 +94,4 @@ const deleteSingleNotification = async (payload: { walletNumber: string; message
   }
 };
 
-export { getAllRetainedMessages, readSingleNotification, deleteSingleNotification };
+export { getAllRetainedMessages, readNotification, deleteSingleNotification };

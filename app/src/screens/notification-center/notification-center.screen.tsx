@@ -17,7 +17,7 @@ import { spinnerVariant } from '@app/utilities/enums.util';
 import {
   deleteSingleNotification,
   getAllRetainedMessages,
-  readSingleNotification,
+  readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -76,7 +76,7 @@ const NotificationCenterScreen: React.FC = () => {
   const pendingNotificationsCount = pendingNotifications.length;
   const hasPendingRequest = pendingNotificationsCount > 0;
   const hasNotifications = notifications.length > 0;
-  const unreadNotificationCount = 1;
+  const unreadNotificationCount = notifications.filter((notification) => !notification.read).length;
 
   const styles = getNotificationCenterStyles(colors);
 
@@ -144,6 +144,39 @@ const NotificationCenterScreen: React.FC = () => {
   };
 
   /**
+   * Handle mark all as read
+   * @param id - Notification ID
+   */
+  const handleAllMarkAsRead = async () => {
+    renderSpinner(true);
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      apiPayload: {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        messageIds: [],
+      },
+    };
+
+    try {
+      const apiResponse = await readNotification(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        renderSpinner(false);
+        // mark the notification as read
+        setNotifications((prevNotifications) =>
+          prevNotifications?.map((notification) => ({ ...notification, read: true })),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
+      renderSpinner(false);
+
+      return { error: error.message || 'Unknown error' };
+    }
+  };
+
+  /**
    * Handle mark as read
    * @param id - Notification ID
    */
@@ -158,7 +191,7 @@ const NotificationCenterScreen: React.FC = () => {
     };
 
     try {
-      const apiResponse = await readSingleNotification(payload);
+      const apiResponse = await readNotification(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
         renderSpinner(false);
@@ -271,9 +304,15 @@ const NotificationCenterScreen: React.FC = () => {
             subTextColor={colors.primary.primary500}
             showDotBeforeSubtext
             leftText={localization.NOTIFICATION_CENTER.NOTIFICATIONS}
-            subText={`${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}`}
+            subText={
+              unreadNotificationCount > 0
+                ? `${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}`
+                : undefined
+            }
             rightText={localization.NOTIFICATION_CENTER.READ_ALL}
+            onRightOptionPress={handleAllMarkAsRead}
           />
+
           <IPayTabs
             scrollEnabled
             scrollable
