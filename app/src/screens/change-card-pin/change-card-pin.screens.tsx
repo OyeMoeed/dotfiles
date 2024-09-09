@@ -28,11 +28,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
   const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const [apiError, setAPIError] = useState<string>('');
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   const getTitle = () => {
     switch (currentView) {
@@ -97,17 +93,6 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
   
 
 
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
   
 
   const renderToast = (toastMsg: string) => {
@@ -120,53 +105,6 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
     });
   };
 
-  const isExist = (checkStr: string | undefined) => checkStr || '';
-  
-  const resetPassCode = async (enteredCode:string) => {
-    renderSpinner(true);
-    try {
-      const payload: resetPinCodeProp = {
-        walletNumber,
-        cardIndex: currentCard?.cardIndex,
-        body:{
-          cardPinCode: encryptData(
-            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + enteredCode,
-            isExist(appData?.encryptionData?.passwordEncryptionKey),
-          ) || '',
-          deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        }
-      };
-      const apiResponse: any = await resetPinCode(payload);
-      renderSpinner(false);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setClearPin((prev) => !prev);
-          if (onSuccess) {
-            onSuccess();
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setPasscodeError(true);
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setPasscodeError(true);
-          renderToast(apiResponse?.error);
-          break;
-        default:
-
-          setPasscodeError(true);
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-      }
-
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  }
 
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
@@ -208,22 +146,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
       default:
     }
   };
-
-  function onCloseBottomSheet(): void {
-    throw new Error('Function not implemented.');
-  }
-
-  function onConfirmOtp(): void {
-    throw new Error('Function not implemented.');
-  }
-
-  function handleOnPressHelp(): void {
-    throw new Error('Function not implemented.');
-  }
-
-  function onResendCodePress(): void {
-    throw new Error('Function not implemented.');
-  }
+  
 
   return (
     <IPayView style={styles.container}>
