@@ -264,10 +264,16 @@ interface Filter {
   icon?: string;
 }
 enum GiftCardStatus {
-  OPENED = 'Opened',
-  UNOPENED = 'Unopened',
-  EXPIRED = 'Expired',
+  OPENED = 'opened',
+  UNOPENED = 'unopened',
+  EXPIRED = 'expired',
 }
+
+enum GiftCardDetailsKey {
+  AMOUNT = 'amount',
+  REF_NUMBER = 'refNumber',
+}
+
 enum ApiResponseStatusType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
@@ -315,8 +321,7 @@ export {
   CardTypesCodes,
   Filter,
   FilterValue,
-  FiltersType,
-  GiftCardStatus,
+  FiltersType, GiftCardDetailsKey, GiftCardStatus,
   IdRenewalState,
   InfoTypes,
   LanguageCode,

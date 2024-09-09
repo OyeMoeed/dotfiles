@@ -157,7 +157,7 @@ const LoginViaPasscode: React.FC = () => {
 
     const apiResponse = await forgetPasscode(payload);
 
-    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
@@ -186,16 +186,15 @@ const LoginViaPasscode: React.FC = () => {
     }
   };
 
-  const getWalletInformation = async (idExpired?: boolean) => {
+  const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
     renderSpinner(true);
-
     const payload: WalletNumberProp = {
-      walletNumber: walletNumber as string,
+      walletNumber: resWalletNumber as string,
     };
 
     const apiResponse: any = await getWalletInfo(payload);
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
       saveProfileImage(apiResponse?.response);
       redirectToHome(idExpired);
@@ -232,7 +231,7 @@ const LoginViaPasscode: React.FC = () => {
         }),
       );
       saveProfileImage(loginApiResponse?.response);
-      await getWalletInformation(loginApiResponse?.response?.idExpired);
+      await getWalletInformation(loginApiResponse?.response?.idExpired, loginApiResponse?.response?.walletNumber);
     }
   };
 
@@ -309,13 +308,10 @@ const LoginViaPasscode: React.FC = () => {
       const apiResponse: any = await deviceDelink(payload);
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
-      } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 

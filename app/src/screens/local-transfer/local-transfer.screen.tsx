@@ -66,7 +66,7 @@ const LocalTransferScreen: React.FC = () => {
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const isKeyoardOpen = useKeyboardStatus();
+  const isKeyboardOpen = useKeyboardStatus();
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
@@ -584,7 +584,7 @@ const LocalTransferScreen: React.FC = () => {
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={isIosOS && isKeyoardOpen ? SNAP_POINTS.MID_LARGE : SNAP_POINTS.SMALL}
+        customSnapPoint={['1%', isIosOS && isKeyboardOpen ? '63%' : '35%']}
         ref={editNickNameSheetRef}
       >
         <IPayView style={styles.editStyles}>

@@ -26,33 +26,24 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
   const localizationText = useLocalization();
   const handleLanguagePress = useLanguageChange(handleClosePress);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const [apiError, setAPIError] = useState<string>('');
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const changeLangugae = async (language: string, isRTL: boolean, code: LanguageCode) => {
-    try {
-      const deviceInfo = await getDeviceInfo();
+    const deviceInfo = await getDeviceInfo();
 
-      const payLoad: ChangeLangPayloadProps = {
-        walletNumber: walletNumber,
-        body: {
-          userContactInfo: {
-            preferedLanguage: code,
-          },
-          deviceInfo: deviceInfo,
+    const payLoad: ChangeLangPayloadProps = {
+      walletNumber,
+      body: {
+        userContactInfo: {
+          preferedLanguage: code,
         },
-      };
-      const apiResponse: any = await changeLanguage(payLoad);
+        deviceInfo,
+      },
+    };
+    const apiResponse: any = await changeLanguage(payLoad);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        handleLanguagePress(language, isRTL, code);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    if (apiResponse) {
+      handleLanguagePress(language, isRTL, code);
     }
   };
 

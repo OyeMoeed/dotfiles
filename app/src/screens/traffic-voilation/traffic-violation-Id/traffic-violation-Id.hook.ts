@@ -39,25 +39,9 @@ const useTrafficViolation = () => {
   const localizationText = useLocalization();
 
   const getTrafficVoilationData = async () => {
-    try {
-      const apiResponse: any = await getTrafficViolationData();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          const bills = apiResponse?.response?.trafficViolationList;
-          setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+    const apiResponse: any = await getTrafficViolationData();
+    const bills = apiResponse?.response?.trafficViolationList;
+    setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
   };
   useEffect(() => {
     getTrafficVoilationData();
