@@ -10,8 +10,11 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { BillProps, GetSadadBillProps } from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.interface';
-import getSadadBills from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.service';
+import {
+  BillProps,
+  GetSadadBillProps,
+} from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
+import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
 import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';

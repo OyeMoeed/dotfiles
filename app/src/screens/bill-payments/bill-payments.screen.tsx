@@ -7,8 +7,11 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { BillProps, GetSadadBillProps } from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.interface';
-import getSadadBills from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.service';
+import {
+  BillProps,
+  GetSadadBillProps,
+} from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
+import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, BillPaymentOptions, BillStatus, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
