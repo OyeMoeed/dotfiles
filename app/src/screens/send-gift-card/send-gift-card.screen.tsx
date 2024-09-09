@@ -16,7 +16,7 @@ import sendGiftCard from './send-gift-card.style';
 
 const SendGiftCard = () => {
   const { colors } = useTheme();
-  const [carouselData, setCarouselData] = useState<GiftDetails[]>(giftsCardData?.eidGiftList(colors));
+  const [carouselData, setCarouselData] = useState<GiftDetails[]>(giftsCardData?.eid(colors));
 
   const localizationText = useLocalization();
 
@@ -34,13 +34,13 @@ const SendGiftCard = () => {
     setSelectedTab(tab);
     switch (tab) {
       case EIYDIAH:
-        return setCarouselData(giftsCardData?.eidGiftList(colors));
+        return setCarouselData(giftsCardData?.eid(colors));
       case BIRTHDAY:
-        return setCarouselData(giftsCardData?.birthdayGiftList(colors));
+        return setCarouselData(giftsCardData?.birthday(colors));
       case CONGRATULATIONS:
-        return setCarouselData(giftsCardData?.congratulationsGiftList(colors));
+        return setCarouselData(giftsCardData?.congrat(colors));
       default:
-        return setCarouselData(giftsCardData?.eidGiftList(colors));
+        return setCarouselData(giftsCardData?.eid(colors));
     }
   };
 

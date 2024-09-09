@@ -44,9 +44,9 @@ interface GiftDetails {
 
 // Define the interface for the entire giftsCardData object
 interface GiftsCardDataProps {
-  eidGiftList: (themeColors: typeof colors) => GiftDetails[];
-  birthdayGiftList: (themeColors: typeof colors) => GiftDetails[];
-  congratulationsGiftList: (themeColors: typeof colors) => GiftDetails[];
+  eid: (themeColors: typeof colors) => GiftDetails[];
+  birthday: (themeColors: typeof colors) => GiftDetails[];
+  congrat: (themeColors: typeof colors) => GiftDetails[];
 }
 
 export { GiftDetails, GiftsCardDataProps, GiftsDataProps, GiftTypes, RenderItemProps, SendGiftItem };
