@@ -1,3 +1,4 @@
+import colors from '@app/styles/colors.const';
 import { AnimationObject } from 'lottie-react-native';
 
 interface SendGiftItem {
@@ -43,9 +44,9 @@ interface GiftDetails {
 
 // Define the interface for the entire giftsCardData object
 interface GiftsCardDataProps {
-  eidGiftList: GiftDetails[];
-  birthdayGiftList: GiftDetails[];
-  congratulationsGiftList: GiftDetails[];
+  eidGiftList: (themeColors: typeof colors) => GiftDetails[];
+  birthdayGiftList: (themeColors: typeof colors) => GiftDetails[];
+  congratulationsGiftList: (themeColors: typeof colors) => GiftDetails[];
 }
 
 export { GiftDetails, GiftsCardDataProps, GiftsDataProps, GiftTypes, RenderItemProps, SendGiftItem };

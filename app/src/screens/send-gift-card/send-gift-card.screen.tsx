@@ -10,13 +10,13 @@ import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
-import giftsCardData from './send-gift-card.constants';
+import { giftsCardData } from './send-gift-card.constants';
 import { GiftDetails } from './send-gift-card.interface';
 import sendGiftCard from './send-gift-card.style';
 
 const SendGiftCard = () => {
   const { colors } = useTheme();
-  const [carouselData, setCarouselData] = useState<GiftDetails[]>(giftsCardData?.eidGiftList);
+  const [carouselData, setCarouselData] = useState<GiftDetails[]>(giftsCardData?.eidGiftList(colors));
 
   const localizationText = useLocalization();
 
@@ -34,13 +34,13 @@ const SendGiftCard = () => {
     setSelectedTab(tab);
     switch (tab) {
       case EIYDIAH:
-        return setCarouselData(giftsCardData?.eidGiftList);
+        return setCarouselData(giftsCardData?.eidGiftList(colors));
       case BIRTHDAY:
-        return setCarouselData(giftsCardData?.birthdayGiftList);
+        return setCarouselData(giftsCardData?.birthdayGiftList(colors));
       case CONGRATULATIONS:
-        return setCarouselData(giftsCardData?.congratulationsGiftList);
+        return setCarouselData(giftsCardData?.congratulationsGiftList(colors));
       default:
-        return setCarouselData(giftsCardData?.eidGiftList);
+        return setCarouselData(giftsCardData?.eidGiftList(colors));
     }
   };
 
@@ -82,6 +82,7 @@ const SendGiftCard = () => {
           style={styles.carouselStyle}
           renderItem={renderCarouselItem}
           onChangeIndex={onChangeIndex}
+          resetOnDataChange
         />
       </IPayView>
       <IPayButton

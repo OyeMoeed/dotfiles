@@ -24,6 +24,7 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
+import { darkCards } from '../send-gift-card/send-gift-card.constants';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
 const SendGiftPreview: FC = ({ route }) => {
@@ -54,6 +55,9 @@ const SendGiftPreview: FC = ({ route }) => {
       giftDetails: { message, occasion, selectedCard },
     });
   };
+
+  // to chnage text color on basis of card theme.
+  const isDarkCard = darkCards.includes(selectedCard?.id);
 
   return (
     <IPaySafeAreaView>
@@ -101,16 +105,20 @@ const SendGiftPreview: FC = ({ route }) => {
       >
         <IPayView style={styles.bottomSheetContainer}>
           <IPayView style={[styles.previewContainer, { backgroundColor: selectedCard?.bgColor }]}>
-            <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
+            <IPayImage image={isDarkCard ? images.textLogoLight : images.logo} style={styles.smallAlinmaLogo} />
             <IPayLottieAnimation source={selectedCard?.path} style={styles.image} loop />
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText style={styles.messageText} color={colors.primary.primary950} text={message} />
+              <IPayFootnoteText
+                style={styles.messageText}
+                color={isDarkCard ? colors.natural.natural0 : colors.primary.primary950}
+                text={message}
+              />
             </IPayScrollView>
             <IPayFootnoteText
               style={[styles.messagePreviewText]}
               text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
-              color={colors.primary.primary950}
+              color={isDarkCard ? colors.natural.natural0 : colors.primary.primary950}
             />
           </IPayView>
         </IPayView>
