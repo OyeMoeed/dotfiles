@@ -164,7 +164,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       getOtpData();
     }
@@ -220,9 +220,15 @@ const IPayIdRenewalSheet: React.FC = () => {
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
               btnType="primary"
-              btnText={primaryButtonText}
+              btnText={isAboutToExpire ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
               textColor={colors.natural.natural0}
-              rightIcon={<IPayIcon icon={buttonIcon} size={20} color={colors.natural.natural0} />}
+              rightIcon={
+                <IPayIcon
+                  icon={isAboutToExpire ? ID_ABOUT_EXPIRE.buttonIcon : buttonIcon}
+                  size={20}
+                  color={colors.natural.natural0}
+                />
+              }
             />
             <IPayButton
               onPress={closeBottomSheet}

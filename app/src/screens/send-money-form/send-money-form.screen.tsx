@@ -53,7 +53,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data

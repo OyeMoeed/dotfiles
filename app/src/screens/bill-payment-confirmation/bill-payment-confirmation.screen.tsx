@@ -73,7 +73,6 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
 
