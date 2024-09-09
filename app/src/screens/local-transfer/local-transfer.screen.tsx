@@ -52,7 +52,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { ViewStyle } from 'react-native';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
-import { BeneficiaryDetails, FooterStatus } from './local-transfer.interface';
+import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
 const LocalTransferScreen: React.FC = () => {
@@ -80,8 +80,8 @@ const LocalTransferScreen: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const [viewAll, setViewAll] = useState({
-    active: false,
-    inactive: false,
+    ACTIVATE: false,
+    NEW_BENEFICIARY: false,
   });
   const [sortBy, setSortBy] = useState<string>(BeneficiaryTypes.ACTIVE);
 
@@ -294,7 +294,7 @@ const LocalTransferScreen: React.FC = () => {
       <IPayView />
     );
 
-  const renderFooter = (statusKey: FooterStatus, totalCount: number) =>
+  const renderFooter = (statusKey: BeneficiaryTypes, totalCount: number) =>
     totalCount > beneficiariesToShow ? (
       <IPayPressable
         style={styles.listFooter}
@@ -474,12 +474,12 @@ const LocalTransferScreen: React.FC = () => {
                   >
                     {!!getSortedData(BeneficiaryTypes.ACTIVE)?.length && (
                       <IPayFlatlist
-                        data={listData(viewAll.active, BeneficiaryTypes.ACTIVE)}
+                        data={listData(viewAll.ACTIVATE, BeneficiaryTypes.ACTIVE)}
                         renderItem={beneficiaryItem}
                         ListHeaderComponent={() =>
                           renderHeader(
                             BeneficiaryTypes.ACTIVE,
-                            listData(viewAll.active, BeneficiaryTypes.ACTIVE)?.length,
+                            listData(viewAll.ACTIVATE, BeneficiaryTypes.ACTIVE)?.length,
                             getSortedData(BeneficiaryTypes.ACTIVE)?.length,
                           )
                         }
@@ -488,13 +488,13 @@ const LocalTransferScreen: React.FC = () => {
                     )}
                     {!!getSortedData(BeneficiaryTypes.INACTIVE)?.length && (
                       <IPayFlatlist
-                        data={listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)}
+                        data={listData(viewAll.NEW_BENEFICIARY, BeneficiaryTypes.INACTIVE)}
                         renderItem={beneficiaryItem}
                         keyExtractor={(item) => item.id}
                         ListHeaderComponent={() =>
                           renderHeader(
                             BeneficiaryTypes.INACTIVE,
-                            listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)?.length,
+                            listData(viewAll.NEW_BENEFICIARY, BeneficiaryTypes.INACTIVE)?.length,
                             getSortedData(BeneficiaryTypes.INACTIVE)?.length,
                           )
                         }
