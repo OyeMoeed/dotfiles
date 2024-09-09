@@ -172,24 +172,18 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       deviceInfo: appData?.deviceInfo!,
     };
 
-    try {
-      const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
-      if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
-        hideSpinner();
-        renderSpinner(false);
-
-        navigate(screenNames.TOP_UP, {
-          topupChannel: payChannel.APPLE,
-          topupStatus: TopupStatus.SUCCESS,
-          amount: topUpAmount,
-        });
-      }
-    } catch (error) {
+    const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
+    if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
       hideSpinner();
       renderSpinner(false);
 
-      setError(getErrorMessage(error));
+      navigate(screenNames.TOP_UP, {
+        topupChannel: payChannel.APPLE,
+        topupStatus: TopupStatus.SUCCESS,
+        amount: topUpAmount,
+      });
     }
+
     hideSpinner();
     renderSpinner(false);
   };
