@@ -28,6 +28,13 @@ const giftListStyles = (theme: typeof colors) =>
       borderRadius: moderateScale(11),
       alignSelf: 'center',
     },
+    iconNewBackground: {
+      backgroundColor: theme.secondary.secondary50,
+      paddingVertical: moderateScale(20),
+      padding: moderateScale(8),
+      borderRadius: moderateScale(11),
+      alignSelf: 'center',
+    },
     rightContainer: {
       flexDirection: 'row',
       gap: moderateScale(8),

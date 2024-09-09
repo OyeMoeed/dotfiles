@@ -23,6 +23,4 @@ interface SetPasscodeMockDataProps extends MockAPIOkProp {
   type: string;
 }
 
-
-
 export { SetPasscodeMockDataProps, SetPasscodeServiceProps };

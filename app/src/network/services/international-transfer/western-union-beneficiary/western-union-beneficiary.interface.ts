@@ -9,14 +9,13 @@ interface BankDetail {
   city: string | null;
 }
 
-interface Beneficiary {
+export interface WesternUnionBeneficiary {
   beneficiaryCode: string;
   beneficiaryStatus: string;
   nickname: string;
   fullName: string;
   countryCode: string;
   countryDesc: string;
-  countryFlag: string;
   currency: string;
   currencyDesc: string;
   remittanceType: string;
@@ -31,14 +30,14 @@ interface PaginationInfo {
   sentRecords: string;
 }
 
-interface Response {
-  beneficiaries: Beneficiary[];
+interface WesternUnionBeneficiaryResponse {
+  beneficiaries: WesternUnionBeneficiary[];
 }
 
 interface WesternUnionBeneficiariesProps {
   status: MockAPIStatusProps;
   paginationInfo: PaginationInfo;
-  response: Response;
+  response: WesternUnionBeneficiaryResponse;
   successfulResponse: boolean;
   ok?: boolean;
   apiResponseNotOk?: boolean;

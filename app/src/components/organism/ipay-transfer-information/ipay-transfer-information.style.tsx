@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
-import { isIosOS } from '@app/utilities/constants';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -38,7 +38,8 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     },
     inputText: {
       fontSize: FONT_SIZE_20,
-      lineHeight: moderateScale(22),
+      lineHeight: moderateScale(30),
+      minWidth: scaleSize(45),
     },
     inputContainer: {
       alignItems: 'center',
@@ -46,11 +47,28 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderWidth: moderateScale(1),
       borderColor: themeColors.primary.primary100,
       borderRadius: moderateScale(22),
-      paddingTop: moderateScale(12),
+      paddingVertical: moderateScale(12),
     },
+    focusedContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: moderateScale(1),
+      borderColor: themeColors.primary.primary500,
+      borderRadius: moderateScale(22),
+      paddingVertical: moderateScale(12),
+    },
+
     currencyStyle: {
       fontSize: FONT_SIZE_16,
-      marginHorizontal: moderateScale(3),
+      ...Platform.select({
+        android: {
+          marginTop: moderateScale(5),
+        },
+        ios: {
+          marginVertical: 0,
+        },
+      }),
+      lineHeight: moderateScale(30),
     },
     reasonsView: {
       marginVertical: moderateScale(8),
@@ -61,6 +79,13 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(22),
       paddingRight: moderateScale(45),
     },
+    focusedField: {
+      backgroundColor: themeColors.natural.natural0,
+      borderColor: themeColors.primary.primary500,
+      borderRadius: moderateScale(22),
+      paddingRight: moderateScale(45),
+    },
+
     btnText: {
       color: themeColors.primary.primary500,
     },

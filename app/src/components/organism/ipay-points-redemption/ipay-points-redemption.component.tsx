@@ -161,7 +161,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const handleToggleInputs = () => {
     setReversible(reversible === amountInput ? pointsInput : amountInput);
   };
-  const disabled = !amountStr.length || errorMessage || amountStr === '0' || points === '0';
+  const disabled = !amountStr.length || !!errorMessage || amountStr === '0' || points === '0'; // should be convert in boolean
 
   const renderContent = (): JSX.Element => {
     if (isEligible === true) {
@@ -200,7 +200,6 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     placeholder="0"
                     maxLength={5}
                     autoFocus={reversible === amountInput}
-                    isFocused={reversible === amountInput}
                     editable={reversible === amountInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, dynamicStyles.textInput]}
@@ -233,7 +232,6 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     maxLength={5}
                     editable={reversible === pointsInput}
                     autoFocus={reversible === pointsInput}
-                    isFocused={reversible === pointsInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}

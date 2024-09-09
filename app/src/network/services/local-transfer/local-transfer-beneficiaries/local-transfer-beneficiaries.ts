@@ -7,8 +7,23 @@ const localTransferBeneficiariesMock: LocalTransferBeneficiariesMockProps = {
         beneficiaryCode: '10587981-3',
         beneficiaryStatus: 'active',
         nickname: 'test',
-        fullName: 'arwa Ahmad ali alali',
+        fullName: 'Floyd Miles',
         beneficiaryAccountNumber: 'SA2880000000002345567889',
+        isIBAN: true,
+        beneficiaryBankDetail: {
+          bankCode: '20',
+          bankName: 'Saudi National Bank',
+          branchName: '',
+          address: null,
+          correspondingBankCode: null,
+          city: null,
+        },
+      },
+      {
+        beneficiaryCode: '10587981-2',
+        beneficiaryStatus: 'inactive',
+        fullName: 'arwa ahmad',
+        beneficiaryAccountNumber: 'SA6180000296608013414076',
         isIBAN: true,
         beneficiaryBankDetail: {
           bankCode: '20',
@@ -65,6 +80,7 @@ const localTransferBeneficiariesMock: LocalTransferBeneficiariesMockProps = {
   },
   successfulResponse: true,
   ok: true,
+  apiResponseNotOk: false,
 };
 
 export default localTransferBeneficiariesMock;

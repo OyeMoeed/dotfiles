@@ -9,27 +9,27 @@ const alertStyles = (themeColors: typeof colors) =>
     flexStyles: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     borderRadius: {
-      borderRadius: scaleSize(10)
+      borderRadius: scaleSize(10),
     },
     textsView: {
-      gap: scaleSize(12)
+      gap: scaleSize(12),
     },
     modalTitle: {
       color: themeColors.primary.primary800,
       textAlign: 'center',
-      fontWeight: constants.FONT_WEIGHT_BOLD
+      fontWeight: constants.FONT_WEIGHT_BOLD,
     },
     modalMessage: {
       color: themeColors.primary.primary800,
       textAlign: 'center',
-      marginBottom: scaleSize(10)
+      marginBottom: scaleSize(10),
     },
     centeredView: {
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     modalView: {
       backgroundColor: themeColors.natural.natural100,
@@ -40,32 +40,32 @@ const alertStyles = (themeColors: typeof colors) =>
       shadowColor: themeColors.natural.natural1000,
       shadowOffset: {
         width: 0,
-        height: 2
+        height: 2,
       },
       shadowOpacity: 0.25,
       shadowRadius: scaleSize(4),
       elevation: scaleSize(5),
 
-      width: moderateScale(280, 0.5)
+      width: moderateScale(280, 0.5),
     },
     sideBySideContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      gap: scaleSize(8)
+      gap: scaleSize(8),
     },
     buttonContainer: {
       width: '100%',
-      gap: scaleSize(8)
+      gap: scaleSize(8),
     },
     buttonTextColored: {
       color: colors.primary.primary500,
-      textAlign: 'center'
+      textAlign: 'center',
     },
 
     buttonTextWhite: {
       color: themeColors.natural.natural0,
-      textAlign: 'center'
-    }
+      textAlign: 'center',
+    },
   });
 
 export default alertStyles;

@@ -9,7 +9,6 @@ const genratedStyles = (theme: any) =>
       marginHorizontal: moderateScale(24, 0.3),
       paddingVertical: moderateScale(60),
       alignItems: 'center',
-      
     },
     logoStyles: {
       width: verticalScale(84),

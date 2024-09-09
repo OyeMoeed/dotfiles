@@ -158,5 +158,5 @@ export const spacing = {
   SCALE_2,
   SCALE_1,
   SCALE_0,
-  CUSTOME_SCALE
+  CUSTOME_SCALE,
 };

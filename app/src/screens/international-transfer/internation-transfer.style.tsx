@@ -53,10 +53,9 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       height: '100%',
       paddingBottom: moderateScale(70),
     },
-    bankLogo: {
+    countryImage: {
       width: scaleSize(24),
       height: verticalScale(24),
-      resizeMode: 'contain',
     },
     moreButton: {
       flexDirection: 'row',

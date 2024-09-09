@@ -43,4 +43,8 @@ export interface SadadBillDetailFormProps {
    * name of input to use
    */
   accountInputName: string;
+  /**
+   * label for account number
+   */
+  accountInputLabel?: string;
 }

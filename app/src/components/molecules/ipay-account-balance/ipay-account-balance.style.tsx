@@ -40,7 +40,11 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
     },
     gap: {
-      marginTop: moderateScale(12),
+      marginTop: moderateScale(10),
+    },
+    topupButton: {
+      paddingHorizontal: moderateScale(14),
+      borderRadius: moderateScale(12),
     },
     lineBorderStyle: {
       borderWidth: 1,

@@ -7,7 +7,6 @@ interface IPayOtpVerificationProps {
   isLoading?: boolean;
   onPressConfirm?: () => void;
   ref: string;
-  apiError: string;
   isBottomSheet?: boolean;
   handleOnPressHelp?: () => void;
   showHelp?: boolean;

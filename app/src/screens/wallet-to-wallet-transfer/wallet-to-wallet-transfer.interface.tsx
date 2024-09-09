@@ -2,6 +2,4 @@ interface AddPhoneFormValues {
   mobileNumber: string;
 }
 
-export {
-  AddPhoneFormValues
-};
+export { AddPhoneFormValues };
