@@ -9,9 +9,15 @@ interface FormValues {
   bankName?: string;
   beneficiaryNickName?: string;
 }
+interface BeneficiaryBankDetails {
+  bankCode: string;
+  bankName: string;
+  beneficiaryAccountNo: string;
+}
 
 interface IPayCreateBeneficiaryProps {
   testID?: string;
 }
 
-export { FormValues, IPayCreateBeneficiaryProps, ListOption };
+export { BeneficiaryBankDetails, FormValues, IPayCreateBeneficiaryProps, ListOption };
+

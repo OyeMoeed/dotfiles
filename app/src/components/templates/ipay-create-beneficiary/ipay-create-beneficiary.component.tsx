@@ -15,7 +15,6 @@ import {
 import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
 import {
   BeneficiaryBankDetailsReq,
-  BeneficiaryBankDetailsRes,
   LocalTransferBeneficiaryBankMockProps,
 } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
@@ -23,12 +22,18 @@ import { ValidateIBANResponse } from '@app/network/services/local-transfer/valid
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { getBankIconByCode } from '@app/utilities/bank-logo';
 import { AddBeneficiary, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
-import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
+import {
+  BeneficiaryBankDetails,
+  FormValues,
+  IPayCreateBeneficiaryProps,
+  ListOption,
+} from './ipay-create-beneficiary.interface';
 import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 
 /**
@@ -44,7 +49,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
   const [bankList, setBankList] = useState();
-  const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetailsRes>();
+  const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetails>();
   const currency = 'SAR';
   const countryCode = 'SA';
 
@@ -116,9 +121,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo ?? '',
       currency,
       beneficiaryBankDetail: {
-        bankCode: beneficiaryBankDetails.bankCode ,
+        bankCode: beneficiaryBankDetails.bankCode,
         bankName: beneficiaryBankDetails.bankName,
-      }
+      },
     };
 
     if (isValid) {
@@ -174,7 +179,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     setValue(AddBeneficiary.BANK_NAME, bankDetails.desc);
     setBeneficiaryBankDetails({
       bankCode: bankCode,
-      correspondingBankCode: bankCode,
       bankName: bankDetails.desc,
       beneficiaryAccountNo: ibanNumber,
     });
@@ -245,7 +249,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               control={control}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                 
+                  maxLength={24}
                   label={localizationText.COMMON.IBAN}
                   value={value}
                   onChangeText={(text) => {
@@ -269,6 +273,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                       <IPaySubHeadlineText color={colors.primary.primary800} regular>
                         {beneficiaryBankDetails?.bankName}
                       </IPaySubHeadlineText>
+                      {getBankIconByCode(beneficiaryBankDetails?.bankCode)}
                       <IPayImage image={beneficiaryBankDetails?.bankLogo} style={styles.imgStyle} />
                     </>
                   )}
@@ -292,7 +297,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           </IPayView>
           <IPayButton
             onPress={handleSubmit(onPrepareData)}
-            disabled={!watch(AddBeneficiary.BENEFICIARY_NAME) || !watch(AddBeneficiary.IBAN)}
+            disabled={!watch(AddBeneficiary.BENEFICIARY_NAME) || !watch(AddBeneficiary.IBAN) || !isValid}
             btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
             btnType={buttonVariants.PRIMARY}
             large
