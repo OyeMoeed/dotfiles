@@ -29,7 +29,7 @@ import {
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
@@ -51,8 +51,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const [, setNafathRequestId] = useState<string>('');
   const [duration, setDuration] = useState<number>();
   const [waitngScnds] = useState<number>(20);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
 
@@ -105,7 +104,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const apiResponse: any = await getNafathRandom(payLoad);
 
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      const nafathToken = Number.isNaN(apiResponse?.response?.token || '')
+      const nafathToken = Number.isNaN(apiResponse.response.token)
         ? atob(apiResponse.response.token)
         : apiResponse.response.token;
 
@@ -119,10 +118,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         setStep(2);
       }
       setStartInqiryInterval(true);
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
     renderSpinner(false);
@@ -144,9 +139,9 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const nafathObj = nafathRes.response.mainInfo;
 
     const body: IActivationAbsherReq = {
-      walletNumber,
+      walletNumber: walletInfo.walletNumber,
       walletTier: 'G',
-      poiNumber: userInfo?.poiNumber,
+      poiNumber: walletInfo?.poiNumber,
       poiExpiryDate: nafathObj.idExpiryDate,
       poiExpiryDateHijri: nafathObj.idExpiryDateHijri,
       birthDate: nafathObj.dateOfBirth,
@@ -173,35 +168,34 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     };
     const apiResponse = await updateWalletTierReq(body);
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       const updatedValues = {
         walletTier: 'G',
         poiNumber: nafathObj.idNumber,
         poiType: nafathObj.idNumber,
       };
       dispatch(
-        setUserInfo({
-          ...userInfo,
+        setWalletInfo({
+          ...walletInfo,
           ...updatedValues,
         }),
       );
 
       onCloseNafathVerificationSheet();
       navigate(screenNames.IDENTITY_SUCCESSFUL);
-    } else if (apiResponse?.apiResponseNotOk) {
-      const updatedValues = {
-        walletTier: 'B',
-      };
-      dispatch(
-        setUserInfo({
-          ...userInfo,
-          ...updatedValues,
-        }),
-      );
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
+      renderSpinner(false);
+      return;
     }
+
+    const updatedValues = {
+      walletTier: 'B',
+    };
+    dispatch(
+      setWalletInfo({
+        ...walletInfo,
+        ...updatedValues,
+      }),
+    );
     renderSpinner(false);
   };
 
@@ -230,10 +224,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         default:
           break;
       }
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
   };

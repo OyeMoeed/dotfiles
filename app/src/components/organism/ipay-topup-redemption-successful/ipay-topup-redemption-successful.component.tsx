@@ -31,6 +31,7 @@ import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
 
@@ -77,8 +78,9 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       const payload = {
         walletNumber: walletInfo?.walletNumber,
       };
-      const walletInfoResponse = await getWalletInfo(payload, dispatch);
+      const walletInfoResponse: any = await getWalletInfo(payload);
       if (walletInfoResponse?.status?.type === 'SUCCESS') {
+        dispatch(setWalletInfo(walletInfoResponse?.response));
         navigate(ScreenNames.POINTS_REDEMPTIONS, {
           aktharPointsInfo: aktharPointsResponse?.response,
           isEligible: true,
@@ -170,7 +172,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                     text={localizationText.TOP_UP.TOPUP_REDEMPTION_SUCESS}
                     gradientColors={gradientColors}
                     style={styles.gradientTextSvg}
-                    fontSize={styles.linearGradientText.fontSize}
+                    fontSize={styles.linearGradientText?.fontSize}
                     fontFamily={styles.linearGradientText.fontFamily}
                   />
                   <IPaySubHeadlineText

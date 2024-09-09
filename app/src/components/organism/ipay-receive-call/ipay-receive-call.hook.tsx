@@ -1,7 +1,8 @@
 import { DURATIONS, INITIAL_TIMER, PROGRESS_INCREMENT_FACTOR } from '@app/constants/constants';
+import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { useCallback, useEffect, useState } from 'react';
 
-const useCallReceiverTimer = () => {
+const useCallReceiverTimer = (activateInternationalBeneficiary: () => Promise<ApiResponseStatusType | void>) => {
   const [gradientWidth, setGradientWidth] = useState('0%');
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);
   const [expired, setExpired] = useState(false);
@@ -29,10 +30,14 @@ const useCallReceiverTimer = () => {
     }, DURATIONS.LONG);
   }, [DURATIONS.LONG]);
 
-  const handleRequestAgain = useCallback(() => {
-    setExpired(false);
-    setGradientWidth('0%');
-    setTimeLeft(INITIAL_TIMER);
+  const handleRequestAgain = useCallback(async () => {
+    const response = await activateInternationalBeneficiary();
+
+    if (response === ApiResponseStatusType.SUCCESS) {
+      setExpired(false);
+      setGradientWidth('0%');
+      setTimeLeft(INITIAL_TIMER);
+    }
   }, [INITIAL_TIMER]);
 
   useEffect(
