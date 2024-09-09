@@ -1,11 +1,10 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
+import { Alinma, NonAlinma } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
@@ -146,6 +145,9 @@ const SendGiftAmountScreen = ({ route }) => {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
     }
 
+    const renderAlinmaIcon = (isAlinma) => {
+      return isAlinma ? <Alinma /> : <NonAlinma />;
+    };
     return (
       <IPayView>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && contacts.length > 0 ? (
@@ -162,11 +164,7 @@ const SendGiftAmountScreen = ({ route }) => {
                   <IPaySubHeadlineText text={givenName} regular color={colors.natural.natural900} />
                 </IPayView>
               </IPayView>
-              <IPayImage
-                image={!isAlinma ? images.nonAlinma : images.alinmaP}
-                resizeMode="contain"
-                style={styles.image}
-              />
+              {renderAlinmaIcon(isAlinma)}
             </IPayView>
             {!isAlinma && (
               <IPayView style={styles.chipContainer}>
@@ -368,7 +366,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const isDisabled =
     parseFloat(amountToShow) <= 0 ||
-    isNaN(parseFloat(amountToShow)) ||
+    Number.isNaN(parseFloat(amountToShow)) ||
     parseFloat(amountToShow) > monthlyRemainingOutgoingAmount ||
     (selectedTab === localizationText.SEND_GIFT.MANUAL && !areAllManualAmountsFilled());
   return (

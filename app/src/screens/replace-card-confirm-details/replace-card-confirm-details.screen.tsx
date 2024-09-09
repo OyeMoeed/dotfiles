@@ -82,6 +82,10 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
     navigate(ScreenNames.REPLACE_CARD_SUCCESS);
   };
 
+  const onClose = () => {
+    addressInfoSheetRef.current?.showAddressInfoSheet();
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_OPTIONS.PRINT_CARD} backBtn applyFlex />
@@ -119,7 +123,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 title={localizationText.REPLACE_CARD.ADDRESS}
                 rightText={
                   <IPayPressable
-                    onPress={() => addressInfoSheetRef.current?.showAddressInfoSheet()}
+                    onPress={onClose}
                     style={styles.addressStyle}
                   >
                     <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />

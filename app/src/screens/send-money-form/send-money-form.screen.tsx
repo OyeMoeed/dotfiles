@@ -303,7 +303,10 @@ const SendMoneyFormScreen: React.FC = () => {
       isShowCard: false,
     });
   };
-
+  const btnText =
+    from === TRANSFERTYPE.REQUEST_MONEY
+      ? localizationText.REQUEST_MONEY.SENT_REQUEST
+      : localizationText.COMMON.TRANSFER;
   return (
     <IPaySafeAreaView style={styles.container}>
       <>
@@ -311,7 +314,7 @@ const SendMoneyFormScreen: React.FC = () => {
           backBtn
           title={heading}
           rightComponent={
-            showHistory && (
+            showHistory ? (
               <IPayPressable style={styles.history} onPress={history}>
                 <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
                 <IPaySubHeadlineText
@@ -320,6 +323,8 @@ const SendMoneyFormScreen: React.FC = () => {
                   color={colors.primary.primary500}
                 />
               </IPayPressable>
+            ) : (
+              <IPayView />
             )
           }
           applyFlex
@@ -389,11 +394,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 medium
                 btnType="primary"
                 onPress={onConfirm}
-                btnText={
-                  from === TRANSFERTYPE.REQUEST_MONEY
-                    ? localizationText.REQUEST_MONEY.SENT_REQUEST
-                    : localizationText.COMMON.TRANSFER
-                }
+                btnText={btnText}
               />
             </IPayLinearGradientView>
           )}

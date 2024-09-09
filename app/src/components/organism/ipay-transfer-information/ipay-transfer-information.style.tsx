@@ -106,7 +106,6 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     alinmaLogo: {
       wdith: moderateScale(18),
       height: moderateScale(18),
-      magrinLeft: moderateScale(50),
     },
     alinmaContainer: {
       marginLeft: moderateScale(30),

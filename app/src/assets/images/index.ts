@@ -111,7 +111,6 @@ const images = {
   eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
   truckTime: require('./truck-time.png'),
-  nonAlinma: require('./non-alinma.png'),
 };
 
 export default images;

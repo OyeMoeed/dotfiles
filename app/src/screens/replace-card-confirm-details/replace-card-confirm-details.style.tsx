@@ -12,7 +12,6 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       gap: moderateScale(4),
     },
-
     btn: {
       justifyContent: 'center',
       paddingVertical: moderateScale(14),

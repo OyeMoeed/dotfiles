@@ -7,6 +7,7 @@ import {
   Login,
   LogoIcon,
   Message,
+  NonAlinma,
   Outgoing,
   PointRedemptionBackground,
   PointRedemptionPlus,
@@ -142,7 +143,7 @@ const icons = {
   delinked: 'logout2122',
   MESSAGE: 'messgae',
   LOGIN: 'login',
-  share: 'send-2',
+  share: 'send-312',
   send2: 'send-2',
   copy: 'copy',
   copy_success: 'copy-success',
@@ -251,6 +252,7 @@ const icons = {
   timer_1: 'timer-1',
   call_incoming: IncomingCall,
   call_outgoing: Outgoing,
+  nonALinma: NonAlinma,
 };
 
 export default icons;

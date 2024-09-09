@@ -18,7 +18,6 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(6),
       alignSelf: 'center',
     },
-
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24),

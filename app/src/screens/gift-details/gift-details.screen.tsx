@@ -87,7 +87,13 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     };
     Share.open(shareOptions);
   };
-
+  const getDynamicStyles = (styles, details, item) => {
+    return [
+      styles.subTitle,
+      details[item]?.length > 20 && styles.condtionalWidthSubtitle,
+      item === GiftCardDetailsKey.AMOUNT && details?.status === GiftCardStatus.EXPIRED && styles.textStyle,
+    ];
+  };
   const titleText = useCallback(
     (value: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
@@ -162,11 +168,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             text={titleText(details[item])}
             color={getTitleColor(details[item])}
             numberOfLines={1}
-            style={[
-              styles.subTitle,
-              details[item]?.length > 20 && styles.condtionalWidthSubtitle,
-              item === GiftCardDetailsKey.AMOUNT && details?.status === GiftCardStatus.EXPIRED && styles.textStyle,
-            ]}
+            style={getDynamicStyles(styles, details, item)}
           />
           {item === GiftCardDetailsKey.REF_NUMBER && (
             <IPayPressable style={styles.icon} onPress={() => onPressCopy(details[item])}>

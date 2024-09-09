@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
+import { Alinma, NonAlinma } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -89,13 +89,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
             isShowIcon
             containerStyle={StyleSheet.flatten(styles.headerContainer)}
-            icon={
-              <IPayImage
-                image={!hasWallet ? images.nonAlinma : images.alinmaP}
-                style={styles.alinmaLogo}
-                resizeMode="contain"
-              />
-            }
+            icon={hasWallet ? <Alinma /> : <NonAlinma />}
           />
         )}
       </IPayView>
@@ -132,7 +126,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           />
         )}
       </IPayView>
-      {showReason && (
+      {showReason ? (
         <IPayPressable onPress={openReason} style={styles.reasonsView}>
           <IPayAnimatedTextInput
             onChangeText={setSelectedItem}
@@ -149,6 +143,8 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             }
           />
         </IPayPressable>
+      ) : (
+        <IPayView />
       )}
       <IPayAnimatedTextInput
         containerStyle={[StyleSheet.flatten(styles.inputField), isFocused && styles.focusedField, inputFieldStyle]}
