@@ -30,6 +30,8 @@ import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import LocalTransferDeleteBeneficiaryMockProps from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.interface';
+import deleteLocalTransferBeneficiary from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.service';
 import editLocalTransferBeneficiary from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.service';
 import { ActivationMethods } from '@app/network/services/local-transfer/local-transfer-activate-beneficiary/local-transfer-activate-beneficiary.interface';
 import activateLocalBeneficiary from '@app/network/services/local-transfer/local-transfer-activate-beneficiary/local-transfer-activate-beneficiary.service';
@@ -318,10 +320,7 @@ const LocalTransferScreen: React.FC = () => {
     viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 3);
 
   const hasBeneficiariesData = () =>
-    [
-      ...getSortedData(BeneficiaryTypes.ACTIVE),
-      ...getSortedData(BeneficiaryTypes.NEW_BENEFICIARY),
-    ]?.length;
+    [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)]?.length;
 
   //IVR
   const currentOptionText =
@@ -419,6 +418,16 @@ const LocalTransferScreen: React.FC = () => {
         break;
     }
   }, []);
+  const onDeleteBeneficiary = async () => {
+    const apiResponse: LocalTransferDeleteBeneficiaryMockProps = await deleteLocalTransferBeneficiary(
+      selectedBeneficiaryRef.current?.beneficiaryCode,
+    );
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setDeleteBeneficiary(false);
+      showDeleteBeneficiaryToast();
+    }
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -492,7 +501,10 @@ const LocalTransferScreen: React.FC = () => {
                           )
                         }
                         ListFooterComponent={() =>
-                          renderFooter(BeneficiaryTypes.INACTIVE, getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length)
+                          renderFooter(
+                            BeneficiaryTypes.INACTIVE,
+                            getSortedData(BeneficiaryTypes.NEW_BENEFICIARY)?.length,
+                          )
                         }
                       />
                     )}
@@ -552,7 +564,7 @@ const LocalTransferScreen: React.FC = () => {
         }}
         secondaryAction={{
           text: localizationText.COMMON.DELETE,
-          onPress: showDeleteBeneficiaryToast,
+          onPress: onDeleteBeneficiary
         }}
       />
       <IPayActionSheet

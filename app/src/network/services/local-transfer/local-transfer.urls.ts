@@ -8,6 +8,8 @@ const LOCAL_TRANSFERS_URLS = {
   get_transaction: (walletNumber: string) => `/v1/${walletNumber}/transaction`,
   edit_local_transfer_beneficiary: (beneficiaryCode: string) =>
     `/transfer-management/v1/alinma-pay/beneficiaries/${beneficiaryCode}`,
+  delete_local_transfer_beneficiary: (beneficiaryCode: string) =>
+    `/transfer-management/v1/alinma-pay/beneficiaries/${beneficiaryCode}`,
 };
 
 export default LOCAL_TRANSFERS_URLS;
