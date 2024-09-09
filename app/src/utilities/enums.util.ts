@@ -220,9 +220,9 @@ enum AddBeneficiary {
   BENEFICIARY_NICK_NAME = 'beneficiaryNickName',
 }
 enum BeneficiaryTypes {
-  ACTIVE = 'active',
+  ACTIVE = 'ACTIVATE',
   INACTIVE = 'inactive',
-  NEW_BENEFICIARY = 'NEW_BENEFICIARY'
+  NEW_BENEFICIARY = 'NEW_BENEFICIARY',
 }
 
 enum APIResponseType {
@@ -308,8 +308,12 @@ export {
   CardCategories,
   CardDetailsSegment,
   CardOptions,
-  CardStatusIndication, CardStatusNumber, CardStatusType,
-  CardTypes, CardTypesCodes, Filter,
+  CardStatusIndication,
+  CardStatusNumber,
+  CardStatusType,
+  CardTypes,
+  CardTypesCodes,
+  Filter,
   FilterValue,
   FiltersType,
   GiftCardStatus,
@@ -334,6 +338,5 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
 };
-
