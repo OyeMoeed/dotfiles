@@ -13,7 +13,7 @@ const sendGiftCard = () =>
       marginTop: moderateScale(16),
     },
     tabs: {
-      marginLeft: moderateScale(24),
+      marginHorizontal: moderateScale(24),
       gap: moderateScale(8),
       marginBottom: moderateScale(24),
       marginTop: moderateScale(14),

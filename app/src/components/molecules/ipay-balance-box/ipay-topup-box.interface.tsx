@@ -12,7 +12,6 @@ export interface IPayBalanceBoxProps {
    * The remaining outgoing balance for the month, can be a string or a number.
    */
 
-
   monthlyRemainingIncommingAmount?: string | number;
 
   monthlyIncomingLimit: string;

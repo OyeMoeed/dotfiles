@@ -10,13 +10,13 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
     colors: {
       primary: { primary900: '' },
       natural: { natural500: '#000000' },
-      redPalette: { red500: '' }
+      redPalette: { red500: '' },
     },
     icons: {
       message: jest.fn().mockReturnValue('MessageIcon'), // Mock icons as needed
-      refresh: jest.fn().mockReturnValue('RefreshIcon')
-    }
-  })
+      refresh: jest.fn().mockReturnValue('RefreshIcon'),
+    },
+  }),
 }));
 
 jest.mock('@app/localization/hooks/localization.hook', () => ({
@@ -26,8 +26,8 @@ jest.mock('@app/localization/hooks/localization.hook', () => ({
     enter_four_digit_otp: 'Enter the four-digit OTP for:', // Mock more localization text if needed
     code_expires_in: 'Code expires in', // Mock more localization text if needed
     send_code_again: 'Send code again', // Mock more localization text if needed
-    confirm: 'Confirm' // Mock more localization text if needed
-  })
+    confirm: 'Confirm', // Mock more localization text if needed
+  }),
 }));
 
 describe('IPayOtpVerification', () => {

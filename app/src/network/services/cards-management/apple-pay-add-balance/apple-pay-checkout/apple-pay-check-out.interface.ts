@@ -9,7 +9,7 @@ export interface ApplePayCheckOutReq {
       displayName: string;
     };
     paymentData: string;
-  }
+  };
   amount: string;
   cardBrand: string;
   deviceInfo: IDeveiceInfo;

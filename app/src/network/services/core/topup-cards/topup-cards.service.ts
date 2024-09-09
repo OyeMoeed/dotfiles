@@ -5,7 +5,6 @@ import CORE_URLS from '../core.urls';
 import { CheckOutProp, CheckStatusProp, WalletNumberProp } from './topup-cards.interface';
 import topupCardsMock from './topup-cards.mock';
 
-
 const getTopupCards = async (payload: WalletNumberProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return topupCardsMock;
@@ -16,7 +15,7 @@ const getTopupCards = async (payload: WalletNumberProp): Promise<unknown> => {
       method: requestType.GET,
     });
 
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -24,18 +23,16 @@ const getTopupCards = async (payload: WalletNumberProp): Promise<unknown> => {
     return { error: error.message || 'Unknown error' };
   }
 };
-
 
 const topupCheckout = async (payload: CheckOutProp): Promise<unknown> => {
   try {
     const apiResponse: any = await apiCall({
       endpoint: CORE_URLS.TOPUP_CHECK_OUT(payload?.walletNumber),
       method: requestType.POST,
-      payload: payload?.checkOutBody
+      payload: payload?.checkOutBody,
     });
 
-
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -43,7 +40,6 @@ const topupCheckout = async (payload: CheckOutProp): Promise<unknown> => {
     return { error: error.message || 'Unknown error' };
   }
 };
-
 
 const topupCheckStatus = async (payload: CheckStatusProp): Promise<unknown> => {
   try {
@@ -52,8 +48,7 @@ const topupCheckStatus = async (payload: CheckStatusProp): Promise<unknown> => {
       method: requestType.GET,
     });
 
-
-    if (apiResponse?.status?.type === "SUCCESS") {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       return apiResponse;
     }
     return { apiResponseNotOk: true };
@@ -62,5 +57,4 @@ const topupCheckStatus = async (payload: CheckStatusProp): Promise<unknown> => {
   }
 };
 
-
-export  {getTopupCards, topupCheckout, topupCheckStatus};
+export { getTopupCards, topupCheckout, topupCheckStatus };

@@ -15,21 +15,13 @@ const otpVerification = async (
     dispatch(setUserInfo(resposne?.response));
     return resposne;
   }
-  try {
-    const apiResponse = await apiCall({
-      endpoint: AUTHENTICATION_URLS.OTP_VERIFICATION,
-      method: requestType.POST,
-      payload,
-    });
 
-    if (apiResponse.status.type === 'SUCCESS') {
-      dispatch(setUserInfo(apiResponse?.response));
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: AUTHENTICATION_URLS.OTP_VERIFICATION,
+    method: requestType.POST,
+    payload,
+  });
+  return apiResponse;
 };
 
 export default otpVerification;

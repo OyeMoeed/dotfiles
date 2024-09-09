@@ -6,7 +6,7 @@ const genratedStyles = (colors: any) =>
     otpMainView: {
       width: '96%',
       height: moderateScale(66),
-      alignSelf: 'center'
+      alignSelf: 'center',
     },
     underlineStyleBase: {
       backgroundColor: colors.natural.natural0,
@@ -17,7 +17,7 @@ const genratedStyles = (colors: any) =>
       height: moderateScale(64),
       padding: moderateVerticalScale(11, 0.3),
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     underlineStyleHighLighted: {
       backgroundColor: colors.natural.natural0,
@@ -28,13 +28,13 @@ const genratedStyles = (colors: any) =>
       height: moderateScale(64),
       padding: moderateScale(11, 0.3),
       alignItems: 'center',
-      justifyContent: 'center'
+      justifyContent: 'center',
     },
     errorMsgStyle: {
       color: colors.error.error500,
       width: '90%',
-      textAlign: 'left'
-    }
+      textAlign: 'left',
+    },
   });
 
 export default genratedStyles;

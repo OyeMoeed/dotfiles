@@ -9,25 +9,24 @@
 /* eslint-disable max-len */
 /* eslint-disable consistent-return */
 export class Crc {
-	scanData = {
-		
-		arr: [],
-  	cashBackObj: {
-			Type: '',
-			WalletNum: '',
-			Amount: '',
-			Currency: '',
-			UID: '',
-		},
-		atmtObj: { Type: '', ID: '' },
-		scannedData: null,
-		merchantWalletObj:{ Type: '', WalletNum: '', UID: '' },
-		crcCheck: null,
+  scanData = {
+    arr: [],
+    cashBackObj: {
+      Type: '',
+      WalletNum: '',
+      Amount: '',
+      Currency: '',
+      UID: '',
+    },
+    atmtObj: { Type: '', ID: '' },
+    scannedData: null,
+    merchantWalletObj: { Type: '', WalletNum: '', UID: '' },
+    crcCheck: null,
 
     scanStringData(str: string) {
       let CRCData = str.substr(0, str.length - 4);
-			console.log(CRCData);
-			const utils = new Crc();
+      console.log(CRCData);
+      const utils = new Crc();
       utils.CRCMaster.init();
       let CRCResult = utils.CRCMaster.Calculate(CRCData, 'ASCII').crc16;
       if (CRCResult.length == 1) {

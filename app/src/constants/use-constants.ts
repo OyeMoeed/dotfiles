@@ -19,6 +19,15 @@ const useConstantData = () => {
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
+  const localTransferReasonData = [
+    { id: 1, text: localizationText.LOCAL_TRANSFER.INVESTMENT },
+    { id: 2, text: localizationText.LOCAL_TRANSFER.TUITION },
+    { id: 7, text: localizationText.LOCAL_TRANSFER.TREATMENT },
+    { id: 3, text: localizationText.LOCAL_TRANSFER.TRAVEL },
+    { id: 4, text: localizationText.LOCAL_TRANSFER.PURCHASES },
+    { id: 5, text: localizationText.LOCAL_TRANSFER.FIRENDS_AND_FAMILY },
+    { id: 6, text: localizationText.LOCAL_TRANSFER.DONATION },
+  ];
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
     { id: 2, text: localizationText.SEND_MONEY_FORM.ACCOMMODATION_FEES },
@@ -133,6 +142,33 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
   ];
+  const giftRecivedData = [
+    {
+      id: '1',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.NEW,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '2',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.OPENED,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '3',
+      title: 'Sayed Ismael', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.EXPIRED,
+      amount: '500',
+      dates: formattedDate,
+    },
+  ];
+
   const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
@@ -421,7 +457,7 @@ const useConstantData = () => {
         {
           id: '2',
           key: 'CLOTHS',
-          value: localizationText.OFFERS.CLOTHS,
+          value: localizationText.OFFERS.CLOTHES,
         },
         {
           id: '3',
@@ -789,6 +825,85 @@ const useConstantData = () => {
     },
   ];
 
+  const internationalTransferHistoryFilterData = [
+    {
+      id: '1',
+      label: localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE,
+      type: FiltersType.DELIVERY_TYPE,
+      filterValues: [
+        {
+          id: '1',
+          title: 'AlinmaPay Direct',
+          image: images.alinmaPayDirectLogo,
+          data: [
+            {
+              id: '1',
+              title: 'Bank Transfer',
+              amount: '10',
+              type: 'AlinmaPay Direct',
+            },
+            {
+              id: '2',
+              title: 'Cash Pickup',
+              amount: '10',
+              type: 'AlinmaPay Direct',
+            },
+          ],
+        },
+        {
+          id: '2',
+          title: 'Western Union',
+          image: images.westernUnionLogo,
+          data: [
+            {
+              id: '1',
+              title: 'Degitial Wallet',
+              amount: '10',
+              type: 'Western Union',
+            },
+            {
+              id: '2',
+              title: 'Bank Transfer',
+              amount: '10',
+              type: 'Western Union',
+            },
+            {
+              id: '3',
+              title: 'Cash Pickup',
+              amount: '10',
+              type: 'Western Union',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          beneficiaryName: 'Ahmed Khan',
+          country: 'Pakistan',
+          icon: images.pakFlag,
+        },
+        {
+          id: '2',
+          beneficiaryName: 'Ahmed Mohamed',
+          country: 'Egypt',
+          icon: images.egyFlag,
+        },
+        {
+          id: '3',
+          beneficiaryName: 'Ahmed Ali',
+          country: 'Nepal',
+          icon: images.nepFlag,
+        },
+      ],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -827,6 +942,7 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
+    [FiltersType.DELIVERY_TYPE]: '',
   };
 
   const W2WFilterData = (filterValues) => [
@@ -1034,6 +1150,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TOP_UP.TRANSFER_TO,
       value: 'Shatha Mohammed', // TODO:replaced by api
+      leftIcon: 'true',
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
@@ -1417,7 +1534,7 @@ const useConstantData = () => {
 
   const contactusList = [
     { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '(+966)8004339000' },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)90000670' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)920000670' },
   ];
 
   return {
@@ -1466,6 +1583,7 @@ const useConstantData = () => {
     alinmaDetailsUnsaved1,
     alinmaDetailsUnsaved2,
     billSaveDetails,
+    internationalTransferHistoryFilterData,
     requestMoneyFilterData,
     requestMoneyBottomFilterData,
     sendMoneyDetails,
@@ -1485,11 +1603,13 @@ const useConstantData = () => {
     productDetailData,
     shopsOffers,
     W2WFilterData,
+    giftRecivedData,
     W2WFilterDefaultValues,
     contactusList,
     AlinmaDirectData,
     WesternUnionData,
     activeBillDetails,
+    localTransferReasonData,
   };
 };
 

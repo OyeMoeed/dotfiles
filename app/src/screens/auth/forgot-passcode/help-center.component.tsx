@@ -14,8 +14,9 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@components/atoms';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import getFAQ from '@app/network/services/core/faq/faq.service';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
@@ -27,8 +28,21 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
+  const [faqsItems, setFaqsItems] = useState([]);
 
-  const renderFaqItem = ({ item, index }: { item: { question: string; answer: string }; index: number }) => (
+  const fetchFaqItems = async () => {
+    const apiResponse: any = await getFAQ();
+
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      setFaqsItems(apiResponse?.response?.faqs);
+    }
+  };
+
+  useEffect(() => {
+    fetchFaqItems();
+  }, []);
+
+  const renderFaqItem = ({ item, index }: { item: { question: string; answer: [] }; index: number }) => (
     <IPayView style={styles.faqItemContainer} testID={testID}>
       <IPayPressable onPress={() => toggleExpand(index)} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
@@ -43,9 +57,21 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
         </IPayView>
       </IPayPressable>
       {expandedIndex === index && (
-        <IPayCaption1Text regular style={styles.faqItemAnswer}>
-          {item.answer}
-        </IPayCaption1Text>
+        <>
+          {item.answer.map((ques, answerIndex) => (
+            <IPayCaption1Text
+              key={answerIndex}
+              regular
+              style={[
+                styles.faqItemAnswer,
+                index === 0 ? styles.faqItemAnswerFirstItem : styles.faqItemAnswerListItem,
+                index === item.answer.length - 1 ? styles.faqItemAnswerLastItem : styles.faqItemAnswerListItem,
+              ]}
+            >
+              {ques}
+            </IPayCaption1Text>
+          ))}
+        </>
       )}
     </IPayView>
   );
@@ -61,7 +87,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
           </IPayView>
           <IPayFlatlist
             scrollEnabled={false}
-            data={constants.FAQ_ITEMS}
+            data={faqsItems}
             renderItem={renderFaqItem}
             keyExtractor={(item, index) => index.toString()}
           />

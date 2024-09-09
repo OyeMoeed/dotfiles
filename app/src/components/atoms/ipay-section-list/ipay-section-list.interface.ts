@@ -1,4 +1,5 @@
-import { SectionListRenderItem, ViewStyle } from 'react-native';
+import React from 'react';
+import { SectionListRenderItem, StyleProp, ViewStyle } from 'react-native';
 
 interface Section {
   id: string | number;
@@ -14,6 +15,7 @@ interface IPaySectionListProps {
   showsVerticalScrollIndicator?: boolean;
   renderItem: SectionListRenderItem<any>;
   renderSectionHeader: (info: { section: Section }) => React.ReactNode;
+  itemSeparatorStyle?: StyleProp<ViewStyle>;
 }
 
 export default IPaySectionListProps;

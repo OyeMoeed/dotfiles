@@ -17,7 +17,9 @@ const MerchantScreen: React.FC = () => {
   const { merchantData } = useConstantData();
   const [search, setSearch] = useState<string>('');
 
-  const renderItem = ({ item }: { item: MerchantItem }) => <IPayMerchantCard item={item} />;
+  const renderItem = ({ item }: { item: MerchantItem }) => (
+    <IPayMerchantCard containerStyle={styles.cardContainer} item={item} />
+  );
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -33,11 +35,13 @@ const MerchantScreen: React.FC = () => {
           containerStyle={styles.searchInputStyle}
         />
         <IPayFlatlist
+          numColumns={3}
           data={merchantData}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           style={styles.merchantList}
           contentContainerStyle={styles.containerWrapper}
+          columnWrapperStyle={styles.columnWrapper}
         />
       </IPayView>
     </IPaySafeAreaView>

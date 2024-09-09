@@ -104,7 +104,7 @@ const NearestAtmScreen: React.FC = () => {
         const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
           type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
           city: item.attribute2,
-          title: item.recDesc,
+          title: `${item.recDesc} ${item.recTypeCode}`,
           address: item.recDesc,
           distance: getDistance(+item.attribute4, +item.attribute3, currentLocation).toString(),
           location: { latitude: +item.attribute4, longitude: +item.attribute3 },
@@ -210,20 +210,24 @@ const NearestAtmScreen: React.FC = () => {
 
   const onSelectCity = (city: ListItem) => {
     if (selectedTab === ALL_TYPES) {
-      const data = nearestAtms?.filter((item) => item?.city === city?.id);
+      const data = nearestAtms?.filter((item) => (city?.id ? item?.city === city?.id : true));
       setFilteredData(data);
     } else {
-      const data = nearestAtms?.filter((item) => item.type === selectedTab && item?.city === city?.id);
+      const data = nearestAtms?.filter(
+        (item) => item.type === selectedTab && (city?.id ? item?.city === city?.id : true),
+      );
       setFilteredData(data);
     }
     setSelectedCity(city);
   };
 
   const onPressDropDown = () => {
+    setSearchText('');
     citiesFilterSheetRef?.current?.present();
   };
 
   const onPressReset = () => {
+    setSearchText('');
     selectCitySheetRef?.current?.resetSelectedListItem();
   };
 

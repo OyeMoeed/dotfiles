@@ -8,5 +8,5 @@ export interface IPayGradientTextProps {
   lineHeight?: number;
   yScale?: number;
   xScale?: string;
-  textAnchor?:"middle" | "end" | "start"
+  textAnchor?: 'middle' | 'end' | 'start';
 }

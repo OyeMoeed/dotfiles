@@ -146,10 +146,11 @@ export {
   WINDOW_WIDTH,
   boxShadow,
   createCustomScale,
-  heightPercent, isIPhoneX,
+  heightPercent,
+  isIPhoneX,
   margin,
   padding,
   scaleFont,
-  scaleSize, widthPercent
+  scaleSize,
+  widthPercent,
 };
-

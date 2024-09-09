@@ -1,3 +1,3 @@
 export interface IPayExpBottomSheetProps {
-  testID: string
+  testID: string;
 }

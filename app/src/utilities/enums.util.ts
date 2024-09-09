@@ -113,7 +113,7 @@ enum IdRenewalState {
 }
 
 enum FiltersType {
-  TRANSACTION_TYPE = 'transaction_type',
+  TRANSACTION_TYPE = 'transactionType',
   CARD = 'card',
   AMOUNT_FROM = 'amountFrom',
   AMOUNT_TO = 'amountTo',
@@ -127,6 +127,7 @@ enum FiltersType {
   OCCASION = 'occasion',
   OFFER_CATEGORY = 'offerCategory',
   OFFER_AVAILABILITY = 'offerAvailability',
+  DELIVERY_TYPE = 'deliveryType',
 }
 
 enum TopupStatus {
@@ -154,16 +155,14 @@ enum CardTypes {
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
 }
-enum CardStatusNumber{
-    ActiveWithoutOnlinePurchase = '0',
-    ActiveWithOnlinePurchase = '100',
-    Stolen = '700',
-    Freezed = '850'
-
-
+enum CardStatusNumber {
+  ActiveWithoutOnlinePurchase = '0',
+  ActiveWithOnlinePurchase = '100',
+  Stolen = '700',
+  Freezed = '850',
 }
 
-enum CardTypesCodes{
+enum CardTypesCodes {
   MADA = 'IPMC',
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
@@ -344,5 +343,5 @@ export {
   spinnerVariant,
   toastTypes,
   CardStatusNumber,
-  CardTypesCodes
+  CardTypesCodes,
 };

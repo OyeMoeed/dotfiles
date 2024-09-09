@@ -1,16 +1,19 @@
+import images from '@app/assets/images';
 import { IPayView } from '@app/components/atoms';
-import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
-import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
+import { IPayAccountBalance, IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import { MultiPaymentPrepareBillPayloadTypes } from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.interface';
+import multiPaymentPrepareBillService from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
-import images from '@app/assets/images';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
@@ -23,11 +26,35 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     billNickname,
     billerName,
     billerIcon,
-    serviceType,
+    totalAmount,
+    detailsArray,
+    billerId,
+    billIdType,
+    serviceDescription,
     billNumOrBillingAcct,
     dueDate,
-    totalAmount,
+    showBalanceBox = true,
   } = route.params || {};
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const billPaymentInfos: BillPaymentInfosTypes[] = [
+    {
+      billerId,
+      billNumOrBillingAcct,
+      amount: Number(totalAmount),
+      dueDateTime: dueDate,
+      billIdType,
+      billingCycle: '', // TODO: need to confirm where can I get this value
+      billIndex: '0',
+      serviceDescription,
+      billerName,
+      walletNumber,
+    },
+  ];
+  const billHeaderDetail = {
+    title: billNickname,
+    companyDetails: billerName,
+    companyImage: billerIcon,
+  };
   const {
     localizationText,
     balanceData,
@@ -39,13 +66,13 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     apiError,
     otpVerificationRef,
     veriyOTPSheetRef,
-  } = useBillPaymentConfirmation(isPayPartially, isPayOnly);
+    setOtpRefAPI,
+  } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos, billHeaderDetail);
 
   const { availableBalance, balance } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
   const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
 
@@ -59,11 +86,18 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     helpCenterRef?.current?.present();
   };
 
-  const shortString = (text: string) => {
-    if (text.length < 20) {
-      return text;
+  const onMultiPaymentPrepareBill = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const payload: MultiPaymentPrepareBillPayloadTypes = {
+      deviceInfo,
+      walletNumber,
+    };
+
+    const apiResponse = await multiPaymentPrepareBillService(payload);
+    if (apiResponse.successfulResponse) {
+      setOtpRefAPI(apiResponse.response.otpRef);
+      veriyOTPSheetRef.current?.present();
     }
-    return `${text.slice(0, 20)}...`;
   };
 
   const billInfoDetailsList = [
@@ -89,18 +123,20 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
       <IPaySafeAreaView style={styles.container}>
         <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
         <IPayView style={styles.innerContainer}>
-          <IPayAccountBalance
-            style={styles.accountBalance}
-            currencyTextStyle={styles.darkBlueText}
-            accountBalanceTextStyle={styles.darkBlueText}
-            totalAvailableTextStyle={styles.greyText}
-            currentBalanceTextStyle={styles.darkBlueText}
-            remainingAmountTextStyle={styles.greyText}
-            currentAvailableTextStyle={styles.darkText}
-            availableBalance={availableBalance}
-            showRemainingAmount
-            balance={balance}
-          />
+          {showBalanceBox && (
+            <IPayAccountBalance
+              style={styles.accountBalance}
+              currencyTextStyle={styles.darkBlueText}
+              accountBalanceTextStyle={styles.darkBlueText}
+              totalAvailableTextStyle={styles.greyText}
+              currentBalanceTextStyle={styles.darkBlueText}
+              remainingAmountTextStyle={styles.greyText}
+              currentAvailableTextStyle={styles.darkText}
+              availableBalance={availableBalance}
+              showRemainingAmount
+              balance={balance}
+            />
+          )}
           <IPayBillDetailsOption
             headerData={{
               title: billNickname || '-',
@@ -113,9 +149,10 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         <SadadFooterComponent
           style={styles.margins}
           totalAmount={totalAmount}
+          totalAmountText={localizationText.TRAFFIC_VIOLATION.AMOUNT}
           btnText={localizationText.COMMON.CONFIRM}
           disableBtnIcons
-          onPressBtn={() => veriyOTPSheetRef.current?.present()}
+          onPressBtn={onMultiPaymentPrepareBill}
         />
 
         <IPayBottomSheet
