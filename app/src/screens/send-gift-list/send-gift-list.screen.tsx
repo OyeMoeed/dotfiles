@@ -32,7 +32,7 @@ const SendGiftListScreen: React.FC = () => {
   const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
   const GIFT_TABS = [localizationText.SEND_GIFT.SENT, localizationText.SEND_GIFT.RECEIVED];
-  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData, giftData } = useConstantData();
+  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [walletTransferData, setWalletTransferData] = useState({});
@@ -141,7 +141,8 @@ const SendGiftListScreen: React.FC = () => {
 
   const renderItem = ({ item }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount } = item;
-    const isSend = selectedTab === localizationText.SEND_GIFT.SEND;
+    const isSend = selectedTab === localizationText.SEND_GIFT.SENT;
+
     return (
       <IPayView style={styles.listView}>
         <IPayGiftTransactionList
@@ -209,7 +210,7 @@ const SendGiftListScreen: React.FC = () => {
       )}
       {selectedTabData?.length ? (
         <IPayView style={styles.view}>
-          <IPayView>
+          <IPayView style={styles.listWrapper}>
             <IPayFlatlist data={selectedTabData} renderItem={renderItem} style={styles.flexStyle} />
           </IPayView>
           <IPayView>
