@@ -196,7 +196,6 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
             isExpired={details?.status === GiftCardStatus.EXPIRED}
-            expiredOverlayComponent={<IPayView style={styles.expirOverlay} />}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton

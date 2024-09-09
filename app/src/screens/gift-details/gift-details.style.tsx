@@ -1,11 +1,12 @@
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
+import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_15, FONT_SIZE_16, FONT_SIZE_17, FONT_SIZE_40 } from '@app/styles/typography.styles';
 import { isTablet } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const giftDetailsStyles = (colors: any) =>
+const giftDetailsStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -31,7 +32,7 @@ const giftDetailsStyles = (colors: any) =>
     previewContainer: {
       width: moderateScale(324),
       height: verticalScale(353),
-      backgroundColor: colors.primary.primary650,
+      backgroundColor: themeColors.primary.primary650,
       borderRadius: moderateScale(12),
       paddingVertical: moderateScale(24),
       paddingHorizontal: moderateScale(40, 0.3),
@@ -82,7 +83,7 @@ const giftDetailsStyles = (colors: any) =>
     },
     messagePreviewText: {
       textAlign: 'center',
-      color: colors.primary.primary950,
+      color: themeColors.primary.primary950,
     },
     swipeBtnView: {
       width: isTablet ? '95%' : '100%',
@@ -100,22 +101,22 @@ const giftDetailsStyles = (colors: any) =>
       width: moderateScale(24),
       height: moderateScale(4),
       borderRadius: moderateScale(99),
-      backgroundColor: colors.primary.primary200,
+      backgroundColor: themeColors.primary.primary200,
     },
     indicator2: {
       width: moderateScale(24),
       height: moderateScale(4),
       borderRadius: moderateScale(99),
       marginStart: moderateScale(4, 0.3),
-      backgroundColor: colors.primary.primary200,
+      backgroundColor: themeColors.primary.primary200,
     },
     selectedIndexIndicator: {
-      backgroundColor: colors.primary.primary500,
+      backgroundColor: themeColors.primary.primary500,
     },
     dataCardView: {
       flex: 1,
       width: '100%',
-      backgroundColor: colors.natural.natural0,
+      backgroundColor: themeColors.natural.natural0,
       borderRadius: moderateScale(16),
       height: moderateScale(48),
       paddingHorizontal: moderateScale(18, 0.3),
@@ -159,17 +160,7 @@ const giftDetailsStyles = (colors: any) =>
     },
     textStyle: {
       textDecorationLine: 'line-through',
-      color: colors.natural.natural500,
-    },
-    expirOverlay: {
-      backgroundColor: colors.error.error25,
-      width: '100%',
-      height: verticalScale(353),
-      position: 'absolute',
-      zIndex: 99999,
-      opacity: 0.5,
-      pointerEvents: 'none',
-      borderRadius: moderateScale(12),
+      color: themeColors.natural.natural500,
     },
   });
 
