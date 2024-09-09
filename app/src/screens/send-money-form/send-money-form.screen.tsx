@@ -92,7 +92,7 @@ const SendMoneyFormScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await getCoreLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo)
         setTransferReasonData(
           apiResponse?.response?.lovInfo.map((item) => ({
@@ -177,7 +177,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const getSelectedItem = () => {
     const selectedObject = formInstances?.find((item) => item?.id === selectedId);
-    return selectedObject?.selectedItem;
+    return selectedObject?.selectedItem?.text;
   };
 
   const isTransferButtonDisabled = () => {
@@ -245,7 +245,7 @@ const SendMoneyFormScreen: React.FC = () => {
       })),
     };
     const apiResponse = await getWalletToWalletFees(walletInfo.walletNumber as string, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
         data: {
@@ -389,7 +389,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 dailySpendingLimit={Number(dailyOutgoingLimit)}
               />
               <IPayButton
-                disabled={isTransferButtonDisabled() || !!warningStatus}
+                disabled={isTransferButtonDisabled() || !totalAmount || !!warningStatus}
                 btnIconsDisabled
                 medium
                 btnType="primary"
