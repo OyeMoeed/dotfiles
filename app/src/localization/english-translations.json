@@ -455,7 +455,6 @@
     "BANK_NAME": "Bank Name",
     "RECEIVERS_IBAN": "Receiver's IBAN",
     "VAT_INVOICE": "VAT Invoice",
-    "CLEAR_FILTERS": "Clear Filter",
     "CLEAR_FILTER": "Clear filter",
     "FILTERS": "Filters",
     "FILTER": "Filter",
@@ -571,7 +570,8 @@
     "TYPE_MOBILE_NUMBER": "Type mobile number",
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
-    "CONTACT_NAME": "Contact Name"
+    "CONTACT_NAME": "Contact Name",
+    "CONTACT_LIMIT": "Contacts limit reached"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -993,9 +993,8 @@
     "MINUTES": "Minutes",
     "SECONDS": "Seconds",
     "IN_STORES": "In-Stores",
-    "THEATRE": "Theatre",
     "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
+    "THEATRE": "Theatre",
     "GAMES": "Games",
     "CLOTHES": "Clothes"
   },
@@ -1361,6 +1360,11 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {

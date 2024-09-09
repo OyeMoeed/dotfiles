@@ -121,6 +121,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
         },
       ],
       transId: transaction.id,
+      heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
     });
   };
 

@@ -31,7 +31,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
   currency = 'SAR',
   flagImage,
   showIcon = true,
-  variant = inputType.PHONE_NUMBER
+  variant = inputType.PHONE_NUMBER,
 }: IPaySelectorInputProps): JSX.Element => {
   const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState(false);
@@ -53,7 +53,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
           isFocused && styles.focusedContainer,
           isError && styles.errorContainer,
           !editable && styles.disabledContainer,
-          containerStyle
+          containerStyle,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>

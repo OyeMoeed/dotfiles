@@ -9,6 +9,7 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 const transactionHistoryStyle = (colors: any) =>
   createStyleSheet({
     container: {
+      width: '100%',
       flex: 1,
       marginBottom: isIosOS ? moderateScale(100) : 0,
     },

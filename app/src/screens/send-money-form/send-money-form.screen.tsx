@@ -19,7 +19,6 @@ import {
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -54,9 +53,8 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReasonData, setTransferReasonData] = useState<ListProps[]>([]);
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
@@ -91,7 +89,7 @@ const SendMoneyFormScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await getCoreLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo)
         setTransferReasonData(
           apiResponse?.response?.lovInfo.map((item) => ({
@@ -172,7 +170,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const getSelectedItem = () => {
     const selectedObject = formInstances?.find((item) => item?.id === selectedId);
-    return selectedObject?.selectedItem;
+    return selectedObject?.selectedItem?.text;
   };
 
   const isTransferButtonDisabled = () => {
@@ -199,16 +197,6 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
-    if (constants.MOCK_API_RESPONSE) {
-      // Mock API response
-      navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.WALLET,
-        topupStatus: TopupStatus.SUCCESS,
-        amount: totalAmount,
-      });
-      return;
-    }
-
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
@@ -222,8 +210,8 @@ const SendMoneyFormScreen: React.FC = () => {
         transferPurpose: item.selectedItem.id as string,
       })),
     };
-    const apiResponse = await getWalletToWalletFees(userInfo.walletNumber as string, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    const apiResponse = await getWalletToWalletFees(walletInfo.walletNumber as string, payload);
+    if (apiResponse) {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
         data: {
@@ -244,7 +232,7 @@ const SendMoneyFormScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
     };
-    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
         getW2WTransferFees(apiResponse.response?.friends);
@@ -343,7 +331,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 dailySpendingLimit={Number(dailyOutgoingLimit)}
               />
               <IPayButton
-                disabled={isTransferButtonDisabled() || !totalAmount || !getSelectedItem() || !!warningStatus}
+                disabled={isTransferButtonDisabled() || !totalAmount || !!warningStatus}
                 btnIconsDisabled
                 medium
                 btnType="primary"

@@ -9,36 +9,26 @@ const prepareRenewId = async (payload: PrepareIdRenewalProp): Promise<unknown> =
   if (constants.MOCK_API_RESPONSE) {
     return getWalletInfoMock;
   }
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.PREPARE_ID_RENEWAL(payload?.walletNumber),
-      method: requestType.POST,
-      payload: { deviceInfo: payload?.deviceInfo },
-    });
-    return apiResponse;
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.PREPARE_ID_RENEWAL(payload?.walletNumber),
+    method: requestType.POST,
+    payload: { deviceInfo: payload?.deviceInfo },
+  });
+  return apiResponse;
 };
 
 const confirmRenewId = async (payload: ConfirmIdRenewalProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return getWalletInfoMock;
   }
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.CONFIRM_ID_RENEWAL(payload?.walletNumber),
-      method: requestType.POST,
-      payload: payload.confirmBody,
-    });
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.CONFIRM_ID_RENEWAL(payload?.walletNumber),
+    method: requestType.POST,
+    payload: payload.confirmBody,
+  });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export { confirmRenewId, prepareRenewId };

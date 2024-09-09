@@ -14,7 +14,7 @@ const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({ testID, isError, on
   const ref = useBlurOnFulfill({ value, cellCount: constants.OTP_CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
-    setValue
+    setValue,
   });
 
   const onChange = (text: string) => {
@@ -41,7 +41,7 @@ const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({ testID, isError, on
           style={[
             styles.underlineStyleBase,
             isError && { borderColor: colors.error.error500 },
-            isFocused && styles.underlineStyleHighLighted
+            isFocused && styles.underlineStyleHighLighted,
           ]}
         >
           <IPayBodyText color={symbol ? colors.natural.natural900 : colors.natural.natural300}>
