@@ -24,7 +24,7 @@ import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import passcodeStyles from '../set-passcode/set-passcode.style';
 
-const ConfirmPasscode: React.FC = ({ route }: any) => {
+const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const { passcode } = route.params;
   const { colors } = useTheme();
   const styles = passcodeStyles(colors);
@@ -170,4 +170,4 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
   );
 };
 
-export default ConfirmPasscode;
+export default ConfirmPasscodeScreen;
