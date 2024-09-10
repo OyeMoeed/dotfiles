@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayScrollView, IPayText, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayList, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
@@ -10,12 +10,16 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import { getDateFormate } from '@app/utilities/date-helper.util';
+import dateTimeFormat from '@app/utilities/date.const';
+import { shortString } from '@app/utilities/string-functions.utils';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
-  const { isSaveOnly, isPayOnly, isPayPartially, billPayDetailes, billHeaderDetail, totalAmount } = route.params;
+  const { isSaveOnly, isPayOnly, isPayPartially, totalAmount, billPaymentInfos } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
   const localizationText = useLocalization();
@@ -33,6 +37,31 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
       isSaveOnly,
     });
   };
+
+  const getBillInfoArray = (item: BillPaymentInfosTypes) => [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: shortString(item.serviceDescription, 15),
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: item.billNumOrBillingAcct,
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
+    },
+    {
+      id: '4',
+      label: localizationText.COMMON.REF_NUM,
+      value: item.transactionId,
+      icon: icons.copy,
+    },
+  ];
+
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
@@ -64,11 +93,21 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 regularTitle={false}
               />
             )}
-            <IPayBillDetailsOption
-              headerData={billHeaderDetail}
-              data={billPayDetailes}
-              style={styles.billContainer}
-              optionsStyles={styles.optionsStyle}
+
+            <IPayFlatlist
+              data={billPaymentInfos}
+              renderItem={({ item }: { item: BillPaymentInfosTypes }) => (
+                <IPayBillDetailsOption
+                  headerData={{
+                    title: item.billNickname,
+                    companyDetails: item.billerName,
+                    companyImage: item.billerIcon,
+                  }}
+                  data={getBillInfoArray(item)}
+                  style={styles.billContainer}
+                  optionsStyles={styles.optionsStyle}
+                />
+              )}
             />
             {isPayPartially && (
               <IPayButton
