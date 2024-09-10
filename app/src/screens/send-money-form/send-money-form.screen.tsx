@@ -115,7 +115,8 @@ const SendMoneyFormScreen: React.FC = () => {
   }, []);
 
   const totalAmount = formInstances.reduce(
-    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
+    // eslint-disable-next-line no-useless-escape
+    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || '0'),
     0,
   );
 

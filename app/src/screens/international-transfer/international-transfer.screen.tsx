@@ -28,16 +28,19 @@ import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { ActivationMethods } from '@app/network/services/international-transfer/activate-international-beneficiary/activate-international-beneficiary.interface';
-import activateInternationalBeneficiary from '@app/network/services/international-transfer/activate-international-beneficiary/activate-international-beneficiary.service';
+import {
+  ActivationMethods,
+  activateInternationalBeneficiary,
+} from '@app/network/services/international-transfer/activate-international-beneficiary';
 import getAlinmaExpressBeneficiaries from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.service';
-import deleteInternationalBeneficiary from '@app/network/services/international-transfer/delete-international-beneficiary/delete-international-beneficiary.service';
+import { deleteInternationalBeneficiary } from '@app/network/services/international-transfer/delete-international-beneficiary';
 import { WesternUnionBeneficiary } from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.interface';
 import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ViewAllStatus } from '@app/types/global.types';
 import {
   ApiResponseStatusType,
+  ToastTypes,
   alertType,
   alertVariant,
   buttonVariants,
@@ -218,7 +221,7 @@ const InternationalTransferScreen: React.FC = () => {
             containerStyle: styles.toast,
             isShowRightIcon: false,
             leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
-            toastType: toastTypes.SUCCESS,
+            toastType: ToastTypes.SUCCESS,
           });
           break;
         case apiResponse?.apiResponseNotOk:
@@ -384,18 +387,11 @@ const InternationalTransferScreen: React.FC = () => {
     activateBeneficiary?.current?.close();
   }, []);
 
-  const handleReceiveCall = useCallback(async () => {
-    const repsonse = await onPressActivateBeneficiary();
-    if (repsonse === ApiResponseStatusType.SUCCESS) {
-      setActivateHeight(SNAP_POINTS.LARGE);
-      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
-    }
-  }, []);
-
   const handleCallAlinma = useCallback(() => {
     setActivateHeight(SNAP_POINTS.LARGE);
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
+
   const onPressActivateBeneficiary = async () => {
     const activateBeneficiaryPayload = {
       beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
@@ -418,6 +414,15 @@ const InternationalTransferScreen: React.FC = () => {
       return '';
     }
   };
+
+  const handleReceiveCall = useCallback(async () => {
+    const repsonse = await onPressActivateBeneficiary();
+    if (repsonse === ApiResponseStatusType.SUCCESS) {
+      setActivateHeight(SNAP_POINTS.LARGE);
+      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
+    }
+  }, []);
+
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {
       case ActivateViewTypes.RECEIVE_CALL:

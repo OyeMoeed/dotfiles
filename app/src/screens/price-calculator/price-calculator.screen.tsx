@@ -89,6 +89,8 @@ const PriceCalculatorScreen: React.FC = () => {
         case FilterType.Currency:
           setSelectedCurrency(text);
           break;
+        default:
+          break;
       }
       closeDropdownBottomSheet();
     },

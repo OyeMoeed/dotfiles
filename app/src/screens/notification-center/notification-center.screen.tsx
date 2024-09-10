@@ -20,7 +20,6 @@ import {
   readSingleNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 
@@ -60,7 +59,6 @@ const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any
 const NotificationCenterScreen: React.FC = () => {
   // hooks
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { showToast } = useToastContext();
   const localization = useLocalization();
   const { colors } = useTheme();
 

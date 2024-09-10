@@ -142,6 +142,16 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   }, [permissionStatus]);
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
+
+  const renderToast = () => {
+    showToast({
+      title: localizationText.WALLET_TO_WALLET.CONTACT_LIMIT,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainer,
+    });
+  };
+
   const handleSelect = (contact: Contact) => {
     if (selectedContacts.length < 5) {
       // Corrected 'lenght' to 'length'
@@ -204,15 +214,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const handleLayout = (event: LayoutChangeEvent) => {
     const { width } = event.nativeEvent.layout;
     setContainerWidth(width);
-  };
-
-  const renderToast = () => {
-    showToast({
-      title: localizationText.WALLET_TO_WALLET.CONTACT_LIMIT,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-      containerStyle: styles.toastContainer,
-    });
   };
 
   const renderItem = ({ item }: { item: Contact }) => (
