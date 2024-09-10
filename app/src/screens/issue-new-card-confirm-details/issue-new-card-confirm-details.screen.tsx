@@ -189,39 +189,36 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                   />
                 }
               />
-
-              <IPayView style={styles.bottomContainer}>
-                <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
-                  <IPayView style={styles.termsChildContainer}>
-                    <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                    <IPayFootnoteText
-                      style={styles.termText}
-                      text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
-                    />
-                    <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
-                  </IPayView>
-                </IPayPressable>
-                <IPayList
-                  testID="ipay-list-total-fee"
-                  title={localizationText.REPLACE_CARD.TOTAL_FEE}
-                  rightText={
-                    <IPaySubHeadlineText
-                      color={colors.primary.primary800}
-                      regular
-                      text={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
-                    />
-                  }
-                />
-                <IPayButton
-                  onPress={onConfirm}
-                  large
-                  btnIconsDisabled
-                  btnType={buttonVariants.PRIMARY}
-                  btnText={localizationText.COMMON.CONFIRM}
-                />
-              </IPayView>
             </IPayView>
           </IPayScrollView>
+          <IPayView style={styles.bottomContainer}>
+            <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
+              <IPayView style={styles.termsChildContainer}>
+                <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
+                <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+                <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
+              </IPayView>
+            </IPayPressable>
+            <IPayList
+              testID="ipay-list-total-fee"
+              title={localizationText.REPLACE_CARD.TOTAL_FEE}
+              rightText={
+                <IPaySubHeadlineText
+                  color={colors.primary.primary800}
+                  regular
+                  text={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
+                />
+              }
+            />
+            <IPayButton
+              onPress={onConfirm}
+              // large
+              btnStyle={styles.button}
+              btnIconsDisabled
+              btnType={buttonVariants.PRIMARY}
+              btnText={localizationText.COMMON.CONFIRM}
+            />
+          </IPayView>
         </IPayView>
       </IPayView>
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />

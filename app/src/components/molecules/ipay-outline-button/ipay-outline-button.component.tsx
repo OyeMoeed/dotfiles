@@ -22,7 +22,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   leftIcon,
   rightIcon,
   textStyle,
-  textColor
+  textColor,
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -30,7 +30,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   const btnStyle = useMemo(() => {
     const baseStyle = {
       width,
-      borderColor: disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500
+      borderColor: disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500,
     };
     if (small) return [styles.btnSmall, baseStyle];
     if (medium) return [styles.btnMedium, baseStyle];
@@ -40,7 +40,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
-    [disabled, arrowIconColor, colors]
+    [disabled, arrowIconColor, colors],
   );
 
   const ButtonText = useMemo(() => {
@@ -57,7 +57,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
 
   const alignItemsStyle = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
-    [btnIconsDisabled, leftIcon, rightIcon]
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
 
   return (

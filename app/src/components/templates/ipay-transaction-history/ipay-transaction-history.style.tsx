@@ -9,6 +9,7 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 const transactionHistoryStyle = (colors: any) =>
   createStyleSheet({
     container: {
+      width: '100%',
       flex: 1,
       marginBottom: isIosOS ? moderateScale(100) : 0,
     },
@@ -40,7 +41,6 @@ const transactionHistoryStyle = (colors: any) =>
     },
     cardStyle: {
       flexDirection: 'row',
-      width: CUSTOME_SCALE(311),
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: colors.natural.natural0,
@@ -87,6 +87,7 @@ const transactionHistoryStyle = (colors: any) =>
       fontWeight: FONT_WEIGHT_BOLD,
     },
     containerToastIosStyle: {
+      position: 'absolute',
       bottom: verticalScale(120),
     },
     fullFlex: {

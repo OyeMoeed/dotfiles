@@ -17,11 +17,13 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   addForm,
   formInstances,
   setNotes,
+  showReason,
   setSelectedItem,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
+  const MAX_LENGTH = 500;
 
   const renderItem = ({
     item: { subtitle, id, amount, selectedItem, notes, hasWallet },
@@ -29,6 +31,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
     item: FormInstanceType;
   }) => (
     <IPayTransferInformation
+      showReason={showReason}
       amount={amount}
       subtitle={subtitle}
       setAmount={(value) => setAmount(id, value)}
@@ -36,10 +39,12 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
       selectedItem={selectedItem?.text}
       setNotes={(value) => setNotes(id, value)}
       notes={notes}
+      maxLength={MAX_LENGTH}
       openReason={() => openReason(id)}
       showRemoveFormOption={() => showRemoveFormOption(id)}
       showRemoveBtn
       hasWallet={hasWallet}
+      currencyStyle={styles.currencyStyle}
     />
   );
   return (

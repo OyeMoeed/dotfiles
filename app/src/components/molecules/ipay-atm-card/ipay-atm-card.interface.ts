@@ -47,6 +47,15 @@ export interface CardInterface {
    * expiration date
    */
   expiryDate?: string;
+  reissueDue?: boolean;
+  cardStatus?: string;
+  cardTypeId?: string;
+  linkedName?: {
+    title?: string;
+    embossingName?: string;
+    firstName?: string;
+    lastName?: string;
+  };
   /**
    * card printing status
    */

@@ -29,11 +29,10 @@ import {
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
@@ -45,7 +44,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = nafathVerificationStyles(colors);
-  const navigation = useNavigation();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -53,8 +51,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const [nafathRequestId, setNafathRequestId] = useState<string>('');
   const [duration, setDuration] = useState<number>();
   const [waitngScnds, setWaitngScnds] = useState<number>(20);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
 
@@ -122,20 +119,16 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       setNafathRequestId(apiResponse.response.nafathRequestId);
       setNafathNumber(
-        isNaN(apiResponse.response.token) ? atob(apiResponse.response.token) : apiResponse.response.token,
+        Number.isNaN(apiResponse.response.token) ? atob(apiResponse.response.token) : apiResponse.response.token,
       );
       setCounter(apiResponse.response.waitingTimeSeconds);
       setDuration(apiResponse.response.waitingTimeSeconds * 10);
-      if (step == 2) {
+      if (step === 2) {
         setIsExpired(false);
       } else {
         setStep(2);
       }
       setStartInqiryInterval(true);
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
     renderSpinner(false);
@@ -154,12 +147,12 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const { dispatch } = store || {};
 
     const deviceInfo = await getDeviceInfo();
-    let nafathObj = nafathRes.response.mainInfo;
+    const nafathObj = nafathRes.response.mainInfo;
 
-    let body: IActivationAbsherReq = {
-      walletNumber: walletNumber,
+    const body: IActivationAbsherReq = {
+      walletNumber: walletInfo.walletNumber,
       walletTier: 'G',
-      poiNumber: userInfo?.poiNumber,
+      poiNumber: walletInfo?.poiNumber,
       poiExpiryDate: nafathObj.idExpiryDate,
       poiExpiryDateHijri: nafathObj.idExpiryDateHijri,
       birthDate: nafathObj.dateOfBirth,
@@ -182,39 +175,38 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         familyName: nafathObj.arabicName.familyName,
         fullName: nafathObj.arabicName.fullName,
       },
-      deviceInfo: deviceInfo,
+      deviceInfo,
     };
     const apiResponse = await updateWalletTierReq(body);
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       const updatedValues = {
         walletTier: 'G',
         poiNumber: nafathObj.idNumber,
         poiType: nafathObj.idNumber,
       };
       dispatch(
-        setUserInfo({
-          ...userInfo,
+        setWalletInfo({
+          ...walletInfo,
           ...updatedValues,
         }),
       );
 
       onCloseNafathVerificationSheet();
       navigate(screenNames.IDENTITY_SUCCESSFUL);
-    } else if (apiResponse?.apiResponseNotOk) {
-      const updatedValues = {
-        walletTier: 'B',
-      };
-      dispatch(
-        setUserInfo({
-          ...userInfo,
-          ...updatedValues,
-        }),
-      );
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
+      renderSpinner(false);
+      return;
     }
+
+    const updatedValues = {
+      walletTier: 'B',
+    };
+    dispatch(
+      setWalletInfo({
+        ...walletInfo,
+        ...updatedValues,
+      }),
+    );
     renderSpinner(false);
   };
 
@@ -225,7 +217,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     };
     const apiResponse: any = await getNafathInquiry(payLoad);
 
-    if (apiResponse?.status?.type == APIResponseType.SUCCESS) {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       switch (apiResponse?.response?.status) {
         case NAFATH_STATUSES.ACCEPTED:
           setStartInqiryInterval(false);
@@ -243,10 +235,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         default:
           break;
       }
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-    } else {
-      setAPIError(apiResponse?.error);
     }
     setIsLoading(false);
   };
@@ -259,7 +247,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
   const onResend = () => {
     onComplete();
-    navigation.navigate(screenNames.IDENTITY_SUCCESSFUL);
+    navigate(screenNames.IDENTITY_SUCCESSFUL);
   };
 
   const onTimerCompete = () => {

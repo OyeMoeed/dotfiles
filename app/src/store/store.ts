@@ -11,11 +11,11 @@ import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
 import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
+import nafathVerificationReducer from './slices/nafath-verification';
 import permissionAlertReducer from './slices/permission-alert-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
 import resetStateSlice from './slices/reset-state-slice';
 import themeReducer from './slices/theme-slice';
-import userInformationReducer from './slices/user-information-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
 
 /**
@@ -24,7 +24,6 @@ import walletInfoReducer from './slices/wallet-info-slice';
 const reducers = {
   themeReducer,
   appDataReducer,
-  userInfoReducer: userInformationReducer,
   languageReducer,
   rearrangement: rearrangementReducer,
   auth: authReducer,
@@ -33,6 +32,7 @@ const reducers = {
   dropdownReducer,
   permissionAlertReducer,
   resetStateSlice,
+  nafathVerificationReducer,
 };
 
 /**

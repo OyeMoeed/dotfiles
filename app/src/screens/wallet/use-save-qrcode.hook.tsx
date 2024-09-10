@@ -14,17 +14,17 @@ import IQrData from './use-save-qrcode.interface';
 import walletStyles from './wallet.style';
 
 const useSaveQRCode = () => {
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
   const qrRef = useRef<any>(null);
   const { colors } = useTheme();
   const localization = useLocalization();
   // Define the QR data
   const qrDataObject: IQrData = {
-    name: userInfo?.fullName,
-    IBAN: userInfo?.viban,
-    contact: userInfo?.mobileNumber,
-   reference: ALINMA_REFERENCE_NUM,
+    name: walletInfo?.fullName,
+    IBAN: walletInfo?.viban,
+    contact: walletInfo?.mobileNumber,
+    reference: ALINMA_REFERENCE_NUM,
   };
   const qrData = JSON.stringify(qrDataObject);
 

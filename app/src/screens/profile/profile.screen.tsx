@@ -20,12 +20,12 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
-import { SNAP_POINT, WALLET_TIERS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { isBasicTierSelector, setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
@@ -43,7 +43,6 @@ const Profile = () => {
   const [kycVisible, setKycVisible] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
@@ -107,14 +106,12 @@ const Profile = () => {
       },
       walletInfo.walletNumber,
     );
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
+    if (apiResponse) {
+      dispatch(setWalletInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
       renderUploadSuccessToast();
-    } else {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderSpinner(false);
     }
+    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -130,9 +127,9 @@ const Profile = () => {
   ];
 
   useEffect(() => {
-    if (userInfo && walletInfo) {
+    if (walletInfo) {
       const userInfoData: any = {
-        fullName: userInfo.fullName,
+        fullName: walletInfo.fullName,
         ...walletInfo.addressDetails,
         ...walletInfo.userContactInfo,
         ...walletInfo.accountBasicInfo,
@@ -143,7 +140,7 @@ const Profile = () => {
       const transformedData = mapUserDataToDesiredFormat(userInfoData);
       setUserData(transformedData);
     }
-  }, [userInfo, walletInfo]);
+  }, [walletInfo]);
 
   const kycBottomSheetRef = useRef<BottomSheetModal>(null);
   const nafathVerificationBottomSheetRef = useRef(null);
@@ -180,8 +177,8 @@ const Profile = () => {
   const handlePress = () => {
     showActionSheet();
   };
+  const isBasicTier = useTypedSelector(isBasicTierSelector);
 
-  const isBasicTier = userInfo?.walletTier === WALLET_TIERS.BASIC && userInfo?.basicTier;
   const cardData = [
     {
       key: CardKeys.IDENTITY_VERIFICATION,
@@ -219,7 +216,7 @@ const Profile = () => {
         </IPayFootnoteText>
       </IPayView>
       {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
-        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED}></IPayChip>
+        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED} />
       ) : (
         <IPayOutlineButton
           rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
@@ -245,12 +242,13 @@ const Profile = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    // renderSpinner(true);
     const payload = {
       walletNumber,
     };
-    await getWalletInfo(payload, dispatch);
-    // renderSpinner(false);
+    const apiResponse: any = await getWalletInfo(payload);
+    if (apiResponse) {
+      dispatch(setWalletInfo(apiResponse?.response));
+    }
   };
 
   const updateWalletKYC = async (formData: IFormData) => {
@@ -277,7 +275,7 @@ const Profile = () => {
       deviceInfo: appData.deviceInfo as DeviceInfoProps,
     };
     renderSpinner(true);
-    const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
+    const walletUpdateResponse = await walletUpdate(payload, walletInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
       await getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
       renderSuccessToast();
@@ -306,7 +304,7 @@ const Profile = () => {
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar image={userInfo.profileImage} />
+            <IPayUserAvatar image={walletInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

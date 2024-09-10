@@ -88,7 +88,7 @@ const TransferConfirmation: React.FC = () => {
   };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
-    const { title, subTitle, icon } = item;
+    const { title, subTitle, icon, currency } = item;
     const isImage = checkImage(icon);
     return (
       <IPayView style={styles.dataCardView}>
@@ -97,7 +97,7 @@ const TransferConfirmation: React.FC = () => {
           <IPayView style={styles.detailsView}>
             <IPaySubHeadlineText
               regular
-              text={subTitle}
+              text={subTitle + (currency ? ` ${currency}` : '')}
               color={colors.primary.primary800}
               numberOfLines={1}
               style={[styles.subTitle, subTitle.length > 20 && styles.condtionalWidthSubtitle]}
@@ -154,7 +154,7 @@ const TransferConfirmation: React.FC = () => {
       </IPayScrollView>
 
       <IPayView style={styles.bottomChild}>
-        <IPayLinearGradientView gradientColors={footerParentViewGradient} style={styles.bottomView}>
+        <IPayView style={styles.bottomView}>
           <IPayLinearGradientView gradientColors={footerGradientColors} style={styles.footerView}>
             <IPayView style={styles.transferInfoView}>
               <IPayIcon icon={icons.clock_circle} size={24} color={colors.primary.primary900} />
@@ -180,7 +180,7 @@ const TransferConfirmation: React.FC = () => {
               btnText={localizationText.COMMON.TRANSFER_TEXT}
             />
           </IPayLinearGradientView>
-        </IPayLinearGradientView>
+        </IPayView>
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.LOCAL_TRANSFER.TRANSFER}

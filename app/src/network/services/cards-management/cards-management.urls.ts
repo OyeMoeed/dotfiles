@@ -8,10 +8,11 @@ const CARDS_MANAGEMENT_URLS = {
   checkPaymentStatus: (walletNumber?: string, transactionRef?: string) =>
     `/v1/${walletNumber}/credit-topup/${transactionRef}/status`,
   transfer_to_wallet_fees: (walletNumber?: string) => `cards-management/v1/${walletNumber}/fees/wallet-to-wallet`,
-  changeCardStatus :(walletNumber? : string)=> `cards-management/v1/${walletNumber}/cards/status` ,
+  changeCardStatus: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/status`,
   atm_withdrawal_fees: (walletNumber: string, amount: string) =>
     `cards-management/v1/${walletNumber}/fees/cash-withdraw?amount=${amount}`,
   atm_withdrawal_confirm: (walletNumber?: string) => `cards-management/v1/${walletNumber}/atm/withdraw`,
+  apple_pay_crypto: (walletNumber?: string) => `cards-management/v2/${walletNumber}/apple-pay-crypto`,
 };
 
 export default CARDS_MANAGEMENT_URLS;

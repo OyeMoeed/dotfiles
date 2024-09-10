@@ -30,12 +30,11 @@ const SendMoneyQRScannerScreen: React.FC = () => {
     goBack();
   };
 
- const alertGoBackPress = debounce(() => {
+  const alertGoBackPress = debounce(() => {
     route?.params?.onGoBack('');
     setScannerCode('');
     goBack();
   }, 500);
-
 
   return (
     <IPaySafeAreaView style={styles.fill}>

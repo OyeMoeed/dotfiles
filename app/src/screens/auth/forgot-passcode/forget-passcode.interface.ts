@@ -19,6 +19,7 @@ export interface SetPasscodeComponentProps {
 export interface IPayHelpCenterProps {
   testID?: string;
   onPressContactUs?: () => void;
+  hideFAQError?: boolean;
 }
 
 export interface OTPVerificationRefTypes {

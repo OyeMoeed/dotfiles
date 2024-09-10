@@ -13,6 +13,9 @@ const INTERNATIONAL_TRANSFERS_URLS = {
   get_alinma_express_transactions: () => '/v1/alinma-express-transfer/transactions',
   get_western_union_transactions_details: (moneyTransferControlNumber: string) =>
     `/v1/westernunion-transfer/transactions/${moneyTransferControlNumber}`,
+  delete_beneficiary: (beneficiaryCode: string) => `/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
+  activate_beneficiary: () => '/v1/alinma-pay/beneficiaries/activation/mark',
+  edit_beneficiary: (beneficiaryCode: string) => `/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
 };
 
 export default INTERNATIONAL_TRANSFERS_URLS;

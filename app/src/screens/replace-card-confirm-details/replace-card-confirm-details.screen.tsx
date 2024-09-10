@@ -1,11 +1,19 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@components/templates';
 
-import { IPayFootnoteText, IPayScrollView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayCheckbox,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPayScrollView,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayBottomSheet } from '@app/components/organism';
+import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -17,6 +25,10 @@ import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
+import { TermsAndConditionsRefTypes } from '../card-renewal/card-renewal.screen.interface';
+import icons from '@app/assets/icons';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
+import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh',
@@ -28,6 +40,9 @@ const DUMMY_DATA = {
 
 const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
+
+  const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -44,15 +59,20 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
 
   const styles = replaceCardStyles(colors);
 
+  const addressInfoSheetRef = useRef<AddressInfoRefTypes>(null);
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
     veriyOTPSheetRef.current?.close();
   };
 
+  const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
 
+  const onPressTermsAndConditions = () => {
+    termsAndConditionSheetRef.current?.showTermsAndConditions();
+  };
   const onPressConfirm = () => {
     veriyOTPSheetRef.current?.present();
   };
@@ -62,15 +82,28 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
     navigate(ScreenNames.REPLACE_CARD_SUCCESS);
   };
 
+  const onClose = () => {
+    addressInfoSheetRef.current?.showAddressInfoSheet();
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD} backBtn applyFlex />
+      <IPayHeader title={localizationText.CARD_OPTIONS.PRINT_CARD} backBtn applyFlex />
       <IPayView style={styles.childContainer}>
-        <IPayAccountBalance balance={DUMMY_DATA.balance} onPressTopup={() => {}} />
+        <IPayAccountBalance
+          showRemainingAmount
+          availableBalance="20,000"
+          balance={DUMMY_DATA.balance}
+          onPressTopup={() => {}}
+        />
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView style={styles.contentTopMargin}>
-              <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
+              <IPayFootnoteText
+                text={localizationText.CARDS.CARD_DETAILS}
+                color={colors.natural.natural500}
+                style={styles.header}
+              />
               <IPayList
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
                 isShowDetail
@@ -88,7 +121,15 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               />
               <IPayList
                 title={localizationText.REPLACE_CARD.ADDRESS}
-                rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />}
+                rightText={
+                  <IPayPressable
+                    onPress={onClose}
+                    style={styles.addressStyle}
+                  >
+                    <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
+                    <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
+                  </IPayPressable>
+                }
               />
               <IPayFootnoteText
                 text={localizationText.CARD_OPTIONS.CARD_FEE}
@@ -116,28 +157,35 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   />
                 }
               />
-
-              <IPayView style={styles.bottomContainer}>
-                <IPayList
-                  title={localizationText.REPLACE_CARD.TOTAL_FEE}
-                  rightText={
-                    <IPaySubHeadlineText
-                      color={colors.primary.primary800}
-                      regular
-                      text={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
-                    />
-                  }
-                />
-                <IPayButton
-                  onPress={onPressConfirm}
-                  large
-                  btnIconsDisabled
-                  btnType={buttonVariants.PRIMARY}
-                  btnText={localizationText.COMMON.CONFIRM}
-                />
-              </IPayView>
             </IPayView>
           </IPayScrollView>
+          <IPayView style={styles.bottomContainer}>
+            <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
+              <IPayView style={styles.termsChildContainer}>
+                <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
+                <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+                <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
+              </IPayView>
+            </IPayPressable>
+
+            <IPayList
+              title={localizationText.REPLACE_CARD.TOTAL_FEE}
+              rightText={
+                <IPaySubHeadlineText
+                  color={colors.primary.primary800}
+                  regular
+                  text={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
+                />
+              }
+            />
+            <IPayButton
+              onPress={onPressConfirm}
+              btnStyle={styles.btn}
+              btnIconsDisabled
+              btnType={buttonVariants.PRIMARY}
+              btnText={localizationText.COMMON.CONFIRM}
+            />
+          </IPayView>
         </IPayView>
       </IPayView>
       <IPayBottomSheet
@@ -165,6 +213,8 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
       >
         <HelpCenterComponent />
       </IPayBottomSheet>
+      <IPayAddressInfoSheet ref={addressInfoSheetRef} />
+      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
     </IPaySafeAreaView>
   );
 };
