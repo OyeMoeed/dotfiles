@@ -32,7 +32,7 @@ const IPayNearestAtmLocations: React.FC<IPayNearestAtmLocationsProps> = ({ testI
         {nearestAtms &&
           nearestAtms.map((atm, index) => (
             <Marker
-              key={`${`${index}Marker`}`}
+              key={`${`${index}-map-marker`}`}
               coordinate={atm?.location}
               title={atm?.type}
               description={atm?.address}

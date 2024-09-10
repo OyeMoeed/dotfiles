@@ -46,7 +46,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const renderToast = () => {
     showToast({
       title: topupChannel === payChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
-      // subTitle: subTitle,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: topupChannel === payChannel.ORDER ? styles.orderToast : styles.toastContainer,
