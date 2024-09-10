@@ -291,6 +291,8 @@ const TransferSummaryScreen: React.FC = () => {
     prepareOtp();
   };
 
+  const totalAmount = transfersDetails?.formInstances?.[0]?.totalAmount ?? '';
+
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
@@ -332,7 +334,7 @@ const TransferSummaryScreen: React.FC = () => {
             title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
             showDetail
             detailTextStyle={styles.listTextStyle}
-            detailText={`${transfersDetails?.formInstances?.[0]?.totalAmount ?? ''} ${localizationText.COMMON.SAR}`}
+            detailText={`${totalAmount} ${localizationText.COMMON.SAR}`}
           />
           <IPayButton
             btnType={buttonVariants.PRIMARY}

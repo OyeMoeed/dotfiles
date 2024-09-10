@@ -59,6 +59,10 @@ const SendGiftPreview: FC = ({ route }) => {
   // to change text color on basis of card theme.
   const isDarkCard = darkCards.includes(selectedCard?.id);
 
+  const logoImage = isDarkCard ? images.textLogoLight : images.logo;
+
+  const themeTextColor = isDarkCard ? colors.natural.natural0 : colors.primary.primary950;
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SEND_GIFT.SEND_GIFT} applyFlex />
@@ -105,20 +109,16 @@ const SendGiftPreview: FC = ({ route }) => {
       >
         <IPayView style={styles.bottomSheetContainer}>
           <IPayView style={[styles.previewContainer, { backgroundColor: selectedCard?.bgColor }]}>
-            <IPayImage image={isDarkCard ? images.textLogoLight : images.logo} style={styles.smallAlinmaLogo} />
+            <IPayImage image={logoImage} style={styles.smallAlinmaLogo} />
             <IPayLottieAnimation source={selectedCard?.path} style={styles.image} loop />
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText
-                style={styles.messageText}
-                color={isDarkCard ? colors.natural.natural0 : colors.primary.primary950}
-                text={message}
-              />
+              <IPayFootnoteText style={styles.messageText} color={themeTextColor} text={message} />
             </IPayScrollView>
             <IPayFootnoteText
               style={styles.messagePreviewText}
               text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
-              color={isDarkCard ? colors.natural.natural0 : colors.primary.primary950}
+              color={themeTextColor}
             />
           </IPayView>
         </IPayView>

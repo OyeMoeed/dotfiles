@@ -140,6 +140,11 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
 
   // to chnage text color on basis of card theme.
   const isDarkCard = darkCards.includes(transferDetails?.selectedCard?.id);
+
+  const logoImage = isDarkCard ? images.textLogoLight : images.logo;
+
+  const themeTextColor = isDarkCard ? colors.backgrounds.orange : colors.primary.primary950;
+
   return (
     <IPayView style={styles.container}>
       <IPayView style={styles.contentContainer}>
@@ -222,21 +227,17 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
       >
         <IPayView style={styles.bottomSheetContainer}>
           <IPayView style={[styles.previewContainer, { backgroundColor: transferDetails?.selectedCard?.bgColor }]}>
-            <IPayImage image={isDarkCard ? images.textLogoLight : images.logo} style={styles.smallAlinmaLogo} />
+            <IPayImage image={logoImage} style={styles.smallAlinmaLogo} />
             <IPayLottieAnimation source={transferDetails?.selectedCard?.path ?? ''} style={styles.image} loop />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
               <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
             </IPayView>
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText
-                color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
-                style={styles.messagePreviewText}
-                text={notes}
-              />
+              <IPayFootnoteText color={themeTextColor} style={styles.messagePreviewText} text={notes} />
             </IPayScrollView>
             <IPayFootnoteText
-              color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
+              color={themeTextColor}
               style={styles.messagePreviewText}
               text={`${localizationText.SEND_GIFT.FROM}: ${name}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
