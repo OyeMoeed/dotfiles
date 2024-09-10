@@ -173,7 +173,6 @@ const SadadBillsScreen: React.FC = ({ route }) => {
       navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
         billData: billToEditRef.current,
         setEditBillSuccessToast,
-        billId: selectedBillsId, // TODO: once api implemented on this screen will update it
       });
     } else {
       setActionSheetOptions(deleteBillOptions);

@@ -2,6 +2,8 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SadadEditBillFields } from '@app/enums/edit-sadad-bill.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -10,17 +12,19 @@ import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-
 import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
 import editBillService from '@app/network/services/bills-management/edit-bill/edit-bill.service';
 import { PaymentInfoProps } from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
 
 const SadadEditBillsScreen: React.FC = ({ route }) => {
-  const { billData, setEditBillSuccessToast, billId } = route.params;
+  const { billData, setEditBillSuccessToast } = route.params;
   const {
     billerId = '004',
+    billId = '1',
     billDesc = '',
     billerName = '',
     serviceDescription = '',
@@ -31,6 +35,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   const localizationText = useLocalization();
   const [showAlert, setShowAlert] = useState(false);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { showToast } = useToastContext();
 
   const {
     getValues,
@@ -40,27 +45,39 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
     watch,
   } = useForm();
 
+  const renderToast = ({ title, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        borderColor: colors.error.error25,
+        isShowRightIcon: false,
+        leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
+
   const onSubmit = async () => {
-    // Handle form submission here
-    const billName = getValues(SadadEditBillFields.BILL_NICK_NAME);
-    if (billName) {
-      const payload: EditBillPayloadTypes = {
-        billNumOrBillingAcct,
-        billId,
-        billNickname: billName,
-        walletNumber,
-        deviceInfo: {
-          platformVersion: '',
-          deviceId: '',
-          deviceName: '',
-          platform: '',
-        },
-      };
-      const apiResponse = await editBillService(payload);
-      if (apiResponse.successfulResponse) {
-        setEditBillSuccessToast(billName);
-        goBack();
+    try {
+      const deviceInfo = await getDeviceInfo();
+      // Handle form submission here
+      const billName = getValues(SadadEditBillFields.BILL_NICK_NAME);
+      if (billName) {
+        const payload: EditBillPayloadTypes = {
+          billNumOrBillingAcct,
+          billId,
+          billNickname: billName,
+          walletNumber,
+          deviceInfo,
+        };
+        const apiResponse = await editBillService(payload);
+        if (apiResponse.status.type === APIResponseType.SUCCESS) {
+          setEditBillSuccessToast(billName);
+          goBack();
+        }
       }
+    } catch (error) {
+      renderToast({ title: localizationText.ERROR.SOMETHING_WENT_WRONG });
     }
   };
 
