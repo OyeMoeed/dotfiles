@@ -11,6 +11,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
+import { useTypedSelector } from '@app/store/store';
 import { BalanceStatusVariants, IPayBillBalanceProps } from './ipay-bill-balance.interface';
 import onBillBalanceStyles from './ipay-bill-balance.style';
 
@@ -36,13 +37,22 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
   const currentBalance = 4000; // TODO will be updated on basis of API
   const availableBalance = '5000'; // TODO will be updated on basis of API
   const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
-  const totalAmount = 700; // TODO will be updated later
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
 
   useEffect(() => {
     if (selectedBills?.length) {
-      setBillsData(selectedBills);
+      setBillsData(
+        selectedBills?.map((el) => ({
+          billInfoItem: el,
+          currency: localizationText.COMMON.SAR,
+          billTitle: el.nickName,
+          vendor: el.biller.billerDesc,
+          vendorIcon: el.biller.imageURL,
+          billAmount: el.dueAmount,
+        })),
+      );
     }
-  }, [selectedBills]);
+  }, []);
 
   const balanceStatusVariants: BalanceStatusVariants = {
     insufficient: {
@@ -69,8 +79,15 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
   };
 
   const removeItem = (itemToRemove: SadadBillItemProps) => {
-    const data = billsData?.filter((item) => item?.billTitle !== itemToRemove?.billTitle);
+    const data = billsData?.filter((item) => item?.billInfoItem.billIndex !== itemToRemove?.billInfoItem.billIndex);
     setBillsData(data);
+  };
+
+  const onChangeAmountOutside = (value: string, item: SadadBillItemProps) => {
+    const updatedBills = billsData?.map((el) =>
+      item?.billInfoItem.billIndex === el.billInfoItem.billIndex ? { ...el, billAmount: value } : el,
+    );
+    setBillsData(updatedBills);
   };
 
   const renderItem = ({ item }: { item: SadadBillItemProps }) => (
@@ -81,12 +98,36 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
       actionBtnText={localizationText.COMMON.REMOVE}
       item={item}
       onPress={() => removeItem(item)}
+      handleAmountInputFromOutSide
+      onChangeAmountOutside={(value) => onChangeAmountOutside(value, item)}
     />
   );
 
+  const billPaymentInfosObject = billsData?.map((el) => ({
+    billerId: el.billInfoItem.biller.billerId,
+    billNumOrBillingAcct: el.billInfoItem.billAccountNumber,
+    amount: Number(el.billAmount),
+    dueDateTime: el.billInfoItem.dueDateTime,
+    billIdType: '1', // TODO: not receiving this value from response
+    billingCycle: '1', // TODO: need to confirm where can I get this value
+    billIndex: el.billInfoItem.billIndex,
+    serviceDescription: el.billInfoItem.biller.billerCategoryDesc,
+    billerName: el.billInfoItem.biller.billerDesc,
+    walletNumber,
+    billNickname: el.billInfoItem.nickName,
+    billerIcon: el.billInfoItem.biller.categoryImageURL,
+  }));
+
   const onPressPay = () => {
-    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayPartially });
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+      isPayPartially,
+      billPaymentInfos: billPaymentInfosObject,
+    });
   };
+
+  const totalAmount = billsData.length
+    ? billsData.reduce((sum, item) => sum + Number(item.billAmount), 0).toString()
+    : '0';
 
   return (
     <IPayView style={[styles.container, eligibleToPay && styles.containerHeight]}>
