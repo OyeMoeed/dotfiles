@@ -166,6 +166,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
       toastType: toastTypes.SUCCESS,
     });
+    getBills(selectedTab);
   };
 
   const handelEditOrDelete = (index: number) => {

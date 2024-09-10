@@ -14,6 +14,7 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
@@ -56,6 +57,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const [services, setServices] = useState<BillersService[]>();
   const [selectedService, setSelectedService] = useState<BillersService>();
+  const { showToast } = useToastContext();
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -68,6 +70,15 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     accountNumber,
     billName,
   });
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
@@ -109,20 +120,24 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onGetBillersServices = async (billerID: string) => {
-    const apiResponse = await getBillersServicesService(billerID);
-    if (apiResponse.successfulResponse) {
-      setServices(
-        apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
-          ...serviceItem,
-          id: serviceItem.serviceId,
-          text: serviceItem.serviceDesc,
-        })),
-      );
+    try {
+      const apiResponse = await getBillersServicesService(billerID);
+      if (apiResponse.successfulResponse) {
+        setServices(
+          apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+            ...serviceItem,
+            id: serviceItem.serviceId,
+            text: serviceItem.serviceDesc,
+          })),
+        );
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   useEffect(() => {
-    onGetBillersServices(selectedBiller?.billerId);
+    onGetBillersServices(walletNumber);
   }, [selectedBiller]);
 
   useEffect(() => {
