@@ -44,7 +44,7 @@ const SendGiftCard = () => {
     }
   };
 
-  const renderCarouselItem = ({ item }: any) => (
+  const renderCarouselItem = ({ item }: GiftDetails) => (
     <IPayView style={[styles.carouselItem, { backgroundColor: item.bgColor }]}>
       <IPayLottieAnimation source={item.path} style={styles.image} loop />
     </IPayView>
