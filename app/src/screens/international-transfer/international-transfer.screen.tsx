@@ -42,7 +42,7 @@ import {
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -179,7 +179,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, {selectedBeneficiary});
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, { selectedBeneficiary });
   };
 
   const handleBeneficiaryActions = useCallback((index: number) => {
@@ -398,7 +398,6 @@ const InternationalTransferScreen: React.FC = () => {
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
   const onPressActivateBeneficiary = async () => {
-   
     const activateBeneficiaryPayload = {
       beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
       activationMethod: ActivationMethods.IVR,

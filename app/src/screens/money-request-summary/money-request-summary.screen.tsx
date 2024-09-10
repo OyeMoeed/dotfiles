@@ -20,7 +20,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { States, TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -77,13 +77,13 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     createRequestBottomSheetRef.current?.close();
     if (screen === SummaryType.MONEY_REQUEST_SUMMARY) {
       navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.REQUEST_ACCEPT,
+        topupChannel: PayChannel.REQUEST_ACCEPT,
         topupStatus: TopupStatus.SUCCESS,
       });
     }
     if (screen === SummaryType.ORDER_SUMMARY) {
       navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.ORDER,
+        topupChannel: PayChannel.ORDER,
         topupStatus: TopupStatus.SUCCESS,
         amount: 1000,
       });

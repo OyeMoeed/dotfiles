@@ -12,7 +12,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { toastTypes } from '@app/utilities/enums.util';
+import { ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
@@ -56,7 +56,7 @@ const CardOptionsScreen: React.FC = () => {
       subTitle: getToastSubTitle(),
       containerStyle: isFromDelete ? styles.isFromDeleteStyle : styles.toastContainerStyle,
       leftIcon: <IPayIcon icon={icon} size={24} color={colors.natural.natural0} />,
-      toastType: isOn ? toastTypes.SUCCESS : toastTypes.WARNING,
+      toastType: isOn ? ToastTypes.SUCCESS : ToastTypes.WARNING,
     });
   };
 

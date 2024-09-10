@@ -33,7 +33,7 @@ const formatTime = (seconds: number): string => {
   return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
 function minutesToSeconds(minutes: string | number) {
-  const min = parseInt(minutes);
+  const min = parseInt(String(minutes), 10);
   return min * 60;
 }
 

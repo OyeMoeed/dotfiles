@@ -16,7 +16,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { FilterSelectedValue } from '@app/utilities/filter-interface.utll';
+import { FilterSelectedValue } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import requestMoneyStyles from './request-money-transaction.style';

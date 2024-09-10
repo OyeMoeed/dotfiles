@@ -16,7 +16,7 @@ import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { isIosOS } from '@app/utilities/constants';
 import React, { useState } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';

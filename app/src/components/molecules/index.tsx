@@ -44,6 +44,7 @@ import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-st
 import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAccountBalance from './ipay-account-balance/ipay-account-balance.component';
@@ -133,4 +134,5 @@ export {
   IPayTransactionHistoryDetails,
   IPayUserAvatar,
   SadadFooterComponent,
+  useToastContext,
 };

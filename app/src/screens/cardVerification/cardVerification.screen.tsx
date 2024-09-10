@@ -6,11 +6,12 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { PayChannel, spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
+
 import { CheckStatusProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { topupCheckStatus } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTypedSelector } from '@app/store/store';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useState } from 'react';
 import { WebViewNavigation } from 'react-native-webview';
@@ -34,9 +35,9 @@ const CardVerificationScreen: React.FC = () => {
 
   // const handlePressPay = () => {
   //   setProcessToast(false);
-  //   if (channel === payChannel.APPLE) {
+  //   if (channel === PayChannel.APPLE) {
   //     setTopUpAmount('');
-  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
+  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: PayChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
   //   } else {
   //     navigate(screenNames.CARD_VERIFICATION);
   //   }
@@ -61,7 +62,7 @@ const CardVerificationScreen: React.FC = () => {
     if (cvv === constants.MOCK_CVV) {
       setIsCvvError(false);
       setCvv('');
-      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.CARD, topupStatus: TopupStatus.SUCCESS });
+      navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: PayChannel.CARD, topupStatus: TopupStatus.SUCCESS });
     } else {
       setIsCvvError(true);
     }
@@ -86,7 +87,7 @@ const CardVerificationScreen: React.FC = () => {
       } else {
         renderSpinner(false);
         navigate(screenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.CARD,
+          topupChannel: PayChannel.CARD,
           topupStatus: TopupStatus.SUCCESS,
           isUnderProccess: true,
           summaryData: apiResponse,
@@ -95,7 +96,7 @@ const CardVerificationScreen: React.FC = () => {
     } else if (apiResponse) {
       renderSpinner(false);
       navigate(screenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.CARD,
+        topupChannel: PayChannel.CARD,
         topupStatus: TopupStatus.SUCCESS,
         summaryData: apiResponse,
       });
@@ -103,7 +104,7 @@ const CardVerificationScreen: React.FC = () => {
   };
 
   const onNavigationStateChange = (event: WebViewNavigation) => {
-    if (event?.url?.indexOf('result') != -1) {
+    if (event?.url?.indexOf('result') !== -1) {
       setShowWebView(false);
       renderSpinner(true);
       checkStatus();
