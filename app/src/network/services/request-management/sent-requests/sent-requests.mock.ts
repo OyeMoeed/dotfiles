@@ -23,7 +23,7 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
         targetFullName: 'Mohammed recived',
         targetMobileNumber: '0583431010',
         targetAmount: '100.00',
-        transactionDescription: 'test',
+        transactionDescription: 'Hey Dear, I would like to send this amazing request',
         cancellation_date: '2008-04-08T16:00:00',
         realTransactionAmount: null,
         realTransactionTotalPaidAmount: null,

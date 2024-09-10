@@ -410,6 +410,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       />
       <IPayView style={styles.listContainer}>
         <IPayPaginatedFlatlist
+          contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
           externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
           keyExtractor={(index: number) => {
