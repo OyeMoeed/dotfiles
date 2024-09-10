@@ -14,10 +14,14 @@ interface BeneficiaryBankDetails {
   bankName: string;
   beneficiaryAccountNo: string;
 }
+interface BankDetails {
+  code: string;
+  desc: string;
+}
 
 interface IPayCreateBeneficiaryProps {
   testID?: string;
 }
 
-export { BeneficiaryBankDetails, FormValues, IPayCreateBeneficiaryProps, ListOption };
+export { BankDetails, BeneficiaryBankDetails, FormValues, IPayCreateBeneficiaryProps, ListOption };
 

@@ -28,6 +28,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import {
+  BankDetails,
   BeneficiaryBankDetails,
   FormValues,
   IPayCreateBeneficiaryProps,
@@ -47,7 +48,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
-  const [bankList, setBankList] = useState();
+  const [bankList, setBankList] = useState([]);
   const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetails>();
   const countryCode = 'SA';
 
@@ -172,13 +173,17 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   };
 
   const getBankDetails = (bankCode: string, ibanNumber: string) => {
-    const bankDetails = bankList?.find((bank) => bank.code === bankCode);
-    setValue(AddBeneficiary.BANK_NAME, bankDetails.desc);
-    setBeneficiaryBankDetails({
-      bankCode: bankCode,
-      bankName: bankDetails.desc,
-      beneficiaryAccountNo: ibanNumber,
-    });
+    const bankDetails = bankList.find((bank: BankDetails) => bank.code === bankCode);
+
+    if (bankDetails) {
+      const { desc: bankName } = bankDetails;
+      setValue(AddBeneficiary.BANK_NAME, bankName);
+      setBeneficiaryBankDetails({
+        bankCode,
+        bankName,
+        beneficiaryAccountNo: ibanNumber,
+      });
+    }
   };
 
   const onIBanChange = async (ibanNumber: string) => {
