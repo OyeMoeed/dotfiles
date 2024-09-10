@@ -8,19 +8,13 @@ const getTrafficViolationData = async (): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return trafficVoilationMock;
   }
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.GET_TRAFIC_VIOLATION,
-      method: requestType.GET,
-    });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.GET_TRAFIC_VIOLATION,
+    method: requestType.GET,
+  });
+
+  return apiResponse;
 };
 
 export default getTrafficViolationData;

@@ -20,6 +20,7 @@ import { getTransactions } from '@app/network/services/core/transaction/transact
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -28,7 +29,6 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
-import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -47,9 +47,9 @@ const Home: React.FC = () => {
   const topUpSelectionRef = React.createRef<any>();
 
   const dispatch = useTypedDispatch();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
@@ -90,28 +90,18 @@ const Home: React.FC = () => {
 
   const getTransactionsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '3',
-        offset: '1',
-      };
 
-      const apiResponse: any = await getTransactions(payload);
+    const payload: TransactionsProp = {
+      walletNumber,
+      maxRecords: '3',
+      offset: '1',
+    };
 
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        setTransactionsData(apiResponse?.response?.transactions);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+    const apiResponse: any = await getTransactions(payload);
+
+    setTransactionsData(apiResponse?.response?.transactions);
+
+    renderSpinner(false);
   };
 
   const getOffersData = async () => {
@@ -157,7 +147,7 @@ const Home: React.FC = () => {
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
     });
-    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
@@ -212,7 +202,7 @@ const Home: React.FC = () => {
       walletNumber: walletNumber as string,
     };
     const apiResponse: any = await getWalletInfo(payload);
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
     }
   };
@@ -235,19 +225,19 @@ const Home: React.FC = () => {
       <>
         {/* ---------Top Navigation------------- */}
         <IPayView style={styles.topNavCon}>
-          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
+          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={firstName} />
         </IPayView>
         {/* ----------BalanceBox------------ */}
         <IPayView style={styles.balanceCon}>
           <IPayBalanceBox
-            balance={walletInfo?.availableBalance}
-            totalBalance={walletInfo?.currentBalance}
+            balance={availableBalance}
+            totalBalance={currentBalance}
             hideBalance={appData?.hideBalance}
             walletInfoPress={() => navigate(ScreenNames.WALLET)}
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
-            monthlyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyOutgoingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+            monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}

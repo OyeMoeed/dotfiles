@@ -17,7 +17,7 @@ const sendGiftStyles = () =>
     },
     sendButton: {
       backgroundColor: colors.primary.primary500,
-      marginTop: scaleSize(36),
+      marginTop: scaleSize(24),
       paddingHorizontal: scaleSize(20),
       paddingVertical: scaleSize(14),
       borderRadius: scaleSize(16),

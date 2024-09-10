@@ -40,7 +40,6 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
       width: moderateScale(75),
     },
     previewContainer: {
-      backgroundColor: colors.backgrounds.skyBlue,
       borderRadius: moderateScale(12),
       alignItems: 'center',
       marginHorizontal: moderateScale(36),
@@ -52,7 +51,7 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
     image: { width: moderateScale(130), height: moderateScale(120), marginBottom: verticalScale(25) },
     amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2) },
     messagePreview: {
-      marginTop: moderateScale(50),
+      paddingVertical: moderateScale(50),
       marginHorizontal: moderateScale(24),
     },
 

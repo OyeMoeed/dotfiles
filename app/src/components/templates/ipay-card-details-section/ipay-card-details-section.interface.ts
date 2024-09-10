@@ -3,6 +3,7 @@ import { CardStatusRes } from '@app/network/services/cards-management/card-statu
 
 interface IPayCardDetailsSectionProps {
   testID?: string;
+  isCardPrinted?: boolean;
   onOpenOTPSheet?: () => void;
   currentCard: CardInterface;
   cards: CardInterface[];
