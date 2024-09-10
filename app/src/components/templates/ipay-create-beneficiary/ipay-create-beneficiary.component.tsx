@@ -21,7 +21,7 @@ import validateIBAN from '@app/network/services/local-transfer/validate-iban/val
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { getBankIconByCode } from '@app/utilities/bank-logo';
-import { AddBeneficiary, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { AddBeneficiary, AddBeneficiaryKey, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -76,11 +76,16 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       beneficiaryNickName: '',
     },
   });
+  const formatKey = (key: string) => {
+    return key
+      .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase words
+      .replace(/^./, (str) => str?.toUpperCase()); // Capitalize the first letter
+  };
 
   const generatedData = () => {
     if (beneficiaryData) {
       return Object.entries(beneficiaryData).map(([key, value]) => ({
-        key,
+        key: formatKey(key),
         value,
       }));
     }
@@ -157,14 +162,14 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       <IPayList
         containerStyle={styles.listContainerStyle}
         title={renderTitle(key)}
-        textStyle={[styles.listTitleText, key === AddBeneficiary.IBAN && styles.capitalizeText]}
+        textStyle={[styles.listTitleText, key === AddBeneficiaryKey.IBAN && styles.capitalizeText]}
         rightContainerStyles={styles.rightContainer}
         rightText={
           <IPayView testID={key} style={styles.rightTextStyle}>
             <IPaySubHeadlineText numberOfLines={2} color={colors.primary.primary800} regular>
               {value || '-'}
             </IPaySubHeadlineText>
-            {key === AddBeneficiary.BANK_NAME && getBankIconByCode(beneficiaryBankDetails?.bankCode, 40)}
+            {key === AddBeneficiaryKey.BANK_NAME && getBankIconByCode(beneficiaryBankDetails?.bankCode, 40)}
           </IPayView>
         }
       />
@@ -193,16 +198,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     if (REGEX.IBAN.test(ibanNumber)) {
       renderSpinner(true);
       const apiResponse = await validateIBAN(params);
-
-      if (apiResponse && apiResponse?.bankCode) {
+      if (apiResponse?.bankCode) {
         getBankDetails(apiResponse.bankCode, ibanNumber);
-        renderSpinner(false);
       } else {
-        renderSpinner(false);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-        setBeneficiaryBankDetails({ bankCode: '', bankName: '', beneficiaryAccountNo: '' });
       }
     }
+    renderSpinner(false);
   };
 
   return (

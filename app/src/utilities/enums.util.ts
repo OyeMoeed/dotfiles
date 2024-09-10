@@ -219,6 +219,11 @@ enum AddBeneficiary {
   BENEFICIARY_NAME = 'beneficiaryName',
   BENEFICIARY_NICK_NAME = 'beneficiaryNickName',
 }
+
+export enum AddBeneficiaryKey {
+  BANK_NAME = 'Bank Name',
+  IBAN = 'Iban',
+}
 enum BeneficiaryTypes {
   ACTIVE = 'ACTIVATE',
   INACTIVE = 'NEW_BENEFICIARY',
@@ -321,7 +326,9 @@ export {
   CardTypesCodes,
   Filter,
   FilterValue,
-  FiltersType, GiftCardDetailsKey, GiftCardStatus,
+  FiltersType,
+  GiftCardDetailsKey,
+  GiftCardStatus,
   IdRenewalState,
   InfoTypes,
   LanguageCode,
