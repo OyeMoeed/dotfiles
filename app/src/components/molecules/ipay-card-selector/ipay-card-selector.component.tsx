@@ -17,7 +17,6 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback, useEffect, useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
-import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
 import IPayCardItemProps from './ipay-card.interface';
@@ -35,9 +34,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const [, setSelectedCardObj] = useState<any>({});
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [apiError, setAPIError] = useState<string>('');
   const [topupCards, setTopupcards] = useState<any[]>([]);
-  const { showToast } = useToastContext();
 
   const handleCardSelect = (key: number) => {
     setSelectedCard(key);
@@ -57,16 +54,6 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
       hideSpinner();
     }
   }, []);
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const isExpired = (card: any) => {
     const todayDate = new Date();

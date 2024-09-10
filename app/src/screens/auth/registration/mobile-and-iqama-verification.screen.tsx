@@ -21,7 +21,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';

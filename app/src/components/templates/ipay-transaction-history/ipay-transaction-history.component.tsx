@@ -1,3 +1,6 @@
+// TODO: Fix max function for this file and indent
+/* eslint-disable indent */
+/* eslint-disable max-lines-per-function */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import {
@@ -588,7 +591,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     {localizationText.TRANSACTION_HISTORY.AMOUNT}
                   </IPayFootnoteText>
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {transaction?.amount + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                    {`${transaction?.amount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
@@ -613,7 +616,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {localizationText.TRANSACTION_HISTORY.FEES}
                     </IPayFootnoteText>
                     <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {(transaction?.feesAmount || '0.00') + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                      {`${transaction?.feesAmount || '0.00'}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}
@@ -625,7 +628,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {localizationText.TRANSACTION_HISTORY.VAT}
                     </IPayFootnoteText>
                     <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {(transaction?.vatAmount || '0.00') + '  ' + localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}
+                      {`${transaction?.vatAmount || '0.00'}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}

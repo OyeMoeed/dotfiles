@@ -8,9 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 
-// TODO: fix linting hooks names rule
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const useSplashScreenAnimations = () => {
+const useSplashAnimations = () => {
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.5)).current;
   const blurAnim = useRef(new Animated.Value(0)).current;
@@ -52,4 +50,4 @@ const useSplashScreenAnimations = () => {
   return { opacityAnim, scaleAnim, blurAnim };
 };
 
-export default useSplashScreenAnimations;
+export default useSplashAnimations;

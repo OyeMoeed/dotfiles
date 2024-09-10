@@ -25,6 +25,7 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
   const generateYears = (startYear: number) => {
     const endYear = 2040;
     const years = [];
+    // eslint-disable-next-line no-plusplus
     for (let year = startYear; year <= endYear; year++) {
       years.push(year.toString());
     }

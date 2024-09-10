@@ -162,7 +162,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                   style={styles.headlineText}
                 />
               </IPayView>
-              <IPayScrollView style={{ flex: 0 }} scrollEnabled>
+              <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
                 {formattedTransferDetails.map((item, index) => {
                   const { isAlinma, value } = item[0];
                   const isFirstItem = index === 0;
@@ -180,7 +180,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                       )}
                       <IPayFlatlist
                         style={styles.detailesFlex}
-                        scrollEnabled={true}
+                        scrollEnabled
                         data={item}
                         renderItem={renderWallerPaymentItem}
                       />

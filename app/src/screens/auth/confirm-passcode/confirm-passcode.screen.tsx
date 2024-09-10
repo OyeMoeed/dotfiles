@@ -11,7 +11,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode/set-passcode.interface';
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';

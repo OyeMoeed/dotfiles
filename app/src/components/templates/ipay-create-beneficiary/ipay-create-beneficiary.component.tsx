@@ -19,7 +19,7 @@ import {
   LocalTransferBeneficiaryBankMockProps,
 } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
 import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { AddBeneficiary, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -226,7 +226,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   }}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.iban}
-                  maxLength={34}
                   testID="iban"
                   assistiveText={errors?.iban && errors?.iban?.message}
                 />

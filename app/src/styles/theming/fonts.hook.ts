@@ -4,7 +4,7 @@
  */
 
 import { fonts } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
-import languages from '@localization/languages.localization';
+import Languages from '@localization/languages.localization';
 import { useTypedSelector } from '@store/store';
 
 /**
@@ -14,9 +14,9 @@ import { useTypedSelector } from '@store/store';
  */
 const getFonts = (languageFlag: string) => {
   switch (languageFlag) {
-    case languages.EN:
+    case Languages.EN:
       return fonts; // Default font for English language
-    case languages.AR:
+    case Languages.AR:
       return fonts; // Default font for Arabic language
     default:
       return fonts; // Default font for other languages

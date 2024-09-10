@@ -18,7 +18,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import logOut from '@app/network/services/core/logout/logout.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import clearSession from '@app/network/utilities/network-session-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';

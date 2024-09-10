@@ -27,7 +27,7 @@ import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { isW2WTransactions, isShowTabs = false, currentCard, cards, contacts, isShowAmount = true } = route.params;
-  const { transactionHistoryFilterDefaultValues, W2WFilterData, W2WFilterDefaultValues } = useConstantData();
+  const { transactionHistoryFilterDefaultValues, w2WFilterData, w2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const localizationText = useLocalization();
@@ -355,7 +355,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       heading: localizationText.WALLET_TO_WALLET.CONTACT_NAME,
     }));
 
-  const selectedFilterData = isW2WTransactions ? W2WFilterData(onContactsList(contacts)) : transactionHistoryFilterData;
+  const selectedFilterData = isW2WTransactions ? w2WFilterData(onContactsList(contacts)) : transactionHistoryFilterData;
 
   const renderTrxsList = () => (
     <IPayView>
@@ -459,7 +459,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       {selectedFilterData && (
         <IPayFilterBottomSheet
           heading={localizationText.TRANSACTION_HISTORY.FILTER}
-          defaultValues={isW2WTransactions ? W2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
+          defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
           showAmountFilter={isShowAmount}
           showDateFilter
           ref={filterRef}

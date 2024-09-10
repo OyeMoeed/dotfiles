@@ -1,3 +1,5 @@
+// TODO: will be fixed in another PR
+/* eslint-disable @typescript-eslint/naming-convention */
 import { TransactionsProp } from './transaction/transaction.interface';
 
 const CORE_URLS = {

@@ -266,35 +266,34 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={[styles.cardButton, styles.margins]}>
         <IPayButton
           onPress={goBack}
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           btnText={localizationText.TOP_UP.NEW_TOP_UP}
           leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
         />
         <IPayButton
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           btnText={localizationText.TOP_UP.SHARE}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>
     );
 
-  const renderRequestAccept = () => {
-    (topupChannel === payChannel.REQUEST_ACCEPT || topupChannel === payChannel.REQUEST) && (
+  const renderRequestAccept = () =>
+    (topupChannel === PayChannel.REQUEST_ACCEPT || topupChannel === PayChannel.REQUEST) && (
       <IPayView style={[styles.cardButton, styles.margins]}>
         <IPayButton
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           btnText={localizationText.TOP_UP.SHARE}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>
     );
-  };
 
   const renderWalletAndGiftShare = () =>
     (topupChannel === PayChannel.WALLET || topupChannel === PayChannel.GIFT) && (
       <IPayView style={styles.shareBackground}>
         <IPayButton
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           btnText={localizationText.TOP_UP.SHARE}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />

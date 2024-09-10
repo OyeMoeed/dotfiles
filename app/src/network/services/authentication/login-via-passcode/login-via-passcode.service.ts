@@ -15,6 +15,7 @@ const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object 
     method: requestType.POST,
     payload,
     headers: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       'Api-Version': 'v2',
     },
   });

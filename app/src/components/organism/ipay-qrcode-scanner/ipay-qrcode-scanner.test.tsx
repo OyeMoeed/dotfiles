@@ -7,7 +7,7 @@ import IPayQRCodeScannerComponent from './ipay-qrcode-scanner.component';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import { render } from '@testing-library/react-native';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
+import { PermissionsStatus } from '@app/enums';
 import { IPayView } from '@app/components/atoms';
 
 // Mock the hooks
@@ -64,7 +64,7 @@ describe('IPayQRCodeScannerComponent', () => {
   });
 
   it('renders loader when permission status is unknown', () => {
-    (usePermissions as jest.Mock).mockReturnValue({ permissionStatus: permissionsStatus.UNKNOWN });
+    (usePermissions as jest.Mock).mockReturnValue({ permissionStatus: PermissionsStatus.UNKNOWN });
 
     const { getByTestId } = render(<IPayQRCodeScannerComponent testID="qrcode-component" onRead={onReadMock} />);
 
@@ -72,7 +72,7 @@ describe('IPayQRCodeScannerComponent', () => {
   });
 
   it('renders QR code scanner when permission is granted', () => {
-    (usePermissions as jest.Mock).mockReturnValue({ permissionStatus: permissionsStatus.GRANTED });
+    (usePermissions as jest.Mock).mockReturnValue({ permissionStatus: PermissionsStatus.GRANTED });
 
     const { getByTestId } = render(<IPayQRCodeScannerComponent testID="qrcode-scanner-view" onRead={onReadMock} />);
 
@@ -80,7 +80,7 @@ describe('IPayQRCodeScannerComponent', () => {
   });
 
   it('renders permission denied alert when permission is denied', () => {
-    (usePermissions as jest.Mock).mockReturnValue({ permissionStatus: permissionsStatus.DENIED });
+    (usePermissions as jest.Mock).mockReturnValue({ permissionStatus: PermissionsStatus.DENIED });
 
     const { getByText } = render(<IPayQRCodeScannerComponent testID="qrcode-scanner" onRead={onReadMock} />);
 

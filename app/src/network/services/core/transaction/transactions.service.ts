@@ -35,6 +35,7 @@ const getCards = async (payload: CardsProp): Promise<any> => {
     endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
     method: requestType.GET,
     headers: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       'api-version': 'v2',
     },
   });

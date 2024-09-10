@@ -34,8 +34,7 @@ import forgetPasscode from '@app/network/services/core/forget-passcode/forget-pa
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';

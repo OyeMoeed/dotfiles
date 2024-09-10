@@ -18,7 +18,7 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';

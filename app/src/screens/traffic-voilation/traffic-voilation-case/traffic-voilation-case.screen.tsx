@@ -11,7 +11,7 @@ import useConstantData from '@app/constants/use-constants';
 
 import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficTabPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
