@@ -47,7 +47,8 @@ import {
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/core';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
@@ -122,9 +123,13 @@ const LocalTransferScreen: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    getBeneficiariesData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getBeneficiariesData();
+
+      return () => {};
+    }, []),
+  );
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
