@@ -9,6 +9,8 @@ const BILLS_MANAGEMENT_URLS = {
   GET_BILLS: 'bills-management/v1/bills',
   GET_BILLS_BY_STATUS: (walletNumber: string, billStatus: string) =>
     `bills-management/v1/alinmapay/bills/${walletNumber}?billStatus=${billStatus}`,
+  GET_BILLER_IMAGE: (billerId: string) =>
+    `https://www.alinma.com/ADS/channels/retail/assets/images/billers/${billerId}.png`,
 };
 
 export default BILLS_MANAGEMENT_URLS;

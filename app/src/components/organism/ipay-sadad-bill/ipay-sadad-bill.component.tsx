@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import {
   IPayCaption2Text,
   IPayCheckbox,
@@ -11,6 +10,7 @@ import {
 } from '@app/components/atoms';
 import { IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
@@ -29,7 +29,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   onPressMoreOptions,
   showMoreOption = true,
 }) => {
-  const { billId, billerName, amount, billDesc, dueDateTime, billStatusDesc, selected = false } = billDetails;
+  const { billId, billerId, billerName, amount, billDesc, dueDateTime, billStatusDesc, selected = false } = billDetails;
 
   const { colors } = useTheme();
   const styles = sadadBillStyles(colors);
@@ -67,7 +67,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
       {showCheckBox && <IPayCheckbox isCheck={selected} onPress={onPressCheckBox} />}
       <IPayView style={styles.contentView}>
         <IPayView>
-          <IPayImage image={images.logoTab} style={styles.vendorIcon} />
+          <IPayImage image={BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId)} style={styles.vendorIcon} />
           <IPaySubHeadlineText text={billDesc} color={colors.natural.natural900} />
           <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>
