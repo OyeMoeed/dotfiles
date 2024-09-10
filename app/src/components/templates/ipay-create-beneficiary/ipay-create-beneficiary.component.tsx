@@ -17,7 +17,6 @@ import LocalBeneficiaryMetaMockProps, {
   LocalBank,
 } from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
-import { ValidateIBANResponse } from '@app/network/services/local-transfer/validate-iban/validate-iban.interface';
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -193,20 +192,19 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     };
     if (REGEX.IBAN.test(ibanNumber)) {
       renderSpinner(true);
-      const apiResponse: ValidateIBANResponse = await validateIBAN(params);
-      console.log('apiResponse', apiResponse);
+      const apiResponse = await validateIBAN(params);
 
-      if (apiResponse?.bankCode) {
+      if (apiResponse && apiResponse?.bankCode) {
         getBankDetails(apiResponse.bankCode, ibanNumber);
         renderSpinner(false);
       } else {
         renderSpinner(false);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-        setBeneficiaryBankDetails({});
+         setBeneficiaryBankDetails( { bankCode:"",
+        bankName:"",
+        beneficiaryAccountNo: ""});
       }
-    } else {
-      setBeneficiaryBankDetails({});
-    }
+  
   };
 
   return (
