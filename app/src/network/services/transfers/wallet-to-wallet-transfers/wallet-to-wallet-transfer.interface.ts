@@ -22,7 +22,7 @@ interface TransferItem {
   vatAmt: string | null;
   bankVATAmt: string | null;
   userNotes: string;
-  status: 'initiated' | 'executed'; // Assuming status is one of these two values
+  status: 'initiated' | 'executed' | 'failed'; // Assuming status is one of these two values
 }
 
 // Define the WalletToWalletTransferResponseDetails interface that extends MockAPIDataProps with a specific response
