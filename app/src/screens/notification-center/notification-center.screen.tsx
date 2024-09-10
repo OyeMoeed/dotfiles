@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayHeader, IPayNoResult } from '@app/components/molecules';
+import { IPayHeader, IPayNoResult, useToastContext } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -17,7 +17,7 @@ import { spinnerVariant } from '@app/utilities/enums.util';
 import {
   deleteSingleNotification,
   getAllRetainedMessages,
-  readSingleNotification,
+  readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { Notification } from './notification-center.interface';
@@ -61,6 +61,7 @@ const NotificationCenterScreen: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const localization = useLocalization();
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
 
   // states
   const [notifications, setNotifications] = useState<Notification[]>([] as Notification[]);
@@ -74,9 +75,25 @@ const NotificationCenterScreen: React.FC = () => {
   const pendingNotificationsCount = pendingNotifications.length;
   const hasPendingRequest = pendingNotificationsCount > 0;
   const hasNotifications = notifications.length > 0;
-  const unreadNotificationCount = 1;
+  const unreadNotificationCount = notifications.filter((notification) => !notification.read).length;
+  const notificationSubText =
+    unreadNotificationCount > 0 ? `${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}` : undefined;
 
   const styles = getNotificationCenterStyles(colors);
+
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
 
   /**
    * Render spinner
@@ -95,24 +112,62 @@ const NotificationCenterScreen: React.FC = () => {
   /**
    * Handle delete notification
    * @param id - Notification ID
-   */
-  const handleDeleteNotification = async (id: string) => {
+   */ const handleDeleteNotification = async (id: string) => {
     renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       messageId: id,
     };
 
-    const apiResponse = await deleteSingleNotification(payload);
+    try {
+      const apiResponse = await deleteSingleNotification(payload);
 
-    if (apiResponse) {
-      setNotifications((prevNotifications) =>
-        prevNotifications?.filter((notification) => notification.messageId !== id),
-      );
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        renderSpinner(false);
+        // remove the deleted notification from the list
+        setNotifications((prevNotifications) =>
+          prevNotifications?.filter((notification) => notification.messageId !== id),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
+      renderSpinner(false);
+      return { error: error.message || 'Unknown error' };
     }
+  };
 
-    renderSpinner(false);
-    return apiResponse;
+  /**
+   * Handle mark all as read
+   * @param id - Notification ID
+   */
+  const handleAllMarkAsRead = async () => {
+    renderSpinner(true);
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      apiPayload: {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        messageIds: [],
+      },
+    };
+
+    try {
+      const apiResponse = await readNotification(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        renderSpinner(false);
+        // mark the notification as read
+        setNotifications((prevNotifications) =>
+          prevNotifications?.map((notification) => ({ ...notification, read: true })),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
+      renderSpinner(false);
+
+      return { error: error.message || 'Unknown error' };
+    }
   };
 
   /**
@@ -129,20 +184,25 @@ const NotificationCenterScreen: React.FC = () => {
       },
     };
 
-    const apiResponse = await readSingleNotification(payload);
+    try {
+      const apiResponse = await readNotification(payload);
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        renderSpinner(false);
+        // mark the notification as read
+        setNotifications((prevNotifications) =>
+          prevNotifications?.map((notification) =>
+            notification.messageId === id ? { ...notification, read: true } : notification,
+          ),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
       renderSpinner(false);
-      // mark the notification as read
-      setNotifications((prevNotifications) =>
-        prevNotifications?.map((notification) =>
-          notification.messageId === id ? { ...notification, read: true } : notification,
-        ),
-      );
-      return apiResponse;
+
+      return { error: error.message || 'Unknown error' };
     }
-    renderSpinner(false);
-    return null;
   };
 
   /**
@@ -161,27 +221,47 @@ const NotificationCenterScreen: React.FC = () => {
       currentPage: page,
       pageSize,
     };
+    try {
+      const apiResponse = await getAllRetainedMessages(payload);
 
-    const apiResponse: any = await getAllRetainedMessages(payload);
+      switch (apiResponse?.status?.type) {
+        case 'SUCCESS': {
+          const newNotifications = apiResponse?.response?.retainedMessages || [];
+          const start = (page - 1) * pageSize;
+          const end = page * pageSize;
+          const paginatedData = newNotifications.slice(start, end);
+          const hasMore = newNotifications.length > end;
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      const newNotifications = apiResponse?.response?.retainedMessages || [];
-      const start = (page - 1) * pageSize;
-      const end = page * pageSize;
-      const paginatedData = newNotifications.slice(start, end);
-      const hasMore = newNotifications.length > end;
+          if (page === 1) {
+            setNotifications(paginatedData);
+          } else {
+            setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
+          }
 
-      if (page === 1) {
-        setNotifications(paginatedData);
-      } else {
-        setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
+          renderSpinner(false);
+          return { data: paginatedData, hasMore };
+        }
+
+        case 'apiResponseNotOk':
+          renderToast({
+            title: localization.ERROR.API_ERROR_RESPONSE,
+            toastType: 'WARNING',
+          });
+          break;
+
+        case 'FAILURE':
+          renderToast(apiResponse?.error);
+          break;
+
+        default:
+          break;
       }
-
+    } catch (error: any) {
+      renderToast(error?.message || localization.ERROR.SOMETHING_WENT_WRONG);
+    } finally {
       renderSpinner(false);
-      return { data: paginatedData, hasMore };
     }
 
-    renderSpinner(false);
     return { data: [], hasMore: false };
   };
 
@@ -218,9 +298,11 @@ const NotificationCenterScreen: React.FC = () => {
             subTextColor={colors.primary.primary500}
             showDotBeforeSubtext
             leftText={localization.NOTIFICATION_CENTER.NOTIFICATIONS}
-            subText={`${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}`}
+            subText={notificationSubText}
             rightText={localization.NOTIFICATION_CENTER.READ_ALL}
+            onRightOptionPress={handleAllMarkAsRead}
           />
+
           <IPayTabs
             scrollEnabled
             scrollable

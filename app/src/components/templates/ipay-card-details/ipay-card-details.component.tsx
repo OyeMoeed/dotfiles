@@ -6,10 +6,10 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import React from 'react';
-import FieldKeyMappingProps from './ipay-card-details.interface';
+import { cardDetailsProps, FieldKeyMappingProps } from './ipay-card-details.interface';
 import cardDetailsStyle from './ipay-card-details.style';
 
-const IPayCardDetails: React.FC = () => {
+const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = cardDetailsStyle(colors);
@@ -27,16 +27,16 @@ const IPayCardDetails: React.FC = () => {
   };
 
   const dummyCardDetails: FieldKeyMappingProps = {
-    [CardDetailsKeys.CARD_TYPE]: 'Mada Debit Card',
-    [CardDetailsKeys.CARD_NUMBER]: '1111 1111 1111 1111',
-    [CardDetailsKeys.CARD_HOLDER_NAME]: 'Adam Ahmed',
-    [CardDetailsKeys.EXPIRY_DATE]: '22/26',
+    [CardDetailsKeys.CARD_NUMBER]: cardDetails?.cardNumber,
+    [CardDetailsKeys.CARD_HOLDER_NAME]: cardDetails?.cardHolderName,
+    [CardDetailsKeys.CVV]: cardDetails?.cvv,
+    [CardDetailsKeys.EXPIRY_DATE]: cardDetails?.expiryDate,
   };
 
   const fieldKeyMapping: FieldKeyMappingProps = {
-    [CardDetailsKeys.CARD_TYPE]: localizationText.CARDS[CardDetailsKeys.CARD_TYPE],
     [CardDetailsKeys.CARD_NUMBER]: localizationText.CARDS[CardDetailsKeys.CARD_NUMBER],
     [CardDetailsKeys.CARD_HOLDER_NAME]: localizationText.CARDS[CardDetailsKeys.CARD_HOLDER_NAME],
+    [CardDetailsKeys.CVV]: localizationText.CARDS[CardDetailsKeys.CVV],
     [CardDetailsKeys.EXPIRY_DATE]: localizationText.CARDS[CardDetailsKeys.EXPIRY_DATE],
   };
 

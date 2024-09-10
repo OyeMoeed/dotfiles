@@ -17,9 +17,10 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const styles = changeCardPinStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
-  const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.CurrentPin);
+  const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
+  const [apiError] = useState<string>('');
 
   const getTitle = () => {
     switch (currentView) {
@@ -47,19 +48,6 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
     }
   };
 
-  const getErrorTitle = () => {
-    switch (currentView) {
-      case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.CHANGE_PIN.PIN_INCORRECT;
-      case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.INVALID_PIN;
-      case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.PIN_NOT_MATCHING;
-      default:
-        return '';
-    }
-  };
-
   const getErrorDescription = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
@@ -81,13 +69,13 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
 
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
 
-  const renderToast = () => {
+  const renderToast = (toastMsg: string) => {
     showToast({
-      title: getErrorTitle(),
-      subTitle: getErrorDescription(),
-      containerStyle: styles.toast,
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
 
@@ -104,7 +92,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setClearPin((prev) => !prev);
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       case ChangeCardPinViewTypes.NewPin:
@@ -114,18 +102,17 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setClearPin((prev) => !prev);
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
-          setClearPin((prev) => !prev);
           if (onSuccess) {
-            onSuccess();
+            onSuccess(enteredCode);
           }
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       default:

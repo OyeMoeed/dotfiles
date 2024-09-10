@@ -7,7 +7,7 @@ import { useRoute } from '@react-navigation/native';
 
 const TopUpSuccessScreen = () => {
   const route: any = useRoute();
-  const { topupChannel, topupStatus, isUnderProccess, summaryData, amount } = route.params || {
+  const { topupChannel, topupStatus, isUnderProccess, summaryData, amount, requestPaidSummaryData } = route.params || {
     topupChannel: null,
     topupStatus: null,
   };
@@ -37,6 +37,7 @@ const TopUpSuccessScreen = () => {
         summaryData={summaryData}
         goBack={handleNavigation}
         amount={amount}
+        requestPaidSummaryData={requestPaidSummaryData}
       />
     </IPaySafeAreaView>
   );
