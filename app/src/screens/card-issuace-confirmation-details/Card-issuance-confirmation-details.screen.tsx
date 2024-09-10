@@ -29,6 +29,15 @@ const CardIssuanceConfirmationScreen = () => {
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
   const helpCenterRef = useRef<OpenBottomSheetRefTypes>(null);
 
+  const renderToast = () => {
+    showToast({
+      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
@@ -83,15 +92,6 @@ const CardIssuanceConfirmationScreen = () => {
       showDetail
     />
   );
-
-  const renderToast = () => {
-    showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   return (
     <IPaySafeAreaView>

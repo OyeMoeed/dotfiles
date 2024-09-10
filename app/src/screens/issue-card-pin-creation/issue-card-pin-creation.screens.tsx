@@ -105,27 +105,23 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
     }
   };
 
-  return (
-    <>
-      {currentView === ChangeCardPinViewTypes.EnterReceiveOtp ? (
-        <OtpVerificationComponent onConfirmPress={onSuccess} onPressHelp={handleOnPressHelp} />
-      ) : (
-        <IPayView style={styles.container}>
-          <IPayImage image={images.securityCard} style={styles.lockIconView} />
-          <IPayView style={styles.headingView}>
-            <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
-          </IPayView>
-          <IPayView style={styles.pincodeViewContainer}>
-            <IPayPasscode
-              clearPin={clearPin}
-              passcodeError={passcodeError}
-              data={constants.DIALER_DATA}
-              onEnterPassCode={onEnterPassCode}
-            />
-          </IPayView>
-        </IPayView>
-      )}
-    </>
+  return currentView === ChangeCardPinViewTypes.EnterReceiveOtp ? (
+    <OtpVerificationComponent onConfirmPress={onSuccess} onPressHelp={handleOnPressHelp} />
+  ) : (
+    <IPayView style={styles.container}>
+      <IPayImage image={images.securityCard} style={styles.lockIconView} />
+      <IPayView style={styles.headingView}>
+        <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
+      </IPayView>
+      <IPayView style={styles.pincodeViewContainer}>
+        <IPayPasscode
+          clearPin={clearPin}
+          passcodeError={passcodeError}
+          data={constants.DIALER_DATA}
+          onEnterPassCode={onEnterPassCode}
+        />
+      </IPayView>
+    </IPayView>
   );
 };
 

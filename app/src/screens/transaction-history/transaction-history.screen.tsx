@@ -6,7 +6,7 @@ import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
+import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -278,17 +278,18 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const mapFiltersTypes = (transactionTypesRes: []) => {
-    const transactionTypesResMap = transactionTypesRes?.length
-      ? transactionTypesRes?.map((transactionType: any, index: number) => ({
-          id: index,
-          key: transactionType?.transactionRequestType,
-          value: transactionType?.defaultDescEn,
-        }))
-      : [];
+    let transactionTypesResMap: any = [];
+    if (transactionTypesRes?.length) {
+      transactionTypesResMap = transactionTypesRes?.map((transactionType: any, index: number) => ({
+        id: index,
+        key: transactionType?.transactionRequestType,
+        value: transactionType?.defaultDescEn,
+      }));
+    }
 
-    const filters = [];
+    const filtersTransaction = [];
 
-    filters.push({
+    filtersTransaction.push({
       id: '1',
       label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
       type: FiltersType.TRANSACTION_TYPE,
@@ -301,7 +302,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         key: card.cardIndex,
         value: card?.maskedCardNumber,
       }));
-      filters.push({
+      filtersTransaction.push({
         id: '2',
         label: localizationText.TRANSACTION_HISTORY.CARD,
         type: FiltersType.CARD,
@@ -367,6 +368,21 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     </IPayView>
   );
 
+  const renderNoResult = () =>
+    noFilterResult ? (
+      <IPayNoResult
+        textColor={colors.primary.primary800}
+        message={localizationText.TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND}
+      />
+    ) : (
+      <IPayNoResult
+        textColor={colors.primary.primary800}
+        message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
+      />
+    );
+
+  const renderLoadingWithNoResult = () => (isLoading ? <IPaySpinner hasBackgroundColor={false} /> : renderNoResult());
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -426,27 +442,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         />
       )}
       <IPayView style={styles.listContainer}>
-        {filteredData && filteredData.length ? (
-          renderTrxsList()
-        ) : (
-          <>
-            {!isLoading ? (
-              noFilterResult ? (
-                <IPayNoResult
-                  textColor={colors.primary.primary800}
-                  message={localizationText.TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND}
-                />
-              ) : (
-                <IPayNoResult
-                  textColor={colors.primary.primary800}
-                  message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
-                />
-              )
-            ) : (
-              <IPaySpinner hasBackgroundColor={false} />
-            )}
-          </>
-        )}
+        {filteredData && filteredData.length ? renderTrxsList() : renderLoadingWithNoResult()}
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}

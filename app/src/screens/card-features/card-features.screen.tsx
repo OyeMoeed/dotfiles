@@ -15,7 +15,7 @@ import cardFeaturesStyles from './card-features.style';
 
 const CardFeaturesScreen: React.FC = () => {
   const route = useRoute();
-  const { currentCard } = route?.params;
+  const { currentCard } = route?.params as { currentCard: { cardType: '' } };
   const CURRENT_CARD_TYPE = currentCard.cardType;
   const localizationText = useLocalization();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();

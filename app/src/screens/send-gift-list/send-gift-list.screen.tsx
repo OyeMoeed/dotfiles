@@ -36,7 +36,7 @@ const SendGiftListScreen: React.FC = () => {
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [walletTransferData, setWalletTransferData] = useState({});
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
 

@@ -434,29 +434,27 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         onCloseBottomSheet={onCloseSaveContact}
       >
         <IPayFormProvider<AddPhoneFormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '' }}>
-          {({ handleSubmit }) => {
-            return (
-              <IPayView style={styles.unsavedBottomSheet}>
-                <IPayRHFAnimatedTextInput
-                  name="mobileNumber"
-                  label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
-                  keyboardType="phone-pad"
-                  rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
-                  containerStyle={styles.phoneInputStyle}
-                  mainContainerStyles={styles.phoneInputStyleMain}
-                  maxLength={constants.UNSAVED_NUMBER_LENGTH}
-                />
-                <IPayButton
-                  medium
-                  btnIconsDisabled
-                  btnStyle={styles.unsavedButton}
-                  btnText={localizationText.COMMON.DONE}
-                  onPress={handleSubmit(addUnsavedNumber)}
-                  btnType="primary"
-                />
-              </IPayView>
-            );
-          }}
+          {({ handleSubmit }) => (
+            <IPayView style={styles.unsavedBottomSheet}>
+              <IPayRHFAnimatedTextInput
+                name="mobileNumber"
+                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                keyboardType="phone-pad"
+                rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
+                containerStyle={styles.phoneInputStyle}
+                mainContainerStyles={styles.phoneInputStyleMain}
+                maxLength={constants.UNSAVED_NUMBER_LENGTH}
+              />
+              <IPayButton
+                medium
+                btnIconsDisabled
+                btnStyle={styles.unsavedButton}
+                btnText={localizationText.COMMON.DONE}
+                onPress={handleSubmit(addUnsavedNumber)}
+                btnType="primary"
+              />
+            </IPayView>
+          )}
         </IPayFormProvider>
       </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />

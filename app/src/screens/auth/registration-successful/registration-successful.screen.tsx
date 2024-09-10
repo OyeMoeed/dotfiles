@@ -21,10 +21,10 @@ import useBiometricService from '@app/network/services/core/biometric/biometric-
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import throttle from '@app/utilities/throttle-onPress.util';
-import { useTypedSelector } from '@store/store';
 import React, { useCallback, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import { buttonVariants } from '@app/utilities';
 import genratedStyles from './registration-successful.style';
 
 const RegistrationSuccessful: React.FC = () => {
@@ -35,7 +35,6 @@ const RegistrationSuccessful: React.FC = () => {
   const [isBottomViewVisible, setBottomViewVisible] = useState(false);
   const bottomViewHeight = useRef(new Animated.Value(0)).current;
   const { handleSetupBiomatric } = useBiometricService();
-  const { passCode } = useTypedSelector((state) => state.appDataReducer.appData);
 
   const handleDonePress = () => {
     Animated.timing(bottomViewHeight, {
@@ -97,7 +96,7 @@ const RegistrationSuccessful: React.FC = () => {
                   text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
                 />
                 <IPayButton
-                  btnType="primary"
+                  btnType={buttonVariants.PRIMARY}
                   btnText={localizationText.COMMON.DONE}
                   large
                   btnStyle={styles.btnStyle}
@@ -150,7 +149,7 @@ const RegistrationSuccessful: React.FC = () => {
               />
 
               <IPayButton
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 btnText={localizationText.REGISTRATION.SETUP_NOW}
                 large
                 btnIconsDisabled
@@ -158,7 +157,7 @@ const RegistrationSuccessful: React.FC = () => {
                 onPress={handleSetupBiomatric}
               />
               <IPayButton
-                btnType="outline"
+                btnType={buttonVariants.OUTLINED}
                 btnText={localizationText.REGISTRATION.SKIP_FOR_NOW}
                 large
                 btnIconsDisabled

@@ -80,30 +80,6 @@ const useBillPaymentConfirmation = (
     calculatedBill: '300',
   };
 
-  const billPayDetailesArr = [
-    {
-      id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
-      value: shortString(billPaymentInfos[0].serviceDescription),
-    },
-    {
-      id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-      value: billPaymentInfos[0].billNumOrBillingAcct,
-    },
-    {
-      id: '3',
-      label: localizationText.COMMON.DUE_DATE,
-      value: billPaymentInfos[0].dueDateTime,
-    },
-    {
-      id: '4',
-      label: localizationText.COMMON.REF_NUM,
-      value: apiResponse.response.billPaymentResponses[0].transactionId,
-      icon: icons.copy,
-    },
-  ];
-
   const onConfirm = async () => {
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
@@ -112,6 +88,30 @@ const useBillPaymentConfirmation = (
     };
     setIsLoading(true);
     const apiResponse = await multiPaymentBillService(payload);
+    const billPayDetailsArr = [
+      {
+        id: '1',
+        label: localizationText.PAY_BILL.SERVICE_TYPE,
+        value: shortString(billPaymentInfos?.[0].serviceDescription || ''),
+      },
+      {
+        id: '2',
+        label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+        value: billPaymentInfos?.[0].billNumOrBillingAcct,
+      },
+      {
+        id: '3',
+        label: localizationText.COMMON.DUE_DATE,
+        value: billPaymentInfos?.[0].dueDateTime,
+      },
+      {
+        id: '4',
+        label: localizationText.COMMON.REF_NUM,
+        value: apiResponse.response.billPaymentResponses[0].transactionId,
+        icon: icons.copy,
+      },
+    ];
+
     setIsLoading(false);
     if (apiResponse.successfulResponse) {
       veriyOTPSheetRef.current?.close();
@@ -119,9 +119,9 @@ const useBillPaymentConfirmation = (
       navigate(ScreenNames.PAY_BILL_SUCCESS, {
         isPayOnly,
         isPayPartially,
-        billPayDetailes: billPayDetailesArr,
+        billPayDetailes: billPayDetailsArr,
         billHeaderDetail,
-        totalAmount: billPaymentInfos[0].amount,
+        totalAmount: billPaymentInfos?.[0].amount,
       });
     } else {
       setAPIError(apiResponse?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);

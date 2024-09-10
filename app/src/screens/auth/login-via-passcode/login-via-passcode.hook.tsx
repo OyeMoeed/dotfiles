@@ -39,7 +39,7 @@ const useLogin = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
   const [resendOtpPayload, setResendOtpPayload] = useState<PrepareForgetPasscodeProps>();
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const { showSpinner, hideSpinner } = useSpinnerContext();

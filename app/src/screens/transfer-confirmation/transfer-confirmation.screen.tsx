@@ -43,7 +43,6 @@ const TransferConfirmation: React.FC = () => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
-  const footerParentViewGradient = [colors.primary.primary50, colors.secondary.secondary50];
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const totalAmount = `3020 ${localizationText.COMMON.SAR}`;
   const beneficiaryData = constants.BENEFICIARY_DETAILS;

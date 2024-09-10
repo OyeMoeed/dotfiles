@@ -30,8 +30,7 @@ const useChangeImage = (): UseChangeImageReturn => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const [, setIsLoading] = useState<boolean>(false);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const dispatch = useTypedDispatch();
   const showActionSheet = useCallback(() => {

@@ -14,9 +14,16 @@ const useSettings = () => {
   const openBottomSheet = useRef<bottomSheetTypes>(null);
   const { passCode } = useTypedSelector((state) => state.appDataReducer.appData);
   const [renderView, setRenderView] = useState(PasscodeTypes.ResetPasscode);
+
+  const changeView = (data: PasscodeChangeState) => {
+    if (data?.currentCode) setCurrentPasscode(data?.currentCode);
+    if (data?.newCode) setNewPasscode(data?.newCode);
+    setRenderView(data.nextComponent);
+  };
+
   const onEnterPassCode = (currentCode: string) => {
     if (currentCode.length === 4) {
-      if (currentCode == passCode) {
+      if (currentCode === passCode) {
         changeView({ currentCode, nextComponent: PasscodeTypes.NewPasscode });
       } else {
         setPasscodeError(true);
@@ -25,12 +32,6 @@ const useSettings = () => {
     } else {
       setPasscodeError(false);
     }
-  };
-
-  const changeView = (data: PasscodeChangeState) => {
-    if (data?.currentCode) setCurrentPasscode(data?.currentCode);
-    if (data?.newCode) setNewPasscode(data?.newCode);
-    setRenderView(data.nextComponent);
   };
 
   // close passcode sheet

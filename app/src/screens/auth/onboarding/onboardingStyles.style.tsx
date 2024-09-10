@@ -2,7 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 
-export const onboardingStyles = (colors: any) =>
+const onboardingStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -83,3 +83,5 @@ export const onboardingStyles = (colors: any) =>
       width: '100%',
     },
   });
+
+export default onboardingStyles;

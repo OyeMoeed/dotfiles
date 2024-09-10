@@ -10,8 +10,6 @@ import {
   IPayNearestAtmLocations,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetCoreManagementLovPayload } from '@app/network/services/core/lov/get-lov.interface';
 import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';

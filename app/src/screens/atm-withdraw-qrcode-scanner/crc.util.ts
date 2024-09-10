@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-alert */
@@ -41,7 +42,7 @@ export class Crc {
       let y = 0;
       for (let x = 0; x < str.length; x = y) {
         const str1 = str.substr(y, 2);
-        const strLength1 = parseInt(str.substr(y + 2, 2));
+        const strLength1 = parseInt(str.substr(y + 2, 2), 10);
         const strValue1 = str.substr(y + 4, strLength1);
         y = y + 4 + strLength1;
 
@@ -145,7 +146,7 @@ export class Crc {
             let u = 0;
             for (let z = 0; z < strLength1; z = u) {
               const str2 = strValue1.substr(u, 2);
-              const strLength2 = parseInt(strValue1.substr(u + 2, 2));
+              const strLength2 = parseInt(strValue1.substr(u + 2, 2), 10);
               const strValue2 = strValue1.substr(u + 4, strLength2);
               u = u + 4 + strLength2;
 
@@ -195,7 +196,7 @@ export class Crc {
             let u = 0;
             for (let z = 0; z < strLength1; z = u) {
               const str2 = strValue1.substr(u, 2);
-              const strLength2 = parseInt(strValue1.substr(u + 2, 2));
+              const strLength2 = parseInt(strValue1.substr(u + 2, 2), 10);
               const strValue2 = strValue1.substr(u + 4, strLength2);
               u = u + 4 + strLength2;
 

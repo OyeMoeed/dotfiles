@@ -139,6 +139,11 @@ const SendGiftAmountScreen = ({ route }) => {
     });
   };
 
+  const showRemoveAlert = (contact: Contact) => {
+    setContactToRemove(contact);
+    setAlertVisible(true);
+  };
+
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID, isAlinma } = item;
     let detailText = `${topUpAmount || 0} ${localizationText.COMMON.SAR}`;
@@ -147,9 +152,8 @@ const SendGiftAmountScreen = ({ route }) => {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
     }
 
-    const renderAlinmaIcon = (isAlinma) => {
-      return isAlinma ? <Alinma /> : <NonAlinma />;
-    };
+    const renderAlinmaIcon = (isAlinmaValid: boolean) => (isAlinmaValid ? <Alinma /> : <NonAlinma />);
+
     return (
       <IPayView>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && contacts.length > 0 ? (
@@ -192,7 +196,7 @@ const SendGiftAmountScreen = ({ route }) => {
             </IPayView>
             <IPayView style={styles.remove}>
               <IPayButton
-                btnType="link-button"
+                btnType={buttonVariants.LINK_BUTTON}
                 btnStyle={styles.remove}
                 btnText={localizationText.PROFILE.REMOVE}
                 rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
@@ -306,11 +310,6 @@ const SendGiftAmountScreen = ({ route }) => {
     setAlertVisible(false);
   };
 
-  const showRemoveAlert = (contact: Contact) => {
-    setContactToRemove(contact);
-    setAlertVisible(true);
-  };
-
   // Calculate the amount to be shown above the button
   const amountToShow = selectedTab === localizationText.SEND_GIFT.MANUAL ? calculateTotalManualAmount() : topUpAmount;
 
@@ -371,6 +370,22 @@ const SendGiftAmountScreen = ({ route }) => {
     parseFloat(amountToShow) > Number(monthlyRemainingOutgoingAmount) ||
     (selectedTab === localizationText.SEND_GIFT.MANUAL && !areAllManualAmountsFilled());
 
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ListFooterContacts = () => (
+    <IPayButton
+      small
+      btnType="link-button"
+      btnStyle={styles.recipientsContainer}
+      textColor={colors.secondary.secondary800}
+      btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
+      hasLeftIcon
+      leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
+      onPress={addForm}
+      disabled={formInstances?.length >= MAX_CONTACTS}
+    />
+  );
+
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
@@ -404,19 +419,7 @@ const SendGiftAmountScreen = ({ route }) => {
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
-              ListFooterComponent={() => (
-                <IPayButton
-                  small
-                  btnType="link-button"
-                  btnStyle={styles.recipientsContainer}
-                  textColor={colors.secondary.secondary800}
-                  btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
-                  hasLeftIcon
-                  leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
-                  onPress={addForm}
-                  disabled={formInstances?.length >= MAX_CONTACTS}
-                />
-              )}
+              ListFooterComponent={<ListFooterContacts />}
               keyExtractor={(item) => item.recordID}
               showsVerticalScrollIndicator={false}
             />

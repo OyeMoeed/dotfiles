@@ -29,8 +29,8 @@ const MoiPaymentRefund: React.FC = () => {
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiError] = useState<string>('');
+  const [isLoading] = useState<boolean>(false);
   const { otpConfig } = useConstantData();
 
   const helpCenterRef = useRef<any>(null);

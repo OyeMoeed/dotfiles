@@ -32,7 +32,7 @@ const SadadBillsScreen: React.FC = () => {
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [apiError, setAPIError] = useState<string>('');
+  const [, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
   const selectedBillsCount = useMemo(

@@ -42,7 +42,6 @@ import {
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  ToastTypes,
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -74,7 +73,7 @@ const InternationalTransferScreen: React.FC = () => {
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [selectedNumber, setSelectedNumber] = useState<string>('');
-  const [nickName, setNickName] = useState('');
+  const [, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
   const editBeneficiaryRef = useRef<any>(null);
@@ -407,17 +406,16 @@ const InternationalTransferScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           return apiResponse?.status?.type;
-
-          break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
-          break;
+          return '';
         default:
-          break;
+          return '';
       }
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      return '';
     }
   };
   const renderCurrentOption = useMemo(() => {

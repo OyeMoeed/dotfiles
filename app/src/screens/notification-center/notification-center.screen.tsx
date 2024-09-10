@@ -81,27 +81,6 @@ const NotificationCenterScreen: React.FC = () => {
   const styles = getNotificationCenterStyles(colors);
 
   /**
-   * Render toast message
-   * @param title - Title of the toast
-   * @param subTitle - Subtitle of the toast
-   * @param icon - Icon to display in the toast
-   * @param toastType - Type of the toast
-   * @param displayTime - Duration to display the toast
-   */
-  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
-    showToast(
-      {
-        title,
-        subTitle,
-        toastType,
-        isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
-      },
-      displayTime,
-    );
-  };
-
-  /**
    * Render spinner
    * @param isVisible - Boolean to show or hide spinner
    */ const renderSpinner = (isVisible: boolean) => {
@@ -165,6 +144,7 @@ const NotificationCenterScreen: React.FC = () => {
       return apiResponse;
     }
     renderSpinner(false);
+    return null;
   };
 
   /**

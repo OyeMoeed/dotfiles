@@ -7,7 +7,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { internationalBeneficiaryData } from '../international-transfer/international-transfer.constent';
 import { BeneficiaryDetailsProps } from '../international-transfer/international-transfer.interface';
 import chooseBeneficiaryStyles from './choose-beneficiary.styles';
@@ -16,9 +16,12 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = chooseBeneficiaryStyles(colors);
   const localizationText = useLocalization();
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>();
+
   const handleBeneficiaryTransfer = () => {
     navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData: selectedBeneficiary });
   };
+
   const [search, setSearch] = useState<string>('');
 
   const onClearInput = () => {
@@ -27,7 +30,6 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   const handleAddNewBeneficiray = () => {
     navigate(ScreenNames.ADD_INTERNATIONAL_BENEFICIARY);
   };
-  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>();
   const renderBeneficiaryDetails = ({ item }: { item: BeneficiaryDetailsProps }) => {
     const { name, transferType, countryFlag, countryName } = item;
     const handlePress = () => {

@@ -21,7 +21,7 @@ const SendMoneyQRScannerScreen: React.FC = () => {
   const { colors } = useTheme();
   const route = useRoute();
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
-  const [_, setScannerCode] = useState('');
+  const [, setScannerCode] = useState('');
 
   const styles = qrCodeScannerStyles();
   const onScannedContact = (scannedCodeData: string) => {

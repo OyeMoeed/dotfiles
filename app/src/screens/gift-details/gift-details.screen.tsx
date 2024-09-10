@@ -86,11 +86,13 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     };
     Share.open(shareOptions);
   };
-  const getDynamicStyles = (styles, details, item) => [
-    styles.subTitle,
-    details[item]?.length > 20 && styles.condtionalWidthSubtitle,
-    item === GiftCardDetailsKey.AMOUNT && details?.status === GiftCardStatus.EXPIRED && styles.textStyle,
+
+  const getDynamicStyles = (stylesValue, dataDetails, item) => [
+    stylesValue.subTitle,
+    dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
+    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftCardStatus.EXPIRED && stylesValue.textStyle,
   ];
+
   const titleText = useCallback(
     (value: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);

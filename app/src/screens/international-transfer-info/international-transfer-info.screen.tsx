@@ -51,6 +51,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [isCheck, setIsCheck] = useState<number | null>(null);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const localTransfer = `${localizationText.LOCAL_TRANSFER.FEES} ${beneficiaryDummyData.fee} ${localizationText.COMMON.AND_VAT} ${beneficiaryDummyData.vat}`;
 
   const onPressNext = () => navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION);
 
@@ -142,9 +143,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                     <IPayFootnoteText color={colors.natural.natural900}>
                       {localizationText.COMMON.INCLUDE_FEES}
                     </IPayFootnoteText>
-                    <IPayCaption1Text
-                      color={colors.natural.natural500}
-                    >{`${localizationText.LOCAL_TRANSFER.FEES} ${beneficiaryDummyData.fee} ${localizationText.COMMON.AND_VAT} ${beneficiaryDummyData.vat}`}</IPayCaption1Text>
+                    <IPayCaption1Text color={colors.natural.natural500}>{localTransfer}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
                 <IPayToggleButton toggleState={isIncludeFees} onToggleChange={() => setIsIncludeFees(!isIncludeFees)} />

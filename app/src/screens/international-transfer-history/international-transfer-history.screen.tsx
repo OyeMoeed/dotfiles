@@ -25,14 +25,14 @@ import TransactionDetails from './components/transaction-details.component';
 import TransactionRefund from './components/transaction-refund.component';
 import IPayInternationalTransferDeliveryTypeComponent from './components/transcation-details-delivery-type.component';
 import { TransactionDataProps } from './components/transction-details-component.interface';
-import { TransactionDataFiltersProps } from './internationa-transfer-history.interface';
+import TransactionDataFiltersProps from './internationa-transfer-history.interface';
 import internationalTransferHistoryData from './international-transfer-history.data';
 import { InternationalTransferHistoryDataProps } from './international-transfer-history.interface';
 import internationalTrHistoryStyles from './international-transfer-history.style';
 
 const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
-  const styles = internationalTrHistoryStyles(colors);
+  const styles = internationalTrHistoryStyles();
   const localizationText = useLocalization();
   const [filteredData, setFilteredData] = useState<InternationalTransferHistoryDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -56,14 +56,7 @@ const InternationalTransferHistory: React.FC = () => {
   const filterTabs = constants.TRANSACTION_FILTERS;
   const { internationalTransferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
 
-  const {
-    getValues,
-    control,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm();
+  const { getValues, control, setValue } = useForm();
 
   const resetData = () => {
     setFilteredData(internationalTransferHistoryData);
