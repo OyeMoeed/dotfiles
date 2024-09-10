@@ -1,6 +1,8 @@
-import { IPayScrollView, IPayView, IPayIcon } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
@@ -9,19 +11,17 @@ import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { useTypedSelector } from '@app/store/store';
-import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useRef, useState } from 'react';
 import getSarieTransferFees from '@app/network/services/cards-management/get-sarie-transfer-fees/get-sarie-transfer-fees.service';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import colors from '@app/styles/colors.const';
-import icons from '@app/assets/icons';
-import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { useTypedSelector } from '@app/store/store';
+import colors from '@app/styles/colors.const';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useEffect, useRef, useState } from 'react';
+import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import transferInformationStyles from './transfer-information.style';
-import { TransferInformationProps } from './trasnfer-information.interface';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
@@ -37,11 +37,19 @@ const TransferInformation: React.FC = () => {
   const [isLoadingPrepare, setIsLoadingPrepare] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  type RouteProps = RouteProp<{ params: TransferInformationProps }, 'params'>;
+  type RouteProps = RouteProp<
+    {
+      params: {
+        beneficiaryDetails: BeneficiaryDetails;
+      };
+    },
+    'params'
+  >;
   const route = useRoute<RouteProps>();
-  const { bankCode, beneficiaryNickName, beneficiaryCode } = route?.params;
+  const { beneficiaryBankDetail, nickname: beneficiaryNickName, beneficiaryCode } = route.params.beneficiaryDetails;
+  const { bankCode } = beneficiaryBankDetail;
   const { localTransferReasonData } = useConstantData();
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
@@ -107,7 +115,6 @@ const TransferInformation: React.FC = () => {
     setIsLoadingGetFees(true);
     if (walletNumber) {
       try {
-
         const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
         if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
           return apiResponse?.response;
@@ -220,7 +227,7 @@ const TransferInformation: React.FC = () => {
       {!isKeyboardOpen ? (
         <IPayView style={styles.buttonContainer}>
           <IPayButton
-            onPress={onPressNext}
+            onPress={onLocalTransferPrepare}
             btnType={buttonVariants.PRIMARY}
             large
             disabled={isTransferButtonDisabled()}

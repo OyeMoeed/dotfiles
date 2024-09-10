@@ -217,7 +217,8 @@ const LocalTransferScreen: React.FC = () => {
 
   const onPressBtn = (beneficiary: BeneficiaryDetails) => {
     selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE)
+      navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
     else handleActivateBeneficiary();
   };
 

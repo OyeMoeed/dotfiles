@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -21,18 +22,17 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.interface';
+import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import { APIResponseType, buttonVariants, toastTypes } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import images from '@app/assets/images';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.interface';
-import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BeneficiaryDetailsProps, TransactionDetails } from './transfer-confirmation.interface';
 import transferConfirmationStyles from './transfer-confirmation.style';
@@ -61,7 +61,7 @@ const TransferConfirmation: React.FC = () => {
   type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
 
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     amount,
