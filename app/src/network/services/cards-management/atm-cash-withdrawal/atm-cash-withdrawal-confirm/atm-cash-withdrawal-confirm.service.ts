@@ -8,7 +8,7 @@ const atmWithdrawalConfirm = async (
   walletNumber: string,
   payload: IAtmWithdrawalConfirmReq,
 ): Promise<ApiResponse<IAtmWithdrawalConfirmRes>> => {
-  const apiResponse = await apiCall<IAtmWithdrawalConfirmRes>({
+  const apiResponse: any = await apiCall<IAtmWithdrawalConfirmRes>({
     endpoint: CARDS_MANAGEMENT_URLS.atm_withdrawal_confirm(walletNumber),
     method: requestType.POST,
     payload,

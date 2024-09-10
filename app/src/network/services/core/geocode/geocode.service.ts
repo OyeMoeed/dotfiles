@@ -13,19 +13,13 @@ const getGeocode = async (latitude: number, longitude: number): Promise<any> => 
       ],
     };
   }
-  try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.GEOCODING(latitude, longitude),
-      method: requestType.GET,
-    });
 
-    if (apiResponse?.ok) {
-      return apiResponse.json();
-    }
-    return { error: 'API response not OK' };
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: CORE_URLS.GEOCODING(latitude.toString(), longitude.toString()),
+    method: requestType.GET,
+  });
+
+  return apiResponse;
 };
 
 export default getGeocode;

@@ -1,6 +1,6 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../authentication.urls';
 import { OtpVerificationProps } from './otp-verification.interface';
@@ -12,7 +12,7 @@ const otpVerification = async (
 ): Promise<object | unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     const resposne = validateOtpMock;
-    dispatch(setUserInfo(resposne?.response));
+    dispatch(setWalletInfo(resposne?.response));
     return resposne;
   }
 

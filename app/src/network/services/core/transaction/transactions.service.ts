@@ -2,44 +2,30 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import transactionMock from '@app/network/services/core/transaction/transaction.mock';
 import apiCall from '@network/services/api-call.service';
-import { APIResponseType } from '@app/utilities/enums.util';
 import CORE_URLS from '../core.urls';
 import { CardListResponse, CardsProp, TransactionsProp, changeStatusProp, getCardDetailsProp, prepareShowDetailsProp, resetPinCodeProp } from './transaction.interface';
 import cardsListMock from './cards-list.mock';
+import { APIResponseType } from '@app/utilities/enums.util';
 
 const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return transactionMock;
   }
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
-      method: requestType.GET,
-    });
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
+    method: requestType.GET,
+  });
+  return apiResponse;
 };
 
 const getTransactionTypes = async (): Promise<unknown> => {
-  try {
-    let apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
-      method: requestType.GET,
-    });
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
+    method: requestType.GET,
+  });
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 const getCards = async (payload: CardsProp): Promise<any> => {

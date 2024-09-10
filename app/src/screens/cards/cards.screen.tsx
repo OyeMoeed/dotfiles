@@ -35,7 +35,7 @@ import { verticalScale } from 'react-native-size-matters';
 import { CardScreenCurrentState } from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { SNAP_POINT } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -57,14 +57,14 @@ const CardsScreen: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
   const helpCenterRef: any = useRef(null);
   const otpVerificationRef: any = useRef(null);
@@ -201,50 +201,28 @@ const CardsScreen: React.FC = () => {
   };
   const getCardsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: CardsProp = {
-        walletNumber,
-      };
-      const apiResponse: any = await getCards(payload);
-      renderSpinner(false);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          let availableCards = apiResponse?.response?.cards.filter((card: any) => {
-            return (
-              card.cardStatus == CardStatusNumber.ActiveWithOnlinePurchase ||
-              card.cardStatus == CardStatusNumber.ActiveWithoutOnlinePurchase ||
-              card.cardStatus == CardStatusNumber.Freezed
-            );
-          });
 
-          if (availableCards?.length) {
-            setCardsData(mapCardData(availableCards));
-            setCurrentCard(mapCardData(availableCards)[0]);
-            setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
-          } else {
-            setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderSpinner(false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderSpinner(false);
-          setAPIError(apiResponse?.error);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
-        default:
-          renderSpinner(false);
-          setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-          break;
+    const payload: CardsProp = {
+      walletNumber,
+    };
+    const apiResponse: any = await getCards(payload);
+    renderSpinner(false);
+
+    if (apiResponse) {
+      const availableCards = apiResponse?.response?.cards.filter(
+        (card: any) =>
+          card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.Freezed,
+      );
+
+      if (availableCards?.length) {
+        setCardsData(mapCardData(availableCards));
+        setCurrentCard(mapCardData(availableCards)[0]);
+        setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
+      } else {
+        setCardsCurrentState(CardScreenCurrentState.NO_DATA);
       }
-    } catch (error: any) {
-      renderSpinner(false);
-      setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -393,7 +371,7 @@ const CardsScreen: React.FC = () => {
       </IPayView>
       {renderCardsCurrentState()}
       <IPayPortalBottomSheet
-        heading={localizationText.CARD_OPTIONS.CHANGE_PIN
+        heading={localizationText.CARD_OPTIONS.CARD_DETAILS
         }
         enablePanDownToClose
         simpleBar
@@ -406,7 +384,7 @@ const CardsScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={walletInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
@@ -435,7 +413,7 @@ const CardsScreen: React.FC = () => {
       <IPayBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
         onCloseBottomSheet={closeCardSheet}
-        customSnapPoint={['20%', '70%']}
+        customSnapPoint={SNAP_POINTS.MID_MEDUIM}
         ref={cardSheetRef}
         enablePanDownToClose
         simpleHeader

@@ -22,6 +22,7 @@ import { typography } from '@app/styles/typography.styles';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
 const SendGiftPreview: FC = ({ route }) => {
@@ -41,6 +42,7 @@ const SendGiftPreview: FC = ({ route }) => {
 
   const onPreview = () => {
     previewBottomSheetRef.current?.present();
+    Keyboard.dismiss();
   };
 
   const onNext = () => {

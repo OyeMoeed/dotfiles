@@ -58,7 +58,7 @@ const CardOptionsScreen: React.FC = () => {
   const [isATMWithDraw, setIsATMWithDraw] = useState(false);
   const otpVerificationRef: any = useRef(null);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -67,7 +67,7 @@ const CardOptionsScreen: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const helpCenterRef = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [pin, setPin] = useState("");
   const [cardStatus, setCardStatus] = useState<string>();
@@ -363,6 +363,9 @@ const CardOptionsScreen: React.FC = () => {
       }
     };
     const apiResponse:any = await prepareResetCardPinCode(payload);
+
+    otpVerificationRef?.current?.resetInterval();
+    renderSpinner(false);
     if (apiResponse.status.type === 'SUCCESS') {
       setOtpRef(apiResponse?.response?.otpRef as string);
       if (showOtpSheet) {
@@ -370,8 +373,6 @@ const CardOptionsScreen: React.FC = () => {
         otpVerificationRef?.current?.present();
       }
     }
-    otpVerificationRef?.current?.resetInterval();
-    renderSpinner(false);
   };
 
   return (
@@ -487,7 +488,7 @@ const CardOptionsScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={walletInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
