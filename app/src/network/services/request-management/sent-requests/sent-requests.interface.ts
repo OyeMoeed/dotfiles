@@ -1,13 +1,15 @@
 // Import necessary interfaces
 import {
+  DeviceInfoProps,
   MockAPIDataProps,
   MockAPIOkProp,
   MockAPIStatusProps,
-  DeviceInfoProps,
 } from '@network/services/services.interface';
 
 interface WalletNumberProp {
   walletNumber: string;
+  currentPage: number;
+  pageSize?: number;
 }
 
 //* ******************GetAllRequests****************************//
@@ -21,6 +23,16 @@ interface RequestItem {
   targetFullName: string;
   targetMobileNumber: string;
   targetAmount: string;
+  transactionDescription: string;
+  realTransactionRefNumber?: string;
+  cancellation_date?: string;
+  payment_date?: string;
+  request_date?: string;
+  rejection_date?: string;
+  realTransactionAmount?: string | null;
+  realTransactionTotalPaidAmount?: string | null;
+  realTransactionNumberOfPaymentRequests?: string | null;
+  targetProfileImage?: string | null;
 }
 
 // Define the GetAllRequestsDetails interface that extends MockAPIDataProps with a specific response

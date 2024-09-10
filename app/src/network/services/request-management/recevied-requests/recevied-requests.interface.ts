@@ -1,8 +1,15 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import {
+  DeviceInfoProps,
+  MockAPIDataProps,
+  MockAPIOkProp,
+  MockAPIStatusProps,
+} from '@network/services/services.interface';
 
 interface WalletNumberProp {
   walletNumber: string;
+  currentPage: number;
+  pageSize?: number;
 }
 
 //* ******************GetAllRequests****************************//
@@ -16,6 +23,16 @@ interface RequestItem {
   targetFullName: string;
   targetMobileNumber: string;
   targetAmount: string;
+  transactionDescription: string;
+  realTransactionRefNumber?: string;
+  cancellation_date?: string;
+  payment_date?: string;
+  request_date?: string;
+  rejection_date?: string;
+  realTransactionAmount?: string | null;
+  realTransactionTotalPaidAmount?: string | null;
+  realTransactionNumberOfPaymentRequests?: string | null;
+  targetProfileImage?: string | null;
 }
 
 // Define the GetAllRequestsDetails interface that extends MockAPIDataProps with a specific response
@@ -39,4 +56,45 @@ interface GetAllRequestsMockProps extends MockAPIOkProp {
   status: MockAPIStatusProps; // Include status directly
 }
 
-export { WalletNumberProp, GetAllRequestsMockProps };
+//* ******************SendRequestedMoneyPrepare****************************//
+
+// Define the SendRequestedMoneyPrepareReq interface
+interface SendRequestedMoneyPrepareReq {
+  deviceInfo: DeviceInfoProps;
+}
+
+// Define the SendRequestedMoneyPrepareRes interface
+interface SendRequestedMoneyPrepareRes {
+  otpRef: string;
+}
+
+//* ******************SendRequestedMoneyConfirm****************************//
+
+// Define the SendRequestedMoneyConfirmReq interface
+interface SendRequestedMoneyConfirmReq {
+  authentication: {
+    transactionId: string;
+  };
+  otp: string;
+  otpRef: string;
+  deviceInfo: DeviceInfoProps;
+}
+
+// Define the SendRequestedMoneyConfirmRes interface
+interface SendRequestedMoneyConfirmRes {
+  transctionRefNumber: string;
+  transactionId: string;
+  totalTansactionAmount: string;
+  beneficiaryName: string;
+}
+
+export {
+  WalletNumberProp,
+  GetAllRequestsMockProps,
+  RequestItem,
+  GetAllRequestsDetails,
+  SendRequestedMoneyPrepareReq,
+  SendRequestedMoneyPrepareRes,
+  SendRequestedMoneyConfirmReq,
+  SendRequestedMoneyConfirmRes,
+};

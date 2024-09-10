@@ -20,7 +20,7 @@ const { AppleWallet } = NativeModules;
 const IPayAddAppleWalletButton: React.FC<IPayAddAppleWalletProps> = ({ selectedCard }) => {
   const localizationText = useLocalization();
   const styles = addAppleWalletStyles(colors);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [addedSuccessfully, setAddedSuccessfully] = useState<boolean>(false);
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
