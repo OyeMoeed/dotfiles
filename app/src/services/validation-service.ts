@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 export const getValidationSchemas = (localizationText: LocalizationText) => ({
   mobileNumberSchema: Yup.string()
     .required(localizationText.COMMON.INCORRECT_MOBILE_NUMBER)
-    .matches(REGEX.SaudiMobileNumber, localizationText.COMMON.INCORRECT_MOBILE_NUMBER),
+    .matches(REGEX.SaudiMobileNumber, localizationText.COMMON.INVALID_NUMBER),
 
   iqamaIdSchema: Yup.string()
     .required(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER)
