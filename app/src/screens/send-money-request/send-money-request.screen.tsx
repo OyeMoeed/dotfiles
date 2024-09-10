@@ -7,7 +7,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayBalanceStatusChip, IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import { IPayActionSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -20,20 +19,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
-import {
-  CreateMoneyRequestPayloadTypes,
-  CreateMoneyRequestResponseTypes,
-} from '@app/network/services/request-management/sent-requests/sent-requests.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { createMoneyRequestService } from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import {
-  IW2WActiveFriends,
-  IW2WCheckActiveReq,
-} from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
-import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
 import sendMoneyFormStyles from './send-money-request.styles';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-request.interface';
 
@@ -44,12 +30,10 @@ const SendMoneyRequest: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts } = route.params;
   const [selectedId, setSelectedId] = useState<number | string>('');
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [warningStatus, setWarningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
@@ -127,58 +111,14 @@ const SendMoneyRequest: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
-  const onSendRequest = async (activeFriends: IW2WActiveFriends[]) => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    const payload: CreateMoneyRequestPayloadTypes = {
-      requests: formInstances.map((formDetails) => ({
-        mobileNumber: formDetails.mobileNumber,
-        amount: formDetails.mobileNumber,
-        note: formDetails.notes,
-        inContactList: true, // TODO: need clearity how can get this value
-      })),
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse: CreateMoneyRequestResponseTypes = await createMoneyRequestService(
-      userInfo.walletNumber as string,
-      payload,
-    );
-    hideSpinner();
-
-    if (apiResponse.status.type === ApiResponseStatusType.SUCCESS) {
-      navigate(ScreenNames.TRANSFER_SUMMARY, {
-        variant: TransactionTypes.PAYMENT_REQUEST,
-        data: {
-          transfersDetails: { formInstances, fees: apiResponse?.response?.moneyRequestsResult, activeFriends },
-          totalAmount,
-        },
-      });
-    }
-  };
-
-  const getW2WActiveFriends = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    const payload: IW2WCheckActiveReq = {
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      mobileNumbers: formInstances.map((item) => item.mobileNumber),
-    };
-    const apiResponse = await walletToWalletCheckActive(userInfo.walletNumber as string, payload);
-    if (apiResponse.status.type === ApiResponseStatusType.SUCCESS) {
-      if (apiResponse.response?.friends) {
-        onSendRequest(apiResponse.response?.friends);
-      }
-    } else {
-      hideSpinner();
-    }
-  };
-
   const onConfirm = async () => {
-    getW2WActiveFriends();
+    navigate(ScreenNames.CREATE_MONEY_REQUEST_SUMMARY, {
+      variant: TransactionTypes.PAYMENT_REQUEST,
+      data: {
+        transfersDetails: { formInstances },
+        totalAmount,
+      },
+    });
   };
 
   const getContactInfoText = () => {

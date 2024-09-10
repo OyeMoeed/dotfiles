@@ -55,8 +55,6 @@ const TransferSummaryScreen: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
@@ -80,10 +78,7 @@ const TransferSummaryScreen: React.FC = () => {
       if (!hasWallet) {
         return {
           id: '1',
-          label:
-            variant === TransactionTypes.PAYMENT_REQUEST
-              ? localizationText.REQUEST_SUMMARY.FROM
-              : localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+          label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
           value: transfersDetails.formInstances[index]?.subtitle,
           leftIcon: icons.user_square,
           color: colors.primary.primary900,
@@ -92,10 +87,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
       return {
         id: '1',
-        label:
-          variant === TransactionTypes.PAYMENT_REQUEST
-            ? localizationText.REQUEST_SUMMARY.FROM
-            : localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
         value: transfersDetails.formInstances[index]?.subtitle,
         leftIcon: images.alinmaP,
         isAlinma: true,

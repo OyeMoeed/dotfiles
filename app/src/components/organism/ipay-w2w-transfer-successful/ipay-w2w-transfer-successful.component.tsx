@@ -106,8 +106,8 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
         value: item.selectedItem.text,
       });
     }
-    if (item.note) {
-      summeryArray.push({ id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note });
+    if (item.notes) {
+      summeryArray.push({ id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.notes });
     }
     return summeryArray;
   });

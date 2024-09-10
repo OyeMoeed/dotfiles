@@ -54,6 +54,7 @@ const enum ScreenNames {
   SEND_MONEY_FORM = 'SendMoneyForm',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
   TRANSFER_SUMMARY = 'TransferSummary',
+  CREATE_MONEY_REQUEST_SUMMARY = 'CreateMoneyRequestSummary',
   GIFT_TRANSFER_SUMMARY = 'GiftTransferSummary',
   INTERNATIONAL_TRANSFER_HISTORY = 'InternationalTransferHistory',
   BENEFICIARY_TRANSACTION_HISTORY = 'BeneficiaryTransactionHistory',

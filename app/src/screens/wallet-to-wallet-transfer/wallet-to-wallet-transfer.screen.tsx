@@ -88,7 +88,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         break;
 
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(ScreenNames.SEND_MONEY_FORM, {
+        navigate(ScreenNames.SEND_MONEY_REQUEST, {
           selectedContacts,
           heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
           from: TRANSFERTYPE.REQUEST_MONEY,
