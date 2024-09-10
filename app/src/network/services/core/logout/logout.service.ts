@@ -10,20 +10,13 @@ const logOut = async (): Promise<unknown> => {
     return delinkDeviceMock;
   }
 
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: AUTHENTICATION_URLS.LOGOUT,
-      method: requestType.POST,
-    });
+  const apiResponse: any = await apiCall({
+    endpoint: AUTHENTICATION_URLS.LOGOUT,
+    method: requestType.POST,
+  });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      await clearSession(false);
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  await clearSession(false);
+  return apiResponse;
 };
 
 export default logOut;

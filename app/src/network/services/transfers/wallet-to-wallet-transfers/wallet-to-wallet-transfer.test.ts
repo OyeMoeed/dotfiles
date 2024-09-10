@@ -10,7 +10,7 @@ jest.mock('@app/constants/constants', () => ({
   MOCK_API_RESPONSE: false,
 }));
 jest.mock('../transfer.urls', () => ({
-  GET_WALLET_TO_WALLET_TRANSFERS: jest.fn(),
+  get_wallet_to_wallet_transfer: jest.fn(),
 }));
 jest.mock('./wallet-to-wallet-transfer.mock');
 
@@ -31,7 +31,7 @@ describe('getWalletToWalletTransfers', () => {
 
   it('should call apiCall with correct parameters when MOCK_API_RESPONSE is false', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = false;
-    (TRANSFERS_URLS.GET_WALLET_TO_WALLET_TRANSFERS as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
+    (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
     (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
     const result = await getWalletToWalletTransfers(mockPayload);
@@ -45,7 +45,7 @@ describe('getWalletToWalletTransfers', () => {
 
   it('should return { apiResponseNotOk: true } when api response is not ok', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = false;
-    (TRANSFERS_URLS.GET_WALLET_TO_WALLET_TRANSFERS as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
+    (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
     (apiCall as jest.Mock).mockResolvedValue({ ok: false });
 
     const result = await getWalletToWalletTransfers(mockPayload);
@@ -55,7 +55,7 @@ describe('getWalletToWalletTransfers', () => {
 
   it('should return an error message when an error occurs', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = false;
-    (TRANSFERS_URLS.GET_WALLET_TO_WALLET_TRANSFERS as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
+    (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
     (apiCall as jest.Mock).mockRejectedValue(mockErrorResponse);
 
     const result = await getWalletToWalletTransfers(mockPayload);
@@ -65,7 +65,7 @@ describe('getWalletToWalletTransfers', () => {
 
   it('should return "Unknown error" when an error occurs without a message', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = false;
-    (TRANSFERS_URLS.GET_WALLET_TO_WALLET_TRANSFERS as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
+    (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockPayload.walletNumber}`);
     (apiCall as jest.Mock).mockRejectedValue({});
 
     const result = await getWalletToWalletTransfers(mockPayload);
