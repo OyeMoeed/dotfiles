@@ -89,7 +89,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       : chipValue;
 
   // Prepare data for request paid summary success screen
-  const requestPaidSummaryData = (apiResponse: { response: SendRequestedMoneyConfirmRes }) => [
+  const requestPaidSummaryData = (apiResponse: SendRequestedMoneyConfirmRes) => [
     {
       id: '1',
       label: localizationText.REQUEST_SUMMARY.PAY_TO,
@@ -158,7 +158,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           topupChannel: payChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
           amount: apiResponse?.response?.totalTansactionAmount,
-          receviedRequestSummaryData: requestPaidSummaryData(apiResponse),
+          requestPaidSummaryData: requestPaidSummaryData(apiResponse),
         });
       }
     } else {
