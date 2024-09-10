@@ -625,6 +625,7 @@
     "VERIFY_CODE_ACCURACY": "يرجى التحقق من دقة الرمز.",
     "ENTER_CARD_PIN_CODE": "أدخل رمز PIN الخاص بالبطاقة",
     "CARD_TYPE": "نوع البطاقة",
+    "CVV": "cvv",
     "CARD_NUMBER": "رقم البطاقة",
     "CARD_HOLDER_NAME": "اسم حامل البطاقة",
     "EXPIRY_DATE": "تاريخ الانتهاء",
