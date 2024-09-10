@@ -514,7 +514,9 @@
     "NOTE": "ملاحظة",
     "NOTE_DETAIL": "مرحبا عزيزي",
     "ERSA_ALTURK": "إسراء الترك",
-    "AMOUNT_2": "500 ريال سعودي"
+    "AMOUNT_2": "500 ريال سعودي",
+    "FAST_CONVERSION_BY": "تحويل سريع بواسطة",
+    "SARIE": "ساري"
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "لم يتم العثور على العنوان",

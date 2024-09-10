@@ -37,10 +37,10 @@ import LocalTransferBeneficiariesMockProps from '@app/network/services/local-tra
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
-  ApiResponseStatusType,
-  BeneficiaryTypes,
   alertType,
   alertVariant,
+  ApiResponseStatusType,
+  BeneficiaryTypes,
   buttonVariants,
   spinnerVariant,
   toastTypes,
