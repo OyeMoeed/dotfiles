@@ -21,6 +21,7 @@ import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
+import { shortString } from '@app/utilities/string-functions.utils';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
   const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos } = route.params || {};
@@ -70,12 +71,23 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     }
   };
 
-  const shortString = (text: string) => {
-    if (text.length < 20) {
-      return text;
-    }
-    return `${text.slice(0, 15)}...`;
-  };
+  const getBillInfoArray = (item: BillPaymentInfosTypes) => [
+    {
+      id: '1',
+      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      value: shortString(item.serviceDescription, 15),
+    },
+    {
+      id: '2',
+      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      value: item.billNumOrBillingAcct,
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.DUE_DATE,
+      value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
+    },
+  ];
 
   return (
     <>
@@ -106,23 +118,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
                   companyDetails: item.billerName,
                   companyImage: item.billerIcon || images.electricityBill, // TODO: billerIcon is currently null because not getting from API response
                 }}
-                data={[
-                  {
-                    id: '1',
-                    label: localizationText.PAY_BILL.SERVICE_TYPE,
-                    value: shortString(item.serviceDescription),
-                  },
-                  {
-                    id: '2',
-                    label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-                    value: item.billNumOrBillingAcct,
-                  },
-                  {
-                    id: '3',
-                    label: localizationText.COMMON.DUE_DATE,
-                    value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
-                  },
-                ]}
+                data={getBillInfoArray(item)}
               />
             )}
           />

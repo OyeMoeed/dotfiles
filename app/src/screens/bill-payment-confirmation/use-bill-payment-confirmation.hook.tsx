@@ -5,6 +5,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
   MultiPaymentBillPayloadTypes,
   BillPaymentInfosTypes,
+  MultiPaymentBillResponseTypes,
 } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import multiPaymentBillService from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.service';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -70,6 +71,11 @@ const useBillPaymentConfirmation = (
     calculatedBill: '300',
   };
 
+  const getTransactionIds = (apiResponse: MultiPaymentBillResponseTypes, index: number) =>
+    apiResponse.response.billPaymentResponses[index].transactionId;
+
+  const getTotalAmount = () => (billPaymentInfos ? billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) : 0);
+
   const onConfirm = async () => {
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
@@ -87,9 +93,9 @@ const useBillPaymentConfirmation = (
         isPayPartially,
         billPaymentInfos: billPaymentInfos?.map((el, index) => ({
           ...el,
-          transactionId: apiResponse.response.billPaymentResponses[index].transactionId,
+          transactionId: getTransactionIds(apiResponse, index),
         })),
-        totalAmount: billPaymentInfos ? billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) : 0,
+        totalAmount: getTotalAmount,
       });
     } else {
       setAPIError(apiResponse?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);

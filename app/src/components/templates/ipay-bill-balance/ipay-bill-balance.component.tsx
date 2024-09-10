@@ -83,6 +83,13 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
     setBillsData(data);
   };
 
+  const onChangeAmountOutside = (value: string, item: SadadBillItemProps) => {
+    const updatedBills = billsData?.map((el) =>
+      item?.billInfoItem.billIndex === el.billInfoItem.billIndex ? { ...el, billAmount: value } : el,
+    );
+    setBillsData(updatedBills);
+  };
+
   const renderItem = ({ item }: { item: SadadBillItemProps }) => (
     <IPaySadadBillDetailsBox
       showActionBtn={!singleBill && !isSaveOnly}
@@ -92,39 +99,35 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
       item={item}
       onPress={() => removeItem(item)}
       handleAmountInputFromOutSide
-      onChangeAmountOutside={(value) => {
-        const updatedBills = billsData?.map((el) =>
-          item?.billInfoItem.billIndex === el.billInfoItem.billIndex
-            ? {
-                ...el,
-                billAmount: value,
-              }
-            : el,
-        );
-        setBillsData(updatedBills);
-      }}
+      onChangeAmountOutside={(value) => onChangeAmountOutside(value, item)}
     />
   );
+
+  const billPaymentInfosObject = billsData?.map((el) => ({
+    billerId: el.billInfoItem.biller.billerId,
+    billNumOrBillingAcct: el.billInfoItem.billAccountNumber,
+    amount: Number(el.billAmount),
+    dueDateTime: el.billInfoItem.dueDateTime,
+    billIdType: '1', // TODO: not receiving this value from response
+    billingCycle: '1', // TODO: need to confirm where can I get this value
+    billIndex: el.billInfoItem.billIndex,
+    serviceDescription: el.billInfoItem.biller.billerCategoryDesc,
+    billerName: el.billInfoItem.biller.billerDesc,
+    walletNumber,
+    billNickname: el.billInfoItem.nickName,
+    billerIcon: el.billInfoItem.biller.categoryImageURL,
+  }));
 
   const onPressPay = () => {
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayPartially,
-      billPaymentInfos: billsData?.map((el) => ({
-        billerId: el.billInfoItem.biller.billerId,
-        billNumOrBillingAcct: el.billInfoItem.billAccountNumber,
-        amount: Number(el.billAmount),
-        dueDateTime: el.billInfoItem.dueDateTime,
-        billIdType: '1', // TODO: not receiving this value from response
-        billingCycle: '1', // TODO: need to confirm where can I get this value
-        billIndex: el.billInfoItem.billIndex,
-        serviceDescription: el.billInfoItem.biller.billerCategoryDesc,
-        billerName: el.billInfoItem.biller.billerDesc,
-        walletNumber,
-        billNickname: el.billInfoItem.nickName,
-        billerIcon: el.billInfoItem.biller.categoryImageURL,
-      })),
+      billPaymentInfos: billPaymentInfosObject,
     });
   };
+
+  const totalAmount = billsData.length
+    ? billsData.reduce((sum, item) => sum + Number(item.billAmount), 0).toString()
+    : '0';
 
   return (
     <IPayView style={[styles.container, eligibleToPay && styles.containerHeight]}>
@@ -174,9 +177,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
           disableBtnIcons
           btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
           showButtonOnly={eligibleToPay}
-          totalAmount={
-            billsData.length ? billsData.reduce((sum, item) => sum + Number(item.billAmount), 0).toString() : '0'
-          }
+          totalAmount={totalAmount}
           testID="ipay-bill"
           onPressBtn={onPressPay}
         />
