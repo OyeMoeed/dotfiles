@@ -5,9 +5,24 @@ interface SuccessItem {
   icon: string;
 }
 
+interface GiftDetails {
+  trxId: string;
+}
+
+interface GiftDetailsParams {
+  params: {
+    isSend?: boolean;
+    details: GiftDetails;
+  };
+}
+
+interface GiftDetailsProps {
+  route: GiftDetailsParams;
+}
+
 interface ItemProps {
   item: SuccessItem;
   index: number;
 }
 
-export { ItemProps, SuccessItem };
+export { GiftDetailsProps, ItemProps, SuccessItem };

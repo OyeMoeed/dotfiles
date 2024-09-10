@@ -42,11 +42,12 @@ import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import Share from 'react-native-share';
 import { darkCards, giftsCardData } from '../send-gift-card/send-gift-card.constants';
-import { ItemProps } from './gift-details.interface';
+import { GiftDetails, GiftsCardDataProps } from '../send-gift-card/send-gift-card.interface';
+import { GiftDetailsProps, ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
 
-const GiftDetailsScreen: React.FC = ({ route }) => {
-  const { isSend } = route.params;
+const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
+  const { isSend, details } = route.params;
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
   const localizationText = useLocalization();
@@ -54,10 +55,11 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [giftDetails, setGiftDetails] = useState<TransferDetailsRes>({});
+  const [giftDetails, setGiftDetails] = useState<TransferDetailsRes>({} as TransferDetailsRes);
 
   const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
   const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
+  const trxReqType = 'COUT_GIFT';
   const GiftTransactionKeys = [
     GiftTransactionKey.STATUS,
     GiftTransactionKey.RECEIVER_NAME,
@@ -93,8 +95,8 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const getWalletToWalletTransferData = async () => {
     renderSpinner(true);
     const payload = {
-      trxReqType: 'COUT_GIFT',
-      trxId: 'EPY08099J8M75',
+      trxReqType,
+      trxId: details?.trxId ?? '',
       deviceInfo: await getDeviceInfo(),
     };
     try {
@@ -162,12 +164,12 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     (value: string, key: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
       switch (key) {
-        case 'trnsDateTime':
+        case GiftTransactionKey.TRANSACTION_DATE_TIME:
           if (date.isValid()) {
             return formatTimeAndDate(value);
           }
           break;
-        case 'amount':
+        case GiftTransactionKey.AMOUNT:
           return `${value} ${localizationText.COMMON.SAR}`;
         default:
           break;
@@ -182,16 +184,16 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       const cardId = giftDetails?.giftCategory;
       const category = cardId?.split('_')[0].toLowerCase();
 
-      const getCardsList = giftsCardData[category];
-      if (!getCardsList) return false;
+      const getCardsList = giftsCardData[category as keyof GiftsCardDataProps];
+      if (!getCardsList) return {} as GiftDetails;
 
       const allCards = getCardsList(colors);
 
       const matchedGiftCard = allCards.find((card) => card.id === cardId);
 
-      return matchedGiftCard || false;
+      return matchedGiftCard || ({} as GiftDetails);
     }
-    return false;
+    return {} as GiftDetails;
   };
 
   const isDarkCard = darkCards.includes(getGiftCardAnimation()?.id);

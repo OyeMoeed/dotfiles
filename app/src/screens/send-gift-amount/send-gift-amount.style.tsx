@@ -208,8 +208,11 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
     inputStyle: {
       minWidth: scaleSize(65),
+      textAlign: 'right',
+      color: themeColors.primary.primary900,
     },
     inputActiveStyle: {
+      color: themeColors.primary.primary900,
       ...Platform.select({
         android: {
           marginBottom: moderateScale(5),
