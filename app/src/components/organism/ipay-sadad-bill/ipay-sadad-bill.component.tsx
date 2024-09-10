@@ -51,7 +51,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
     return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
   }, [dueDateTime]);
 
-  const billingAmount = `${amount} ${localizationText.COMMON.SAR}`;
+  const billingAmount = `${amount || 0} ${localizationText.COMMON.SAR}`;
   const billingDueDate = `${localizationText.SADAD.DUE} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
 
   const onPressCheckBox = () => {

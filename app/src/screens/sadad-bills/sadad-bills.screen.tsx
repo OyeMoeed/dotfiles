@@ -168,6 +168,20 @@ const SadadBillsScreen: React.FC = ({ route }) => {
     });
   };
 
+  const handelEditOrDelete = (index: number) => {
+    if (index === 0) {
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
+        billData: billToEditRef.current,
+        setEditBillSuccessToast,
+        billId: selectedBillsId, // TODO: once api implemented on this screen will update it
+      });
+    } else {
+      setActionSheetOptions(deleteBillOptions);
+    }
+    sadadActionSheetRef?.current?.hide();
+    showActionSheet();
+  };
+
   const deleteBillOptions = {
     title: localizationText.SADAD.DELETE_NEW_BILL,
     showIcon: true,
@@ -204,20 +218,6 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const [actionSheetOptions, setActionSheetOptions] = useState<ActionSheetProps>(
     selectedTab === BillsStatusTypes.ACTIVE_BILLS ? editOrDeletedBillOptions : activeBillOptions,
   );
-
-  const handelEditOrDelete = (index: number) => {
-    if (index === 0) {
-      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
-        billData: billToEditRef.current,
-        setEditBillSuccessToast,
-        billId: '1', // TODO: once api implemented on this screen will update it
-      });
-    } else {
-      setActionSheetOptions(deleteBillOptions);
-    }
-    sadadActionSheetRef?.current?.hide();
-    showActionSheet();
-  };
 
   const getActionSheetOptions = () => {
     if (selectedTab === BillsStatusTypes.ACTIVE_BILLS) {
