@@ -1,6 +1,7 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
+import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
 import { ValidateIBANResponse, ValidateIBANResponseReq } from './validate-iban.interface';
 import ibanValidityMock from './validate-iban.mock';
@@ -12,11 +13,10 @@ const validateIBAN = async (params: ValidateIBANResponseReq): Promise<ValidateIB
     return ibanValidityMock;
   }
 
-  const apiResponse = await apiCall({
+  const apiResponse = await apiCall<ApiResponse<ValidateIBANResponse>>({
     endpoint: `${LOCAL_TRANSFERS_URLS.validateIBAN()}${paramsUrl}`,
     method: requestType.GET,
   });
-
   return apiResponse;
 };
 
