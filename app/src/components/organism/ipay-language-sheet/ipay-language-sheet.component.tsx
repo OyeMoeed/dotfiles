@@ -24,11 +24,12 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
   const { colors } = useTheme();
   const sheetStyles = styles(colors);
   const localizationText = useLocalization();
+
   const handleLanguagePress = useLanguageChange(handleClosePress);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const changeLangugae = async (language: string, isRTL: boolean, code: LanguageCode) => {
+  const changeMainLanguage = async (language: string, isRTL: boolean, code: LanguageCode) => {
     const deviceInfo = await getDeviceInfo();
 
     const payLoad: ChangeLangPayloadProps = {
@@ -40,11 +41,9 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
         deviceInfo,
       },
     };
-    const apiResponse: any = await changeLanguage(payLoad);
+    await changeLanguage(payLoad);
 
-    if (apiResponse) {
-      handleLanguagePress(language, isRTL, code);
-    }
+    handleLanguagePress(language, isRTL, code);
   };
 
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
@@ -54,9 +53,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
       <IPayPressable
         key={index}
         style={sheetStyles.buttonBox}
-        onPress={() => {
-          changeLangugae(item.language, item.isRTL, item.code);
-        }}
+        onPress={() => changeMainLanguage(item.language, item.isRTL, item.code)}
       >
         <IPayView style={sheetStyles.row}>
           <IPayView style={sheetStyles.rowInner}>

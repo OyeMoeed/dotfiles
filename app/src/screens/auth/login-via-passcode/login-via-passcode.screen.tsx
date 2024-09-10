@@ -52,6 +52,7 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
 import useLogin from './login-via-passcode.hook';
 import loginViaPasscodeStyles from './login-via-passcode.style';
+import { useTranslation } from 'react-i18next';
 
 const LoginViaPasscode: React.FC = () => {
   const {
@@ -75,6 +76,7 @@ const LoginViaPasscode: React.FC = () => {
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
@@ -411,7 +413,7 @@ const LoginViaPasscode: React.FC = () => {
             regular
             color={colors.primary.primary800}
             style={styles.enterPasscodeText}
-            text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
+            text={'LOGIN.ENTER_YOUR_PASSCODE'}
           />
         </IPayView>
         <IPayPasscode
