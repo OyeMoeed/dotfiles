@@ -194,6 +194,8 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     if (REGEX.IBAN.test(ibanNumber)) {
       renderSpinner(true);
       const apiResponse: ValidateIBANResponse = await validateIBAN(params);
+      console.log('apiResponse', apiResponse);
+      
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         getBankDetails(apiResponse.response.bankCode, ibanNumber);
         renderSpinner(false);
