@@ -33,6 +33,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   summaryData,
   goBack,
   amount,
+  requestPaidSummaryData,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -45,7 +46,6 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const renderToast = () => {
     showToast({
       title: topupChannel === payChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
-      // subTitle: subTitle,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: topupChannel === payChannel.ORDER ? styles.orderToast : styles.toastContainer,
@@ -143,7 +143,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
     return (
       <IPayView key={item.id}>
-        {isFirstItem && (
+        {isFirstItem && !payChannel.REQUEST_ACCEPT && (
           <IPayView style={styles.chipContainer}>
             <IPayChip
               containerStyle={styles.chipColors}
@@ -198,7 +198,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         <IPayFlatlist
           style={styles.detailesFlex}
           scrollEnabled={false}
-          data={getDetails()}
+          data={topupChannel === payChannel.REQUEST_ACCEPT ? requestPaidSummaryData : getDetails()}
           renderItem={renderNonAlinmaPayItem}
         />
       </IPayView>
