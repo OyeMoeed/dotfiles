@@ -17,7 +17,6 @@ import {
   LocalizationKeysMapping,
   MoneyRequestStatus,
 } from '@app/enums/money-request-status.enum';
-import SummaryType from '@app/enums/summary-type';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -28,8 +27,9 @@ import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import SummaryType from '@app/enums/summary-type';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
-import { typeFieldMapping } from './ipay-request-detail.constant';
+import { getTypeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
 
 const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
@@ -46,6 +46,25 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   const isTransactionCredit =
     transaction?.type === TransactionOperations.CREDIT && transaction.status === MoneyRequestStatus.PENDING;
   const { showToast } = useToastContext();
+
+  const receviedRequestSummaryData = [
+    {
+      id: 1,
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      detailsText: transaction.title,
+      leftIcon: true,
+    },
+    {
+      id: 2,
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      detailsText: transaction.receiver_mobile_number,
+    },
+    {
+      id: 3,
+      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      detailsText: transaction.amount,
+    },
+  ];
 
   const renderToast = (value: string) => {
     showToast({
@@ -100,8 +119,10 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   const onPressPay = () => {
     if (onCloseBottomSheet) onCloseBottomSheet();
     navigate(ScreenNames.REQUEST_SUMMARY, {
-      heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
       screen: SummaryType.MONEY_REQUEST_SUMMARY,
+      receviedRequestSummaryData,
+      transId: transaction.id,
+      heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
     });
   };
 
@@ -162,7 +183,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
             </IPayView>
             {transaction &&
               Object.keys(transaction)
-                .filter((key) => typeFieldMapping[transaction.status].includes(key))
+                .filter((key) => getTypeFieldMapping(transaction.status, transaction.type).includes(key))
                 .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
           </IPayView>
           <IPayView style={styles.buttonWrapper}>

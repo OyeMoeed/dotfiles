@@ -608,7 +608,9 @@
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
     "GO_TO_CARD": "Go to Card",
-    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted",
+    "CHANGE_PIN": "Change pincode",
+    "CARD_DETAILS": "Card Details"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -680,6 +682,7 @@
     "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
     "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
     "CARD_TYPE": "Card Type",
+    "CVV": "cvv",
     "CARD_NUMBER": "Card Number",
     "CARD_HOLDER_NAME": "Card's Holder Name",
     "EXPIRY_DATE": "Expiry date",
@@ -1331,7 +1334,8 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",

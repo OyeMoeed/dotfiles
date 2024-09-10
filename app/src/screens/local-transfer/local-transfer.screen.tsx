@@ -18,7 +18,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
-import { SNAP_POINTS } from '@app/constants/constants';
 import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -51,7 +50,7 @@ const LocalTransferScreen: React.FC = () => {
   const [nickName, setNickName] = useState('');
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const isKeyoardOpen = useKeyboardStatus();
+  const isKeyboardOpen = useKeyboardStatus();
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
@@ -447,7 +446,7 @@ const LocalTransferScreen: React.FC = () => {
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={isIosOS && isKeyoardOpen ? SNAP_POINTS.MID_LARGE : SNAP_POINTS.SMALL}
+        customSnapPoint={['1%', isIosOS && isKeyboardOpen ? '63%' : '35%']}
         ref={editNickNameSheetRef}
       >
         <IPayView style={styles.editStyles}>

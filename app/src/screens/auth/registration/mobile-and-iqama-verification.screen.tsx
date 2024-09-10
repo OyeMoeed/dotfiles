@@ -172,7 +172,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               customSnapPoint={SNAP_POINTS.LARGE}
               ref={helpCenterRef}
             >
-              <HelpCenterComponent />
+              <HelpCenterComponent hideFAQError />
             </IPayBottomSheet>
             <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
           </>

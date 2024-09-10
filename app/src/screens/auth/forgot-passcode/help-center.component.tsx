@@ -20,7 +20,7 @@ import { buttonVariants } from '@app/utilities';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
-const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs }) => {
+const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs, hideFAQError = false }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -31,7 +31,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
   const [faqsItems, setFaqsItems] = useState([]);
 
   const fetchFaqItems = async () => {
-    const apiResponse: any = await getFAQ();
+    const apiResponse: any = await getFAQ(hideFAQError);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       setFaqsItems(apiResponse?.response?.faqs);
