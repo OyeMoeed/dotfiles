@@ -163,7 +163,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                 timeout={otpConfig.login.otpTimeout}
               />
             </IPayPortalBottomSheet>
-            <>{isLoading && <IPaySpinner />}</>
+            {isLoading && <IPaySpinner />}
             <IPayBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
               enablePanDownToClose
@@ -172,7 +172,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               customSnapPoint={SNAP_POINTS.LARGE}
               ref={helpCenterRef}
             >
-              <HelpCenterComponent />
+              <HelpCenterComponent hideFAQError />
             </IPayBottomSheet>
             <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
           </>

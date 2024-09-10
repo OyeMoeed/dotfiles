@@ -253,7 +253,7 @@ const IPayIdRenewalSheet: React.FC = () => {
         simpleBar
         cancelBnt
       >
-        <HelpCenterComponent />
+        <HelpCenterComponent hideFAQError />
       </IPayPortalBottomSheet>
     </>
   );
