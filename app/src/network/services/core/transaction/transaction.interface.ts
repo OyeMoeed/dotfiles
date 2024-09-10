@@ -109,7 +109,25 @@ interface resetPinCodeProp {
   }
 }
 
-interface activateOnlinePurchaseProp {
+interface getCardDetailsProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string;
+    otp?: string;
+    otpRef?: string;
+    deviceInfo?: any;
+  }
+}
+
+interface prepareShowDetailsProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string,
+    deviceInfo: any,
+  }
+}
+
+interface changeStatusProp {
   walletNumber?: string;
   body?: {
     status?: string,
@@ -142,6 +160,13 @@ interface CardListResponse {
   successfulResponse: boolean;
 }
 
+
+enum CARD_STATUS {
+  ONLINE_PURCHASE_DISABLE = '0',
+  ONLINE_PURCHASE_ENABLE = '100',
+  DISABLE = '700',
+}
+
 export {
   CardListItem,
   CardListResponse,
@@ -151,5 +176,8 @@ export {
   TransactionsProp,
   WalletNumberProp,
   resetPinCodeProp,
-  activateOnlinePurchaseProp
+  changeStatusProp,
+  CARD_STATUS,
+  prepareShowDetailsProp,
+  getCardDetailsProp
 };

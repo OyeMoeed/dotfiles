@@ -678,6 +678,7 @@
     "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
     "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
     "CARD_TYPE": "Card Type",
+    "CVV": "cvv",
     "CARD_NUMBER": "Card Number",
     "CARD_HOLDER_NAME": "Card's Holder Name",
     "EXPIRY_DATE": "Expiry date",

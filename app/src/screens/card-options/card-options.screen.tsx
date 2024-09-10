@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
@@ -26,8 +26,8 @@ import { useTypedSelector } from '@app/store/store';
 import useConstantData from '@app/constants/use-constants';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import { activateOnlinePurchaseProp, resetPinCodeProp } from '@app/network/services/core/transaction/transaction.interface';
-import { activateOnlinePurchase, prepareResetCardPinCode, resetPinCode } from '@app/network/services/core/transaction/transactions.service';
+import { CARD_STATUS, changeStatusProp, resetPinCodeProp } from '@app/network/services/core/transaction/transaction.interface';
+import { changeStatus, prepareResetCardPinCode, resetPinCode } from '@app/network/services/core/transaction/transactions.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
@@ -72,6 +72,17 @@ const CardOptionsScreen: React.FC = () => {
   const [pin, setPin] = useState("");
   const [cardStatus, setCardStatus] = useState<string>();
 
+  useEffect(() => {
+    initOnlinePurchase()
+  }, []);
+
+  const initOnlinePurchase = () => {
+    if(currentCard.cardStatus == CARD_STATUS.ONLINE_PURCHASE_ENABLE){ // check if online purchase is enabled
+      setIsOnlinePurchase(true);
+    }else{
+      setIsOnlinePurchase(false);
+    }
+  }
   
   const getToastSubTitle = () =>
     `${cardType} ${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
@@ -88,7 +99,7 @@ const CardOptionsScreen: React.FC = () => {
 
   const changeOnlinePurchase = async (isOn?:boolean, newStatus?: string) => {
     renderSpinner(true);
-    const payload: activateOnlinePurchaseProp = {
+    const payload: changeStatusProp = {
       walletNumber: walletNumber,
       body: {
         status: newStatus,
@@ -96,7 +107,7 @@ const CardOptionsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps
       }
     };
-    const apiResponse:any = await activateOnlinePurchase(payload);
+    const apiResponse:any = await changeStatus(payload);
     switch (apiResponse?.status?.type) {
       case ApiResponseStatusType.SUCCESS:
         setIsOnlinePurchase((prev) => !prev);
@@ -138,10 +149,10 @@ const CardOptionsScreen: React.FC = () => {
   }
 
   const toggleOnlinePurchase = (isOn: boolean) => {
-    if (currentCard?.cardStatus == '0'){
-      changeOnlinePurchase(true, '100') ;
-    }else if (currentCard?.cardStatus == '100'){
-      changeOnlinePurchase(false, '0');
+    if (currentCard?.cardStatus == CARD_STATUS.ONLINE_PURCHASE_DISABLE){
+      changeOnlinePurchase(true, CARD_STATUS.ONLINE_PURCHASE_ENABLE) ;
+    }else if (currentCard?.cardStatus == CARD_STATUS.ONLINE_PURCHASE_ENABLE){
+      changeOnlinePurchase(false, CARD_STATUS.ONLINE_PURCHASE_DISABLE);
     }
     
   };
@@ -161,10 +172,53 @@ const CardOptionsScreen: React.FC = () => {
     openBottomSheet.current?.close();
   };
 
-  const onConfirmDeleteCard = () => {
+  const stopCard = async () => {
+    renderSpinner(true);
+    const payload: changeStatusProp = {
+      walletNumber: walletNumber,
+      body: {
+        status: CARD_STATUS.DISABLE,
+        cardIndex: currentCard?.cardIndex,
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps
+      }
+    };
+    const apiResponse:any = await changeStatus(payload);
     deleteCardSheetRef.current.hide();
-    navigate(ScreenNames.CARDS);
-    renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, true, icons.trash, true);
+    switch (apiResponse?.status?.type) {
+      case ApiResponseStatusType.SUCCESS:
+        navigate(ScreenNames.CARDS);
+        renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, true, icons.trash, true);
+        break;
+      case apiResponse?.apiResponseNotOk:
+        renderToast(
+          localizationText.ERROR.API_ERROR_RESPONSE,
+          false,
+          icons.warning,
+          false,
+        );
+        break;
+      case ApiResponseStatusType.FAILURE:
+        renderToast(
+          localizationText.ERROR.API_ERROR_RESPONSE,
+          false,
+          icons.warning,
+          false,
+        );
+        break;
+      default:
+        renderToast(
+          localizationText.ERROR.API_ERROR_RESPONSE,
+          false,
+          icons.warning,
+          false,
+        );
+        break;
+    }
+    renderSpinner(false);
+  }
+
+  const onConfirmDeleteCard = () => {
+    stopCard();
   };
   const showDeleteCardSheet = () => {
     deleteCardSheetRef.current.show();
