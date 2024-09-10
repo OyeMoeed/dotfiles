@@ -60,10 +60,10 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     balanceData,
     handlePay,
     setOtp,
+    otp,
     isLoading,
     otpError,
     setOtpError,
-    apiError,
     otpVerificationRef,
     veriyOTPSheetRef,
     setOtpRefAPI,
@@ -188,7 +188,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}

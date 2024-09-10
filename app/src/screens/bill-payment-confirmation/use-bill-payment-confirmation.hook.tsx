@@ -144,6 +144,7 @@ const useBillPaymentConfirmation = (
     balanceData,
     handlePay,
     setOtp,
+    otp,
     isLoading,
     otpError,
     setOtpError,

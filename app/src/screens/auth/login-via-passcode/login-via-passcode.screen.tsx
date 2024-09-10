@@ -63,12 +63,12 @@ const LoginViaPasscode: React.FC = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     otpVerificationRef,
-    apiError,
     setComponentToRender,
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
     checkAndHandlePermission,
+    otp
   } = useLogin();
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
@@ -336,7 +336,7 @@ const LoginViaPasscode: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            apiError={apiError}
+            otp={otp}
             showHelp
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
