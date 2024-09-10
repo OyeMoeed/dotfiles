@@ -4,10 +4,10 @@ import {
   IPayCaption1Text,
   IPayCaption2Text,
   IPayCheckbox,
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayImageBackground,
   IPayLinearGradientView,
   IPayPressable,
@@ -142,7 +142,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
             </IPayView>
 
             <IPayView style={styles.receiverInfoContainer}>
-              <IPayImage image={beneficiaryData?.countryFlag} style={styles.countryFlagImg} />
+              <IPayFlag countryCode={beneficiaryData?.countryCode} />
               <IPayView style={styles.receiverInfoView}>
                 <IPayFootnoteText regular={false} text={beneficiaryData?.fullName} color={colors.natural.natural900} />
                 <IPayCaption1Text

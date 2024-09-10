@@ -1,8 +1,8 @@
 import { StyleProp, ViewStyle } from 'react-native';
 
-interface IPayFlagsProps {
+interface IPayFlagProps {
   countryCode: string;
   style?: StyleProp<ViewStyle>;
 }
 
-export default IPayFlagsProps;
+export default IPayFlagProps;

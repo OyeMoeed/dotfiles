@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import {
-  IPayFlags,
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
@@ -178,7 +178,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, {selectedBeneficiary});
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, { selectedBeneficiary });
   };
 
   const handleBeneficiaryActions = useCallback((index: number) => {
@@ -270,7 +270,7 @@ const InternationalTransferScreen: React.FC = () => {
         centerContainerStyles={styles.listCenterContainer}
         adjacentSubTitle={remittanceTypeDesc}
         regularTitle={false}
-        leftIcon={<IPayFlags countryCode={country} />}
+        leftIcon={<IPayFlag countryCode={country} />}
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
@@ -400,7 +400,6 @@ const InternationalTransferScreen: React.FC = () => {
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
   const onPressActivateBeneficiary = async () => {
-   
     const activateBeneficiaryPayload = {
       beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
       activationMethod: ActivationMethods.IVR,

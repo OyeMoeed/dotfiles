@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import {
   IPayCaption1Text,
-  IPayFlags,
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
@@ -242,7 +242,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                 adjacentSubTitle={transferData?.remittanceTypeDesc}
                 isShowSubTitle
                 isShowLeftIcon
-                leftIcon={<IPayFlags countryCode={transferData?.countryCode} />}
+                leftIcon={<IPayFlag countryCode={transferData?.countryCode} />}
                 rightText={
                   <IPayButton
                     btnIconsDisabled

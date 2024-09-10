@@ -38,7 +38,7 @@ import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.co
 import IPayDropdownSheet from './ipay-dropdown/ipay-dropdown-sheet.component';
 import IPayDropdown from './ipay-dropdown/ipay-dropdown.component';
 import IPayFallbackImg from './ipay-fallbackimg/ipay-fallbackimg.component';
-import IPayFlags from './ipay-flags/ipay-flags.component';
+import IPayFlag from './ipay-flag/ipay-flag.component';
 import IPayMaskedInput from './ipay-masked-input/ipay-masked-input';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';
 
@@ -53,7 +53,7 @@ export {
   IPayDropdown,
   IPayDropdownSheet,
   IPayFallbackImg,
-  IPayFlags,
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayHeadlineText,
