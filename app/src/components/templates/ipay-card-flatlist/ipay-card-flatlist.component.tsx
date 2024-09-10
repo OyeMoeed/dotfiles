@@ -34,7 +34,7 @@ const IPayCardFlatList: React.FC<IPayCardFlatListProps> = ({ selectedCardType, s
     );
   };
 
-  const data = segmentType === CardDetailsSegment.CARD_FEATURE ? cardData.features : cardData.fees;
+  const data = segmentType === CardDetailsSegment.CARD_FEATURE ? cardData?.features : cardData?.fees;
 
   return (
     <IPayFlatlist

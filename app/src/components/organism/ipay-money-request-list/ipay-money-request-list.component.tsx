@@ -70,7 +70,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
           <IPayView style={styles.textContainer}>
             <IPaySubHeadlineText
               regular={false}
-              text={titleText}
+              text={titleText.substring(0, 15)}
               styles={titleStyle}
               color={colors.primary.primary900}
             />
