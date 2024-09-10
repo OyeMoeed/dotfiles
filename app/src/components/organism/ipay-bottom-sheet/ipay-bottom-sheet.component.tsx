@@ -1,5 +1,4 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
-import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BottomSheetBackdrop, BottomSheetModal, BottomSheetModalProvider, BottomSheetView } from '@gorhom/bottom-sheet';
@@ -141,13 +140,11 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
             testID={`${testId}-bottom-sheet-view`}
           >
-            <SpinnerProvider>
-              <ToastProvider>
-                <BottomSheetView testID={testID} style={styles.contentContainer}>
-                  {children}
-                </BottomSheetView>
-              </ToastProvider>
-            </SpinnerProvider>
+            <ToastProvider>
+              <BottomSheetView testID={testID} style={styles.contentContainer}>
+                {children}
+              </BottomSheetView>
+            </ToastProvider>
           </IPayLinearGradientView>
         </BottomSheetModal>
       </BottomSheetModalProvider>
