@@ -121,7 +121,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         bankName: beneficiaryBankDetails?.bankName,
       },
     };
-    console.log('payload', payload);
 
     if (isValid) {
       renderSpinner(true);
