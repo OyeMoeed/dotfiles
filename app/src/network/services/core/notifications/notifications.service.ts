@@ -1,11 +1,7 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import { WalletNumberProp } from './notifications.interface';
-import {
-  deleteSingleNotificationMock,
-  getAllRetainedMessagesMock,
-  readSingleNotificationsMock,
-} from './notifications.mock';
+import { deleteSingleNotificationMock, getAllRetainedMessagesMock, readNotificationsMock } from './notifications.mock';
 import apiCall from '../../api-call.service';
 import CORE_URLS from '../core.urls';
 import { DeviceInfoProps } from '../../services.interface';
@@ -29,7 +25,17 @@ const getAllRetainedMessages = async (payload: WalletNumberProp): Promise<unknow
   return apiResponse;
 };
 
-const readSingleNotification = async (payload: {
+/**
+ * Marks a notification as read for a given wallet number.
+ *
+ * @param {Object} payload - The payload containing the wallet number and API payload.
+ * @param {string} payload.walletNumber - The wallet number.
+ * @param {Object} payload.apiPayload - The API payload.
+ * @param {DeviceInfoProps} payload.apiPayload.deviceInfo - The device information.
+ * @param {string[]} payload.apiPayload.messageIds - The message IDs to mark as read.
+ * @returns {Promise<unknown>} - A promise that resolves to the API response or mock data.
+ */
+const readNotification = async (payload: {
   walletNumber: string;
   apiPayload: {
     deviceInfo: DeviceInfoProps;
@@ -37,7 +43,7 @@ const readSingleNotification = async (payload: {
   };
 }): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
-    return readSingleNotificationsMock;
+    return readNotificationsMock;
   }
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.MARK_SINGLE_NOTIFICATION_AS_READ(payload.walletNumber),
@@ -61,4 +67,4 @@ const deleteSingleNotification = async (payload: { walletNumber: string; message
   return apiResponse;
 };
 
-export { getAllRetainedMessages, readSingleNotification, deleteSingleNotification };
+export { getAllRetainedMessages, readNotification, deleteSingleNotification };
