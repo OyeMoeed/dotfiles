@@ -66,6 +66,7 @@ const SendGiftPreview: FC = ({ route }) => {
             multiline
             maxLength={MAX_LENGTH}
             style={styles.input}
+            returnKeyLabel="return"
             containerStyle={styles.message}
             assistiveText={`${message.length}/${MAX_LENGTH}`}
             assistiveTextStyle={styles.assistiveText}
