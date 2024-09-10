@@ -15,6 +15,9 @@ export default interface IpayTopupSuccessProps {
   isUnderProccess: boolean;
 
   summaryData: any;
+
+  // it is the data that is passed to the  success screen after the successful recived request
+  requestPaidSummaryData?: any;
 }
 
 export interface PayData {
