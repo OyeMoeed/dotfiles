@@ -30,14 +30,15 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import SummaryType from '@app/enums/summary-type';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
-import { getTypeFieldMapping, typeFieldMapping } from './ipay-request-detail.constant';
+import { getTypeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
 
 const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   testID,
   transaction,
   onCloseBottomSheet,
-  showActionSheet,
+  showRejectActionSheet,
+  showCancelActionSheet,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -186,7 +187,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
               transaction.status === MoneyRequestStatus.PENDING && (
                 <IPayButton
                   btnType="outline"
-                  onPress={onPressCancel}
+                  onPress={showCancelActionSheet}
                   btnText={localizationText.REQUEST_MONEY.CANCEL_REQUEST}
                   medium
                   btnStyle={[styles.button]}
@@ -205,7 +206,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 />
                 <IPayButton
                   btnType="outline"
-                  onPress={showActionSheet}
+                  onPress={showRejectActionSheet}
                   btnText={localizationText.REQUEST_MONEY.REJECT}
                   large
                   btnIconsDisabled
