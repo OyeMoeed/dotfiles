@@ -23,7 +23,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { useTypedSelector } from '@app/store/store';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
-import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import { formatDate } from '@app/utilities/date-helper.util';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import requestMoneyStyles from './request-money-transaction.style';

@@ -114,11 +114,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     createRequestBottomSheetRef.current?.present();
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    setIsLoading(true);
+    // showSpinner({
+    //   variant: spinnerVariant.DEFAULT,
+    //   hasBackgroundColor: true,
+    // });
+    // setIsLoading(true);
     const payload: SendRequestedMoneyPrepareReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
@@ -131,8 +131,8 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
-    hideSpinner();
+    // setIsLoading(false);
+    // hideSpinner();
   };
 
   // Verify OTP for sending requested money
