@@ -220,7 +220,7 @@ enum AddBeneficiary {
   BENEFICIARY_NICK_NAME = 'beneficiaryNickName',
 }
 
-export enum AddBeneficiaryKey {
+enum AddBeneficiaryKey {
   BANK_NAME = 'Bank Name',
   IBAN = 'Iban',
 }
@@ -307,6 +307,7 @@ enum BillPaymentOptions {
 export {
   APIResponseType,
   AddBeneficiary,
+  AddBeneficiaryKey,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
