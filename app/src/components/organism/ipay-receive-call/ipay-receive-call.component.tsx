@@ -24,6 +24,8 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
   const localizationText = useLocalization();
+  // TODO: fix NodeJs types
+  // eslint-disable-next-line no-undef
   let interval: NodeJS.Timeout;
 
   const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useCallReceiverTimer(

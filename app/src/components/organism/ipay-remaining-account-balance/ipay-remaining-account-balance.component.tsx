@@ -10,12 +10,12 @@ import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
 import ipayRemainingAccountBalanceStyles from './ipay-remaining-account-balance.component.styles';
-import { IPayRemainingBalanceProps } from './ipay-remaining-account-balance.interface';
+import IPayRemainingBalanceProps from './ipay-remaining-account-balance.interface';
 
 const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,
   showProgress = true,
-  topUpAmount,
+  topUpAmount = 0,
   setTopUpAmount,
   walletInfo,
   onPressAddCards,
@@ -45,7 +45,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
     const newAmount = removeCommas(text);
     const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
     if (reg.test(newAmount.toString())) {
-      setTopUpAmount(newAmount.toString());
+      setTopUpAmount?.(newAmount.toString());
     }
   };
 
@@ -88,7 +88,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           }
         />
       )}
-      {!isMultipleOfHundred(topUpAmount) && payChannelType === payChannel.ATM && (
+      {!isMultipleOfHundred(Number(topUpAmount)) && payChannelType === payChannel.ATM && (
         <IPayCaption2Text
           regular={false}
           text={localizationText.ATM.MULTIPLE_OF_HUNDERED}

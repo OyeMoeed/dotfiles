@@ -93,7 +93,7 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
           style={styles.logoContainer}
         >
           <LogoIcon width={scaleSize(28)} height={verticalScale(28)} />
-          <IPayView testID={testID} style={[styles.childContainer]}>
+          <IPayView testID={testID} style={styles.childContainer}>
             <IPayScrollView
               contentContainerStyle={[styles.innerStyle, isSheetOpen && styles.innerStyleOpen]}
               testID={testID}

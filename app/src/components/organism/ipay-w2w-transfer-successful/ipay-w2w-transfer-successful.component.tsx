@@ -14,13 +14,13 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
 import React from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { IW2WTransferSuccessProps, PayData } from './ipay-w2w-transfer-successful.interface';
 import { TopUpSuccessStyles } from './ipay-w2w-transfer-successful.styles';
 
@@ -28,16 +28,10 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
-  const { walletPayDetailes } = useConstantData();
 
   const { showToast } = useToastContext();
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
-
-  const handleClickOnCopy = (step: number, textToCopy: string) => {
-    copyText(textToCopy);
-    renderToast();
-  };
 
   const formattedTransfersDetails = transferDetails.formData.map((item, index) => {
     if (item?.walletNumber) {
@@ -90,6 +84,11 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
     });
+  };
+
+  const handleClickOnCopy = (step: number, textToCopy: string) => {
+    copyText(textToCopy);
+    renderToast();
   };
 
   const renderWallerPayItem = ({ item }: { item: PayData }) => {
@@ -186,7 +185,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
           {renderActionLabel()}
           <IPayButton
             large
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             btnText={localizationText.COMMON.HOME}
             hasLeftIcon
             leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}

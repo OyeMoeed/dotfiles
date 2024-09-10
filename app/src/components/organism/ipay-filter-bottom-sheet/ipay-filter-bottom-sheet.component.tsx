@@ -3,7 +3,6 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import { IPayAnimatedTextInput, IPayButton, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
-import { REGEX } from '@app/constants/app-validations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -231,13 +230,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       }
     };
 
-    const numberValidation = (type: string) => {
-      if (type === FiltersType.CONTACT_NUMBER && REGEX.DIGITS_ONLY.test(getValues(FiltersType.CONTACT_NUMBER))) {
-        return { value: REGEX.SaudiMobileNumber, message: localizationText.COMMON.INCORRECT_MOBILE_NUMBER };
-      }
-      return {};
-    };
-
     const extractTitleByValue = (value: string) => {
       const filterData = getFilterType();
       if (filterData?.type === FiltersType.CONTACT_NUMBER) {
@@ -277,7 +269,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
-          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired = true, editable = false } }) => (
+          renderItem={({ item: { type, label, icon, dropdownIcon, editable = false } }) => (
             <Controller
               control={control}
               name={type}
@@ -499,7 +491,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
-    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
+    const doneTextValue = doneText || localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {
