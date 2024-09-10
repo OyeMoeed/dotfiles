@@ -264,13 +264,20 @@ interface Filter {
   icon?: string;
 }
 enum GiftCardStatus {
-  OPENED = 'Opened',
-  UNOPENED = 'Unopened',
-  EXPIRED = 'Expired',
+  OPENED = 'opened',
+  UNOPENED = 'unopened',
+  EXPIRED = 'expired',
 }
+
+enum GiftCardDetailsKey {
+  AMOUNT = 'amount',
+  REF_NUMBER = 'refNumber',
+}
+
 enum ApiResponseStatusType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
+  ERROR = 'ERROR',
 }
 
 enum MoiPaymentTypes {
@@ -314,8 +321,10 @@ export {
   CardDetailsSegment,
   CardOptions,
   CardStatusIndication,
+  CardStatusNumber,
   CardStatusType,
   CardTypes,
+  CardTypesCodes,
   Filter,
   FilterValue,
   FiltersType,
@@ -342,6 +351,5 @@ export {
   pickerVariant,
   spinnerVariant,
   toastTypes,
-  CardStatusNumber,
-  CardTypesCodes,
+  GiftCardDetailsKey,
 };

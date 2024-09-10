@@ -45,40 +45,39 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
   };
 
   const onReadQrCode = async (code: string) => {
-    try {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    setScannedCode(code);
+    const crc = new Crc();
+    crc.scanData.scanStringData(code);
+
+    const terminal = crc?.scanData?.scannedData?.ID;
+    const feesApiResponse = await getAtmWithdrawalFees(walletNumber as string, route?.params?.amount);
+
+    if (feesApiResponse?.status?.type === 'SUCCESS') {
+      const confirmApiResponse = await atmWithdrawalConfirm(walletNumber as string, {
+        amount: route?.params?.amount,
+        terminal,
+        vatAmount: feesApiResponse?.response?.vatAmount as string,
+        feeAmount: feesApiResponse?.response?.feeAmount as string,
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       });
-      setScannedCode(code);
-      const crc = new Crc();
-      crc.scanData.scanStringData(code);
-      const terminal = crc?.scanData?.scannedData?.ID;
-      const feesApiResponse = await getAtmWithdrawalFees(walletNumber as string, route?.params?.amount);
-      if (feesApiResponse.status.type === 'SUCCESS') {
-        const confirmApiResponse = await atmWithdrawalConfirm(walletNumber as string, {
+
+      if (confirmApiResponse?.status?.type === 'SUCCESS') {
+        navigate(ScreenNames.ATM_WITHDRAW_SUCCESSFUL, {
           amount: route?.params?.amount,
-          terminal,
-          vatAmount: feesApiResponse?.response?.vatAmount as string,
-          feeAmount: feesApiResponse?.response?.feeAmount as string,
-          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+          referenceNumber: confirmApiResponse?.response?.referenceNumber,
         });
-        if (confirmApiResponse.status.type === 'SUCCESS') {
-          navigate(ScreenNames.ATM_WITHDRAW_SUCCESSFUL, {
-            amount: route?.params?.amount,
-            referenceNumber: confirmApiResponse?.response?.referenceNumber,
-          });
-        } else {
-          onReadQrCodeFaild();
-        }
-      } else {
-        onReadQrCodeFaild();
       }
+
       hideSpinner();
-    } catch (error) {
-      hideSpinner();
-      onReadQrCodeFaild();
+      return;
     }
+
+    onReadQrCodeFaild();
+    hideSpinner();
   };
 
   return (

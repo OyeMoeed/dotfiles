@@ -71,4 +71,6 @@ export {
   MockAPIDataProps,
   MockAPIOkProp,
   MockAPIStatusProps,
+  MockAPIOkProp,
+  MockAPIStatusProps,
 };

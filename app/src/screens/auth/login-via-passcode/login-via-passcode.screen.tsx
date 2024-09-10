@@ -157,7 +157,7 @@ const LoginViaPasscode: React.FC = () => {
 
     const apiResponse = await forgetPasscode(payload);
 
-    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
@@ -186,16 +186,15 @@ const LoginViaPasscode: React.FC = () => {
     }
   };
 
-  const getWalletInformation = async (idExpired?: boolean) => {
+  const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
     renderSpinner(true);
-
     const payload: WalletNumberProp = {
-      walletNumber: walletNumber as string,
+      walletNumber: resWalletNumber as string,
     };
 
     const apiResponse: any = await getWalletInfo(payload);
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
       saveProfileImage(apiResponse?.response);
       redirectToHome(idExpired);
@@ -232,7 +231,7 @@ const LoginViaPasscode: React.FC = () => {
         }),
       );
       saveProfileImage(loginApiResponse?.response);
-      await getWalletInformation(loginApiResponse?.response?.idExpired);
+      await getWalletInformation(loginApiResponse?.response?.idExpired, loginApiResponse?.response?.walletNumber);
     }
   };
 
@@ -309,13 +308,10 @@ const LoginViaPasscode: React.FC = () => {
       const apiResponse: any = await deviceDelink(payload);
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
-      } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -450,7 +446,7 @@ const LoginViaPasscode: React.FC = () => {
         customSnapPoint={['1%', '99%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} hideFAQError />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.COMMON.CONTACT_US}
@@ -485,32 +481,6 @@ const LoginViaPasscode: React.FC = () => {
             />
           ))}
         </IPayView>
-      </IPayBottomSheet>
-      <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
-      <IPayActionSheet
-        ref={actionSheetRef}
-        testID="delink-action-sheet"
-        title={actionSheetOptions.title}
-        message={actionSheetOptions.message}
-        options={actionSheetOptions.options}
-        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-        showIcon={actionSheetOptions.showIcon}
-        showCancel={actionSheetOptions.showCancel}
-        customImage={actionSheetOptions.customImage}
-        onPress={delinkSuccessfully}
-      />
-
-      <IPayBottomSheet
-        noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '99%']}
-        ref={helpCenterRef}
-      >
-        <HelpCenterComponent />
       </IPayBottomSheet>
       <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
       <IPayActionSheet

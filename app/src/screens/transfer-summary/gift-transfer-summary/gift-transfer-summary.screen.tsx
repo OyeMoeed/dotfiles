@@ -6,14 +6,18 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayLinearGradientView,
   IPayPressable,
+  IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -46,6 +50,7 @@ const TransferSummaryScreen: React.FC = () => {
     }>
   >();
   const { transfersDetails, transactionType, activeFriends } = (route.params as GiftParamsProps).data;
+
   const { giftDetails } = transfersDetails;
   const [otp, setOtp] = useState<string>('');
   const [otpRef, setOtpRef] = useState<string>('');
@@ -55,10 +60,12 @@ const TransferSummaryScreen: React.FC = () => {
   const [apiError, setAPIError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [expandMsg, setExpandMsg] = useState<boolean>(false);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { showToast } = useToastContext();
   const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
-  const sendMoneyBottomSheetRef = useRef<any>(null);
+  const sendMoneyBottomSheetRef = useRef<any>();
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
   const otpSheetHeading =
@@ -74,6 +81,15 @@ const TransferSummaryScreen: React.FC = () => {
       return false;
     }
     return true;
+  };
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
   };
 
   const transfersRequestsList = transfersDetails?.formInstances?.map((item) => {
@@ -127,7 +143,7 @@ const TransferSummaryScreen: React.FC = () => {
         if (item.isAlinma) {
           return (
             <IPayView style={styles.leftIcon}>
-              <IPayImage image={item.leftIcon} style={styles.alinmaLogo} resizeMode="contain" />
+              <IPayImage image={item.leftIcon} style={styles.alinmaLogo} resizeMode="cover" />
             </IPayView>
           );
         }
@@ -180,66 +196,86 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const handleOnPressHelp = () => {
+    setOtpSheetVisible(false);
     helpCenterRef?.current?.present();
   };
 
   const onCloseBottomSheet = () => {
-    otpVerificationRef?.current?.resetInterval();
+    setOtpSheetVisible(false);
   };
 
   const prepareOtp = async () => {
-    sendMoneyBottomSheetRef.current?.present();
-
+    setOtpSheetVisible(true);
     showSpinner({
       variant: spinnerVariant.DEFAULT,
       hasBackgroundColor: true,
     });
-    const payload: IW2WTransferPrepareReq = {
-      requests: transfersDetails?.formInstances?.map((item) => ({
-        mobileNumber: item.mobileNumber,
-        amount: item.amount,
-        note: item.notes,
-        transferPurpose: item?.transferPurpose,
-      })),
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
-    if (apiResponse.status.type === ApiResponseStatusType.SUCCESS) {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      setTransactionId(apiResponse?.authentication?.transactionId);
-      sendMoneyBottomSheetRef.current?.present();
+    try {
+      const payload: IW2WTransferPrepareReq = {
+        requests: transfersDetails?.formInstances?.map((item) => ({
+          mobileNumber: item.mobileNumber,
+          amount: item.amount,
+          note: item.notes,
+          transferPurpose: item?.transferPurpose,
+        })),
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      };
+      const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setOtpRef(apiResponse?.response?.otpRef as string);
+          setTransactionId(apiResponse?.authentication?.transactionId);
+          setOtpSheetVisible(true);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        default:
+          break;
+      }
+      hideSpinner();
+    } catch (error) {
+      setAPIError(error?.message);
+      hideSpinner();
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    hideSpinner();
   };
 
   const verifyOtp = async () => {
     setIsLoading(true);
-    const payload: IW2WTransferConfirmReq = {
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      otp,
-      otpRef,
-      authentication: {
-        transactionId: transactionId as string,
-      },
-    };
-
-    const apiResponse = await walletToWalletTransferConfirm(walletInfo.walletNumber, payload);
-
-    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      if (apiResponse?.response) {
-        sendMoneyBottomSheetRef.current?.close();
-        navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
-          transferDetails: {
-            formData: transfersDetails.formInstances,
-            apiData: apiResponse?.response.transferRequestsResult,
-          },
-          totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
-        });
+    try {
+      const payload: IW2WTransferConfirmReq = {
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        otp,
+        otpRef,
+        authentication: {
+          transactionId: transactionId as string,
+        },
+      };
+      const apiResponse = await walletToWalletTransferConfirm(walletInfo.walletNumber, payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setOtpSheetVisible(false);
+          navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
+            transferDetails: {
+              formData: transfersDetails.formInstances,
+              apiData: apiResponse?.response?.transferRequestsResult,
+              selectedCard: giftDetails?.selectedCard,
+            },
+            totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
+          });
+          break;
+        case apiResponse?.apiResponseNotOk:
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        default:
+          break;
       }
-    } else {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    setIsLoading(false);
   };
 
   const onConfirmOtp = () => {
@@ -255,6 +291,8 @@ const TransferSummaryScreen: React.FC = () => {
     prepareOtp();
   };
 
+  const totalAmount = transfersDetails?.formInstances?.[0]?.totalAmount ?? '';
+
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
@@ -263,50 +301,61 @@ const TransferSummaryScreen: React.FC = () => {
         {giftMessage()}
       </IPayView>
       <IPayView style={styles.container}>
-        <IPayView>
-          {transfersRequestsList?.map((item) => {
-            if (item[0].isAlinma) {
+        <IPayScrollView>
+          <IPayView>
+            {transfersRequestsList?.map((item) => {
+              if (item[0].isAlinma) {
+                return (
+                  <IPayView style={styles.walletBackground} key={item[0].value}>
+                    <IPayFlatlist
+                      style={styles.detailesFlex}
+                      scrollEnabled={false}
+                      data={item}
+                      renderItem={renderWalletPayItem}
+                    />
+                  </IPayView>
+                );
+              }
               return (
                 <IPayView style={styles.walletBackground} key={item[0].value}>
                   <IPayFlatlist
                     style={styles.detailesFlex}
                     scrollEnabled={false}
                     data={item}
-                    renderItem={renderWalletPayItem}
+                    renderItem={renderNonAlinmaPayItem}
                   />
                 </IPayView>
               );
-            }
-            return (
-              <IPayView style={styles.walletBackground} key={item[0].value}>
-                <IPayFlatlist
-                  style={styles.detailesFlex}
-                  scrollEnabled={false}
-                  data={item}
-                  renderItem={renderNonAlinmaPayItem}
-                />
-              </IPayView>
-            );
-          })}
-        </IPayView>
-        <IPayButton
-          btnType={buttonVariants.PRIMARY}
-          btnIconsDisabled
-          btnText={localizationText.COMMON.CONFIRM}
-          btnColor={colors.primary.primary500}
-          large
-          onPress={onSubmit}
-        />
+            })}
+          </IPayView>
+        </IPayScrollView>
+        <IPayLinearGradientView style={styles.buttonContainer}>
+          <IPayList
+            title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+            showDetail
+            detailTextStyle={styles.listTextStyle}
+            detailText={`${totalAmount} ${localizationText.COMMON.SAR}`}
+          />
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            btnIconsDisabled
+            btnText={localizationText.COMMON.CONFIRM}
+            btnColor={colors.primary.primary500}
+            btnStyle={styles.btn}
+            onPress={onSubmit}
+          />
+        </IPayLinearGradientView>
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={otpSheetHeading}
         enablePanDownToClose
         simpleBar
         bold
         cancelBnt
-        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={sendMoneyBottomSheetRef}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
@@ -315,14 +364,13 @@ const TransferSummaryScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          isLoading={isLoading}
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           onResendCodePress={() => {}}
           timeout={otpConfig.transaction.otpTimeout}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose

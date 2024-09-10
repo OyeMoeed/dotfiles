@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { IPayPressable, IPayView } from '@app/components/atoms';
+import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useRef, useState } from 'react';
 import { Animated, PanResponder } from 'react-native';
 import { FlipCardProps } from './ipay-flip-card.interface';
@@ -11,8 +12,10 @@ const FlipCard: React.FC<FlipCardProps> = ({
   frontViewComponent,
   backViewComponent,
   returnFilpedIndex,
+  isExpired,
 }) => {
-  const styles = flipCardStyles();
+  const { colors } = useTheme();
+  const styles = flipCardStyles(colors);
   const animatedValue = useRef(new Animated.Value(0)).current;
   const [isFlipped, setIsFlipped] = useState(false);
   const perspective = 700;
@@ -72,6 +75,8 @@ const FlipCard: React.FC<FlipCardProps> = ({
     },
   });
 
+  const overlay = isExpired ? <IPayView style={styles.expireOverlay} /> : <IPayView />;
+
   return (
     <IPayView testID={`${testID}-flip-card`} style={[styles.container, style]} {...panResponder.panHandlers}>
       <IPayPressable onPress={flipCard}>
@@ -86,6 +91,7 @@ const FlipCard: React.FC<FlipCardProps> = ({
             ]}
           >
             {frontViewComponent}
+            {overlay}
           </Animated.View>
           <Animated.View
             style={[
@@ -98,6 +104,7 @@ const FlipCard: React.FC<FlipCardProps> = ({
             ]}
           >
             {backViewComponent}
+            {overlay}
           </Animated.View>
         </IPayView>
       </IPayPressable>

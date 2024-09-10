@@ -90,28 +90,18 @@ const Home: React.FC = () => {
 
   const getTransactionsData = async () => {
     renderSpinner(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '3',
-        offset: '1',
-      };
 
-      const apiResponse: any = await getTransactions(payload);
+    const payload: TransactionsProp = {
+      walletNumber,
+      maxRecords: '3',
+      offset: '1',
+    };
 
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        setTransactionsData(apiResponse?.response?.transactions);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+    const apiResponse: any = await getTransactions(payload);
+
+    setTransactionsData(apiResponse?.response?.transactions);
+
+    renderSpinner(false);
   };
 
   const getOffersData = async () => {
@@ -212,7 +202,7 @@ const Home: React.FC = () => {
       walletNumber: walletNumber as string,
     };
     const apiResponse: any = await getWalletInfo(payload);
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
     }
   };

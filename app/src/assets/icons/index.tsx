@@ -7,6 +7,7 @@ import {
   Login,
   LogoIcon,
   Message,
+  NonAlinma,
   Outgoing,
   PointRedemptionBackground,
   PointRedemptionPlus,
@@ -251,6 +252,7 @@ const icons = {
   timer_1: 'timer-1',
   call_incoming: IncomingCall,
   call_outgoing: Outgoing,
+  nonALinma: NonAlinma,
 };
 
 export default icons;

@@ -1,4 +1,4 @@
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
@@ -8,18 +8,27 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
-import { forwardRef, useState } from 'react';
+import { forwardRef, useCallback, useRef, useState } from 'react';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './change-card-pin.interface';
 import changeCardPinStyles from './change-card-pin.style';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
+import { resetPinCodeProp } from '@app/network/services/core/transaction/transaction.interface';
+import { useTypedSelector } from '@app/store/store';
+import { resetPinCode } from '@app/network/services/core/transaction/transactions.service';
+import { encryptData } from '@app/network/utilities/encryption-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import useConstantData from '@app/constants/use-constants';
 
-const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
+const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
-  const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.CurrentPin);
+  const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
+  const [apiError, setAPIError] = useState<string>('');
 
   const getTitle = () => {
     switch (currentView) {
@@ -73,6 +82,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
     }
   };
 
+
   const { showToast } = useToastContext();
 
   const onVerifyPin = (enteredCode: string) => enteredCode === '1234'; // TODO: pincode hardcoded for now will be change later
@@ -80,16 +90,21 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const checkIfPinNotOldPin = (enteredCode: string) => enteredCode !== '1234';
 
   const isPinMatched = (enteredCode: string) => enteredCode === newPin;
+  
 
-  const renderToast = () => {
+
+  
+
+  const renderToast = (toastMsg: string) => {
     showToast({
-      title: getErrorTitle(),
-      subTitle: getErrorDescription(),
-      containerStyle: styles.toast,
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
       isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
+
 
   const onEnterPassCode = (enteredCode: string) => {
     if (passcodeError) {
@@ -104,7 +119,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setClearPin((prev) => !prev);
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       case ChangeCardPinViewTypes.NewPin:
@@ -114,23 +129,24 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           setClearPin((prev) => !prev);
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       case ChangeCardPinViewTypes.ConfirmNewPin:
         if (isPinMatched(enteredCode)) {
-          setClearPin((prev) => !prev);
           if (onSuccess) {
-            onSuccess();
+            onSuccess(enteredCode);
           }
+          
         } else {
           setPasscodeError(true);
-          renderToast();
+          renderToast(getErrorDescription());
         }
         break;
       default:
     }
   };
+  
 
   return (
     <IPayView style={styles.container}>
@@ -148,6 +164,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
           onEnterPassCode={onEnterPassCode}
         />
       </IPayView>
+
     </IPayView>
   );
 });

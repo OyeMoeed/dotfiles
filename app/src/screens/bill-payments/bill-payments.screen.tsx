@@ -7,8 +7,11 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { BillProps, GetSadadBillProps } from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.interface';
-import getSadadBills from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.service';
+import {
+  BillProps,
+  GetSadadBillProps,
+} from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
+import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, BillPaymentOptions, BillStatus, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
@@ -105,7 +108,7 @@ const BillPaymentsScreen: React.FC = () => {
               style={styles.headerStyles}
             />
             <IPayView style={styles.listView}>
-              {sadadBills.length > 0 && (
+              {sadadBills.length > 0 ? (
                 <IPayFlatlist
                   testID="ipay-flatlist"
                   data={sadadBills}
@@ -114,6 +117,8 @@ const BillPaymentsScreen: React.FC = () => {
                   showsVerticalScrollIndicator={false}
                   renderItem={({ item }) => <IPaySadadBill billDetails={item} showMoreOption={false} />}
                 />
+              ) : (
+                <IPayView />
               )}
             </IPayView>
             <IPayButton

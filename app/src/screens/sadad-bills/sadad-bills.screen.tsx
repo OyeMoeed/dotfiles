@@ -10,8 +10,11 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { BillProps, GetSadadBillProps } from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.interface';
-import getSadadBills from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.service';
+import {
+  BillProps,
+  GetSadadBillProps,
+} from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
+import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
 import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
@@ -52,7 +55,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
       ).length,
     [activeBillsData, sadadBills, inactiveBillsData],
   );
-  const multipleBillsSelected = selectedBillsCount > 1;
+  const multipleBillsSelected = selectedBillsCount >= 1;
 
   const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -102,9 +105,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const renderButtonText = () => {
     const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.dueAmount), 0);
 
-    return multipleBillsSelected
-      ? `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`
-      : localizationText.SADAD.COMPLETE_PAYMENT;
+    return `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`;
   };
 
   const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
@@ -379,33 +380,12 @@ const SadadBillsScreen: React.FC = ({ route }) => {
               )}
               fetchData={getBills}
             />
-            {/* <IPayFlatlist
-              testID="ipay-flatlist"
-              data={sadadBillsData}
-              keyExtractor={(_, index) => index.toString()}
-              itemSeparatorStyle={styles.itemSeparatorStyle}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item, index }) => (
-                <IPayView>
-                  <IPaySadadBill
-                    billDetails={item}
-                    onSelectBill={onSelectBill}
-                    onPressMoreOptions={(id) => onPressMoreOptions(Number(id), item)}
-                    showCheckBox={selectedTab === BillsStatusTypes.ACTIVE_BILLS}
-                  />
-                  {index === activeBillsData.length - 1 && selectedBillsCount > 0 && (
-                    <IPayView
-                      style={selectedBillsCount > 1 ? styles.listBottomConditionalView : styles.listBottomView}
-                    />
-                  )}
-                </IPayView>
-              )}
-            /> */}
           </IPayView>
           {selectedBillsCount > 0 && (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
                 btnText={renderButtonText()}
+                btnStyle={styles.btn}
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}

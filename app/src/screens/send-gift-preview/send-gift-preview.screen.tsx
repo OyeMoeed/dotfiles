@@ -4,6 +4,7 @@ import {
   IPayCaption1Text,
   IPayFootnoteText,
   IPayImage,
+  IPayLottieAnimation,
   IPayScrollView,
   IPayTitle1Text,
   IPayView,
@@ -22,10 +23,12 @@ import { typography } from '@app/styles/typography.styles';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
+import { darkCards } from '../send-gift-card/send-gift-card.constants';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
 const SendGiftPreview: FC = ({ route }) => {
-  const { occasion = '' } = { ...route?.params };
+  const { occasion = '', selectedCard } = { ...route?.params };
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = sendGiftPreviewStyles(colors);
@@ -41,6 +44,7 @@ const SendGiftPreview: FC = ({ route }) => {
 
   const onPreview = () => {
     previewBottomSheetRef.current?.present();
+    Keyboard.dismiss();
   };
 
   const onNext = () => {
@@ -48,9 +52,16 @@ const SendGiftPreview: FC = ({ route }) => {
       from: TRANSFERTYPE.SEND_GIFT,
       heading: localizationText.SEND_GIFT.SEND_GIFT,
       showHistory: false,
-      giftDetails: { message, occasion },
+      giftDetails: { message, occasion, selectedCard },
     });
   };
+
+  // to change text color on basis of card theme.
+  const isDarkCard = darkCards.includes(selectedCard?.id);
+
+  const logoImage = isDarkCard ? images.textLogoLight : images.logo;
+
+  const themeTextColor = isDarkCard ? colors.natural.natural0 : colors.primary.primary950;
 
   return (
     <IPaySafeAreaView>
@@ -97,18 +108,17 @@ const SendGiftPreview: FC = ({ route }) => {
         simpleBar
       >
         <IPayView style={styles.bottomSheetContainer}>
-          <IPayView style={styles.previewContainer}>
-            <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
-            <IPayImage image={images.eidMubarak} style={styles.image} />
-
+          <IPayView style={[styles.previewContainer, { backgroundColor: selectedCard?.bgColor }]}>
+            <IPayImage image={logoImage} style={styles.smallAlinmaLogo} />
+            <IPayLottieAnimation source={selectedCard?.path} style={styles.image} loop />
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText style={styles.messageText} color={colors.primary.primary950} text={message} />
+              <IPayFootnoteText style={styles.messageText} color={themeTextColor} text={message} />
             </IPayScrollView>
             <IPayFootnoteText
-              style={[styles.messagePreviewText]}
+              style={styles.messagePreviewText}
               text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
-              color={colors.primary.primary950}
+              color={themeTextColor}
             />
           </IPayView>
         </IPayView>
