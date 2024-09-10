@@ -1,10 +1,11 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const transferInfoStyles = (themeColors: typeof colors) =>
+const transferInfoStyles = (themeColors: typeof colors, hasWallet: boolean) =>
   createStyleSheet({
     chipContainerNotWallet: {
       marginTop: moderateScale(24),
@@ -37,7 +38,8 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     },
     inputText: {
       fontSize: FONT_SIZE_20,
-      lineHeight: moderateScale(22),
+      lineHeight: moderateScale(30),
+      minWidth: scaleSize(45),
     },
     inputContainer: {
       alignItems: 'center',
@@ -66,7 +68,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
           marginVertical: 0,
         },
       }),
-      lineHeight: moderateScale(22),
+      lineHeight: moderateScale(30),
     },
     reasonsView: {
       marginVertical: moderateScale(8),
@@ -104,7 +106,6 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     alinmaLogo: {
       wdith: moderateScale(18),
       height: moderateScale(18),
-      magrinLeft: moderateScale(50),
     },
     alinmaContainer: {
       marginLeft: moderateScale(30),

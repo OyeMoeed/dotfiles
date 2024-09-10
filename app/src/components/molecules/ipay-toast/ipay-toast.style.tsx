@@ -5,7 +5,7 @@ import { SCALE_1, SCALE_10, SCALE_5 } from '@app/styles/spacing.const';
 import { FONT_SIZE_14 } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const styles = ({ _, bgColor, titleColor, borderColor }) =>
+const styles = (bgColor: string, titleColor: string, borderColour: string) =>
   createStyleSheet({
     mainContiner: {
       backgroundColor: 'transparent',
@@ -24,7 +24,7 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       paddingVertical: verticalScale(12),
       marginTop: SCALE_5,
       borderWidth: SCALE_1,
-      borderColor: bgColor,
+      borderColor: borderColour,
       shadowColor: colors.natural.natural700,
       shadowOffset: {
         height: -4,
@@ -82,6 +82,9 @@ const styles = ({ _, bgColor, titleColor, borderColor }) =>
       color: colors.natural.natural0,
       top: scaleSize(6),
       fontSize: FONT_SIZE_14,
+    },
+    justifyCenter: {
+      justifyContent: 'center',
     },
   });
 

@@ -8,10 +8,10 @@ import forgetPasscodeMock from './forget-passcode.mock';
 
 const forgetPasscode = async (
   payload: IconfirmForgetPasscodeOtpReq,
-): Promise<ApiResponse<IconfirmForgetPasscodeOtpRes>> => {
-    if (constants.MOCK_API_RESPONSE) {
-      return forgetPasscodeMock;
-    }
+): Promise<ApiResponse<IconfirmForgetPasscodeOtpRes> | undefined> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return forgetPasscodeMock;
+  }
   const apiResponse = await apiCall<IconfirmForgetPasscodeOtpRes>({
     endpoint: CORE_URLS.CONFIRM_OTP_FORGET_PASSCODE,
     method: requestType.POST,

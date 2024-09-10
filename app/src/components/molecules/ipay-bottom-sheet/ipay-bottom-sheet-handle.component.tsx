@@ -12,7 +12,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   onPressCancel,
   onPressDone,
   simpleHeaderBar,
-  simpleTitleStyle
+  simpleTitleStyle,
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);

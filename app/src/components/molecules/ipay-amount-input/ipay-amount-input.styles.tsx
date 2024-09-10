@@ -27,13 +27,12 @@ const amountInputStyles = (colors) =>
       color: colors.natural.natural1000,
       lineHeight: moderateScale(20),
       alignSelf: 'flex-end',
-      marginBottom: moderateScale(3),
     },
     textAmount: {
       color: colors.natural.natural1000,
       fontSize: FONT_SIZE_34,
       fontWeight: FONT_WEIGHT_BOLD,
-      lineHeight: moderateScale(36),
+      lineHeight: moderateScale(38),
     },
     darkStyle: {
       color: colors.natural.natural300,

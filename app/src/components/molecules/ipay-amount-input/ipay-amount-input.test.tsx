@@ -1,5 +1,3 @@
-
-
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import '@testing-library/jest-dom/extend-expect'; // for extended matchers
@@ -31,7 +29,7 @@ describe('IPayAmountInput Component', () => {
   });
 
   test('renders correctly with initial amount', () => {
-    render(<IPayAmountInput amount="100" onAmountChange={() => { }} />);
+    render(<IPayAmountInput amount="100" onAmountChange={() => {}} />);
 
     const inputElement = screen.getByTestId('amount-input');
     const currencyElement = screen.getByText('SAR');
@@ -42,7 +40,7 @@ describe('IPayAmountInput Component', () => {
   });
 
   test('applies dynamic styles based on the amount', () => {
-    render(<IPayAmountInput amount="50" onAmountChange={() => { }} />);
+    render(<IPayAmountInput amount="50" onAmountChange={() => {}} />);
 
     const inputElement = screen.getByTestId('amount-input');
     const currencyElement = screen.getByText('SAR');
@@ -67,7 +65,7 @@ describe('IPayAmountInput Component', () => {
   });
 
   test('applies placeholder color when the amount is empty', () => {
-    render(<IPayAmountInput amount="" onAmountChange={() => { }} />);
+    render(<IPayAmountInput amount="" onAmountChange={() => {}} />);
 
     const inputElement = screen.getByTestId('amount-input');
     const currencyElement = screen.getByText('SAR');

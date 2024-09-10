@@ -30,6 +30,7 @@ import { DelinkPayload } from '@app/network/services/core/delink/delink-device.i
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
+import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
@@ -37,7 +38,7 @@ import { encryptData } from '@app/network/utilities/encryption-helper';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
-import { resetUserInfo, setUserInfo } from '@app/store/slices/user-information-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { onCall } from '@app/utilities/call-helper.util';
@@ -82,8 +83,7 @@ const LoginViaPasscode: React.FC = () => {
   const { handleFaceID } = useBiometricService();
 
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
-  const { walletNumber } = userInfo;
+  const { walletNumber, mobileNumber, firstName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -101,16 +101,7 @@ const LoginViaPasscode: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
-  const renderErrorToast = (apiError: string) => {
-    // to be removed
-    setPasscodeError(true);
-    showToast({
-      title: '',
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
+
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -166,17 +157,13 @@ const LoginViaPasscode: React.FC = () => {
 
     const apiResponse = await forgetPasscode(payload);
 
-    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       resetBiometricConfig();
       savePasscodeState(forgetPasswordFormData.passcode);
 
       redirectToResetConfirmation();
     }
     renderSpinner(false);
-  };
-
-  const handelPasscodeReacted = () => {
-    resetPasscode();
   };
 
   const onCloseBottomSheet = () => {
@@ -193,26 +180,26 @@ const LoginViaPasscode: React.FC = () => {
     dispatch(setAuth(true));
   };
 
-  const getWalletInformation = async (idExpired?: boolean) => {
-    // renderSpinner(true);
-    try {
-      const payload = {
-        walletNumber,
-      };
-
-      const apiResponse = await getWalletInfo(payload, dispatch);
-
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        saveProfileImage(apiResponse?.response);
-        redirectToHome(idExpired);
-      } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      }
-      renderSpinner(false);
-    } catch (error) {
-      renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+  const saveProfileImage = (response: any) => {
+    if (response?.profileImage) {
+      dispatch(setWalletInfo({ profileImage: response?.profileImage }));
     }
+  };
+
+  const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
+    renderSpinner(true);
+    const payload: WalletNumberProp = {
+      walletNumber: resWalletNumber as string,
+    };
+
+    const apiResponse: any = await getWalletInfo(payload);
+
+    if (apiResponse) {
+      dispatch(setWalletInfo(apiResponse?.response));
+      saveProfileImage(apiResponse?.response);
+      redirectToHome(idExpired);
+    }
+    renderSpinner(false);
   };
 
   const loginUsingPasscode = async (
@@ -244,21 +231,7 @@ const LoginViaPasscode: React.FC = () => {
         }),
       );
       saveProfileImage(loginApiResponse?.response);
-      await getWalletInformation(loginApiResponse?.response?.idExpired);
-    } else {
-      setPasscodeError(true);
-
-      if (loginApiResponse['apiResponse'].status.code == 'E430185')
-        renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
-            'Youve reached the maximum attempts to login to your wallet, to activate please click forget passcode',
-        );
-      else if (loginApiResponse['apiResponse'].status.code == 'E430183' || 'E430184')
-        renderErrorToast(
-          `${loginApiResponse['apiResponse'].status.code} :` +
-            'Your wallet is locked, Please try again after 5 minutes.',
-        );
-      else renderErrorToast(localizationText.ERROR.INVALID_PASSCODE);
+      await getWalletInformation(loginApiResponse?.response?.idExpired, loginApiResponse?.response?.walletNumber);
     }
   };
 
@@ -267,18 +240,17 @@ const LoginViaPasscode: React.FC = () => {
     if (!hasLocation) {
       setPasscodeError(true);
       return;
-    } else {
-      setPasscodeError(false);
     }
+    setPasscodeError(false);
+
     renderSpinner(true);
     const location = await fetchLocation();
     if (!location) {
       setPasscodeError(true);
       renderSpinner(false);
       return;
-    } else {
-      setPasscodeError(false);
     }
+    setPasscodeError(false);
 
     try {
       const deviceInfo = getDeviceInfo();
@@ -320,7 +292,6 @@ const LoginViaPasscode: React.FC = () => {
 
   const delinkSuccessfullyDone = () => {
     resetBiometricConfig();
-    dispatch(resetUserInfo());
     navigate(screenNames.DELINK_SUCCESS);
   };
 
@@ -337,13 +308,10 @@ const LoginViaPasscode: React.FC = () => {
       const apiResponse: any = await deviceDelink(payload);
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
-      } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -364,12 +332,12 @@ const LoginViaPasscode: React.FC = () => {
           <IPayOtpVerification
             ref={otpVerificationRef}
             onPressConfirm={onConfirm}
-            mobileNumber={userInfo?.mobileNumber}
+            mobileNumber={mobileNumber}
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
             apiError={apiError}
-            showHelp={true}
+            showHelp
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
@@ -420,12 +388,6 @@ const LoginViaPasscode: React.FC = () => {
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
-  const saveProfileImage = (response) => {
-    if (response?.profileImage) {
-      dispatch(setUserInfo({ profileImage: response?.profileImage }));
-    }
-  };
-
   return (
     <IPaySafeAreaView>
       <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
@@ -435,9 +397,9 @@ const LoginViaPasscode: React.FC = () => {
         </IPayView>
         <IPayView style={styles.childContainer}>
           <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
-          {userInfo?.firstName && (
+          {firstName && (
             <IPayGradientText
-              text={userInfo.firstName}
+              text={firstName}
               gradientColors={gradientColors}
               fontSize={styles.linearGradientText.fontSize}
               fontFamily={styles.linearGradientText.fontFamily}
@@ -484,7 +446,7 @@ const LoginViaPasscode: React.FC = () => {
         customSnapPoint={['1%', '99%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} hideFAQError />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.COMMON.CONTACT_US}
@@ -519,32 +481,6 @@ const LoginViaPasscode: React.FC = () => {
             />
           ))}
         </IPayView>
-      </IPayBottomSheet>
-      <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
-      <IPayActionSheet
-        ref={actionSheetRef}
-        testID="delink-action-sheet"
-        title={actionSheetOptions.title}
-        message={actionSheetOptions.message}
-        options={actionSheetOptions.options}
-        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-        showIcon={actionSheetOptions.showIcon}
-        showCancel={actionSheetOptions.showCancel}
-        customImage={actionSheetOptions.customImage}
-        onPress={delinkSuccessfully}
-      />
-
-      <IPayBottomSheet
-        noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '99%']}
-        ref={helpCenterRef}
-      >
-        <HelpCenterComponent />
       </IPayBottomSheet>
       <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
       <IPayActionSheet

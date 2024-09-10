@@ -6,9 +6,9 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: jest.fn().mockReturnValue({
     colors: {
       primary: { primary800: '#000000', primary500: '' },
-      natural: { natural0: '' }
-    }
-  })
+      natural: { natural0: '' },
+    },
+  }),
 }));
 
 describe('IPayPasscode', () => {
@@ -31,12 +31,12 @@ describe('IPayPasscode', () => {
     expect(getByTestId(`${testID}-pin-box-0-base-view`).props.style).toContainEqual(
       expect.objectContaining({
         // Update with the actual filled pin box style object
-      })
+      }),
     );
     expect(getByTestId(`${testID}-pin-box-1-base-view`).props.style).toContainEqual(
       expect.objectContaining({
         // Update with the actual filled pin box style object
-      })
+      }),
     );
   });
 

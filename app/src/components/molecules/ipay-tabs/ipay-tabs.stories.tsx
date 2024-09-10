@@ -12,16 +12,16 @@ const IPayTabsMeta: Meta<typeof IPayTabs> = {
     scrollable: false,
     variant: TabBase.Natural,
     customStyles: {
-      backgroundColor: colors.primary.primary100
-    }
+      backgroundColor: colors.primary.primary100,
+    },
   },
   decorators: [
     (Story) => (
       <IPayView style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
         <Story />
       </IPayView>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayTabsMeta;
@@ -30,14 +30,14 @@ export const Basic: StoryObj<typeof IPayTabs> = {};
 
 export const Scrollable: StoryObj<typeof IPayTabs> = {
   args: {
-    scrollable: true
-  }
+    scrollable: true,
+  },
 };
 
 export const WithCustomStyles: StoryObj<typeof IPayTabs> = {
   args: {
     customStyles: {
-      backgroundColor: colors.secondary.secondary200
-    }
-  }
+      backgroundColor: colors.secondary.secondary200,
+    },
+  },
 };

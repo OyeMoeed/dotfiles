@@ -1,4 +1,3 @@
-
 enum PasscodeTypes {
   ResetPasscode = 'ResetPasscode',
   NewPasscode = 'NewPasscode',
@@ -11,4 +10,3 @@ interface PasscodeChangeState {
 }
 
 export { PasscodeChangeState, PasscodeTypes };
-

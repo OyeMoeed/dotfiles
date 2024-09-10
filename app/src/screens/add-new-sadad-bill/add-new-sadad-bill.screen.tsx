@@ -1,5 +1,7 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayButton,
   IPayContentNotFound,
@@ -18,26 +20,24 @@ import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
+import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
+import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
+import getBillersServicesService from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
+import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
+import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
+import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { getValidationSchemas } from '@app/services/validation-service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { FC, useEffect, useRef, useState, useCallback } from 'react';
-import * as Yup from 'yup';
-import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
-import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
-import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
-import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
-import getBillersServicesService from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
-import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { spinnerVariant } from '@app/utilities/enums.util';
-import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
-import { useTypedSelector } from '@app/store/store';
-import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
-import images from '@app/assets/images';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import addSadadBillStyles from './add-new-sadad-bill.style';
+import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import * as Yup from 'yup';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
+import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
@@ -58,7 +58,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [selectedService, setSelectedService] = useState<BillersService>();
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
 
@@ -160,7 +160,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: '14/12/2024', // TODO: No Due Date is coming from api response once receive from response will update it
+        dueDate: '2024-07-21T12:00:00Z', // TODO: No Due Date is coming from api response once receive from response will update it
         totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,

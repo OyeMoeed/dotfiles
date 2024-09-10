@@ -51,10 +51,10 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { showToast } = useToastContext();
 
   const tabOptions = [localizationText.COMMON.SENT, localizationText.COMMON.RECEIVED];
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
+    const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], '100%'];
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
     transactionRef.current?.present();

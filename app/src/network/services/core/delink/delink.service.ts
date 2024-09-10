@@ -10,22 +10,15 @@ const deviceDelink = async (payload: DelinkPayload): Promise<object> => {
     return delinkDeviceMock;
   }
 
-  try {
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.DEVICE_DELINK(payload?.walletNumber),
-      method: requestType.POST,
-      payload: {
-        deviceInfo: payload?.delinkReq,
-      },
-    });
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.DEVICE_DELINK(payload?.walletNumber),
+    method: requestType.POST,
+    payload: {
+      deviceInfo: payload?.delinkReq,
+    },
+  });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true, apiResponse };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export default deviceDelink;
