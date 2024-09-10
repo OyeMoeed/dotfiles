@@ -24,7 +24,7 @@ import {
   CardStatusNumber,
   CardStatusType,
   spinnerVariant,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import {
   IPayCaption2Text,
@@ -130,12 +130,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     const toastVariant: ToastVariants = {
       freeze: {
         title: localizationText.CARDS.CARD_FREEZE_MESSAGE,
-        toastType: toastTypes.SUCCESS,
+        toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },
       unfreeze: {
         title: localizationText.CARDS.CARD_UNFREEZE_MESSAGE,
-        toastType: toastTypes.SUCCESS,
+        toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },
     };

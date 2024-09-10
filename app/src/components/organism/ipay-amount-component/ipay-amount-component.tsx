@@ -18,7 +18,7 @@ import {
   TopUpStates,
   TopupStatus,
   buttonVariants,
-  payChannel,
+  PayChannel,
   spinnerVariant,
 } from '@app/utilities/enums.util';
 
@@ -126,7 +126,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       renderSpinner(false);
 
       navigate(screenNames.TOP_UP, {
-        topupChannel: payChannel.APPLE,
+        topupChannel: PayChannel.APPLE,
         topupStatus: TopupStatus.SUCCESS,
         amount: topUpAmount,
       });
@@ -151,7 +151,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
   const handlePressPay = async () => {
     renderSpinner(true);
-    if (channel === payChannel.APPLE) {
+    if (channel === PayChannel.APPLE) {
       try {
         handlePay();
         return;
@@ -275,7 +275,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             setTopUpAmount={setTopUpAmount}
             chipValue={chipValue}
             walletInfo={walletInfo}
-            payChannelType={payChannel.CARD}
+            payChannelType={PayChannel.CARD}
             openPressExpired={openPressExpired}
             onPressAddCards={addCard}
             handleCardSelect={handleCardObjSelect}
@@ -285,7 +285,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             balanceType="Incoming"
           />
 
-          {channel === payChannel.APPLE ? (
+          {channel === PayChannel.APPLE ? (
             <IPayButton
               large
               btnStyle={[

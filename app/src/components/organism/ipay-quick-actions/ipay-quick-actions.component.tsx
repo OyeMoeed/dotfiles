@@ -4,7 +4,7 @@ import { IPayButton } from '@app/components/molecules';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import IPayQuickActionsProps from './ipay-quick-actions.interface';
 import iPayQuickActionsStyles from './ipay-quick-actions.styles';
 
@@ -21,7 +21,7 @@ const IPayQuickActions: React.FC<IPayQuickActionsProps> = ({
 
   const styles = iPayQuickActionsStyles(colors);
   const localizationText = useLocalization();
-  const quickAmounts = payChannelType === payChannel.ATM ? constants.QUICK_AMOUNT_ATM : constants.QUICK_AMOUNT_CARD;
+  const quickAmounts = payChannelType === PayChannel.ATM ? constants.QUICK_AMOUNT_ATM : constants.QUICK_AMOUNT_CARD;
   return (
     <IPayView style={styles.buttonContainer}>
       {quickAmounts.map((amountItem, index) => (

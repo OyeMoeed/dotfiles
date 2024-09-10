@@ -29,7 +29,7 @@ import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 import offerDetailsStyles from './offer-details.style';
 

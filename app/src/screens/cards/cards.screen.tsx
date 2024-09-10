@@ -23,7 +23,7 @@ import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
-  CAROUSEL_MODES,
+  CarouselModes,
   CardOptions,
   CardStatusNumber,
   CardTypes,
@@ -330,7 +330,7 @@ const CardsScreen: React.FC = () => {
               <IPayCarousel
                 data={[...cardsData, { newCard: true }]}
                 modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-                mode={CAROUSEL_MODES.PARALLAX}
+                mode={CarouselModes.PARALLAX}
                 width={SCREEN_WIDTH}
                 loop={false}
                 height={verticalScale(350)}

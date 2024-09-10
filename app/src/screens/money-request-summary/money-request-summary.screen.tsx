@@ -20,7 +20,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, TopupStatus, buttonVariants, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { States, TopupStatus, buttonVariants, PayChannel, spinnerVariant } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -155,7 +155,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
         createRequestBottomSheetRef.current?.close();
         navigate(ScreenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.REQUEST_ACCEPT,
+          topupChannel: PayChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
           amount: apiResponse?.response?.totalTansactionAmount,
           requestPaidSummaryData: requestPaidSummaryData(apiResponse),
@@ -232,6 +232,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
   const renderPayItem = useMemo(
     () =>
+      // eslint-disable-next-line react/no-unstable-nested-components
       ({ item }: { item: PayData }) => {
         const { detailsText, leftIcon, label } = item;
         return (

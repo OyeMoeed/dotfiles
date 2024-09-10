@@ -299,8 +299,8 @@ export class Crc {
     init() {
       this.CRCDNPInit();
     },
-    CleanString(inputType) {
-      if (inputType == 'ASCII') {
+    CleanString(InputType) {
+      if (InputType == 'ASCII') {
         this.CleanedString = this.StringToCheck;
       } else if (this.StringToCheck.match(/^[0-9A-F \t]+$/gi) !== null) {
         this.CleanedString = this._hexStringToString(this.StringToCheck.toUpperCase().replace(/[\t ]/g, ''));
@@ -494,11 +494,11 @@ export class Crc {
     },
     /**
      * str: the frame to compute
-     * inputType: "ASCII" or "hex"
+     * InputType: "ASCII" or "hex"
      * */
-    Calculate(str, inputType) {
+    Calculate(str, InputType) {
       this.StringToCheck = str;
-      if (this.CleanString(inputType)) {
+      if (this.CleanString(InputType)) {
         return {
           //    crc8: this.CRC8().toString().toUpperCase(),
           //    crccittxmodem: "0x"+ this.CRCXModem().toString(16).toUpperCase(),
