@@ -87,6 +87,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     return [];
   };
 
+  const getBankList = async () => {
+    const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalBeneficiaryMetaData();
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setBankList(apiResponse.response.localBanks);
+    }
+  };
+
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -164,12 +171,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     );
   };
 
-  const getBankList = async () => {
-    const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalBeneficiaryMetaData();
-    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      setBankList(apiResponse.response.localBanks);
-    }
-  };
   const getBankDetails = (bankCode: string, ibanNumber: string) => {
     const bankDetails = bankList?.find((bank) => bank.code === bankCode);
     setValue(AddBeneficiary.BANK_NAME, bankDetails.desc);
