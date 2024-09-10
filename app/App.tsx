@@ -5,7 +5,6 @@
  * @format
  */
 
-import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayBottomSheetProvider from '@app/components/organism/ipay-bottomsheet-provider/ipay-bottomsheet-provider.component';
 import MainNavigation from '@app/navigation/app-navigator.navigation';
@@ -26,13 +25,11 @@ const App = (): JSX.Element => {
         <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
           <GestureHandlerRootView style={style.rootView}>
             <Host>
-              <SpinnerProvider>
-                <ToastProvider>
-                  <IPayBottomSheetProvider>
-                    <MainNavigation />
-                  </IPayBottomSheetProvider>
-                </ToastProvider>
-              </SpinnerProvider>
+              <ToastProvider>
+                <IPayBottomSheetProvider>
+                  <MainNavigation />
+                </IPayBottomSheetProvider>
+              </ToastProvider>
             </Host>
           </GestureHandlerRootView>
         </KeyboardAvoidingView>
