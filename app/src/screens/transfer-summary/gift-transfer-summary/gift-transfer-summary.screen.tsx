@@ -216,7 +216,7 @@ const TransferSummaryScreen: React.FC = () => {
           mobileNumber: item.mobileNumber,
           amount: item.amount,
           note: item.notes,
-          transferPurpose: item?.transferPurpose,
+          giftCategory: giftDetails?.selectedCard?.id,
         })),
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       };
