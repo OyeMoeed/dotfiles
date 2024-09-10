@@ -36,7 +36,7 @@ const topupIbanStyles = (colors: any) =>
     },
     shareBtn: {
       position: 'absolute',
-      width: '100%',
+      width: innerWidth,
       bottom: verticalScale(30),
       left: verticalScale(18),
     },

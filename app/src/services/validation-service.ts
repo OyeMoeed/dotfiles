@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 export const getValidationSchemas = (localizationText: LocalizationText) => ({
   mobileNumberSchema: Yup.string()
     .required(localizationText.COMMON.INCORRECT_MOBILE_NUMBER)
-    .matches(REGEX.SaudiMobileNumber, localizationText.COMMON.INCORRECT_MOBILE_NUMBER),
+    .matches(REGEX.SaudiMobileNumber, localizationText.COMMON.INVALID_NUMBER),
 
   iqamaIdSchema: Yup.string()
     .required(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER)
@@ -32,6 +32,14 @@ export const getValidationSchemas = (localizationText: LocalizationText) => ({
     .min(STANDARD_MAX_LENGTH, localizationText.ERROR.INCORRECT_ACCOUNT_NUMBER),
   billName: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
   required: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
+  beneficiaryNameSchema: Yup.string()
+    .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE)
+    .max(50, localizationText.ERROR.TOO_LONG),
+  ibanSchema: Yup.string()
+    .matches(REGEX.IBAN, localizationText.ERROR.INVALID_IBAN)
+    .required(localizationText.ERROR.REQUIRED_VALIDATION_MESSAGE),
+  beneficiaryNickNameSchema: Yup.string().max(50, localizationText.ERROR.TOO_LONG),
+  bankNameSchema: Yup.string(),
 });
 
 function validateSAID(id: string): number {

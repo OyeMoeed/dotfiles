@@ -99,7 +99,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
           type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
@@ -121,7 +121,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedFilterKeys = apiResponse?.response?.lovInfo.map((item) => ({
           id: item.recTypeCode,
@@ -142,7 +142,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       if (apiResponse?.response?.lovInfo) {
         setCities(
           apiResponse?.response?.lovInfo.map((item) => ({

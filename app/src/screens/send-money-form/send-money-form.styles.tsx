@@ -11,6 +11,10 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     },
     history: { flexDirection: 'row', flex: 1, gap: scaleSize(6), alignItems: 'center' },
 
+    image: {
+      width: moderateScale(18),
+      height: moderateScale(18),
+    },
     contactInfoContainer: {
       flexDirection: 'row',
       gap: moderateScale(2),
