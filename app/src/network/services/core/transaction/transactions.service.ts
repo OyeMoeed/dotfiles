@@ -41,7 +41,7 @@ const getCards = async (payload: CardsProp): Promise<any> => {
       },
     });
 
-    return cardsListMock;
+    // return cardsListMock;
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
