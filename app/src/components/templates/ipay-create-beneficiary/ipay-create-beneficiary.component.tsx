@@ -200,11 +200,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       } else {
         renderSpinner(false);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-         setBeneficiaryBankDetails( { bankCode:"",
-        bankName:"",
-        beneficiaryAccountNo: ""});
+        setBeneficiaryBankDetails({ bankCode: '', bankName: '', beneficiaryAccountNo: '' });
       }
-  
+    }
   };
 
   return (
