@@ -270,14 +270,13 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   };
 
   const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
-    renderSpinner(true);
     try {
       const apiResponse = await cancelRejectRequestService(
         walletInfo.walletNumber,
         requestDetail?.id,
         UpdateRequestType,
       );
-      renderSpinner(false);
+
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           if (UpdateRequestType === UpdateRequestTypes.reject) {
@@ -302,8 +301,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       }
     } catch (error: any) {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    } finally {
-      renderSpinner(false);
     }
   };
 
