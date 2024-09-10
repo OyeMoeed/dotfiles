@@ -1,4 +1,4 @@
-import { IPayDropdown } from '@app/components/atoms';
+import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import get from 'lodash/get';
 import React from 'react';
@@ -17,6 +17,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
           <Controller
             name={flatKey} // Use the flattened key
             control={control}
+            defaultValue={field.value}
             render={({ field: { onChange, value }, formState: { errors } }) => {
               const errorMessage = get(errors, `${flatKey}.message`, '');
               return (
@@ -26,7 +27,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                   maxLength={field.maxWidth}
                   onChangeText={onChange}
                   keyboardType={field.type === DYNAMIC_FIELDS_TYPES.NUMBER ? 'number-pad' : 'default'}
-                  isError={!!get(errors, flatKey)} // Use flattened key for errors
+                  isError={!!get(errors, flatKey)}
                   editable
                   assistiveText={errorMessage as string}
                   testID={`${flatKey}-text-input`}
@@ -41,20 +42,50 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
           <Controller
             name={flatKey}
             control={control}
-            render={({ field: { value, onChange } }) => (
-              <IPayDropdown
-                data={field.lovList?.map((item, index) => ({
-                  id: index + 1,
-                  title: item.desc,
-                }))}
-                value={value}
-                label={field.label}
-                name={flatKey}
-                onSelectListItem={(selectedItem: string) => onChange(selectedItem)}
-                isSearchable={false}
-                testID={`${flatKey}-dropdown`}
-              />
-            )}
+            defaultValue={field.value}
+            render={({ field: { value, onChange }, formState: { errors } }) => {
+              const errorMessage = get(errors, `${flatKey}.message`, '');
+              return (
+                <IPayDropdownSelect
+                  data={field.lovList}
+                  selectedValue={value}
+                  label={field.label}
+                  onSelectListItem={(selectedItem: string) => onChange(selectedItem)}
+                  isSearchable={false}
+                  testID={`${flatKey}-dropdown`}
+                  labelKey="desc"
+                  valueKey="code"
+                  errorMessage={errorMessage as string}
+                />
+              );
+            }}
+          />
+        );
+
+      case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE_WITH_OTHER_OPTION:
+        const Lov = [...field.lovList, { code: 'Other', desc: 'Other' }];
+        return (
+          <Controller
+            name={flatKey}
+            control={control}
+            render={({ field: { value, onChange }, formState: { errors } }) => {
+              const errorMessage = get(errors, `${flatKey}.message`, '');
+              return (
+                <IPayDropdownSelect
+                  data={Lov}
+                  selectedValue={value}
+                  label={field.label}
+                  onSelectListItem={(selectedItem: string) => {
+                    onChange(selectedItem);
+                  }}
+                  isSearchable={false}
+                  testID={`${flatKey}-dropdown`}
+                  labelKey="desc"
+                  valueKey="code"
+                  errorMessage={errorMessage as string}
+                />
+              );
+            }}
           />
         );
 

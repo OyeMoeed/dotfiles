@@ -93,6 +93,13 @@ const useDynamicForm = (billerId: string, serviceId: string, walletNumber: strin
           }
           break;
 
+        case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE:
+          schema = Yup.string().typeError(`${label} must be selected`);
+          if (required) {
+            schema = schema.required(`${label} is required`);
+          }
+          break;
+
         default:
           if (required) {
             schema = schema.required(`${label} is required`);
