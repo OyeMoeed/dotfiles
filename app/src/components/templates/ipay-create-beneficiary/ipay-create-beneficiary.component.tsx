@@ -13,9 +13,9 @@ import {
 } from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
 import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
 import {
-  BeneficiaryBankDetailsReq,
-  LocalTransferBeneficiaryBankMockProps,
+  BeneficiaryBankDetailsReq
 } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
+import LocalBeneficiaryMetaMockProps, { LocalBank } from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import { ValidateIBANResponse } from '@app/network/services/local-transfer/validate-iban/validate-iban.interface';
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
@@ -48,7 +48,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
-  const [bankList, setBankList] = useState([]);
+  const [bankList, setBankList] = useState<LocalBank[]>([]);
   const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetails>();
   const countryCode = 'SA';
 
@@ -89,7 +89,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   };
 
   const getBankList = async () => {
-    const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalBeneficiaryMetaData();
+    const apiResponse: LocalBeneficiaryMetaMockProps = await getlocalBeneficiaryMetaData();
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       setBankList(apiResponse.response.localBanks);
     }

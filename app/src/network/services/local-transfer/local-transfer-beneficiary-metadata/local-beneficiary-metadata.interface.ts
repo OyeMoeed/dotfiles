@@ -1,6 +1,6 @@
 import { MockAPIStatusProps } from "../../services.interface";
 
- interface LocalBank {
+ export interface LocalBank {
   code: string;
   desc: string;
   addtionalAttribute1?: string;
