@@ -30,10 +30,10 @@ import useData from './use-data';
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   completionStatus,
   topupChannel,
-  isUnderProccess,
   summaryData,
   goBack,
   amount,
+  requestPaidSummaryData,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -48,10 +48,15 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     renderToast();
   };
 
-  const renderToast = () => {
+  const subTitle =
+    topupChannel.REQUEST || topupChannel.REQUEST_ACCEPT
+      ? localizationText.TOP_UP.TRANSACTION_ID_COPIED
+      : localizationText.COMMON.REF_NUMBER;
+
+  const renderToast = (item) => {
     showToast({
       title: topupChannel === payChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
-      subTitle: topupChannel !== payChannel.ORDER && localizationText.TOP_UP.REF_NUMBER_COPIED,
+      subTitle: subTitle,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: topupChannel === payChannel.ORDER ? styles.orderToast : styles.toastContainer,
@@ -145,7 +150,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
     return (
       <IPayView key={item.id}>
-        {isFirstItem && (
+        {isFirstItem && !payChannel.REQUEST_ACCEPT && (
           <IPayView style={styles.chipContainer}>
             <IPayChip
               containerStyle={styles.chipColors}
@@ -200,7 +205,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         <IPayFlatlist
           style={styles.detailesFlex}
           scrollEnabled={false}
-          data={getDetails()}
+          data={topupChannel === payChannel.REQUEST_ACCEPT ? requestPaidSummaryData : getDetails()}
           renderItem={renderNonAlinmaPayItem}
         />
       </IPayView>
@@ -285,7 +290,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const renderRequestAccept = () => {
-    topupChannel === payChannel.REQUEST_ACCEPT && (
+    (topupChannel === payChannel.REQUEST_ACCEPT || topupChannel === payChannel.REQUEST) && (
       <IPayView style={[styles.cardButton, styles.margins]}>
         <IPayButton
           btnType="link-button"
@@ -295,6 +300,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       </IPayView>
     );
   };
+
   const renderWalletAndGiftShare = () => {
     (topupChannel === payChannel.WALLET || topupChannel === payChannel.GIFT) && (
       <IPayView style={styles.shareBackground}>
@@ -396,9 +402,10 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                   </IPayView>
                 )}
                 <IPayButton
-                  large
                   btnType="primary"
+                  btnStyle={styles.btn}
                   btnText={localizationText.COMMON.HOME}
+                  btnColor={colors.primary.primary500}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
                   onPress={() => navigate(screenNames.HOME)}

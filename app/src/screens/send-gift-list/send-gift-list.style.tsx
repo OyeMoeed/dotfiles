@@ -37,6 +37,7 @@ const sendGiftStyles = (themeColors: typeof colors) =>
     },
     flexStyle: {
       flex: 0,
+      marginBottom: moderateScale(10),
     },
     view: {
       marginHorizontal: moderateScale(24),
@@ -49,6 +50,7 @@ const sendGiftStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
     },
     titleWrapper: { width: scaleSize(150) },
+    listWrapper: { flex: 1 },
   });
 
 export default sendGiftStyles;
