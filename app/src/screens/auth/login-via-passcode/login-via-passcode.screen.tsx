@@ -446,7 +446,7 @@ const LoginViaPasscode: React.FC = () => {
         customSnapPoint={['1%', '99%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} hideFAQError />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.COMMON.CONTACT_US}
@@ -481,32 +481,6 @@ const LoginViaPasscode: React.FC = () => {
             />
           ))}
         </IPayView>
-      </IPayBottomSheet>
-      <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
-      <IPayActionSheet
-        ref={actionSheetRef}
-        testID="delink-action-sheet"
-        title={actionSheetOptions.title}
-        message={actionSheetOptions.message}
-        options={actionSheetOptions.options}
-        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-        showIcon={actionSheetOptions.showIcon}
-        showCancel={actionSheetOptions.showCancel}
-        customImage={actionSheetOptions.customImage}
-        onPress={delinkSuccessfully}
-      />
-
-      <IPayBottomSheet
-        noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '99%']}
-        ref={helpCenterRef}
-      >
-        <HelpCenterComponent />
       </IPayBottomSheet>
       <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
       <IPayActionSheet
