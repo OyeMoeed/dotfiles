@@ -19,7 +19,6 @@ import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-vi
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
@@ -44,32 +43,28 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Contact } from 'react-native-contacts';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const { isKeyboardWillOpen, isKeyboardOpen } = useKeyboardStatus();
-  const styles = sendMoneyFormStyles(colors);
   const localizationText = useLocalization();
-  const MAX_CONTACT = 5;
+
+  const route = useRoute();
+  const { selectedContacts, from, heading, showHistory } = route.params as any;
+
+  const reasonBottomRef = useRef<bottomSheetTypes>(null);
+  const removeFormRef = useRef<SendMoneyFormSheet>(null);
+
+  const styles = sendMoneyFormStyles(colors);
+
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
-  const route = useRoute();
-  const { selectedContacts, from, heading, showHistory } = route.params;
-  const { transferReasonData } = useConstantData();
-  const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
-  const reasonBottomRef = useRef<bottomSheetTypes>(null);
-  const [amount, setAmount] = useState<number | string>('');
   const [warningStatus, setWarningStatus] = useState<string>('');
-
-  const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
-    selectedContacts?.map((contact, index) => ({
+    selectedContacts?.map((contact: any, index: number) => ({
       id: index + 1,
       subtitle: contact.givenName,
       amount: '',
@@ -79,7 +74,12 @@ const SendMoneyFormScreen: React.FC = () => {
     })),
   );
 
-  const getTransferreasonLovs = async () => {
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { availableBalance } = walletInfo; // TODO replace with orignal data
+
+  const MAX_CONTACT = 5;
+
+  const getTransferReasonLovs = async () => {
     const payload: IGetCoreLovPayload = {
       lovType: '184',
       lovCode2: 'W',
@@ -98,14 +98,11 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    setContacts(selectedContacts);
-  }, [selectedContacts]);
-  useEffect(() => {
     if (formInstances?.length === 0) goBack();
   }, [formInstances]);
 
   useEffect(() => {
-    getTransferreasonLovs();
+    getTransferReasonLovs();
   }, []);
 
   const totalAmount = formInstances.reduce(
@@ -409,7 +406,7 @@ const SendMoneyFormScreen: React.FC = () => {
           bold
         >
           <IPayListView
-            list={transferReasonData}
+            list={transferReason}
             onPressListItem={onPressListItem}
             selectedListItem={getSelectedItem()}
             cardContainerStyle={styles.reasonItemStyle}
