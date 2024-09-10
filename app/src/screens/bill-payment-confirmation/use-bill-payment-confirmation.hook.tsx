@@ -1,4 +1,3 @@
-import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -6,11 +5,11 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
   MultiPaymentBillPayloadTypes,
   BillPaymentInfosTypes,
+  MultiPaymentBillResponseTypes,
 } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import multiPaymentBillService from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.service';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
-import { BillHeaderDetailTypes } from './bill-payment-confirmation.interface';
 
 interface billPayDetail {
   id: string;
@@ -31,7 +30,6 @@ const useBillPaymentConfirmation = (
   isPayPartially?: boolean,
   isPayOnly?: boolean,
   billPaymentInfos?: BillPaymentInfosTypes[],
-  billHeaderDetail?: BillHeaderDetailTypes,
 ) => {
   const localizationText = useLocalization();
   const otpRef = useRef<bottomSheetTypes>(null);
@@ -67,42 +65,16 @@ const useBillPaymentConfirmation = (
     companyImage: images.electricityBill,
   };
 
-  const shortString = (text: string) => {
-    if (text.length < 20) {
-      return text;
-    }
-    return `${text.slice(0, 15)}...`;
-  };
-
   const balanceData = {
     availableBalance: '52000',
     balance: '50000',
     calculatedBill: '300',
   };
 
-  const billPayDetailesArr = [
-    {
-      id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
-      value: shortString(billPaymentInfos[0].serviceDescription),
-    },
-    {
-      id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-      value: billPaymentInfos[0].billNumOrBillingAcct,
-    },
-    {
-      id: '3',
-      label: localizationText.COMMON.DUE_DATE,
-      value: billPaymentInfos[0].dueDateTime,
-    },
-    {
-      id: '4',
-      label: localizationText.COMMON.REF_NUM,
-      value: apiResponse.response.billPaymentResponses[0].transactionId,
-      icon: icons.copy,
-    },
-  ];
+  const getTransactionIds = (apiResponse: MultiPaymentBillResponseTypes, index: number) =>
+    apiResponse.response.billPaymentResponses[index].transactionId;
+
+  const getTotalAmount = () => (billPaymentInfos ? billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) : 0);
 
   const onConfirm = async () => {
     const payload: MultiPaymentBillPayloadTypes = {
@@ -119,9 +91,11 @@ const useBillPaymentConfirmation = (
       navigate(ScreenNames.PAY_BILL_SUCCESS, {
         isPayOnly,
         isPayPartially,
-        billPayDetailes: billPayDetailesArr,
-        billHeaderDetail,
-        totalAmount: billPaymentInfos[0].amount,
+        billPaymentInfos: billPaymentInfos?.map((el, index) => ({
+          ...el,
+          transactionId: getTransactionIds(apiResponse, index),
+        })),
+        totalAmount: getTotalAmount,
       });
     } else {
       setAPIError(apiResponse?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
