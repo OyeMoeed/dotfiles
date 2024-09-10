@@ -14,9 +14,10 @@ const getlocalTransferBeneficiaries = async (): Promise<LocalTransferBeneficiari
     const apiResponse: ApiResponse<LocalTransferBeneficiariesMockProps> = await apiCall({
       endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries(),
       method: requestType.GET,
-      // example hide error message
+      // example hide error message and spinner loading
       headers: {
         hide_error_response: true,
+        hide_spinner_loading: true,
       },
     });
     if (apiResponse?.status) {

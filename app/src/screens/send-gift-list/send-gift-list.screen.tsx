@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -14,9 +13,9 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getWalletToWalletTransfers from '@app/network/services/transfers/wallet-to-wallet-transfers/wallet-to-wallet-transfers.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, FiltersType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, FiltersType, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import sendGiftStyles from './send-gift-list.style';
 
 interface Item {
@@ -42,7 +41,6 @@ const SendGiftListScreen: React.FC = () => {
 
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
   const handleSelectedTab = (tab: string) => {
@@ -91,17 +89,6 @@ const SendGiftListScreen: React.FC = () => {
   `;
   }
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -113,7 +100,6 @@ const SendGiftListScreen: React.FC = () => {
   };
 
   const getWalletToWalletTransferData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse: any = await getWalletToWalletTransfers({
         walletNumber,
@@ -128,9 +114,7 @@ const SendGiftListScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };

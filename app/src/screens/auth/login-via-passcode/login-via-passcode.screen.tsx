@@ -6,7 +6,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
 import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
@@ -42,7 +41,7 @@ import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { onCall } from '@app/utilities/call-helper.util';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -86,7 +85,6 @@ const LoginViaPasscode: React.FC = () => {
   const { walletNumber, mobileNumber, firstName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig, contactusList } = useConstantData();
   const contactUsRef = useRef<any>(null);
 
@@ -100,17 +98,6 @@ const LoginViaPasscode: React.FC = () => {
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
   };
 
   const onPressForgetPassword = () => {
@@ -138,7 +125,6 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const resetPasscode = async () => {
-    renderSpinner(true);
     const payload: IconfirmForgetPasscodeOtpReq = {
       poiNumber: encryptData(
         `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
@@ -163,7 +149,6 @@ const LoginViaPasscode: React.FC = () => {
 
       redirectToResetConfirmation();
     }
-    renderSpinner(false);
   };
 
   const onCloseBottomSheet = () => {
@@ -187,7 +172,6 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
-    renderSpinner(true);
     const payload: WalletNumberProp = {
       walletNumber: resWalletNumber as string,
     };
@@ -199,7 +183,6 @@ const LoginViaPasscode: React.FC = () => {
       saveProfileImage(apiResponse?.response);
       redirectToHome(idExpired);
     }
-    renderSpinner(false);
   };
 
   const loginUsingPasscode = async (
@@ -243,11 +226,9 @@ const LoginViaPasscode: React.FC = () => {
     }
     setPasscodeError(false);
 
-    renderSpinner(true);
     const location = await fetchLocation();
     if (!location) {
       setPasscodeError(true);
-      renderSpinner(false);
       return;
     }
     setPasscodeError(false);
@@ -275,9 +256,7 @@ const LoginViaPasscode: React.FC = () => {
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -297,7 +276,6 @@ const LoginViaPasscode: React.FC = () => {
 
   const delinkDevice = async () => {
     actionSheetRef.current.hide();
-    renderSpinner(true);
     try {
       const delinkReqBody = await getDeviceInfo();
       const payload: DelinkPayload = {
@@ -309,10 +287,7 @@ const LoginViaPasscode: React.FC = () => {
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
       }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-    }
+    } catch (error: any) {}
   };
 
   const onEnterPassCode = (newCode: string) => {

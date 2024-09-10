@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayFlatlist, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { REGEX } from '@app/constants/app-validations';
@@ -21,9 +20,9 @@ import {
 import getlocalTransferBeneficiaryBankDetails from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { AddBeneficiary, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { AddBeneficiary, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { FormValues, IPayCreateBeneficiaryProps, ListOption } from './ipay-create-beneficiary.interface';
@@ -36,7 +35,6 @@ import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID }) => {
   const { colors } = useTheme();
   const styles = createBeneficiaryStyles(colors);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
@@ -91,17 +89,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const onSubmitData = async (values: FormValues) => {
     const payload: BeneficiaryInfo = {
       fullName: values?.beneficiaryName,
@@ -116,14 +103,11 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       },
     };
     if (isValid) {
-      renderSpinner(true);
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setBeneficiaryData(values);
         setIsBeneficiaryCreated(true);
-        renderSpinner(false);
       } else {
-        renderSpinner(false);
         renderToast(apiResponse?.error?.error ?? '');
       }
     }
@@ -157,14 +141,11 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       countryCode,
     };
     if (REGEX.IBAN.test(ibanNumber)) {
-      renderSpinner(true);
       const apiResponse: LocalTransferBeneficiaryBankMockProps = await getlocalTransferBeneficiaryBankDetails(params);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setValue(AddBeneficiary.BANK_NAME, apiResponse?.data?.bankName ?? '');
         setBeneficiaryBankDetails(apiResponse?.data);
-        renderSpinner(false);
       } else {
-        renderSpinner(false);
         renderToast(apiResponse?.error?.error ?? '');
       }
     } else {

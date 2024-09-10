@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -28,7 +27,6 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [renewId, setRenewId] = useState(false);
   const [otpRef, setOTPRef] = useState<string>('');
   const [isHelpBottomSheetVisible, setIsHelpBottomSheetVisible] = useState(false);
-  const { showToast } = useToastContext();
   const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const {
@@ -44,34 +42,13 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const { t } = useTranslation();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const dispatch = useTypedDispatch();
   const isIdRenewalSheetVisible = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo.isIdRenewalSheetVisible,
   );
 
-  const renderToast = (apiErrorMessage: string) => {
-    showToast({
-      title: localizationText.ERROR.API_ERROR_RESPONSE,
-      subTitle: apiErrorMessage || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
   const resetBottomSheet = () => {
     setIsHelpBottomSheetVisible(false);
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
   };
 
   const { title, subtitle, primaryButtonText, secondaryButtonText, icon, buttonIcon } = useIdRenewal(
@@ -88,7 +65,6 @@ const IPayIdRenewalSheet: React.FC = () => {
         deviceInfo: idRenewalPrepareBody,
         walletNumber,
       };
-      renderSpinner(true);
       const apiResponse: any = await prepareRenewId(payload);
 
       if (apiResponse) {
@@ -96,7 +72,6 @@ const IPayIdRenewalSheet: React.FC = () => {
         setRenewId(true);
         setCustomSnapPoints(['95%', '95%']);
       }
-      renderSpinner(false);
     }
   };
 

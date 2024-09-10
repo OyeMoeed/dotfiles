@@ -8,9 +8,7 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -21,9 +19,9 @@ import deviceDelink from '@app/network/services/core/delink/delink.service';
 import logOut from '@app/network/services/core/logout/logout.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import clearSession from '@app/network/utilities/network-session-helper';
-import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType } from '@app/utilities/enums.util';
 import { FC, useCallback, useRef } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
@@ -33,32 +31,9 @@ const MenuScreen: FC = () => {
   const styles = menuStyles(colors);
   const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const localizationText = useLocalization();
-  const dispatch = useTypedDispatch();
+
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-
-  const { showToast } = useToastContext();
-
-  const renderToast = (error: string) => {
-    showToast({
-      title: localizationText.COMMON.TRY_AGAIN,
-      subTitle: error || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
 
   const onPressSettings = () => {
     navigate(screenNames.SETTINGS);
@@ -85,22 +60,16 @@ const MenuScreen: FC = () => {
   };
 
   const delinkDevice = async () => {
-    renderSpinner(true);
-    try {
-      const delinkReqBody = await getDeviceInfo();
-      const payload: DelinkPayload = {
-        delinkReq: delinkReqBody,
-        walletNumber,
-      };
+    const delinkReqBody = await getDeviceInfo();
+    const payload: DelinkPayload = {
+      delinkReq: delinkReqBody,
+      walletNumber,
+    };
 
-      const apiResponse: any = await deviceDelink(payload);
+    const apiResponse: any = await deviceDelink(payload);
 
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        delinkSuccessfullyDone();
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      delinkSuccessfullyDone();
     }
   };
 

@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
@@ -14,7 +13,7 @@ import { topupCheckout } from '@app/network/services/core/topup-cards/topup-card
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, TopUpStates, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, TopUpStates, TopupStatus, payChannel } from '@app/utilities/enums.util';
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
 import { getErrorMessage } from '@rnw-community/shared';
@@ -53,33 +52,18 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   const [redirectUrl, setRedirectUrl] = useState<string>('');
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const addCard = () => {
     handlePressPay();
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const handlePressPay = async () => {
-    renderSpinner(true);
     if (channel === payChannel.APPLE) {
       try {
         handlePay();
         return;
       } catch (error) {
         return;
-      } finally {
-        renderSpinner(false);
       }
     }
     const deviceInfo = await getDeviceInfo();
@@ -120,8 +104,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         });
       }
     }
-
-    renderSpinner(false);
   };
 
   const createPaymentRequest = (): PaymentRequest => {
@@ -143,11 +125,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       .catch((err: unknown) => void setError(getErrorMessage(err)));
   };
   const applePayCheckOutId = async (paymentResponse: IosPaymentResponse): Promise<void> => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-
     const applePayCheckOutPayload: ApplePayCheckOutReq = {
       clickPayApplePayToken: {
         transactionIdentifier: paymentResponse.details.applePayToken.transactionIdentifier,
@@ -165,18 +142,12 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
     if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
-      hideSpinner();
-      renderSpinner(false);
-
       navigate(screenNames.TOP_UP, {
         topupChannel: payChannel.APPLE,
         topupStatus: TopupStatus.SUCCESS,
         amount: topUpAmount,
       });
     }
-
-    hideSpinner();
-    renderSpinner(false);
   };
 
   const methodData = [

@@ -12,13 +12,11 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
-import { SNAP_POINTS } from '@app/constants/constants';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -33,7 +31,6 @@ import {
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant,
   toastTypes,
 } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -55,7 +52,6 @@ const LocalTransferScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [apiError, setAPIError] = useState<string>('');
   const sortSheetRef = useRef<bottomSheetTypes>(null);
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
@@ -65,17 +61,6 @@ const LocalTransferScreen: React.FC = () => {
     inactive: false,
   });
   const [sortBy, setSortBy] = useState<string>(BeneficiaryTypes.ACTIVE);
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -89,7 +74,6 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const getBeneficiariesData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse: LocalTransferBeneficiariesMockProps = await getlocalTransferBeneficiaries();
       switch (apiResponse?.status?.type) {
@@ -105,9 +89,7 @@ const LocalTransferScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }

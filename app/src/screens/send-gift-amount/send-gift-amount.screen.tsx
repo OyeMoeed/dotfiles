@@ -10,7 +10,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
@@ -26,13 +25,7 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import {
-  alertType,
-  alertVariant,
-  ApiResponseStatusType,
-  buttonVariants,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
+import { alertType, alertVariant, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Contact } from 'react-native-contacts';
@@ -47,8 +40,6 @@ const SendGiftAmountScreen = ({ route }) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
@@ -335,10 +326,6 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   const getW2WActiveFriends = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IW2WCheckActiveReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
@@ -353,10 +340,7 @@ const SendGiftAmountScreen = ({ route }) => {
             activeFriends: apiResponse?.response?.friends,
           },
         });
-        hideSpinner();
       }
-    } else {
-      hideSpinner();
     }
   };
   const areAllManualAmountsFilled = () => {

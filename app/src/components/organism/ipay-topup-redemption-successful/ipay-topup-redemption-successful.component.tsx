@@ -12,7 +12,6 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -21,17 +20,17 @@ import { default as screenNames } from '@app/navigation/screen-names.navigation'
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { copyText } from '@app/utilities/clip-board.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
+import { TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
 
@@ -42,7 +41,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const styles = topUpSuccessRedemptionStyles(colors);
   const { showToast } = useToastContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const renderToast = () => {
@@ -65,10 +63,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   };
 
   const navigateTOAktharPoints = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
     dispatch(setPointsRedemptionReset(true));
     if (
@@ -89,7 +83,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     } else {
       navigate(screenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }
-    hideSpinner();
   };
 
   const successDetail = [

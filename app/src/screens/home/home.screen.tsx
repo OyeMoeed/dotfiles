@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
@@ -24,7 +23,6 @@ import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -54,7 +52,6 @@ const Home: React.FC = () => {
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const openProfileBottomSheet = () => {
     dispatch(setProfileSheetVisibility(true));
@@ -74,23 +71,7 @@ const Home: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback(
-    (isVisbile: boolean) => {
-      if (isVisbile) {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-      } else {
-        hideSpinner();
-      }
-    },
-    [isLoading],
-  );
-
   const getTransactionsData = async () => {
-    renderSpinner(true);
-
     const payload: TransactionsProp = {
       walletNumber,
       maxRecords: '3',
@@ -100,12 +81,9 @@ const Home: React.FC = () => {
     const apiResponse: any = await getTransactions(payload);
 
     setTransactionsData(apiResponse?.response?.transactions);
-
-    renderSpinner(false);
   };
 
   const getOffersData = async () => {
-    renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
         walletNumber,
@@ -120,9 +98,7 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -143,10 +119,6 @@ const Home: React.FC = () => {
   };
 
   const navigateTOAktharPoints = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
@@ -156,7 +128,6 @@ const Home: React.FC = () => {
     } else {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }
-    hideSpinner();
   };
 
   const topupItemSelected = (routeName: string, params: {}) => {

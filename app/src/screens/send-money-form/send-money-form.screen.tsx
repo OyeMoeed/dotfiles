@@ -7,7 +7,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayBalanceStatusChip,
   IPayButton,
@@ -40,7 +39,7 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { TopupStatus, payChannel } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -65,7 +64,6 @@ const SendMoneyFormScreen: React.FC = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [amount, setAmount] = useState<number | string>('');
   const [warningStatus, setWarningStatus] = useState<string>('');
 
@@ -82,10 +80,6 @@ const SendMoneyFormScreen: React.FC = () => {
   );
 
   const getTransferreasonLovs = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IGetCoreLovPayload = {
       lovType: '184',
       lovCode2: 'W',
@@ -101,7 +95,6 @@ const SendMoneyFormScreen: React.FC = () => {
           })),
         );
     }
-    hideSpinner();
   };
 
   useEffect(() => {
@@ -231,10 +224,6 @@ const SendMoneyFormScreen: React.FC = () => {
       return;
     }
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IW2WFeesReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       requests: formInstances.map((item) => ({
@@ -254,14 +243,9 @@ const SendMoneyFormScreen: React.FC = () => {
         },
       });
     }
-    hideSpinner();
   };
 
   const getW2WActiveFriends = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IW2WCheckActiveReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
@@ -271,8 +255,6 @@ const SendMoneyFormScreen: React.FC = () => {
       if (apiResponse.response?.friends) {
         getW2WTransferFees(apiResponse.response?.friends);
       }
-    } else {
-      hideSpinner();
     }
   };
 

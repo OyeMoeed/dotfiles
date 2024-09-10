@@ -1,5 +1,4 @@
 import { IPayView, IPayWebView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
@@ -10,9 +9,9 @@ import { CheckStatusProp } from '@app/network/services/core/topup-cards/topup-ca
 import { topupCheckStatus } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { TopupStatus, payChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { WebViewNavigation } from 'react-native-webview';
 import cardVerificationStyles from './cardVerification.styles';
 
@@ -25,33 +24,9 @@ const CardVerificationScreen: React.FC = () => {
 
   const route: any = useRoute();
   const { redirectUrl, transactionRefNumber } = route.params;
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [apiError, setAPIError] = useState<string>('');
-  // const [trials, setTrials] = useState<number>(0);
   const [showWebView, setShowWebView] = useState<boolean>(true);
   let trial = 0;
-
-  // const handlePressPay = () => {
-  //   setProcessToast(false);
-  //   if (channel === payChannel.APPLE) {
-  //     setTopUpAmount('');
-  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: payChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
-  //   } else {
-  //     navigate(screenNames.CARD_VERIFICATION);
-  //   }
-  // };
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const handleCvvChange = (text: string) => {
     setCvv(text);
@@ -68,8 +43,6 @@ const CardVerificationScreen: React.FC = () => {
   };
 
   const checkStatus = async () => {
-    renderSpinner(true);
-
     const payload: CheckStatusProp = {
       walletNumber,
       refNumber: transactionRefNumber,
@@ -84,7 +57,6 @@ const CardVerificationScreen: React.FC = () => {
           checkStatus();
         }, 3000);
       } else {
-        renderSpinner(false);
         navigate(screenNames.TOP_UP_SUCCESS, {
           topupChannel: payChannel.CARD,
           topupStatus: TopupStatus.SUCCESS,
@@ -93,7 +65,6 @@ const CardVerificationScreen: React.FC = () => {
         });
       }
     } else if (apiResponse) {
-      renderSpinner(false);
       navigate(screenNames.TOP_UP_SUCCESS, {
         topupChannel: payChannel.CARD,
         topupStatus: TopupStatus.SUCCESS,
@@ -105,7 +76,6 @@ const CardVerificationScreen: React.FC = () => {
   const onNavigationStateChange = (event: WebViewNavigation) => {
     if (event?.url?.indexOf('result') != -1) {
       setShowWebView(false);
-      renderSpinner(true);
       checkStatus();
       return;
     }

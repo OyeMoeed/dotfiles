@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
@@ -18,12 +17,10 @@ import { IPayTransactionItemProps } from '@app/screens/transaction-history/compo
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
-  ApiResponseStatusType,
   CardActiveStatus,
   CardStatusIndication,
   CardStatusNumber,
   CardStatusType,
-  spinnerVariant,
   toastTypes,
 } from '@app/utilities/enums.util';
 import {
@@ -71,21 +68,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
   const [isCardPrinted, setIsCardPrinted] = useState();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const [apiError, setAPIError] = useState<string>('');
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
-
-  const renderToastMsg = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -170,19 +154,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const onFreeze = async (type: string) => {
-    renderSpinner(true);
     const cardStatusPayload: CardStatusReq = {
       status:
         type.toLowerCase() === CardActiveStatus.UNFREEZE
@@ -205,11 +177,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       setTimeout(() => {
         renderToast(`${localizationText.CARDS.DEBIT_CARD} ${currentCard.maskedCardNumber}`, type.toLowerCase());
       }, 500);
-      renderSpinner(false);
       return;
     }
 
-    renderSpinner(false);
     actionSheetRef.current.hide();
   };
 
@@ -227,8 +197,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   }, []);
 
   const getTransactionsData = async () => {
-    renderSpinner(true);
-
     const payload: TransactionsProp = {
       walletNumber: walletInfo.walletNumber,
       maxRecords: '10',
@@ -240,11 +208,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     const apiResponse: any = await getTransactions(payload);
 
     if (apiResponse) {
-      renderSpinner(false);
       setTransactionsData(apiResponse?.response?.transactions);
     }
-
-    renderSpinner(false);
   };
 
   useEffect(() => {
