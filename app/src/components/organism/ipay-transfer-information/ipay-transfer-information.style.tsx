@@ -106,8 +106,6 @@ const transferInfoStyles = (themeColors: typeof colors, hasWallet: boolean) =>
     alinmaLogo: {
       wdith: moderateScale(18),
       height: moderateScale(18),
-      magrinLeft: moderateScale(50),
-      opacity: !hasWallet ? 0.25 : 1,
     },
     alinmaContainer: {
       marginLeft: moderateScale(30),

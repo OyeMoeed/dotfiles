@@ -61,6 +61,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   // // states
   const [sentRequestsData, setSentRequestsData] = useState([]);
   const [recivedRequestsData, setRecivedRequestsData] = useState([]);
+  const dataForPaginatedFLatlist = selectedTab === SEND_REQUESTS ? sentRequestsData : recivedRequestsData;
 
   // // selectors
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -242,7 +243,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           ref_number: item.realTransactionRefNumber,
         };
       case MoneyRequestStatus.PENDING:
-      case MoneyRequestStatus.INITIATED:
         return {
           ...baseMapping,
           ref_number: item.realTransactionRefNumber,
@@ -253,8 +253,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           rejection_date: item.rejection_date,
           ref_number: item.realTransactionRefNumber,
         };
-      case MoneyRequestStatus.INITIATED:
-        return baseMapping;
       default:
         return baseMapping;
     }
@@ -416,15 +414,14 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayView style={styles.listContainer}>
         <IPayPaginatedFlatlist
           showsVerticalScrollIndicator={false}
-          externalData={selectedTab === SEND_REQUESTS ? sentRequestsData : recivedRequestsData} // Pass externalData for pagination
-          keyExtractor={(item: any, index: number) => {
-            console.log(item, index);
-            return index.toString(); // Convert the index to a string
+          externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
+          keyExtractor={(index: number) => {
+            index.toString(); // Convert the index to a string
           }}
           renderItem={renderItem}
           fetchData={getRequestsData} // Pass fetchData for pagination
           pageSize={10} // Optional: Set page size for pagination
-          data={selectedTab === SEND_REQUESTS ? sentRequestsData : recivedRequestsData}
+          data={dataForPaginatedFLatlist}
           ListEmptyComponent={noResult}
         />
         {selectedTab === SEND_REQUESTS ? (

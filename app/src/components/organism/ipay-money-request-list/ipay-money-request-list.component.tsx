@@ -34,7 +34,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
-          text: localizationText.REQUEST_MONEY.CANCEL,
+          text: localizationText.REQUEST_MONEY.CANCELLED,
           backgroundColor: colors.natural.natural100,
         };
       case MoneyRequestStatus.PAID:
@@ -44,7 +44,6 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
-      case MoneyRequestStatus.INITIATED:
         return {
           color: colors.critical.critical800,
           text: localizationText.REQUEST_MONEY.PENDING,

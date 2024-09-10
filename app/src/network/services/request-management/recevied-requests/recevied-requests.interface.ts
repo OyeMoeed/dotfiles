@@ -29,6 +29,10 @@ interface RequestItem {
   payment_date?: string;
   request_date?: string;
   rejection_date?: string;
+  realTransactionAmount?: string | null;
+  realTransactionTotalPaidAmount?: string | null;
+  realTransactionNumberOfPaymentRequests?: string | null;
+  targetProfileImage?: string | null;
 }
 
 // Define the GetAllRequestsDetails interface that extends MockAPIDataProps with a specific response

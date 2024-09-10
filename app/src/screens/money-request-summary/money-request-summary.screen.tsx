@@ -30,6 +30,7 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   SendRequestedMoneyConfirmReq,
+  SendRequestedMoneyConfirmRes,
   SendRequestedMoneyPrepareReq,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import {
@@ -82,6 +83,32 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig } = useConstantData();
+  const textValue =
+    screen === SummaryType.MONEY_REQUEST_SUMMARY
+      ? receviedRequestSummaryData && receviedRequestSummaryData[0].amount
+      : chipValue;
+
+  // Prepare data for request paid summary success screen
+  const requestPaidSummaryData = (apiResponse: SendRequestedMoneyConfirmRes) => [
+    {
+      id: '1',
+      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      value: receviedRequestSummaryData[0].detailsText,
+      isAlinma: true,
+      leftIcon: true,
+    },
+    {
+      id: '2',
+      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      value: receviedRequestSummaryData[1].detailsText,
+    },
+    {
+      id: '3',
+      label: localizationText.COMMON.REF_NUM,
+      value: apiResponse?.response?.transctionRefNumber,
+      icon: icons.copy,
+    },
+  ];
 
   // Prepare OTP for sending requested money
   const prepareOtp = async (showOtpSheet: boolean = true) => {
@@ -131,26 +158,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           topupChannel: payChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
           amount: apiResponse?.response?.totalTansactionAmount,
-          requestPaidSummaryData: [
-            {
-              id: '1',
-              label: localizationText.REQUEST_SUMMARY.PAY_TO,
-              value: receviedRequestSummaryData[0].detailsText,
-              isAlinma: true,
-              leftIcon: true,
-            },
-            {
-              id: '2',
-              label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
-              value: receviedRequestSummaryData[1].detailsText,
-            },
-            {
-              id: '3',
-              label: localizationText.COMMON.REF_NUM,
-              value: apiResponse?.response?.transctionRefNumber,
-              icon: icons.copy,
-            },
-          ],
+          requestPaidSummaryData: requestPaidSummaryData(apiResponse),
         });
       }
     } else {
@@ -195,11 +203,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     () =>
       chipValue ? (
         <IPayChip
-          textValue={
-            screen === SummaryType.MONEY_REQUEST_SUMMARY
-              ? receviedRequestSummaryData && receviedRequestSummaryData[0].amount
-              : chipValue
-          }
+          textValue={textValue}
           variant={States.WARNING}
           isShowIcon
           containerStyle={styles.chipContainer}

@@ -35,12 +35,16 @@ import Send2Icon from './send-2.svg';
 import RefreshIcon from './refresh.svg';
 import ShoppingCartIcon from './shopping-cart.svg';
 import TrashIcon from './trash.svg';
+import NonAlinma from './nonAlinma.svg';
+import Alinma from './alinmaPay.svg';
 
 export {
   AlimapayLogo,
   AlinmaLogo,
   ArrangeSquare2,
   BulkLock,
+  NonAlinma,
+  Alinma,
   CallIncoming,
   CallIncomingIcon,
   CallOutgoing,

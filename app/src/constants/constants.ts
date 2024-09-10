@@ -8,7 +8,7 @@ import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -134,6 +134,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   ],
   HELP_CENTER_TABS: ['All FAQ', 'Account', 'Top-up', 'Money Transfer', 'Others'],
   MOBILE_NUMBER_LENGTH: 10,
+  UNSAVED_NUMBER_LENGTH: 16,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
@@ -457,6 +458,7 @@ const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_MEDUIM: ['1%', '63%'],
   MID_LARGE: ['1%', '70%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
@@ -732,7 +734,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES
+  WU_TRANSFER_TYPES,
 };
 
 export default constants;
