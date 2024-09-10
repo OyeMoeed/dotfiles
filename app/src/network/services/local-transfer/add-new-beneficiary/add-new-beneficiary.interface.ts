@@ -9,7 +9,7 @@ interface BeneficiaryDetailsRes {
 
 interface BeneficiaryBankDetail {
   bankCode: string;
-  correspondingBankCode: string;
+  correspondingBankCode?: string;
   bankName: string;
 }
 

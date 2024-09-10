@@ -49,7 +49,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
   const [bankList, setBankList] = useState();
   const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetails>();
-  const currency = 'SAR';
   const countryCode = 'SA';
 
   const { beneficiaryNameSchema, ibanSchema, beneficiaryNickNameSchema, bankNameSchema } =
@@ -114,16 +113,15 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
 
   const onSubmitData = async (values: FormValues) => {
     const payload: BeneficiaryInfo = {
+      beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo,
       fullName: values?.beneficiaryName,
       nickname: values?.beneficiaryNickName,
-      countryCode,
-      beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo ?? '',
-      currency,
       beneficiaryBankDetail: {
-        bankCode: beneficiaryBankDetails.bankCode,
-        bankName: beneficiaryBankDetails.bankName,
+        bankCode: beneficiaryBankDetails?.bankCode,
+        bankName: beneficiaryBankDetails?.bankName,
       },
     };
+    console.log('payload', payload);
 
     if (isValid) {
       renderSpinner(true);
