@@ -14,25 +14,25 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 
-import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import React from 'react';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { useTypedSelector } from '@app/store/store';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
   CreateMoneyRequestPayloadTypes,
   CreateMoneyRequestResponseTypes,
 } from '@app/network/services/request-management/sent-requests/sent-requests.interface';
 import { createMoneyRequestService } from '@app/network/services/request-management/sent-requests/sent-requests.service';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import ScreenNames from '@app/navigation/screen-names.navigation';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { scaleSize } from '@app/styles/mixins';
+import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React from 'react';
+import { IW2WTransferSummaryItem, ParamsProps } from './create-money-request-summary.interface';
 import createMoneyRequestSummaryStyles from './create-money-request-summary.styles';
-import { ParamsProps, IW2WTransferSummaryItem } from './create-money-request-summary.interface';
 
 const CreateMoneyRequestSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -171,7 +171,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
     const payload: CreateMoneyRequestPayloadTypes = {
       requests: transfersDetails.formInstances.map((formDetails) => ({
         mobileNumber: formDetails.mobileNumber,
-        amount: formDetails.mobileNumber,
+        amount: formDetails.amount,
         note: formDetails.notes,
         inContactList: isNumeric(formDetails.subtitle) !== true, // TODO: need clearity how can get this value
       })),
