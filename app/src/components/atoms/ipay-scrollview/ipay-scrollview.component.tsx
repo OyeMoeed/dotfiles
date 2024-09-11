@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef, JSX } from 'react';
 import { ScrollView as RNScrollView } from 'react-native';
 import { ScrollView as GHScrollView } from 'react-native-gesture-handler';
 import { IPayScrollViewProps } from './ipay-scrollview.interface';

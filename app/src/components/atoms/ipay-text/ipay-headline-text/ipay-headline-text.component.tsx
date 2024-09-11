@@ -1,6 +1,6 @@
+import React, { JSX } from 'react';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IPayText } from '@components/atoms/index';
-import React from 'react';
 import { IPaySubHeadlineTextProps } from './ipay-headline-text.interface';
 import styles from './ipay-headline-text.styles';
 

@@ -17,8 +17,9 @@ const IPayLinearGradientView: React.FC<IPayLinearGradientViewProps> = ({
   angle,
 }) => {
   const { colors } = useTheme();
-  const styles = linearGradientStyles(colors);
+  const styles = linearGradientStyles();
   const gradientColorsProp = gradientColors || colors.bottomsheetGradient;
+
   return (
     <LinearGradient
       testID={`${testID}-linear-gradient`}

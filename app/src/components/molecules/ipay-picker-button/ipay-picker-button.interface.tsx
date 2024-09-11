@@ -1,5 +1,5 @@
-import dateTimeFormat from '@app/utilities/date.const';
-import { pickerVariant } from '@app/utilities/enums.util';
+import { dateTimeFormat } from '@app/utilities';
+import { PickerVariant } from '@app/utilities/enums.util';
 
 export interface IPayPickerButtonProps {
   /**
@@ -11,7 +11,7 @@ export interface IPayPickerButtonProps {
    * A required property that must be one of the values specified in the VariantType type alias.
    * It determines the type of picker button.
    */
-  variant: pickerVariant;
+  variant: PickerVariant;
 
   /**
    * An optional property representing a date value.

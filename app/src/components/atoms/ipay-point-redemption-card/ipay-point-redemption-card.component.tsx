@@ -17,7 +17,6 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
   containerStyle,
   points,
   amount,
-  pointsStyle,
   headerStyle,
   backgroundImageStyle,
   innerContainerStyle,
@@ -31,7 +30,7 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
     <IPayLinearGradientView
       locations={[0, 1]}
       gradientColors={colors.appGradient.gradientPrimary20}
-      useAngle={true}
+      useAngle
       angle={79.03}
       style={[styles.gradientBackground, containerStyle]}
       testID={testID}
@@ -52,7 +51,7 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
                   gradientColors={gradientColors}
                   fontSize={SCALE_16}
                   fontFamily={typography.FONT_WEIGHT_BOLD}
-                  xScale={'0'}
+                  xScale="0"
                   textAnchor="start"
                 />
               </IPayView>

@@ -41,15 +41,13 @@ const PriceCalculatorScreen: React.FC = () => {
   const { transferTypesData } = useConstantData();
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
-  const renderTransferType = (type: { type: TransactionDetails }) => {
-    return (
-      <IPayTransactionService
-        transaction={type}
-        selectedService={selectedService}
-        setSelectedService={setSelectedService}
-      />
-    );
-  };
+  const renderTransferType = (type: { type: TransactionDetails }) => (
+    <IPayTransactionService
+      transaction={type}
+      selectedService={selectedService}
+      setSelectedService={setSelectedService}
+    />
+  );
 
   const dropdownRef = useRef<bottomSheetTypes>(null);
 
@@ -90,6 +88,8 @@ const PriceCalculatorScreen: React.FC = () => {
           break;
         case FilterType.Currency:
           setSelectedCurrency(text);
+          break;
+        default:
           break;
       }
       closeDropdownBottomSheet();
@@ -171,10 +171,10 @@ const PriceCalculatorScreen: React.FC = () => {
               currencyStyle={styles.currencyStyle}
               amount={amount}
               onAmountChange={setAmount}
-              isEditable={true}
+              isEditable
             />
             <IPayPressable onPress={handleCurrencyFilter} style={styles.pressableStyles}>
-              <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular={true} />
+              <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>
           </IPayView>
@@ -185,7 +185,7 @@ const PriceCalculatorScreen: React.FC = () => {
               {localizationText.PRICE_CALCULATOR.INCLUDES_FEES}
             </IPayCaption1Text>
           </IPayView>
-          <IPayToggleButton toggleState={true} />
+          <IPayToggleButton toggleState />
         </IPayView>
         <IPayFlatlist
           data={transferTypesData}

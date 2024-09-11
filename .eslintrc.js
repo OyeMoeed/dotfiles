@@ -44,7 +44,7 @@ module.exports = {
       'error',
       {
         selector: ['function'],
-        format: ['camelCase','PascalCase'],
+        format: ['camelCase', 'PascalCase'],
       },
       {
         selector: ['variable'],
@@ -115,6 +115,8 @@ module.exports = {
     'comma-dangle': ['error', 'always-multiline'],
     'react/jsx-filename-extension': ['warn', { extensions: ['.js', '.jsx', '.tsx'] }],
     'no-param-reassign': ['error', { props: true, ignorePropertyModificationsFor: ['state', 'config'] }],
+    'react/jsx-props-no-spreading': ['warn'],
+    'import/no-cycle': ['warn'],
   },
   settings: {
     'import/parsers': {

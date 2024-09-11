@@ -8,7 +8,7 @@ import { IPayButton } from '@app/components/molecules';
 import { buttonVariants } from '@app/utilities/enums.util';
 import cardManagementStyles from './card-management.style';
 
-const IPayNoCardIndicatorComponenent: React.FC = () => {
+const IPayNoCardIndicatorComponenent: React.FC<{ addCard: () => void }> = ({ addCard }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
 
@@ -34,6 +34,7 @@ const IPayNoCardIndicatorComponenent: React.FC = () => {
         btnType={buttonVariants.PRIMARY}
         large
         btnText={localizationText.MENU.ADD_CARD}
+        onPress={addCard}
         leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.natural.natural0} />}
       />
     </IPayView>

@@ -1,15 +1,15 @@
 import { StyleProp, ViewStyle } from 'react-native';
 
 interface IPayDropdownComponentProps {
-  //display header of dropdown sheet
+  // display header of dropdown sheet
   dropdownType: string;
-  //display heading of input
+  // display heading of input
   label: string;
   testID?: string;
   style?: StyleProp<ViewStyle>;
   data: ListItem[];
   onSelectListItem?: (item: string) => void;
-  //prop for searchable dropdown
+  // prop for searchable dropdown
   isSearchable?: boolean;
   size: string[];
   name: string;

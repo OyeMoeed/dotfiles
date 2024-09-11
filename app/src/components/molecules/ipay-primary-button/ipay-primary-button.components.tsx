@@ -4,7 +4,7 @@ import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayPrimaryButtonProps } from './ipay-primary-button.interface';
-import genratedStyles from './ipay-primary-button.style';
+import generatedStyles from './ipay-primary-button.style';
 
 const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   disabled,
@@ -25,13 +25,14 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   textStyle,
 }) => {
   const { colors } = useTheme();
-  const styles = genratedStyles(colors);
+  const styles = generatedStyles();
 
   const buttonBackgroundColor = disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500;
   const btnStyle = useMemo(() => {
     if (small) return [styles.btnSmall, { width, backgroundColor: buttonBackgroundColor }];
     if (medium) return [styles.btnMedium, { width, backgroundColor: buttonBackgroundColor }];
     if (large) return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
+    return {};
   }, [small, medium, large, width, buttonBackgroundColor]);
 
   const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor || colors.natural.natural0;

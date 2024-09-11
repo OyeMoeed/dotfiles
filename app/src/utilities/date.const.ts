@@ -2,12 +2,13 @@
  * Defines variants types used for date time formats.
  */
 
-enum dateTimeFormat {
+enum DateTimeFormat {
   // Date formats
   FullDate = 'dddd, MMMM D, YYYY', // Format date to "Monday, June 15, 2023"
   TimeAndDate = 'HH:mm - DD/MM/YYYY',
   DateAndTime = 'DD/MM/YYYY - HH:mm',
-  DateMonthYear = 'DD / MM / YYYY', // Format date to "01 / 01 / 2024"
+  DateMonthYear = 'DD / MM / YYYY', // Format date to "01 / 01 / 2024",
+  DateMonthYearWithoutSpace = 'DD/MM/YYYY',
   ShortDate = 'MM/DD/YYYY', // Format date to "06/15/2023"
   YearMonth = 'YYYY-MM', // Format date to "2023-06"
   ISODate = 'YYYY-MM-DD', // Format date to "2023-06-15"
@@ -33,4 +34,4 @@ enum dateTimeFormat {
   ShortMilitaryTime = 'H:mm', // Format time to "8:00" in 24-hour format
 }
 
-export default dateTimeFormat;
+export default DateTimeFormat;
