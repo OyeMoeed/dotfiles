@@ -189,8 +189,6 @@ const IPayIdRenewalSheet: React.FC = () => {
         })
       : subtitle;
 
-
-
   return (
     <>
       <IPayPortalBottomSheet
@@ -212,6 +210,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             setOtpError={setOtpError}
             otpError={otpError}
             otp={otp}
+            showVerify={true}
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}

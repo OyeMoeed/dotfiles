@@ -1,13 +1,13 @@
 import icons from '@app/assets/icons';
 import { Message } from '@app/assets/svgs';
-import { IPayCaption1Text, IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
-import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { forwardRef, useImperativeHandle } from 'react';
 import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
@@ -26,6 +26,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       handleOnPressHelp,
       showHelp = true,
       title,
+      showVerify,
       timeout = 60,
       onResendCodePress,
       otp = '',
@@ -103,6 +104,20 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           btnIconsDisabled
           onPress={onPressConfirm}
         />
+        {showVerify && (
+          <IPayView style={styles.verifyView}>
+            <IPayView style={styles.verifyViewRow}>
+              <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
+              <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
+                {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+              </IPayFootnoteText>
+            </IPayView>
+
+            <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+              {localizationText.ID_RENEWAL.WHY_VERIFY}
+            </IPayCaption1Text>
+          </IPayView>
+        )}
         {showHelp && (
           <IPayButton
             onPress={handleOnPressHelp}

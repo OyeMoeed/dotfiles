@@ -1,8 +1,9 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const otpVerificationStyles = (colors: any) =>
+const otpVerificationStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -53,6 +54,20 @@ const otpVerificationStyles = (colors: any) =>
     },
     needHelpBtn: {
       marginTop: verticalScale(24),
+    },
+    verifyViewRow: {
+      flexDirection: 'row',
+      gap: moderateScale(10),
+    },
+    verifyView: {
+      marginTop: moderateScale(40),
+      paddingHorizontal: moderateScale(16, 0.3),
+      paddingVertical: moderateScale(12),
+      borderRadius: moderateScale(16),
+      backgroundColor: colors.natural.natural0,
+    },
+    verifyText: {
+      marginBottom: moderateScale(16),
     },
   });
 

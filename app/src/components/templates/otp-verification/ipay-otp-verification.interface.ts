@@ -14,5 +14,6 @@ interface IPayOtpVerificationProps {
   timeout?: number;
   onResendCodePress: () => void;
   otp: string;
+  showVerify?: boolean;
 }
 export default IPayOtpVerificationProps;
