@@ -16,7 +16,7 @@ import colors from '@app/styles/colors.const';
 import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
@@ -175,6 +175,12 @@ const IPayIdRenewalSheet: React.FC = () => {
     setIsHelpBottomSheetVisible(true); // Show the help bottom sheet
   };
 
+  useEffect(() => {
+    if (isIdRenewalSheetVisible && renewId) {
+      setOtp('');
+    }
+  }, [isIdRenewalSheetVisible, renewId]);
+
   const formattedSubtitle =
     isAboutToExpire && !idExpired
       ? t('ID_RENEWAL.ID_UPDATION_DES', {
@@ -182,6 +188,8 @@ const IPayIdRenewalSheet: React.FC = () => {
           DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
         })
       : subtitle;
+
+
 
   return (
     <>
@@ -203,7 +211,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            apiError={apiError}
+            otp={otp}
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}
@@ -253,7 +261,7 @@ const IPayIdRenewalSheet: React.FC = () => {
         simpleBar
         cancelBnt
       >
-        <HelpCenterComponent />
+        <HelpCenterComponent hideFAQError />
       </IPayPortalBottomSheet>
     </>
   );

@@ -43,7 +43,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
+  const [otpError, setOtpError] = useState<boolean>(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
@@ -253,6 +253,8 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
           setOtp={setOtp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
+          otp={otp}
+          otpError={otpError}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

@@ -1,10 +1,11 @@
+import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+
 interface BillPaySuccessParams {
   isSaveOnly?: boolean;
   isPayOnly?: boolean;
   isPayPartially?: boolean;
-  billPayDetailes: BillInfoItem[];
-  billHeaderDetail: billHeaderDetail;
   totalAmount: string;
+  billPaymentInfos: BillPaymentInfosTypes[];
 }
 
 export interface BillPaySuccessProps {
