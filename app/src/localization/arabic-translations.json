@@ -161,7 +161,8 @@
     "UNSAVED_NUMBER": "رقم غير محفوظ",
     "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
     "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
-    "CONTACT_NAME": "اسم جهة الاتصال"
+    "CONTACT_NAME": "اسم جهة الاتصال",
+    "CONTACT_LIMIT": "تم الوصول إلى حد جهات الاتصال"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -624,6 +625,7 @@
     "VERIFY_CODE_ACCURACY": "يرجى التحقق من دقة الرمز.",
     "ENTER_CARD_PIN_CODE": "أدخل رمز PIN الخاص بالبطاقة",
     "CARD_TYPE": "نوع البطاقة",
+    "CVV": "cvv",
     "CARD_NUMBER": "رقم البطاقة",
     "CARD_HOLDER_NAME": "اسم حامل البطاقة",
     "EXPIRY_DATE": "تاريخ الانتهاء",
@@ -1163,7 +1165,9 @@
     "TRAFFIC_NUMBER": "رقم المرور"
   },
   "REQUEST_MONEY": {
+    "MAKE_NEW_REQUEST": "قم بعمل طلب جديد",
     "REQUEST_MONEY": "طلب مال",
+    "CANCELLED": "ملغى",
     "SEND_REQUESTS": "طلبات مرسلة",
     "RECEIVED_REQUESTS": "طلبات مستلمة",
     "CREATE_REQUEST": "إنشاء طلب",

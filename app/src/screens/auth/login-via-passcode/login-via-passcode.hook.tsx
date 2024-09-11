@@ -18,6 +18,7 @@ import { spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
+import { setAppData } from '@app/store/slices/app-data-slice';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
 
 const useLogin = () => {
@@ -70,35 +71,27 @@ const useLogin = () => {
 
   const verifyOtp = async () => {
     renderSpinner(true);
-    try {
-      const body: validateForgetPasscodeOtpReq = {
-        poiNumber: encryptData(
-          `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId as string}`,
-          appData?.encryptionData?.passwordEncryptionKey as string,
-        ) as string,
-        otp,
-        otpRef: otpRef as string,
-        authentication: { transactionId: forgetPasswordFormData.transactionId as string },
-        deviceInfo: appData.deviceInfo as DeviceInfoProps,
-      };
-      const validateOtpRes = await validateForgetPasscodeOtp(body);
 
-      if (validateOtpRes.status.type === 'SUCCESS') {
-        onCallbackHandle({
-          nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE,
-          data: { otp, walletNumber: validateOtpRes?.response?.walletNumber },
-        });
-      } else {
-        setOtpError(true);
-        otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
-      }
-    } catch (error) {
-      setOtpError(true);
-      setAPIError(localizationText.COMMON.INCORRECT_CODE);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
-    } finally {
-      renderSpinner(false);
+    const body: validateForgetPasscodeOtpReq = {
+      poiNumber: encryptData(
+        `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId as string}`,
+        appData?.encryptionData?.passwordEncryptionKey as string,
+      ) as string,
+      otp,
+      otpRef: otpRef as string,
+      authentication: { transactionId: forgetPasswordFormData.transactionId as string },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
+    };
+    const validateOtpRes = await validateForgetPasscodeOtp(body);
+
+    if (validateOtpRes) {
+      onCallbackHandle({
+        nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CREATE_PASSCODE,
+        data: { otp, walletNumber: validateOtpRes?.response?.walletNumber },
+      });
     }
+
+    renderSpinner(false);
   };
 
   const onConfirm = () => {
@@ -114,15 +107,15 @@ const useLogin = () => {
 
   const resendForgetPasscodeOtp = async () => {
     renderSpinner(true);
-    try {
-      const apiResponse = await prepareForgetPasscode(resendOtpPayload as PrepareForgetPasscodeProps, dispatch);
-      if (apiResponse?.status.type === 'SUCCESS') {
-        setOtpRef(apiResponse?.response?.otpRef as string);
-      }
-      renderSpinner(false);
-    } catch (error) {
-      renderSpinner(false);
+
+    const apiResponse = await prepareForgetPasscode(resendOtpPayload as PrepareForgetPasscodeProps);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      const { otpRef: otpRefValue, walletNumber } = apiResponse?.data?.response || {};
+      dispatch(setAppData({ otpRefValue, walletNumber }));
+
+      setOtpRef(otpRefValue);
     }
+    renderSpinner(false);
   };
 
   return {
@@ -140,6 +133,7 @@ const useLogin = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     checkAndHandlePermission,
+    otp
   };
 };
 

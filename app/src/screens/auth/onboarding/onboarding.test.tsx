@@ -1,4 +1,3 @@
-
 // Mock the Platform module with the select method
 jest.mock('react-native/Libraries/Utilities/Platform', () => ({
   OS: 'ios',
@@ -61,7 +60,6 @@ jest.mock('react-native/Libraries/Settings/NativeSettingsManager', () => ({
 }));
 
 describe('getLocalization', () => {
-
   it('returns locale identifier for Android', () => {
     // Mock Platform.OS to simulate Android
     jest.mock('react-native/Libraries/Utilities/Platform', () => ({

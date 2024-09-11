@@ -29,13 +29,13 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     isLoading,
     otpError,
     setOtpError,
-    apiError,
+    otp,
     otpVerificationRef,
   } = useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = billPaymentStyles();
   const route = useRoute();
   const variant = route?.params?.variant;
@@ -73,13 +73,13 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={handlePay}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={walletInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
-          showHelp={true}
+          otp={otp}
+          showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
           containerStyle={styles.otpContainerStyle}

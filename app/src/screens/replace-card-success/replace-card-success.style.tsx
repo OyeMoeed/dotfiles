@@ -17,6 +17,19 @@ const replaceCardSuccessStyles = (colors: typeof themeColors) =>
       gap: verticalScale(12),
       marginBottom: verticalScale(24),
     },
+    descriptionBoxContainer: {
+      flexDirection: 'row',
+      backgroundColor: colors.natural.natural0,
+      borderRadius: scaleSize(20),
+      marginBottom: verticalScale(30),
+      gap: moderateScale(12),
+      paddingVertical: verticalScale(22),
+      paddingHorizontal: scaleSize(16),
+      alignItems: 'center',
+    },
+    captionTextContainer: {
+      flex: 1,
+    },
   });
 
 export default replaceCardSuccessStyles;

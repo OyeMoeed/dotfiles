@@ -1,11 +1,23 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_17, FONT_SIZE_20, FONT_SIZE_33, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import {
+  FONT_SIZE_17,
+  FONT_SIZE_20,
+  FONT_SIZE_33,
+  FONT_SIZE_34,
+  FONT_WEIGHT_BOLD,
+} from '@app/styles/typography.styles';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    recipientsContainer: {
+      backgroundColor: colors.secondary.secondary100,
+      marginTop: moderateScale(6),
+      alignSelf: 'center',
+    },
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24),
@@ -49,6 +61,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(16),
     },
     buttonContainer: {
+      marginHorizontal: moderateScale(24),
       gap: moderateScale(16),
       bottom: moderateScale(0),
       left: moderateScale(0),
@@ -85,7 +98,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(16),
-      marginBottom: moderateScale(16),
+      marginBottom: moderateScale(8),
     },
     iconHeader: {
       flexDirection: 'row',
@@ -122,17 +135,32 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
     },
     remove: {
-      marginTop: moderateScale(16),
+      marginTop: moderateScale(6),
     },
 
     input: {
-      paddingVertical: moderateScale(12),
+      ...Platform.select({
+        android: {
+          paddingVertical: moderateScale(-5),
+        },
+        ios: {
+          paddingVertical: moderateScale(12),
+        },
+      }),
       marginVertical: moderateScale(2),
     },
     manualInput: {
       fontSize: FONT_SIZE_20,
       alignSelf: 'center',
-      lineHeight: 0,
+      ...Platform.select({
+        android: {
+          lineHeight: moderateScale(30),
+        },
+        ios: {
+          lineHeight: 0,
+        },
+      }),
+      minWidth: scaleSize(42),
     },
     chipColors: {
       alignSelf: 'stretch',
@@ -144,20 +172,21 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(16),
     },
     currencyText: {
-      fontSize: FONT_SIZE_33,
+      fontSize: FONT_SIZE_34,
       fontWeight: FONT_WEIGHT_BOLD,
       ...Platform.select({
         android: {
-          lineHeight: moderateScale(50),
+          paddingTop: moderateScale(24),
+          lineHeight: moderateScale(30),
         },
         ios: {
-          lineHeight: moderateScale(0),
+          lineHeight: 0,
+          marginBottom: moderateScale(2),
         },
       }),
     },
     currencyManual: {
       fontSize: FONT_SIZE_17,
-      paddingTop: moderateScale(15),
       ...Platform.select({
         android: {
           paddingTop: moderateScale(15),
@@ -167,6 +196,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
         },
       }),
       alignSelf: 'center',
+      marginBottom: moderateScale(3),
     },
     contactInfoContainer: {
       marginTop: moderateScale(6),
@@ -182,6 +212,19 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     sar: { fontSize: FONT_SIZE_33 },
     btnText: {
       justifyContent: 'center',
+    },
+    inputStyle: {
+      minWidth: scaleSize(65),
+    },
+    inputActiveStyle: {
+      ...Platform.select({
+        android: {
+          marginBottom: moderateScale(5),
+        },
+        ios: {
+          marginBottom: moderateScale(7),
+        },
+      }),
     },
   });
 

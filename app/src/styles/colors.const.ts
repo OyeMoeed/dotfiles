@@ -225,6 +225,16 @@ const colors = {
     skyBlue: '#A1CBFE',
     yellowish: '#FFC54D',
     greenish: '#32D38F',
+    lightRed: '#F9CDD7',
+    lightPurple: '#D3D7FF',
+    mildRed: '#FB7865',
+    mildBlue: '#59B1FF',
+    skin: '#FFD6CC',
+    yellow: '#FFC754',
+    purpleBlue: '#5456FF',
+    mildPurple: '#E7D0FF',
+    lightBlue: '#B9DBFD',
+    palePink: '#F9DFD8',
   },
 
   appGradient: {
@@ -258,6 +268,5 @@ const colors = {
 };
 
 export type Colors = typeof colors;
-
 
 export default colors;

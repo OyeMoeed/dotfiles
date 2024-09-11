@@ -15,7 +15,8 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useRef, useState } from 'react';
+import moment from 'moment';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
@@ -27,8 +28,6 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [renewId, setRenewId] = useState(false);
   const [otpRef, setOTPRef] = useState<string>('');
   const [isHelpBottomSheetVisible, setIsHelpBottomSheetVisible] = useState(false);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showToast } = useToastContext();
   const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
@@ -36,12 +35,14 @@ const IPayIdRenewalSheet: React.FC = () => {
     aboutToExpire: isAboutToExpire,
     remainingNumberOfDaysToExpire,
     expiryDate,
+    idExpired,
+    walletNumber,
+    mobileNumber,
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
 
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
   const { t } = useTranslation();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const dispatch = useTypedDispatch();
@@ -82,30 +83,20 @@ const IPayIdRenewalSheet: React.FC = () => {
 
   const handleRenewalId = async () => {
     if (idRenewalState === IdRenewalState.EXPIRE_FLAG_REACHED) {
-      try {
-        const idRenewalPrepareBody = await getDeviceInfo();
-        const payload: PrepareIdRenewalProp = {
-          deviceInfo: idRenewalPrepareBody,
-          walletNumber,
-        };
-        renderSpinner(true);
-        const apiResponse: any = await prepareRenewId(payload);
+      const idRenewalPrepareBody = await getDeviceInfo();
+      const payload: PrepareIdRenewalProp = {
+        deviceInfo: idRenewalPrepareBody,
+        walletNumber,
+      };
+      renderSpinner(true);
+      const apiResponse: any = await prepareRenewId(payload);
 
-        if (apiResponse?.status?.type === 'SUCCESS') {
-          setOTPRef(apiResponse?.response?.otpRef);
-          setRenewId(true);
-          setCustomSnapPoints(['95%', '95%']);
-        } else if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        } else {
-          setAPIError(apiResponse?.error);
-        }
-        renderSpinner(false);
-      } catch (error: any) {
-        renderSpinner(false);
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      if (apiResponse) {
+        setOTPRef(apiResponse?.response?.otpRef);
+        setRenewId(true);
+        setCustomSnapPoints(['95%', '95%']);
       }
+      renderSpinner(false);
     }
   };
 
@@ -132,63 +123,40 @@ const IPayIdRenewalSheet: React.FC = () => {
     setRenewalAlertVisible(false);
   };
   const handleRenewalIdResendOtp = async () => {
-    try {
-      const idRenewalPrepareBody = await getDeviceInfo();
-      const payload: PrepareIdRenewalProp = {
-        deviceInfo: idRenewalPrepareBody,
-        walletNumber,
-      };
-      renderSpinner(true);
-      const apiResponse: any = await prepareRenewId(payload);
+    const idRenewalPrepareBody = await getDeviceInfo();
+    const payload: PrepareIdRenewalProp = {
+      deviceInfo: idRenewalPrepareBody,
+      walletNumber,
+    };
+    renderSpinner(true);
+    const apiResponse: any = await prepareRenewId(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        otpVerificationRef?.current?.resetInterval();
-        setOTPRef(apiResponse?.response?.otpRef);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      otpVerificationRef?.current?.resetInterval();
+      setOTPRef(apiResponse?.response?.otpRef);
     }
+    renderSpinner(false);
   };
 
   const getOtpData = async () => {
     const OTP_LENGHT = 4;
     renderSpinner(true);
     if (otp?.length === OTP_LENGHT) {
-      try {
-        const idRenewalPrepareBody = await getDeviceInfo();
-        const payload: ConfirmIdRenewalProp = {
-          confirmBody: {
-            otpRef,
-            otp,
-            mobileNumber,
-            deviceInfo: idRenewalPrepareBody,
-          },
-          walletNumber,
-        };
+      const idRenewalPrepareBody = await getDeviceInfo();
+      const payload: ConfirmIdRenewalProp = {
+        confirmBody: {
+          otpRef,
+          otp,
+          mobileNumber,
+          deviceInfo: idRenewalPrepareBody,
+        },
+        walletNumber,
+      };
 
-        const apiResponse: any = await confirmRenewId(payload);
-        renderSpinner(false);
-        if (apiResponse?.status?.type === 'SUCCESS') {
-          showSuccessAlert();
-        } else if (apiResponse?.apiResponseNotOk) {
-          setOtpError(true);
-          otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        } else {
-          setOtpError(true);
-          otpVerificationRef.current?.triggerToast(apiResponse?.error, false);
-        }
-      } catch (error: any) {
-        renderSpinner(false);
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      const apiResponse: any = await confirmRenewId(payload);
+      renderSpinner(false);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        showSuccessAlert();
       }
     }
   };
@@ -196,7 +164,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       getOtpData();
     }
@@ -207,9 +175,21 @@ const IPayIdRenewalSheet: React.FC = () => {
     setIsHelpBottomSheetVisible(true); // Show the help bottom sheet
   };
 
-  const formattedSubtitle = isAboutToExpire
-    ? t('ID_RENEWAL.ID_UPDATION_DES', { DAYS: remainingNumberOfDaysToExpire, DATE: expiryDate })
-    : subtitle;
+  useEffect(() => {
+    if (isIdRenewalSheetVisible && renewId) {
+      setOtp('');
+    }
+  }, [isIdRenewalSheetVisible, renewId]);
+
+  const formattedSubtitle =
+    isAboutToExpire && !idExpired
+      ? t('ID_RENEWAL.ID_UPDATION_DES', {
+          DAYS: remainingNumberOfDaysToExpire,
+          DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
+        })
+      : subtitle;
+
+
 
   return (
     <>
@@ -231,16 +211,16 @@ const IPayIdRenewalSheet: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            apiError={apiError}
+            otp={otp}
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}
           />
         ) : (
           <IPayView style={styles.profileContainer}>
-            {isAboutToExpire ? ID_ABOUT_EXPIRE.icon : icon}
+            {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.icon : icon}
             <IPayTitle2Text style={styles.titleTextStyle}>
-              {isAboutToExpire ? ID_ABOUT_EXPIRE.title : title}
+              {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
             <IPayCaption1Text style={styles.captionTextStyle}>{formattedSubtitle}</IPayCaption1Text>
             <IPayButton
@@ -248,9 +228,15 @@ const IPayIdRenewalSheet: React.FC = () => {
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
               btnType="primary"
-              btnText={primaryButtonText}
+              btnText={isAboutToExpire ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
               textColor={colors.natural.natural0}
-              rightIcon={<IPayIcon icon={buttonIcon} size={20} color={colors.natural.natural0} />}
+              rightIcon={
+                <IPayIcon
+                  icon={isAboutToExpire ? ID_ABOUT_EXPIRE.buttonIcon : buttonIcon}
+                  size={20}
+                  color={colors.natural.natural0}
+                />
+              }
             />
             <IPayButton
               onPress={closeBottomSheet}
@@ -275,7 +261,7 @@ const IPayIdRenewalSheet: React.FC = () => {
         simpleBar
         cancelBnt
       >
-        <HelpCenterComponent />
+        <HelpCenterComponent hideFAQError />
       </IPayPortalBottomSheet>
     </>
   );

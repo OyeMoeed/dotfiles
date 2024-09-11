@@ -134,6 +134,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   ],
   HELP_CENTER_TABS: ['All FAQ', 'Account', 'Top-up', 'Money Transfer', 'Others'],
   MOBILE_NUMBER_LENGTH: 10,
+  UNSAVED_NUMBER_LENGTH: 16,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
@@ -335,7 +336,7 @@ const CARDS_MOCK_DATA = [
 export { CARDS_MOCK_DATA, SUPPORTED_CARD };
 
 const CARD_DATA = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
@@ -349,7 +350,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -365,7 +366,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Instant Cashback 1.6% with no Cap.',
@@ -457,6 +458,7 @@ const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_MEDUIM: ['1%', '63%'],
   MID_LARGE: ['1%', '70%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],

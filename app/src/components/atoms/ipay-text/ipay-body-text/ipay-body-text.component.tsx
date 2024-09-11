@@ -18,7 +18,7 @@ const IPayBodyText: React.FC<IPayBodyTextProps> = ({
   children,
   color,
 }: IPayBodyTextProps): JSX.Element => {
-  const textColor = color ? { color } : {}; 
+  const textColor = color ? { color } : {};
   return (
     <IPayText
       testID={`${testID}-body-text`}

@@ -60,7 +60,7 @@ const localTransferStyles = (themeColors: typeof colors) =>
     },
     textStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
-      marginRight: moderateScale(4),
+      // marginRight: moderateScale(4),
       textTransform: 'capitalize',
     },
     bankLogo: {

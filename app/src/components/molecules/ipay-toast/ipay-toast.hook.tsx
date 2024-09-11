@@ -22,7 +22,7 @@ const useToast = () => {
         setHideTimeout(timeout);
       }
     },
-    [hideTimeout]
+    [hideTimeout],
   );
 
   const hideToast = useCallback(() => {

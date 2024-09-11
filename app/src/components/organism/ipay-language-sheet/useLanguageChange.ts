@@ -7,7 +7,6 @@ import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 import { I18nManager } from 'react-native';
 import RNRestart from 'react-native-restart';
 
-
 // Hook for modal actions
 export const useModalActions = (ref: any) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,4 +49,3 @@ export const useLanguageChange = (handleClosePress: () => void) => {
 
   return handleLanguagePress;
 };
-

@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale } from 'react-native-size-matters';
 
 const billPaymentsStyles = () =>
   createStyleSheet({
@@ -7,6 +7,7 @@ const billPaymentsStyles = () =>
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
       marginVertical: moderateScale(16, 0.3),
+      marginBottom: moderateScale(26),
     },
     headerStyles: {
       marginVertical: moderateScale(8, 0.3),
@@ -19,9 +20,12 @@ const billPaymentsStyles = () =>
     },
     addNewBillBtn: {
       width: '100%',
-      height: verticalScale(34),
+      height: 'auto',
       paddingVertical: moderateScale(7, 0.3),
+      paddingHorizontal: moderateScale(14),
       marginTop: moderateScale(8, 0.3),
+      borderRadius: moderateScale(12),
+      borderWidth: 1.1,
     },
     contentContainer: {
       flex: 1,

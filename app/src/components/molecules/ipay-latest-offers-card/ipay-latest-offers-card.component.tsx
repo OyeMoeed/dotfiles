@@ -43,11 +43,7 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
   }, [offer?.imageUrlEn]);
 
   return (
-    <IPayPressable
-      onPress={onPress}
-      testID={testID}
-      style={[styles.container, containerStyle, isLastItem && styles.lastOffer]}
-    >
+    <IPayPressable onPress={onPress} testID={testID} style={[containerStyle, isLastItem && styles.lastOffer]}>
       <ImageBackground resizeMode="contain" source={images.offersCover} style={styles.imageBackgroundContainer}>
         <IPayView style={[styles.childContainer, childContainerStyle]}>
           <IPayImage

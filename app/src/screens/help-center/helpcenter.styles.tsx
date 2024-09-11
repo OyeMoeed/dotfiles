@@ -1,6 +1,5 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_12, FONT_SIZE_13, typography } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const helpCenterStyles = (colors: any) =>
@@ -151,7 +150,7 @@ const helpCenterStyles = (colors: any) =>
       borderRadius: 15,
     },
     bodyStyle: {
-      bottom: 0,
+      bottom: verticalScale(16),
     },
   });
 

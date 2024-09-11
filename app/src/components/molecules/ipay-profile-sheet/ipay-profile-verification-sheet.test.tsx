@@ -10,7 +10,6 @@ jest.mock('@app/localization/hooks/localization.hook', () => {
   });
 });
 
-
 describe('ProfileVerificationSheet', () => {
   it('renders correctly with the given Counter Button', () => {
     // Act

@@ -9,7 +9,6 @@ interface IPayOtpVerificationProps {
   isLoading?: boolean;
   onPressConfirm?: () => void;
   ref: string;
-  apiError: string;
   isBottomSheet?: boolean;
   handleOnPressHelp?: () => void;
   showHelp?: boolean;
@@ -20,5 +19,6 @@ interface IPayOtpVerificationProps {
   headingContainerStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   innerContainerStyle?: StyleProp<ViewStyle>;
+  otp: string;
 }
 export default IPayOtpVerificationProps;

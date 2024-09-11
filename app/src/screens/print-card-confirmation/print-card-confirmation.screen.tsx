@@ -44,7 +44,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('')
+  const [otpError, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -113,7 +113,11 @@ const PrintCardConfirmationScreen: React.FC = () => {
           monthlyIncomingLimit="20,000"
         />
         <IPayView style={styles.contentContainer}>
-          <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
+          <IPayFootnoteText
+            text={localizationText.CARDS.CARD_DETAILS}
+            color={colors.natural.natural500}
+            style={styles.header}
+          />
           <IPayList
             title={localizationText.REPLACE_CARD.HOLDERS_NAME}
             isShowDetail
@@ -137,7 +141,9 @@ const PrintCardConfirmationScreen: React.FC = () => {
                 style={styles.addressStyle}
               >
                 <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
-                <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
+                <IPayView style={styles.iconStyle}>
+                  <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
+                </IPayView>
               </IPayPressable>
             }
           />
@@ -169,6 +175,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
               onPress={onPressConfirm}
               large
               btnIconsDisabled
+              btnStyle={styles.confirmButton}
               btnType={buttonVariants.PRIMARY}
               btnText={localizationText.COMMON.CONFIRM}
             />
@@ -193,6 +200,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           onPressConfirm={onNavigateToSuccess}
           mobileNumber="0511110302"
           setOtp={setOtp}
+          otp={otp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
         />

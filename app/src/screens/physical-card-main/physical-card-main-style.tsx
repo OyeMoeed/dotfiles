@@ -29,6 +29,7 @@ const physicalCardMainStyles = (colors: typeof themeColors) =>
       borderRadius: scaleSize(28),
     },
     btnStyle: {
+      justifyContent: 'center',
       width: '100%',
       marginTop: verticalScale(12),
       borderRadius: scaleSize(16),

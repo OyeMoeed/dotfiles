@@ -9,7 +9,7 @@ const defaultProps: IPayGradientTextProps = {
   gradientColors: ['#ff0000', '#00ff00'],
   fontSize: 16,
   fontFamily: 'System',
-  lineHeight: 1.2
+  lineHeight: 1.2,
 };
 
 describe('IPayGradientText', () => {
@@ -27,7 +27,7 @@ describe('IPayGradientText', () => {
     const customProps: IPayGradientTextProps = {
       ...defaultProps,
       fontSize: 20,
-      lineHeight: 1.5
+      lineHeight: 1.5,
     };
     const { getByTestId, queryAllByText } = render(<IPayGradientText {...customProps} />);
 
@@ -41,7 +41,7 @@ describe('IPayGradientText', () => {
   it('renders correctly with multiple lines of text', () => {
     const multilineProps: IPayGradientTextProps = {
       ...defaultProps,
-      text: 'Line 1\nLine 2\nLine 3'
+      text: 'Line 1\nLine 2\nLine 3',
     };
     const { getByTestId, queryAllByText } = render(<IPayGradientText {...multilineProps} />);
 
@@ -61,7 +61,7 @@ describe('IPayGradientText', () => {
     const customStyle = { margin: 10 };
     const styledProps: IPayGradientTextProps = {
       ...defaultProps,
-      style: customStyle
+      style: customStyle,
     };
     const { getByTestId } = render(<IPayGradientText {...styledProps} />);
 
