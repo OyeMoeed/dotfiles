@@ -1,3 +1,4 @@
+import React from 'react';
 import images from '@app/assets/images';
 import { IPayCaption2Text, IPayImage, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';

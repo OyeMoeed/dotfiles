@@ -18,10 +18,9 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { GiftLocalizationKeys, GiftTransactionKey } from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
-import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, toastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, ToastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
@@ -60,7 +59,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const getTitleColor = (subTitle: string) => {
@@ -87,13 +86,13 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     };
     Share.open(shareOptions);
   };
-  const getDynamicStyles = (styles, details, item) => {
-    return [
-      styles.subTitle,
-      details[item]?.length > 20 && styles.condtionalWidthSubtitle,
-      item === GiftCardDetailsKey.AMOUNT && details?.status === GiftCardStatus.EXPIRED && styles.textStyle,
-    ];
-  };
+
+  const getDynamicStyles = (stylesValue, dataDetails, item) => [
+    stylesValue.subTitle,
+    dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
+    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftCardStatus.EXPIRED && stylesValue.textStyle,
+  ];
+
   const titleText = useCallback(
     (value: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);

@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const topUpSuccessRedemptionStyles = (colors: any) =>
+const topUpSuccessRedemptionStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,

@@ -1,8 +1,7 @@
-import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const internationalTrHistoryStyles = (themeColors: typeof colors) =>
+const internationalTrHistoryStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,

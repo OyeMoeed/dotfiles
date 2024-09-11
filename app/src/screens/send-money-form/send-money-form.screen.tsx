@@ -23,7 +23,7 @@ import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -37,7 +37,7 @@ import {
   IW2WCheckActiveReq,
 } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
@@ -56,17 +56,16 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
+  const [, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
+  const { availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts, from, heading, showHistory, activeFriends } = route.params;
   const { transferReasonData } = useConstantData();
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const [amount, setAmount] = useState<number | string>('');
   const [warningStatus, setWarningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
@@ -129,7 +128,8 @@ const SendMoneyFormScreen: React.FC = () => {
   }, []);
 
   const totalAmount = formInstances.reduce(
-    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
+    // eslint-disable-next-line no-useless-escape
+    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || '0'),
     0,
   );
 
@@ -199,13 +199,10 @@ const SendMoneyFormScreen: React.FC = () => {
       // Validate amount and reason
       const hasValidAmount = totalAmount > 0;
       return !hasValidAmount;
-    } else {
-      const hasValidAmount = totalAmount > 0;
-      const hasValidReason = formInstances.every(
-        (instance) => instance.selectedItem?.id && instance.selectedItem?.text,
-      );
-      return !hasValidAmount || !hasValidReason;
     }
+    const hasValidAmount = totalAmount > 0;
+    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
+    return !hasValidAmount || !hasValidReason;
   };
 
   const addForm = () => {
@@ -361,7 +358,7 @@ const SendMoneyFormScreen: React.FC = () => {
             />
           ) : (
             <IPaySendMoneyForm
-              showReason={true}
+              showReason
               subtitle={selectedContacts[0].givenName}
               openReason={openReason}
               setAmount={handleAmountChange}

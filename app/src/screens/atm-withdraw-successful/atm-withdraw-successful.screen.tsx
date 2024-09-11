@@ -16,8 +16,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
@@ -74,7 +74,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const renderItem = ({ item }: ItemProps) => (

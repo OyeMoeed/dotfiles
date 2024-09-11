@@ -13,7 +13,7 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({ testID, selectedCardT
   const styles = cardSegmentStyles(colors);
   const { SEGMENT_LABEL } = useVirtualCardData();
   const [selectedTab, setSelectedTab] = useState<CardDetailsSegment | string>(SEGMENT_LABEL[0]);
-  const handleSelectedTab = (tab: string, index: number) => {
+  const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
   };
 

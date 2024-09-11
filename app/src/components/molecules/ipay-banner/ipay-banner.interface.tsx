@@ -1,4 +1,5 @@
 import { States } from '@app/utilities/enums.util';
+import React from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
