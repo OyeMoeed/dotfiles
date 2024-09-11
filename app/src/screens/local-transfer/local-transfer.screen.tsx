@@ -433,16 +433,15 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
   const onDeleteBeneficiary = async () => {
+    setDeleteBeneficiary(false);
     renderSpinner(true);
     try {
       const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
 
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         getBeneficiariesData();
-        setDeleteBeneficiary(false);
         showDeleteBeneficiaryToast();
       } else {
-        setDeleteBeneficiary(false);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     } catch (error: any) {
