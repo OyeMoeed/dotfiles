@@ -5,6 +5,7 @@ interface MockAPIStatusProps {
   requestReference: string;
   type: string;
   desc: string;
+  translation:string
 }
 
 // Define the Data interface
@@ -70,5 +71,6 @@ export {
   IApiStatus,
   MockAPIDataProps,
   MockAPIOkProp,
-  MockAPIStatusProps,
+  MockAPIStatusProps
 };
+
