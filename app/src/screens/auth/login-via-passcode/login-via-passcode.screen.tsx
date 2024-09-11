@@ -67,7 +67,7 @@ const LoginViaPasscode: React.FC = () => {
     forgetPasswordFormData,
     setForgetPasswordFormData,
     checkAndHandlePermission,
-    otp
+    otp,
   } = useLogin();
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
