@@ -15,7 +15,7 @@ interface MockAPIDataProps {
 
 // Define the ok property type
 type MockAPIOkProp = {
-  ok: boolean;
+  ok?: boolean;
 };
 
 type DeviceInfoProps = {

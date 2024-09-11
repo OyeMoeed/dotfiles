@@ -30,6 +30,14 @@ const useSaveQRCode = () => {
 
   const styles = walletStyles(colors);
 
+  const renderToast = (title: string, icon: string) => {
+    showToast({
+      title,
+      leftIcon: <IPayIcon icon={icon} size={18} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainerStyle,
+    });
+  };
+
   // Save QR code to disk
   const saveQrToDisk = async (): Promise<void> => {
     qrRef.current?.toDataURL(async (data: string) => {
@@ -43,16 +51,8 @@ const useSaveQRCode = () => {
 
         renderToast(localization.HOME.QR_TO_GALLERY, icons.save);
       } catch (error) {
-        console.error(error); //TODO : implement dynatrace
+        // TODO : implement dynatrace
       }
-    });
-  };
-
-  const renderToast = (title: string, icon: string) => {
-    showToast({
-      title,
-      leftIcon: <IPayIcon icon={icon} size={18} color={colors.natural.natural0} />,
-      containerStyle: styles.toastContainerStyle,
     });
   };
 

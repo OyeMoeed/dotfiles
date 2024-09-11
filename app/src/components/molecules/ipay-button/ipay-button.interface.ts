@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { JSX } from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -28,7 +29,7 @@ export interface IPayButtonProps {
   /**
    * Different variants of button.
    */
-  btnType?: 'primary' | 'outline' | 'link-button';
+  btnType?: buttonVariants.PRIMARY | buttonVariants.OUTLINED | buttonVariants.LINK_BUTTON;
   btnColor?: string;
 
   btnIconsDisabled?: boolean;

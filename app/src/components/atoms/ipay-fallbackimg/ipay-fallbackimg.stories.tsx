@@ -1,5 +1,5 @@
 import { store } from '@app/store/store';
-import { fallbackVariants } from '@app/utilities/enums.util';
+import { FallbackVariants } from '@app/utilities/enums.util';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import IPayView from '../ipay-view/ipay-view.component';
@@ -9,7 +9,7 @@ const IPayFallbackImgMeta: Meta<typeof IPayFallbackImg> = {
   title: 'components/fallbackImages/IPayFallbackImg',
   component: IPayFallbackImg,
   args: {
-    variant: fallbackVariants.LOGO, // Default args
+    variant: FallbackVariants.LOGO, // Default args
   },
   decorators: [
     (Story) => (
@@ -25,18 +25,18 @@ const IPayFallbackImgMeta: Meta<typeof IPayFallbackImg> = {
 export default IPayFallbackImgMeta;
 export const LogoVariant: StoryObj<typeof IPayFallbackImg> = {
   args: {
-    variant: fallbackVariants.LOGO,
+    variant: FallbackVariants.LOGO,
   },
 };
 
 export const LoaderVariant: StoryObj<typeof IPayFallbackImg> = {
   args: {
-    variant: fallbackVariants.LOADER,
+    variant: FallbackVariants.LOADER,
   },
 };
 
 export const ImageVariant: StoryObj<typeof IPayFallbackImg> = {
   args: {
-    variant: fallbackVariants.IMAGE,
+    variant: FallbackVariants.IMAGE,
   },
 };

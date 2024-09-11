@@ -14,7 +14,7 @@ import topBarStyles from './ipay-topbar.style';
  * @param {IPayTopbarProps} props - The props for the Ipay component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName, userProfile }) => {
+const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName }) => {
   const { colors } = useTheme();
   const styles = topBarStyles(colors);
 

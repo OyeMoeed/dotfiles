@@ -16,7 +16,6 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
   const {
     localizationText,
     billPayDetailes,
-    extraDetails,
     balanceData,
     handlePay,
     helpCenterRef,

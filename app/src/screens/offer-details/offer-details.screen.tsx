@@ -29,7 +29,7 @@ import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 import offerDetailsStyles from './offer-details.style';
 
@@ -52,7 +52,7 @@ const OfferDetailsScreen: React.FC = () => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [offersData, setOffersData] = useState<OfferItem[] | null>([]);
 
@@ -134,6 +134,7 @@ const OfferDetailsScreen: React.FC = () => {
 
       return isoFormat;
     }
+    return undefined;
   };
 
   const calculateTimeLeft = () => {

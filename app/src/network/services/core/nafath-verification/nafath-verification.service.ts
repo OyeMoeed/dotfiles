@@ -1,11 +1,7 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import { APIResponseType } from '@app/utilities/enums.util';
 import apiCall from '@network/services/api-call.service';
-import axios, { AxiosResponse } from 'axios';
 import Config from 'react-native-config';
-import { handleApiResponse } from '../../api-call.interceptors';
-import { ApiResponse } from '../../services.interface';
 import CORE_URLS from '../core.urls';
 import { IActivationAbsherReq, PrepareIdRenewalProp } from './nafath-verification.interface';
 

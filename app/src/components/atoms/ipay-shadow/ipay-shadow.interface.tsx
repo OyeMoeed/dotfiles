@@ -1,4 +1,5 @@
 import { States } from '@app/utilities/enums.util';
+import React from 'react';
 
 /**
  * Props for the RNChip component.

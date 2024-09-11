@@ -9,19 +9,18 @@ const IPayAllCategories: React.FC<IPayAllCategoriesProps> = ({ testID, data, onP
   const { colors } = useTheme();
   const styles = IPayAllCategoriesStyle(colors);
 
-  const renderItem = ({ item }: { item: CategoriesItem }) => {
-    return (
-      <IPayView>
-        <IPayCategoryCard
-          item={item}
-          testID={testID}
-          onPress={onPress}
-          cardContainerStyle={styles.cardContainer}
-          style={styles.itemContainer}
-        />
-      </IPayView>
-    );
-  };
+  const renderItem = ({ item, index }: { item: CategoriesItem; index: number }) => (
+    <IPayView testID={`${item.title}-${index}`}>
+      <IPayCategoryCard
+        item={item}
+        testID={testID}
+        onPress={onPress}
+        cardContainerStyle={styles.cardContainer}
+        style={styles.itemContainer}
+      />
+    </IPayView>
+  );
+
   return <IPayFlatlist style={styles.flex} numColumns={3} renderItem={renderItem} data={data} />;
 };
 

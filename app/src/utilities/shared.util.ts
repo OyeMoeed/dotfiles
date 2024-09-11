@@ -9,7 +9,7 @@ const onGoToSetting = () => {
   if (isAndroidOS) {
     openSettings();
   } else {
-    Linking.openURL(`App-Prefs:Privacy&path=LOCATION`);
+    Linking.openURL('App-Prefs:Privacy&path=LOCATION');
   }
 };
 
@@ -19,7 +19,7 @@ const shareOptions = (title: string, otherOptions: object) =>
       activityItemSources: [
         {
           linkMetadata: {
-            title: title,
+            title,
           },
         },
       ],

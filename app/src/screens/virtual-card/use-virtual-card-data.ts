@@ -101,19 +101,19 @@ const useVirtualCardData = () => {
     {
       key: CardTypes.CLASSIC,
       type: localizationText.VIRTUAL_CARD.CLASSIC_DEBIT_CARD,
-      description: localizationText.VIRTUAL_CARD.DESCRIPTION,
+      description: localizationText.VIRTUAL_CARD.MADA_DETAILS,
       backgroundImage: images.classicBackground,
     },
     {
       key: CardTypes.PLATINUM,
       type: localizationText.VIRTUAL_CARD.PLATINUM_CASHBACK_PREPAID_CARD,
-      description: localizationText.VIRTUAL_CARD.DESCRIPTION,
+      description: localizationText.VIRTUAL_CARD.SIGNATURE_DETAILS,
       backgroundImage: images.platinumCard,
     },
     {
       key: CardTypes.SIGNATURE,
       type: localizationText.VIRTUAL_CARD.SIGNATURE_PREPAID_CARD,
-      description: localizationText.VIRTUAL_CARD.DESCRIPTION,
+      description: localizationText.VIRTUAL_CARD.SIGNATURE_DETAILS,
       backgroundImage: images.signatueCard,
     },
   ];

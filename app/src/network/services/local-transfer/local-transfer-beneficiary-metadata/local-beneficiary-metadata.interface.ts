@@ -1,24 +1,21 @@
-// Import necessary interfaces
-import { MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { MockAPIStatusProps } from '../../services.interface';
 
-// Define the Item interface
-interface LocalBank {
+export interface LocalBank {
   code: string;
   desc: string;
+  addtionalAttribute1?: string;
+  addtionalAttribute2?: string;
+  addtionalAttribute3?: string;
+  addtionalAttribute4?: string;
 }
 
-// Define the LocalBeneficiaryMetaDetails interface
-interface LocalBeneficiaryMetaDetails {
-  data: {
-    localBanks: LocalBank[];
-  };
+interface Response {
+  localBanks: LocalBank[];
+}
+
+interface LocalBeneficiaryMetaMockProps {
+  status: MockAPIStatusProps;
+  response: Response; // Contains the list of local banks
   successfulResponse: boolean;
 }
-
-// Extend the LocalBeneficiaryMetaMockProps interface from LocalBeneficiaryMetaDetails and MockAPIOkProp
-interface LocalBeneficiaryMetaMockProps extends MockAPIOkProp, LocalBeneficiaryMetaDetails {
-  status: MockAPIStatusProps; // Include status directly
-  apiResponseNotOk: boolean;
-}
-
 export default LocalBeneficiaryMetaMockProps;

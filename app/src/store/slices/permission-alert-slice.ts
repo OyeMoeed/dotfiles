@@ -1,6 +1,7 @@
 // src/store/alertshowPermissionpermissionAlertSlice.ts
 
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 interface PermissionAlertState {
   visible: boolean;
   title?: string;

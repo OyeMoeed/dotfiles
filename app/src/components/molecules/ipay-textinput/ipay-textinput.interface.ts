@@ -130,4 +130,5 @@ export interface IPayTextInputProps {
    * focus style of input
    */
   showFocusStyle?: boolean;
+  returnKeyLabel?: string;
 }
