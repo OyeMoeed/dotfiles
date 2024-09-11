@@ -28,10 +28,10 @@ import {
   sendRequestedMoneyPrepare,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, TopupStatus, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { PayChannel, States, TopupStatus, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -76,7 +76,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiError] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string | undefined>('');
 
   const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
@@ -146,7 +145,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       if (apiResponse?.response) {
         createRequestBottomSheetRef.current?.close();
         navigate(ScreenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.REQUEST_ACCEPT,
+          topupChannel: PayChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
           amount: apiResponse?.response?.totalTansactionAmount,
           requestPaidSummaryData: requestPaidSummaryData(apiResponse),
@@ -223,6 +222,8 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
   const renderPayItem = useMemo(
     () =>
+      // TODO: Fix nested components
+      // eslint-disable-next-line react/no-unstable-nested-components
       ({ item }: { item: PayData }) => {
         const { detailsText, leftIcon, label } = item;
         return (
@@ -305,7 +306,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}

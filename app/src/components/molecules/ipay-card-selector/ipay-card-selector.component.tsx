@@ -7,11 +7,13 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
+
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
@@ -28,7 +30,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
-  const [selectedCardObj, setSelectedCardObj] = useState<any>({});
+  const [, setSelectedCardObj] = useState<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [topupCards, setTopupcards] = useState<any[]>([]);
 
@@ -42,31 +44,28 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
 
   const isExpired = (card: any) => {
     const todayDate = new Date();
-    const month = todayDate?.getMonth() + 1;
+    const month = todayDate.getMonth() + 1;
     const year = todayDate?.getFullYear();
 
-    if (month > parseInt(card?.expirationMonth) && year >= parseInt(card?.expirationYear)) {
+    if (month > parseInt(card?.expirationMonth, 10) && year >= parseInt(card?.expirationYear, 10)) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   };
 
-  const mapTopupcards = (cards: any) => {
-    return cards?.map((card: any, index: number) => {
-      return {
-        key: index,
-        cardType: card?.cardBrand,
-        text: `${localizationText.TOP_UP.CARD} ${card?.cardBrand}`,
-        cardNumber: `${card?.lastDigits} ****`,
-        subtitle: `${card?.lastDigits} ****`,
-        expired: isExpired(card),
-        ...card,
-      };
-    });
-  };
+  const mapTopupcards = (cards: any) =>
+    cards?.map((card: any, index: number) => ({
+      key: index,
+      cardType: card?.cardBrand,
+      text: `${localizationText.TOP_UP.CARD} ${card?.cardBrand}`,
+      cardNumber: `${card?.lastDigits} ****`,
+      subtitle: `${card?.lastDigits} ****`,
+      expired: isExpired(card),
+      ...card,
+    }));
+
   useEffect(() => {
-    if (topupCards?.length == 1) setSelectedCard(topupCards[0]?.key);
+    if (topupCards?.length === 1) setSelectedCard(topupCards[0]?.key);
   }, [topupCards]);
 
   const getTopupCardsData = async () => {
@@ -89,15 +88,15 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     <IPayView style={styles.itemContainer}>
       <IPayPressable
         onPress={() => {
-          onCardSelect(item);
+          onCardSelect?.(item);
           if (item.expired) {
-            openPressExpired();
+            openPressExpired?.();
           } else {
             handleCardSelect(item.key);
             handleCardSelectObj(item);
           }
         }}
-        style={[styles.cardContainer]}
+        style={styles.cardContainer}
       >
         <IPayView style={styles.itemContent}>
           <IPayIcon icon={item.cardType} size={24} color={colors.primary.primary900} />
@@ -106,8 +105,10 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
             <IPayCaption1Text text={item.subtitle} style={styles.subtitleText} />
           </IPayView>
         </IPayView>
-        {selectedCard === item.key && (
+        {selectedCard === item.key ? (
           <IPayIcon icon={icons.tick_mark_default} size={18} color={colors.primary.primary500} />
+        ) : (
+          <IPayView />
         )}
       </IPayPressable>
     </IPayView>
@@ -121,7 +122,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
         )}
 
         <IPayButton
-          btnType="outline"
+          btnType={buttonVariants.OUTLINED}
           leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.primary.primary850} />}
           btnText={localizationText.TOP_UP.ADD_CARD}
           onPress={onPressAddCard}

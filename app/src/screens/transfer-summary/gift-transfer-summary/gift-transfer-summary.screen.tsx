@@ -27,7 +27,7 @@ import { IW2WTransferConfirmReq } from '@app/network/services/transfers/wallet-t
 import walletToWalletTransferConfirm from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.service';
 import { IW2WTransferPrepareReq } from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.interface';
 import walletToWalletTransferPrepare from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -211,7 +211,7 @@ const TransferSummaryScreen: React.FC = () => {
           mobileNumber: item.mobileNumber,
           amount: item.amount,
           note: item.notes,
-          transferPurpose: item?.transferPurpose,
+          giftCategory: giftDetails?.selectedCard?.id,
         })),
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       };
@@ -357,7 +357,8 @@ const TransferSummaryScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
+          isLoading={isLoading}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           onResendCodePress={() => {}}

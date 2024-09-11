@@ -12,7 +12,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import atmWithdrawalConfirm from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-confirm/atm-cash-withdrawal-confirm.service';
 import getAtmWithdrawalFees from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-fees/atm-cash-withdrawal-fees.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant } from '@app/utilities/enums.util';
@@ -70,6 +70,8 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
 
     onReadQrCodeFaild();
   };
+
+  const goBackQr = () => {};
 
   return (
     <IPaySafeAreaView style={styles.fill}>

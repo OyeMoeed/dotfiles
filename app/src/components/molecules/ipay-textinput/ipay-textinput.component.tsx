@@ -36,6 +36,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   showLeftIcon,
   onClearInput,
   caretHidden,
+  returnKeyLabel,
   simpleInput = false,
   assistiveTextStyle,
   showFocusStyle,
@@ -82,6 +83,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
             )}
             <IPayInput
               isFocused={isFocused}
+              returnKeyLabel={returnKeyLabel}
               handleFocus={handleFocus}
               handleBlur={handleBlur}
               testID={testID}

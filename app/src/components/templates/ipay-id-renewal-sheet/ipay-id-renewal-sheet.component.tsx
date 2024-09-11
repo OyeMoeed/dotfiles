@@ -1,13 +1,11 @@
-import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
 import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
@@ -15,7 +13,7 @@ import colors from '@app/styles/colors.const';
 import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPayRenewalIdAlert from './ipay-id-renewal-alert';
 import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
@@ -150,13 +148,17 @@ const IPayIdRenewalSheet: React.FC = () => {
     setIsHelpBottomSheetVisible(true); // Show the help bottom sheet
   };
 
-  const formattedSubtitle =
-    isAboutToExpire && !idExpired
-      ? t('ID_RENEWAL.ID_UPDATION_DES', {
-          DAYS: remainingNumberOfDaysToExpire,
-          DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
-        })
-      : subtitle;
+  useEffect(() => {
+    if (isIdRenewalSheetVisible && renewId) {
+      setOtp('');
+    }
+  }, [isIdRenewalSheetVisible, renewId]);
+
+  const extraParams = {
+    DAYS: remainingNumberOfDaysToExpire,
+    DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
+  };
+  const formattedSubtitle = isAboutToExpire && !idExpired ? t('ID_RENEWAL.ID_UPDATION_DES', extraParams) : subtitle;
 
   return (
     <>
@@ -178,7 +180,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            apiError={apiError}
+            otp={otp}
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}
@@ -228,7 +230,7 @@ const IPayIdRenewalSheet: React.FC = () => {
         simpleBar
         cancelBnt
       >
-        <HelpCenterComponent />
+        <HelpCenterComponent hideFAQError />
       </IPayPortalBottomSheet>
     </>
   );

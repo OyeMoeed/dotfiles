@@ -25,6 +25,7 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
   const generateYears = (startYear: number) => {
     const endYear = 2040;
     const years = [];
+    // eslint-disable-next-line no-plusplus
     for (let year = startYear; year <= endYear; year++) {
       years.push(year.toString());
     }
@@ -38,13 +39,13 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
 
   const handleMonthChange = (month: string) => {
     setSelectedMonth(month);
-    onDateChange && onDateChange(`${month}/${formatYearToLastTwoDigits(selectedYear)}`);
+    onDateChange?.(`${month}/${formatYearToLastTwoDigits(selectedYear)}`);
   };
 
   const handleYearChange = (year: string) => {
     const formatedYear = formatYearToLastTwoDigits(year);
     setSelectedYear(formatedYear);
-    onDateChange && onDateChange(`${selectedMonth}/${formatedYear}`);
+    onDateChange?.(`${selectedMonth}/${formatedYear}`);
   };
   const styles = datePickerStyles(colors);
   return (

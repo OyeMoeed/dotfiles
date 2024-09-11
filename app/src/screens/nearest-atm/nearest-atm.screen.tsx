@@ -13,7 +13,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetCoreManagementLovPayload } from '@app/network/services/core/lov/get-lov.interface';
 import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
 import { TabBase } from '@app/utilities/enums.util';

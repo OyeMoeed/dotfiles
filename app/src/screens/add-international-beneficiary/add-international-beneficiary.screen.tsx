@@ -18,7 +18,7 @@ import WUBeneficiaryMetaDataProps, {
   WesternUnionCountries,
 } from '@app/network/services/international-transfer/wu-beneficiary-metadata/wu-beneficiary-metadata.interface';
 import getWUBeneficiaryMetaData from '@app/network/services/international-transfer/wu-beneficiary-metadata/wu-beneficiary-metadata.service';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
@@ -34,7 +34,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = addBeneficiaryStyles(colors);
   const localizationText = useLocalization();
-  const { AlinmaDirectData, WesternUnionData } = useConstantData();
+  const { alinmaDirectData, westernUnionData } = useConstantData();
   const [selectedService, setSelectedService] = useState<ServiceDataProps>();
   const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[]>([]);
   const [currenciesData, setCurrenciesData] = useState<Currencies[]>([]);
@@ -60,6 +60,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
 
   const getCurrenciesData = () => currenciesData?.map((item, idx) => ({ id: idx + 1, title: item?.code }));
 
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
   const TransferMethods = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
     const isCheck = selectedService?.recordID === recordID;
@@ -85,7 +87,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
             />
             <IPayDropdown
               dropdownType={localizationText.NEW_BENEFICIARY.SELECT_DELIVERY_TYPE}
-              data={serviceName === AlinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : WU_TRANSFER_TYPES}
+              data={serviceName === alinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : WU_TRANSFER_TYPES}
               size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
               name={AddBeneficiaryFields.transferType}
               label={localizationText.COMMON.DELIVERY_TYPE}
@@ -185,8 +187,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               style={styles.textStyle}
               text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
             />
-            <TransferMethods data={AlinmaDirectData} />
-            <TransferMethods data={WesternUnionData} />
+            <TransferMethods data={alinmaDirectData} />
+            <TransferMethods data={westernUnionData} />
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}

@@ -11,17 +11,18 @@ import { CardStatusReq } from '@app/network/services/cards-management/card-statu
 import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
+  buttonVariants,
   CardActiveStatus,
   CardStatusIndication,
   CardStatusNumber,
   CardStatusType,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import {
   IPayCaption2Text,
@@ -86,7 +87,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     {
       icon: icons.freeze_icon,
       text:
-        actionTypeRef.current == CardActiveStatus.FREEZE
+        actionTypeRef.current === CardActiveStatus.FREEZE
           ? localizationText.CARDS.FREEZE_CARD
           : localizationText.CARDS.UNFREEZE_CARD,
       key: '1',
@@ -125,12 +126,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     const toastVariant: ToastVariants = {
       freeze: {
         title: localizationText.CARDS.CARD_FREEZE_MESSAGE,
-        toastType: toastTypes.SUCCESS,
+        toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },
       unfreeze: {
         title: localizationText.CARDS.CARD_UNFREEZE_MESSAGE,
-        toastType: toastTypes.SUCCESS,
+        toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },
     };
@@ -168,6 +169,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     if (apiResponse?.status?.type === 'SUCCESS') {
       actionSheetRef.current.hide();
       onFreezeCard(type.toLowerCase());
+      // TODO: Fix props reassign
+      // eslint-disable-next-line no-param-reassign
       currentCard.frozen = apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed;
 
       actionTypeRef.current =
@@ -286,7 +289,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
                 currentCard,
               });
             }}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
             medium
             btnText={localizationText.CARDS.PRINT_CARD}
@@ -309,7 +312,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             })
           }
           style={styles.commonContainerStyle}
-        ></IPayPressable>
+        />
         <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
           {localizationText.COMMON.VIEW_ALL}
         </IPaySubHeadlineText>

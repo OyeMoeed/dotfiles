@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { Image, ImageSourcePropType } from 'react-native';
 import { IPayImageProps } from './ipay-image.interface';
-import styles from './ipay-image.style';
 
 /**
  * A component to display images with support for local and remote sources.
@@ -12,13 +11,11 @@ const IPayImage: React.FC<IPayImageProps> = ({ testID, style, image, resizeMode 
   // Determine the source of the image based on whether it is a local asset or a URL
 
   const source: ImageSourcePropType =
-    typeof image === 'string' && (image.startsWith('http') || image.startsWith('https'))
+    typeof image === 'string' && ((image as string).startsWith('http') || (image as string).startsWith('https'))
       ? { uri: image }
       : (image as ImageSourcePropType);
 
-  return (
-    <Image resizeMode={resizeMode} testID={`${testID}-image`} style={[styles.imageStyles, style]} source={source} />
-  );
+  return <Image resizeMode={resizeMode} testID={`${testID}-image`} style={style} source={source} />;
 };
 
 export default IPayImage;

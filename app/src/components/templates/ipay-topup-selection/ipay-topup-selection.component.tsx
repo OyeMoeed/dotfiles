@@ -5,7 +5,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isIosOS } from '@app/utilities/constants';
-import { payChannel } from '@app/utilities/enums.util';
+import { PayChannel } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
 import { IPayTopUpSelectionProps } from './ipay-topup-selection.interface';
 import ipayTopupSelectionStyles from './ipay-topup-selection.styles';
@@ -23,7 +23,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
       iconColor: colors.primary.primary900,
       leftIcon: icons.right_greater_icon,
       navigateTo: screenNames.TOP_UP,
-      payVariant: payChannel.APPLE,
+      payVariant: PayChannel.APPLE,
     },
     {
       key: 2,
@@ -32,7 +32,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
       navigateTo: screenNames.TOP_UP,
-      payVariant: payChannel.CARD,
+      payVariant: PayChannel.CARD,
     },
     {
       key: 3,
@@ -48,7 +48,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
       text: localizationText.TOP_UP.AKHTR,
       leftIcon: icons.right_greater_icon,
       navigateTo: screenNames.POINTS_REDEMPTIONS,
-      payVariant: payChannel.AKHTAR,
+      payVariant: PayChannel.AKHTAR,
     },
     // Add more top-up types as needed
   ];

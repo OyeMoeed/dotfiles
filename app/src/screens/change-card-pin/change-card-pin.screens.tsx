@@ -12,7 +12,7 @@ import { forwardRef, useState } from 'react';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './change-card-pin.interface';
 import changeCardPinStyles from './change-card-pin.style';
 
-const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinProps) => {
+const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
   const localizationText = useLocalization();
@@ -20,7 +20,7 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
   const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
 
   const getTitle = () => {
     switch (currentView) {
@@ -43,19 +43,6 @@ const IPayChangeCardPin = forwardRef(({ onSuccess, currentCard }: ChangeCardPinP
         return localizationText.CHANGE_PIN.YOU_WILL_NEED_TO;
       case ChangeCardPinViewTypes.ConfirmNewPin:
         return localizationText.CHANGE_PIN.ENTER_PASS_AGAIN;
-      default:
-        return '';
-    }
-  };
-
-  const getErrorTitle = () => {
-    switch (currentView) {
-      case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.CHANGE_PIN.PIN_INCORRECT;
-      case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.INVALID_PIN;
-      case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.PIN_NOT_MATCHING;
       default:
         return '';
     }

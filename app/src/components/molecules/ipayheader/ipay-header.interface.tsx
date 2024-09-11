@@ -1,3 +1,4 @@
+import React, { JSX } from 'react';
 import { TextStyle } from 'react-native';
 
 export interface HeaderProps {

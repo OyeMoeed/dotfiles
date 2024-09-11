@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayChip, IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -26,11 +26,11 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { isBasicTierSelector, setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { States, toastTypes } from '@app/utilities/enums.util';
+import { States, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
-import { CardKeys } from './profile.interface';
+import CardKeys from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -70,7 +70,7 @@ const Profile = () => {
   const renderSuccessToast = () => {
     showToast({
       title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
-      toastType: toastTypes.INFORMATION,
+      toastType: ToastTypes.INFORMATION,
       leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
     });
   };
@@ -272,7 +272,7 @@ const Profile = () => {
 
   return (
     <>
-      <IPaySafeAreaView style={styles.SafeAreaView2}>
+      <IPaySafeAreaView style={styles.safeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>

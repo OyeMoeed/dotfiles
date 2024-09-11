@@ -1,7 +1,7 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_16 } from '@app/styles/spacing.const';
+import { FONT_WEIGHT_BOLD, FONT_WEIGHT_NORMAL } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const sectionStyles = (colors: any) =>
@@ -39,7 +39,7 @@ const sectionStyles = (colors: any) =>
     footnoteTextStyle: {
       marginRight: moderateScale(8),
       color: colors.natural.natural500,
-      fontWeight: constants.FONT_WEIGHT_NORMAL,
+      fontWeight: FONT_WEIGHT_NORMAL,
       fontSize: scaleFont(13),
       lineHeight: verticalScale(18),
     },
@@ -50,7 +50,7 @@ const sectionStyles = (colors: any) =>
       lineHeight: verticalScale(20),
     },
     captionTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_NORMAL,
+      fontWeight: FONT_WEIGHT_NORMAL,
       fontSize: scaleFont(11),
       color: colors.warning.warning500,
       lineHeight: verticalScale(13),
@@ -81,7 +81,7 @@ const sectionStyles = (colors: any) =>
       alignItems: 'flex-end',
     },
     footnoteBoldTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: scaleFont(13),
       color: colors.natural.natural900,
       lineHeight: verticalScale(18),

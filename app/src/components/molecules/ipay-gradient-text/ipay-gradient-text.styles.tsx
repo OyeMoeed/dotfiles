@@ -5,6 +5,7 @@ const gradientStyles = () =>
     text: {
       textAlign: 'center',
     },
+    opacity0: { opacity: 0 },
   });
 
 export default gradientStyles;

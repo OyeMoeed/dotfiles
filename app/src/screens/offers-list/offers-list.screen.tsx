@@ -34,6 +34,7 @@ const OffersListScreen: React.FC = () => {
   const { offerFilterData, offerFilterDefaultValues } = useConstantData();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
+  const [isLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [offersData, setOffersData] = useState<OfferItem[] | null>(null);
 
@@ -42,7 +43,7 @@ const OffersListScreen: React.FC = () => {
 
   const styles = offersListStyles(colors);
 
-  const handleSubmit = (data: { offerCategory: string; offerAvailability: string }) => {};
+  const handleSubmit = () => {};
 
   const renderToast = (toastMsg: string) => {
     showToast({

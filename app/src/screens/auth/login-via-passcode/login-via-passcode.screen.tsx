@@ -32,15 +32,14 @@ import forgetPasscode from '@app/network/services/core/forget-passcode/forget-pa
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { onCall } from '@app/utilities/call-helper.util';
+import { openPhoneNumber } from '@app/utilities';
 import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
@@ -62,12 +61,12 @@ const LoginViaPasscode: React.FC = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     otpVerificationRef,
-    apiError,
     setComponentToRender,
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
     checkAndHandlePermission,
+    otp,
   } = useLogin();
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
@@ -82,7 +81,9 @@ const LoginViaPasscode: React.FC = () => {
   const { handleFaceID } = useBiometricService();
 
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { walletNumber, mobileNumber, firstName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber, mobileNumber, firstName, fatherName } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const { otpConfig, contactusList } = useConstantData();
@@ -90,11 +91,11 @@ const LoginViaPasscode: React.FC = () => {
 
   const { fetchLocation } = useLocation();
 
-  const renderToast = (apiError: string) => {
+  const renderToast = (apiErrorValue: string) => {
     setPasscodeError(true);
     showToast({
       title: localizationText.COMMON.INCORRECT_CODE,
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      subTitle: apiErrorValue || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
@@ -311,7 +312,7 @@ const LoginViaPasscode: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            apiError={apiError}
+            otp={otp}
             showHelp
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
@@ -363,6 +364,10 @@ const LoginViaPasscode: React.FC = () => {
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
+  const onCall = (phoneNumber: string) => {
+    openPhoneNumber(phoneNumber, colors, showToast, localizationText);
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
@@ -374,8 +379,9 @@ const LoginViaPasscode: React.FC = () => {
           <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
           {firstName && (
             <IPayGradientText
-              text={firstName}
+              text={`${firstName} ${fatherName || ''}`}
               gradientColors={gradientColors}
+              yScale={12}
               fontSize={styles.linearGradientText.fontSize}
               fontFamily={styles.linearGradientText.fontFamily}
               style={styles.gradientTextSvg}

@@ -10,7 +10,7 @@ import {
   prepareForgetPasscode,
   validateForgetPasscodeOtp,
 } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities';
 import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
@@ -37,7 +37,7 @@ const useLogin = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
   const [resendOtpPayload, setResendOtpPayload] = useState<PrepareForgetPasscodeProps>();
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
 
@@ -110,6 +110,7 @@ const useLogin = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     checkAndHandlePermission,
+    otp,
   };
 };
 

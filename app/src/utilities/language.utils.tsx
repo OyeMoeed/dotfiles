@@ -19,13 +19,13 @@ export const getLocalization = (): LanguageCode => {
     const deviceLanguage: string =
       NativeModules.SettingsManager.settings?.AppleLocale || NativeModules.SettingsManager.settings?.AppleLanguages[0];
     return (deviceLanguage.substr(0, 2) as LanguageCode) || LanguageCode.EN;
-  } else if (Platform.OS === 'android') {
+  }
+  if (Platform.OS === 'android') {
     const localeIdentifier: string =
       (NativeModules.I18nManager.localeIdentifier.substr(0, 2) as LanguageCode) || LanguageCode.EN;
     return localeIdentifier as LanguageCode;
-  } else {
-    return LanguageCode.EN; // Default to English for other platforms
   }
+  return LanguageCode.EN; // Default to English for other platforms
 };
 // Define flag components for each language code
 const languageFlags: Record<LanguageCode, React.ComponentType<any>> = {
@@ -38,9 +38,9 @@ const languageFlags: Record<LanguageCode, React.ComponentType<any>> = {
   [LanguageCode.BN]: () => <IpayFlagIcon country="bn_s" />, // Bangladesh flag
 };
 
-export const getFlagComponent = (selectedLanguage: LanguageCode): React.ReactElement => {
+export const getFlagComponent = (selectedLanguage: LanguageCode): React.ReactElement | null => {
   const FlagComponent = languageFlags[selectedLanguage];
-  return FlagComponent ? <FlagComponent /> : <></>;
+  return FlagComponent ? <FlagComponent /> : null;
 };
 
 export const getSelectedLanguage = (selectedLanguage: LanguageCode): string => {

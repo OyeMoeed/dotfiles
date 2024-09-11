@@ -11,8 +11,7 @@ import loginUser from '@app/network/services/authentication/login/login.service'
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
 import otpVerification from '@app/network/services/authentication/otp-verification/otp-verification.service';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
 import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
@@ -54,12 +53,11 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onCloseBottomSheet = () => {
+    setOtpSheetVisible(false);
     otpVerificationRef.current?.resetInterval();
   };
   const redirectToOtp = () => {
     setIsLoading(false);
-    onCloseBottomSheet();
-    setOtpSheetVisible(false);
     setOtpSheetVisible(true);
   };
 
@@ -229,6 +227,12 @@ const useMobileAndIqamaVerification = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isOtpSheetVisible) {
+      setOtp('');
+    }
+  }, [isOtpSheetVisible]);
+
   const onConfirm = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
@@ -258,6 +262,7 @@ const useMobileAndIqamaVerification = () => {
     onConfirm,
     setOtpError,
     setIsLoading,
+    otp,
     setOtp,
     resendOtp,
   };

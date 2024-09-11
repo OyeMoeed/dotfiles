@@ -37,7 +37,7 @@ interface BeneficiaryTransferFormValues {
   beneficiaryNickName?: string;
   walletType: string;
   beneficiaryNationality: string;
-  beneficiaryCode:string;
+  beneficiaryCode: string;
 }
 
 export { BeneficiaryFields, BeneficiaryInformation, BeneficiaryTransferFormValues, TransferService, TransferTypes };
