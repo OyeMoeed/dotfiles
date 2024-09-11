@@ -6,24 +6,16 @@ import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
 import LocalBeneficiaryMetaMockProps from './local-beneficiary-metadata.interface';
 import localBeneficiaryMetaDataMock from './local-beneficiary-metadata.mock';
 
-const getlocalBeneficiaryMetaData = async (): Promise<LocalBeneficiaryMetaMockProps> => {
+const getlocalBeneficiaryMetaData = async (): Promise<LocalBeneficiaryMetaMockProps | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return localBeneficiaryMetaDataMock;
   }
-  try {
-    const apiResponse: ApiResponse<LocalBeneficiaryMetaMockProps> = await apiCall({
-      endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries_metadata(),
-      method: requestType.GET,
-    });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
-    }
-    return  apiResponse 
-  } catch (error) {
-    const { response } = error;
-    return response || 'Unknown error';
-  }
+  const apiResponse: ApiResponse<LocalBeneficiaryMetaMockProps> | undefined = await apiCall({
+    endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries_metadata(),
+    method: requestType.GET,
+  });
+  return apiResponse;
 };
 
 export default getlocalBeneficiaryMetaData;

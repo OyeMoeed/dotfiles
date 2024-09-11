@@ -92,7 +92,7 @@ const TransferInformation: React.FC = () => {
   };
 
   const isTransferButtonDisabled = () => {
-    const hasValidAmount = Number(transferAmount) > 0;
+    const hasValidAmount = parseFloat(transferAmount) > 0 || parseFloat(transferAmount);
     const hasValidReason = selectedReason.trim() !== '';
     return !hasValidAmount || !hasValidReason;
   };
@@ -261,7 +261,7 @@ const TransferInformation: React.FC = () => {
             onPress={onLocalTransferPrepare}
             btnType={buttonVariants.PRIMARY}
             large
-            disabled={isTransferButtonDisabled()}
+            disabled={isTransferButtonDisabled() || chipValue}
             btnIconsDisabled
             btnText={localizationText.COMMON.NEXT}
             btnStyle={styles.nextBtn}

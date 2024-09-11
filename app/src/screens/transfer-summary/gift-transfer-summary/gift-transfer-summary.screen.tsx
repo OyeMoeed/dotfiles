@@ -216,7 +216,7 @@ const TransferSummaryScreen: React.FC = () => {
           mobileNumber: item.mobileNumber,
           amount: item.amount,
           note: item.notes,
-          transferPurpose: item?.transferPurpose,
+          giftCategory: giftDetails?.selectedCard?.id,
         })),
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       };
@@ -364,7 +364,8 @@ const TransferSummaryScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
+          isLoading={isLoading}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           onResendCodePress={() => {}}

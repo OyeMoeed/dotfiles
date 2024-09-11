@@ -10,35 +10,35 @@ import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-cus
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
-import IPayCardPinCode from '@app/components/templates/ipay-card-pin-code/ipay-card-pin-code.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { CardListItem, CardsProp, getCardDetailsProp, prepareShowDetailsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { getCards, otpGetCardDetails, prepareShowCardDetails } from '@app/network/services/core/transaction/transactions.service';
+import {
+  CardListItem,
+  CardsProp,
+  getCardDetailsProp,
+  prepareShowDetailsProp,
+} from '@app/network/services/core/transaction/transaction.interface';
+import {
+  getCards,
+  otpGetCardDetails,
+  prepareShowCardDetails,
+} from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { isAndroidOS } from '@app/utilities/constants';
-import {
-  ApiResponseStatusType,
-  CAROUSEL_MODES,
-  CardOptions,
-  CardStatusNumber,
-  CardTypes,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
+import { CAROUSEL_MODES, CardOptions, CardStatusNumber, CardTypes, spinnerVariant } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import { CardScreenCurrentState } from './cards.screen.interface';
-import cardScreenStyles from './cards.style';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import cardScreenStyles from './cards.style';
+import { CardScreenCurrentState } from './cards.screen.interface';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -70,7 +70,7 @@ const CardsScreen: React.FC = () => {
   const otpVerificationRef: any = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
   const [cardDetails, setCardDetails] = useState<any>({});
-  
+
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
   const openCardSheet = () => {
@@ -105,41 +105,6 @@ const CardsScreen: React.FC = () => {
     </IPayView>
   );
 
-   const prepareOtpCardDetails = async (showOtpSheet:boolean) => {
-    renderSpinner(true);
-    const payload: prepareShowDetailsProp = {
-      walletNumber: walletNumber,
-      body: {
-        cardIndex: currentCard?.cardIndex,
-        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps
-      }
-    };
-    const apiResponse:any = await prepareShowCardDetails(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present;
-      }
-    }
-    otpVerificationRef?.current?.resetInterval();
-    renderSpinner(false);
-    
-   }
-
-  const onPinCodeSheet = () => {
-    prepareOtpCardDetails(true)
-  };
-
-  const onCloseCardSheet = () => {
-    cardDetailsSheetRef.current.close();
-  };
-
-  const onChangeIndex = (index: number) => {
-    console.log(index);
-    setCurrentCard(cardsData[index]);
-  };
-
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
       showSpinner({
@@ -150,6 +115,40 @@ const CardsScreen: React.FC = () => {
       hideSpinner();
     }
   }, []);
+
+  const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
+    renderSpinner(true);
+    const payload: prepareShowDetailsProp = {
+      walletNumber,
+      body: {
+        cardIndex: currentCard?.cardIndex,
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      },
+    };
+    const apiResponse: any = await prepareShowCardDetails(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setOtpRef(apiResponse?.response?.otpRef as string);
+      if (showOtpSheet) {
+        setOtpSheetVisible(true);
+        otpVerificationRef?.current?.present;
+      }
+    }
+    otpVerificationRef?.current?.resetInterval();
+    renderSpinner(false);
+  };
+
+  const onPinCodeSheet = () => {
+    prepareOtpCardDetails(true);
+  };
+
+  const onCloseCardSheet = () => {
+    cardDetailsSheetRef.current.close();
+  };
+
+  const onChangeIndex = (index: number) => {
+    console.log(index);
+    setCurrentCard(cardsData[index]);
+  };
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -176,27 +175,23 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const currentYear: number = new Date().getFullYear();
-
   const mapCardData = (cards: CardListItem[]) => {
     let mappedCards = [];
-    mappedCards = cards.map((card: any) => {
-      return {
-        name: card?.linkedName?.embossingName,
-        cardType: card?.cardTypeId,
-        cardHeaderText: getCardDesc(card?.cardTypeId),
-        expired: card?.reissueDue,
-        frozen: card.cardStatus == CardStatusNumber.Freezed,
-        suspended: false,
-        maskedCardNumber: `**** **** **** **${card.lastDigits}`,
-        cardNumber: card.lastDigits,
-        creditCardDetails: {
-          availableBalance: '5200.40',
-        },
-        totalCashbackAmt: card.totalCashbackAmt,
-        ...card,
-      };
-    });
+    mappedCards = cards.map((card: any) => ({
+      name: card?.linkedName?.embossingName,
+      cardType: card?.cardTypeId,
+      cardHeaderText: getCardDesc(card?.cardTypeId),
+      expired: card?.reissueDue,
+      frozen: card.cardStatus == CardStatusNumber.Freezed,
+      suspended: false,
+      maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      cardNumber: card.lastDigits,
+      creditCardDetails: {
+        availableBalance: '5200.40',
+      },
+      totalCashbackAmt: card.totalCashbackAmt,
+      ...card,
+    }));
     return mappedCards;
   };
   const getCardsData = async () => {
@@ -226,21 +221,35 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-
-  function onOtpCloseBottomSheet(): void {
+  const onOtpCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
-  }
+  };
+
+  const prepareCardInfoData = (data: any) => {
+    const cardExpireDate = data?.expiryDate;
+    const cardNumber = [...data?.cardNumber]
+      .map((d, i) => (i % 4 == 0 ? ` ${d}` : d))
+      .join('')
+      .trim();
+    const cardInfo = {
+      ...data,
+      expiryDate: cardExpireDate,
+      cardNumber,
+    };
+
+    setCardDetails(cardInfo);
+  };
 
   const getCardDetails = async () => {
     try {
       renderSpinner(true);
       const payload: getCardDetailsProp = {
-        walletNumber: walletNumber,
+        walletNumber,
         body: {
           cardIndex: currentCard?.cardIndex,
-          otp: otp,
-          otpRef: otpRef,
+          otp,
+          otpRef,
           deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
         },
       };
@@ -259,21 +268,8 @@ const CardsScreen: React.FC = () => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-  }
+  };
 
-  const prepareCardInfoData = (data: any) =>{
-    let cardExpireDate = data?.expiryDate;
-    let cardNumber = [...data?.cardNumber].map(
-      (d, i) => (i) % 4 == 0 ? ' ' + d : d
-    ).join('').trim();
-    let cardInfo = {
-      ...data,
-      expiryDate: cardExpireDate,
-      cardNumber: cardNumber
-    };
-
-    setCardDetails(cardInfo)
-  }
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
@@ -281,16 +277,13 @@ const CardsScreen: React.FC = () => {
       otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     } else {
       // resetPassCode();
-      getCardDetails()
+      getCardDetails();
     }
-  }
+  };
 
-  function handleOnPressHelp(): void {
+  const handleOnPressHelp = () => {
     helpCenterRef?.current?.present;
-
-  }
-
-
+  };
 
   const onResendCodePress = () => {
     prepareOtpCardDetails(false);
@@ -355,7 +348,6 @@ const CardsScreen: React.FC = () => {
         return null;
     }
   };
-  
 
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
@@ -371,8 +363,7 @@ const CardsScreen: React.FC = () => {
       </IPayView>
       {renderCardsCurrentState()}
       <IPayPortalBottomSheet
-        heading={localizationText.CARD_OPTIONS.CARD_DETAILS
-        }
+        heading={localizationText.CARD_OPTIONS.CARD_DETAILS}
         enablePanDownToClose
         simpleBar
         bold
@@ -388,14 +379,14 @@ const CardsScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}
           onResendCodePress={onResendCodePress}
         />
       </IPayPortalBottomSheet>
-      
+
       <IPayBottomSheet
         ref={cardDetailsSheetRef}
         heading={localizationText.CARDS.CARD_DETAILS}
@@ -427,7 +418,6 @@ const CardsScreen: React.FC = () => {
           onNextPress={handleNext}
         />
       </IPayBottomSheet>
-
     </IPaySafeAreaView>
   );
 };

@@ -121,7 +121,7 @@ const MoiPaymentRefund: React.FC = () => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}

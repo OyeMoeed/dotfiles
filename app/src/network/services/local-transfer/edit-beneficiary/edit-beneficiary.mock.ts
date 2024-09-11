@@ -1,7 +1,7 @@
-import { editBeneficiaryResponse } from './edit-beneficiary.interface';
+import { EditBeneficiaryResponse } from './edit-beneficiary.interface';
 
 
-const editBeneficiariesData: editBeneficiaryResponse = {
+const editBeneficiariesData: EditBeneficiaryResponse = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',

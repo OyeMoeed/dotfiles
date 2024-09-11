@@ -223,7 +223,7 @@ const CardManagementScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_MANAGEMENT.CARD_MANAGEMENT} backBtn applyFlex />
       {cards?.length === 0 ? (
-        <IPayNoCardIndicatorComponenent />
+        <IPayNoCardIndicatorComponenent addCard={onAddCard} />
       ) : (
         <IPayView style={styles.cardListContainer}>
           <IPayFootnoteText

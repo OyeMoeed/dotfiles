@@ -6,25 +6,20 @@ import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
 import LocalTransferBeneficiariesMockProps from './local-transfer-beneficiaries.interface';
 import localTransferBeneficiariesMock from './local-transfer-beneficiaries.mock';
 
-const getlocalTransferBeneficiaries = async (): Promise<LocalTransferBeneficiariesMockProps> => {
+const getlocalTransferBeneficiaries = async (): Promise<LocalTransferBeneficiariesMockProps | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return localTransferBeneficiariesMock;
   }
-  try {
-    const apiResponse: ApiResponse<LocalTransferBeneficiariesMockProps> = await apiCall({
-      endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries(),
-      method: requestType.GET,
-      // example hide error message
-      headers: {
-        hide_error_response: true,
-      },
-    });
 
-    return apiResponse;
-  } catch (error) {
-    const { response } = error;
-    return response || 'Unknown error';
-  }
+  const apiResponse: ApiResponse<LocalTransferBeneficiariesMockProps> | undefined = await apiCall({
+    endpoint: LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries(),
+    method: requestType.GET,
+    headers: {
+      hide_error_response: true,
+    },
+  });
+
+  return apiResponse;
 };
 
 export default getlocalTransferBeneficiaries;

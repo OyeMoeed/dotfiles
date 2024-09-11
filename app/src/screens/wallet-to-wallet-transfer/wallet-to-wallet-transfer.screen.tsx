@@ -36,13 +36,19 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { States, buttonVariants } from '@app/utilities/enums.util';
+import { States, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { useTypedSelector } from '@app/store/store';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
+import { AddPhoneFormValues } from './wallet-to-wallet-transfer.interface';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
@@ -67,14 +73,37 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
-  const handleSubmitTransfer = () => {
-    switch (from) {
-      case TRANSFERTYPE.SEND_MONEY:
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
+  const getW2WActiveFriends = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
+    };
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
         navigate(ScreenNames.SEND_MONEY_FORM, {
+          activeFriends: apiResponse.response?.friends,
           selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
           showReason: true,
         });
+      }
+    } else {
+      hideSpinner();
+    }
+  };
+
+  const handleSubmitTransfer = () => {
+    switch (from) {
+      case TRANSFERTYPE.SEND_MONEY:
+        getW2WActiveFriends();
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
