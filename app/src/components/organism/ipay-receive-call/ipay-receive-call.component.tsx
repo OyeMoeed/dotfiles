@@ -10,6 +10,7 @@ import {
 import { IPayButton, IPayGradientTextMasked, IPayList } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import { formatCountdownTime } from '@app/utilities/date-helper.util';
 import React, { useEffect } from 'react';
 import useCallReceiverTimer from './ipay-receive-call.hook';
@@ -112,7 +113,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
       <IPayView style={styles.makeTransferStyles}>
         <IPayButton
           large
-          btnType="primary"
+          btnType={buttonVariants.OUTLINED}
           btnText={localizationText.ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER}
           btnIconsDisabled
           onPress={hanldePageNavigation}
