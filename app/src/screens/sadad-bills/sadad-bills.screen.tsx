@@ -171,9 +171,11 @@ const SadadBillsScreen: React.FC = ({ route }) => {
 
   const handelEditOrDelete = (index: number) => {
     if (index === 0) {
+      const { id } = billToEditRef.current;
       navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
         billData: billToEditRef.current,
         setEditBillSuccessToast,
+        billId: id,
       });
     } else {
       setActionSheetOptions(deleteBillOptions);
@@ -235,7 +237,24 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   };
 
   const onPressFooterBtn = () => {
-    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+      isPayOnly: true,
+      showBalanceBox: false,
+      billPaymentInfos: selectedBills?.map((el) => ({
+        billerId: el.biller.billerId,
+        billNumOrBillingAcct: el.billAccountNumber,
+        amount: Number(el.dueAmount),
+        dueDateTime: el.dueDateTime,
+        billIdType: '1', // TODO: not receiving this value from response
+        billingCycle: '1', // TODO: need to confirm where can I get this value
+        billIndex: el.billIndex,
+        serviceDescription: el.biller.billerCategoryDesc,
+        billerName: el.biller.billerDesc,
+        walletNumber,
+        billNickname: el.nickName,
+        billerIcon: el.biller.categoryImageURL,
+      })),
+    });
   };
 
   const addStatusToData = async (newBills: PaymentInfoProps[]) => {

@@ -167,7 +167,8 @@
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
-    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully"
+    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
+    "AMOUNT": "Amount"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -608,7 +609,9 @@
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
     "GO_TO_CARD": "Go to Card",
-    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted",
+    "CHANGE_PIN": "Change pincode",
+    "CARD_DETAILS": "Card Details"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -680,6 +683,7 @@
     "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
     "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
     "CARD_TYPE": "Card Type",
+    "CVV": "cvv",
     "CARD_NUMBER": "Card Number",
     "CARD_HOLDER_NAME": "Card's Holder Name",
     "EXPIRY_DATE": "Expiry date",
@@ -728,6 +732,8 @@
     "HEADER": "Virtual Card",
     "CLASSIC_DEBIT_CARD": "Classic Debit Card",
     "DESCRIPTION": "your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "SIGNATURE_DETAILS": "your secure choice for Shopping, online purchase or at points of sales and gives you instant cashback on all your domestic and international purchases. ",
+    "MADA_DETAILS": "your secure choice for Shopping, online purchase or at points of sales , you can add the card on Apple Pay & Mada Pay",
     "VIEW_DETAILS": "View all Details",
     "CLOSE_DETAILS": "Close Details",
     "ISSUE_CARD": "Issue Card",

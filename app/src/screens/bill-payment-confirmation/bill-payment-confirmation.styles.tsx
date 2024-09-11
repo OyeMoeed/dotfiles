@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const billPaymentStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -31,6 +31,9 @@ const billPaymentStyles = (themeColors: typeof colors) =>
     },
     darkText: {
       color: themeColors.natural.natural900,
+    },
+    contentContainerStyle: {
+      gap: verticalScale(20),
     },
   });
 export default billPaymentStyles;

@@ -176,7 +176,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: '14/12/2024', // TODO: No Due Date is coming from api response once receive from response will update it
+        dueDate: '2024-07-21T12:00:00Z', // TODO: No Due Date is coming from api response once receive from response will update it
         totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,

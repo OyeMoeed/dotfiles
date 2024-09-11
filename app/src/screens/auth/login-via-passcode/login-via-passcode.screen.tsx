@@ -63,12 +63,12 @@ const LoginViaPasscode: React.FC = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     otpVerificationRef,
-    apiError,
     setComponentToRender,
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
     checkAndHandlePermission,
+    otp
   } = useLogin();
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
@@ -83,7 +83,9 @@ const LoginViaPasscode: React.FC = () => {
   const { handleFaceID } = useBiometricService();
 
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { walletNumber, mobileNumber, firstName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber, mobileNumber, firstName, fatherName } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -336,7 +338,7 @@ const LoginViaPasscode: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            apiError={apiError}
+            otp={otp}
             showHelp
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
@@ -399,8 +401,9 @@ const LoginViaPasscode: React.FC = () => {
           <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
           {firstName && (
             <IPayGradientText
-              text={firstName}
+              text={`${firstName} ${fatherName || ''}`}
               gradientColors={gradientColors}
+              yScale={12}
               fontSize={styles.linearGradientText.fontSize}
               fontFamily={styles.linearGradientText.fontFamily}
               style={styles.gradientTextSvg}
@@ -446,7 +449,7 @@ const LoginViaPasscode: React.FC = () => {
         customSnapPoint={['1%', '99%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} />
+        <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} hideFAQError />
       </IPayBottomSheet>
       <IPayBottomSheet
         heading={localizationText.COMMON.CONTACT_US}
@@ -481,32 +484,6 @@ const LoginViaPasscode: React.FC = () => {
             />
           ))}
         </IPayView>
-      </IPayBottomSheet>
-      <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
-      <IPayActionSheet
-        ref={actionSheetRef}
-        testID="delink-action-sheet"
-        title={actionSheetOptions.title}
-        message={actionSheetOptions.message}
-        options={actionSheetOptions.options}
-        cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
-        destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
-        showIcon={actionSheetOptions.showIcon}
-        showCancel={actionSheetOptions.showCancel}
-        customImage={actionSheetOptions.customImage}
-        onPress={delinkSuccessfully}
-      />
-
-      <IPayBottomSheet
-        noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
-        enablePanDownToClose
-        simpleBar
-        backBtn
-        customSnapPoint={['1%', '99%']}
-        ref={helpCenterRef}
-      >
-        <HelpCenterComponent />
       </IPayBottomSheet>
       <IPayDelink onClose={handleClose} visible={isAlertVisible} delink={handleDelink} />
       <IPayActionSheet

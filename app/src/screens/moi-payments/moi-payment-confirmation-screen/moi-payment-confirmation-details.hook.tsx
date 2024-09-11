@@ -144,6 +144,7 @@ const useMoiPaymentConfirmation = () => {
     moiPayBillSubList,
     handlePay,
     setOtp,
+    otp,
     isLoading,
     otpError,
     setOtpError,
