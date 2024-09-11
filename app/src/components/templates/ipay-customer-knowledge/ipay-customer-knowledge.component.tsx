@@ -14,6 +14,7 @@ import { Controller, useForm } from 'react-hook-form';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
+import { debounce } from 'lodash';
 
 /**
  * A component that contains customer knowledge input fields.
@@ -102,7 +103,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
         apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
       );
     }
-    
+
     renderSpinner(false);
   };
 
@@ -133,9 +134,9 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     setSearch('');
   }, [category]);
 
-  const onSubmitEvent = (formData: IFormData) => {
+  const onSubmitEvent = debounce((formData: IFormData) => {
     if (onSubmit) onSubmit(formData);
-  };
+  }, 300);
 
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
   const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;
