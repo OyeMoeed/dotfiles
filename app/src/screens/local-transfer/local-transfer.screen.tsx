@@ -173,6 +173,7 @@ const LocalTransferScreen: React.FC = () => {
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
+      titleStyle: styles.toastTitle,
     });
   };
 
