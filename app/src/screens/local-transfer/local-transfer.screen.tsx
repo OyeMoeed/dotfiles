@@ -446,10 +446,10 @@ const LocalTransferScreen: React.FC = () => {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    renderSpinner(false);
   };
   return (
     <IPaySafeAreaView style={styles.container}>
