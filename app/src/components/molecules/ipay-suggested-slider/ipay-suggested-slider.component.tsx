@@ -12,7 +12,7 @@ import {
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { JSX } from 'react';
 import { IPaySuggestedSliderProps } from './ipay-suggested-slider.interface';
 import genratedStyles from './ipay-suggested-slider.style';
 
@@ -21,11 +21,7 @@ import genratedStyles from './ipay-suggested-slider.style';
  * @param {RNSwitchProps} props - The props for the IPayText component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
-  testID,
-  onPressUp,
-  onPressDown,
-}: IPaySuggestedSliderProps): JSX.Element => {
+const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPaySuggestedSliderProps): JSX.Element => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const localizationText = useLocalization();

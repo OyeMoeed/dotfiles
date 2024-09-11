@@ -1,10 +1,9 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPaySpinner, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
+import { IPayButton, IPayCarousel, IPayNoResult, useToastContext } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -28,22 +27,31 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { CAROUSEL_MODES, CardOptions, CardStatusNumber, CardTypes, spinnerVariant } from '@app/utilities/enums.util';
+import {
+  CarouselModes,
+  buttonVariants,
+  CardOptions,
+  CardStatusNumber,
+  CardTypes,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import cardScreenStyles from './cards.style';
-import { CardScreenCurrentState } from './cards.screen.interface';
+import CardScreenCurrentState from './cards.screen.interface';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
@@ -59,8 +67,7 @@ const CardsScreen: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
-  const [apiError, setAPIError] = useState<string>('');
-  const { showToast } = useToastContext();
+  const [, setAPIError] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
@@ -72,6 +79,20 @@ const CardsScreen: React.FC = () => {
   const [cardDetails, setCardDetails] = useState<any>({});
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
+
+  const renderToast = ({ title = '', subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
 
   const openCardSheet = () => {
     const hasAccess = checkUserAccess();
@@ -98,7 +119,7 @@ const CardsScreen: React.FC = () => {
     <IPayView style={styles.newCardWrapper}>
       <IPayButton
         onPress={openCardSheet}
-        btnType="outline"
+        btnType={buttonVariants.OUTLINED}
         btnText={localizationText.CARDS.NEW_CARD}
         rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
       />
@@ -130,7 +151,7 @@ const CardsScreen: React.FC = () => {
       setOtpRef(apiResponse?.response?.otpRef as string);
       if (showOtpSheet) {
         setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present;
+        otpVerificationRef?.current?.present();
       }
     }
     otpVerificationRef?.current?.resetInterval();
@@ -146,19 +167,9 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
-    console.log(index);
     setCurrentCard(cardsData[index]);
   };
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
@@ -171,7 +182,7 @@ const CardsScreen: React.FC = () => {
         return localizationText.CARDS.CLASSIC_DEBIT_CARD;
 
       default:
-        break;
+        return '';
     }
   };
 
@@ -182,7 +193,7 @@ const CardsScreen: React.FC = () => {
       cardType: card?.cardTypeId,
       cardHeaderText: getCardDesc(card?.cardTypeId),
       expired: card?.reissueDue,
-      frozen: card.cardStatus == CardStatusNumber.Freezed,
+      frozen: card.cardStatus === CardStatusNumber.Freezed,
       suspended: false,
       maskedCardNumber: `**** **** **** **${card.lastDigits}`,
       cardNumber: card.lastDigits,
@@ -221,15 +232,16 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const onOtpCloseBottomSheet = () => {
+  const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
   };
 
   const prepareCardInfoData = (data: any) => {
     const cardExpireDate = data?.expiryDate;
-    const cardNumber = [...data?.cardNumber]
-      .map((d, i) => (i % 4 == 0 ? ` ${d}` : d))
+    const cardNumberValue = data?.cardNumber;
+    const cardNumber = [...cardNumberValue]
+      .map((d, i) => (i % 4 === 0 ? ` ${d}` : d))
       .join('')
       .trim();
     const cardInfo = {
@@ -280,8 +292,8 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const handleOnPressHelp = () => {
-    helpCenterRef?.current?.present;
+  const handleOnPressHelp = (): void => {
+    helpCenterRef?.current?.present();
   };
 
   const onResendCodePress = () => {
@@ -308,7 +320,7 @@ const CardsScreen: React.FC = () => {
             <IPayButton
               btnStyle={styles.buttonStyle}
               btnText={localizationText.CARDS.CREATE_NEW_CARD}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               large
               onPress={openCardSheet}
               leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
@@ -322,7 +334,7 @@ const CardsScreen: React.FC = () => {
               <IPayCarousel
                 data={[...cardsData, { newCard: true }]}
                 modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-                mode={CAROUSEL_MODES.PARALLAX}
+                mode={CarouselModes.PARALLAX}
                 width={SCREEN_WIDTH}
                 loop={false}
                 height={verticalScale(350)}
@@ -344,7 +356,7 @@ const CardsScreen: React.FC = () => {
           </>
         );
       default:
-        return null;
+        return <IPayView />;
     }
   };
 
@@ -354,7 +366,7 @@ const CardsScreen: React.FC = () => {
         <IPayTitle2Text regular={false}>{localizationText.CARDS.CARDS}</IPayTitle2Text>
         <IPayButton
           small
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           btnText={localizationText.CARDS.NEW_CARD}
           onPress={openCardSheet}
           rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}

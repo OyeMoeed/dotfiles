@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { JSX, forwardRef } from 'react';
 import { KeyboardAwareScrollView, KeyboardAwareScrollViewProps } from 'react-native-keyboard-aware-scroll-view';
 import { IPayKeyboardAwareScrollViewProps } from './ipay-keyboard-aware-scroll-view.interface';
 import styles from './ipay-keyboard-aware-scroll-view.styles';
@@ -13,21 +13,19 @@ const IPayKeyboardAwareScrollView = forwardRef<KeyboardAwareScrollView, IPayKeyb
   (
     { testID, children, style, horizontal, refreshControl, showsVerticalScrollIndicator, ...rest },
     ref,
-  ): JSX.Element => {
-    return (
-      <KeyboardAwareScrollView
-        ref={ref as any} // Type casting is needed for KeyboardAwareScrollView's ref
-        testID={`${testID}-keyboard-aware-scroll-view`}
-        style={[styles.container, style]}
-        horizontal={horizontal}
-        refreshControl={refreshControl}
-        showsVerticalScrollIndicator={showsVerticalScrollIndicator}
-        {...(rest as KeyboardAwareScrollViewProps)}
-      >
-        {children}
-      </KeyboardAwareScrollView>
-    );
-  },
+  ): JSX.Element => (
+    <KeyboardAwareScrollView
+      ref={ref as any} // Type casting is needed for KeyboardAwareScrollView's ref
+      testID={`${testID}-keyboard-aware-scroll-view`}
+      style={[styles.container, style]}
+      horizontal={horizontal}
+      refreshControl={refreshControl}
+      showsVerticalScrollIndicator={showsVerticalScrollIndicator}
+      {...(rest as KeyboardAwareScrollViewProps)}
+    >
+      {children}
+    </KeyboardAwareScrollView>
+  ),
 );
 
 export default IPayKeyboardAwareScrollView;

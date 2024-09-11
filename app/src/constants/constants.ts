@@ -1,14 +1,16 @@
+// TODO: fix max-len
+/* eslint-disable max-len */
 /**
  * Defines a set of constants.
  */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import FeatureSections from '@app/utilities/enum/feature-sections.enum';
+import { FeatureSections } from '@app/enums';
 import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: false,
+  MOCK_API_RESPONSE: true,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -572,7 +574,7 @@ const ACTIVE_SADAD_BILLS = [
 ];
 
 const TRAFFIC_VIOLATIONS = [
-  //TODO will be replaced by API data, for now its dummy data
+  // TODO will be replaced by API data, for now its dummy data
   {
     id: 1,
     billTitle: 'Traffic violation',
@@ -630,7 +632,7 @@ const VOILATOR_ID = '22321313';
 
 const ALINMA_REFERENCE_NUM = '#IPAY789';
 
-//TODO will be replace from api
+// TODO will be replace from api
 const RELATIONSHIPS = [
   { id: 1, title: 'Father' },
   { id: 2, title: 'Mother' },

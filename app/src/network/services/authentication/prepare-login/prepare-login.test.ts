@@ -1,6 +1,6 @@
 import requestType from '@app/network/request-types.network';
 import ENDPOINTS from '@app/network/utilities/api-endpoints';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import apiCall from '@network/services/api-call.service';
 import prepareLogin from './prepare-login.service';

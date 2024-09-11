@@ -16,7 +16,8 @@ import {
 } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useState } from 'react';
+import React, { JSX, useState } from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { IPayAddCardBottomsheetProps } from './ipay-addcard-bottomsheet.interface';
 import addCardBottomSheetStyles from './ipay-addcard-bottomsheet.styles'; // Adjust the path as per your project structure
 
@@ -86,7 +87,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   };
 
   return (
-    <IPayView style={[styles.container, containerStyles]}>
+    <IPayView testID={`${testID}-IPayAddCardBottomsheet`} style={[styles.container, containerStyles]}>
       <IPayView style={styles.headerRow}>
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
@@ -113,7 +114,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
           showRightIcon
         />
         <IPayMaskedInput
-          type={'credit-card'}
+          type="credit-card"
           label={localizationText.COMMON.CARD_NUMBER}
           containerStyle={[styles.inputField, isCardNumberError && { borderColor: colors.error.error500 }]}
           assistiveText={isCardNumberError ? localizationText.TOP_UP.INCORRECT_CARD_NUMBER : ''}
@@ -199,7 +200,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
       </IPayView>
 
       <IPayButton
-        btnType="primary"
+        btnType={buttonVariants.PRIMARY}
         btnText={savedScreen ? localizationText.TOP_UP.PAY : localizationText.COMMON.SAVE}
         btnColor={buttonColor('button')}
         textColor={buttonColor('text')}

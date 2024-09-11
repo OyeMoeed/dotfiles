@@ -10,7 +10,7 @@ import { LocalizationKeysMapping, TransactionsStatus } from '@app/enums/transact
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { FiltersType, States } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
@@ -25,14 +25,14 @@ import TransactionDetails from './components/transaction-details.component';
 import TransactionRefund from './components/transaction-refund.component';
 import IPayInternationalTransferDeliveryTypeComponent from './components/transcation-details-delivery-type.component';
 import { TransactionDataProps } from './components/transction-details-component.interface';
-import { TransactionDataFiltersProps } from './internationa-transfer-history.interface';
+import TransactionDataFiltersProps from './internationa-transfer-history.interface';
 import internationalTransferHistoryData from './international-transfer-history.data';
 import { InternationalTransferHistoryDataProps } from './international-transfer-history.interface';
 import internationalTrHistoryStyles from './international-transfer-history.style';
 
 const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
-  const styles = internationalTrHistoryStyles(colors);
+  const styles = internationalTrHistoryStyles();
   const localizationText = useLocalization();
   const [filteredData, setFilteredData] = useState<InternationalTransferHistoryDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -56,14 +56,7 @@ const InternationalTransferHistory: React.FC = () => {
   const filterTabs = constants.TRANSACTION_FILTERS;
   const { internationalTransferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
 
-  const {
-    getValues,
-    control,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm();
+  const { getValues, control, setValue } = useForm();
 
   const resetData = () => {
     setFilteredData(internationalTransferHistoryData);

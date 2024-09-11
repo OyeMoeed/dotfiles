@@ -24,7 +24,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
@@ -170,7 +170,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                   style={styles.headlineText}
                 />
               </IPayView>
-              <IPayScrollView style={{ flex: 0 }} scrollEnabled>
+              <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
                 {formattedTransferDetails.map((item, index) => {
                   const { isAlinma, value } = item[0];
                   const isFirstItem = index === 0;
@@ -188,7 +188,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                       )}
                       <IPayFlatlist
                         style={styles.detailesFlex}
-                        scrollEnabled={true}
+                        scrollEnabled
                         data={item}
                         renderItem={renderWallerPaymentItem}
                       />

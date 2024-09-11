@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const termsAndConditionsStyles = (theme: any) =>
+const termsAndConditionsStyles = () =>
   createStyleSheet({
     termsAndConditions: {
       marginTop: moderateScale(10),

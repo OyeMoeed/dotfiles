@@ -19,8 +19,8 @@ const useMoiPaymentConfirmation = () => {
   const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiError] = useState<string>('');
+  const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
 
   const moiPaymentDetailes: MoiPaymentDetail[] = [

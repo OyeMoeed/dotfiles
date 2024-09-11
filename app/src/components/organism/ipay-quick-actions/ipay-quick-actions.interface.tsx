@@ -1,11 +1,11 @@
 // actionSheetProps.ts
 
-import { payChannel } from '@app/utilities/enums.util';
+import { PayChannel } from '@app/utilities/enums.util';
 
 interface IPayQuickActionsProps {
   testID?: string;
-  payChannelType?: payChannel;
+  payChannelType?: PayChannel;
   monthlyRemainingOutgoingAmount: string;
   setTopUpAmount?: (text: string) => void;
 }
-export { IPayQuickActionsProps };
+export default IPayQuickActionsProps;

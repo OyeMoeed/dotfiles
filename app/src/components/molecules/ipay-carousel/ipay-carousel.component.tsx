@@ -26,7 +26,7 @@ const IPayCarousel = <T,>({
 }: IPayCarouselProps<T>): React.JSX.Element => {
   const carouselRef = useRef(null);
   const { colors } = useTheme();
-  const styles = carouselStyles(colors);
+  const styles = carouselStyles();
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 
   const handleChangeIndex = (index: number) => {
@@ -73,7 +73,7 @@ const IPayCarousel = <T,>({
           {data.map((item: any, index: number) => (
             <IPayPressable
               testID={`${index}-carousel-item`}
-              key={`${index}`}
+              key={`${`${index}IPayPressable`}`}
               onPress={() => handleChangeIndex(index)}
               style={[
                 styles.paginationDot,

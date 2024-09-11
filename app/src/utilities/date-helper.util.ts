@@ -32,10 +32,10 @@ const formatTime = (seconds: number): string => {
   const remainingSeconds = seconds % 60;
   return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
-const minutesToSeconds = (minutes: string | number) => {
-  const min = parseInt(minutes);
+function minutesToSeconds(minutes: string | number) {
+  const min = parseInt(String(minutes), 10);
   return min * 60;
-};
+}
 
 const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
 
