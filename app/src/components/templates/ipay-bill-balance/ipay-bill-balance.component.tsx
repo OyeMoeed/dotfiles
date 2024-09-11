@@ -37,7 +37,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
   const currentBalance = 4000; // TODO will be updated on basis of API
   const availableBalance = '5000'; // TODO will be updated on basis of API
   const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   useEffect(() => {
     if (selectedBills?.length) {
