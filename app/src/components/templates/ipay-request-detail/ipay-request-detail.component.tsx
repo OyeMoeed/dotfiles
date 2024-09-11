@@ -23,14 +23,13 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import { dateTimeFormat } from '@app/utilities';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import SummaryType from '@app/enums/summary-type';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
-import { getTypeFieldMapping, typeFieldMapping } from './ipay-request-detail.constant';
+import { getTypeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
 
 const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({

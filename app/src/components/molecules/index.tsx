@@ -10,7 +10,7 @@ import IPayBanner from '@app/components/molecules/ipay-banner/ipay-banner.compon
 import IPayButton from '@app/components/molecules/ipay-button/ipay-button.component';
 import IPayCarousel from '@app/components/molecules/ipay-carousel/ipay-carousel.component';
 import IPayChip from '@app/components/molecules/ipay-chip/ipay-chip.component';
-import { IPayGradientText as IPayGradientTextMasked } from '@app/components/molecules/ipay-gradient-text/ipay-gradien-text.component';
+import IPayGradientTextMasked from '@app/components/molecules/ipay-gradient-text/ipay-gradien-text.component';
 import IPayGradientText from '@app/components/molecules/ipay-gradient-text/ipay-gradient-text.component';
 import IPayLanguageSelectorButton from '@app/components/molecules/ipay-header/ipay-header-components/ipay-language-selector-button';
 import IPayHeader from '@app/components/molecules/ipay-header/ipay-header.component';

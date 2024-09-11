@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPaySpinner, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
+import { IPayButton, IPayCarousel, IPayNoResult, useToastContext } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -41,8 +41,9 @@ import { verticalScale } from 'react-native-size-matters';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import cardScreenStyles from './cards.style';
 import CardScreenCurrentState from './cards.screen.interface';
 
@@ -50,6 +51,7 @@ const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
@@ -65,7 +67,7 @@ const CardsScreen: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
-  const [apiError, setAPIError] = useState<string>('');
+  const [, setAPIError] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
@@ -77,6 +79,20 @@ const CardsScreen: React.FC = () => {
   const [cardDetails, setCardDetails] = useState<any>({});
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
+
+  const renderToast = ({ title = '', subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
 
   const openCardSheet = () => {
     const hasAccess = checkUserAccess();
@@ -110,6 +126,17 @@ const CardsScreen: React.FC = () => {
     </IPayView>
   );
 
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
     renderSpinner(true);
     const payload: prepareShowDetailsProp = {
@@ -124,7 +151,7 @@ const CardsScreen: React.FC = () => {
       setOtpRef(apiResponse?.response?.otpRef as string);
       if (showOtpSheet) {
         setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present;
+        otpVerificationRef?.current?.present();
       }
     }
     otpVerificationRef?.current?.resetInterval();
@@ -142,17 +169,6 @@ const CardsScreen: React.FC = () => {
   const onChangeIndex = (index: number) => {
     setCurrentCard(cardsData[index]);
   };
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
@@ -216,9 +232,25 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const onOtpCloseBottomSheet = () => {
+  const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
+  };
+
+  const prepareCardInfoData = (data: any) => {
+    const cardExpireDate = data?.expiryDate;
+    const cardNumberValue = data?.cardNumber;
+    const cardNumber = [...cardNumberValue]
+      .map((d, i) => (i % 4 === 0 ? ` ${d}` : d))
+      .join('')
+      .trim();
+    const cardInfo = {
+      ...data,
+      expiryDate: cardExpireDate,
+      cardNumber,
+    };
+
+    setCardDetails(cardInfo);
   };
 
   const getCardDetails = async () => {
@@ -250,22 +282,6 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const prepareCardInfoData = (data: any) => {
-    const cardExpireDate = data?.expiryDate;
-    const cardNumberDetails = data?.cardNumber;
-    const cardNumber = [...cardNumberDetails]
-      .map((d, i) => (i % 4 === 0 ? ` ${d}` : d))
-      .join('')
-      .trim();
-    const cardInfo = {
-      ...data,
-      expiryDate: cardExpireDate,
-      cardNumber,
-    };
-
-    setCardDetails(cardInfo);
-  };
-
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
@@ -276,7 +292,7 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const handleOnPressHelp = () => {
+  const handleOnPressHelp = (): void => {
     helpCenterRef?.current?.present();
   };
 

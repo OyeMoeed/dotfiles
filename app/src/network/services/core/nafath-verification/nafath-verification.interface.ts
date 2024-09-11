@@ -1,11 +1,9 @@
-import { IDeveiceInfo } from '../id-renewal/id-renewal.interface';
-
 interface PrepareIdRenewalProp {
   requestId?: string;
   channelId?: string;
 }
 
-enum NAFATH_STATUSES {
+enum NafathStatus {
   PENDING = 'pending',
   REJECTED = 'rejected',
   EXPIRED = 'NF1900160',
@@ -82,4 +80,4 @@ export interface IActivationAbsherReq {
   deviceInfo?: any;
 }
 
-export { PrepareIdRenewalProp, NAFATH_STATUSES, INafathInqRes };
+export { PrepareIdRenewalProp, NafathStatus, INafathInqRes };

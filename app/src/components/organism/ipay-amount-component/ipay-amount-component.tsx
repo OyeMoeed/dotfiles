@@ -10,7 +10,7 @@ import { ApplePayCheckOutReq } from '@app/network/services/cards-management/appl
 import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
 import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {

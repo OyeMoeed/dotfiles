@@ -9,7 +9,7 @@ import React from 'react';
 import { cardDetailsProps, FieldKeyMappingProps } from './ipay-card-details.interface';
 import cardDetailsStyle from './ipay-card-details.style';
 
-const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
+const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = cardDetailsStyle(colors);

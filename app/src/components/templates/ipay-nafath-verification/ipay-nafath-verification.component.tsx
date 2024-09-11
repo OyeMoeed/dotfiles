@@ -20,7 +20,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import {
   IActivationAbsherReq,
   INafathInqRes,
-  NAFATH_STATUSES,
+  NafathStatus,
   PrepareIdRenewalProp,
 } from '@app/network/services/core/nafath-verification/nafath-verification.interface';
 import {
@@ -28,7 +28,7 @@ import {
   getNafathRandom,
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -208,15 +208,15 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       switch (apiResponse?.response?.status) {
-        case NAFATH_STATUSES.ACCEPTED:
+        case NafathStatus.ACCEPTED:
           setStartInqiryInterval(false);
           updateWalletTier(apiResponse);
           break;
-        case NAFATH_STATUSES.EXPIRED:
+        case NafathStatus.EXPIRED:
           setStartInqiryInterval(false);
           setAPIError('Sorry! Nafath session has expired. Please try again later');
           break;
-        case NAFATH_STATUSES.REJECTED:
+        case NafathStatus.REJECTED:
           setStartInqiryInterval(false);
           setAPIError('Sorry ! Nafath request was rejected. Please try again later');
           setStep(1);

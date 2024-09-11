@@ -6,7 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { validateForgetPasscodeOtp } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';

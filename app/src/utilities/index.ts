@@ -13,6 +13,8 @@ import getCustomSheetThreshold from './custom-sheet-helper.utils';
 import dateTimeFormat from './date.const';
 import FilterSelectedValue from './filter-interface.utils';
 
+export { default as shortString } from './string-functions.utils';
+
 export * from './enums.util';
 
 export {

@@ -5,7 +5,7 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySadadBill } from '@app/components/organism';
-import { BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
+import { BillDetailsProps, BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -16,7 +16,7 @@ import {
 } from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
 import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
 import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
@@ -314,7 +314,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
         case apiResponse?.apiResponseNotOk:
           renderToast({
             title: localizationText.ERROR.API_ERROR_RESPONSE,
-            toastType: toastTypes.WARNING,
+            toastType: ToastTypes.WARNING,
           });
           break;
 

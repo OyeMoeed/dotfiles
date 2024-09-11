@@ -5,7 +5,7 @@ import { useTypedDispatch } from '@app/store/store';
 import { useState } from 'react';
 import OnboardingSteps from '../screens/auth/onboarding/onboarding-enum.util';
 
-export const useStepper = () => {
+const useStepper = () => {
   const [currentView, setCurrentView] = useState(OnboardingSteps.OpportunitiesStep);
   const dispatch = useTypedDispatch();
   const hideWalkThrough = () => {
@@ -32,3 +32,5 @@ export const useStepper = () => {
     getStarted,
   };
 };
+
+export default useStepper;

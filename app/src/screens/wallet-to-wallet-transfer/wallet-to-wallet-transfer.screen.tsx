@@ -25,15 +25,14 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import PermissionTypes from '@app/enums/permissions-types.enum';
+import { PermissionsStatus, PermissionTypes } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import usePermissions from '@app/hooks/permissions.hook';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
@@ -101,7 +100,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const formatMobileNumber = (mobile: string): string => {
     const mobileWithoutSpaces = mobile.replace(/ /g, '');
-    if (REGEX.LongSaudiMobileNumber.test(mobileWithoutSpaces)) {
+    if (REGEX.longSaudiMobileNumber.test(mobileWithoutSpaces)) {
       return `0${mobileWithoutSpaces.substr(3)}`;
     }
     if (REGEX.longSaudiMobileNumber2.test(mobileWithoutSpaces)) {
@@ -114,7 +113,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
+    if (permissionStatus === PermissionsStatus.GRANTED) {
       Contacts.getAll().then((contactsList: Contact[]) => {
         const flattenedArray = contactsList.reduce((acc, obj) => {
           const mappedValues = obj.phoneNumbers.map((item) => ({
@@ -129,7 +128,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           return acc.concat(mappedValues);
         }, []);
         const saudiNumbers = flattenedArray.filter((item: Contact) => {
-          const isSaudiNumber = REGEX.SaudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+          const isSaudiNumber = REGEX.saudiMobileNumber.test(item?.phoneNumbers[0]?.number);
           return isSaudiNumber;
         });
         const listWithUniqueId = saudiNumbers.map((item: Contact) => ({

@@ -12,7 +12,7 @@ import allOrdersStyle from './all-orders.style';
 
 const AllOrdersScreen: React.FC = () => {
   const { colors } = useTheme();
-  const { allOrders, OrderHistoryFilterDefaultValues } = useConstantData();
+  const { allOrders, orderHistoryFilterDefaultValues } = useConstantData();
   const styles = allOrdersStyle(colors);
   const localizationText = useLocalization();
   const [filters, setFilters] = useState<Array<string>>([]);
@@ -83,7 +83,7 @@ const AllOrdersScreen: React.FC = () => {
 
       <IPayFilterBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.FILTER}
-        defaultValues={OrderHistoryFilterDefaultValues}
+        defaultValues={orderHistoryFilterDefaultValues}
         showDateFilter
         ref={filterRef}
         onSubmit={handleSubmit}

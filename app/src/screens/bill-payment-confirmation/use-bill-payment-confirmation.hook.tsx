@@ -1,3 +1,4 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -8,7 +9,7 @@ import {
   MultiPaymentBillResponseTypes,
 } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import multiPaymentBillService from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.service';
-import { shortString } from '@app/utilities/string-functions.utils';
+import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
 

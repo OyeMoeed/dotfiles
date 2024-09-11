@@ -26,6 +26,7 @@ import { getAllRecivedRequests } from '@app/network/services/request-management/
 import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import { formatDate } from '@app/utilities/date-helper.util';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {

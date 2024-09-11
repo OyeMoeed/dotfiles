@@ -20,6 +20,7 @@ import {
   readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 

@@ -11,7 +11,7 @@ import {
   prepareForgetPasscode,
   validateForgetPasscodeOtp,
 } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities';
 import { useLocationPermission } from '@app/services/location-permission.service';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { spinnerVariant } from '@app/utilities/enums.util';
@@ -133,7 +133,7 @@ const useLogin = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     checkAndHandlePermission,
-    otp
+    otp,
   };
 };
 
