@@ -9,6 +9,7 @@ import {
   IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -28,9 +29,9 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
 import transferSummaryStyles from './transfer-summary.styles';
@@ -49,6 +50,7 @@ const TransferSummaryScreen: React.FC = () => {
   const { variant } = route.params as ParamsProps;
 
   const [otp, setOtp] = useState<string>('');
+  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -176,7 +178,8 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const prepareOtp = async (showOtpSheet: boolean = true) => {
-    sendMoneyBottomSheetRef.current?.present();
+    try {
+      sendMoneyBottomSheetRef.current?.present();
 
     const payload: IW2WTransferPrepareReq = {
       requests: transfersDetails.formInstances.map((item) => ({
@@ -194,6 +197,10 @@ const TransferSummaryScreen: React.FC = () => {
       if (showOtpSheet) {
         sendMoneyBottomSheetRef.current?.present();
       }
+      otpVerificationRef?.current?.resetInterval();
+    } finally {
+      setIsLoading(false);
+      hideSpinner();
     }
     otpVerificationRef?.current?.resetInterval();
   };
@@ -323,7 +330,7 @@ const TransferSummaryScreen: React.FC = () => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={+walletInfo?.otpTimeout}

@@ -14,14 +14,14 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities/clip-board.util';
-import React from 'react';
 import { useRoute } from '@react-navigation/native';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import React from 'react';
 import { IW2WTransferSuccessProps, PayData } from './ipay-w2w-transfer-successful.interface';
 import { TopUpSuccessStyles } from './ipay-w2w-transfer-successful.styles';
 

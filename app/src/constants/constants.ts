@@ -336,7 +336,7 @@ const CARDS_MOCK_DATA = [
 export { CARDS_MOCK_DATA, SUPPORTED_CARD };
 
 const CARD_DATA = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
@@ -350,7 +350,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -366,7 +366,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Instant Cashback 1.6% with no Cap.',

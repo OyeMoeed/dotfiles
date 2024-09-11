@@ -198,7 +198,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       });
     }
   };
-
   const handleContentSizeChange = (contentSizeWidth: number) => {
     setContentWidth(contentSizeWidth);
   };
