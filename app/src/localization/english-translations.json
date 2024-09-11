@@ -167,7 +167,8 @@
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
-    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully"
+    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
+    "AMOUNT": "Amount"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -1336,7 +1337,8 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",

@@ -7,7 +7,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
-import { forwardRef, useImperativeHandle } from 'react';
+import { forwardRef, useEffect, useImperativeHandle } from 'react';
 import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
@@ -28,6 +28,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       title,
       timeout = 60,
       onResendCodePress,
+      otp = '',
     },
     ref,
   ) => {
@@ -73,7 +74,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           />
         </IPayView>
 
-        <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+        <IPayOtpInputText isError={otpError} onChangeText={onChangeText} value={otp} setValue={setOtp} />
 
         <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
           {`${localizationText.COMMON.CODE_EXPIRES_IN} ${formatTime(counter)}`}

@@ -80,7 +80,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   };
 
   const mapTopupcards = (cards: any) => {
-    return cards.map((card: any, index: number) => {
+    return cards?.map((card: any, index: number) => {
       return {
         key: index,
         cardType: card?.cardBrand,
@@ -93,7 +93,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     });
   };
   useEffect(() => {
-    if (topupCards.length == 1) setSelectedCard(topupCards[0].key);
+    if (topupCards?.length == 1) setSelectedCard(topupCards[0]?.key);
   }, [topupCards]);
 
   const getTopupCardsData = async () => {
@@ -147,7 +147,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   return (
     <IPayView testID={`${testID}-card-selector`} style={styles.containerStyle}>
       <IPayView style={styles.header}>
-        {topupCards.length > 0 && (
+        {topupCards?.length > 0 && (
           <IPayFootnoteText text={localizationText.TOP_UP.CHOOSE_CARD} style={styles.headerText} />
         )}
 
