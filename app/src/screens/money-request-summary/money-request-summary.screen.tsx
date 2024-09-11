@@ -77,7 +77,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiError] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string | undefined>('');
 
   const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
@@ -316,7 +315,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}

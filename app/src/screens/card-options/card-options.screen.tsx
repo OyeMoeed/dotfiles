@@ -30,9 +30,8 @@ import {
   prepareResetCardPinCode,
   resetPinCode,
 } from '@app/network/services/core/transaction/transactions.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import cardOptionsStyles from './card-options.style';
 import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
@@ -71,7 +70,6 @@ const CardOptionsScreen: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const { otpConfig } = useConstantData();
-  const [apiError, setAPIError] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const helpCenterRef = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
@@ -270,7 +268,6 @@ const CardOptionsScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG, false, icons.warning, false);
     }
   };
@@ -324,6 +321,12 @@ const CardOptionsScreen: React.FC = () => {
   const onResendCodePress = () => {
     prepareOtp(false);
   };
+
+  useEffect(() => {
+    if (isOtpSheetVisible) {
+      setOtp('');
+    }
+  }, [isOtpSheetVisible]);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -440,11 +443,11 @@ const CardOptionsScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}
           onResendCodePress={onResendCodePress}
+          otp={otp}
         />
       </IPayPortalBottomSheet>
 

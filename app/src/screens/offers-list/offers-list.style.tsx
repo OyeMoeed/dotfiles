@@ -1,17 +1,16 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const offersListStyles = (themeColors: typeof colors) =>
-  StyleSheet.create({
+  createStyleSheet({
     backgroundColor: { backgroundColor: colors.backgrounds.lightGradient },
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
     },
     contentContainerStyle: {
-      // gap: moderateScale(20),
       marginTop: moderateScale(16),
     },
     inputContainer: {

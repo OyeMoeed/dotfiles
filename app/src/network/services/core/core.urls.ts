@@ -54,6 +54,7 @@ const CORE_URLS = {
   OTP_GET_CARD_DETAILS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/showNumber/confirm`,
   GET_TRANSACTION_TYPES: 'core-management/v1/transactionRequestTypes',
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,
+  deleteTopupCard: (walletNumber?: string, registrationIid?: string) => `cards-management/v1/${walletNumber}/topup-cards/${registrationIid}`,
   TOPUP_CHECK_OUT: (walletNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/check-out`,
   CHECK_STATUS: (walletNumber?: string, refNumber?: string) =>
     `cards-management/v1/${walletNumber}/credit-topup/${refNumber}/status`,

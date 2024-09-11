@@ -133,6 +133,7 @@ const useLogin = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     checkAndHandlePermission,
+    otp
   };
 };
 

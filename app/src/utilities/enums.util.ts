@@ -303,6 +303,11 @@ enum BillPaymentOptions {
   TRAFFIC_VIOLATION = 'Traffic Violation',
 }
 
+enum BillingStatus {
+  ENABLED = 'ENABLED',
+  NOT_ENABLED = 'NOT_ENABLED',
+}
+
 // Export all enums
 export {
   APIResponseType,
@@ -312,6 +317,7 @@ export {
   BeneficiaryTypes,
   BillPaymentOptions,
   BillStatus,
+  BillingStatus,
   BillsStatusTypes,
   BiometricErrorTypes,
   CardActiveStatus,

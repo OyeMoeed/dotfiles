@@ -34,12 +34,10 @@ const useSettings = () => {
     }
   };
 
-  // close passcode sheet
   const onCloseBottomSheet = () => {
     changePasscodeRef.current?.resetInterval();
     openBottomSheet.current?.close();
   };
-  // open passcode sheet
   const onOpenPasscodeSheet = () => {
     setRenderView(PasscodeTypes.ResetPasscode);
     setPasscodeError(false);

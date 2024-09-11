@@ -29,6 +29,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       title,
       timeout = 60,
       onResendCodePress,
+      otp = '',
     },
     ref,
   ) => {
@@ -74,7 +75,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           />
         </IPayView>
 
-        <IPayOtpInputText isError={otpError} onChangeText={onChangeText} />
+        <IPayOtpInputText isError={otpError} onChangeText={onChangeText} value={otp} setValue={setOtp} />
 
         <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
           {`${localizationText.COMMON.CODE_EXPIRES_IN} ${formatTime(counter)}`}

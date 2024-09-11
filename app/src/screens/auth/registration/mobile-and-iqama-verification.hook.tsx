@@ -66,12 +66,11 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onCloseBottomSheet = () => {
+    setOtpSheetVisible(false);
     otpVerificationRef.current?.resetInterval();
   };
   const redirectToOtp = () => {
     setIsLoading(false);
-    onCloseBottomSheet();
-    setOtpSheetVisible(false);
     setOtpSheetVisible(true);
   };
 
@@ -244,6 +243,12 @@ const useMobileAndIqamaVerification = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isOtpSheetVisible) {
+      setOtp('');
+    }
+  }, [isOtpSheetVisible]);
+
   const onConfirm = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
@@ -273,6 +278,7 @@ const useMobileAndIqamaVerification = () => {
     onConfirm,
     setOtpError,
     setIsLoading,
+    otp,
     setOtp,
     resendOtp,
   };

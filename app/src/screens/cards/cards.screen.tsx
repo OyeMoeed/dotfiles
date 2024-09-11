@@ -29,11 +29,11 @@ import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import {
   CarouselModes,
+  buttonVariants,
   CardOptions,
   CardStatusNumber,
   CardTypes,
   spinnerVariant,
-  buttonVariants,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
@@ -67,7 +67,7 @@ const CardsScreen: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
-  const [apiError, setAPIError] = useState<string>('');
+  const [, setAPIError] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
@@ -80,7 +80,7 @@ const CardsScreen: React.FC = () => {
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
-  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+  const renderToast = ({ title = '', subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
         title,
@@ -390,7 +390,7 @@ const CardsScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}
