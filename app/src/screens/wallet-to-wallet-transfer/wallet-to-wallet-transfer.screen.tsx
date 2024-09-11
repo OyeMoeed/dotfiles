@@ -74,6 +74,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
           showReason: true,
+          showHistory: true,
         });
         break;
       case TRANSFERTYPE.SEND_GIFT:
