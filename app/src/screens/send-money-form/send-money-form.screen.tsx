@@ -210,21 +210,13 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
-    if (constants.MOCK_API_RESPONSE) {
+    if (constants.MOCK_API_RESPONSE && from === TRANSFERTYPE.REQUEST_MONEY) {
       // Mock API response
-      if (from === TRANSFERTYPE.REQUEST_MONEY) {
-        navigate(ScreenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.REQUEST,
-          topupStatus: TopupStatus.SUCCESS,
-          amount: totalAmount,
-        });
-      } else {
-        navigate(ScreenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.WALLET,
-          topupStatus: TopupStatus.SUCCESS,
-          amount: totalAmount,
-        });
-      }
+      navigate(ScreenNames.TOP_UP_SUCCESS, {
+        topupChannel: payChannel.REQUEST,
+        topupStatus: TopupStatus.SUCCESS,
+        amount: totalAmount,
+      });
       return;
     }
 

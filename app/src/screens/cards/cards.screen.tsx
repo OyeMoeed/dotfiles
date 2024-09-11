@@ -29,11 +29,11 @@ import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import {
   CarouselModes,
+  buttonVariants,
   CardOptions,
   CardStatusNumber,
   CardTypes,
   spinnerVariant,
-  buttonVariants,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
@@ -216,10 +216,10 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  function onOtpCloseBottomSheet(): void {
+  const onOtpCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
-  }
+  };
 
   const getCardDetails = async () => {
     try {
@@ -252,8 +252,9 @@ const CardsScreen: React.FC = () => {
 
   const prepareCardInfoData = (data: any) => {
     const cardExpireDate = data?.expiryDate;
-    const cardNumber = [...data?.cardNumber]
-      .map((d, i) => (i % 4 == 0 ? ` ${d}` : d))
+    const cardNumberDetails = data?.cardNumber;
+    const cardNumber = [...cardNumberDetails]
+      .map((d, i) => (i % 4 === 0 ? ` ${d}` : d))
       .join('')
       .trim();
     const cardInfo = {
@@ -275,9 +276,9 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  function handleOnPressHelp(): void {
-    helpCenterRef?.current?.present;
-  }
+  const handleOnPressHelp = () => {
+    helpCenterRef?.current?.present();
+  };
 
   const onResendCodePress = () => {
     prepareOtpCardDetails(false);
@@ -373,7 +374,7 @@ const CardsScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}

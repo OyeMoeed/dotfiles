@@ -43,8 +43,8 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [, setOtp] = useState('');
-  const [, setOtpError] = useState('');
+  const [otp, setOtp] = useState('');
+  const [, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -200,6 +200,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           onPressConfirm={onNavigateToSuccess}
           mobileNumber="0511110302"
           setOtp={setOtp}
+          otp={otp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
         />

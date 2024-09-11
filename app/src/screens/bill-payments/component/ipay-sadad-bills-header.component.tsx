@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
@@ -6,27 +6,19 @@ import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } fro
 import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { BillStatus, buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import billPaymentsComponentsStyles from './ipay-bill-payment-components.style';
 import { IPaySadadBillsHeaderProps } from './ipay-bills-payment-components.interface';
 
 const IPaySadadBillsHeader: React.FC<IPaySadadBillsHeaderProps> = ({
   testID,
   style,
-  totalSadadBills,
+  unpaidBillsCount,
   onPressViewAll,
 }) => {
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
   const localizationText = useLocalization();
-
-  const unpaidBillsCount = useMemo(() => {
-    if (totalSadadBills) {
-      const billsCount = totalSadadBills.filter((bill) => bill.billStatus === BillStatus.UNPAID);
-      return billsCount.length;
-    }
-    return 0;
-  }, [totalSadadBills]);
 
   const unpaidBills = `(${unpaidBillsCount} ${localizationText.BILL_PAYMENTS.UNPAID})`;
 
@@ -40,7 +32,7 @@ const IPaySadadBillsHeader: React.FC<IPaySadadBillsHeaderProps> = ({
             text={localizationText.SADAD.SADAD_BILLS}
             color={colors.primary.primary900}
           />
-          {unpaidBillsCount > 0 && <IPayCaption2Text text={unpaidBills} style={styles.unpaidText} />}
+          {(unpaidBillsCount ?? 0) > 0 && <IPayCaption2Text text={unpaidBills} style={styles.unpaidText} />}
         </IPayView>
       </IPayView>
       <IPayButton

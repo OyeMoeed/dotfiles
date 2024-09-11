@@ -15,7 +15,7 @@ interface MockAPIDataProps {
 
 // Define the ok property type
 type MockAPIOkProp = {
-  ok: boolean;
+  ok?: boolean;
 };
 
 type DeviceInfoProps = {
@@ -69,6 +69,8 @@ export {
   DeviceInfoProps,
   IApiStatus,
   MockAPIDataProps,
+  MockAPIOkProp,
+  MockAPIStatusProps,
   MockAPIOkProp,
   MockAPIStatusProps,
 };

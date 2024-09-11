@@ -71,7 +71,6 @@ const CardOptionsScreen: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const { otpConfig } = useConstantData();
-  const [apiError, setAPIError] = useState<string>('');
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const helpCenterRef = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
@@ -276,28 +275,27 @@ const CardOptionsScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG, false, icons.warning, false);
     }
   };
 
-  function onOtpCloseBottomSheet(): void {
+  const onOtpCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
-  }
+  };
 
-  function onConfirmOtp(): void {
+  const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
       otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
     } else {
       resetPassCode();
     }
-  }
+  };
 
-  function handleOnPressHelp(): void {
+  const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
-  }
+  };
 
   const onResendCodePress = () => {
     prepareOtp(false);
@@ -324,6 +322,12 @@ const CardOptionsScreen: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (isOtpSheetVisible) {
+      setOtp('');
+    }
+  }, [isOtpSheetVisible]);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -440,11 +444,11 @@ const CardOptionsScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}
           onResendCodePress={onResendCodePress}
+          otp={otp}
         />
       </IPayPortalBottomSheet>
 

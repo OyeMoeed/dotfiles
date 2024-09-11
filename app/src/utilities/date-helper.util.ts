@@ -39,6 +39,8 @@ function minutesToSeconds(minutes: string | number) {
 
 const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
 
+const getDateFormate = (date: string, dateFormate: string) => moment(date).format(dateFormate);
+
 /**
  * Format date string to 'DD/MM/YYYY - HH:mm'
  * @param dateStr - Date string in ISO format
@@ -59,10 +61,11 @@ export {
   FORMAT_1,
   checkDateValidation,
   formatCountdownTime,
+  formatDate,
   formatDateAndTime,
   formatTime,
   formatTimeAndDate,
   formatYearToLastTwoDigits,
+  getDateFormate,
   minutesToSeconds,
-  formatDate,
 };
