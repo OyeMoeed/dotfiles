@@ -1,10 +1,10 @@
 import { MockAPIStatusProps } from '../../services.interface';
 
-export interface editBeneficiaryPayload {
+export interface EditBeneficiaryPayload {
   nickname: string;
 }
 
-export interface editBeneficiaryResponse {
+export interface EditBeneficiaryResponse {
   status: MockAPIStatusProps;
   response: {};
   successfulResponse: true;
