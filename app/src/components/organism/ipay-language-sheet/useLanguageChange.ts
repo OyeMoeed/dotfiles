@@ -1,4 +1,3 @@
-import constants from '@app/constants/constants';
 import { useTypedDispatch } from '@app/store/store';
 import { LanguageCode } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -9,7 +8,7 @@ import RNRestart from 'react-native-restart';
 
 // Hook for modal actions
 export const useModalActions = (ref: any) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen] = useState(false);
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {

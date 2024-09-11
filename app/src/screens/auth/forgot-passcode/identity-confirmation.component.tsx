@@ -14,16 +14,14 @@ import prepareLogin from '@app/network/services/authentication/prepare-login/pre
 import { PrepareForgetPasscodeProps } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { prepareForgetPasscode } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { encryptData } from '@app/network/utilities/encryption-helper';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
+import { getValidationSchemas } from '@app/services';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
-import { Keyboard } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import * as Yup from 'yup';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
@@ -151,7 +149,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             <IPayPageDescriptionText
               style={styles.headingStyle}
               heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
-              text={'FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE'}
+              text="FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE"
             />
           </IPayView>
 
@@ -170,7 +168,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
           <IPayButton
             onPress={handleSubmit(onSubmit)}
             btnType="primary"
-            btnText={'COMMON.NEXT'}
+            btnText="COMMON.NEXT"
             large
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
           />
@@ -178,7 +176,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
           <IPayButton
             onPress={handleOnPressHelp}
             btnType="link-button"
-            btnText={'COMMON.NEED_HELP'}
+            btnText="COMMON.NEED_HELP"
             large
             btnStyle={styles.needHelpBtn}
             rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}

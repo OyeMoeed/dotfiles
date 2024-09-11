@@ -28,8 +28,8 @@ import { BillersTypes } from '@app/network/services/bills-management/get-billers
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getDeviceInfo } from '@app/network/utilities';
+import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -160,7 +160,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: '14/12/2024', // TODO: No Due Date is coming from api response once receive from response will update it
+        dueDate: '2024-07-21T12:00:00Z', // TODO: No Due Date is coming from api response once receive from response will update it
         totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
@@ -278,7 +278,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                   )}
                   <IPayButton
-                    btnText={'NEW_SADAD_BILLS.INQUIRY'}
+                    btnText="NEW_SADAD_BILLS.INQUIRY"
                     btnType="primary"
                     onPress={handleSubmit(onInquireBill)}
                     large
@@ -287,7 +287,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   />
                   {watch(FormFields.SAVE_BILL) && (
                     <IPayButton
-                      btnText={'NEW_SADAD_BILLS.SAVE_ONLY'}
+                      btnText="NEW_SADAD_BILLS.SAVE_ONLY"
                       btnType="outline"
                       onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
                       large
@@ -320,7 +320,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayTextInput
                       text={search}
                       onChangeText={setSearch}
-                      placeholder={'LOCAL_TRANSFER.SEARCH_FOR_NAME'}
+                      placeholder="LOCAL_TRANSFER.SEARCH_FOR_NAME"
                       rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                       simpleInput
                       style={styles.inputStyle}
@@ -328,7 +328,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                     {search && (
                       <IPayButton
-                        btnText={'COMMON.CANCEL'}
+                        btnText="COMMON.CANCEL"
                         btnIconsDisabled
                         small
                         btnType="link-button"
@@ -380,7 +380,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               <IPayContentNotFound
                 title={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
                 message={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
-                btnText={'COMMON.TRY_AGAIN'}
+                btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

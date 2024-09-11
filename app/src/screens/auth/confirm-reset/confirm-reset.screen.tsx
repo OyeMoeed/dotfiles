@@ -12,7 +12,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import changePasscodeReq from '@app/network/services/core/change-passcode/change-passcode.service';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
@@ -113,7 +113,7 @@ const ConfirmPasscode = forwardRef((props) => {
         <BulkLock />
       </IPayView>
       <IPayView>
-        <IPayPageDescriptionText heading={localizationText.SETTINGS.CONFIRM_PASSCODE} text={'SETTINGS.ENTER_CONFIRM'} />
+        <IPayPageDescriptionText heading={localizationText.SETTINGS.CONFIRM_PASSCODE} text="SETTINGS.ENTER_CONFIRM" />
       </IPayView>
       <IPayView style={styles.dialerView}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

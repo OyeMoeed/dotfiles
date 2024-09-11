@@ -9,7 +9,7 @@ import React from 'react';
 import cardManagementStyles from './cardManagement.style';
 
 const CardManagementScreen: React.FC = () => {
-  const styles = cardManagementStyles(colors);
+  const styles = cardManagementStyles();
   const localizationText = useLocalization();
 
   return (
@@ -34,7 +34,7 @@ const CardManagementScreen: React.FC = () => {
         <IPayButton
           btnType={buttonVariants.PRIMARY}
           medium
-          btnText={'MENU.ADD_CARD'}
+          btnText="MENU.ADD_CARD"
           hasRightIcon
           onPress={() => {}}
           btnStyle={styles.sendButton}

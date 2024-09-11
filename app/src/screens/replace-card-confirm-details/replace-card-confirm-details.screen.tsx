@@ -21,13 +21,13 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import icons from '@app/assets/icons';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
 import { TermsAndConditionsRefTypes } from '../card-renewal/card-renewal.screen.interface';
-import icons from '@app/assets/icons';
-import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 
 const DUMMY_DATA = {
@@ -99,7 +99,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView style={styles.contentTopMargin}>
-              <IPayFootnoteText text={'CARDS.CARD_DETAILS'} color={colors.natural.natural500} style={styles.header} />
+              <IPayFootnoteText text="CARDS.CARD_DETAILS" color={colors.natural.natural500} style={styles.header} />
               <IPayList
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
                 isShowDetail
@@ -111,7 +111,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               />
 
               <IPayFootnoteText
-                text={'REPLACE_CARD.SHIPPING_ADDRESS'}
+                text="REPLACE_CARD.SHIPPING_ADDRESS"
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
@@ -125,7 +125,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 }
               />
               <IPayFootnoteText
-                text={'CARD_OPTIONS.CARD_FEE'}
+                text="CARD_OPTIONS.CARD_FEE"
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
@@ -156,7 +156,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
+                <IPayFootnoteText style={styles.termText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
@@ -176,7 +176,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               btnStyle={styles.btn}
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
-              btnText={'COMMON.CONFIRM'}
+              btnText="COMMON.CONFIRM"
             />
           </IPayView>
         </IPayView>

@@ -30,7 +30,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
         textStyle={styles.boldStyles}
         containerStyle={[styles.heightStyles, optionsStyles]}
         title={label}
-        subTitle={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violationNumber ? violationNumber : ''}`}
+        subTitle={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violationNumber || ''}`}
         detailText={`${value} ${localizationText.COMMON.SAR}`}
         detailTextStyle={styles.detailsText}
         showDetail
@@ -65,7 +65,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
         />
         <IPayFlatlist
           style={[styles.detailsFlex, listStyles]}
-          scrollEnabled={true}
+          scrollEnabled
           data={declinedTrasactionData}
           showsVerticalScrollIndicator={false}
           renderItem={renderOption}
@@ -76,7 +76,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
           btnStyle={styles.shareStyles}
           btnType={buttonVariants.LINK_BUTTON}
           leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-          btnText={'TOP_UP.SHARE'}
+          btnText="TOP_UP.SHARE"
         />
       </IPayView>
     </IPayView>

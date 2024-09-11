@@ -3,7 +3,6 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import { IPayAnimatedTextInput, IPayButton, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
-import { REGEX } from '@app/constants/app-validations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -231,13 +230,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       }
     };
 
-    const numberValidation = (type: string) => {
-      if (type === FiltersType.CONTACT_NUMBER && REGEX.DIGITS_ONLY.test(getValues(FiltersType.CONTACT_NUMBER))) {
-        return { value: REGEX.SaudiMobileNumber, message: localizationText.COMMON.INCORRECT_MOBILE_NUMBER };
-      }
-      return {};
-    };
-
     const extractTitleByValue = (value: string) => {
       const filterData = getFilterType();
       if (filterData?.type === FiltersType.CONTACT_NUMBER) {
@@ -277,7 +269,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
-          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired = true, editable = false } }) => (
+          renderItem={({ item: { type, label, icon, dropdownIcon, editable = false } }) => (
             <Controller
               control={control}
               name={type}
@@ -307,7 +299,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           <IPayView style={styles.amountCard}>
             <IPayView style={styles.rowInputHeading}>
               <IPayIcon icon={icons.amount} />
-              <IPayCaption1Text text={'TRANSACTION_HISTORY.BY_AMOUNT'} style={styles.rowInputHeadingText} />
+              <IPayCaption1Text text="TRANSACTION_HISTORY.BY_AMOUNT" style={styles.rowInputHeadingText} />
             </IPayView>
 
             <IPayView style={styles.rowInput}>
@@ -337,7 +329,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           <IPayView style={styles.dateHeading}>
             <IPayView style={styles.rowInputHeading}>
               <IPayIcon icon={icons.calendar} />
-              <IPayCaption1Text text={'TRANSACTION_HISTORY.BY_DATE'} style={styles.rowInputHeadingText} />
+              <IPayCaption1Text text="TRANSACTION_HISTORY.BY_DATE" style={styles.rowInputHeadingText} />
             </IPayView>
 
             <IPayView style={styles.rowInput}>
@@ -493,7 +485,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
-    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
+    const doneTextValue = doneText || localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {
@@ -527,7 +519,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
         doneText={doneTextValue}
-        disabled={!isDirty}
+        disabled={!isDirty && !getValues(FiltersType.DATE_FROM) && !getValues(FiltersType.DATE_TO)}
         onDone={onPressDone}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}
@@ -548,7 +540,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               medium
               btnStyle={styles.applyButton}
               btnType={buttonVariants.PRIMARY}
-              btnText={'TRANSACTION_HISTORY.APPLY'}
+              btnText="TRANSACTION_HISTORY.APPLY"
               large
               btnIconsDisabled
               onPress={handleSubmit(onSubmitEvent)}

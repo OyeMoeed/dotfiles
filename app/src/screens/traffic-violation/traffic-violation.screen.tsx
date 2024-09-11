@@ -32,7 +32,7 @@ const TrafficViolationScreen: React.FC = () => {
         <IPayFootnoteText
           color={colors.primary.primary900}
           regular={false}
-          text={'TRAFFIC_VIOLATION.MY_TRAFFIC_VIOLATION'}
+          text="TRAFFIC_VIOLATION.MY_TRAFFIC_VIOLATION"
         />
         <IPayButton
           btnIconsDisabled
@@ -57,8 +57,8 @@ const TrafficViolationScreen: React.FC = () => {
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => (
                 <IPayView>
-                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox={true} />
-                  {index === billsData?.length - 1 && selectedBillsCount > 0 && (
+                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox />
+                  {index === (billsData || []).length - 1 && selectedBillsCount > 0 && (
                     <IPayView style={styles.listBottomView} />
                   )}
                 </IPayView>
@@ -79,7 +79,7 @@ const TrafficViolationScreen: React.FC = () => {
             <IPayView style={styles.footerViewSecondary}>
               <IPayButton
                 onPress={handleInquire}
-                btnText={'TRAFFIC_VIOLATION.INQUIRE_ANOTHER'}
+                btnText="TRAFFIC_VIOLATION.INQUIRE_ANOTHER"
                 btnType={buttonVariants.OUTLINED}
                 rightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.primary.primary500} />}
                 large
@@ -100,7 +100,7 @@ const TrafficViolationScreen: React.FC = () => {
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={'SADAD.ADD_NEW_BILL'}
+            btnText="SADAD.ADD_NEW_BILL"
             btnStyle={styles.addNewBillBtn}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
           />

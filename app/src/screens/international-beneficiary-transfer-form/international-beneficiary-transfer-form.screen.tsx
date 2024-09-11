@@ -19,7 +19,6 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
@@ -36,11 +35,10 @@ import beneficiaryTransferStyles from './international-beneficiary-transfer-form
 const IBeneficiaryTransferScreen: React.FC = () => {
   const route = useRoute();
   const { colors } = useTheme();
-  const { transferService } = route?.params;
+  const { transferService } = route?.params as { transferService: { transferType: ''; serviceName: '' } };
   const styles = beneficiaryTransferStyles(colors);
   const localizationText = useLocalization();
   const { onSubmit, cities } = useInternationalTransferHook();
-  const {} = getValidationSchemas(localizationText);
   const transferType = transferService?.transferType;
   const validationSchema = Yup.object().shape({});
 
@@ -78,7 +76,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                 <IPayFootnoteText
                   color={colors.natural.natural500}
                   style={styles.textStyle}
-                  text={'NEW_BENEFICIARY.BENEFECIARY_INFORMATION'}
+                  text="NEW_BENEFICIARY.BENEFECIARY_INFORMATION"
                 />
 
                 <IPayAnimatedTextInput
@@ -112,7 +110,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
-                      text={'NEW_BENEFICIARY.OTHER_INFORMATION'}
+                      text="NEW_BENEFICIARY.OTHER_INFORMATION"
                     />
                     <IPayDropdown
                       dropdownType={localizationText.NEW_BENEFICIARY.BENEFECIARY_NATIONALITY}
@@ -123,7 +121,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     />
                   </>
                 )}
-                {transferType != TransferTypes.CASH && (
+                {transferType !== TransferTypes.CASH && (
                   <>
                     <IPayAnimatedTextInput
                       name={BeneficiaryFields.BENEFICIARY_NAME}
@@ -156,7 +154,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
-                      text={'COMMON.BANK_DETAILS'}
+                      text="COMMON.BANK_DETAILS"
                     />
                     <IPayAnimatedTextInput
                       name={BeneficiaryFields.IBAN}
@@ -179,7 +177,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
-                      text={'NEW_BENEFICIARY.DIGITAL_WALLET_DETAILS'}
+                      text="NEW_BENEFICIARY.DIGITAL_WALLET_DETAILS"
                     />
                     <IPayDropdown
                       dropdownType={localizationText.NEW_BENEFICIARY.WALLER_TYPE}
@@ -196,7 +194,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
               onPress={handleSubmit(onSubmit)}
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={'NEW_BENEFICIARY.ADD_BENEFICIARY'}
+              btnText="NEW_BENEFICIARY.ADD_BENEFICIARY"
               btnIconsDisabled
               btnStyle={styles.btnStyles}
             />

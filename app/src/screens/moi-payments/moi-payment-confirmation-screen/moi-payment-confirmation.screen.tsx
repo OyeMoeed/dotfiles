@@ -20,7 +20,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
-  const { moiPaymentDetailes, handlePay, setOtp, isLoading, otpError, setOtpError, apiError, otpVerificationRef } =
+  const { moiPaymentDetailes, handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef } =
     useMoiPaymentConfirmation();
   const { otpConfig } = useConstantData();
   const otpBottomSheetRef = useRef<any>(null);
@@ -60,7 +60,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
-          btnText={'SADAD.COMPLETE_PAYMENT'}
+          btnText="SADAD.COMPLETE_PAYMENT"
           totalAmount={totalAmount}
           btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
         />
@@ -83,7 +83,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}

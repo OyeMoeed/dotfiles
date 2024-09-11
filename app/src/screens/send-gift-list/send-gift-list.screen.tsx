@@ -36,7 +36,7 @@ const SendGiftListScreen: React.FC = () => {
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [walletTransferData, setWalletTransferData] = useState({});
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
 
@@ -172,9 +172,9 @@ const SendGiftListScreen: React.FC = () => {
         rightComponent={
           <IPayPressable onPress={applyFilter}>
             <IPayIcon
-              icon={!!filters.length ? icons.filter_edit_purple : icons.filter}
+              icon={filters.length ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={!!filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }
@@ -217,7 +217,7 @@ const SendGiftListScreen: React.FC = () => {
             <IPayButton
               leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
               btnType="primary"
-              btnText={'SEND_GIFT.SEND_NEW_GIFT'}
+              btnText="SEND_GIFT.SEND_NEW_GIFT"
               large
               onPress={sendGiftNow}
               btnStyle={styles.btnStyle}
@@ -231,7 +231,7 @@ const SendGiftListScreen: React.FC = () => {
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               medium
-              btnText={'SEND_GIFT.SEND_GIFT_NOW'}
+              btnText="SEND_GIFT.SEND_GIFT_NOW"
               hasRightIcon
               onPress={sendGiftNow}
               btnStyle={styles.sendButton}

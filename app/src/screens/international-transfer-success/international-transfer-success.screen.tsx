@@ -18,8 +18,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { alertType, alertVariant, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { internationalTransferData } from '../international-transfer/international-transfer.constent';
 import { InternationalTransferData, OptionItem } from './international-transfer-success.interface';
@@ -49,7 +49,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   // Function to check the condition dynamically
@@ -132,13 +132,13 @@ const InternationalTransferSuccessScreen: React.FC = () => {
               medium
               btnType={buttonVariants.LINK_BUTTON}
               leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-              btnText={'COMMON.SHARE'}
+              btnText="COMMON.SHARE"
             />
             <IPayButton
               medium
               btnType={buttonVariants.LINK_BUTTON}
               rightIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} size={16} />}
-              btnText={'TRANSACTION_HISTORY.VAT_INVOICE'}
+              btnText="TRANSACTION_HISTORY.VAT_INVOICE"
               onPress={handleVatInvoice}
             />
           </IPayView>
@@ -146,7 +146,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
             large
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.natural.natural0} />}
-            btnText={'COMMON.HOME'}
+            btnText="COMMON.HOME"
             onPress={() => navigate(ScreenNames.HOME)}
           />
         </IPayView>

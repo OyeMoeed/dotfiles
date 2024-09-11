@@ -30,7 +30,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
 import { States } from '@app/utilities/enums.util';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, JSX } from 'react';
 import { useDispatch } from 'react-redux';
 import pointRedemption from './ipay-points-redemption.style';
 
@@ -169,7 +169,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
         <IPayView style={styles.pointsRedemptionContainer}>
           <IPayPointRedemptionCard points={aktharPointsInfo?.mazayaPoints} amount={aktharPointsInfo?.amount} />
           <IPayView style={styles.pointsConversionDetail}>
-            <IPayText fontFamily={fonts.REGULAR} style={styles.redeemPointText} text={'TOP_UP.REDEEM_THE_POINTS'} />
+            <IPayText fontFamily={fonts.REGULAR} style={styles.redeemPointText} text="TOP_UP.REDEEM_THE_POINTS" />
             <IPayChip
               textValue={localizationText.TOP_UP.POINT_CONVERSION_VALUE.replace(
                 '$points_number',
@@ -188,7 +188,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
 
             <IPayView style={styles.pointsAmountConversion}>
               <IPayView>
-                <IPayFootnoteText text={'TOP_UP.AMOUNT_VALUE'} style={styles.amountInputLabel} />
+                <IPayFootnoteText text="TOP_UP.AMOUNT_VALUE" style={styles.amountInputLabel} />
                 <IPayView style={styles.amountInput}>
                   <IPayInput
                     testID="amount-input"
@@ -203,7 +203,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     keyboardType="numeric"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {' ' + localizationText.COMMON.SAR}
+                    {` ${localizationText.COMMON.SAR}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -219,7 +219,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
               </IPayView>
 
               <IPayView>
-                <IPayFootnoteText text={'TOP_UP.POINTS_REDEEMED'} style={styles.amountInputLabel} />
+                <IPayFootnoteText text="TOP_UP.POINTS_REDEEMED" style={styles.amountInputLabel} />
                 <IPayView style={styles.amountInput}>
                   <IPayInput
                     testID="points-input"
@@ -234,7 +234,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     keyboardType="number-pad"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {' ' + localizationText.COMMON.POINT}
+                    {` ${localizationText.COMMON.POINT}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -243,7 +243,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
               <IPayChip
                 textValue={errorMessage}
                 variant={States.WARNING}
-                isShowIcon={true}
+                isShowIcon
                 containerStyle={styles.chipContainer}
                 icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={scaleSize(16)} />}
               />
@@ -264,7 +264,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                 colors={colors.gradientPrimaryReverse}
               />
               <IPayView style={styles.topUpContainer}>
-                <IPayCaption2Text text={'TOP_UP.REMAINING'} />
+                <IPayCaption2Text text="TOP_UP.REMAINING" />
                 <IPayCaption2Text color={colors.natural.natural500}>
                   <IPayCaption2Text style={styles.totalAmount}>
                     {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingIncomingAmount)}`}{' '}
@@ -279,7 +279,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
             onPress={onRedeem}
             btnType="primary"
             disabled={disabled}
-            btnText={'TOP_UP.REDEEM'}
+            btnText="TOP_UP.REDEEM"
             textColor={colors.natural.natural0}
             btnStyle={[styles.redeemButton, disabled && styles.disabledBackground]}
             rightIcon={
@@ -291,20 +291,20 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
           />
         </IPayView>
       );
-    } else if (isEligible === false) {
+    }
+    if (isEligible === false) {
       return (
         <IPayView style={styles.notEnrolled}>
           <IPayView style={styles.iconContainer}>
             <IPayIcon icon={icons.akhtr_pay2} size={scaleSize(80)} />
           </IPayView>
-          <IPayTitle2Text text={'TOP_UP.NOT_ENROLLED'} style={styles.notEnrolledText} />
-          <IPayFootnoteText text={'TOP_UP.NOT_ENROLLED_DESCRIPTION'} style={styles.notEnrolledSubtitle} />
+          <IPayTitle2Text text="TOP_UP.NOT_ENROLLED" style={styles.notEnrolledText} />
+          <IPayFootnoteText text="TOP_UP.NOT_ENROLLED_DESCRIPTION" style={styles.notEnrolledSubtitle} />
           <IPayImage style={styles.image} image={images.blackLogo3x} />
         </IPayView>
       );
-    } else {
-      return <IPayView />;
     }
+    return <IPayView />;
   };
 
   return (

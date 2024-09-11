@@ -20,7 +20,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants, CardTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
@@ -44,7 +44,7 @@ const CardRenewalScreen: React.FC = () => {
 
   const {
     currentCard: { cardType, cardHeaderText, name },
-  } = route?.params;
+  } = route?.params as unknown as { currentCard: { cardType: CardTypes; cardHeaderText: ''; name: '' } };
 
   const localizationText = useLocalization();
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
@@ -139,7 +139,7 @@ const CardRenewalScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
+                <IPayFootnoteText style={styles.termText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
@@ -148,7 +148,7 @@ const CardRenewalScreen: React.FC = () => {
               large
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
-              btnText={'COMMON.CONFIRM'}
+              btnText="COMMON.CONFIRM"
             />
           </IPayView>
         </IPayView>

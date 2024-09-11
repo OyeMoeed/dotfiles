@@ -14,13 +14,13 @@ import {
 } from '@app/network/services/cards-management/mazaya-topup/redeem-points-confirm/redeem-points-confirm.interface';
 import redeemPointsConfirm from '@app/network/services/cards-management/mazaya-topup/redeem-points-confirm/redeem-points-confirm.service';
 import redeemPointsPrepare from '@app/network/services/cards-management/mazaya-topup/redeem-points-prepare/redeem-points-prepare.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TopupStatus, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayPointRedemptionConfirmatonProps } from './ipay-points-redemption-confirmation.interface';
@@ -33,7 +33,6 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const [otpError, setOtpError] = useState<boolean>(false);
   const pointRemdemptionBottomSheetRef = useRef<bottomSheetTypes>(null);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const styles = pointRedemptionConfirmation(colors);
@@ -129,6 +128,12 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
     onConfirm(false);
   };
 
+  useEffect(() => {
+    if (isOtpSheetVisible) {
+      setOtp('');
+    }
+  }, [isOtpSheetVisible]);
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPaySafeAreaView style={styles.container}>
@@ -149,7 +154,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           >
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={'TOP_UP.POINTS_REDEEMED'} color={colors.natural.natural900} />
+                <IPayFootnoteText text="TOP_UP.POINTS_REDEEMED" color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
@@ -161,7 +166,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
             </IPayView>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={'TOP_UP.EQUIVALENT_BALANCE'} color={colors.natural.natural900} />
+                <IPayFootnoteText text="TOP_UP.EQUIVALENT_BALANCE" color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
@@ -176,7 +181,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           <IPayView style={styles.remainingDetails}>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={'TOP_UP.REMAINING_POINTS'} color={colors.natural.natural900} />
+                <IPayFootnoteText text="TOP_UP.REMAINING_POINTS" color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
@@ -191,7 +196,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         <IPayButton
           onPress={onConfirm}
           btnType="primary"
-          btnText={'COMMON.CONFIRM'}
+          btnText="COMMON.CONFIRM"
           btnIconsDisabled
           textColor={colors.natural.natural0}
           btnStyle={[styles.confirmButton]}
@@ -213,9 +218,9 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           onPressConfirm={onConfirmOtp}
           mobileNumber={walletInfo?.mobileNumber ? walletInfo?.mobileNumber : ''}
           setOtp={setOtp}
+          otp={otp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.akhtrPoints.otpTimeout}

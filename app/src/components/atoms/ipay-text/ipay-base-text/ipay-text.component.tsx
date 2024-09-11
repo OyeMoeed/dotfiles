@@ -2,11 +2,11 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import useFonts from '@app/styles/theming/fonts.hook';
 
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import React from 'react';
+import React, { JSX } from 'react';
 import { Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { IPayTextProps } from './ipay-text.interface';
 import styles from './ipay-text.style';
-import { useTranslation } from 'react-i18next';
 
 /**
  * A component to display localized text.

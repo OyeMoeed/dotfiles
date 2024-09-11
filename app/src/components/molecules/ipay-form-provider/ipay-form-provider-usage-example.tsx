@@ -10,7 +10,7 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 
 interface FormValues {
   mobileNumber: string;
@@ -22,7 +22,7 @@ const ExampleFormProviderUsage = () => {
   const localizationText = useLocalization();
   const [searchText, setSearchText] = useState<string>('');
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {};
+  const onSubmit: SubmitHandler<FormValues> = () => {};
 
   const cities = constants.CITIES;
 
@@ -39,54 +39,52 @@ const ExampleFormProviderUsage = () => {
       validationSchema={validationSchema}
       defaultValues={{ mobileNumber: '', iqamaId: '', city: '' }}
     >
-      {({ handleSubmit, control, formState: { errors } }) => {
-        return (
-          <IPayView>
-            <IPayScrollView showsVerticalScrollIndicator={false}>
-              <>
-                {/* This is an Example of TextInput With RHF( React Hook Form Integrated ) */}
-                <IPayAnimatedTextInput
-                  name="mobileNumber"
-                  label={localizationText.PROFILE.MOBILE_NUMBER}
-                  editable
-                  keyboardType="phone-pad"
-                  maxLength={constants.MOBILE_NUMBER_LENGTH}
-                />
-                {errors.mobileNumber && <IPayFootnoteText text={errors.mobileNumber.message} />}
+      {({ handleSubmit, control, formState: { errors } }) => (
+        <IPayView>
+          <IPayScrollView showsVerticalScrollIndicator={false}>
+            <>
+              {/* This is an Example of TextInput With RHF( React Hook Form Integrated ) */}
+              <IPayAnimatedTextInput
+                name="mobileNumber"
+                label={localizationText.PROFILE.MOBILE_NUMBER}
+                editable
+                keyboardType="phone-pad"
+                maxLength={constants.MOBILE_NUMBER_LENGTH}
+              />
+              {errors.mobileNumber && <IPayFootnoteText text={errors.mobileNumber.message} />}
 
-                <IPayAnimatedTextInput
-                  name="iqamaId"
-                  label={localizationText.COMMON.ID_IQAMA}
-                  editable
-                  keyboardType="number-pad"
-                  maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
-                />
-                {errors.iqamaId && <IPayFootnoteText text={errors.iqamaId.message} />}
+              <IPayAnimatedTextInput
+                name="iqamaId"
+                label={localizationText.COMMON.ID_IQAMA}
+                editable
+                keyboardType="number-pad"
+                maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
+              />
+              {errors.iqamaId && <IPayFootnoteText text={errors.iqamaId.message} />}
 
-                {/* This is an Example of Dropdown , This approach can be used for ANY library component, or any component that does not have React Hook Form */}
-                <Controller
-                  name="city"
-                  control={control}
-                  render={({ field: { onChange } }) => (
-                    <>
-                      <IPayDropdownComponent
-                        testID="city-dropdown"
-                        list={cities}
-                        searchText={searchText}
-                        setSearchText={setSearchText}
-                        onSelectListItem={(selectedItem: string) => onChange(selectedItem)}
-                      />
-                      {errors.city && <IPayFootnoteText text={errors.city.message} />}
-                    </>
-                  )}
-                />
+              {/* This is an Example of Dropdown , This approach can be used for ANY library component, or any component that does not have React Hook Form */}
+              <Controller
+                name="city"
+                control={control}
+                render={({ field: { onChange } }) => (
+                  <>
+                    <IPayDropdownComponent
+                      testID="city-dropdown"
+                      list={cities}
+                      searchText={searchText}
+                      setSearchText={setSearchText}
+                      onSelectListItem={(selectedItem: string) => onChange(selectedItem)}
+                    />
+                    {errors.city && <IPayFootnoteText text={errors.city.message} />}
+                  </>
+                )}
+              />
 
-                <IPayButton onPress={handleSubmit(onSubmit)} btnText={'COMMON.NEXT'} />
-              </>
-            </IPayScrollView>
-          </IPayView>
-        );
-      }}
+              <IPayButton onPress={handleSubmit(onSubmit)} btnText="COMMON.NEXT" />
+            </>
+          </IPayScrollView>
+        </IPayView>
+      )}
     </IPayFormProvider>
   );
 };

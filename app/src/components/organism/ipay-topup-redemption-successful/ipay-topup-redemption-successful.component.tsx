@@ -17,16 +17,15 @@ import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { default as screenNames } from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
 import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
@@ -55,7 +54,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   };
 
   const goBackToHome = () => {
-    navigation.navigate(screenNames.HOME);
+    navigation.navigate(ScreenNames.HOME);
   };
   const dispatch = useDispatch();
 
@@ -81,13 +80,13 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       const walletInfoResponse: any = await getWalletInfo(payload);
       if (walletInfoResponse?.status?.type === 'SUCCESS') {
         dispatch(setWalletInfo(walletInfoResponse?.response));
-        navigate(screenNames.POINTS_REDEMPTIONS, {
+        navigate(ScreenNames.POINTS_REDEMPTIONS, {
           aktharPointsInfo: aktharPointsResponse?.response,
           isEligible: true,
         });
       }
     } else {
-      navigate(screenNames.POINTS_REDEMPTIONS, { isEligible: false });
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }
     hideSpinner();
   };
@@ -129,8 +128,8 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
           {variants === TopupStatus.FAILED && (
             <IPayView style={styles.failedVariant}>
               <IPayIcon icon={icons.danger12} size={scaleSize(80)} />
-              <IPayTitle2Text text={'TOP_UP.TOPUP_FAILED'} style={styles.failedText} />
-              <IPayFootnoteText text={'TOP_UP.REVIEW_CARD'} style={styles.failedSubtitle} />
+              <IPayTitle2Text text="TOP_UP.TOPUP_FAILED" style={styles.failedText} />
+              <IPayFootnoteText text="TOP_UP.REVIEW_CARD" style={styles.failedSubtitle} />
             </IPayView>
           )}
 
@@ -142,19 +141,19 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                     <IPayButton
                       onPress={navigateTOAktharPoints}
                       btnType="link-button"
-                      btnText={'TOP_UP.NEW_TOP_UP'}
+                      btnText="TOP_UP.NEW_TOP_UP"
                       leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
                     />
                     <IPayButton
                       btnType="link-button"
-                      btnText={'TOP_UP.SHARE'}
+                      btnText="TOP_UP.SHARE"
                       leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
                     />
                   </IPayView>
                   <IPayButton
                     btnType="primary"
                     leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
-                    btnText={'COMMON.HOME'}
+                    btnText="COMMON.HOME"
                     onPress={goBackToHome}
                     large
                     btnStyle={styles.btnStyle}
@@ -169,7 +168,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
                 <IPayView style={styles.linearGradientTextView}>
                   <IPayGradientText
-                    text={'TOP_UP.TOPUP_REDEMPTION_SUCESS'}
+                    text="TOP_UP.TOPUP_REDEMPTION_SUCESS"
                     gradientColors={gradientColors}
                     style={styles.gradientTextSvg}
                     fontSize={styles.linearGradientText?.fontSize}
@@ -182,7 +181,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                 </IPayView>
 
                 {successDetail.map(({ title, value, icon, pressIcon }, index) => (
-                  <IPayView style={styles.listContainer} key={index}>
+                  <IPayView style={styles.listContainer} key={`${`${index}SuccessDetail`}`}>
                     <IPayView style={styles.listView}>
                       <IPayFootnoteText text={title} color={colors.natural.natural900} />
                       <IPayView style={styles.listDetails}>
@@ -208,7 +207,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
             <IPayView>
               <IPayButton
                 btnType="primary"
-                btnText={'TOP_UP.START_OVER'}
+                btnText="TOP_UP.START_OVER"
                 leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />}
                 large
                 onPress={onStartOverPress}
@@ -218,7 +217,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
               <IPayButton
                 btnType="outline"
                 leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.primary.primary500} />}
-                btnText={'COMMON.HOME'}
+                btnText="COMMON.HOME"
                 hasLeftIcon
                 large
                 onPress={goBackToHome}

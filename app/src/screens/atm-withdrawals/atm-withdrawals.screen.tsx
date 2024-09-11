@@ -17,7 +17,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, isMultipleOfHundred } from '@app/utilities/number-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
@@ -59,7 +59,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     topUpSelectionRef.current.close();
   };
 
-  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount == '' || !isMultipleOfHundred(topUpAmount);
+  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount === '' || !isMultipleOfHundred(topUpAmount);
   const onPressQR = () => {
     navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER, { amount: topUpAmount });
     setTopUpAmount('');
@@ -92,7 +92,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               <IPayFootnoteText
                 color={colors.primary.primary900}
                 style={styles.accountBalanceTitle}
-                text={'HOME.ACCOUNT_BALANCE'}
+                text="HOME.ACCOUNT_BALANCE"
               />
 
               <IPayView style={styles.balanceContainer}>
@@ -100,7 +100,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
                 />
-                <IPayFootnoteText style={styles.currencyStyle} text={'COMMON.SAR'} />
+                <IPayFootnoteText style={styles.currencyStyle} text="COMMON.SAR" />
               </IPayView>
             </IPayView>
             <IPayButton
@@ -108,7 +108,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               small
               btnType={buttonVariants.OUTLINED}
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-              btnText={'COMMON.TOP_UP'}
+              btnText="COMMON.TOP_UP"
               btnStyle={styles.topUpBtn}
             />
           </IPayView>
@@ -120,7 +120,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text color={colors.natural.natural700} text={'HOME.REMAINING_AMOUNT'} />
+            <IPayCaption2Text color={colors.natural.natural700} text="HOME.REMAINING_AMOUNT" />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalanceFormatted} />
               <IPayCaption2Text color={colors.natural.natural500} text={monthlyOutgoingLimitFormatted} />
@@ -135,7 +135,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             showIcon={false}
             qrScanBtn
             chipValue={chipValue}
-            payChannelType={payChannel.ATM}
+            payChannelType={PayChannel.ATM}
             showQuickAmount
             isQrBtnDisabled={isQrBtnDisabled}
             topUpAmount={topUpAmount}

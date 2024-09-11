@@ -17,7 +17,6 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
   containerStyle,
   points,
   amount,
-  pointsStyle,
   headerStyle,
   backgroundImageStyle,
   innerContainerStyle,
@@ -31,7 +30,7 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
     <IPayLinearGradientView
       locations={[0, 1]}
       gradientColors={colors.appGradient.gradientPrimary20}
-      useAngle={true}
+      useAngle
       angle={79.03}
       style={[styles.gradientBackground, containerStyle]}
       testID={testID}
@@ -40,25 +39,25 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
       <IPayView style={[styles.container, innerContainerStyle]}>
         <IPayView style={[styles.header, headerStyle]}>
           <PointRedemptionPlus />
-          <IPayText fontFamily={fonts.REGULAR} style={styles.headerText} text={'TOP_UP.AKHTR'} />
+          <IPayText fontFamily={fonts.REGULAR} style={styles.headerText} text="TOP_UP.AKHTR" />
         </IPayView>
         {points && (
           <IPayView style={styles.pointsContainer}>
             <IPayView style={styles.yourPointsContainer}>
-              <IPayText style={styles.yourPointsText} text={'TOP_UP.YOUR_POINTS'} />
+              <IPayText style={styles.yourPointsText} text="TOP_UP.YOUR_POINTS" />
               <IPayView style={styles.pointsValueContainer}>
                 <IPayGradientText
                   text={`${points} ${localizationText.COMMON.POINTS}`}
                   gradientColors={gradientColors}
                   fontSize={SCALE_16}
                   fontFamily={typography.FONT_WEIGHT_BOLD}
-                  xScale={'0'}
+                  xScale="0"
                   textAnchor="start"
                 />
               </IPayView>
             </IPayView>
             <IPayView>
-              <IPayText style={styles.pointsValueText} text={'TOP_UP.VALUE_OF_POINTS'} />
+              <IPayText style={styles.pointsValueText} text="TOP_UP.VALUE_OF_POINTS" />
               <IPayView style={styles.pointsValueContainer}>
                 <IPayText
                   style={styles.pointsValueAmount}

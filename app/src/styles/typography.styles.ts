@@ -1,6 +1,5 @@
 import { typography as constants } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { Platform } from 'react-native';
-import useTheme from './hooks/theme.hook';
 import { scaleFont } from './mixins';
 
 /**
@@ -64,41 +63,6 @@ const fonts = {
   BLACK: 'Inter-Black',
 };
 
-/**
- * Creates a text style object with the provided parameters.
- * @param {number} fontSize - The font size of the text.
- * @param {number} lineHeight - The line height of the text.
- * @param {number} letterSpacing - The letter spacing of the text.
- * @param {string} fontFamily - The font family of the text.
- * @param {string} [fontWeight] - Optional. The font weight of the text.
- * @param {string} [color] - Optional. The color of the text. Defaults to a predefined color if not provided.
- * @param {string} [textDecorationLine] - Optional. The text decoration line of the text (e.g., 'underline', 'line-through').
- * @param {string} [textTransform] - Optional. The text transformation (e.g., 'uppercase', 'lowercase', 'capitalize').
- * @returns {Function} A function that accepts a custom color and returns the text style object.
- */
-const createTextStyle = (
-  fontSize: number,
-  lineHeight: number,
-  letterSpacing: number,
-  fontFamily: string,
-  fontWeight?: string,
-  color?: string,
-  textDecorationLine?: string,
-  textTransform?: string,
-) => {
-  const { colors } = useTheme();
-  return (customColor?: string) => ({
-    fontSize: scaleFont(fontSize),
-    lineHeight: Platform.OS === 'android' ? scaleFont(lineHeight) : undefined,
-    letterSpacing: scaleFont(letterSpacing),
-    fontFamily,
-    fontWeight,
-    color: customColor || color || colors.natural.natural900,
-    ...(textDecorationLine && { textDecorationLine }),
-    ...(textTransform && { textTransform }),
-  });
-};
-
 const regex = {
   NUMBERS_ONLY: /^\d*$/,
 };
@@ -158,7 +122,6 @@ const typography = {
 };
 
 export {
-  createTextStyle,
   FONT_SIZE_10,
   FONT_SIZE_11,
   FONT_SIZE_12,

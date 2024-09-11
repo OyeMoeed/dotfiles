@@ -39,11 +39,7 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
         />
       </IPayView>
       <IPayView style={styles.rowStyles}>
-        <IPayFootnoteText
-          color={colors.primary.primary900}
-          regular={false}
-          text={'TRAFFIC_VIOLATION.FOUND_VIOLATION'}
-        />
+        <IPayFootnoteText color={colors.primary.primary900} regular={false} text="TRAFFIC_VIOLATION.FOUND_VIOLATION" />
         <IPayButton
           btnIconsDisabled
           btnText={
@@ -66,8 +62,8 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => (
                 <IPayView>
-                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox={true} />
-                  {index === billsData?.length - 1 && selectedBillsCount > 0 && (
+                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox />
+                  {index === (billsData || []).length - 1 && selectedBillsCount > 0 && (
                     <IPayView style={styles.listBottomView} />
                   )}
                 </IPayView>
@@ -99,7 +95,7 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={'SADAD.ADD_NEW_BILL'}
+            btnText="SADAD.ADD_NEW_BILL"
             btnStyle={styles.addNewBillBtn}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
           />

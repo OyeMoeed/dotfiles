@@ -4,23 +4,23 @@ import { IPayAmountInput, IPayButton, IPayCardSelector, IPayChip } from '@app/co
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { States, TopUpStates, buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { States, TopUpStates, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { isMultipleOfHundred, removeCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
 import ipayRemainingAccountBalanceStyles from './ipay-remaining-account-balance.component.styles';
-import { IPayRemainingBalanceProps } from './ipay-remaining-account-balance.interface';
+import IPayRemainingBalanceProps from './ipay-remaining-account-balance.interface';
 
 const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,
   showProgress = true,
-  topUpAmount,
+  topUpAmount = 0,
   setTopUpAmount,
   walletInfo,
   onPressAddCards,
   chipValue,
-  payChannelType = payChannel.ATM,
+  payChannelType = PayChannel.ATM,
   openPressExpired,
   currentState,
   handleCardSelect,
@@ -45,7 +45,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
     const newAmount = removeCommas(text);
     const reg = regex.NUMBERS_ONLY; // Matches an empty string or any number of digits
     if (reg.test(newAmount.toString())) {
-      setTopUpAmount(newAmount.toString());
+      setTopUpAmount?.(newAmount.toString());
     }
   };
 
@@ -88,10 +88,10 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           }
         />
       )}
-      {!isMultipleOfHundred(topUpAmount) && payChannelType === payChannel.ATM && (
+      {!isMultipleOfHundred(Number(topUpAmount)) && payChannelType === PayChannel.ATM && (
         <IPayCaption2Text
           regular={false}
-          text={'ATM.MULTIPLE_OF_HUNDERED'}
+          text="ATM.MULTIPLE_OF_HUNDERED"
           color={colors.natural.natural700}
           style={styles.chipContainer}
         />
@@ -132,7 +132,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
           disabled={isQrBtnDisabled || chipValue !== ''}
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={'ATM_WITHDRAWAL.SCAN_QR_CODE'}
+          btnText="ATM_WITHDRAWAL.SCAN_QR_CODE"
           leftIcon={
             <IPayIcon
               icon={icons.scan}

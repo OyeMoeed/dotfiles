@@ -5,7 +5,7 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySadadBill } from '@app/components/organism';
-import { BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
+import { BillDetailsProps, BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -16,7 +16,7 @@ import {
 } from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
 import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
 import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
@@ -24,7 +24,7 @@ import {
   APIResponseType,
   BillsStatusTypes,
   buttonVariants,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
@@ -44,7 +44,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [apiError, setAPIError] = useState<string>('');
+  const [, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
 
@@ -82,10 +82,14 @@ const SadadBillsScreen: React.FC = ({ route }) => {
 
   const handleTabSelect = useCallback(
     (tab: string, billsData?: BillProps[]) => {
+      const sadadBillDetails = billsData || activeBillsData || [];
+      const sadadBill = Array.isArray(sadadBillDetails) ? sadadBillDetails : [];
       if (tab === BillsStatusTypes.ACTIVE_BILLS) {
-        setActiveBillsData((billsData || activeBillsData).filter((bill) => bill.active));
+        const activeSadadBill = sadadBill?.filter((bill) => bill.active);
+        setActiveBillsData(activeSadadBill);
       } else {
-        setInactiveBillsData((billsData || inactiveBillsData).filter((bill) => !bill.active));
+        const notActiveSadadBill = sadadBill?.filter((bill) => !bill?.active);
+        setInactiveBillsData(notActiveSadadBill);
       }
       setSelectedTab(tab);
     },
@@ -131,7 +135,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
         billNumOrBillingAcct: accountNumber,
         billId: id,
         billNickname: vendor,
-        walletNumber: walletNumber,
+        walletNumber,
         deviceInfo,
       };
 
@@ -144,7 +148,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
           renderToast({
             title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
             subTitle: billToDelete?.billTitle,
-            toastType: toastTypes.SUCCESS,
+            toastType: ToastTypes.SUCCESS,
           });
 
           return updatedBillsData;
@@ -171,22 +175,8 @@ const SadadBillsScreen: React.FC = ({ route }) => {
       title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
       subTitle: billSubTitle,
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
     });
-  };
-
-  const handelEditOrDelete = (index: number) => {
-    if (index === 0) {
-      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
-        billData: billToEditRef.current,
-        setEditBillSuccessToast,
-        billId: '1', // TODO: once api implemented on this screen will update it
-      });
-    } else {
-      setActionSheetOptions(deleteBillOptions);
-    }
-    sadadActionSheetRef?.current?.hide();
-    showActionSheet();
   };
 
   const deleteBillOptions = {
@@ -207,6 +197,8 @@ const SadadBillsScreen: React.FC = ({ route }) => {
     cancelButtonIndex: 2,
     showCancel: true,
     destructiveButtonIndex: 1,
+    // TODO: refactor codebase
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     onPress: handelEditOrDelete,
   };
 
@@ -235,14 +227,47 @@ const SadadBillsScreen: React.FC = ({ route }) => {
     showActionSheet();
   };
 
-  const onPressMoreOptions = (billId: number, item: BillProps) => {
+  const handelEditOrDelete = (index: number) => {
+    if (index === 0) {
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
+        billData: billToEditRef.current,
+        setEditBillSuccessToast,
+        billId: '1', // TODO: once api implemented on this screen will update it
+      });
+    } else {
+      setActionSheetOptions(deleteBillOptions);
+    }
+    sadadActionSheetRef?.current?.hide();
+    showActionSheet();
+  };
+
+  const onPressMoreOptions = (billId: number, item: BillDetailsProps) => {
     setSelectedBillId(billId);
     billToEditRef.current = item;
     getActionSheetOptions();
   };
 
   const onPressFooterBtn = () => {
-    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+    const billPaymentDetails = selectedBills?.map((bill) => ({
+      billerId: bill.biller.billerId,
+      billNumOrBillingAcct: bill.billAccountNumber,
+      amount: Number(bill.dueAmount),
+      dueDateTime: bill.dueDateTime,
+      billIdType: '1', // TODO: not receiving this value from response
+      billingCycle: '1', // TODO: need to confirm where can I get this value
+      billIndex: bill.billIndex,
+      serviceDescription: bill.biller.billerCategoryDesc,
+      billerName: bill.biller.billerDesc,
+      walletNumber,
+      billNickname: bill.nickName,
+      billerIcon: bill.biller.categoryImageURL,
+    }));
+
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+      isPayOnly: true,
+      showBalanceBox: false,
+      billPaymentInfos: billPaymentDetails,
+    });
   };
 
   const addStatusToData = async (newBills: BillProps[]) => {
@@ -293,7 +318,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
         case apiResponse?.apiResponseNotOk:
           renderToast({
             title: localizationText.ERROR.API_ERROR_RESPONSE,
-            toastType: toastTypes.WARNING,
+            toastType: ToastTypes.WARNING,
           });
           break;
 
@@ -329,7 +354,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
             small
             onPress={onPressAddNewBill}
             btnType={buttonVariants.LINK_BUTTON}
-            btnText={'COMMON.NEW'}
+            btnText="COMMON.NEW"
             rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
           />
         }
@@ -390,7 +415,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={'SADAD.ADD_NEW_BILL'}
+            btnText="SADAD.ADD_NEW_BILL"
             btnStyle={styles.addNewBillBtn}
             onPress={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS)}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}

@@ -8,6 +8,7 @@ import {
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
+import { openPhoneNumber } from '@app/utilities';
 import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -33,15 +34,13 @@ import forgetPasscode from '@app/network/services/core/forget-passcode/forget-pa
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { onCall } from '@app/utilities/call-helper.util';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
@@ -52,7 +51,6 @@ import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import IdentityConfirmationComponent from '../forgot-passcode/identity-confirmation.component';
 import useLogin from './login-via-passcode.hook';
 import loginViaPasscodeStyles from './login-via-passcode.style';
-import { useTranslation } from 'react-i18next';
 
 const LoginViaPasscode: React.FC = () => {
   const {
@@ -64,19 +62,18 @@ const LoginViaPasscode: React.FC = () => {
     setResendOtpPayload,
     resendForgetPasscodeOtp,
     otpVerificationRef,
-    apiError,
     setComponentToRender,
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
     checkAndHandlePermission,
+    otp,
   } = useLogin();
   const dispatch = useTypedDispatch();
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
-  const { t } = useTranslation();
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
@@ -85,7 +82,9 @@ const LoginViaPasscode: React.FC = () => {
   const { handleFaceID } = useBiometricService();
 
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { walletNumber, mobileNumber, firstName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber, mobileNumber, firstName, fatherName } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -94,11 +93,11 @@ const LoginViaPasscode: React.FC = () => {
 
   const { fetchLocation } = useLocation();
 
-  const renderToast = (apiError: string) => {
+  const renderToast = (apiErrorValue: string) => {
     setPasscodeError(true);
     showToast({
       title: localizationText.COMMON.INCORRECT_CODE,
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      subTitle: apiErrorValue || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
@@ -338,7 +337,7 @@ const LoginViaPasscode: React.FC = () => {
             setOtp={setOtp}
             setOtpError={setOtpError}
             otpError={otpError}
-            apiError={apiError}
+            otp={otp}
             showHelp
             title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
             handleOnPressHelp={handleOnPressHelp}
@@ -390,6 +389,10 @@ const LoginViaPasscode: React.FC = () => {
   // Using the useActionSheetOptions hook
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
+  const onCall = (phoneNumber: string) => {
+    openPhoneNumber(phoneNumber, colors, showToast, localizationText);
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader isDelink languageBtn onPress={() => handleDelink()} />
@@ -398,11 +401,12 @@ const LoginViaPasscode: React.FC = () => {
           <IPayUserAvatar style={styles.image} />
         </IPayView>
         <IPayView style={styles.childContainer}>
-          <IPayCaption1Text text={'LOGIN.WELCOME_BACK'} style={styles.welcomeText} />
+          <IPayCaption1Text text="LOGIN.WELCOME_BACK" style={styles.welcomeText} />
           {firstName && (
             <IPayGradientText
-              text={firstName}
+              text={`${firstName} ${fatherName || ''}`}
               gradientColors={gradientColors}
+              yScale={12}
               fontSize={styles.linearGradientText.fontSize}
               fontFamily={styles.linearGradientText.fontFamily}
               style={styles.gradientTextSvg}
@@ -413,7 +417,7 @@ const LoginViaPasscode: React.FC = () => {
             regular
             color={colors.primary.primary800}
             style={styles.enterPasscodeText}
-            text={'LOGIN.ENTER_YOUR_PASSCODE'}
+            text="LOGIN.ENTER_YOUR_PASSCODE"
           />
         </IPayView>
         <IPayPasscode
@@ -460,8 +464,8 @@ const LoginViaPasscode: React.FC = () => {
         cancelBnt
       >
         <IPayView style={styles.contactWrapper}>
-          <IPayFootnoteText style={styles.headerStyle} text={'COMMON.ASSISTANCE'} color={colors.primary.primary900} />
-          <IPayCaption1Text text={'COMMON.CONTACT_SERVICE_TEAM'} color={colors.natural.natural700} />
+          <IPayFootnoteText style={styles.headerStyle} text="COMMON.ASSISTANCE" color={colors.primary.primary900} />
+          <IPayCaption1Text text="COMMON.CONTACT_SERVICE_TEAM" color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactusList.map((item) => (

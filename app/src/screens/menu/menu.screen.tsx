@@ -10,7 +10,6 @@ import {
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -19,9 +18,9 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
 import logOut from '@app/network/services/core/logout/logout.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import clearSession from '@app/network/utilities/network-session-helper';
-import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { FC, useCallback, useRef } from 'react';
@@ -33,21 +32,9 @@ const MenuScreen: FC = () => {
   const styles = menuStyles(colors);
   const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const localizationText = useLocalization();
-  const dispatch = useTypedDispatch();
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-
-  const { showToast } = useToastContext();
-
-  const renderToast = (error: string) => {
-    showToast({
-      title: localizationText.COMMON.TRY_AGAIN,
-      subTitle: error || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
@@ -155,7 +142,7 @@ const MenuScreen: FC = () => {
                     color={colors.primary.primary900}
                     style={styles.profileNameText}
                   />
-                  <IPayCaption1Text text={'MENU.SHOW_PROFILE'} color={colors.natural.natural900} />
+                  <IPayCaption1Text text="MENU.SHOW_PROFILE" color={colors.natural.natural900} />
                 </IPayView>
                 <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
               </IPayLinearGradientView>
@@ -166,7 +153,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.setting} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={'COMMON.SETTINGS'}
+              text="COMMON.SETTINGS"
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -177,7 +164,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.messageQuestion} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={'MENU.SUPPORT_AND_HELP'}
+              text="MENU.SUPPORT_AND_HELP"
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -188,7 +175,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={'MENU.CARDS_MANAGEMENT'}
+              text="MENU.CARDS_MANAGEMENT"
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -201,7 +188,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.logout} size={24} color={colors.natural.natural700} />
             <IPaySubHeadlineText
               regular
-              text={'COMMON.DELINK_ALERT.DELINK'}
+              text="COMMON.DELINK_ALERT.DELINK"
               style={styles.menuItemText}
               color={colors.natural.natural700}
             />
@@ -210,7 +197,7 @@ const MenuScreen: FC = () => {
           <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
             <IPaySubHeadlineText
               regular
-              text={'MENU.LOGOUT'}
+              text="MENU.LOGOUT"
               style={styles.menuItemText}
               color={colors.natural.natural700}
             />

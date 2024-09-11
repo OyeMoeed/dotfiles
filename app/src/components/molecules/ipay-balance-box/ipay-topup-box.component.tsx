@@ -30,7 +30,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
       <IPayView style={styles.accountBalanceView}>
         <IPayView style={styles.commonContainer}>
           <IPayView>
-            <IPayCaption2Text color={colors.primary.primary900} text={'TOPUP_CONFIRMATION.ACCOUNT_BALANCE'} />
+            <IPayCaption2Text color={colors.primary.primary900} text="TOPUP_CONFIRMATION.ACCOUNT_BALANCE" />
             <IPayView style={styles.balanceContainer}>
               <IPaySubHeadlineText
                 color={colors.primary.primary900}
@@ -41,7 +41,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
                 color={colors.primary.primary900}
                 regular
                 style={styles.currencyStyle}
-                text={'COMMON.SAR'}
+                text="COMMON.SAR"
               />
             </IPayView>
           </IPayView>
@@ -51,12 +51,12 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
               onPress={onTopUpPress}
               btnType="outline"
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-              btnText={'TOPUP_CONFIRMATION.TOP_UP'}
+              btnText="TOPUP_CONFIRMATION.TOP_UP"
             />
           )}
         </IPayView>
         {isShowProgressBar && (
-          <IPayView style={[styles.gap]}>
+          <IPayView style={styles.gap}>
             <IPayProgressBar
               gradientWidth={`${balancePercentage(monthlyTopupLimit, remainingTopupLimit)}%`}
               colors={colors.gradientSecondary}
@@ -65,7 +65,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
         )}
         {isShowRemaining && (
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text text={'TOPUP_CONFIRMATION.REMAINING_AMOUNT'} />
+            <IPayCaption2Text text="TOPUP_CONFIRMATION.REMAINING_AMOUNT" />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text regular={false} text={formatNumberWithCommas(remainingTopupLimit)} />
               <IPayCaption2Text text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyTopupLimit)}`} />

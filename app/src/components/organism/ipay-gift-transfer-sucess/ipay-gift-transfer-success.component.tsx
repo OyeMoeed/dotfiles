@@ -24,7 +24,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
@@ -129,11 +129,11 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     <IPayView style={styles.giftText}>
       <IPayPressable style={styles.newTopup} onPress={onSendAnotherGift}>
         <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={'SEND_GIFT.SEND_ANOTHER'} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text="SEND_GIFT.SEND_ANOTHER" style={styles.newTopupText} regular />
       </IPayPressable>
       <IPayPressable style={styles.newTopup} onPress={onPreview}>
         <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={'SEND_GIFT.PREVIEW'} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text="SEND_GIFT.PREVIEW" style={styles.newTopupText} regular />
       </IPayPressable>
     </IPayView>
   );
@@ -170,7 +170,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                   style={styles.headlineText}
                 />
               </IPayView>
-              <IPayScrollView style={{ flex: 0 }} scrollEnabled>
+              <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
                 {formattedTransferDetails.map((item, index) => {
                   const { isAlinma, value } = item[0];
                   const isFirstItem = index === 0;
@@ -188,13 +188,13 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                       )}
                       <IPayFlatlist
                         style={styles.detailesFlex}
-                        scrollEnabled={true}
+                        scrollEnabled
                         data={item}
                         renderItem={renderWallerPaymentItem}
                       />
                       <IPayPressable style={styles.newTopup}>
                         <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                        <IPaySubHeadlineText text={'TOP_UP.SHARE'} regular style={styles.newTopupText} />
+                        <IPaySubHeadlineText text="TOP_UP.SHARE" regular style={styles.newTopupText} />
                       </IPayPressable>
                     </IPayView>
                   );
@@ -208,7 +208,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayButton
               large
               btnType="primary"
-              btnText={'COMMON.HOME'}
+              btnText="COMMON.HOME"
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
               onPress={onHome}
@@ -231,7 +231,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayLottieAnimation source={transferDetails?.selectedCard?.path ?? ''} style={styles.image} loop />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
-              <IPayCaption1Text text={'COMMON.SAR'} color={colors.backgrounds.orange} regular={false} />
+              <IPayCaption1Text text="COMMON.SAR" color={colors.backgrounds.orange} regular={false} />
             </IPayView>
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
               <IPayFootnoteText color={themeTextColor} style={styles.messagePreviewText} text={notes} />

@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayText } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -24,7 +24,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
 
   return (
     <>
-      <IPayText text={'PROFILE.EMPLOYMENT_DETAILS'} style={styles.heading} varient="natural" />
+      <IPayText text="PROFILE.EMPLOYMENT_DETAILS" style={styles.heading} varient="natural" />
       <Controller
         control={control}
         rules={{ required: true }}
@@ -96,7 +96,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         )}
         name="monthly_income"
       />
-      <IPayText text={'PROFILE.NATIONAL_ADDRESS_DETAILS'} varient="natural" style={styles.heading} />
+      <IPayText text="PROFILE.NATIONAL_ADDRESS_DETAILS" varient="natural" style={styles.heading} />
       <Controller
         control={control}
         rules={{ required: true }}

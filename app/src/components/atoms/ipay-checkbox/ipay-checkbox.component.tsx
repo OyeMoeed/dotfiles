@@ -23,16 +23,12 @@ const IPayCheckbox: React.FC<IPayCheckboxProps> = ({
   }, [isCheck]);
 
   const defaultBackgroundColor = checkboxBackgroundColor || colors.tertiary.tertiary500;
-  const backgroundColor = isChecked
-    ? disabled
-      ? colors.tertiary.tertiary100
-      : defaultBackgroundColor
-    : colors.natural.natural0;
-  const borderColor = isChecked
-    ? disabled
-      ? colors.tertiary.tertiary100
-      : defaultBackgroundColor
-    : colors.natural.natural500;
+
+  const defaultBackgroundColorDisabled = disabled ? colors.tertiary.tertiary100 : defaultBackgroundColor;
+  const backgroundColor = isChecked ? defaultBackgroundColorDisabled : colors.natural.natural0;
+
+  const backgroundColorDisabled = disabled ? colors.tertiary.tertiary100 : defaultBackgroundColor;
+  const borderColor = isChecked ? backgroundColorDisabled : colors.natural.natural500;
 
   const handlePress = () => {
     if (isCheck) setIsChecked((prev) => !prev);

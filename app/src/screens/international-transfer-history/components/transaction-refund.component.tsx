@@ -15,8 +15,8 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { Countires, LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, States, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, States, ToastTypes } from '@app/utilities/enums.util';
 import getArryFromObject from '@app/utilities/object-to-array.helper';
 import React, { useEffect, useState } from 'react';
 import transactionDetailsCompStyles from './transaction-details-component.style';
@@ -65,7 +65,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const getValueText = (value: string) => {
@@ -80,7 +80,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
       <IPayView style={styles.refundHeaderView}>
         <IPayIcon icon={icons.money_time2} size={64} />
         <IPayTitle2Text text={transactionAmount} color={colors.primary.primary900} style={styles.refundText} />
-        <IPayCaption1Text text={'TRANSACTION_HISTORY.REFUND_CAUTION_MESSAGE'} color={colors.primary.primary800} />
+        <IPayCaption1Text text="TRANSACTION_HISTORY.REFUND_CAUTION_MESSAGE" color={colors.primary.primary800} />
       </IPayView>
 
       <IPayView style={styles.redundChildView}>
@@ -125,7 +125,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
           btnType={buttonVariants.PRIMARY}
           large
           btnColor={colors.error.error500}
-          btnText={'TRANSACTION_HISTORY.REFUND'}
+          btnText="TRANSACTION_HISTORY.REFUND"
           textColor={colors.natural.natural0}
           btnIconsDisabled
           btnStyle={styles.refundBtn}
@@ -134,7 +134,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
           onPress={onPressCancel}
           btnType={buttonVariants.OUTLINED}
           large
-          btnText={'COMMON.CANCEL'}
+          btnText="COMMON.CANCEL"
           btnIconsDisabled
         />
       </IPayView>

@@ -51,6 +51,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [isCheck, setIsCheck] = useState<number | null>(null);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const transferFees = `${localizationText.LOCAL_TRANSFER.FEES} ${beneficiaryDummyData.fee} ${localizationText.COMMON.AND_VAT} ${beneficiaryDummyData.vat}`;
 
   const onPressNext = () => navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION);
 
@@ -111,7 +112,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                   <IPayButton
                     btnIconsDisabled
                     btnType={buttonVariants.LINK_BUTTON}
-                    btnText={'COMMON.VIEW_DETAILS'}
+                    btnText="COMMON.VIEW_DETAILS"
                     onPress={() => beneficiaryDetailsRef.current.present()}
                   />
                 }
@@ -142,9 +143,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                     <IPayFootnoteText color={colors.natural.natural900}>
                       {localizationText.COMMON.INCLUDE_FEES}
                     </IPayFootnoteText>
-                    <IPayCaption1Text
-                      color={colors.natural.natural500}
-                    >{`${localizationText.LOCAL_TRANSFER.FEES} ${beneficiaryDummyData.fee} ${localizationText.COMMON.AND_VAT} ${beneficiaryDummyData.vat}`}</IPayCaption1Text>
+                    <IPayCaption1Text color={colors.natural.natural500}>{transferFees}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
                 <IPayToggleButton toggleState={isIncludeFees} onToggleChange={() => setIsIncludeFees(!isIncludeFees)} />
@@ -165,7 +164,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           </IPayView>
         </IPayScrollView>
         <IPayButton
-          btnText={'COMMON.NEXT'}
+          btnText="COMMON.NEXT"
           btnType={buttonVariants.PRIMARY}
           large
           disabled={!selectedReason}

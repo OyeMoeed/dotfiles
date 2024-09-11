@@ -5,7 +5,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, CURRENCIES, RELATIONSHIPS, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
@@ -22,7 +21,6 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
   const styles = beneficiaryTransferStyles(colors);
   const localizationText = useLocalization();
   const { onSubmit, cities } = useInternationalTransferHook();
-  const {} = getValidationSchemas(localizationText);
 
   const validationSchema = Yup.object().shape({});
 
@@ -51,7 +49,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
                 <IPayFootnoteText
                   color={colors.natural.natural500}
                   style={styles.textStyle}
-                  text={'NEW_BENEFICIARY.BENEFECIARY_INFORMATION'}
+                  text="NEW_BENEFICIARY.BENEFECIARY_INFORMATION"
                 />
 
                 <IPayAnimatedTextInput
@@ -85,7 +83,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
                 <IPayFootnoteText
                   color={colors.natural.natural500}
                   style={styles.textStyle}
-                  text={'COMMON.BANK_DETAILS'}
+                  text="COMMON.BANK_DETAILS"
                 />
                 <IPayAnimatedTextInput
                   name={BeneficiaryFields.IBAN}
@@ -114,7 +112,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
               onPress={handleSubmit(onSubmit)}
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={'COMMON.SAVE_EDITS'}
+              btnText="COMMON.SAVE_EDITS"
               btnIconsDisabled
               btnStyle={styles.btnStyles}
             />
@@ -122,7 +120,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
               onPress={() => goBack()}
               large
               btnType={buttonVariants.OUTLINED}
-              btnText={'COMMON.CANCEL'}
+              btnText="COMMON.CANCEL"
               btnIconsDisabled
               btnStyle={styles.cancelBtn}
             />

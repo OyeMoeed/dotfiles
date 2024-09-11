@@ -11,6 +11,9 @@ export interface BillPaymentInfosTypes {
   serviceDescription: string;
   billerName: string;
   walletNumber: string;
+  billNickname?: string;
+  billerIcon?: string;
+  transactionId?: string;
 }
 
 export interface MultiPaymentBillPayloadTypes {

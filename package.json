@@ -5,7 +5,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint": "eslint --ext .tsx --ext .ts app/ .",
+    "lint": "eslint --ext .tsx --ext .ts app/",
     "lint:fix": "eslint --ext .tsx --ext .ts app/ . --fix",
     "format": "prettier --write ./app",
     "start": "react-native start",
@@ -34,7 +34,7 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
+      "eslint --quiet --fix"
     ],
     "**/*.{json,md}": [
       "prettier --write"
@@ -103,7 +103,6 @@
     "react-native-linear-gradient": "2.8.3",
     "react-native-maps": "1.15.6",
     "react-native-masked-text": "^1.13.0",
-    "react-native-otp-verify": "1.1.8",
     "react-native-permissions": "4.1.5",
     "react-native-portalize": "1.0.7",
     "react-native-qrcode-scanner": "1.5.5",

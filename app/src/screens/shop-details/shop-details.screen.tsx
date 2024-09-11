@@ -67,7 +67,7 @@ const ShopDetails: React.FC = ({ route }) => {
 
   const renderCarouselItem = ({ item }: RenderItemProps) => (
     <IPayView style={[styles.carouselItem, { backgroundColor: item.background }]}>
-      <IPayImage image={item.image} style={styles.image}></IPayImage>
+      <IPayImage image={item.image} style={styles.image} />
     </IPayView>
   );
   const renderBulletPoints = (point: string, index: number) => (
@@ -119,7 +119,7 @@ const ShopDetails: React.FC = ({ route }) => {
               </Animated.View>
               <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
                 <IPayView style={styles.termsChildContainer}>
-                  <IPayFootnoteText style={styles.termText} text={'SHOP.TERMS_AND_CONDITIONS'} />
+                  <IPayFootnoteText style={styles.termText} text="SHOP.TERMS_AND_CONDITIONS" />
                   <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
                 </IPayView>
               </IPayPressable>

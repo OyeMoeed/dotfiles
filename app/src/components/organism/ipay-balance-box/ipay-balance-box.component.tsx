@@ -19,7 +19,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { dashboardOptions } from '@app/utilities/enums.util';
+import { DashboardOptions } from '@app/utilities';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { forwardRef } from 'react';
@@ -65,25 +65,25 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       const hasAccess = checkUserAccess();
       if (hasAccess) {
         switch (option) {
-          case dashboardOptions.ATM_WITHDRAWALS:
+          case DashboardOptions.ATM_WITHDRAWALS:
             navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
             break;
-          case dashboardOptions.SEND_MONEY:
+          case DashboardOptions.SEND_MONEY:
             navigate(screenNames.WALLET_TRANSFER);
             break;
-          case dashboardOptions.LOCAL_TRANSFER:
+          case DashboardOptions.LOCAL_TRANSFER:
             navigate(screenNames.LOCAL_TRANSFER, {});
             break;
-          case dashboardOptions.INTERNATIONAL_TR:
+          case DashboardOptions.INTERNATIONAL_TR:
             navigate(screenNames.INTERNATIONAL_TRANSFER);
             break;
-          case dashboardOptions.BILL_PAYMENTS:
+          case DashboardOptions.BILL_PAYMENTS:
             navigate(screenNames.BILL_PAYMENTS_SCREEN);
             break;
-          case dashboardOptions.SEND_GIFT:
+          case DashboardOptions.SEND_GIFT:
             navigate(screenNames.SEND_GIFT);
             break;
-          case dashboardOptions.REQUEST_MONEY:
+          case DashboardOptions.REQUEST_MONEY:
             navigate(screenNames.REQUEST_MONEY);
             break;
 
@@ -147,7 +147,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         {/* Card Text */}
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.textStyle} text={'HOME.ACCOUNT_BALANCE'} />
+            <IPayFootnoteText style={styles.textStyle} text="HOME.ACCOUNT_BALANCE" />
             {allowEyeIconFunctionality && (
               <IPayPressable onPress={onEyeIconPress}>
                 <IPayIcon
@@ -160,7 +160,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
           <IPayPressable onPress={walletInfoPress}>
             <IPayView style={styles.eyeCon}>
-              <IPayFootnoteText style={styles.walletTextStyle} text={'HOME.WALLET_INFO'} />
+              <IPayFootnoteText style={styles.walletTextStyle} text="HOME.WALLET_INFO" />
               <IPayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayView>
           </IPayPressable>
@@ -169,13 +169,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={[styles.commonContainer, styles.gap]}>
           <IPayView style={styles.balanceContainer}>
             <IPayTitle2Text style={styles.balanceTextStyle} text={balanceValue} />
-            <IPayFootnoteText style={styles.currencyStyle} text={'COMMON.SAR'} />
+            <IPayFootnoteText style={styles.currencyStyle} text="COMMON.SAR" />
           </IPayView>
           <IPayButton
             onPress={topUpPress}
             btnType={buttonTypes.PRIMARY}
             leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.natural.natural0} />}
-            btnText={'COMMON.TOP_UP'}
+            btnText="COMMON.TOP_UP"
             btnStyle={styles.btnStyle}
           />
         </IPayView>
@@ -187,7 +187,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text style={styles.remainingAmountText} text={'HOME.REMAINING_AMOUNT'} />
+          <IPayCaption2Text style={styles.remainingAmountText} text="HOME.REMAINING_AMOUNT" />
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={formatNumberWithCommas(remainingSpendingLimit)} />
 

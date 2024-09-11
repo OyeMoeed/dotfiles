@@ -5,7 +5,8 @@ import { IPayPageWrapper } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { generatedStyles } from './identity-success-message.style';
+import { buttonVariants } from '@app/utilities';
+import generatedStyles from './identity-success-message.style';
 
 const IdentitySuccessMessage = () => {
   const { colors } = useTheme();
@@ -28,7 +29,13 @@ const IdentitySuccessMessage = () => {
             descriptionText={localizationText.PROFILE.UTILIZE_APP_FEATURE}
           />
           <IPayView style={styles.buttonContainer}>
-            <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={handleDonePress} />
+            <IPayButton
+              btnType={buttonVariants.PRIMARY}
+              btnText="COMMON.DONE"
+              large
+              btnIconsDisabled
+              onPress={handleDonePress}
+            />
           </IPayView>
         </IPayView>
       </IPayView>

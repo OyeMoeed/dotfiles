@@ -25,8 +25,6 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   gradientWidth,
   gradientColors,
   gradientBgStyle,
-  dailyRemainingOutgoingAmount,
-  monthlyIncomingLimit,
   topUpBtnStyle = {},
 }) => {
   const { colors } = useTheme();
@@ -42,7 +40,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
         <IPayView style={styles.textContainer}>
           <IPayCaption2Text
             color={colors.primary.primary900}
-            text={'HOME.ACCOUNT_BALANCE'}
+            text="HOME.ACCOUNT_BALANCE"
             style={[styles.textColor, accountBalanceTextStyle]}
           />
           <IPayView style={styles.balanceContainer}>
@@ -65,12 +63,11 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
           testID="topup-button"
           onPress={onPressTopup}
           small
-          btnStyle={styles.topupButton}
+          btnStyle={[styles.topupButton, topUpBtnStyle]}
           btnType={buttonVariants.OUTLINED}
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-          btnText={'COMMON.TOP_UP'}
+          btnText="COMMON.TOP_UP"
           textColor={colors.primary.primary500}
-          btnStyle={topUpBtnStyle}
         />
       </IPayView>
 
@@ -88,7 +85,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
             <IPayCaption2Text
               color={colors.natural.natural700}
               style={remainingAmountTextStyle}
-              text={'HOME.REMAINING_AMOUNT'}
+              text="HOME.REMAINING_AMOUNT"
             />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />

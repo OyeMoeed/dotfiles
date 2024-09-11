@@ -3,13 +3,12 @@ import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const cardManagementStyles = (themeColors: typeof colors) =>
+const cardManagementStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
       paddingTop: scaleFont(16),
     },
-
     noResult: { flex: 1, alignItems: 'center', justifyContent: 'center' },
     sendButton: {
       backgroundColor: colors.primary.primary500,

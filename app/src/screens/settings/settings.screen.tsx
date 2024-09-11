@@ -17,7 +17,7 @@ import { setAllowEyeIconFunctionality, setAppData, setNotificationSettings } fro
 import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { LanguageCode, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
+import { LanguageCode, spinnerVariant, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -41,7 +41,7 @@ const Settings: React.FC = () => {
   const dispatch = useTypedDispatch();
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  //use setting hook
+  // use setting hook
   const {
     onEnterPassCode,
     passcodeError,
@@ -91,7 +91,7 @@ const Settings: React.FC = () => {
       title: allowEyeIconFunctionality
         ? localizationText.CARDS.BALANCE_IS_VISIBLE
         : localizationText.CARDS.BALANCE_IS_HIDDEN,
-      toastType: toastTypes.INFORMATION,
+      toastType: ToastTypes.INFORMATION,
       icon: (
         <IPayIcon
           icon={allowEyeIconFunctionality ? icons.eye : icons.eye_slash}
@@ -134,7 +134,7 @@ const Settings: React.FC = () => {
           title: !biomatricToggle
             ? localizationText.CARDS.BIOMETRIC_STATUS_UPDATED
             : localizationText.CARDS.BIOMETRIC_STATUS_DISABLED,
-          toastType: toastTypes.INFORMATION,
+          toastType: ToastTypes.INFORMATION,
           icon: <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural0} />,
           displayTime: 1000,
         });
@@ -218,7 +218,7 @@ const Settings: React.FC = () => {
           <IPayOutlineButton
             rightIcon={<IPayImage image={images.edit} style={styles.editIconStyle} />}
             onPress={onOpenPasscodeSheet}
-            btnText={'SETTINGS.CHANGE'}
+            btnText="SETTINGS.CHANGE"
           />
         </IPayView>
 

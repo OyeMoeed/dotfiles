@@ -1,3 +1,4 @@
+import React from 'react';
 import icons from '@app/assets/icons';
 import {
   IPayCaption2Text,
@@ -15,7 +16,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { buttonVariants } from '@app/utilities/enums.util';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { CategoriesItem, IPayOrdersCardProps } from './ipay-orders-card-interface';
@@ -72,7 +73,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
                   btnStyle={styles.buttonStyles}
                   onPress={onPressView}
                   btnIconsDisabled
-                  btnText={'SHOP.VIEW_PRODUCT'}
+                  btnText="SHOP.VIEW_PRODUCT"
                   small
                 />
                 <IPayButton
@@ -80,7 +81,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
                   btnStyle={styles.buttonStyles}
                   btnIconsDisabled
                   onPress={purchaseAgain}
-                  btnText={'SHOP.PURCHASE_AGAIN'}
+                  btnText="SHOP.PURCHASE_AGAIN"
                   small
                 />
               </IPayView>

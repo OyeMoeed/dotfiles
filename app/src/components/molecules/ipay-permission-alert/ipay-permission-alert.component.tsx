@@ -24,7 +24,7 @@ const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, t
   return (
     <Modal
       testID={`${testID}-iapy-permission-alert`}
-      transparent={true}
+      transparent
       animationType="fade"
       visible={visible}
       onRequestClose={onClose}

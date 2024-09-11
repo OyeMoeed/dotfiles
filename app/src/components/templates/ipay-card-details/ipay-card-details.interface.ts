@@ -6,5 +6,3 @@ export interface cardDetailsProps {
   testID?: string;
   cardDetails?: any;
 }
-
-

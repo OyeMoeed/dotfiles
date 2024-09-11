@@ -13,10 +13,9 @@ import {
 import { LocalizationKeysMapping, TransactionsStatus } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { checkDateValidation, formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
-import { States, toastTypes } from '@app/utilities/enums.util';
+import { States, ToastTypes } from '@app/utilities/enums.util';
 import getArryFromObject from '@app/utilities/object-to-array.helper';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet } from 'react-native';
@@ -67,7 +66,7 @@ const IPayTransactionHistoryDetails = forwardRef(
           icon: <IPayImage image={images.money_tick} style={styles.moneyTimeImg} />,
           title: localizationText.TOP_UP.REF_NUMBER_COPIED,
           subTitle: `${transactionData?.amount} ${localizationText.COMMON.SAR}`,
-          toastType: toastTypes.SUCCESS,
+          toastType: ToastTypes.SUCCESS,
           displayTime: 2000,
         });
       },
@@ -88,7 +87,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     // when on press copy icon this method will trigger, it will copy the number and render taost message
     const onPressCopyIcon = (refNo: string) => {
       copyText(refNo);
-      renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+      renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
     };
 
     // To get the tile text for list view data of a trnasaction
@@ -170,7 +169,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     return (
       <IPayView testID={`${testID}-transaction-detail`} style={[styles.container, style]}>
         <IPayView style={styles.headerView}>
-          <IPayFootnoteText text={'TRANSACTION_HISTORY.AMOUNT'} />
+          <IPayFootnoteText text="TRANSACTION_HISTORY.AMOUNT" />
           <IPayTitle3Text
             regular={false}
             text={transactionAmount}

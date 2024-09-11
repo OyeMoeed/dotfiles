@@ -32,11 +32,11 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
-import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
+import internationalTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
 const InternationalTransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
-  const styles = internationlTransferConfirmationStyles(colors);
+  const styles = internationalTransferConfirmationStyles();
   const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -47,12 +47,7 @@ const InternationalTransferConfirmation: React.FC = () => {
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { getDataByKey, getTransactionListedData, getLocalizationKeyFromLabel } = useInternationalTransferData();
-  const {
-    getValues,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
@@ -146,10 +141,7 @@ const InternationalTransferConfirmation: React.FC = () => {
           <IPayLinearGradientView style={styles.gradientView} gradientColors={contentViewBg}>
             <IPayView style={styles.transferMsgView}>
               <IPayIcon icon={icons.clock3} size={24} />
-              <IPayFootnoteText
-                text={'INTERNATIONAL_TRANSFER.AMOUNT_TRANSFER_MESSAGE'}
-                style={styles.transferMsgText}
-              />
+              <IPayFootnoteText text="INTERNATIONAL_TRANSFER.AMOUNT_TRANSFER_MESSAGE" style={styles.transferMsgText} />
             </IPayView>
 
             <IPayView style={styles.receiverInfoContainer}>
@@ -214,7 +206,7 @@ const InternationalTransferConfirmation: React.FC = () => {
                 style={[styles.promocodeContainer, promoMatchSuccessfuly && styles.promocodeContainerContitional]}
               >
                 <IPayView>
-                  <IPayFootnoteText text={'INTERNATIONAL_TRANSFER.PROMO_CODE'} />
+                  <IPayFootnoteText text="INTERNATIONAL_TRANSFER.PROMO_CODE" />
                   {promoMatchSuccessfuly && <IPayCaption2Text text={discountFees} color={colors.natural.natural500} />}
                 </IPayView>
                 <IPayPressable
@@ -232,7 +224,7 @@ const InternationalTransferConfirmation: React.FC = () => {
             </IPayImageBackground>
 
             <IPayView style={styles.totalAmountView}>
-              <IPayFootnoteText text={'LOCAL_TRANSFER.TOTAL_AMOUNT'} color={colors.natural.natural900} />
+              <IPayFootnoteText text="LOCAL_TRANSFER.TOTAL_AMOUNT" color={colors.natural.natural900} />
               <IPayView style={styles.amountView}>
                 <IPaySubHeadlineText regular text={promoAmount} style={styles.strikethroughText} />
                 <IPaySubHeadlineText regular text={totalAmount()} color={colors.primary.primary800} />
@@ -242,14 +234,14 @@ const InternationalTransferConfirmation: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
               <IPayView style={styles.termsAndConditionsView}>
                 <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termAndConditionsText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
+                <IPayFootnoteText style={styles.termAndConditionsText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={'INTERNATIONAL_TRANSFER.TRANSFER'}
+              btnText="INTERNATIONAL_TRANSFER.TRANSFER"
               btnIconsDisabled
               disabled={!checkTermsAndConditions}
               onPress={onPressTransfer}
@@ -301,7 +293,7 @@ const InternationalTransferConfirmation: React.FC = () => {
           <IPayButton
             large
             btnType={buttonVariants.PRIMARY}
-            btnText={'COMMON.SAVE'}
+            btnText="COMMON.SAVE"
             btnIconsDisabled
             btnStyle={styles.saveBtnStyle}
             onPress={onPressSavePromo}

@@ -9,6 +9,7 @@ import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { navigate } from '@app/navigation/navigation-service.navigation';
+import { useTypedSelector } from '@app/store/store';
 import newsadadBillStyles from './new-sadad-bill.style';
 import { NewSadadBillProps } from './new-sadad-bill.interface';
 
@@ -23,6 +24,8 @@ const NewSadadBillScreen: React.FC = () => {
     totalAmount: '550',
   };
 
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<
     {
@@ -36,7 +39,6 @@ const NewSadadBillScreen: React.FC = () => {
     billerName,
     billerIcon,
     totalAmount,
-    serviceType,
     billNumOrBillingAcct,
     dueDate,
     billerId,
@@ -61,46 +63,26 @@ const NewSadadBillScreen: React.FC = () => {
     getAmountWarning();
   }, [amount]);
 
-  const shortString = (text: string) => {
-    if (text.length < 20) {
-      return text;
-    }
-    return `${text.slice(0, 20)}...`;
-  };
-
-  const detailsArray = [
-    {
-      id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
-      value: shortString(serviceType),
-    },
-    {
-      id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
-      value: billNumOrBillingAcct,
-    },
-    {
-      id: '3',
-      label: localizationText.COMMON.DUE_DATE,
-      value: dueDate,
-    },
-  ];
-
   const onNavigateToConfirm = () => {
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
-      billNickname,
-      billerName,
-      billerIcon,
-      serviceType,
-      billNumOrBillingAcct,
-      dueDate,
-      totalAmount: amount,
-      detailsArray,
-      billerId,
-      billIdType,
-      serviceDescription,
       showBalanceBox: false,
+      billPaymentInfos: [
+        {
+          billerId,
+          billNumOrBillingAcct,
+          amount: Number(amount),
+          dueDateTime: dueDate,
+          billIdType,
+          billingCycle: '', // TODO: need to confirm where can I get this value
+          billIndex: '0',
+          serviceDescription,
+          billerName,
+          walletNumber,
+          billNickname,
+          billerIcon,
+        },
+      ],
     });
   };
 
@@ -149,9 +131,9 @@ const NewSadadBillScreen: React.FC = () => {
           )}
         />
         <SadadFooterComponent
-          btnDisbaled={warningMessage}
+          btnDisbaled={warningMessage !== ''}
           btnStyle={styles.footerBtn}
-          btnText={'TOP_UP.PAY'}
+          btnText="TOP_UP.PAY"
           disableBtnIcons
           warning={warningMessage}
           onPressBtn={onNavigateToConfirm}

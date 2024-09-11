@@ -31,10 +31,6 @@ const PlayStationScreen: React.FC = () => {
     }
   };
 
-  const handleSearch = (newText: string) => {
-    setSearch(newText);
-  };
-
   const onPricePress = () =>
     navigate(ScreenNames.SHOP_DETAILS, {
       details: productDetailData,
@@ -98,7 +94,7 @@ const PlayStationScreen: React.FC = () => {
           <IPayTextInput
             text={search}
             onChangeText={setSearch}
-            placeholder={'COMMON.SEARCH'}
+            placeholder="COMMON.SEARCH"
             rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
             simpleInput
             containerStyle={styles.background}

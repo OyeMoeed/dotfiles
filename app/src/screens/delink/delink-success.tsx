@@ -1,3 +1,5 @@
+import React from 'react';
+
 import images from '@app/assets/images';
 import { delinkAnimation } from '@app/assets/lottie';
 import {
@@ -9,7 +11,6 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigateAndReset } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -22,7 +23,6 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
   const paramsData = route.params;
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
-  const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
 
   const handleDonePress = () => {
@@ -43,23 +43,23 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
       <IPayView style={styles.container}>
         <IPayView style={styles.linearGradientView}>
           <IPayLinearGradientView
-            style={[styles.innerLinearGradientView]}
+            style={styles.innerLinearGradientView}
             gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
           >
             <IPayLottieAnimation source={delinkAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={'COMMON.DELINK_ALERT.SUCCESSFULLY_DELINK'}
+                text="COMMON.DELINK_ALERT.SUCCESSFULLY_DELINK"
                 gradientColors={colors.gradientPrimary}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
                 style={styles.gradientTextSvg}
               />
             </IPayView>
-            <IPayFootnoteText regular color={colors.primary.primary800} text={'COMMON.DELINK_ALERT.NEED_LOGIN'} />
+            <IPayFootnoteText regular color={colors.primary.primary800} text="COMMON.DELINK_ALERT.NEED_LOGIN" />
             <IPayButton
               btnType="primary"
-              btnText={'COMMON.DONE'}
+              btnText="COMMON.DONE"
               large
               btnStyle={styles.btnStyle}
               btnIconsDisabled

@@ -21,8 +21,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { ItemProps } from './transfer-success.interface';
@@ -53,7 +53,7 @@ const TransferSuccessScreen = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const onPressShare = () => {
@@ -129,13 +129,13 @@ const TransferSuccessScreen = () => {
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={'TOP_UP.SHARE'}
+                  btnText="TOP_UP.SHARE"
                 />
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   rightIcon={<ExportIcon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={'TRANSACTION_HISTORY.VAT_INVOICE'}
+                  btnText="TRANSACTION_HISTORY.VAT_INVOICE"
                 />
               </IPayView>
               <IPayButton
@@ -143,7 +143,7 @@ const TransferSuccessScreen = () => {
                 btnType={buttonVariants.PRIMARY}
                 large
                 leftIcon={<IPayIcon icon={icons.HOME_2} size={14} color={colors.natural.natural0} />}
-                btnText={'COMMON.HOME'}
+                btnText="COMMON.HOME"
               />
             </IPayView>
           }

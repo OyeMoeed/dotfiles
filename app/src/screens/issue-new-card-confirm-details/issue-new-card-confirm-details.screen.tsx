@@ -43,7 +43,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
+  const [otpError, setOtpError] = useState<boolean>(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
@@ -130,7 +130,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView style={styles.contentTopMargin}>
-              <IPayFootnoteText text={'CARDS.CARD_DETAILS'} color={colors.natural.natural500} />
+              <IPayFootnoteText text="CARDS.CARD_DETAILS" color={colors.natural.natural500} />
               <IPayList
                 testID="ipay-list-card-holders-name"
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
@@ -144,7 +144,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
               />
 
               <IPayFootnoteText
-                text={'REPLACE_CARD.SHIPPING_ADDRESS'}
+                text="REPLACE_CARD.SHIPPING_ADDRESS"
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
@@ -162,7 +162,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                 }
               />
               <IPayFootnoteText
-                text={'CARD_OPTIONS.CARD_FEE'}
+                text="CARD_OPTIONS.CARD_FEE"
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
@@ -195,7 +195,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
+                <IPayFootnoteText style={styles.termText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
@@ -216,7 +216,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
               btnStyle={styles.button}
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
-              btnText={'COMMON.CONFIRM'}
+              btnText="COMMON.CONFIRM"
             />
           </IPayView>
         </IPayView>
@@ -253,6 +253,8 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
           setOtp={setOtp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
+          otp={otp}
+          otpError={otpError}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

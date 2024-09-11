@@ -29,7 +29,7 @@ import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 import offerDetailsStyles from './offer-details.style';
 
@@ -52,7 +52,7 @@ const OfferDetailsScreen: React.FC = () => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [offersData, setOffersData] = useState<OfferItem[] | null>([]);
 
@@ -134,6 +134,7 @@ const OfferDetailsScreen: React.FC = () => {
 
       return isoFormat;
     }
+    return undefined;
   };
 
   const calculateTimeLeft = () => {
@@ -198,11 +199,7 @@ const OfferDetailsScreen: React.FC = () => {
             <>
               <IPayView style={[styles.offerExpiryContainer, styles.detailsSectionCommon]}>
                 <IPayView style={styles.expiryTop}>
-                  <IPayFootnoteText
-                    color={colors.natural.natural900}
-                    regular={false}
-                    text={'OFFERS.OFFER_EXPIRES_IN'}
-                  />
+                  <IPayFootnoteText color={colors.natural.natural900} regular={false} text="OFFERS.OFFER_EXPIRES_IN" />
                   {offersData && (
                     <IPayFootnoteText
                       color={colors.primary.primary800}
@@ -215,19 +212,19 @@ const OfferDetailsScreen: React.FC = () => {
                   <IPayView style={styles.expiryTop}>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.days || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text text={'OFFERS.DAYS'} regular color={colors.natural.natural500} />
+                      <IPayCaption1Text text="OFFERS.DAYS" regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.hours || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text text={'OFFERS.HOURS'} regular color={colors.natural.natural500} />
+                      <IPayCaption1Text text="OFFERS.HOURS" regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.minutes || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text text={'OFFERS.MINUTES'} regular color={colors.natural.natural500} />
+                      <IPayCaption1Text text="OFFERS.MINUTES" regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.seconds || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text text={'OFFERS.SECONDS'} regular color={colors.natural.natural500} />
+                      <IPayCaption1Text text="OFFERS.SECONDS" regular color={colors.natural.natural500} />
                     </IPayView>
                   </IPayView>
                 )}
@@ -241,18 +238,18 @@ const OfferDetailsScreen: React.FC = () => {
                 )}
               </IPayView>
               <IPayView style={[styles.detailsContainer, styles.detailsSectionCommon]}>
-                <IPayFootnoteText regular={false} color={colors.natural.natural900} text={'OFFERS.OFFER_DETAILS'} />
+                <IPayFootnoteText regular={false} color={colors.natural.natural900} text="OFFERS.OFFER_DETAILS" />
                 <IPayCaption1Text color={colors.natural.natural500} text={DUMMY_DETAILS} />
               </IPayView>
               <IPayView style={[styles.availabilityContainer, styles.detailsSectionCommon]}>
-                <IPayFootnoteText color={colors.natural.natural900} text={'OFFERS.AVAILABILITY'} />
+                <IPayFootnoteText color={colors.natural.natural900} text="OFFERS.AVAILABILITY" />
                 <IPaySubHeadlineText color={colors.primary.primary800} regular text={DUMMY_AVAILABILITY} />
               </IPayView>
               <IPayView style={[styles.termsContainer, styles.detailsSectionCommon]}>
                 <IPayFootnoteText
                   regular={false}
                   color={colors.natural.natural900}
-                  text={'COMMON.TERMS_AND_CONDITIONS'}
+                  text="COMMON.TERMS_AND_CONDITIONS"
                 />
                 <IPayCaption1Text color={colors.natural.natural500} text={offersData[0]?.termsDetailsEn} />
               </IPayView>
@@ -265,7 +262,7 @@ const OfferDetailsScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} />}
-            btnText={'OFFERS.VISIT_WEBSITE'}
+            btnText="OFFERS.VISIT_WEBSITE"
             btnStyle={styles.flexStyle}
           />
           <IPayButton
@@ -273,7 +270,7 @@ const OfferDetailsScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.location1} color={colors.primary.primary500} />}
-            btnText={'OFFERS.NEAREST_STORE'}
+            btnText="OFFERS.NEAREST_STORE"
             btnStyle={styles.flexStyle}
           />
         </IPayView>

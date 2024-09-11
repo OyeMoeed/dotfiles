@@ -44,7 +44,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
+  const [, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -113,7 +113,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           monthlyIncomingLimit="20,000"
         />
         <IPayView style={styles.contentContainer}>
-          <IPayFootnoteText text={'CARDS.CARD_DETAILS'} color={colors.natural.natural500} style={styles.header} />
+          <IPayFootnoteText text="CARDS.CARD_DETAILS" color={colors.natural.natural500} style={styles.header} />
           <IPayList
             title={localizationText.REPLACE_CARD.HOLDERS_NAME}
             isShowDetail
@@ -125,7 +125,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           />
 
           <IPayFootnoteText
-            text={'REPLACE_CARD.SHIPPING_ADDRESS'}
+            text="REPLACE_CARD.SHIPPING_ADDRESS"
             color={colors.natural.natural500}
             style={styles.footNoteTextStyle}
           />
@@ -144,7 +144,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
             }
           />
           <IPayFootnoteText
-            text={'CARD_OPTIONS.CARD_FEE'}
+            text="CARD_OPTIONS.CARD_FEE"
             color={colors.natural.natural500}
             style={styles.footNoteTextStyle}
           />
@@ -162,7 +162,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
+                <IPayFootnoteText style={styles.termText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
@@ -173,7 +173,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
               btnIconsDisabled
               btnStyle={styles.confirmButton}
               btnType={buttonVariants.PRIMARY}
-              btnText={'COMMON.CONFIRM'}
+              btnText="COMMON.CONFIRM"
             />
           </IPayView>
         </IPayView>
@@ -196,6 +196,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           onPressConfirm={onNavigateToSuccess}
           mobileNumber="0511110302"
           setOtp={setOtp}
+          otp={otp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
         />

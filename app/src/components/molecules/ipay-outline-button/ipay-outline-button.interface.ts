@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { ViewStyle } from 'react-native';
 import { TextStyle } from 'react-native-size-matters';
 

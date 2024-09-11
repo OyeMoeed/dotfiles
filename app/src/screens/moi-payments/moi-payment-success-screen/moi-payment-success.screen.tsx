@@ -18,8 +18,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { ItemProps } from './moi-payment-success.interface';
@@ -50,7 +50,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const onPressShare = () => {
@@ -106,7 +106,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
               text={value}
               color={colors.primary.primary800}
               numberOfLines={1}
-              style={[styles.valueStyle]}
+              style={styles.valueStyle}
             />
             {icon && (
               <IPayPressable style={styles.icon} onPress={() => onPressCopy(value)}>
@@ -138,14 +138,14 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                   small
                   onPress={onPressPayOtherBill}
                   leftIcon={<Refresh2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={'BILL_PAYMENTS.PAY_ANOTHER_BILL'}
+                  btnText="BILL_PAYMENTS.PAY_ANOTHER_BILL"
                 />
                 <IPayButton
                   onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={'TOP_UP.SHARE'}
+                  btnText="TOP_UP.SHARE"
                 />
               </IPayView>
               <IPayButton
@@ -153,7 +153,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 btnType={buttonVariants.PRIMARY}
                 large
                 leftIcon={<Home2 style={styles.homeIcon} color={colors.natural.natural0} />}
-                btnText={'COMMON.HOME'}
+                btnText="COMMON.HOME"
               />
             </IPayView>
           }

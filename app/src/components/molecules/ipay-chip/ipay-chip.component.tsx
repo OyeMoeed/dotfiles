@@ -3,7 +3,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities/enums.util';
 import { getForegroundColor } from '@app/utilities/interface-utils';
 import { IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@components/atoms/index';
-import React from 'react';
+import React, { JSX } from 'react';
 import { IPayChipProps } from './ipay-chip.interface';
 import { getColorsStyle, styles } from './ipay-chip.style';
 

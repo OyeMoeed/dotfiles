@@ -18,14 +18,14 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
-import { MoiFormFormValues } from './moi-payment.interface';
+import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
@@ -40,7 +40,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [filteredData, setFilteredData] = useState<{ id: number; text: string }[]>(moiServiceProvider);
   const [customSnapPoint, setCustomSnapPoints] = useState<string[]>(['1%', '92%']);
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
-  const [isRefund, setIsRefund] = useState<boolean>(false);
+  const [, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
@@ -262,7 +262,7 @@ const MoiPaymentScreen: React.FC = () => {
                       errorMessage={errorMessage}
                     />
                     <IPayButton
-                      btnText={'NEW_SADAD_BILLS.INQUIRY'}
+                      btnText="NEW_SADAD_BILLS.INQUIRY"
                       btnType="primary"
                       onPress={onSubmit}
                       large
@@ -292,7 +292,7 @@ const MoiPaymentScreen: React.FC = () => {
                       <IPayTextInput
                         text={search}
                         onChangeText={onSearchTextChange}
-                        placeholder={'LOCAL_TRANSFER.SEARCH_FOR_NAME'}
+                        placeholder="LOCAL_TRANSFER.SEARCH_FOR_NAME"
                         rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                         simpleInput
                         style={styles.inputStyle}
@@ -342,7 +342,7 @@ const MoiPaymentScreen: React.FC = () => {
               <IPayContentNotFound
                 title={localizationText.BILL_PAYMENTS.NO_BILLS_WERE_FOUND}
                 message={localizationText.BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE}
-                btnText={'COMMON.TRY_AGAIN'}
+                btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

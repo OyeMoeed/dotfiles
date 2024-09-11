@@ -22,7 +22,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
@@ -38,11 +38,13 @@ import { useEffect, useState } from 'react';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
+const defaultValue = '0.00';
+
 const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
-  const [warningStatus, setWarningStatus] = useState<string>('');
+  const [warningStatus] = useState<string>('');
   const MAX_CONTACTS = 5;
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
@@ -137,6 +139,11 @@ const SendGiftAmountScreen = ({ route }) => {
     });
   };
 
+  const showRemoveAlert = (contact: Contact) => {
+    setContactToRemove(contact);
+    setAlertVisible(true);
+  };
+
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID, isAlinma } = item;
     let detailText = `${topUpAmount || 0} ${localizationText.COMMON.SAR}`;
@@ -145,9 +152,8 @@ const SendGiftAmountScreen = ({ route }) => {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
     }
 
-    const renderAlinmaIcon = (isAlinma) => {
-      return isAlinma ? <Alinma /> : <NonAlinma />;
-    };
+    const renderAlinmaIcon = (isAlinmaValid: boolean) => (isAlinmaValid ? <Alinma /> : <NonAlinma />);
+
     return (
       <IPayView>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && contacts.length > 0 ? (
@@ -156,7 +162,7 @@ const SendGiftAmountScreen = ({ route }) => {
               <IPayView style={styles.iconHeader}>
                 <IPayIcon icon={icons.user_filled} />
                 <IPayView>
-                  <IPayCaption1Text regular text={'SEND_GIFT.RECIPIENT'} color={colors.primary.primary600} />
+                  <IPayCaption1Text regular text="SEND_GIFT.RECIPIENT" color={colors.primary.primary600} />
                   <IPaySubHeadlineText text={givenName} regular color={colors.natural.natural900} />
                 </IPayView>
               </IPayView>
@@ -174,7 +180,7 @@ const SendGiftAmountScreen = ({ route }) => {
             )}
 
             <IPayView style={styles.amountInput2}>
-              <IPayFootnoteText style={styles.text2} text={'TOP_UP.ENTER_AMOUNT'} />
+              <IPayFootnoteText style={styles.text2} text="TOP_UP.ENTER_AMOUNT" />
               <IPayAmountInput
                 defaultValue={defaultValue}
                 style={styles.input}
@@ -186,9 +192,9 @@ const SendGiftAmountScreen = ({ route }) => {
             </IPayView>
             <IPayView style={styles.remove}>
               <IPayButton
-                btnType="link-button"
+                btnType={buttonVariants.LINK_BUTTON}
                 btnStyle={styles.remove}
-                btnText={'PROFILE.REMOVE'}
+                btnText="PROFILE.REMOVE"
                 rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
                 onPress={() => showRemoveAlert(item)}
                 textColor={colors.primary.primary500}
@@ -225,7 +231,6 @@ const SendGiftAmountScreen = ({ route }) => {
     );
   };
 
-  const defaultValue = '0.00';
   const renderAmountInput = () => {
     switch (selectedTab) {
       case localizationText.SEND_GIFT.EQUALLY:
@@ -263,7 +268,7 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={styles.manual}>
             <IPayFootnoteText style={styles.text} color={colors.primary.primary800}>
               {localizationText.SEND_GIFT.CUSTOM_AMOUNT1}
-              <IPayFootnoteText text={'SEND_GIFT.CUSTOM_AMOUNT2'} regular={false} />
+              <IPayFootnoteText text="SEND_GIFT.CUSTOM_AMOUNT2" regular={false} />
             </IPayFootnoteText>
           </IPayView>
         );
@@ -299,11 +304,6 @@ const SendGiftAmountScreen = ({ route }) => {
   const removeContactAndHideAlert = (contactId: string) => {
     handleRemoveContact(contactId);
     setAlertVisible(false);
-  };
-
-  const showRemoveAlert = (contact: Contact) => {
-    setContactToRemove(contact);
-    setAlertVisible(true);
   };
 
   // Calculate the amount to be shown above the button
@@ -363,8 +363,25 @@ const SendGiftAmountScreen = ({ route }) => {
   const isDisabled =
     parseFloat(amountToShow) <= 0 ||
     Number.isNaN(parseFloat(amountToShow)) ||
-    parseFloat(amountToShow) > monthlyRemainingOutgoingAmount ||
+    parseFloat(amountToShow) > Number(monthlyRemainingOutgoingAmount) ||
     (selectedTab === localizationText.SEND_GIFT.MANUAL && !areAllManualAmountsFilled());
+
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ListFooterContacts = () => (
+    <IPayButton
+      small
+      btnType="link-button"
+      btnStyle={styles.recipientsContainer}
+      textColor={colors.secondary.secondary800}
+      btnText="SEND_MONEY_FORM.ADD_MORE_RECIPIENTS"
+      hasLeftIcon
+      leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
+      onPress={addForm}
+      disabled={formInstances?.length >= MAX_CONTACTS}
+    />
+  );
+
   return (
     <IPaySafeAreaView>
       <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
@@ -384,7 +401,7 @@ const SendGiftAmountScreen = ({ route }) => {
             style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
           >
             <IPayView style={styles.header}>
-              <IPayFootnoteText text={'SEND_GIFT.SELECT_METHOD'} color={colors.primary.primary600} />
+              <IPayFootnoteText text="SEND_GIFT.SELECT_METHOD" color={colors.primary.primary600} />
               <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
             </IPayView>
             {renderAmountInput()}
@@ -398,19 +415,7 @@ const SendGiftAmountScreen = ({ route }) => {
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
-              ListFooterComponent={() => (
-                <IPayButton
-                  small
-                  btnType="link-button"
-                  btnStyle={styles.recipientsContainer}
-                  textColor={colors.secondary.secondary800}
-                  btnText={'SEND_MONEY_FORM.ADD_MORE_RECIPIENTS'}
-                  hasLeftIcon
-                  leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
-                  onPress={addForm}
-                  disabled={formInstances?.length >= MAX_CONTACTS}
-                />
-              )}
+              ListFooterComponent={<ListFooterContacts />}
               keyExtractor={(item) => item.recordID}
               showsVerticalScrollIndicator={false}
             />
@@ -429,7 +434,7 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayButton
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={'SEND_GIFT.SEND'}
+          btnText="SEND_GIFT.SEND"
           btnIconsDisabled
           onPress={getW2WActiveFriends}
           disabled={isDisabled || !!warningStatus}

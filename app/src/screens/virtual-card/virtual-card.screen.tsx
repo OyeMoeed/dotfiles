@@ -55,7 +55,7 @@ const VirtualCardScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
       <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
-      <IPayImage image={backgroundImage} style={[styles.background]} />
+      <IPayImage image={backgroundImage} style={styles.background} />
       <IPayAnimatedView
         animationStyles={animatedStyles}
         style={[styles.animatedContainer, isExpanded && styles.expandedBorderRadius]}
@@ -88,7 +88,7 @@ const VirtualCardScreen: React.FC = () => {
         <IPayButton
           btnType="primary"
           large
-          btnText={'VIRTUAL_CARD.ISSUE_CARD'}
+          btnText="VIRTUAL_CARD.ISSUE_CARD"
           btnIconsDisabled
           btnStyle={styles.marginStyles}
           onPress={onPressIsssueCard}

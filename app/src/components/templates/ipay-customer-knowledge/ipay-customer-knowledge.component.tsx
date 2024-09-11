@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
 import getLov from '@app/network/services/core/lov/get-lov.service';
@@ -302,7 +302,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
                 btnType="primary"
-                btnText={'COMMON.SAVE'}
+                btnText="COMMON.SAVE"
                 large
                 btnIconsDisabled
                 disabled={!isDirty}
