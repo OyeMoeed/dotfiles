@@ -38,18 +38,19 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import {
   ApiResponseStatusType,
   BeneficiaryTypes,
+  ToastTypes,
   alertType,
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  ToastTypes,
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
-import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
+
+import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
@@ -119,6 +120,7 @@ const LocalTransferScreen: React.FC = () => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    setIsLoadingData(false);
   };
 
   useFocusEffect(
@@ -431,22 +433,22 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
   const onDeleteBeneficiary = async () => {
+    setDeleteBeneficiary(false);
+    renderSpinner(true);
     try {
       const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
 
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         getBeneficiariesData();
-        setDeleteBeneficiary(false);
         showDeleteBeneficiaryToast();
       } else {
-        setDeleteBeneficiary(false);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    renderSpinner(false);
   };
   return (
     <IPaySafeAreaView style={styles.container}>
