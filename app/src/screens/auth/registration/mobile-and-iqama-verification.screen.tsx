@@ -53,6 +53,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     setOtp,
     otpVerificationRef,
     resendOtp,
+    otp
   } = useMobileAndIqamaVerification();
 
   const { colors } = useTheme();
@@ -164,6 +165,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                 otpError={otpError}
                 showHelp={false}
                 timeout={otpConfig.login.otpTimeout}
+                otp={otp}
               />
             </IPayPortalBottomSheet>
             {isLoading && <IPaySpinner />}
