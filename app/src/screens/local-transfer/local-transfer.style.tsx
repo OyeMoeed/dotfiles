@@ -60,7 +60,6 @@ const localTransferStyles = (themeColors: typeof colors) =>
     },
     textStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
-      // marginRight: moderateScale(4),
       textTransform: 'capitalize',
     },
     bankLogo: {
@@ -78,7 +77,7 @@ const localTransferStyles = (themeColors: typeof colors) =>
       paddingBottom: scaleFont(100),
     },
     listCenterContainer: {
-      paddingRight: moderateScale(12),
+      paddingRight: moderateScale(10),
     },
     buttonStyle: {
       justifyContent: 'center',
@@ -86,6 +85,7 @@ const localTransferStyles = (themeColors: typeof colors) =>
     actionSheetStyle: {
       bottom: moderateScale(20),
     },
+    listContainer: { paddingHorizontal: moderateScale(12) },
     editStyles: {
       width: '85%',
       gap: moderateScale(12),

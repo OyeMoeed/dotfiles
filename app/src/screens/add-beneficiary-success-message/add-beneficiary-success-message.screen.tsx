@@ -48,7 +48,8 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       actionSheetRef.current.show();
     }, 500);
   };
-  const { type } = route?.params;
+ const { type = '', response = {} } = route?.params || {};
+
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);
