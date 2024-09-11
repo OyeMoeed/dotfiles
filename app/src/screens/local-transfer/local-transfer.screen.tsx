@@ -195,7 +195,7 @@ const LocalTransferScreen: React.FC = () => {
       editNickNameSheetRef?.current?.close();
       getBeneficiariesData();
     } catch (error: any) {
-      setShowEditSheet(false);
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
     setShowEditSheet(false);
 
