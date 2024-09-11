@@ -433,6 +433,7 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
   const onDeleteBeneficiary = async () => {
+    renderSpinner(true);
     try {
       const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
 
