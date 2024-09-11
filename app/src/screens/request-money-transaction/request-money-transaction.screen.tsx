@@ -1,7 +1,10 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayPaginatedFlatlist, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayActionSheet, IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import IPayMoneyRequestList from '@app/components/organism/ipay-money-request-list/ipay-money-request-list.component';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -9,25 +12,23 @@ import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-de
 import IPayRequestDetails from '@app/components/templates/ipay-request-detail/ipay-request-detail.component';
 import { heightMapping } from '@app/components/templates/ipay-request-detail/ipay-request-detail.constant';
 import useConstantData from '@app/constants/use-constants';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
+import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
+import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
+import { formatDate } from '@app/utilities/date-helper.util';
 import { ApiResponseStatusType, buttonVariants, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
 import { FilterSelectedValue } from '@app/utilities/filter-interface.utll';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useEffect, useRef, useState } from 'react';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { useTypedSelector } from '@app/store/store';
-import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
-import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
-import { formatDate } from '@app/utilities/date-helper.util';
-import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
-import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
-import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
+import React, { useRef, useState } from 'react';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
@@ -38,6 +39,9 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const requestdetailRef = React.createRef<bottomSheetTypes>();
   const rejectRequestRef = React.createRef<bottomSheetTypes>();
   const cancelRequestRef = React.createRef<bottomSheetTypes>();
+  const [sentRequestsPage, setSentRequestsPage] = useState(1);
+  const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
+
   const {
     REQUEST_MONEY: {
       REQUEST_MONEY,
@@ -137,8 +141,10 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           // set data according to the tabs
           if (selectedTab === SEND_REQUESTS) {
             setSentRequestsData(page === 1 ? paginatedData : [...sentRequestsData, ...paginatedData]);
+            setSentRequestsPage(page + 1);
           } else {
             setRecivedRequestsData(page === 1 ? paginatedData : [...recivedRequestsData, ...paginatedData]);
+            setReceivedRequestsPage(page + 1);
           }
 
           renderSpinner(false);
@@ -168,13 +174,13 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     return { data: [], hasMore: false };
   };
 
-  // Fetch requets according to the selected tabs on component mount with page 1 and page size 10
-  useEffect(() => {
-    getRequestsData(1, 10);
-  }, [selectedTab]);
-
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
+    if (tab === SEND_REQUESTS) {
+      setSentRequestsPage(1);
+    } else {
+      setReceivedRequestsPage(1);
+    }
   };
 
   const [filters, setFilters] = useState<Array<string>>([]);
@@ -417,7 +423,9 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             index.toString(); // Convert the index to a string
           }}
           renderItem={renderItem}
-          fetchData={getRequestsData} // Pass fetchData for pagination
+          fetchData={(page, pageSize) =>
+            getRequestsData(selectedTab === SEND_REQUESTS ? sentRequestsPage : receivedRequestsPage, pageSize)
+          } // Pass fetchData for pagination
           pageSize={10} // Optional: Set page size for pagination
           data={dataForPaginatedFLatlist}
           ListEmptyComponent={noResult}

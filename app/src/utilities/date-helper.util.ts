@@ -32,12 +32,14 @@ const formatTime = (seconds: number): string => {
   const remainingSeconds = seconds % 60;
   return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
-function minutesToSeconds(minutes: string | number) {
+const minutesToSeconds = (minutes: string | number) => {
   const min = parseInt(minutes);
   return min * 60;
-}
+};
 
 const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
+
+const getDateFormate = (date: string, dateFormate: string) => moment(date).format(dateFormate);
 
 /**
  * Format date string to 'DD/MM/YYYY - HH:mm'
@@ -59,10 +61,11 @@ export {
   FORMAT_1,
   checkDateValidation,
   formatCountdownTime,
+  formatDate,
   formatDateAndTime,
   formatTime,
   formatTimeAndDate,
   formatYearToLastTwoDigits,
+  getDateFormate,
   minutesToSeconds,
-  formatDate,
 };

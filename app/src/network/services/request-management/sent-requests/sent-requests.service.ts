@@ -3,13 +3,13 @@ import requestType from '@app/network/request-types.network';
 
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import apiCall from '../../api-call.service';
-import { getAllRequestsMock, createMoneyRequestMockResponse } from './sent-requests.mock';
+import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
 import {
-  WalletNumberProp,
   CreateMoneyRequestPayloadTypes,
   CreateMoneyRequestResponseTypes,
+  WalletNumberProp,
 } from './sent-requests.interface';
-import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
+import { createMoneyRequestMockResponse, getAllRequestsMock } from './sent-requests.mock';
 
 /**
  * Fetches all received requests for a given wallet number.
@@ -23,13 +23,8 @@ const getAllSentRequests = async (payload: WalletNumberProp): Promise<unknown> =
   }
   try {
     const apiResponse: any = await apiCall({
-      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber),
+      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber, 'TO', payload.currentPage, 20),
       method: requestType.GET,
-      headers: {
-        mode: 'TO',
-        offset: payload.currentPage,
-        'max-record': 100,
-      },
     });
 
     if (apiResponse?.status?.type === 'SUCCESS') {
@@ -65,4 +60,4 @@ const createMoneyRequestService = async (
   }
 };
 
-export { getAllSentRequests, createMoneyRequestService };
+export { createMoneyRequestService, getAllSentRequests };
