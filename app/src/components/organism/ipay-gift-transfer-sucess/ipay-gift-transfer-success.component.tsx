@@ -153,55 +153,59 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
           style={styles.innerLinearGradientView}
           gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
         >
-          <IPayShareableImageView>
-            <IPayView>
-              <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-              <IPayView style={styles.linearGradientTextView}>
-                <IPayGradientText
-                  text={renderText()}
-                  gradientColors={gradientColors}
-                  style={styles.gradientTextSvg}
-                  fontSize={styles.linearGradientText.fontSize}
-                  fontFamily={styles.linearGradientText.fontFamily}
-                />
-                <IPaySubHeadlineText
-                  regular={false}
-                  text={`${totalAmount} ${localizationText.COMMON.SAR}`}
-                  style={styles.headlineText}
-                />
-              </IPayView>
-              <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
-                {formattedTransferDetails.map((item, index) => {
-                  const { isAlinma, value } = item[0];
-                  const isFirstItem = index === 0;
-                  return (
-                    <IPayView key={value} style={styles.walletBackground}>
-                      {isFirstItem && !isAlinma && (
-                        <IPayView style={styles.chipContainer}>
-                          <IPayChip
-                            containerStyle={styles.chipColors}
-                            icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-                            textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
-                            headingStyles={styles.chipColors}
-                          />
-                        </IPayView>
-                      )}
+          <IPayView>
+            <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+            <IPayView style={styles.linearGradientTextView}>
+              <IPayGradientText
+                text={renderText()}
+                gradientColors={gradientColors}
+                style={styles.gradientTextSvg}
+                fontSize={styles.linearGradientText.fontSize}
+                fontFamily={styles.linearGradientText.fontFamily}
+              />
+              <IPaySubHeadlineText
+                regular={false}
+                text={`${totalAmount} ${localizationText.COMMON.SAR}`}
+                style={styles.headlineText}
+              />
+            </IPayView>
+            <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
+              {formattedTransferDetails.map((item, index) => {
+                const { isAlinma, value } = item[0];
+                const isFirstItem = index === 0;
+                return (
+                  <IPayView key={value} style={styles.walletBackground}>
+                    {isFirstItem && !isAlinma && (
+                      <IPayView style={styles.chipContainer}>
+                        <IPayChip
+                          containerStyle={styles.chipColors}
+                          icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
+                          textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+                          headingStyles={styles.chipColors}
+                        />
+                      </IPayView>
+                    )}
+                    <IPayShareableImageView
+                      otherView={
+                        <IPayButton
+                          btnType="link-button"
+                          btnText={localizationText.TOP_UP.SHARE}
+                          leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+                        />
+                      }
+                    >
                       <IPayFlatlist
                         style={styles.detailesFlex}
-                        scrollEnabled
+                        scrollnabled
                         data={item}
                         renderItem={renderWallerPaymentItem}
                       />
-                      <IPayPressable style={styles.newTopup}>
-                        <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                        <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-                      </IPayPressable>
-                    </IPayView>
-                  );
-                })}
-              </IPayScrollView>
-            </IPayView>
-          </IPayShareableImageView>
+                    </IPayShareableImageView>
+                  </IPayView>
+                );
+              })}
+            </IPayScrollView>
+          </IPayView>
 
           <IPayView style={styles.btnBackground}>
             {renderActionLabel()}
