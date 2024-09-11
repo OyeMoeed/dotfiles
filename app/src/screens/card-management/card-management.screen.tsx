@@ -26,7 +26,6 @@ import { IPaySafeAreaView } from '@components/templates';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
-import checkUserAccess from '@app/utilities/check-user-access';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useTypedSelector } from '@app/store/store';
 import { deleteSavedCard, getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
@@ -199,13 +198,6 @@ const CardManagementScreen: React.FC = () => {
       message={`${cards[selectedCardIndex].name}\n**** **** **** ${cards[selectedCardIndex].lastFourDigit}`}
     />
   );
-
-  const onNavigateToAddCard = () => {
-    const hasAccess = checkUserAccess();
-    if (hasAccess) {
-      navigate(ScreenNames.ADD_CARD);
-    }
-  };
 
   const onPressSave = () => {
     editNickNameSheet.current?.close();

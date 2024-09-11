@@ -52,7 +52,6 @@ const TransferSummaryScreen: React.FC = () => {
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const styles = transferSummaryStyles(colors);

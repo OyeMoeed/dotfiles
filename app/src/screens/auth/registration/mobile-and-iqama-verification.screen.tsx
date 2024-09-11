@@ -53,7 +53,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     setOtp,
     otpVerificationRef,
     resendOtp,
-    otp
+    otp,
   } = useMobileAndIqamaVerification();
 
   const { colors } = useTheme();

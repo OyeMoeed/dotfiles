@@ -11,14 +11,7 @@ const getValidationSchemas = (localizationText: LocalizationText) => ({
     .required(localizationText.COMMON.INCORRECT_IQAMA)
     .matches(REGEX.nationalID, localizationText.COMMON.INCORRECT_IQAMA)
     .min(STANDARD_MAX_LENGTH, localizationText.COMMON.INCORRECT_IQAMA)
-    .test(
-      'validateSAID',
-      localizationText.COMMON.INCORRECT_IQAMA,
-      () =>
-        // if (!value) return false;
-        // return validateSAID(value) !== -1;
-        true,
-    ),
+    .test('validateSAID', localizationText.COMMON.INCORRECT_IQAMA, () => true),
 
   city: Yup.string().required(localizationText.COMMON.REQUIRED_FIELD),
   companyName: Yup.string(),

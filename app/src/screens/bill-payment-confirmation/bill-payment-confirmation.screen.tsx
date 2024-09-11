@@ -15,7 +15,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { shortString } from '@app/utilities/string-functions.utils';
+import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -111,7 +111,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           <IPayFlatlist
             contentContainerStyle={styles.contentContainerStyle}
             data={billPaymentInfos}
-            renderItem={({ item }: { item: BillPaymentInfosTypes }) => (
+            renderItem={({ item }) => (
               <IPayBillDetailsOption
                 headerData={{
                   title: item.billNickname || '-',

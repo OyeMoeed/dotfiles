@@ -40,13 +40,15 @@ const getCards = async (payload: CardsProp): Promise<any> => {
     return cardsListMock;
   }
   try {
+    const header = {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'api-version': 'v2',
+    };
+
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
       method: requestType.GET,
-      headers: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'api-version': 'v2',
-      },
+      headers: header,
     });
 
     // return cardsListMock;

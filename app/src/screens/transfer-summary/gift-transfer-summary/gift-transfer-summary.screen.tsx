@@ -56,7 +56,7 @@ const TransferSummaryScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [expandMsg, setExpandMsg] = useState<boolean>(false);
