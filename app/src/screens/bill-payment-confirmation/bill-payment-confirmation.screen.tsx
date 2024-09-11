@@ -102,7 +102,6 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     {
       id: '1',
       label: localizationText.PAY_BILL.SERVICE_TYPE,
-      // value: shortString(serviceType),
     },
     {
       id: '2',
