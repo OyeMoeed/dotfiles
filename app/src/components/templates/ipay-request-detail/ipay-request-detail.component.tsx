@@ -17,6 +17,7 @@ import {
   LocalizationKeysMapping,
   MoneyRequestStatus,
 } from '@app/enums/money-request-status.enum';
+import SummaryType from '@app/enums/summary-type';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -28,7 +29,6 @@ import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import SummaryType from '@app/enums/summary-type';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
 import { getTypeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
@@ -174,7 +174,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.type === TransactionOperations.DEBIT ? '' : '-'}${transaction?.amount} SAR`}
+                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} SAR`}
               </IPayTitle3Text>
             </IPayView>
             {transaction &&
