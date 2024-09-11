@@ -74,7 +74,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
   };
   const renderNoResults = () => (
     <IPayView style={styles.noResultsView}>
-      <IPayFootnoteText text={localizationText.COMMON.NO_RESULTS_FOUND} />
+      <IPayFootnoteText text={'COMMON.NO_RESULTS_FOUND'} />
     </IPayView>
   );
 

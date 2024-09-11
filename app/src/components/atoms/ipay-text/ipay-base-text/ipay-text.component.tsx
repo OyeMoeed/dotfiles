@@ -3,10 +3,10 @@ import useFonts from '@app/styles/theming/fonts.hook';
 
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';
 import { IPayTextProps } from './ipay-text.interface';
 import styles from './ipay-text.style';
+import { useTranslation } from 'react-i18next';
 
 /**
  * A component to display localized text.
@@ -30,13 +30,17 @@ const IPayText: React.FC<IPayTextProps> = ({
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
   const baseTextStyles = styles(getFontFamily as string, colors);
 
+  const mainChildren = typeof children === 'string' ? t(children) : children;
+  const propText = t(`${isAmount ? formatNumberWithCommas(text || '') : text}`);
+  const showText = text ? propText : mainChildren;
+
   return (
     <Text
       testID={`${testID}-base-text`}
       numberOfLines={numberOfLines}
       style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, { fontWeight }, style]}
     >
-      {text ? t(`${isAmount ? formatNumberWithCommas(text) : text}`) : children}
+      {showText}
     </Text>
   );
 };

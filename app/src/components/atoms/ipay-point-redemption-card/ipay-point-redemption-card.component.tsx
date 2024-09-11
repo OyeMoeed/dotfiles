@@ -40,12 +40,12 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
       <IPayView style={[styles.container, innerContainerStyle]}>
         <IPayView style={[styles.header, headerStyle]}>
           <PointRedemptionPlus />
-          <IPayText fontFamily={fonts.REGULAR} style={styles.headerText} text={localizationText.TOP_UP.AKHTR} />
+          <IPayText fontFamily={fonts.REGULAR} style={styles.headerText} text={'TOP_UP.AKHTR'} />
         </IPayView>
         {points && (
           <IPayView style={styles.pointsContainer}>
             <IPayView style={styles.yourPointsContainer}>
-              <IPayText style={styles.yourPointsText} text={localizationText.TOP_UP.YOUR_POINTS} />
+              <IPayText style={styles.yourPointsText} text={'TOP_UP.YOUR_POINTS'} />
               <IPayView style={styles.pointsValueContainer}>
                 <IPayGradientText
                   text={`${points} ${localizationText.COMMON.POINTS}`}
@@ -58,7 +58,7 @@ const IPayPointRedemptionCard: React.FC<IPayPointRedemptionCardProps> = ({
               </IPayView>
             </IPayView>
             <IPayView>
-              <IPayText style={styles.pointsValueText} text={localizationText.TOP_UP.VALUE_OF_POINTS} />
+              <IPayText style={styles.pointsValueText} text={'TOP_UP.VALUE_OF_POINTS'} />
               <IPayView style={styles.pointsValueContainer}>
                 <IPayText
                   style={styles.pointsValueAmount}
