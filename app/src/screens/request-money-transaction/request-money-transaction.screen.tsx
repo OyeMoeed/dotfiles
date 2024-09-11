@@ -277,6 +277,11 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
   const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
     try {
+      if (UpdateRequestType === UpdateRequestTypes.reject) {
+        rejectRequestRef.current?.hide();
+      } else {
+        cancelRequestRef.current?.hide();
+      }
       const apiResponse = await cancelRejectRequestService(
         walletInfo.walletNumber,
         requestDetail?.id,
@@ -285,11 +290,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          if (UpdateRequestType === UpdateRequestTypes.reject) {
-            rejectRequestRef.current?.hide();
-          } else {
-            cancelRequestRef.current?.hide();
-          }
+          getRequestsData(1, 20);
           break;
         case 'apiResponseNotOk':
           renderToast({
