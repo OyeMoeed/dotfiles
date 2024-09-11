@@ -16,8 +16,10 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -26,8 +28,6 @@ import { ApiResponseStatusType, buttonVariants, spinnerVariant, toastTypes } fro
 import { FilterSelectedValue } from '@app/utilities/filter-interface.utll';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
-import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
-import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
@@ -180,13 +180,11 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       } else {
         cancelRequestRef.current?.hide();
       }
-      showSpinner(true)
       const apiResponse = await cancelRejectRequestService(
         walletInfo.walletNumber,
         requestDetail?.id,
         UpdateRequestType,
       );
-      showSpinner(false);
 
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
