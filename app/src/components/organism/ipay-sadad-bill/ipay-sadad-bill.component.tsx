@@ -11,8 +11,8 @@ import {
 import { IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dateTimeFormat } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useMemo } from 'react';

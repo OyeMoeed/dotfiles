@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayDatePicker, IPayIcon } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import moment, { MomentInput } from 'moment';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Calendar, DateData } from 'react-native-calendars';
 import IPayPressable from '../../atoms/ipay-pressable/ipay-pressable.component';
 import IPayText from '../../atoms/ipay-text/ipay-base-text/ipay-text.component';

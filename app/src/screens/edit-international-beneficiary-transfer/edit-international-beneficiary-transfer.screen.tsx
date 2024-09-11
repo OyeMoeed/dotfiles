@@ -5,7 +5,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, CURRENCIES, RELATIONSHIPS, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
@@ -22,7 +21,6 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
   const styles = beneficiaryTransferStyles(colors);
   const localizationText = useLocalization();
   const { onSubmit, cities } = useInternationalTransferHook();
-  const {} = getValidationSchemas(localizationText);
 
   const validationSchema = Yup.object().shape({});
 

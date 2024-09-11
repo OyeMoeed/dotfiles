@@ -6,6 +6,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
 import { forwardRef, useImperativeHandle } from 'react';
 import useOtpVerification from './ipay-otp-verification.hook';
@@ -17,7 +18,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     {
       testID,
       onPressConfirm,
-      mobileNumber,
+      mobileNumber = '',
       setOtp,
       setOtpError,
       otpError,
@@ -28,14 +29,18 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       title,
       showVerify,
       timeout = 60,
+      containerStyle,
+      innerContainerStyle,
       onResendCodePress,
+      toastContainerStyle,
+      headingContainerStyle,
       otp = '',
     },
     ref,
   ) => {
     const { colors } = useTheme();
     const localizationText = useLocalization();
-    const styles = otpVerificationStyles(colors);
+    const styles = otpVerificationStyles();
     const { showToast } = useToastContext();
     const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
     const renderToast = (toastMsg: string) => {
@@ -46,6 +51,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         isShowRightIcon: false,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
         isBottomSheet,
+        containerStyle: toastContainerStyle,
       });
     };
     const onSendCodeAgainPress = () => {
@@ -62,72 +68,74 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     }));
 
     return (
-      <IPayView testID={`${testID}-otp-verification`} style={styles.container}>
+      <IPayView testID={`${testID}-otp-verification`} style={[styles.container, containerStyle]}>
         {isLoading && <IPaySpinner hasBackgroundColor={false} />}
 
         <IPayView style={styles.messageIconView}>
           <Message />
         </IPayView>
-        <IPayView style={styles.headingView}>
+        <IPayView style={[styles.headingView, headingContainerStyle]}>
           <IPayPageDescriptionText
             heading={title || localizationText.COMMON.ENTER_RECEIVED_CODE}
             text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${hideContactNumber(mobileNumber)}`}
           />
         </IPayView>
 
-        <IPayOtpInputText isError={otpError} onChangeText={onChangeText} value={otp} setValue={setOtp} />
+        <IPayView style={innerContainerStyle}>
+          <IPayOtpInputText isError={otpError} onChangeText={onChangeText} value={otp} setValue={setOtp} />
 
-        <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-          {`${localizationText.COMMON.CODE_EXPIRES_IN} ${formatTime(counter)}`}
-        </IPayCaption1Text>
+          <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
+            {`${localizationText.COMMON.CODE_EXPIRES_IN} ${formatTime(counter)}`}
+          </IPayCaption1Text>
 
-        <IPayButton
-          disabled={counter > 0}
-          btnType="link-button"
-          btnText={localizationText.COMMON.SEND_CODE_AGAIN}
-          small
-          btnStyle={styles.sendCodeBtnStyle}
-          rightIcon={
-            <IPayIcon
-              icon={icons.refresh}
-              size={14}
-              color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500}
-            />
-          }
-          onPress={onSendCodeAgainPress}
-        />
-        <IPayButton
-          btnType="primary"
-          disabled={counter <= 0}
-          btnText={localizationText.COMMON.CONFIRM}
-          large
-          btnIconsDisabled
-          onPress={onPressConfirm}
-        />
-        {showVerify && (
-          <IPayView style={styles.verifyView}>
-            <IPayView style={styles.verifyViewRow}>
-              <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
-              <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
-                {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
-              </IPayFootnoteText>
-            </IPayView>
-
-            <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-              {localizationText.ID_RENEWAL.WHY_VERIFY}
-            </IPayCaption1Text>
-          </IPayView>
-        )}
-        {showHelp && (
           <IPayButton
-            onPress={handleOnPressHelp}
-            btnType="link-button"
-            btnText={localizationText.COMMON.NEED_HELP}
-            large
-            btnStyle={styles.needHelpBtn}
-            rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
+            disabled={counter > 0}
+            btnType={buttonVariants.LINK_BUTTON}
+            btnText={localizationText.COMMON.SEND_CODE_AGAIN}
+            small
+            btnStyle={styles.sendCodeBtnStyle}
+            rightIcon={
+              <IPayIcon
+                icon={icons.refresh}
+                size={14}
+                color={counter > 0 ? colors.natural.natural200 : colors.primary.primary500}
+              />
+            }
+            onPress={onSendCodeAgainPress}
           />
-        )}
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            disabled={counter <= 0}
+            btnText={localizationText.COMMON.CONFIRM}
+            large
+            btnIconsDisabled
+            onPress={onPressConfirm}
+          />
+          {showVerify && (
+            <IPayView style={styles.verifyView}>
+              <IPayView style={styles.verifyViewRow}>
+                <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
+                <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
+                  {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+                </IPayFootnoteText>
+              </IPayView>
+
+              <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+                {localizationText.ID_RENEWAL.WHY_VERIFY}
+              </IPayCaption1Text>
+            </IPayView>
+          )}
+          {showHelp && (
+            <IPayButton
+              onPress={handleOnPressHelp}
+              btnType={buttonVariants.LINK_BUTTON}
+              btnText={localizationText.COMMON.NEED_HELP}
+              large
+              btnStyle={styles.needHelpBtn}
+              rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}
+            />
+          )}
+        </IPayView>
       </IPayView>
     );
   },

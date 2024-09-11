@@ -1,5 +1,6 @@
-import { States } from '@app/utilities/enums.util';
+import React, { JSX } from 'react';
 import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import { States } from '@app/utilities/enums.util';
 
 /**
  * Props for the RNList component.

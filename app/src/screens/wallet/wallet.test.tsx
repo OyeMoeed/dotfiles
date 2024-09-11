@@ -1,4 +1,4 @@
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 // Mocking Clipboard module

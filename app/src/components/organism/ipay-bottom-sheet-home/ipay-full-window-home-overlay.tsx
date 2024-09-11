@@ -19,7 +19,7 @@ const FullWindowOverlay = (props: { children: ReactNode }) => {
   if (Platform.OS !== 'ios') {
     return <IPayView {...props} />;
   }
-  return <NativeFullWindowOverlay style={styles.fullWindowOverlay}>{props.children}</NativeFullWindowOverlay>;
+  return <NativeFullWindowOverlay style={styles.fullWindowOverlay}>{props?.children}</NativeFullWindowOverlay>;
 };
 
 export default FullWindowOverlay;
