@@ -178,7 +178,7 @@ const OfferDetailsScreen: React.FC = () => {
   }, [offersData[0]?.endDate]);
 
   return (
-    <IPaySafeAreaView>
+    <IPaySafeAreaView style={styles.backgroundColor}>
       <IPayHeader title={localizationText.OFFERS.DETAILS} backBtn applyFlex />
       <IPayView style={styles.container}>
         {offersData && (

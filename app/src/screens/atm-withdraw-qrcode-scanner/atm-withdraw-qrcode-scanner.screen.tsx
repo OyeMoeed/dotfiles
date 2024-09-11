@@ -72,6 +72,10 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
         });
       }
 
+      if (route?.params?.setTopUpAmount != null) {
+        route?.params?.setTopUpAmount(0);
+      }
+
       hideSpinner();
       return;
     }

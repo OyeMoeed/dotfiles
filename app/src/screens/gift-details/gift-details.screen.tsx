@@ -92,6 +92,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       styles.subTitle,
       details[item]?.length > 20 && styles.condtionalWidthSubtitle,
       item === GiftCardDetailsKey.AMOUNT && details?.status === GiftCardStatus.EXPIRED && styles.textStyle,
+      item === GiftCardDetailsKey.AMOUNT && styles.currencyStyle,
     ];
   };
   const titleText = useCallback(
@@ -165,7 +166,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
-            text={titleText(details[item])}
+            text={`${titleText(details[item])}${item === GiftCardDetailsKey.AMOUNT ? ' ' + localizationText.COMMON.SAR : ''}`}
             color={getTitleColor(details[item])}
             numberOfLines={1}
             style={getDynamicStyles(styles, details, item)}
@@ -195,7 +196,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
-            isExpired={details?.status === GiftCardStatus.EXPIRED}
+            isExpired={details?.status === GiftCardStatus.EXPIRED && isSend}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton
@@ -215,7 +216,9 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         {isSend ? (
           <IPayView style={styles.bottomView}>
             <IPayFlatlist
-              data={Object.keys(details).filter((key) => GiftTransactionKeys.includes(key))}
+              data={Object.keys(details)
+                .filter((key) => GiftTransactionKeys.includes(key))
+                .sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
               keyExtractor={(_, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={renderCardDetails}
