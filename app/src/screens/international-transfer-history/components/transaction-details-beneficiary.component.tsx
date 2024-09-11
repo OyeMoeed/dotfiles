@@ -58,7 +58,7 @@ const IPayInternationalTransferBeneficiries: React.FC<IPayInternationalTransferB
         text={search}
         onChangeText={onSearchTextChange}
         style={styles.searchInput}
-        placeholder={localizationText.INTERNATIONAL_TRANSFER.SEARCH_FOR_BENEFICIARY}
+        placeholder={'INTERNATIONAL_TRANSFER.SEARCH_FOR_BENEFICIARY'}
         rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
         simpleInput
         containerStyle={styles.searchInputStyle}

@@ -384,7 +384,7 @@ const SendGiftAmountScreen = ({ route }) => {
             style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
           >
             <IPayView style={styles.header}>
-              <IPayFootnoteText text={localizationText.SEND_GIFT.SELECT_METHOD} color={colors.primary.primary600} />
+              <IPayFootnoteText text={'SEND_GIFT.SELECT_METHOD'} color={colors.primary.primary600} />
               <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
             </IPayView>
             {renderAmountInput()}

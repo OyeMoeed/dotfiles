@@ -28,7 +28,7 @@ const MerchantScreen: React.FC = () => {
         <IPayTextInput
           text={search}
           onChangeText={setSearch}
-          placeholder={localizationText.COMMON.SEARCH}
+          placeholder={'COMMON.SEARCH'}
           rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
           simpleInput
           style={styles.inputStyle}

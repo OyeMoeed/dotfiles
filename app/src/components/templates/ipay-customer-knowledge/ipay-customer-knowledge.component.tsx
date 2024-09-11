@@ -102,7 +102,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
         apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
       );
     }
-    
+
     renderSpinner(false);
   };
 
@@ -148,7 +148,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder="COMMON.SEARCH"
               rightIcon={searchIcon}
               simpleInput
               containerStyle={styles.searchInputStyle}
@@ -248,7 +248,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder="COMMON.SEARCH"
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}

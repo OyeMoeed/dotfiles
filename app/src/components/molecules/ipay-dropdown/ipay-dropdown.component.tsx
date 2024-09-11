@@ -80,7 +80,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
         <IPayInput
           onChangeText={onSearchChangeText}
           text={searchText}
-          placeholder={localizationText.COMMON.SEARCH}
+          placeholder={'COMMON.SEARCH'}
           style={styles.searchInputText}
         />
       </IPayView>

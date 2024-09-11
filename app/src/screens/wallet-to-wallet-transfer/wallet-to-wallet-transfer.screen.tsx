@@ -326,7 +326,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           placeholderTextColor={colors.natural.natural500}
           onChangeText={setSearch}
           label={localizationText.COMMON.SEARCH}
-          placeholder={localizationText.COMMON.SEARCH}
+          placeholder={'COMMON.SEARCH'}
           rightIcon={searchIcon}
           simpleInput
           containerStyle={styles.searchInputStyle}

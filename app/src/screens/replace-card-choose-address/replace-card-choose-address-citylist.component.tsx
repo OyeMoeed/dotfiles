@@ -30,7 +30,7 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
             label=""
             text={values.cityName}
             onChangeText={handleChange('cityName')}
-            placeholder={localizationText.COMMON.SEARCH}
+            placeholder={'COMMON.SEARCH'}
             rightIcon={searchIcon}
             simpleInput
             containerStyle={styles.citySearchStyle}

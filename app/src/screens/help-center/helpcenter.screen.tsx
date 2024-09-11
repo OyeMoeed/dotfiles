@@ -310,7 +310,7 @@ const HelpCenter: React.FC = () => {
             <IPayInput
               onChangeText={onSearchChangeText}
               text={searchText}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder={'COMMON.SEARCH'}
               style={styles.searchInputText}
             />
             <IPayPressable onPress={onClearInput}>

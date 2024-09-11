@@ -510,7 +510,7 @@ const InternationalTransferScreen: React.FC = () => {
               <IPayTextInput
                 text={search}
                 onChangeText={handleSearchChange}
-                placeholder={localizationText.COMMON.SEARCH}
+                placeholder={'COMMON.SEARCH'}
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
                 showLeftIcon={search}

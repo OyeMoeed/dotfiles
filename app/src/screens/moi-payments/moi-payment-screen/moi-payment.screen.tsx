@@ -292,7 +292,7 @@ const MoiPaymentScreen: React.FC = () => {
                       <IPayTextInput
                         text={search}
                         onChangeText={onSearchTextChange}
-                        placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
+                        placeholder={'LOCAL_TRANSFER.SEARCH_FOR_NAME'}
                         rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                         simpleInput
                         style={styles.inputStyle}

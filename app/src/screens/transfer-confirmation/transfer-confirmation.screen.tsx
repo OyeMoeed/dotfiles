@@ -146,7 +146,7 @@ const TransferConfirmation: React.FC = () => {
             </IPayView>
 
             <IPayView style={[styles.smallerTabView, styles.feesView]}>
-              <IPayFootnoteText text={localizationText.LOCAL_TRANSFER.FEES} color={colors.natural.natural900} />
+              <IPayFootnoteText text={'LOCAL_TRANSFER.FEES'} color={colors.natural.natural900} />
               <IPayFootnoteText text={fees} color={colors.primary.primary800} />
             </IPayView>
           </IPayView>

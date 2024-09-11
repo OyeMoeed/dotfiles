@@ -60,7 +60,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
         <IPayTextInput
           text={search}
           onChangeText={setSearch}
-          placeholder={localizationText.COMMON.SEARCH_BENEFICIARY}
+          placeholder={'COMMON.SEARCH_BENEFICIARY'}
           rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
           simpleInput
           style={styles.inputStyle}
