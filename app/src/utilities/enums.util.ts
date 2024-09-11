@@ -219,9 +219,14 @@ enum AddBeneficiary {
   BENEFICIARY_NAME = 'beneficiaryName',
   BENEFICIARY_NICK_NAME = 'beneficiaryNickName',
 }
+
+enum AddBeneficiaryKey {
+  BANK_NAME = 'Bank Name',
+  IBAN = 'Iban',
+}
 enum BeneficiaryTypes {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
+  ACTIVE = 'ACTIVATE',
+  INACTIVE = 'NEW_BENEFICIARY',
 }
 
 enum APIResponseType {
@@ -307,6 +312,7 @@ enum BillingStatus {
 export {
   APIResponseType,
   AddBeneficiary,
+  AddBeneficiaryKey,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
@@ -328,6 +334,7 @@ export {
   Filter,
   FilterValue,
   FiltersType,
+  GiftCardDetailsKey,
   GiftCardStatus,
   IdRenewalState,
   InfoTypes,
@@ -350,6 +357,6 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes,
-  GiftCardDetailsKey,
+  toastTypes
 };
+

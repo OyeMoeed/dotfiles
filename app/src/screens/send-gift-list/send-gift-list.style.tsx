@@ -46,7 +46,7 @@ const sendGiftStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
     },
     btnStyle: {
-      marginBottom: moderateScale(20),
+      marginBottom: moderateScale(41),
       justifyContent: 'center',
     },
     titleWrapper: { width: scaleSize(150) },

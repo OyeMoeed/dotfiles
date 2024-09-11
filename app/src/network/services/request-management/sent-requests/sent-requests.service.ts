@@ -2,8 +2,8 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 
 import apiCall from '../../api-call.service';
-import getAllRequestsMock from './sent-requests.mock';
 import { WalletNumberProp } from './sent-requests.interface';
+import getAllRequestsMock from './sent-requests.mock';
 import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
 
 /**
@@ -18,14 +18,8 @@ const getAllSentRequests = async (payload: WalletNumberProp): Promise<unknown> =
   }
   try {
     const apiResponse: any = await apiCall({
-      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber),
+      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber, 'TO', payload.currentPage, 20),
       method: requestType.GET,
-      headers: {
-        mode: 'TO',
-        offset: payload.currentPage,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'max-record': 100,
-      },
     });
 
     if (apiResponse?.status?.type === 'SUCCESS') {
