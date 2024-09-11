@@ -7,7 +7,7 @@ interface TransferInfoData {
   accountNumber?: string;
 }
 
-export interface IPayTransferInformationProps {
+interface IPayTransferInformationProps {
   testID?: string;
   showReason?: boolean;
   currencyStyle?: ViewStyle;
@@ -30,3 +30,5 @@ export interface IPayTransferInformationProps {
   maxLength?: number;
   inputFieldStyle?: ViewStyle;
 }
+
+export { IPayTransferInformationProps, TransferInfoData };

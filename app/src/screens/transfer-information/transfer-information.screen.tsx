@@ -1,23 +1,26 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
+import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getSarieTransferFees from '@app/network/services/cards-management/get-sarie-transfer-fees/get-sarie-transfer-fees.service';
+import { IGetCoreLovPayload } from '@app/network/services/core/lov/get-lov.interface';
+import { getCoreLov } from '@app/network/services/core/lov/get-lov.service';
 import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
 import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
@@ -33,9 +36,9 @@ const TransferInformation: React.FC = () => {
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const reasonsBottomSheetRef = useRef(null);
-  const [isLoadingGetFees, setIsLoadingGetFees] = useState<boolean>(false);
-  const [isLoadingPrepare, setIsLoadingPrepare] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
+
   const { showToast } = useToastContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -48,15 +51,27 @@ const TransferInformation: React.FC = () => {
     'params'
   >;
   const route = useRoute<RouteProps>();
-  const { beneficiaryBankDetail, nickname: beneficiaryNickName, beneficiaryCode } = route.params.beneficiaryDetails;
-  const { bankCode } = beneficiaryBankDetail;
-  const { localTransferReasonData } = useConstantData();
+  const {
+    beneficiaryBankDetail,
+    nickname: beneficiaryNickName,
+    beneficiaryCode,
+    fullName,
+    beneficiaryAccountNumber,
+  } = route.params.beneficiaryDetails;
+  const { bankCode, bankName } = beneficiaryBankDetail;
+
+  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
 
   const { isKeyboardOpen } = useKeyboardStatus();
-  const bankDetails = constants.BANK_DETAILS;
+  const bankDetails = {
+    icon: bankCode ?? '',
+    bankName,
+    title: fullName ?? '',
+    accountNumber: beneficiaryAccountNumber ?? '',
+  };
 
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
@@ -77,7 +92,7 @@ const TransferInformation: React.FC = () => {
   };
 
   const isTransferButtonDisabled = () => {
-    const hasValidAmount = transferAmount > 0;
+    const hasValidAmount = Number(transferAmount) > 0;
     const hasValidReason = selectedReason.trim() !== '';
     return !hasValidAmount || !hasValidReason;
   };
@@ -94,13 +109,6 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.present();
   };
 
-  const checkIsButtonDisabled = () => {
-    if (transferAmount && selectedReason) {
-      return false;
-    }
-    return true;
-  };
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -112,7 +120,6 @@ const TransferInformation: React.FC = () => {
   };
 
   const getTransferFee = async () => {
-    setIsLoadingGetFees(true);
     if (walletNumber) {
       try {
         const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
@@ -124,10 +131,8 @@ const TransferInformation: React.FC = () => {
           return null;
         }
         setAPIError(apiResponse?.error);
-        setIsLoadingGetFees(false);
         return null;
       } catch (error) {
-        setIsLoadingGetFees(false);
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         return null;
@@ -144,7 +149,6 @@ const TransferInformation: React.FC = () => {
 
   const onLocalTransferPrepare = async () => {
     if (transferAmount && selectedReason && walletNumber) {
-      setIsLoadingPrepare(true);
       const transferFees = await getTransferFee();
       if (transferFees) {
         try {
@@ -175,23 +179,49 @@ const TransferInformation: React.FC = () => {
               vatAmount: transferFees.vatAmount,
               totalAmount: getTotal(transferFees.feeAmount, transferFees.vatAmount, transferAmount),
               authentication: apiResponse?.authentication,
+              bankDetails,
             });
           } else if (apiResponse?.apiResponseNotOk) {
             setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
           } else {
             setAPIError(apiResponse?.error);
           }
-          setIsLoadingPrepare(false);
         } catch (error) {
-          setIsLoadingPrepare(false);
           setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
           renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         }
-      } else {
-        setIsLoadingPrepare(true);
       }
     }
   };
+
+  const getTransferreasonLovs = async () => {
+    showSpinner({
+      variant: spinnerVariant.DEFAULT,
+      hasBackgroundColor: true,
+    });
+    const payload: IGetCoreLovPayload = {
+      lovType: '184',
+      lovCode2: 'W',
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+    };
+    const apiResponse = await getCoreLov(payload);
+    if (apiResponse?.status.type === ApiResponseStatusType.SUCCESS) {
+      if (apiResponse?.response?.lovInfo)
+        setTransferReasonData(
+          apiResponse?.response?.lovInfo.map((item) => ({
+            id: item.recTypeCode,
+            text: item.recDescription,
+          })),
+        );
+    }
+    hideSpinner();
+  };
+
+  useEffect(() => {
+    getTransferreasonLovs();
+  }, []);
+
+  const onPressTopup = () => navigate(ScreenNames.WALLET);
 
   return (
     <IPaySafeAreaView>
@@ -203,6 +233,7 @@ const TransferInformation: React.FC = () => {
             availableBalance={currentBalance}
             hideBalance={appData?.hideBalance}
             showRemainingAmount
+            onPressTopup={onPressTopup}
           />
 
           <IPayView style={styles.bankDetailsView}>
@@ -249,11 +280,7 @@ const TransferInformation: React.FC = () => {
         cancelBnt
         bold
       >
-        <IPayListView
-          list={localTransferReasonData}
-          onPressListItem={onPressListItem}
-          selectedListItem={selectedReason}
-        />
+        <IPayListView list={transferReason} onPressListItem={onPressListItem} selectedListItem={selectedReason} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

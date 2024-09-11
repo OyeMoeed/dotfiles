@@ -5,7 +5,6 @@ import {
   IPayCaption2Text,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
@@ -69,7 +68,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
       <IPayView>
         {transferInfo ? (
           <IPayView style={styles.headingView}>
-            <IPayImage image={transferInfoData?.icon} style={styles.bankLogo} />
+            <IPayIcon icon={transferInfoData?.icon} size={30} />
             <IPayView style={styles.bankDetailsView}>
               <IPayView style={styles.bankTitleView}>
                 <IPayFootnoteText regular={false} text={transferInfoData?.title} color={colors.natural.natural900} />
