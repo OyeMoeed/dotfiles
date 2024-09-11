@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { isIosOS } from '@app/utilities/constants';
+import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const billPaymentStyles = () =>
@@ -18,7 +18,12 @@ const billPaymentStyles = () =>
     },
     toastContainerStyle: {
       margin: 0,
-      bottom: isIosOS ? moderateScale(120) : moderateScale(45),
+      ...Platform.select({
+        ios: { bottom: moderateScale(120) },
+        android: {
+          bottom: moderateScale(45),
+        },
+      }),
     },
     headingContainerStyle: {
       width: 'auto',
