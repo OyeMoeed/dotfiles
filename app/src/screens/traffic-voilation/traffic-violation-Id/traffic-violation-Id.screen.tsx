@@ -42,7 +42,7 @@ const TrafficViolationIDScreen: React.FC = () => {
         <IPayFootnoteText
           color={colors.primary.primary900}
           regular={false}
-          text={localizationText.TRAFFIC_VIOLATION.FOUND_VIOLATION}
+          text={'TRAFFIC_VIOLATION.FOUND_VIOLATION'}
         />
         <IPayButton
           btnIconsDisabled

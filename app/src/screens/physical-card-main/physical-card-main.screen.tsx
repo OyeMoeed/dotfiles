@@ -49,11 +49,7 @@ const PhysicalCardMainScreen: React.FC = () => {
         <IPayView style={styles.cardPrintedContainer}>
           <IPayView style={styles.cardPrintedChildContainer}>
             <IPayIcon icon={icons.card} size={16} color={colors.natural.natural930} />
-            <IPaySubHeadlineText
-              color={colors.natural.natural700}
-              regular
-              text={localizationText.PHYSICAL_CARD.CARD_PRINTED}
-            />
+            <IPaySubHeadlineText color={colors.natural.natural700} regular text={'PHYSICAL_CARD.CARD_PRINTED'} />
           </IPayView>
         </IPayView>
       )}
@@ -68,7 +64,7 @@ const PhysicalCardMainScreen: React.FC = () => {
         style={styles.headerText}
         color={colors.primary.primary900}
         regular={false}
-        text={localizationText.PHYSICAL_CARD.CHOOSE_FROM_YOUR}
+        text={'PHYSICAL_CARD.CHOOSE_FROM_YOUR'}
       />
 
       <IPayView style={styles.cardsContainer}>
@@ -89,13 +85,13 @@ const PhysicalCardMainScreen: React.FC = () => {
             style={styles.textCenter}
             regular
             color={colors.natural.natural500}
-            text={localizationText.PHYSICAL_CARD.CLICK_TO_ISSUE_YOUR}
+            text={'PHYSICAL_CARD.CLICK_TO_ISSUE_YOUR'}
           />
           <IPayFootnoteText
             style={styles.textCenter}
             regular
             color={colors.natural.natural500}
-            text={localizationText.PHYSICAL_CARD.ITS_DETAILS_WILL_BE}
+            text={'PHYSICAL_CARD.ITS_DETAILS_WILL_BE'}
           />
         </IPayView>
         <IPayButton

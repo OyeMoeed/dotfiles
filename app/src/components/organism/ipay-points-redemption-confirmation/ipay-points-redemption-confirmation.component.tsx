@@ -149,7 +149,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           >
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.TOP_UP.POINTS_REDEEMED} color={colors.natural.natural900} />
+                <IPayFootnoteText text={'TOP_UP.POINTS_REDEEMED'} color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
@@ -161,7 +161,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
             </IPayView>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.TOP_UP.EQUIVALENT_BALANCE} color={colors.natural.natural900} />
+                <IPayFootnoteText text={'TOP_UP.EQUIVALENT_BALANCE'} color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
@@ -176,7 +176,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           <IPayView style={styles.remainingDetails}>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.TOP_UP.REMAINING_POINTS} color={colors.natural.natural900} />
+                <IPayFootnoteText text={'TOP_UP.REMAINING_POINTS'} color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}

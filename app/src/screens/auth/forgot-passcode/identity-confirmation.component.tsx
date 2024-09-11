@@ -151,7 +151,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             <IPayPageDescriptionText
               style={styles.headingStyle}
               heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
-              text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
+              text={'FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE'}
             />
           </IPayView>
 

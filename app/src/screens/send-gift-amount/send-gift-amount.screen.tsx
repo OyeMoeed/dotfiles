@@ -156,11 +156,7 @@ const SendGiftAmountScreen = ({ route }) => {
               <IPayView style={styles.iconHeader}>
                 <IPayIcon icon={icons.user_filled} />
                 <IPayView>
-                  <IPayCaption1Text
-                    regular
-                    text={localizationText.SEND_GIFT.RECIPIENT}
-                    color={colors.primary.primary600}
-                  />
+                  <IPayCaption1Text regular text={'SEND_GIFT.RECIPIENT'} color={colors.primary.primary600} />
                   <IPaySubHeadlineText text={givenName} regular color={colors.natural.natural900} />
                 </IPayView>
               </IPayView>
@@ -178,7 +174,7 @@ const SendGiftAmountScreen = ({ route }) => {
             )}
 
             <IPayView style={styles.amountInput2}>
-              <IPayFootnoteText style={styles.text2} text={localizationText.TOP_UP.ENTER_AMOUNT} />
+              <IPayFootnoteText style={styles.text2} text={'TOP_UP.ENTER_AMOUNT'} />
               <IPayAmountInput
                 defaultValue={defaultValue}
                 style={styles.input}
@@ -267,7 +263,7 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={styles.manual}>
             <IPayFootnoteText style={styles.text} color={colors.primary.primary800}>
               {localizationText.SEND_GIFT.CUSTOM_AMOUNT1}
-              <IPayFootnoteText text={localizationText.SEND_GIFT.CUSTOM_AMOUNT2} regular={false} />
+              <IPayFootnoteText text={'SEND_GIFT.CUSTOM_AMOUNT2'} regular={false} />
             </IPayFootnoteText>
           </IPayView>
         );

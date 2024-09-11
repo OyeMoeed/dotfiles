@@ -124,10 +124,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
             <IPayView style={styles.infoView}>
               <IPayImage image={vendorIcon} style={styles.vendorIcon} />
               <IPayView>
-                <IPayCaption1Text
-                  text={localizationText.NEW_SADAD_BILLS.COMPANY_NAME}
-                  color={colors.natural.natural500}
-                />
+                <IPayCaption1Text text={'NEW_SADAD_BILLS.COMPANY_NAME'} color={colors.natural.natural500} />
                 <IPaySubHeadlineText regular text={vendor} style={styles.inputValueText} />
               </IPayView>
             </IPayView>
@@ -136,10 +133,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
 
           <IPayView style={styles.diabledCardView}>
             <IPayView>
-              <IPayCaption1Text
-                text={localizationText.NEW_SADAD_BILLS.SERVICE_TYPE}
-                color={colors.natural.natural500}
-              />
+              <IPayCaption1Text text={'NEW_SADAD_BILLS.SERVICE_TYPE'} color={colors.natural.natural500} />
               <IPaySubHeadlineText regular text={serviceType} style={styles.inputValueText} />
             </IPayView>
             <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.natural.natural500} />
@@ -147,10 +141,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
 
           <IPayView style={styles.diabledCardView}>
             <IPayView>
-              <IPayCaption1Text
-                text={localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
-                color={colors.natural.natural500}
-              />
+              <IPayCaption1Text text={'NEW_SADAD_BILLS.ACCOUNT_NUMBER'} color={colors.natural.natural500} />
               <IPaySubHeadlineText regular text={accountNumber} style={styles.inputValueText} />
             </IPayView>
           </IPayView>

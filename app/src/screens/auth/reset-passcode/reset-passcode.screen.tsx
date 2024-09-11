@@ -46,7 +46,7 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText
           heading={localizationText.SETTINGS.CURRENT_PASSCODE}
-          text={localizationText.SETTINGS.ENTER_CURRENT_PASSCODE}
+          text={'SETTINGS.ENTER_CURRENT_PASSCODE'}
         />
       </IPayView>
       <IPayView style={styles.fill}>

@@ -88,13 +88,13 @@ const RegistrationSuccessful: React.FC = () => {
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
                 <IPayView style={styles.linearGradientTextView}>
                   <IPayGradientTextMasked colors={gradientColors}>
-                    <IPayTitle2Text text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE} />
+                    <IPayTitle2Text text={'REGISTRATION.REGISTRATION_SUCCESS_MESSAGE'} />
                   </IPayGradientTextMasked>
                 </IPayView>
                 <IPayFootnoteText
                   regular
                   color={colors.primary.primary800}
-                  text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
+                  text={'REGISTRATION.EXPLORE_AND_ENJOY_FEATURE'}
                 />
                 <IPayButton
                   btnType="primary"
@@ -115,13 +115,13 @@ const RegistrationSuccessful: React.FC = () => {
 
             <IPayView style={[styles.linearGradientTextView, styles.paddingStyles]}>
               <IPayGradientTextMasked colors={gradientColors}>
-                <IPayTitle2Text text={localizationText.REGISTRATION.REGISTRATION_SUCCESS_MESSAGE} />
+                <IPayTitle2Text text={'REGISTRATION.REGISTRATION_SUCCESS_MESSAGE'} />
               </IPayGradientTextMasked>
             </IPayView>
             <IPayFootnoteText
               regular
               color={colors.primary.primary800}
-              text={localizationText.REGISTRATION.EXPLORE_AND_ENJOY_FEATURE}
+              text={'REGISTRATION.EXPLORE_AND_ENJOY_FEATURE'}
             />
           </IPayView>
         )}
@@ -130,10 +130,7 @@ const RegistrationSuccessful: React.FC = () => {
           <Animated.View style={[styles.bottomView, { height: bottomViewHeight }]}>
             <IPayView style={styles.faceIdView}>
               <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={60} />
-              <IPayFootnoteText
-                text={localizationText.REGISTRATION.ADDITIONAL_FEATURE}
-                style={styles.additionalFeatureText}
-              />
+              <IPayFootnoteText text={'REGISTRATION.ADDITIONAL_FEATURE'} style={styles.additionalFeatureText} />
               <IPayTitle3Text
                 text={
                   isAndroidOS
@@ -145,7 +142,7 @@ const RegistrationSuccessful: React.FC = () => {
 
               <IPayFootnoteText
                 color={colors.primary.primary900}
-                text={localizationText.REGISTRATION.ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT}
+                text={'REGISTRATION.ALLOW_YOU_EASY_ACCESS_TO_ACCOUNT'}
                 style={styles.faceIdDescription}
               />
 

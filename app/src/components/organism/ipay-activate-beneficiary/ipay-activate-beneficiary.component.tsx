@@ -18,10 +18,7 @@ const IPayActivateBeneficiary: React.FC<IPayActivateBeneficiaryProps> = ({
   const localizationText = useLocalization();
   return (
     <IPayView testID={`${testID}-activate-beneficiary`} style={styles.container}>
-      <IPayCaption1Text
-        text={localizationText.ACTIVATE_BENEFICIARY.CHOOSE_ACTIVATION_OPTION}
-        style={styles.descriptionStyles}
-      />
+      <IPayCaption1Text text={'ACTIVATE_BENEFICIARY.CHOOSE_ACTIVATION_OPTION'} style={styles.descriptionStyles} />
       <IPayButton
         btnType={buttonVariants.PRIMARY}
         btnText={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE}

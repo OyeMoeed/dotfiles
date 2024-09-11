@@ -14,12 +14,8 @@ const IPayPrintCard: React.FC<IPayPrintCardProps> = ({ testID, handlePrintCard, 
 
   return (
     <IPayView testID={`${testID}-print-card`} style={[styles.container, containerStyle]}>
-      <IPaySubHeadlineText
-        regular={false}
-        text={localizationText.CARD_OPTIONS.PHYSICAL_CARD}
-        color={colors.natural.natural700}
-      />
-      <IPayCaption1Text color={colors.natural.natural700} text={localizationText.CARD_OPTIONS.PRINT_CARD_DESCRIPTION} />
+      <IPaySubHeadlineText regular={false} text={'CARD_OPTIONS.PHYSICAL_CARD'} color={colors.natural.natural700} />
+      <IPayCaption1Text color={colors.natural.natural700} text={'CARD_OPTIONS.PRINT_CARD_DESCRIPTION'} />
       <IPayButton
         medium
         btnText={localizationText.CARDS.PRINT_CARD}

@@ -69,12 +69,8 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
           <IPayView style={sheetStyles.container}>
             <IPayView style={sheetStyles.topAlign}>
               <IPayIcon icon={icons.cardSlash1} size={64} />
-              <IPayTitle2Text
-                regular={false}
-                style={sheetStyles.weights}
-                text={localizationText.TOP_UP.CARD_HAS_EXPIRED}
-              />
-              <IPayCaption1Text text={localizationText.TOP_UP.INFO_EDIT_CARD} color={colors.primary.primary800} />
+              <IPayTitle2Text regular={false} style={sheetStyles.weights} text={'TOP_UP.CARD_HAS_EXPIRED'} />
+              <IPayCaption1Text text={'TOP_UP.INFO_EDIT_CARD'} color={colors.primary.primary800} />
             </IPayView>
             <IPayView style={sheetStyles.bottomAlign}>
               <IPayButton

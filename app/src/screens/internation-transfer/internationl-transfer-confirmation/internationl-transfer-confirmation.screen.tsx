@@ -147,7 +147,7 @@ const InternationalTransferConfirmation: React.FC = () => {
             <IPayView style={styles.transferMsgView}>
               <IPayIcon icon={icons.clock3} size={24} />
               <IPayFootnoteText
-                text={localizationText.INTERNATIONAL_TRANSFER.AMOUNT_TRANSFER_MESSAGE}
+                text={'INTERNATIONAL_TRANSFER.AMOUNT_TRANSFER_MESSAGE'}
                 style={styles.transferMsgText}
               />
             </IPayView>
@@ -214,7 +214,7 @@ const InternationalTransferConfirmation: React.FC = () => {
                 style={[styles.promocodeContainer, promoMatchSuccessfuly && styles.promocodeContainerContitional]}
               >
                 <IPayView>
-                  <IPayFootnoteText text={localizationText.INTERNATIONAL_TRANSFER.PROMO_CODE} />
+                  <IPayFootnoteText text={'INTERNATIONAL_TRANSFER.PROMO_CODE'} />
                   {promoMatchSuccessfuly && <IPayCaption2Text text={discountFees} color={colors.natural.natural500} />}
                 </IPayView>
                 <IPayPressable
@@ -232,7 +232,7 @@ const InternationalTransferConfirmation: React.FC = () => {
             </IPayImageBackground>
 
             <IPayView style={styles.totalAmountView}>
-              <IPayFootnoteText text={localizationText.LOCAL_TRANSFER.TOTAL_AMOUNT} color={colors.natural.natural900} />
+              <IPayFootnoteText text={'LOCAL_TRANSFER.TOTAL_AMOUNT'} color={colors.natural.natural900} />
               <IPayView style={styles.amountView}>
                 <IPaySubHeadlineText regular text={promoAmount} style={styles.strikethroughText} />
                 <IPaySubHeadlineText regular text={totalAmount()} color={colors.primary.primary800} />
@@ -242,10 +242,7 @@ const InternationalTransferConfirmation: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
               <IPayView style={styles.termsAndConditionsView}>
                 <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText
-                  style={styles.termAndConditionsText}
-                  text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
-                />
+                <IPayFootnoteText style={styles.termAndConditionsText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
                 <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>

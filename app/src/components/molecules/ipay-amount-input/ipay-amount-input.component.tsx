@@ -44,7 +44,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         caretHidden={carretHidden}
       />
       <IPayInput
-        text={localizationText.COMMON.SAR}
+        text={'COMMON.SAR'}
         editable={false}
         style={[styles.currencyText, !amount && styles.darkStyle, currencyStyle]}
       />

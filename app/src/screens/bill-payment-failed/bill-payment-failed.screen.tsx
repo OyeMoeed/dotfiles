@@ -18,11 +18,8 @@ const BillPaymentFailedScreen: React.FC = () => {
       <IPayView style={styles.alertContainer}>
         <IPayView style={styles.alertWrapper}>
           <IPayIcon testID="danger12-icon" icon={icons.danger12} size={80} color={colors.error.error500} />
-          <IPayTitle2Text text={localizationText.PAY_BILL.PAYMENT_FAILED} style={styles.titleStyle} />
-          <IPayFootnoteText
-            text={localizationText.PAY_BILL.TRY_AGAIN_COMPLETE_PAYMENT}
-            color={colors.primary.primary800}
-          />
+          <IPayTitle2Text text={'PAY_BILL.PAYMENT_FAILED'} style={styles.titleStyle} />
+          <IPayFootnoteText text={'PAY_BILL.TRY_AGAIN_COMPLETE_PAYMENT'} color={colors.primary.primary800} />
         </IPayView>
         <IPayView style={styles.buttonWrapper}>
           <IPayButton

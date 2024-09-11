@@ -106,7 +106,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
                 {beneficiaryName && (
                   <IPayView style={styles.beneficaryNameView}>
                     <IPayFootnoteText
-                      text={localizationText.INTERNATIONAL_TRANSFER.NEW_BENEFICIARY_NAME}
+                      text={'INTERNATIONAL_TRANSFER.NEW_BENEFICIARY_NAME'}
                       color={colors.natural.natural900}
                     />
                     <IPayFootnoteText text={beneficiaryName} color={colors.natural.natural500} />

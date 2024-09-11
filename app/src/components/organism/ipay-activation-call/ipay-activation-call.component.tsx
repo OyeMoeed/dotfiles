@@ -81,8 +81,8 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
   return (
     <IPayView testID={`${testID}-activation-call`} style={styles.container}>
       <CallOutgoing />
-      <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE} />
-      <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.ACTIVATION_STEPS} />
+      <IPayTitle2Text text={'ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE'} />
+      <IPayCaption1Text style={styles.desStyle} text={'ACTIVATE_BENEFICIARY.ACTIVATION_STEPS'} />
       <IPayFlatlist
         data={guideStepsToCall}
         keyExtractor={(_, index) => index.toString()}

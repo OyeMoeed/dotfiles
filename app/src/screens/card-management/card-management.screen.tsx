@@ -66,11 +66,7 @@ const CardManagementScreen: React.FC = () => {
     <IPayView>
       {id === defaultCardID && (
         <IPayView style={styles.renderItemContainer}>
-          <IPaySubHeadlineText
-            regular
-            color={colors.success.success500}
-            text={localizationText.CARD_MANAGEMENT.DEFAULT}
-          />
+          <IPaySubHeadlineText regular color={colors.success.success500} text={'CARD_MANAGEMENT.DEFAULT'} />
         </IPayView>
       )}
       <IPayCardListItem
@@ -163,11 +159,7 @@ const CardManagementScreen: React.FC = () => {
         <IPayNoCardIndicatorComponenent />
       ) : (
         <IPayView style={styles.cardListContainer}>
-          <IPayFootnoteText
-            regular
-            color={colors.natural.natural500}
-            text={localizationText.CARD_MANAGEMENT.YOUR_CARDS}
-          />
+          <IPayFootnoteText regular color={colors.natural.natural500} text={'CARD_MANAGEMENT.YOUR_CARDS'} />
           <IPayFlatlist
             contentContainerStyle={styles.contentContainerStyle}
             data={cards}

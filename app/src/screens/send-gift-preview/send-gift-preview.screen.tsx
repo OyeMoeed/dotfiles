@@ -136,11 +136,7 @@ const SendGiftPreview: FC = ({ route }) => {
               <IPayImage image={images.eidMubarak} style={styles.image} />
               <IPayView style={styles.amount}>
                 <IPayTitle1Text text={AMOUNT} regular={false} style={{ color: colors.backgrounds.orange }} />
-                <IPayCaption1Text
-                  text={localizationText.COMMON.SAR}
-                  color={colors.backgrounds.orange}
-                  regular={false}
-                />
+                <IPayCaption1Text text={'COMMON.SAR'} color={colors.backgrounds.orange} regular={false} />
               </IPayView>
               <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
                 <IPayFootnoteText style={styles.messagePreviewText} text={message} />

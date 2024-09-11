@@ -129,8 +129,8 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
           {variants === TopupStatus.FAILED && (
             <IPayView style={styles.failedVariant}>
               <IPayIcon icon={icons.danger12} size={scaleSize(80)} />
-              <IPayTitle2Text text={localizationText.TOP_UP.TOPUP_FAILED} style={styles.failedText} />
-              <IPayFootnoteText text={localizationText.TOP_UP.REVIEW_CARD} style={styles.failedSubtitle} />
+              <IPayTitle2Text text={'TOP_UP.TOPUP_FAILED'} style={styles.failedText} />
+              <IPayFootnoteText text={'TOP_UP.REVIEW_CARD'} style={styles.failedSubtitle} />
             </IPayView>
           )}
 
@@ -169,7 +169,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
                 <IPayView style={styles.linearGradientTextView}>
                   <IPayGradientText
-                    text={localizationText.TOP_UP.TOPUP_REDEMPTION_SUCESS}
+                    text={'TOP_UP.TOPUP_REDEMPTION_SUCESS'}
                     gradientColors={gradientColors}
                     style={styles.gradientTextSvg}
                     fontSize={styles.linearGradientText?.fontSize}

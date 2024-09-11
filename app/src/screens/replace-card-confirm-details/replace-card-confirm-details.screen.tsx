@@ -99,11 +99,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView style={styles.contentTopMargin}>
-              <IPayFootnoteText
-                text={localizationText.CARDS.CARD_DETAILS}
-                color={colors.natural.natural500}
-                style={styles.header}
-              />
+              <IPayFootnoteText text={'CARDS.CARD_DETAILS'} color={colors.natural.natural500} style={styles.header} />
               <IPayList
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
                 isShowDetail
@@ -115,24 +111,21 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               />
 
               <IPayFootnoteText
-                text={localizationText.REPLACE_CARD.SHIPPING_ADDRESS}
+                text={'REPLACE_CARD.SHIPPING_ADDRESS'}
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
               <IPayList
                 title={localizationText.REPLACE_CARD.ADDRESS}
                 rightText={
-                  <IPayPressable
-                    onPress={onClose}
-                    style={styles.addressStyle}
-                  >
+                  <IPayPressable onPress={onClose} style={styles.addressStyle}>
                     <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
                     <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
                   </IPayPressable>
                 }
               />
               <IPayFootnoteText
-                text={localizationText.CARD_OPTIONS.CARD_FEE}
+                text={'CARD_OPTIONS.CARD_FEE'}
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
@@ -163,7 +156,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+                <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>

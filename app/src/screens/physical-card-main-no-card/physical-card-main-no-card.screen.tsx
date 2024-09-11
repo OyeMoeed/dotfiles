@@ -20,14 +20,10 @@ const PhysicalCardMainNoCardScreen: React.FC = () => {
         <IPayFootnoteText
           style={styles.descriptionText}
           regular
-          text={localizationText.PHYSICAL_CARD.YOU_DONT_HAVE_CARD}
+          text={'PHYSICAL_CARD.YOU_DONT_HAVE_CARD'}
           color={colors.natural.natural500}
         />
-        <IPayFootnoteText
-          regular
-          text={localizationText.PHYSICAL_CARD.CREATE_AND_REQUEST}
-          color={colors.natural.natural500}
-        />
+        <IPayFootnoteText regular text={'PHYSICAL_CARD.CREATE_AND_REQUEST'} color={colors.natural.natural500} />
         <IPayView>
           <IPayView style={styles.childContainer}>
             <IPayView style={styles.stepBox}>
@@ -36,7 +32,7 @@ const PhysicalCardMainNoCardScreen: React.FC = () => {
               <IPayCaption2Text
                 style={styles.stepBoxText}
                 regular
-                text={localizationText.PHYSICAL_CARD.FIRST_ISSUE_YOUR}
+                text={'PHYSICAL_CARD.FIRST_ISSUE_YOUR'}
                 color={colors.primary.primary900}
               />
             </IPayView>
@@ -47,7 +43,7 @@ const PhysicalCardMainNoCardScreen: React.FC = () => {
               <IPayCaption2Text
                 style={styles.stepBoxText}
                 regular
-                text={localizationText.PHYSICAL_CARD.THEN_PRINT_YOUR}
+                text={'PHYSICAL_CARD.THEN_PRINT_YOUR'}
                 color={colors.primary.primary900}
               />
             </IPayView>

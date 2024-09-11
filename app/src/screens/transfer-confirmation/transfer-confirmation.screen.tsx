@@ -159,16 +159,13 @@ const TransferConfirmation: React.FC = () => {
             <IPayView style={styles.transferInfoView}>
               <IPayIcon icon={icons.clock_circle} size={24} color={colors.primary.primary900} />
               <IPayFootnoteText
-                text={localizationText.LOCAL_TRANSFER.THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS}
+                text={'LOCAL_TRANSFER.THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS'}
                 style={styles.transferAmountDetailsText}
               />
             </IPayView>
             <IPayView style={styles.totalAmountView}>
               <IPayView style={styles.smallerTabView}>
-                <IPayFootnoteText
-                  text={localizationText.LOCAL_TRANSFER.TOTAL_AMOUNT}
-                  color={colors.natural.natural900}
-                />
+                <IPayFootnoteText text={'LOCAL_TRANSFER.TOTAL_AMOUNT'} color={colors.natural.natural900} />
                 <IPayFootnoteText text={totalAmount} color={colors.primary.primary800} />
               </IPayView>
             </IPayView>

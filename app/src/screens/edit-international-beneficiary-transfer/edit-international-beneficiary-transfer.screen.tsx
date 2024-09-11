@@ -51,7 +51,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
                 <IPayFootnoteText
                   color={colors.natural.natural500}
                   style={styles.textStyle}
-                  text={localizationText.NEW_BENEFICIARY.BENEFECIARY_INFORMATION}
+                  text={'NEW_BENEFICIARY.BENEFECIARY_INFORMATION'}
                 />
 
                 <IPayAnimatedTextInput
@@ -85,7 +85,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
                 <IPayFootnoteText
                   color={colors.natural.natural500}
                   style={styles.textStyle}
-                  text={localizationText.COMMON.BANK_DETAILS}
+                  text={'COMMON.BANK_DETAILS'}
                 />
                 <IPayAnimatedTextInput
                   name={BeneficiaryFields.IBAN}

@@ -112,7 +112,7 @@ const OffersListScreen: React.FC = () => {
       />
       <IPayView style={styles.container}>
         <IPayView style={styles.topTextContainer}>
-          <IPayFootnoteText color={colors.natural.natural500} regular text={localizationText.OFFERS.AVAILABLE_OFFERS} />
+          <IPayFootnoteText color={colors.natural.natural500} regular text={'OFFERS.AVAILABLE_OFFERS'} />
           <IPayView style={styles.smallDOT} />
           <IPayCaption2Text
             regular

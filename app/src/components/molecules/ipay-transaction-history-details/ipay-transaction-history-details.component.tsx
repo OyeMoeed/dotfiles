@@ -170,7 +170,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     return (
       <IPayView testID={`${testID}-transaction-detail`} style={[styles.container, style]}>
         <IPayView style={styles.headerView}>
-          <IPayFootnoteText text={localizationText.TRANSACTION_HISTORY.AMOUNT} />
+          <IPayFootnoteText text={'TRANSACTION_HISTORY.AMOUNT'} />
           <IPayTitle3Text
             regular={false}
             text={transactionAmount}

@@ -179,7 +179,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, {selectedBeneficiary});
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, { selectedBeneficiary });
   };
 
   const handleBeneficiaryActions = useCallback((index: number) => {
@@ -398,7 +398,6 @@ const InternationalTransferScreen: React.FC = () => {
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
   const onPressActivateBeneficiary = async () => {
-   
     const activateBeneficiaryPayload = {
       beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
       activationMethod: ActivationMethods.IVR,
@@ -482,7 +481,7 @@ const InternationalTransferScreen: React.FC = () => {
           <IPayPressable onPress={onPressHistory}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
-              <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
+              <IPaySubHeadlineText regular color={colors.primary.primary500} text={'COMMON.HISTORY'} />
             </IPayView>
           </IPayPressable>
         }

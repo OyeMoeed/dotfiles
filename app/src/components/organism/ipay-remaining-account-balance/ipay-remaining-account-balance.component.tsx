@@ -91,7 +91,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
       {!isMultipleOfHundred(topUpAmount) && payChannelType === payChannel.ATM && (
         <IPayCaption2Text
           regular={false}
-          text={localizationText.ATM.MULTIPLE_OF_HUNDERED}
+          text={'ATM.MULTIPLE_OF_HUNDERED'}
           color={colors.natural.natural700}
           style={styles.chipContainer}
         />

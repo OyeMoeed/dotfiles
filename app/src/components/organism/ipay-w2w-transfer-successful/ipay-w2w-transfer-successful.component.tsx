@@ -136,7 +136,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
       }}
     >
       <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-      <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TRANSFER} style={styles.newTopupText} regular />
+      <IPaySubHeadlineText text={'TOP_UP.NEW_TRANSFER'} style={styles.newTopupText} regular />
     </IPayPressable>
   );
 
@@ -175,7 +175,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
                 />
                 <IPayPressable style={styles.newTopup}>
                   <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                  <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
+                  <IPaySubHeadlineText text={'TOP_UP.SHARE'} regular style={styles.newTopupText} />
                 </IPayPressable>
               </IPayView>
             ))}

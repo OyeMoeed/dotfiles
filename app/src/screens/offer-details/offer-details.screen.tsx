@@ -201,7 +201,7 @@ const OfferDetailsScreen: React.FC = () => {
                   <IPayFootnoteText
                     color={colors.natural.natural900}
                     regular={false}
-                    text={localizationText.OFFERS.OFFER_EXPIRES_IN}
+                    text={'OFFERS.OFFER_EXPIRES_IN'}
                   />
                   {offersData && (
                     <IPayFootnoteText
@@ -215,31 +215,19 @@ const OfferDetailsScreen: React.FC = () => {
                   <IPayView style={styles.expiryTop}>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.days || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text text={localizationText.OFFERS.DAYS} regular color={colors.natural.natural500} />
+                      <IPayCaption1Text text={'OFFERS.DAYS'} regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.hours || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text
-                        text={localizationText.OFFERS.HOURS}
-                        regular
-                        color={colors.natural.natural500}
-                      />
+                      <IPayCaption1Text text={'OFFERS.HOURS'} regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.minutes || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text
-                        text={localizationText.OFFERS.MINUTES}
-                        regular
-                        color={colors.natural.natural500}
-                      />
+                      <IPayCaption1Text text={'OFFERS.MINUTES'} regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.seconds || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text
-                        text={localizationText.OFFERS.SECONDS}
-                        regular
-                        color={colors.natural.natural500}
-                      />
+                      <IPayCaption1Text text={'OFFERS.SECONDS'} regular color={colors.natural.natural500} />
                     </IPayView>
                   </IPayView>
                 )}
@@ -253,22 +241,18 @@ const OfferDetailsScreen: React.FC = () => {
                 )}
               </IPayView>
               <IPayView style={[styles.detailsContainer, styles.detailsSectionCommon]}>
-                <IPayFootnoteText
-                  regular={false}
-                  color={colors.natural.natural900}
-                  text={localizationText.OFFERS.OFFER_DETAILS}
-                />
+                <IPayFootnoteText regular={false} color={colors.natural.natural900} text={'OFFERS.OFFER_DETAILS'} />
                 <IPayCaption1Text color={colors.natural.natural500} text={DUMMY_DETAILS} />
               </IPayView>
               <IPayView style={[styles.availabilityContainer, styles.detailsSectionCommon]}>
-                <IPayFootnoteText color={colors.natural.natural900} text={localizationText.OFFERS.AVAILABILITY} />
+                <IPayFootnoteText color={colors.natural.natural900} text={'OFFERS.AVAILABILITY'} />
                 <IPaySubHeadlineText color={colors.primary.primary800} regular text={DUMMY_AVAILABILITY} />
               </IPayView>
               <IPayView style={[styles.termsContainer, styles.detailsSectionCommon]}>
                 <IPayFootnoteText
                   regular={false}
                   color={colors.natural.natural900}
-                  text={localizationText.COMMON.TERMS_AND_CONDITIONS}
+                  text={'COMMON.TERMS_AND_CONDITIONS'}
                 />
                 <IPayCaption1Text color={colors.natural.natural500} text={offersData[0]?.termsDetailsEn} />
               </IPayView>

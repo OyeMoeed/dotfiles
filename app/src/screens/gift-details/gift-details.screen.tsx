@@ -136,7 +136,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         />
         <IPayCaption1Text
           style={styles.receiveCurrencyStyle}
-          text={localizationText.COMMON.SAR}
+          text={'COMMON.SAR'}
           color={colors.warning.warning600}
           regular={false}
         />

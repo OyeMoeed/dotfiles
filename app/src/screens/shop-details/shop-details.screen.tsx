@@ -119,7 +119,7 @@ const ShopDetails: React.FC = ({ route }) => {
               </Animated.View>
               <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
                 <IPayView style={styles.termsChildContainer}>
-                  <IPayFootnoteText style={styles.termText} text={localizationText.SHOP.TERMS_AND_CONDITIONS} />
+                  <IPayFootnoteText style={styles.termText} text={'SHOP.TERMS_AND_CONDITIONS'} />
                   <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
                 </IPayView>
               </IPayPressable>

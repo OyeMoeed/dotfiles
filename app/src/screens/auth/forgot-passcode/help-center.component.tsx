@@ -82,8 +82,8 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
         <>
           <IPayView style={styles.titleContainer}>
             <icons.question width={scale(40)} height={verticalScale(40)} />
-            <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
-            <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
+            <IPayTitle2Text text={'FORGOT_PASSCODE.FAQ'} style={styles.title} />
+            <IPayCaption1Text regular text={'FORGOT_PASSCODE.FAQ_DEFINITION'} style={styles.subtitle} />
           </IPayView>
           <IPayFlatlist
             scrollEnabled={false}

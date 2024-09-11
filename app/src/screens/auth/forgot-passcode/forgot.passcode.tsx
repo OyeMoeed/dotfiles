@@ -65,7 +65,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
             <IPayView>
               <IPayPageDescriptionText
                 heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
-                text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
+                text={'FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE'}
               />
             </IPayView>
 

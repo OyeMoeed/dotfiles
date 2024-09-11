@@ -22,7 +22,7 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
     <IPayView testID={`${testID}-card-selection-bottomsheet`} style={styles.margin}>
       <IPayView style={styles.headerRow}>
         <IPayIcon icon={icons.add_card2} size={48} color={colors.primary.primary500} />
-        <IPayFootnoteText text={localizationText.CARD_ISSUE.CHOOSE_PREFFERED} style={styles.titleColor} />
+        <IPayFootnoteText text={'CARD_ISSUE.CHOOSE_PREFFERED'} style={styles.titleColor} />
       </IPayView>
       <IPayView style={styles.listStyle}>
         <IPayList

@@ -304,7 +304,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayPressable onPress={() => navigate(ScreenNames.BENEFICIARY_TRANSACTION_HISTORY)}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
-              <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
+              <IPaySubHeadlineText regular color={colors.primary.primary500} text={'COMMON.HISTORY'} />
             </IPayView>
           </IPayPressable>
         }

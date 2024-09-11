@@ -155,7 +155,7 @@ const MenuScreen: FC = () => {
                     color={colors.primary.primary900}
                     style={styles.profileNameText}
                   />
-                  <IPayCaption1Text text={localizationText.MENU.SHOW_PROFILE} color={colors.natural.natural900} />
+                  <IPayCaption1Text text={'MENU.SHOW_PROFILE'} color={colors.natural.natural900} />
                 </IPayView>
                 <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
               </IPayLinearGradientView>
@@ -166,7 +166,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.setting} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.COMMON.SETTINGS}
+              text={'COMMON.SETTINGS'}
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -177,7 +177,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.messageQuestion} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.MENU.SUPPORT_AND_HELP}
+              text={'MENU.SUPPORT_AND_HELP'}
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -188,7 +188,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.MENU.CARDS_MANAGEMENT}
+              text={'MENU.CARDS_MANAGEMENT'}
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -201,7 +201,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.logout} size={24} color={colors.natural.natural700} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.COMMON.DELINK_ALERT.DELINK}
+              text={'COMMON.DELINK_ALERT.DELINK'}
               style={styles.menuItemText}
               color={colors.natural.natural700}
             />
@@ -210,7 +210,7 @@ const MenuScreen: FC = () => {
           <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
             <IPaySubHeadlineText
               regular
-              text={localizationText.MENU.LOGOUT}
+              text={'MENU.LOGOUT'}
               style={styles.menuItemText}
               color={colors.natural.natural700}
             />

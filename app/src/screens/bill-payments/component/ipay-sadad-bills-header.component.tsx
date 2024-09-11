@@ -27,11 +27,7 @@ const IPaySadadBillsHeader: React.FC<IPaySadadBillsHeaderProps> = ({
       <IPayView style={styles.sadadImageView}>
         <IPayImage image={images.sadad} style={styles.sadadImg} />
         <IPayView style={styles.sadadBillsStatuView}>
-          <IPayFootnoteText
-            regular={false}
-            text={localizationText.SADAD.SADAD_BILLS}
-            color={colors.primary.primary900}
-          />
+          <IPayFootnoteText regular={false} text={'SADAD.SADAD_BILLS'} color={colors.primary.primary900} />
           {(unpaidBillsCount ?? 0) > 0 && <IPayCaption2Text text={unpaidBills} style={styles.unpaidText} />}
         </IPayView>
       </IPayView>

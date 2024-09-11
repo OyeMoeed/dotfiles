@@ -129,11 +129,11 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     <IPayView style={styles.giftText}>
       <IPayPressable style={styles.newTopup} onPress={onSendAnotherGift}>
         <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={localizationText.SEND_GIFT.SEND_ANOTHER} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text={'SEND_GIFT.SEND_ANOTHER'} style={styles.newTopupText} regular />
       </IPayPressable>
       <IPayPressable style={styles.newTopup} onPress={onPreview}>
         <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={localizationText.SEND_GIFT.PREVIEW} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text={'SEND_GIFT.PREVIEW'} style={styles.newTopupText} regular />
       </IPayPressable>
     </IPayView>
   );
@@ -194,7 +194,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                       />
                       <IPayPressable style={styles.newTopup}>
                         <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                        <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
+                        <IPaySubHeadlineText text={'TOP_UP.SHARE'} regular style={styles.newTopupText} />
                       </IPayPressable>
                     </IPayView>
                   );
@@ -231,7 +231,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayLottieAnimation source={transferDetails?.selectedCard?.path ?? ''} style={styles.image} loop />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
-              <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
+              <IPayCaption1Text text={'COMMON.SAR'} color={colors.backgrounds.orange} regular={false} />
             </IPayView>
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
               <IPayFootnoteText color={themeTextColor} style={styles.messagePreviewText} text={notes} />

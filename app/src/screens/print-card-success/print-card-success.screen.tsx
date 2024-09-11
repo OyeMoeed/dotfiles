@@ -31,11 +31,7 @@ const PrintCardSuccessScreen: React.FC = () => {
           <IPayView style={styles.descriptionBoxContainer}>
             <IPayIcon icon={icons.truck_tick} size={24} color={colors.natural.natural950} />
             <IPayView style={styles.captionTextContainer}>
-              <IPayCaption1Text
-                color={colors.natural.natural700}
-                regular
-                text={localizationText.PHYSICAL_CARD.COURIER_COMPANY_WILL}
-              />
+              <IPayCaption1Text color={colors.natural.natural700} regular text={'PHYSICAL_CARD.COURIER_COMPANY_WILL'} />
             </IPayView>
           </IPayView>
           <IPayButton

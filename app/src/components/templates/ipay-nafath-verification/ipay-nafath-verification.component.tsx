@@ -263,21 +263,14 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         <>
           <IPayPageDescriptionText
             heading={localizationText.PROFILE.NAFATH_VALIDATION}
-            text={localizationText.SETTINGS.NAFATH_VALIDATION_DESCRIPTION}
+            text={'SETTINGS.NAFATH_VALIDATION_DESCRIPTION'}
           />
           <IPayPressable style={styles.downloadSection}>
-            <IPayFootnoteText
-              regular={false}
-              style={styles.downloadText}
-              text={localizationText.SETTINGS.DOWNLOAD_NAFATH_ACCOUNT}
-            />
+            <IPayFootnoteText regular={false} style={styles.downloadText} text={'SETTINGS.DOWNLOAD_NAFATH_ACCOUNT'} />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.disclaimer}>
-            <IPayFootnoteText
-              color={colors.natural.natural900}
-              text={localizationText.SETTINGS.NAFATH_TERMS_AND_CONDITION}
-            />
+            <IPayFootnoteText color={colors.natural.natural900} text={'SETTINGS.NAFATH_TERMS_AND_CONDITION'} />
             <IPayIcon icon={icons.infoIcon} size={20} />
           </IPayView>
           <IPayButton
@@ -294,19 +287,15 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           <IPayPageDescriptionText heading={localizationText.SETTINGS.VALIDATE_THROUGH_NAFAH} />
           <IPayPressable style={styles.stepper}>
             {renderStep('1')}
-            <IPayFootnoteText
-              regular={false}
-              style={styles.downloadText}
-              text={localizationText.SETTINGS.OPEN_NAFATH_APP}
-            />
+            <IPayFootnoteText regular={false} style={styles.downloadText} text={'SETTINGS.OPEN_NAFATH_APP'} />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.stepTwo}>
             <IPayView style={styles.flexRow}>
               {renderStep('2')}
               <IPayView>
-                <IPayHeadlineText style={styles.sectionText} text={localizationText.HOME.SELECT_CODE} />
-                <IPayCaption1Text text={localizationText.COMMON.INTO_NAFATH_APP} color={colors.primary.primary800} />
+                <IPayHeadlineText style={styles.sectionText} text={'HOME.SELECT_CODE'} />
+                <IPayCaption1Text text={'COMMON.INTO_NAFATH_APP'} color={colors.primary.primary800} />
               </IPayView>
             </IPayView>
             <IPayLinearGradientView
@@ -354,8 +343,8 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           <IPayPressable style={styles.stepper}>
             {renderStep('3')}
             <IPayView style={styles.backSection}>
-              <IPayHeadlineText style={styles.sectionText} text={localizationText.PROFILE.BACK_TO_ALINMA_APP} />
-              <IPayCaption1Text text={localizationText.PROFILE.VERIFY_ACCOUNT} color={colors.primary.primary800} />
+              <IPayHeadlineText style={styles.sectionText} text={'PROFILE.BACK_TO_ALINMA_APP'} />
+              <IPayCaption1Text text={'PROFILE.VERIFY_ACCOUNT'} color={colors.primary.primary800} />
             </IPayView>
           </IPayPressable>
         </>

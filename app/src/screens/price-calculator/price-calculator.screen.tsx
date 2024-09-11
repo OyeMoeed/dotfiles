@@ -164,7 +164,7 @@ const PriceCalculatorScreen: React.FC = () => {
             onClearInput={() => openFilterBottomSheet(FilterType.Currency)}
           />
           <IPayView style={styles.inputContainer}>
-            <IPayFootnoteText style={styles.textStyles} text={localizationText.COMMON.FROM} />
+            <IPayFootnoteText style={styles.textStyles} text={'COMMON.FROM'} />
             <IPayAmountInput
               style={styles.amountInput}
               inputStyles={styles.inputText}
@@ -174,7 +174,7 @@ const PriceCalculatorScreen: React.FC = () => {
               isEditable={true}
             />
             <IPayPressable onPress={handleCurrencyFilter} style={styles.pressableStyles}>
-              <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular={true} />
+              <IPaySubHeadlineText text={'COMMON.SAR'} regular={true} />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>
           </IPayView>

@@ -307,10 +307,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           <IPayView style={styles.amountCard}>
             <IPayView style={styles.rowInputHeading}>
               <IPayIcon icon={icons.amount} />
-              <IPayCaption1Text
-                text={localizationText.TRANSACTION_HISTORY.BY_AMOUNT}
-                style={styles.rowInputHeadingText}
-              />
+              <IPayCaption1Text text={'TRANSACTION_HISTORY.BY_AMOUNT'} style={styles.rowInputHeadingText} />
             </IPayView>
 
             <IPayView style={styles.rowInput}>
@@ -340,10 +337,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           <IPayView style={styles.dateHeading}>
             <IPayView style={styles.rowInputHeading}>
               <IPayIcon icon={icons.calendar} />
-              <IPayCaption1Text
-                text={localizationText.TRANSACTION_HISTORY.BY_DATE}
-                style={styles.rowInputHeadingText}
-              />
+              <IPayCaption1Text text={'TRANSACTION_HISTORY.BY_DATE'} style={styles.rowInputHeadingText} />
             </IPayView>
 
             <IPayView style={styles.rowInput}>

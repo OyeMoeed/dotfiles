@@ -92,7 +92,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               <IPayFootnoteText
                 color={colors.primary.primary900}
                 style={styles.accountBalanceTitle}
-                text={localizationText.HOME.ACCOUNT_BALANCE}
+                text={'HOME.ACCOUNT_BALANCE'}
               />
 
               <IPayView style={styles.balanceContainer}>
@@ -100,7 +100,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
                 />
-                <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
+                <IPayFootnoteText style={styles.currencyStyle} text={'COMMON.SAR'} />
               </IPayView>
             </IPayView>
             <IPayButton
@@ -120,7 +120,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text color={colors.natural.natural700} text={localizationText.HOME.REMAINING_AMOUNT} />
+            <IPayCaption2Text color={colors.natural.natural700} text={'HOME.REMAINING_AMOUNT'} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalanceFormatted} />
               <IPayCaption2Text color={colors.natural.natural500} text={monthlyOutgoingLimitFormatted} />

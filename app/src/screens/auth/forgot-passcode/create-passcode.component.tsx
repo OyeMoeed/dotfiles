@@ -30,7 +30,7 @@ const SetPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback 
       <IPayView style={styles.forgetPasscodeheadingView}>
         <IPayPageDescriptionText
           heading={localizationText.CHANGE_PIN.CREATE_NEW_PASSCODE}
-          text={localizationText.COMMON.ENTER_CODE_TO_ACCESS_APPLICATION}
+          text={'COMMON.ENTER_CODE_TO_ACCESS_APPLICATION'}
         />
       </IPayView>
       <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

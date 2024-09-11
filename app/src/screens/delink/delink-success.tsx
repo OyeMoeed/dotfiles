@@ -49,18 +49,14 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
             <IPayLottieAnimation source={delinkAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.COMMON.DELINK_ALERT.SUCCESSFULLY_DELINK}
+                text={'COMMON.DELINK_ALERT.SUCCESSFULLY_DELINK'}
                 gradientColors={colors.gradientPrimary}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
                 style={styles.gradientTextSvg}
               />
             </IPayView>
-            <IPayFootnoteText
-              regular
-              color={colors.primary.primary800}
-              text={localizationText.COMMON.DELINK_ALERT.NEED_LOGIN}
-            />
+            <IPayFootnoteText regular color={colors.primary.primary800} text={'COMMON.DELINK_ALERT.NEED_LOGIN'} />
             <IPayButton
               btnType="primary"
               btnText={localizationText.COMMON.DONE}

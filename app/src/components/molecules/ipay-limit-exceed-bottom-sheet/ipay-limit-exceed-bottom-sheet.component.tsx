@@ -58,11 +58,7 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
         <IPayView testID={`${testID}-limit-exceed`} style={styles.container}>
           <IPayView style={styles.detail}>
             <IPayIcon icon={icons.send_money_error} size={64} color={colors.error.error500} />
-            <IPayTitle2Text
-              regular={false}
-              style={styles.fontBold}
-              text={localizationText.PROFILE.NO_REMAINING_SPENDINDS}
-            />
+            <IPayTitle2Text regular={false} style={styles.fontBold} text={'PROFILE.NO_REMAINING_SPENDINDS'} />
             <IPayCaption1Text
               text={`${localizationText.PROFILE.REACHED_SPENDING_LIMIT} ${amount} ${localizationText.COMMON.SAR} ${localizationText.PROFILE.NOT_ABLE_TO_SEND_AMOUNT} [${formatDateAndTime(date, dateTimeFormat.ShortDate)}]`}
               style={styles.description}

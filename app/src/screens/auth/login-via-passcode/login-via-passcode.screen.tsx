@@ -398,7 +398,7 @@ const LoginViaPasscode: React.FC = () => {
           <IPayUserAvatar style={styles.image} />
         </IPayView>
         <IPayView style={styles.childContainer}>
-          <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
+          <IPayCaption1Text text={'LOGIN.WELCOME_BACK'} style={styles.welcomeText} />
           {firstName && (
             <IPayGradientText
               text={firstName}
@@ -460,12 +460,8 @@ const LoginViaPasscode: React.FC = () => {
         cancelBnt
       >
         <IPayView style={styles.contactWrapper}>
-          <IPayFootnoteText
-            style={styles.headerStyle}
-            text={localizationText.COMMON.ASSISTANCE}
-            color={colors.primary.primary900}
-          />
-          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+          <IPayFootnoteText style={styles.headerStyle} text={'COMMON.ASSISTANCE'} color={colors.primary.primary900} />
+          <IPayCaption1Text text={'COMMON.CONTACT_SERVICE_TEAM'} color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactusList.map((item) => (

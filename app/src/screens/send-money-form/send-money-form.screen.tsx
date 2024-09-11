@@ -317,11 +317,7 @@ const SendMoneyFormScreen: React.FC = () => {
             showHistory ? (
               <IPayPressable style={styles.history} onPress={history}>
                 <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-                <IPaySubHeadlineText
-                  text={localizationText.WALLET_TO_WALLET.HISTORY}
-                  regular
-                  color={colors.primary.primary500}
-                />
+                <IPaySubHeadlineText text={'WALLET_TO_WALLET.HISTORY'} regular color={colors.primary.primary500} />
               </IPayPressable>
             ) : (
               <IPayView />

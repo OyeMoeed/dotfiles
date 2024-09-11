@@ -90,10 +90,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           carHolderName={name}
           cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
         />
-        <IPayFootnoteText
-          text={localizationText.REPLACE_CARD.CHOOSE_SHIPPING_ADDRESS}
-          style={styles.chooseAddressText}
-        />
+        <IPayFootnoteText text={'REPLACE_CARD.CHOOSE_SHIPPING_ADDRESS'} style={styles.chooseAddressText} />
         <IPayList
           containerStyle={styles.countryButtonStyle}
           textStyle={[styles.titleStyle, styles.textGray]}
@@ -126,7 +123,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
             <IPayView style={styles.termsChildContainer}>
               <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-              <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+              <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
               <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
             </IPayView>
           </IPayPressable>

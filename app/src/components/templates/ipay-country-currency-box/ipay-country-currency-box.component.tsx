@@ -118,7 +118,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               <IPayView>
                 <IPayFootnoteText
                   color={colors.natural.natural700}
-                  text={localizationText.COMMON.YOU_SEND}
+                  text={'COMMON.YOU_SEND'}
                   style={styles.amountInputLabel}
                 />
                 <IPayView style={styles.amountInput}>
@@ -150,7 +150,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               <IPayView>
                 <IPayFootnoteText
                   color={colors.natural.natural700}
-                  text={localizationText.COMMON.THEY_RECEIVE}
+                  text={'COMMON.THEY_RECEIVE'}
                   style={styles.amountInputLabel}
                 />
                 <IPayView style={styles.amountInput}>

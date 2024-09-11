@@ -72,7 +72,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         {checkIfSelectedCount && (
           <IPayView style={styles.selectedItemsCountView}>
             <IPayFootnoteText regular={false} text={`${selectedItemsCount}`} />
-            <IPayFootnoteText color={textColor} text={localizationText.SADAD.SELECTED_BILLS} />
+            <IPayFootnoteText color={textColor} text={'SADAD.SELECTED_BILLS'} />
           </IPayView>
         )}
         {totalAmount && (

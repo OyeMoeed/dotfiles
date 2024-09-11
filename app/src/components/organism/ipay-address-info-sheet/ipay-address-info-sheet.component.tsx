@@ -34,15 +34,11 @@ const IPayAddressInfoSheet: React.FC<IPayAddressInfoSheetProps> = forwardRef((_,
     >
       <IPayView style={styles.containerStyle}>
         <IPayView style={styles.contentContainer}>
-          <IPayHeadlineText
-            color={colors.primary.primary900}
-            regular={false}
-            text={localizationText.REPLACE_CARD.SHIPPING_ADDRESS}
-          />
+          <IPayHeadlineText color={colors.primary.primary900} regular={false} text={'REPLACE_CARD.SHIPPING_ADDRESS'} />
           <IPayCaption1Text
             style={styles.descriptionTextStyle}
             color={colors.natural.natural900}
-            text={localizationText.PHYSICAL_CARD.CUORIER_COMPANY_WILL}
+            text={'PHYSICAL_CARD.CUORIER_COMPANY_WILL'}
           />
         </IPayView>
         <IPayView style={styles.iconContainer}>

@@ -18,16 +18,8 @@ const IPayNoCardIndicatorComponenent: React.FC = () => {
     <IPayView style={styles.noCardContainer}>
       <IPayIcon icon={icons.cardSlash} size={64} color={colors.primary.primary900} />
       <IPayView style={styles.noCardDesContainer}>
-        <IPayFootnoteText
-          regular
-          color={colors.primary.primary800}
-          text={localizationText.CARD_MANAGEMENT.YOU_DONT_HAVE_CARD}
-        />
-        <IPayFootnoteText
-          regular
-          color={colors.primary.primary800}
-          text={localizationText.CARD_MANAGEMENT.YOU_CAN_ADD_NEW_CARD}
-        />
+        <IPayFootnoteText regular color={colors.primary.primary800} text={'CARD_MANAGEMENT.YOU_DONT_HAVE_CARD'} />
+        <IPayFootnoteText regular color={colors.primary.primary800} text={'CARD_MANAGEMENT.YOU_CAN_ADD_NEW_CARD'} />
       </IPayView>
       <IPayButton
         btnStyle={styles.btnStyle}

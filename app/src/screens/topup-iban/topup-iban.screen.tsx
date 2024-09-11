@@ -71,7 +71,7 @@ const TopUpIBAN = () => {
         />
         <IPayPageDescriptionText
           heading={localizationText.TOP_UP.USE_IBAN_NUMBER}
-          text={localizationText.TOP_UP.TO_ADD_BALANCE_DESCRIPTION}
+          text={'TOP_UP.TO_ADD_BALANCE_DESCRIPTION'}
           style={styles.pageDescriptionStyle}
           alignTextLeft
           subHeadingStyle={styles.subHeadingTextStyle}

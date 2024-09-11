@@ -147,9 +147,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   return (
     <IPayView testID={`${testID}-card-selector`} style={styles.containerStyle}>
       <IPayView style={styles.header}>
-        {topupCards?.length > 0 && (
-          <IPayFootnoteText text={localizationText.TOP_UP.CHOOSE_CARD} style={styles.headerText} />
-        )}
+        {topupCards?.length > 0 && <IPayFootnoteText text={'TOP_UP.CHOOSE_CARD'} style={styles.headerText} />}
 
         <IPayButton
           btnType="outline"

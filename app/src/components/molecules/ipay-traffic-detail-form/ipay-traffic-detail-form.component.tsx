@@ -58,11 +58,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
-      <IPayFootnoteText
-        regular
-        text={localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE}
-        color={colors.primary.primary600}
-      />
+      <IPayFootnoteText regular text={'TRAFFIC_VIOLATION.SERVICE_TYPE'} color={colors.primary.primary600} />
       <IPaySegmentedControls
         customStyles={styles.segmentStyles}
         selectedTab={formSelectedTab}

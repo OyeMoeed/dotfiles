@@ -37,7 +37,7 @@ const SetPasscode: React.FC = () => {
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
             heading={localizationText.CHANGE_PIN.CREATE_A_PASSCODE}
-            text={localizationText.COMMON.CREATE_PASSCODE_DESC}
+            text={'COMMON.CREATE_PASSCODE_DESC'}
           />
         </IPayView>
         <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

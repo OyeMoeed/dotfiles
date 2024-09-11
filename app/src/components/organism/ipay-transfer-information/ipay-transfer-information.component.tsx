@@ -94,12 +94,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        <IPayFootnoteText
-          regular
-          style={styles.text}
-          text={localizationText.TOP_UP.ENTER_AMOUNT}
-          color={colors.natural.natural700}
-        />
+        <IPayFootnoteText regular style={styles.text} text={'TOP_UP.ENTER_AMOUNT'} color={colors.natural.natural700} />
         <IPayAmountInput
           carretHidden={false}
           style={styles.amountInput}

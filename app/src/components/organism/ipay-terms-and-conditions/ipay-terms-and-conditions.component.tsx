@@ -38,7 +38,7 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef
         <IPayHeadlineText
           regular={false}
           style={styles.termsAndConditionsHeading}
-          text={localizationText.COMMON.TERMS_AND_CONDITIONS_HEADING}
+          text={'COMMON.TERMS_AND_CONDITIONS_HEADING'}
         />
         <IPayFootnoteText
           regular

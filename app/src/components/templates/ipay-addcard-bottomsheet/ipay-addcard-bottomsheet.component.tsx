@@ -174,8 +174,8 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         {!isEditingMode && (
           <IPayView style={styles.inputToggle}>
             <IPayView>
-              <IPayFootnoteText text={localizationText.TOP_UP.SAVE_CARD} color={colors.natural.natural900} />
-              <IPayCaption1Text text={localizationText.TOP_UP.SAVE_SUBTITLE} color={colors.natural.natural500} />
+              <IPayFootnoteText text={'TOP_UP.SAVE_CARD'} color={colors.natural.natural900} />
+              <IPayCaption1Text text={'TOP_UP.SAVE_SUBTITLE'} color={colors.natural.natural500} />
             </IPayView>
             <IPayToggleButton onToggleChange={handleSaveCardToggle} toggleState={isSaveCardEnabled} />
           </IPayView>

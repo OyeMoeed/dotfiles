@@ -202,7 +202,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
             <IPayFootnoteText
               color={colors.natural.natural500}
               style={styles.textStyle}
-              text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
+              text={'NEW_BENEFICIARY.METHOD_OF_DELIVERY'}
             />
             <TransferMethods data={AlinmaDirectData} />
             <TransferMethods data={WesternUnionData} />

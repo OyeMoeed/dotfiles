@@ -25,7 +25,7 @@ const IPayBalanceProgressbar: React.FC<IPayBalanceProgressbarProps> = ({
         colors={colors.gradientPrimaryReverse}
       />
       <IPayView style={styles.topUpContainer}>
-        <IPayCaption2Text text={localizationText.TOP_UP.REMAINING} style={styles.naturalStyles} />
+        <IPayCaption2Text text={'TOP_UP.REMAINING'} style={styles.naturalStyles} />
         <IPayView style={styles.amountValues}>
           <IPayCaption2Text style={styles.totalAmount} regular={false}>
             {formatNumberWithCommas(monthlyRemainingOutgoingAmount)}

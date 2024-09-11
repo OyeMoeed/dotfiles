@@ -130,7 +130,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView style={styles.contentTopMargin}>
-              <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
+              <IPayFootnoteText text={'CARDS.CARD_DETAILS'} color={colors.natural.natural500} />
               <IPayList
                 testID="ipay-list-card-holders-name"
                 title={localizationText.REPLACE_CARD.HOLDERS_NAME}
@@ -144,7 +144,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
               />
 
               <IPayFootnoteText
-                text={localizationText.REPLACE_CARD.SHIPPING_ADDRESS}
+                text={'REPLACE_CARD.SHIPPING_ADDRESS'}
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
@@ -162,7 +162,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                 }
               />
               <IPayFootnoteText
-                text={localizationText.CARD_OPTIONS.CARD_FEE}
+                text={'CARD_OPTIONS.CARD_FEE'}
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
@@ -195,7 +195,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+                <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>

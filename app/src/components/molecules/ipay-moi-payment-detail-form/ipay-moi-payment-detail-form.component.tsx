@@ -95,7 +95,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
 
       {isServiceTypeValue && (
         <>
-          <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+          <IPayCaption2Text regular text={'BILL_PAYMENTS.BENEFECIARY_DETAILS'} />
 
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}

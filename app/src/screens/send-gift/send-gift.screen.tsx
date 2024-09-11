@@ -27,11 +27,11 @@ const SendGiftScreen: React.FC = () => {
       </IPayView>
       <IPayView style={styles.sendGiftDescription}>
         <IPayTitle1Text
-          text={localizationText.SEND_GIFT.GIFT_ONE_OR_MORE_CONTACTS}
+          text={'SEND_GIFT.GIFT_ONE_OR_MORE_CONTACTS'}
           color={colors.primary.primary900}
           regular={false}
         />
-        <IPaySubHeadlineText text={localizationText.SEND_GIFT.GIFT_DESCRIPTION} regular />
+        <IPaySubHeadlineText text={'SEND_GIFT.GIFT_DESCRIPTION'} regular />
         <IPayButton
           btnType={buttonVariants.PRIMARY}
           btnText={localizationText.SEND_GIFT.SEND_GIFT_NOW}

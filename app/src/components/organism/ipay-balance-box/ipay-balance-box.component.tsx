@@ -147,7 +147,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         {/* Card Text */}
         <IPayView style={styles.commonContainer}>
           <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.textStyle} text={localizationText.HOME.ACCOUNT_BALANCE} />
+            <IPayFootnoteText style={styles.textStyle} text={'HOME.ACCOUNT_BALANCE'} />
             {allowEyeIconFunctionality && (
               <IPayPressable onPress={onEyeIconPress}>
                 <IPayIcon
@@ -160,7 +160,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
           <IPayPressable onPress={walletInfoPress}>
             <IPayView style={styles.eyeCon}>
-              <IPayFootnoteText style={styles.walletTextStyle} text={localizationText.HOME.WALLET_INFO} />
+              <IPayFootnoteText style={styles.walletTextStyle} text={'HOME.WALLET_INFO'} />
               <IPayGradientIcon icon={icons.info_fetch} size={16} />
             </IPayView>
           </IPayPressable>
@@ -169,7 +169,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         <IPayView style={[styles.commonContainer, styles.gap]}>
           <IPayView style={styles.balanceContainer}>
             <IPayTitle2Text style={styles.balanceTextStyle} text={balanceValue} />
-            <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
+            <IPayFootnoteText style={styles.currencyStyle} text={'COMMON.SAR'} />
           </IPayView>
           <IPayButton
             onPress={topUpPress}
@@ -187,7 +187,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
         </IPayView>
 
         <IPayView style={[styles.gap, styles.commonContainer]}>
-          <IPayCaption2Text style={styles.remainingAmountText} text={localizationText.HOME.REMAINING_AMOUNT} />
+          <IPayCaption2Text style={styles.remainingAmountText} text={'HOME.REMAINING_AMOUNT'} />
           <IPayView style={styles.eyeCon}>
             <IPayCaption2Text style={styles.textBold} text={formatNumberWithCommas(remainingSpendingLimit)} />
 

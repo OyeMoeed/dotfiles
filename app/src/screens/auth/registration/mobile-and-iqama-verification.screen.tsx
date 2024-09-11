@@ -82,7 +82,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                   <IPayView style={styles.headingView}>
                     <IPayPageDescriptionText
                       heading={localizationText.COMMON.ENTER_INFORMATION}
-                      text={localizationText.COMMON.ENTER_VALID_ID_OR_IQAMA}
+                      text={'COMMON.ENTER_VALID_ID_OR_IQAMA'}
                     />
                   </IPayView>
                   <IPayView style={styles.inputFieldsContainer}>
@@ -112,7 +112,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                       <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
                       <IPayFootnoteText
                         style={styles.termAndConditionsText}
-                        text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
+                        text={'COMMON.TERMS_AND_CONDITIONS_TEXT'}
                       />
                       <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
                     </IPayView>

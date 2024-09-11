@@ -30,10 +30,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
       <IPayView style={styles.accountBalanceView}>
         <IPayView style={styles.commonContainer}>
           <IPayView>
-            <IPayCaption2Text
-              color={colors.primary.primary900}
-              text={localizationText.TOPUP_CONFIRMATION.ACCOUNT_BALANCE}
-            />
+            <IPayCaption2Text color={colors.primary.primary900} text={'TOPUP_CONFIRMATION.ACCOUNT_BALANCE'} />
             <IPayView style={styles.balanceContainer}>
               <IPaySubHeadlineText
                 color={colors.primary.primary900}
@@ -44,7 +41,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
                 color={colors.primary.primary900}
                 regular
                 style={styles.currencyStyle}
-                text={localizationText.COMMON.SAR}
+                text={'COMMON.SAR'}
               />
             </IPayView>
           </IPayView>
@@ -68,7 +65,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
         )}
         {isShowRemaining && (
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text text={localizationText.TOPUP_CONFIRMATION.REMAINING_AMOUNT} />
+            <IPayCaption2Text text={'TOPUP_CONFIRMATION.REMAINING_AMOUNT'} />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text regular={false} text={formatNumberWithCommas(remainingTopupLimit)} />
               <IPayCaption2Text text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyTopupLimit)}`} />

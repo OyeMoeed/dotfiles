@@ -24,7 +24,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
 
   return (
     <>
-      <IPayText text={localizationText.PROFILE.EMPLOYMENT_DETAILS} style={styles.heading} varient="natural" />
+      <IPayText text={'PROFILE.EMPLOYMENT_DETAILS'} style={styles.heading} varient="natural" />
       <Controller
         control={control}
         rules={{ required: true }}
@@ -96,7 +96,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         )}
         name="monthly_income"
       />
-      <IPayText text={localizationText.PROFILE.NATIONAL_ADDRESS_DETAILS} varient="natural" style={styles.heading} />
+      <IPayText text={'PROFILE.NATIONAL_ADDRESS_DETAILS'} varient="natural" style={styles.heading} />
       <Controller
         control={control}
         rules={{ required: true }}

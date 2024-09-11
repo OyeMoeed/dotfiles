@@ -113,10 +113,7 @@ const ConfirmPasscode = forwardRef((props) => {
         <BulkLock />
       </IPayView>
       <IPayView>
-        <IPayPageDescriptionText
-          heading={localizationText.SETTINGS.CONFIRM_PASSCODE}
-          text={localizationText.SETTINGS.ENTER_CONFIRM}
-        />
+        <IPayPageDescriptionText heading={localizationText.SETTINGS.CONFIRM_PASSCODE} text={'SETTINGS.ENTER_CONFIRM'} />
       </IPayView>
       <IPayView style={styles.dialerView}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

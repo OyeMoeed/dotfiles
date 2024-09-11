@@ -38,7 +38,7 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
           />
         </IPayView>
         {serviceName === TransferService.ALINMAPAY_DIRECT && (
-          <IPayCaption2Text color={colors.natural.natural500} text={localizationText.COMMON.PRICE_VARY} />
+          <IPayCaption2Text color={colors.natural.natural500} text={'COMMON.PRICE_VARY'} />
         )}
       </IPayView>
       <IPayView style={styles.rowStyles}>

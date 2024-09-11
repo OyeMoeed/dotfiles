@@ -27,7 +27,7 @@ const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, benefi
       <IPayView style={styles.editBeneficiaryCautionView}>
         <IPayIcon icon={icons.info_circle2} size={24} color={colors.primary.primary800} />
         <IPayFootnoteText
-          text={localizationText.TRANSACTION_HISTORY.MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID}
+          text={'TRANSACTION_HISTORY.MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID'}
           style={styles.editBeneficiaryInfoText}
         />
       </IPayView>

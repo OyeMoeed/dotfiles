@@ -314,11 +314,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           showHistory && (
             <IPayPressable style={styles.history} onPress={history}>
               <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-              <IPaySubHeadlineText
-                text={localizationText.WALLET_TO_WALLET.HISTORY}
-                regular
-                color={colors.primary.primary500}
-              />
+              <IPaySubHeadlineText text={'WALLET_TO_WALLET.HISTORY'} regular color={colors.primary.primary500} />
             </IPayPressable>
           )
         }
@@ -340,7 +336,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>
             <IPayIcon icon={icons.mobile} size={18} />
             <IPaySubHeadlineText
-              text={localizationText.WALLET_TO_WALLET.SEND_TO_UNSAVED_NUMBER}
+              text={'WALLET_TO_WALLET.SEND_TO_UNSAVED_NUMBER'}
               regular
               color={colors.primary.primary500}
             />

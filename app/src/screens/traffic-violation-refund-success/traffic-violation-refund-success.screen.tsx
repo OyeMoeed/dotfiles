@@ -38,7 +38,7 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
           textElement={
             <IPayCaption1Text
               color={colors.secondary.secondary500}
-              text={localizationText.TRAFFIC_VIOLATION.PROCESS_TAKE_BUSINESS_HOURS}
+              text={'TRAFFIC_VIOLATION.PROCESS_TAKE_BUSINESS_HOURS'}
             />
           }
         />

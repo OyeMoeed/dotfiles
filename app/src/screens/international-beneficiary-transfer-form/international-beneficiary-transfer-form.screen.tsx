@@ -78,7 +78,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                 <IPayFootnoteText
                   color={colors.natural.natural500}
                   style={styles.textStyle}
-                  text={localizationText.NEW_BENEFICIARY.BENEFECIARY_INFORMATION}
+                  text={'NEW_BENEFICIARY.BENEFECIARY_INFORMATION'}
                 />
 
                 <IPayAnimatedTextInput
@@ -112,7 +112,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
-                      text={localizationText.NEW_BENEFICIARY.OTHER_INFORMATION}
+                      text={'NEW_BENEFICIARY.OTHER_INFORMATION'}
                     />
                     <IPayDropdown
                       dropdownType={localizationText.NEW_BENEFICIARY.BENEFECIARY_NATIONALITY}
@@ -156,7 +156,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
-                      text={localizationText.COMMON.BANK_DETAILS}
+                      text={'COMMON.BANK_DETAILS'}
                     />
                     <IPayAnimatedTextInput
                       name={BeneficiaryFields.IBAN}
@@ -179,7 +179,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
-                      text={localizationText.NEW_BENEFICIARY.DIGITAL_WALLET_DETAILS}
+                      text={'NEW_BENEFICIARY.DIGITAL_WALLET_DETAILS'}
                     />
                     <IPayDropdown
                       dropdownType={localizationText.NEW_BENEFICIARY.WALLER_TYPE}
