@@ -7,8 +7,8 @@ const printCardConfirmationStyles = (colors: typeof themeColors) =>
     container: {
       flex: 1,
     },
-    iconStyle:{
-      marginLeft:moderateScale(2),
+    iconStyle: {
+      marginLeft: moderateScale(2),
     },
     header: {
       marginBottom: moderateScale(8),

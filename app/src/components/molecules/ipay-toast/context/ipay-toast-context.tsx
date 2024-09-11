@@ -14,6 +14,8 @@ const ToastProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { visible, toastProps, showToast, hideToast } = useToast();
 
   return (
+    // TODO: Refactor Toggling Toast
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <ToastContext.Provider value={{ showToast, hideToast }}>
       {children}
       <IPayToastContainer visible={visible} toastProps={toastProps} hideToast={hideToast} />

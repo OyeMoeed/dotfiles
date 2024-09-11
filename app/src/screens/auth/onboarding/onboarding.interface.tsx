@@ -1,5 +1,5 @@
 import { ImageSourcePropType, ViewStyle } from 'react-native';
-import { OnboardingSteps } from './onboarding-enum.util';
+import OnboardingSteps from './onboarding-enum.util';
 
 /**
  * Interface for OnboardingScreen component props

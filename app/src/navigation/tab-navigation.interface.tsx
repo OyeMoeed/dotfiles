@@ -3,3 +3,5 @@ interface TabBarIconProps {
   color?: string;
   isFocused?: boolean;
 }
+
+export default TabBarIconProps;

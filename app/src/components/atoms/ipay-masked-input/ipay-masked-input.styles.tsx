@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-export const inputFieldStyles = (colors: typeof themeColors) =>
+const inputFieldStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     input: {
       height: verticalScale(40),
@@ -74,3 +74,5 @@ export const inputFieldStyles = (colors: typeof themeColors) =>
       paddingLeft: moderateScale(10),
     },
   });
+
+export default inputFieldStyles;

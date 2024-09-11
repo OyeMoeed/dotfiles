@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
-import { constants } from '../ipay-text/constants.text';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 
 const alertStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -20,7 +20,7 @@ const alertStyles = (themeColors: typeof colors) =>
     modalTitle: {
       color: themeColors.primary.primary800,
       textAlign: 'center',
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     modalMessage: {
       color: themeColors.primary.primary800,

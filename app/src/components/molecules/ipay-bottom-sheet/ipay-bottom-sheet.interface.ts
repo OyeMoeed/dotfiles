@@ -1,3 +1,5 @@
+import { JSX } from 'react';
+
 export interface IPayBottomSheetProps {
   children?: JSX.Element | JSX.Element[];
   customSnapPoint?: string[];

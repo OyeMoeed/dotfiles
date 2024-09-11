@@ -2,7 +2,7 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import localBeneficiaryMetaDataMock from './local-beneficiary-metadata';
+import localBeneficiaryMetaDataMock from './local-beneficiary-metadata.mock';
 import getlocalBeneficiaryMetaData from './local-beneficiary-metadata.service';
 
 jest.mock('@network/services/api-call.service');

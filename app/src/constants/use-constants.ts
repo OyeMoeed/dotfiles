@@ -1,3 +1,5 @@
+// TODO: fix max-lines
+/* eslint-disable max-lines-per-function */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
@@ -5,12 +7,11 @@ import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
@@ -460,7 +461,7 @@ const useConstantData = () => {
   ];
 
   const billPayDetailsData = [
-    //TODO will be repleaced by API data
+    // TODO will be repleaced by API data
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
@@ -516,7 +517,7 @@ const useConstantData = () => {
   ];
 
   const billPayDetailsRefundData = [
-    //TODO will be repleaced by API data
+    // TODO will be repleaced by API data
 
     {
       id: '3',
@@ -545,7 +546,7 @@ const useConstantData = () => {
     },
   ];
   const declinedTransationData = [
-    //TODO will be repleaced by API data
+    // TODO will be repleaced by API data
     {
       id: '1',
       label: localizationText.TRAFFIC_VIOLATION.TITLE,
@@ -663,13 +664,13 @@ const useConstantData = () => {
     },
   ];
 
-  const AlinmaDirectData = {
+  const alinmaDirectData = {
     recordID: '123',
     serviceName: 'AlinmaPay Direct',
     serviceLogo: images.alinmaPayDirectLogo,
     type: 'Bank Transfer',
   };
-  const WesternUnionData = {
+  const westernUnionData = {
     recordID: '113',
     serviceName: 'Western Union',
     serviceLogo: images.westernUnionLogo,
@@ -859,7 +860,7 @@ const useConstantData = () => {
       type: FiltersType.CONTACT_NUMBER,
       searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
       dropdownIcon: icons.user_search,
-      listTitleStyle: { fontWeight: constants.FONT_WEIGHT_BOLD },
+      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
       filterValues: [
         {
           id: '1',
@@ -893,7 +894,7 @@ const useConstantData = () => {
     [FiltersType.DELIVERY_TYPE]: '',
   };
 
-  const W2WFilterData = (filterValues) => [
+  const w2WFilterData = (filterValues) => [
     {
       id: '1',
       label: localizationText.WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME,
@@ -905,7 +906,7 @@ const useConstantData = () => {
     },
   ];
 
-  const W2WFilterDefaultValues = {
+  const w2WFilterDefaultValues = {
     [FiltersType.CONTACT_NUMBER]: '',
     [FiltersType.AMOUNT_FROM]: '',
     [FiltersType.AMOUNT_TO]: '',
@@ -990,7 +991,7 @@ const useConstantData = () => {
     },
   ];
 
-  const OrderHistoryFilterDefaultValues = {
+  const orderHistoryFilterDefaultValues = {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
@@ -1070,7 +1071,7 @@ const useConstantData = () => {
     },
   ];
   const allOrders = [
-    //TODO: Replaced with api
+    // TODO: Replaced with api
     {
       id: '1',
       image: images.playstation,
@@ -1110,7 +1111,7 @@ const useConstantData = () => {
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
   const contactList = [
-    //TODO: List will replace by actual data
+    // TODO: List will replace by actual data
     { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '8004339000' },
     { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966) 920000670' },
   ];
@@ -1197,7 +1198,7 @@ const useConstantData = () => {
   ];
 
   const billHeaderDetail = {
-    //TODO wiill be replaced by API
+    // TODO wiill be replaced by API
     title: 'My Electricity Bill',
     companyDetails: '123 - Saudi electricity co.',
     companyImage: images.electricityBill,
@@ -1379,7 +1380,7 @@ const useConstantData = () => {
   };
 
   const allCategories = [
-    //TODO: Replaced with api
+    // TODO: Replaced with api
     {
       id: '1',
       image: images.playStatuon,
@@ -1540,7 +1541,7 @@ const useConstantData = () => {
     allCategories,
     orderDetails,
     playstationData,
-    OrderHistoryFilterDefaultValues,
+    orderHistoryFilterDefaultValues,
     allOrders,
     merchantData,
     sortingData,
@@ -1549,11 +1550,11 @@ const useConstantData = () => {
     offerDetailData,
     productDetailData,
     shopsOffers,
-    W2WFilterData,
-    W2WFilterDefaultValues,
+    w2WFilterData,
+    w2WFilterDefaultValues,
     contactusList,
-    AlinmaDirectData,
-    WesternUnionData,
+    alinmaDirectData,
+    westernUnionData,
     activeBillDetails,
     localTransferReasonData,
   };

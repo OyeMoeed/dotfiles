@@ -18,7 +18,7 @@ interface BalanceData {
   calculatedBill: string;
 }
 
-//TODO wiill be replaced by API
+// TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
   const { billPayDetailsData } = useConstantData();
@@ -31,7 +31,7 @@ const useBillPaymentConfirmation = () => {
   const handleOtpVerification = () => {
     otpRef?.current?.present();
   };
-  const [balanceData, setBalanceData] = useState<BalanceData>({
+  const [balanceData] = useState<BalanceData>({
     availableBalance: '0',
     balance: '0',
     calculatedBill: '1000',

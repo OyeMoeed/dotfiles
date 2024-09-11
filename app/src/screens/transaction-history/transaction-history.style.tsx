@@ -1,7 +1,6 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_12, SCALE_34 } from '@app/styles/spacing.const';
-import { FONT_SIZE_13 } from '@app/styles/typography.styles';
+import { FONT_SIZE_13, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transactionsStyles = (colors: any) =>
@@ -49,7 +48,7 @@ const transactionsStyles = (colors: any) =>
       marginRight: moderateScale(8),
     },
     footnoteBoldTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_13,
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),

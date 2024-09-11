@@ -4,6 +4,8 @@ import { ToastHookProps } from './ipay-toast.interface';
 const useToast = () => {
   const [visible, setVisible] = useState<boolean>(false);
   const [toastProps, setToastProps] = useState<ToastHookProps>({});
+  // TODO: fix NodeJs types
+  // eslint-disable-next-line no-undef
   const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
 
   const showToast = useCallback(

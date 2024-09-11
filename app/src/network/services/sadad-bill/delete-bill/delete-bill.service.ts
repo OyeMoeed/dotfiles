@@ -12,7 +12,7 @@ const deleteBill = async (payload: DeleteBillRequest): Promise<ApiResponse<Delet
   }
   try {
     const apiResponse = await apiCall<DeleteBillResponse>({
-      endpoint: SADAD_BILL_URLS.DELETE_BILL(),
+      endpoint: SADAD_BILL_URLS.DELETE_BILL,
       method: requestType.DELETE,
       payload,
     });

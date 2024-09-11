@@ -1,7 +1,6 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
-import { APIResponseType } from '@app/utilities/enums.util';
 import CORE_URLS from '../core.urls';
 import { GetOffersPayload, OffersResponseDetails } from './offers.interface';
 import getOffersMock from './offers.mock';
