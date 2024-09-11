@@ -82,10 +82,14 @@ const SadadBillsScreen: React.FC = ({ route }) => {
 
   const handleTabSelect = useCallback(
     (tab: string, billsData?: BillProps[]) => {
+      const sadadBillDetails = billsData || activeBillsData || [];
+      const sadadBill = Array.isArray(sadadBillDetails) ? sadadBillDetails : [];
       if (tab === BillsStatusTypes.ACTIVE_BILLS) {
-        setActiveBillsData((billsData || activeBillsData).filter((bill) => bill.active));
+        const activeSadadBill = sadadBill?.filter((bill) => bill.active);
+        setActiveBillsData(activeSadadBill);
       } else {
-        setInactiveBillsData((billsData || inactiveBillsData).filter((bill) => !bill.active));
+        const notActiveSadadBill = sadadBill?.filter((bill) => !bill?.active);
+        setInactiveBillsData(notActiveSadadBill);
       }
       setSelectedTab(tab);
     },
