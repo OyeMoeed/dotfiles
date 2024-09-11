@@ -14,6 +14,7 @@ import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -28,8 +29,7 @@ import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { buttonVariants } from '@app/utilities/enums.util';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -47,20 +47,20 @@ const TransferSummaryScreen: React.FC = () => {
     }>
   >();
   const { transfersDetails, transactionType, totalAmount } = (route.params as ParamsProps).data;
-  const { variant } = route.params as ParamsProps;
 
   const [otp, setOtp] = useState<string>('');
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
-  const helpCenterRef = useRef<BottomSheetModal>(null);
+  const helpCenterRef = useRef(null);
 
   const isItemHasWallet = (item: IW2WResRequest): boolean => {
     const walletNumber = transfersDetails.activeFriends?.filter(
@@ -75,40 +75,50 @@ const TransferSummaryScreen: React.FC = () => {
 
   const transfersRequestsList: any[] = transfersDetails?.fees?.map((item, index) => {
     const hasWallet = isItemHasWallet(item);
-    const summeryArray = [];
-    const titleObject = () => {
-      if (!hasWallet) {
-        return {
+    if (!hasWallet) {
+      return [
+        {
           id: '1',
           label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
           value: transfersDetails.formInstances[index]?.subtitle,
           leftIcon: icons.user_square,
           color: colors.primary.primary900,
           isAlinma: false,
-        };
-      }
-      return {
+        },
+        {
+          id: '2',
+          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+          value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        },
+        {
+          id: '3',
+          label: localizationText.TRANSFER_SUMMARY.REASON,
+          value: transfersDetails.formInstances[index]?.selectedItem?.text,
+        },
+        { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
+      ];
+    }
+
+    return [
+      {
         id: '1',
         label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
         value: transfersDetails.formInstances[index]?.subtitle,
         leftIcon: images.alinmaP,
         isAlinma: true,
-      };
-    };
-
-    summeryArray.push(titleObject());
-    summeryArray.push({ id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount });
-    if (transfersDetails.formInstances[index]?.selectedItem) {
-      summeryArray.push({
+      },
+      {
+        id: '2',
+        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+      },
+      {
         id: '3',
         // label: localizationText.TRANSFER_SUMMARY.REASON,
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
-      });
-    }
-    if (item.note) {
-      summeryArray.push({ id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note });
-    }
-    return summeryArray;
+      },
+      { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
+    ];
   });
 
   const renderWalletPayItem = ({ item }) => {
@@ -181,28 +191,34 @@ const TransferSummaryScreen: React.FC = () => {
     try {
       sendMoneyBottomSheetRef.current?.present();
 
-    const payload: IW2WTransferPrepareReq = {
-      requests: transfersDetails.formInstances.map((item) => ({
-        mobileNumber: item.mobileNumber,
-        amount: item.amount,
-        note: item.notes,
-        transferPurpose: item.selectedItem.id as string,
-      })),
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      setTransactionId(apiResponse?.authentication?.transactionId);
-      if (showOtpSheet) {
-        sendMoneyBottomSheetRef.current?.present();
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+
+      setIsLoading(true);
+      const payload: IW2WTransferPrepareReq = {
+        requests: transfersDetails.formInstances.map((item) => ({
+          mobileNumber: item.mobileNumber,
+          amount: item.amount,
+          note: item.notes,
+          transferPurpose: item.selectedItem.id as string,
+        })),
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      };
+      const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
+      if (apiResponse.status.type === 'SUCCESS') {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+        setTransactionId(apiResponse?.authentication?.transactionId);
+        if (showOtpSheet) {
+          sendMoneyBottomSheetRef.current?.present();
+        }
       }
       otpVerificationRef?.current?.resetInterval();
     } finally {
       setIsLoading(false);
       hideSpinner();
     }
-    otpVerificationRef?.current?.resetInterval();
   };
 
   const verifyOtp = async () => {
@@ -222,7 +238,6 @@ const TransferSummaryScreen: React.FC = () => {
       if (apiResponse?.response) {
         sendMoneyBottomSheetRef.current?.close();
         navigate(ScreenNames.W2W_TRANSFER_SUCCESS, {
-          variant,
           transferDetails: {
             formData: transfersDetails.formInstances,
             apiData: apiResponse?.response.transferRequestsResult,

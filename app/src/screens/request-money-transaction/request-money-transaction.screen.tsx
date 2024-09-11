@@ -4,7 +4,6 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayActionSheet, IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import IPayMoneyRequestList from '@app/components/organism/ipay-money-request-list/ipay-money-request-list.component';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -17,10 +16,8 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
-import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -29,6 +26,8 @@ import { ApiResponseStatusType, buttonVariants, spinnerVariant, toastTypes } fro
 import { FilterSelectedValue } from '@app/utilities/filter-interface.utll';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
+import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
+import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
@@ -174,6 +173,58 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     return { data: [], hasMore: false };
   };
 
+  const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
+    try {
+      if (UpdateRequestType === UpdateRequestTypes.reject) {
+        rejectRequestRef.current?.hide();
+      } else {
+        cancelRequestRef.current?.hide();
+      }
+      const apiResponse = await cancelRejectRequestService(
+        walletInfo.walletNumber,
+        requestDetail?.id,
+        UpdateRequestType,
+      );
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          getRequestsData(1, 20);
+          break;
+        case 'apiResponseNotOk':
+          renderToast({
+            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            toastType: toastTypes.WARNING,
+          });
+          break;
+
+        case ApiResponseStatusType.FAILURE:
+          renderToast(apiResponse?.error);
+          break;
+
+        default:
+          break;
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const onPressRejectActionSheet = async (index: number) => {
+    if (index === 0) {
+      rejectRequestRef.current?.hide();
+    } else {
+      onCallCancelOrRejectRequest(UpdateRequestTypes.reject);
+    }
+  };
+
+  const onPressCancelActionSheet = async (index: number) => {
+    if (index === 0) {
+      cancelRequestRef.current?.hide();
+    } else {
+      onCallCancelOrRejectRequest(UpdateRequestTypes.cancel);
+    }
+  };
+
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
     if (tab === SEND_REQUESTS) {
@@ -275,56 +326,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     requestdetailRef.current?.present();
   };
 
-  const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
-    try {
-      if (UpdateRequestType === UpdateRequestTypes.reject) {
-        rejectRequestRef.current?.hide();
-      } else {
-        cancelRequestRef.current?.hide();
-      }
-      const apiResponse = await cancelRejectRequestService(
-        walletInfo.walletNumber,
-        requestDetail?.id,
-        UpdateRequestType,
-      );
-
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          getRequestsData(1, 20);
-          break;
-        case 'apiResponseNotOk':
-          renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
-            toastType: toastTypes.WARNING,
-          });
-          break;
-
-        case ApiResponseStatusType.FAILURE:
-          renderToast(apiResponse?.error);
-          break;
-
-        default:
-          break;
-      }
-    } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  const onPressRejectActionSheet = async (index: number) => {
-    if (index === 0) {
-      rejectRequestRef.current?.hide();
-    } else {
-      onCallCancelOrRejectRequest(UpdateRequestTypes.reject);
-    }
-  };
-
-  const onPressCancelActionSheet = async (index: number) => {
-    if (index === 0) {
-      cancelRequestRef.current?.hide();
-    } else {
-      onCallCancelOrRejectRequest(UpdateRequestTypes.cancel);
-    }
+  const onPressActionSheet = () => {
+    rejectRequestRef.current?.hide();
   };
 
   const createRequest = () => {
@@ -417,7 +420,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       />
       <IPayView style={styles.listContainer}>
         <IPayPaginatedFlatlist
-          contentContainerStyle={styles.contentContainerStyle}
           showsVerticalScrollIndicator={false}
           externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
           keyExtractor={(index: number) => {
