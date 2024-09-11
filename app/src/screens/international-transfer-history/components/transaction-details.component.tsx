@@ -93,8 +93,8 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
           <IPayTransactionHistoryDetails
             ref={transactionHistoryDetailsRef}
             transactionData={getTransactionData()}
-            senderCurrency={localizationText.COMMON.SAR}
-            receiverCurrency={localizationText.COMMON.PKR}
+            senderCurrency={'COMMON.SAR'}
+            receiverCurrency={'COMMON.PKR'}
             vatPercentage={getVatPercentage}
           />
         </IPayView>

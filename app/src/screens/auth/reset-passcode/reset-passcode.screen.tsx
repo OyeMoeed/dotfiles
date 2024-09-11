@@ -46,10 +46,7 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
         <BulkLock />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText
-          heading={localizationText.SETTINGS.CURRENT_PASSCODE}
-          text="SETTINGS.ENTER_CURRENT_PASSCODE"
-        />
+        <IPayPageDescriptionText heading={'SETTINGS.CURRENT_PASSCODE'} text="SETTINGS.ENTER_CURRENT_PASSCODE" />
       </IPayView>
       <IPayView style={styles.fill}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

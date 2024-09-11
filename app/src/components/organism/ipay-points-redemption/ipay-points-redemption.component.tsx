@@ -309,7 +309,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.COMMON.TOP_UP} backBtn applyFlex />
+      <IPayHeader title={'COMMON.TOP_UP'} backBtn applyFlex />
       <IPayKeyboardAwareScrollView
         contentContainerStyle={styles.scrollViewContainer}
         showsVerticalScrollIndicator={false}

@@ -337,7 +337,7 @@ const InternationalTransferHistory: React.FC = () => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTION_HISTORY}
+        title={'COMMON.TRANSACTION_HISTORY'}
         applyFlex
         rightComponent={
           <IPayPressable onPress={onPressFilters}>
@@ -399,7 +399,7 @@ const InternationalTransferHistory: React.FC = () => {
             <IPayNoResult
               testID="no-results"
               textColor={colors.primary.primary800}
-              message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
+              message={'TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY'}
               showEmptyBox
             />
           )}
@@ -407,7 +407,7 @@ const InternationalTransferHistory: React.FC = () => {
       </IPayView>
       <IPayFilterBottomSheet
         testID="filters-bottom-sheet"
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading={'TRANSACTION_HISTORY.FILTER'}
         defaultValues={transferHistoryFilterDefaultValues}
         showAmountFilter
         showDateFilter
@@ -422,7 +422,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testID="delivery-type"
-        heading={localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE}
+        heading={'INTERNATIONAL_TRANSFER.DELIVERY_TYPE'}
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -453,7 +453,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testID="benficiary-name"
-        heading={localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME}
+        heading={'LOCAL_TRANSFER.BENEFICIARY_NAME'}
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -481,7 +481,7 @@ const InternationalTransferHistory: React.FC = () => {
       </IPayBottomSheet>
       <IPayBottomSheet
         testId="transaction-details"
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading={'TRANSACTION_HISTORY.TRANSACTION_DETAILS'}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '95%' : '100%']}
         ref={transactionDetailsBottomSheet}
@@ -503,7 +503,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testId="send-money"
-        heading={localizationText.TRANSACTION_HISTORY.SEND_MONEY}
+        heading={'TRANSACTION_HISTORY.SEND_MONEY'}
         onCloseBottomSheet={closeRefundBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '80%' : '90%']}
         ref={refundBottomSheetRef}
@@ -520,7 +520,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testId="edit-beneficiary"
-        heading={localizationText.TRANSACTION_HISTORY.EDIT_BENEFICIARY}
+        heading={'TRANSACTION_HISTORY.EDIT_BENEFICIARY'}
         onCloseBottomSheet={closeEditBeneficiaryBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '40%' : '50%']}
         ref={editBeneficiaryBottomSheetRef}

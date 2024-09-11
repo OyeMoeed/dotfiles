@@ -167,7 +167,7 @@ const SendGiftListScreen: React.FC = () => {
       <IPayHeader
         testID="send-gift-header"
         backBtn
-        title={localizationText.SEND_GIFT.GIFTS}
+        title={'SEND_GIFT.GIFTS'}
         applyFlex
         rightComponent={
           <IPayPressable onPress={applyFilter}>
@@ -241,7 +241,7 @@ const SendGiftListScreen: React.FC = () => {
         </IPayView>
       )}
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading={'TRANSACTION_HISTORY.FILTER'}
         defaultValues={sendGiftFilterDefaultValues}
         showAmountFilter
         showDateFilter

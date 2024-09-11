@@ -72,7 +72,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
         render={() => (
           <IPayCheckboxTitle
             isCheck={myIdCheck || false}
-            heading={localizationText.BILL_PAYMENTS.USE_MY_ID}
+            heading={'BILL_PAYMENTS.USE_MY_ID'}
             onPress={onCheckboxAction}
           />
         )}
@@ -105,7 +105,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
           <IPayRHFAnimatedTextInput
             testID="id-type-input"
             name={TrafficPaymentFormFields.ID_TYPE}
-            label={localizationText.BILL_PAYMENTS.ID_TYPE}
+            label={'BILL_PAYMENTS.ID_TYPE'}
             editable={false}
             showRightIcon
             containerStyle={[styles.inputContainerStyle]}
@@ -122,7 +122,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
           render={() => (
             <IPayRHFAnimatedTextInput
               name={TrafficPaymentFormFields.VOILATION_NUMBER}
-              label={localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL}
+              label={'TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'}
               labelColor={colors.primary.primary500}
               containerStyle={[styles.inputContainerStyle]}
               customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}

@@ -14,17 +14,12 @@ const CardManagementScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader
-        testID="card-management-header"
-        backBtn
-        title={localizationText.CARD_MANAGEMENT.CARD_MANAGEMENT}
-        applyFlex
-      />
+      <IPayHeader testID="card-management-header" backBtn title={'CARD_MANAGEMENT.CARD_MANAGEMENT'} applyFlex />
 
       <IPayView style={styles.noResult}>
         <IPayNoResult
           textColor={colors.primary.primary800}
-          message={localizationText.CARD_MANAGEMENT.YOU_DO_NOT_HAVE_ANY_CARDS}
+          message={'CARD_MANAGEMENT.YOU_DO_NOT_HAVE_ANY_CARDS'}
           icon={icons.cardSlash}
           showIcon
           iconSize={60}

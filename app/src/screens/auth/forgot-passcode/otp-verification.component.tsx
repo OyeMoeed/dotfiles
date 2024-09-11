@@ -118,7 +118,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             </IPayView>
             <IPayView style={styles.headingView}>
               <IPayPageDescriptionText
-                heading={localizationText.COMMON.ENTER_RECEIVED_CODE}
+                heading={'COMMON.ENTER_RECEIVED_CODE'}
                 text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${replaceFirstSixWithX(phoneNumber)}`}
               />
             </IPayView>

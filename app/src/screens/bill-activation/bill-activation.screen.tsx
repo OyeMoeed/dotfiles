@@ -30,7 +30,7 @@ const BillActivationScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={localizationText.BILL_ACTIVATION.ACTIVATION_MESSAGE}
+          headingText={'BILL_ACTIVATION.ACTIVATION_MESSAGE'}
           headingStyle={styles.headingStyle}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>

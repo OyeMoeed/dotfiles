@@ -148,7 +148,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
           <IPayView style={styles.headingView}>
             <IPayPageDescriptionText
               style={styles.headingStyle}
-              heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+              heading={'FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING'}
               text="FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE"
             />
           </IPayView>
@@ -157,7 +157,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             <IPayView style={styles.inputTextView}>
               <IPayAnimatedTextInput
                 name="iqamaId"
-                label={localizationText.COMMON.ID_IQAMA}
+                label={'COMMON.ID_IQAMA'}
                 editable
                 keyboardType="decimal-pad"
                 maxLength={constants.IQAMA_ID_NUMBER_LENGTH}

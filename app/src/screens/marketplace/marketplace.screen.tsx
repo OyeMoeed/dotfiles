@@ -83,7 +83,7 @@ const MarketPlace: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="shop-ipay-header"
-        title={localizationText.HOME.SHOP}
+        title={'HOME.SHOP'}
         applyFlex
         rightComponent={
           <IPayPressable style={styles.history} onPress={orderHistory}>

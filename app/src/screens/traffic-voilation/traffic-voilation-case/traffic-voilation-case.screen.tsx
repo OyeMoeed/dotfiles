@@ -151,7 +151,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               <IPayHeader
                 backBtn
                 applyFlex
-                title={localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS}
+                title={'BILL_PAYMENTS.TRAFFIC_VIOLATIONS'}
                 titleStyle={styles.screenTitle}
               />
               <IPayView style={styles.container}>
@@ -183,7 +183,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               </IPayView>
             </IPaySafeAreaView>
             <IPayBottomSheet
-              heading={localizationText.BILL_PAYMENTS.ID_TYPE}
+              heading={'BILL_PAYMENTS.ID_TYPE'}
               customSnapPoint={SNAP_POINTS.SMALL}
               onCloseBottomSheet={() => selectSheeRef.current.close()}
               ref={selectSheeRef}
@@ -199,7 +199,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
-              heading={localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS}
+              heading={'BILL_PAYMENTS.TRAFFIC_VIOLATIONS'}
               customSnapPoint={SNAP_POINTS.SMALL}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
@@ -211,8 +211,8 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayContentNotFound
-                title={localizationText.BILL_PAYMENTS.NO_BILLS_WERE_FOUND}
-                message={localizationText.BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE}
+                title={'BILL_PAYMENTS.NO_BILLS_WERE_FOUND'}
+                message={'BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE'}
                 btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}

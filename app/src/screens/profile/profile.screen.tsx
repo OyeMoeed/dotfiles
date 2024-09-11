@@ -207,7 +207,7 @@ const Profile = () => {
         </IPayFootnoteText>
       </IPayView>
       {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
-        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED} />
+        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={'COMMON.VERIFIED'} />
       ) : (
         <IPayOutlineButton
           rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
@@ -292,7 +292,7 @@ const Profile = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView2}>
-        <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
+        <IPayHeader title={'PROFILE.TITLE'} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
             <IPayUserAvatar image={walletInfo.profileImage} />
@@ -347,7 +347,7 @@ const Profile = () => {
         <IPayCustomerKnowledge category={category} onChangeCategory={handleChangeCategory} onSubmit={onSubmit} />
       </IPayPortalBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.COMMON.INDENTITY_VERIFICATION}
+        heading={'COMMON.INDENTITY_VERIFICATION'}
         onCloseBottomSheet={onCloseNafathVerificationSheet}
         ref={nafathVerificationBottomSheetRef}
         customSnapPoint={defaultSnapPoint}

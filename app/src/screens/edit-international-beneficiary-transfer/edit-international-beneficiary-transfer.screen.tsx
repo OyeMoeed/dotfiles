@@ -42,7 +42,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
     >
       {({ handleSubmit }) => (
         <IPaySafeAreaView>
-          <IPayHeader backBtn title={localizationText.COMMON.EDIT_BENEFICIARY} applyFlex />
+          <IPayHeader backBtn title={'COMMON.EDIT_BENEFICIARY'} applyFlex />
           <IPayView style={styles.container}>
             <IPayScrollView contentContainerStyle={styles.innerContainer}>
               <>
@@ -54,27 +54,27 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
 
                 <IPayAnimatedTextInput
                   name={BeneficiaryFields.BENEFICIARY_NICK_NAME}
-                  label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
+                  label={'NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL'}
                 />
 
                 <>
                   <IPayAnimatedTextInput
                     name={BeneficiaryFields.BENEFICIARY_NAME}
-                    label={localizationText.NEW_BENEFICIARY.BENEFECIARY_FULL_NAME}
+                    label={'NEW_BENEFICIARY.BENEFECIARY_FULL_NAME'}
                   />
                   <IPayDropdown
-                    dropdownType={localizationText.COMMON.RELATIONSHIP}
+                    dropdownType={'COMMON.RELATIONSHIP'}
                     data={RELATIONSHIPS}
                     size={SNAP_POINTS.MID_LARGE}
                     name={BeneficiaryFields.RELATIONSHIP}
-                    label={localizationText.COMMON.RELATIONSHIP}
+                    label={'COMMON.RELATIONSHIP'}
                   />
                   <IPayDropdown
-                    dropdownType={localizationText.COMMON.CITY}
+                    dropdownType={'COMMON.CITY'}
                     data={cities}
                     size={SNAP_POINTS.MID_LARGE}
                     name={BeneficiaryFields.CITY}
-                    label={localizationText.PROFILE.CITY_NAME}
+                    label={'PROFILE.CITY_NAME'}
                     isSearchable
                     disabled
                   />
@@ -85,26 +85,22 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
                   style={styles.textStyle}
                   text="COMMON.BANK_DETAILS"
                 />
-                <IPayAnimatedTextInput
-                  name={BeneficiaryFields.IBAN}
-                  label={localizationText.COMMON.IBAN}
-                  editable={false}
-                />
+                <IPayAnimatedTextInput name={BeneficiaryFields.IBAN} label={'COMMON.IBAN'} editable={false} />
                 <IPayDropdown
-                  dropdownType={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
+                  dropdownType={'INTERNATIONAL_TRANSFER.BANK_NAME'}
                   data={BANKS}
                   size={SNAP_POINTS.MID_LARGE}
                   name={BeneficiaryFields.BANK_NAME}
-                  label={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
+                  label={'INTERNATIONAL_TRANSFER.BANK_NAME'}
                   disabled
                 />
 
                 <IPayDropdown
-                  dropdownType={localizationText.NEW_BENEFICIARY.CHOOSE_CURRENCY}
+                  dropdownType={'NEW_BENEFICIARY.CHOOSE_CURRENCY'}
                   data={CURRENCIES}
                   size={SNAP_POINTS.MID_LARGE}
                   name={BeneficiaryFields.WALLET_TYPE}
-                  label={localizationText.COMMON.CURRENCY}
+                  label={'COMMON.CURRENCY'}
                 />
               </>
             </IPayScrollView>

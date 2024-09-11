@@ -90,9 +90,9 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 isShowLeftIcon
                 containerStyle={styles.listContainer}
                 leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
-                title={localizationText.PAY_BILL.DECLINED_TRANSACTION}
+                title={'PAY_BILL.DECLINED_TRANSACTION'}
                 isShowSubTitle
-                subTitle={localizationText.PAY_BILL.DOES_NOT_ACCEPT_PARTIALLY_PAYMENT}
+                subTitle={'PAY_BILL.DOES_NOT_ACCEPT_PARTIALLY_PAYMENT'}
                 subTextStyle={{ color: colors.error.error500 }}
                 textStyle={{ color: colors.error.error500 }}
                 regularTitle={false}

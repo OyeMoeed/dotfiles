@@ -60,7 +60,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} applyFlex />
+      <IPayHeader backBtn title={'PHYSICAL_CARD.ISSUE_A_NEW_CARD'} applyFlex />
       <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
       <IPayImage image={backgroundImage} style={styles.background} />
       <IPayAnimatedView

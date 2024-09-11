@@ -35,10 +35,7 @@ const SetPasscode: React.FC = () => {
           <icons.bulkLock width={scale(40)} height={verticalScale(40)} />
         </IPayView>
         <IPayView style={styles.headingView}>
-          <IPayPageDescriptionText
-            heading={localizationText.CHANGE_PIN.CREATE_A_PASSCODE}
-            text={'COMMON.CREATE_PASSCODE_DESC'}
-          />
+          <IPayPageDescriptionText heading={'CHANGE_PIN.CREATE_A_PASSCODE'} text={'COMMON.CREATE_PASSCODE_DESC'} />
         </IPayView>
         <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />
       </IPayView>

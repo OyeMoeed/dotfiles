@@ -90,7 +90,7 @@ const CardRenewalScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.CARD_RENEWAL.CARD_RENEWAL} backBtn applyFlex />
+      <IPayHeader title={'CARD_RENEWAL.CARD_RENEWAL'} backBtn applyFlex />
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance
           balance={DUMMY_DATA.balance}
@@ -111,20 +111,20 @@ const CardRenewalScreen: React.FC = () => {
               <IPayList
                 containerStyle={styles.zeroMargin}
                 icon={<IPayView />}
-                title={localizationText.CARD_RENEWAL.HOLDER_NAME}
+                title={'CARD_RENEWAL.HOLDER_NAME'}
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
               />
               <IPayList
                 containerStyle={styles.zeroMargin}
                 icon={<IPayView />}
-                title={localizationText.CARD_RENEWAL.CARD_TYPE}
+                title={'CARD_RENEWAL.CARD_TYPE'}
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
               />
             </IPayView>
             <IPayList
               containerStyle={styles.zeroMargin}
               icon={<IPayView />}
-              title={localizationText.CARD_RENEWAL.RENEWAL_FEE}
+              title={'CARD_RENEWAL.RENEWAL_FEE'}
               rightText={
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
@@ -155,7 +155,7 @@ const CardRenewalScreen: React.FC = () => {
       </IPayView>
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
       <IPayBottomSheet
-        heading={localizationText.CARD_RENEWAL.CARD_RENEWAL}
+        heading={'CARD_RENEWAL.CARD_RENEWAL'}
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -173,7 +173,7 @@ const CardRenewalScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

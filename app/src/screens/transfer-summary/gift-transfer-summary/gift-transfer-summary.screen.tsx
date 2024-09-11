@@ -185,7 +185,7 @@ const TransferSummaryScreen: React.FC = () => {
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+              textValue={'TRANSFER_SUMMARY.CHIP_TITLE'}
               headingStyles={styles.chipColors}
             />
           </IPayView>
@@ -295,9 +295,9 @@ const TransferSummaryScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
-      <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
+      <IPayHeader backBtn title={'TRANSFER_SUMMARY.TITLE'} applyFlex />
       <IPayView style={styles.reasonContainer}>
-        <IPayList title={localizationText.SEND_GIFT_SUMMARY.OCCASION} showDetail detailText={giftDetails?.occasion} />
+        <IPayList title={'SEND_GIFT_SUMMARY.OCCASION} showDetail detailText={giftDetails?.occasion'} />
         {giftMessage()}
       </IPayView>
       <IPayView style={styles.container}>
@@ -331,7 +331,7 @@ const TransferSummaryScreen: React.FC = () => {
         </IPayScrollView>
         <IPayLinearGradientView style={styles.buttonContainer}>
           <IPayList
-            title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+            title={'TRANSACTION_HISTORY.TOTAL_AMOUNT'}
             showDetail
             detailTextStyle={styles.listTextStyle}
             detailText={`${totalAmount} ${localizationText.COMMON.SAR}`}
@@ -373,7 +373,7 @@ const TransferSummaryScreen: React.FC = () => {
         />
       </IPayPortalBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

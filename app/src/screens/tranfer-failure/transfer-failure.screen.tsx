@@ -23,8 +23,8 @@ const TransferFailureScreen = () => {
     <IPayPageWrapper>
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPayFailure
-          headingText={localizationText.LOCAL_TRANSFER.TRANSFER_FAILED}
-          descriptionText={localizationText.LOCAL_TRANSFER.TRY_AGAIN_TO_COMPLETE_TRANSFER}
+          headingText={'LOCAL_TRANSFER.TRANSFER_FAILED'}
+          descriptionText={'LOCAL_TRANSFER.TRY_AGAIN_TO_COMPLETE_TRANSFER'}
         />
 
         <IPayView style={styles.footerView}>

@@ -86,7 +86,7 @@ const MoiPaymentRefund: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.BILL_PAYMENTS.REFUND_BILLS} />
+      <IPayHeader backBtn applyFlex title={'BILL_PAYMENTS.REFUND_BILLS'} />
       <IPayView style={styles.container}>
         <IPayBillDetailsOption
           data={refundPaymentDetails}
@@ -103,7 +103,7 @@ const MoiPaymentRefund: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        heading={'LOCAL_TRANSFER.TRANSFER'}
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '97%']}
@@ -128,7 +128,7 @@ const MoiPaymentRefund: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

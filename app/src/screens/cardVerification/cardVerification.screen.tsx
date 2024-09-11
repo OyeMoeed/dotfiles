@@ -95,7 +95,7 @@ const CardVerificationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.TOP_UP.VERIFICATION_TITLE} applyFlex />
+      <IPayHeader backBtn title={'TOP_UP.VERIFICATION_TITLE'} applyFlex />
       <IPayView style={styles.container}>
         {redirectUrl && showWebView && (
           <IPayWebView source={{ uri: redirectUrl }} onNavigationStateChange={onNavigationStateChange} />

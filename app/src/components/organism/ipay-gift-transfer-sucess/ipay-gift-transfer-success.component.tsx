@@ -181,7 +181,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                           <IPayChip
                             containerStyle={styles.chipColors}
                             icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-                            textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+                            textValue={'TRANSFER_SUMMARY.CHIP_TITLE'}
                             headingStyles={styles.chipColors}
                           />
                         </IPayView>
@@ -218,7 +218,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
         </IPayLinearGradientView>
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
+        heading={'SEND_GIFT.PREVIEW_GIFT'}
         ref={previewBottomSheetRef}
         customSnapPoint={SNAP_POINTS.MID_LARGE}
         enablePanDownToClose

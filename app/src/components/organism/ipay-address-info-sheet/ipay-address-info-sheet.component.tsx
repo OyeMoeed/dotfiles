@@ -26,7 +26,7 @@ const IPayAddressInfoSheet: React.FC<IPayAddressInfoSheetProps> = forwardRef((_,
   return (
     <IPayBottomSheet
       noGradient
-      heading={localizationText.COMMON.ADDRESS_INFO}
+      heading={'COMMON.ADDRESS_INFO'}
       enablePanDownToClose
       simpleBar
       customSnapPoint={['1%', isIosOS ? '34%' : '29%']}

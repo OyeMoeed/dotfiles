@@ -273,7 +273,7 @@ const NearestAtmScreen: React.FC = () => {
       </IPayView>
 
       <IPayBottomSheet
-        heading={localizationText.ATM_WITHDRAWAL.SELECT_CITY}
+        heading={'ATM_WITHDRAWAL.SELECT_CITY'}
         customSnapPoint={['20%', '99%']}
         ref={citiesFilterSheetRef}
         enablePanDownToClose
@@ -282,7 +282,7 @@ const NearestAtmScreen: React.FC = () => {
         bold
         cancelBnt
         doneBtn
-        doneText={localizationText.COMMON.RESET}
+        doneText={'COMMON.RESET'}
         onDone={onPressReset}
         closeBottomSheetOnDone={false}
       >
@@ -299,7 +299,7 @@ const NearestAtmScreen: React.FC = () => {
 
       <IPayBottomSheet
         noGradient
-        heading={localizationText.ATM_WITHDRAWAL.ATM_DETAILS}
+        heading={'ATM_WITHDRAWAL.ATM_DETAILS'}
         customSnapPoint={['20%', isTablet ? '70' : '73%']}
         ref={atmDetailsSheetRef}
         enablePanDownToClose

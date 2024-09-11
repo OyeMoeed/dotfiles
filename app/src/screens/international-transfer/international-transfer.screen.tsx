@@ -477,7 +477,7 @@ const InternationalTransferScreen: React.FC = () => {
       <IPayHeader
         testID="international-transfer"
         backBtn
-        title={localizationText.INTERNATIONAL_TRANSFER.INTERNATIONAL_TRANSFER}
+        title={'INTERNATIONAL_TRANSFER.INTERNATIONAL_TRANSFER'}
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
@@ -494,8 +494,8 @@ const InternationalTransferScreen: React.FC = () => {
           onPress={onPressPriceCalculator}
           testID="price-calculator"
           leftIcon={<IPayIcon icon={icons.calculator1} size={24} color={colors.primary.primary500} />}
-          title={localizationText.INTERNATIONAL_TRANSFER.PRICE_CALCULATOR}
-          subTitle={localizationText.INTERNATIONAL_TRANSFER.CALCULATE_AND_DELIVERY}
+          title={'INTERNATIONAL_TRANSFER.PRICE_CALCULATOR'}
+          subTitle={'INTERNATIONAL_TRANSFER.CALCULATE_AND_DELIVERY'}
           rightIcon={<IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary500} />}
         />
       </IPayView>
@@ -586,7 +586,7 @@ const InternationalTransferScreen: React.FC = () => {
                   icon={icons.user_search}
                   iconColor={colors.primary.primary800}
                   iconSize={40}
-                  message={localizationText.LOCAL_TRANSFER.NO_BENEFICIARIES}
+                  message={'LOCAL_TRANSFER.NO_BENEFICIARIES'}
                   containerStyle={styles.noResult}
                   testID="no-result"
                 />
@@ -644,8 +644,8 @@ const InternationalTransferScreen: React.FC = () => {
       <IPayAlert
         visible={deleteBeneficiary}
         onClose={onDeleteCancel}
-        title={localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY}
-        message={localizationText.BENEFICIARY_OPTIONS.DELETION_CONFIRMATION}
+        title={'BENEFICIARY_OPTIONS.DELETE_BENFICIARY'}
+        message={'BENEFICIARY_OPTIONS.DELETION_CONFIRMATION'}
         type={alertType.SIDE_BY_SIDE}
         closeOnTouchOutside
         variant={alertVariant.DESTRUCTIVE}

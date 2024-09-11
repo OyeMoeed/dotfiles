@@ -40,8 +40,8 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
     showToast && (
       <IPayToast
         testID="hideBalanceToast"
-        title={localizationText.COMMON.INCORRECT_IQAMA}
-        subTitle={localizationText.COMMON.VERIFY_IQAMA}
+        title={'COMMON.INCORRECT_IQAMA'}
+        subTitle={'COMMON.VERIFY_IQAMA'}
         isShowSubTitle
         isShowButton
         borderColor={colors.primary.primary700}
@@ -64,7 +64,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
 
             <IPayView>
               <IPayPageDescriptionText
-                heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
+                heading={'FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING'}
                 text={'FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE'}
               />
             </IPayView>
@@ -72,7 +72,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
             <IPayView style={styles.inputFieldsContainer}>
               <IPayView style={styles.inputTextView}>
                 <IPayAnimatedTextInput
-                  label={localizationText.COMMON.ID_IQAMA}
+                  label={'COMMON.ID_IQAMA'}
                   editable
                   isError={!!passcodeErrorMsg}
                   assistiveText={passcodeErrorMsg}

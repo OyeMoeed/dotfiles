@@ -370,7 +370,7 @@ const SendMoneyFormScreen: React.FC = () => {
           {!isKeyboardWillOpen && !isKeyboardOpen && (
             <IPayLinearGradientView style={styles.buttonBackground}>
               <IPayList
-                title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
+                title={'SEND_MONEY_FORM.TOTAL_AMOUNT'}
                 rightText={
                   <IPaySubHeadlineText
                     regular
@@ -413,7 +413,7 @@ const SendMoneyFormScreen: React.FC = () => {
         />
         <IPayBottomSheet
           noGradient
-          heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
+          heading={'SEND_MONEY_FORM.REASON_FOR_TRANSFER'}
           onCloseBottomSheet={closeReason}
           customSnapPoint={['20%', '75%']}
           ref={reasonBottomRef}

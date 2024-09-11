@@ -92,7 +92,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   return (
     <>
       <IPaySafeAreaView style={styles.container}>
-        <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
+        <IPayHeader title={'PAY_BILL.HEADER'} backBtn applyFlex />
         <IPayView style={styles.innerContainer}>
           {showBalanceBox && (
             <IPayAccountBalance
@@ -132,7 +132,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         />
 
         <IPayBottomSheet
-          heading={localizationText.PAY_BILL.HEADER}
+          heading={'PAY_BILL.HEADER'}
           enablePanDownToClose
           simpleBar
           backBtn
@@ -146,7 +146,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         </IPayBottomSheet>
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.PAY_BILL.HEADER}
+        heading={'PAY_BILL.HEADER'}
         enablePanDownToClose
         simpleBar
         cancelBnt

@@ -29,8 +29,8 @@ const ResetSuccessful: React.FC = () => {
             style={styles.successContainer}
             iconsStyles={styles.successIcon}
             descriptionStyle={styles.descriptionStyle}
-            headingText={localizationText.SETTINGS.PASSCODE_CHANGED_SUCCESSFULY}
-            descriptionText={localizationText.SETTINGS.SAVE_FOR_LATER}
+            headingText={'SETTINGS.PASSCODE_CHANGED_SUCCESSFULY'}
+            descriptionText={'SETTINGS.SAVE_FOR_LATER'}
           />
           <IPayView style={styles.buttonContainer}>
             <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={logoutConfirm} />

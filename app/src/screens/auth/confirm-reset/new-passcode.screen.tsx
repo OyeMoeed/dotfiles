@@ -49,7 +49,7 @@ const NewPasscode = forwardRef((props) => {
       </IPayView>
       <IPayView style={styles.headingView}>
         <IPayPageDescriptionText
-          heading={localizationText.REGISTRATION.NEW_PASSCODE}
+          heading={'REGISTRATION.NEW_PASSCODE'}
           text={'COMMON.ENTER_CODE_TO_ACCESS_APPLICATION'}
         />
       </IPayView>

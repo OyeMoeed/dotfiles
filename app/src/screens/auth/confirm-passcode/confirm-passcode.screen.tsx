@@ -129,7 +129,7 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
 
           <IPayView style={styles.headingView}>
             <IPayPageDescriptionText
-              heading={localizationText.REGISTRATION.CONFIRM_PASSCODE}
+              heading={'REGISTRATION.CONFIRM_PASSCODE'}
               text="REGISTRATION.ENTER_PASSCODE_AGAIN"
             />
           </IPayView>

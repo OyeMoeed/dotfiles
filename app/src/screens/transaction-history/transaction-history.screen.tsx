@@ -372,12 +372,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     noFilterResult ? (
       <IPayNoResult
         textColor={colors.primary.primary800}
-        message={localizationText.TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND}
+        message={'TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND'}
       />
     ) : (
       <IPayNoResult
         textColor={colors.primary.primary800}
-        message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
+        message={'TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY'}
       />
     );
 
@@ -388,7 +388,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title={'COMMON.TRANSACTIONS_HISTORY'}
         applyFlex
         rightComponent={
           <IPayPressable onPress={() => handleFiltersShow()}>
@@ -445,7 +445,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         {filteredData && filteredData.length ? renderTrxsList() : renderLoadingWithNoResult()}
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading={'TRANSACTION_HISTORY.TRANSACTION_DETAILS'}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={transactionRef}
@@ -458,7 +458,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       </IPayBottomSheet>
       {selectedFilterData && (
         <IPayFilterBottomSheet
-          heading={localizationText.TRANSACTION_HISTORY.FILTER}
+          heading={'TRANSACTION_HISTORY.FILTER'}
           defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
           showAmountFilter={isShowAmount}
           showDateFilter
@@ -473,11 +473,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         closeOnTouchOutside
         animationType="fade"
         showIcon={false}
-        title={localizationText.TRANSACTION_HISTORY.NO_RESULTS}
+        title={'TRANSACTION_HISTORY.NO_RESULTS'}
         onClose={() => {
           setNoFilterResult(false);
         }}
-        message={localizationText.TRANSACTION_HISTORY.NO_RESULTS_DETAIL}
+        message={'TRANSACTION_HISTORY.NO_RESULTS_DETAIL'}
         primaryAction={{
           text: localizationText.TRANSACTION_HISTORY.GOT_IT,
           onPress: () => {

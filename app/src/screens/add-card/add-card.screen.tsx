@@ -11,7 +11,7 @@ const AddCardScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader title={localizationText.MENU.ADD_CARD} backBtn applyFlex />
+      <IPayHeader title={'MENU.ADD_CARD'} backBtn applyFlex />
       <IPayView style={styles.container}>
         {/* TODO: added dummy URL for now */}
         <IPayWebView source={{ uri: 'https://www.google.com' }} />

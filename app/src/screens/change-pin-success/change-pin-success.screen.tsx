@@ -36,8 +36,8 @@ const ChangePinSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.flexZero}
-          headingText={localizationText.CHANGE_PIN_SUCCESS.CARD_PIN_CHANGES_SUCCESS}
-          descriptionText={localizationText.CHANGE_PIN_SUCCESS.YOU_CAN_USE_PURCHASE}
+          headingText={'CHANGE_PIN_SUCCESS.CARD_PIN_CHANGES_SUCCESS'}
+          descriptionText={'CHANGE_PIN_SUCCESS.YOU_CAN_USE_PURCHASE'}
         />
         <IPayView style={styles.bottomButtonContainer}>
           <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={goBack} />

@@ -49,7 +49,7 @@ const ShopCategoriesScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
+      <IPayHeader backBtn title={'SHOP.TITLE'} applyFlex />
       <IPayTabs
         tabs={CATEGORY_TABS}
         scrollable
@@ -75,7 +75,7 @@ const ShopCategoriesScreen: React.FC = () => {
           <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={onCardPress} />
         ) : (
           <IPayView style={styles.noResultContainer}>
-            <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />
+            <IPayNoResult showEmptyBox message={'SHOP.NO_RESULT'} />
           </IPayView>
         )}
       </IPayView>

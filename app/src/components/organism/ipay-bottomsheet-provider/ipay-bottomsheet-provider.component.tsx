@@ -37,7 +37,7 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
         onCloseBottomSheet={onCloseProfileSheet}
         customSnapPoint={['50%', '56%', '85%']}
         simpleHeader
-        heading={localizationText.HOME.COMPLETE_YOUR_PROFILE}
+        heading={'HOME.COMPLETE_YOUR_PROFILE'}
         simpleBar
         bold
         enablePanDownToClose
@@ -47,7 +47,7 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
       </IPayPortalBottomSheet>
 
       <IPayPortalBottomSheet
-        heading={localizationText.COMMON.INDENTITY_VERIFICATION}
+        heading={'COMMON.INDENTITY_VERIFICATION'}
         onCloseBottomSheet={onCloseNafathSheet}
         customSnapPoint={['92%', '92%']}
         simpleBar

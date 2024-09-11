@@ -30,7 +30,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: true }}
         render={() => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.OCCUPATION}
+            label={'PROFILE.OCCUPATION'}
             editable={false}
             value={getValues('occupation')?.recDescription}
             containerStyle={styles.inputContainerStyle}
@@ -48,7 +48,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: true }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.EMPLOYER_NAME}
+            label={'PROFILE.EMPLOYER_NAME'}
             editable
             value={value}
             onChangeText={onChange}
@@ -65,7 +65,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: true }}
         render={() => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.INCOME_SOURCE}
+            label={'PROFILE.INCOME_SOURCE'}
             editable={false}
             value={getValues('income_source')?.desc}
             containerStyle={styles.inputContainerStyle}
@@ -83,7 +83,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: true }}
         render={() => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.MONTHLY_INCOME}
+            label={'PROFILE.MONTHLY_INCOME'}
             editable={false}
             value={getValues('monthly_income')?.desc}
             containerStyle={styles.inputContainerStyle}
@@ -102,7 +102,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: true }}
         render={() => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.CITY_NAME}
+            label={'PROFILE.CITY_NAME'}
             editable={false}
             value={getValues('city_name')?.recDescription}
             containerStyle={styles.inputContainerStyle}
@@ -122,7 +122,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.DISTRICT}
+            label={'PROFILE.DISTRICT'}
             editable
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             value={value}
@@ -141,7 +141,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.STREET_NAME}
+            label={'PROFILE.STREET_NAME'}
             editable
             value={value}
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
@@ -158,7 +158,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: false }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.POSTAL_CODE}
+            label={'PROFILE.POSTAL_CODE'}
             editable
             value={value}
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
@@ -177,7 +177,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.ADDITIONAL_CODE}
+            label={'PROFILE.ADDITIONAL_CODE'}
             editable
             value={value}
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
@@ -196,7 +196,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.BUILDING_NUMBER}
+            label={'PROFILE.BUILDING_NUMBER'}
             editable
             value={value}
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
@@ -215,7 +215,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.UNIT_NUMBER}
+            label={'PROFILE.UNIT_NUMBER'}
             editable
             value={value}
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}

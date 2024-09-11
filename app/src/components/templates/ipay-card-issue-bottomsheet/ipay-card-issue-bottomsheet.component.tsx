@@ -27,18 +27,18 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
       <IPayView style={styles.listStyle}>
         <IPayList
           textStyle={styles.titleStyle}
-          title={localizationText.CARD_ISSUE.VIRTUAL_CARD}
+          title={'CARD_ISSUE.VIRTUAL_CARD'}
           isShowSubTitle
-          subTitle={localizationText.CARD_ISSUE.VIRTUAL_DEATAILS}
+          subTitle={'CARD_ISSUE.VIRTUAL_DEATAILS'}
           isShowIcon={selectedCard === CardOptions.VIRTUAL}
           icon={selectedCard === CardOptions.VIRTUAL && <IPayIcon icon={icons.tick_check_mark_default} />}
           onPress={() => handleCardSelection(CardOptions.VIRTUAL)}
         />
         <IPayList
           textStyle={styles.titleStyle}
-          title={localizationText.CARD_ISSUE.PHYSICAL_CARD}
+          title={'CARD_ISSUE.PHYSICAL_CARD'}
           isShowSubTitle
-          subTitle={localizationText.CARD_ISSUE.PHYSICAL_DETAILS}
+          subTitle={'CARD_ISSUE.PHYSICAL_DETAILS'}
           isShowIcon={selectedCard === CardOptions.PHYSICAL}
           icon={selectedCard === CardOptions.PHYSICAL && <IPayIcon icon={icons.tick_check_mark_default} />}
           onPress={() => handleCardSelection(CardOptions.PHYSICAL)}

@@ -67,11 +67,11 @@ const SendGiftPreview: FC = ({ route }) => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.SEND_GIFT.SEND_GIFT} applyFlex />
+      <IPayHeader backBtn title={'SEND_GIFT.SEND_GIFT'} applyFlex />
       <IPayKeyboardAwareScrollView keyboardShouldPersistTaps="handled">
         <IPayView style={styles.inputContainer}>
           <IPayTextInput
-            label={localizationText.SEND_GIFT.WRITE_MESSAGE}
+            label={'SEND_GIFT.WRITE_MESSAGE'}
             onChangeText={onChangeText}
             text={message}
             multiline
@@ -104,7 +104,7 @@ const SendGiftPreview: FC = ({ route }) => {
         </IPayView>
       </IPayKeyboardAwareScrollView>
       <IPayBottomSheet
-        heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
+        heading={'SEND_GIFT.PREVIEW_GIFT'}
         ref={previewBottomSheetRef}
         customSnapPoint={['1%', '75%']}
         cancelBnt
@@ -127,7 +127,7 @@ const SendGiftPreview: FC = ({ route }) => {
         </IPayView>
 
         <IPayBottomSheet
-          heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
+          heading={'SEND_GIFT.PREVIEW_GIFT'}
           ref={previewBottomSheetRef}
           customSnapPoint={isIosOS ? SNAP_POINTS.MID_LARGE : SNAP_POINTS.X_SMALL}
           enablePanDownToClose

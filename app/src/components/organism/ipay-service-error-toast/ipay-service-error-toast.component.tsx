@@ -28,7 +28,7 @@ const IPayServiceErrorToast: FC<IPayServiceErrorToastProps> = ({ testID }) => {
   return serviceCallError ? (
     <IPayToast
       testID={`error-toast-${testID}`}
-      title={localizationText.ERROR[serviceCallError as keyof typeof localizationText.ERROR] || serviceCallError}
+      title={'ERROR[serviceCallError as keyof typeof localizationText.ERROR] || serviceCallError'}
       isShowSubTitle
       isShowLeftIcon
       leftIcon={<IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />}

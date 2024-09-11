@@ -24,7 +24,7 @@ const PrintCardSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.successTextContainer}
-          headingText={localizationText.PHYSICAL_CARD.CARD_RPINTING_REQUEST}
+          headingText={'PHYSICAL_CARD.CARD_RPINTING_REQUEST'}
           headingStyle={styles.headingStyle}
         />
         <IPayView style={styles.bottomButtonContainer}>

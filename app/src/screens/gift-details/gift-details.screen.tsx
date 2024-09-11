@@ -181,12 +181,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader
-        backBtn
-        applyFlex
-        title={localizationText.SEND_GIFT.GIFT_DETAILS}
-        customRightComponent={customRightComponent()}
-      />
+      <IPayHeader backBtn applyFlex title={'SEND_GIFT.GIFT_DETAILS'} customRightComponent={customRightComponent()} />
       <IPayView style={[styles.container, !isSend && styles.receiveContainer]}>
         <IPayView style={styles.giftCardView}>
           <FlipCard

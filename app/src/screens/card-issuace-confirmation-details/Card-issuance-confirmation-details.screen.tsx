@@ -95,7 +95,7 @@ const CardIssuanceConfirmationScreen = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.TOPUP_CONFIRMATION.VIRTUAL_CARD} applyFlex />
+      <IPayHeader backBtn title={'TOPUP_CONFIRMATION.VIRTUAL_CARD'} applyFlex />
       <IPayView style={styles.container}>
         <IPayTopUpBox availableBalance={balance} isShowTopup />
         <IPayView style={styles.gradientView}>
@@ -123,7 +123,7 @@ const CardIssuanceConfirmationScreen = () => {
       </IPayView>
       <IPayTermsAndConditions ref={termsRef} />
       <IPayBottomSheet
-        heading={localizationText.CARDS.VIRTUAL_CARD}
+        heading={'CARDS.VIRTUAL_CARD'}
         enablePanDownToClose
         simpleHeader
         cancelBnt
@@ -140,7 +140,7 @@ const CardIssuanceConfirmationScreen = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

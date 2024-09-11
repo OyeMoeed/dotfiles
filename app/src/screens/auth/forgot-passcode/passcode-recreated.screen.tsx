@@ -23,8 +23,8 @@ const PasscodeRecreatedSuccessfuly: React.FC = () => {
             style={styles.successContainer2}
             iconsStyles={styles.successIcon}
             descriptionStyle={styles.descriptionStyle}
-            headingText={localizationText.CHANGE_PIN.PASSCODE_SET}
-            descriptionText={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
+            headingText={'CHANGE_PIN.PASSCODE_SET'}
+            descriptionText={'FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE'}
           />
           <IPayView style={styles.buttonContainer}>
             <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={handleDonePress} />

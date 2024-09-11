@@ -134,7 +134,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               <IPayView style={styles.noRecordWrapper}>
                 <IPayNoResult
                   textColor={colors.natural.natural500}
-                  message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
+                  message={'TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY'}
                   showIcon
                   displayInRow
                 />

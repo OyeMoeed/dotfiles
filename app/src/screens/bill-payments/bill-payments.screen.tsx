@@ -98,7 +98,7 @@ const BillPaymentsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.BILL_PAYMENTS.BILL_PAYMENTS} applyFlex />
+      <IPayHeader backBtn title={'BILL_PAYMENTS.BILL_PAYMENTS'} applyFlex />
       <IPayView style={styles.container}>
         {sadadBills.length > 0 ? (
           <IPayView style={styles.contentContainer}>

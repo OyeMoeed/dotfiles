@@ -330,7 +330,7 @@ const CardOptionsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
+      <IPayHeader title={'CARD_OPTIONS.CARD_OPTIONS'} backBtn applyFlex />
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetails
@@ -345,9 +345,9 @@ const CardOptionsScreen: React.FC = () => {
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.LOCK}
             rightIcon={icons.edit_2}
-            title={localizationText.CARD_OPTIONS.PIN_CODE}
-            subTitle={localizationText.CARD_OPTIONS.FOUR_DIGIT_PIN}
-            detailText={localizationText.CARD_OPTIONS.CHANGE}
+            title={'CARD_OPTIONS.PIN_CODE'}
+            subTitle={'CARD_OPTIONS.FOUR_DIGIT_PIN'}
+            detailText={'CARD_OPTIONS.CHANGE'}
             onPress={() => {
               openBottomSheet.current?.present();
             }}
@@ -356,16 +356,16 @@ const CardOptionsScreen: React.FC = () => {
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}
-            title={localizationText.CARD_OPTIONS.CARD_FEATURES}
-            subTitle={localizationText.CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE}
+            title={'CARD_OPTIONS.CARD_FEATURES'}
+            subTitle={'CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE'}
             onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
           />
 
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}
-            title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
-            subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
+            title={'CARD_OPTIONS.REPLACE_THE_CARD'}
+            subTitle={'CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES'}
             onPress={onNavigateToChooseAddress}
           />
 
@@ -385,7 +385,7 @@ const CardOptionsScreen: React.FC = () => {
 
           <IPayCardOptionsIPayListToggle
             leftIcon={icons.moneys}
-            title={localizationText.CARD_OPTIONS.WITHDRAW_CASH_FROM}
+            title={'CARD_OPTIONS.WITHDRAW_CASH_FROM'}
             onToggleChange={toggleATMWithdraw}
             toggleState={isATMWithDraw}
           />
@@ -394,14 +394,14 @@ const CardOptionsScreen: React.FC = () => {
               onPress={showDeleteCardSheet}
               isShowLeftIcon
               leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural700} />}
-              title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
+              title={'CARD_OPTIONS.DELETE_THE_CARD'}
             />
           </IPayView>
         </IPayView>
       </IPayScrollView>
       <IPayBottomSheet
         simpleBar
-        heading={localizationText.CHANGE_PIN.CHANGE_PIN_CODE}
+        heading={'CHANGE_PIN.CHANGE_PIN_CODE'}
         enablePanDownToClose
         simpleHeader
         cancelBnt
@@ -414,8 +414,8 @@ const CardOptionsScreen: React.FC = () => {
       <IPayActionSheet
         ref={deleteCardSheetRef}
         testID="delete-card-action-sheet"
-        title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
-        message={localizationText.CARD_OPTIONS.YOU_WONT_BE_ABLE_TO_USE}
+        title={'CARD_OPTIONS.DELETE_THE_CARD'}
+        message={'CARD_OPTIONS.YOU_WONT_BE_ABLE_TO_USE'}
         options={[localizationText.COMMON.CANCEL, localizationText.CARD_OPTIONS.DELETE]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
@@ -427,7 +427,7 @@ const CardOptionsScreen: React.FC = () => {
       />
 
       <IPayPortalBottomSheet
-        heading={localizationText.CARD_OPTIONS.CHANGE_PIN}
+        heading={'CARD_OPTIONS.CHANGE_PIN'}
         enablePanDownToClose
         simpleBar
         bold
@@ -452,7 +452,7 @@ const CardOptionsScreen: React.FC = () => {
       </IPayPortalBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

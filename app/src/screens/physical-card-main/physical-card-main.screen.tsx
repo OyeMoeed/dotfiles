@@ -58,7 +58,7 @@ const PhysicalCardMainScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView testID="ipay-safearea">
-      <IPayHeader title={localizationText.CARD_OPTIONS.PHYSICAL_CARD} backBtn applyFlex />
+      <IPayHeader title={'CARD_OPTIONS.PHYSICAL_CARD'} backBtn applyFlex />
 
       <IPayFootnoteText
         style={styles.headerText}

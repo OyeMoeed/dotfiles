@@ -81,7 +81,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.CARD_OPTIONS.PRINT_CARD} backBtn applyFlex />
+      <IPayHeader title={'CARD_OPTIONS.PRINT_CARD'} backBtn applyFlex />
       <IPayView style={styles.contentContainer}>
         <IPayCardDetails
           containerStyle={styles.zeroMargin}
@@ -95,7 +95,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           containerStyle={styles.countryButtonStyle}
           textStyle={[styles.titleStyle, styles.textGray]}
           subTextStyle={{ ...styles.subTextStyle, ...styles.textGray }}
-          title={localizationText.REPLACE_CARD.COUNTRY}
+          title={'REPLACE_CARD.COUNTRY'}
           isShowSubTitle
           subTitle={COUNTRY}
         />
@@ -104,7 +104,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           containerStyle={styles.cityDistrict}
           textStyle={styles.titleStyle}
           subTextStyle={styles.subTextStyle}
-          title={localizationText.REPLACE_CARD.CITY_NAME}
+          title={'REPLACE_CARD.CITY_NAME'}
           isShowSubTitle
           subTitle={selectedCity}
           isShowIcon
@@ -114,7 +114,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           containerStyle={styles.cityDistrict}
           textStyle={styles.titleStyle}
           subTextStyle={styles.subTextStyle}
-          title={localizationText.REPLACE_CARD.DISTRICT}
+          title={'REPLACE_CARD.DISTRICT'}
           isShowSubTitle
           subTitle={DISTRICT}
         />
@@ -139,7 +139,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
       <IPayBottomSheet
         noGradient
-        heading={localizationText.REPLACE_CARD.SELECT_CITY}
+        heading={'REPLACE_CARD.SELECT_CITY'}
         enablePanDownToClose
         simpleHeader
         cancelBnt

@@ -250,13 +250,7 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader
-          title={localizationText.MENU.SUPPORT_AND_HELP}
-          backBtn
-          onPress={openBottomSheet}
-          applyFlex
-          contactUs
-        />
+        <IPayHeader title={'MENU.SUPPORT_AND_HELP'} backBtn onPress={openBottomSheet} applyFlex contactUs />
         <IPayView style={styles.container}>
           {/* TODO: remove categories untill implement it from back end */}
           {/* <IPayView style={styles.headerTabView}>
@@ -331,7 +325,7 @@ const HelpCenter: React.FC = () => {
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.COMMON.CONTACT_US}
+        heading={'COMMON.CONTACT_US'}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', '40%']}
         ref={contactUsRef}

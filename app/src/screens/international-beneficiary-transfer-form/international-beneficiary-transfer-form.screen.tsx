@@ -63,7 +63,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
     >
       {({ handleSubmit }) => (
         <IPaySafeAreaView>
-          <IPayHeader backBtn title={localizationText.NEW_BENEFICIARY.NEW_BENEFICIARY} applyFlex />
+          <IPayHeader backBtn title={'NEW_BENEFICIARY.NEW_BENEFICIARY'} applyFlex />
           <IPayView style={styles.container}>
             <IPayImage image={transferService?.serviceLogo} style={styles.logoStyles} />
             <IPayCaption1Text
@@ -81,7 +81,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
 
                 <IPayAnimatedTextInput
                   name={BeneficiaryFields.BENEFICIARY_NICK_NAME}
-                  label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
+                  label={'NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL'}
                 />
                 {transferType === TransferTypes.CASH && (
                   <>
@@ -89,35 +89,23 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                       icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} />}
                       variant={States.SEVERE}
                       headingStyles={styles.chipHeading}
-                      textValue={localizationText.NEW_BENEFICIARY.NAME_SHOULD_BE_ENGLISH}
+                      textValue={'NEW_BENEFICIARY.NAME_SHOULD_BE_ENGLISH'}
                     />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.FIRST_NAME}
-                      label={localizationText.NEW_BENEFICIARY.FIRST_NAME}
-                    />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.THIRD_NAME}
-                      label={localizationText.NEW_BENEFICIARY.THIRD_NAME}
-                    />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.SECOND_NAME}
-                      label={localizationText.NEW_BENEFICIARY.SECOND_NAME}
-                    />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.LAST_NAME}
-                      label={localizationText.NEW_BENEFICIARY.LAST_NAME}
-                    />
+                    <IPayAnimatedTextInput name={BeneficiaryFields.FIRST_NAME} label={'NEW_BENEFICIARY.FIRST_NAME'} />
+                    <IPayAnimatedTextInput name={BeneficiaryFields.THIRD_NAME} label={'NEW_BENEFICIARY.THIRD_NAME'} />
+                    <IPayAnimatedTextInput name={BeneficiaryFields.SECOND_NAME} label={'NEW_BENEFICIARY.SECOND_NAME'} />
+                    <IPayAnimatedTextInput name={BeneficiaryFields.LAST_NAME} label={'NEW_BENEFICIARY.LAST_NAME'} />
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
                       text="NEW_BENEFICIARY.OTHER_INFORMATION"
                     />
                     <IPayDropdown
-                      dropdownType={localizationText.NEW_BENEFICIARY.BENEFECIARY_NATIONALITY}
+                      dropdownType={'NEW_BENEFICIARY.BENEFECIARY_NATIONALITY'}
                       data={COUNTRIES}
                       size={SNAP_POINTS.MID_LARGE}
                       name={BeneficiaryFields.BENEFICIARY_NATIONALITY}
-                      label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NATIONALITY}
+                      label={'NEW_BENEFICIARY.BENEFECIARY_NATIONALITY'}
                     />
                   </>
                 )}
@@ -125,48 +113,41 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                   <>
                     <IPayAnimatedTextInput
                       name={BeneficiaryFields.BENEFICIARY_NAME}
-                      label={localizationText.NEW_BENEFICIARY.BENEFECIARY_FULL_NAME}
+                      label={'NEW_BENEFICIARY.BENEFECIARY_FULL_NAME'}
                     />
                     <IPayDropdown
-                      dropdownType={localizationText.COMMON.RELATIONSHIP}
+                      dropdownType={'COMMON.RELATIONSHIP'}
                       data={RELATIONSHIPS}
                       size={SNAP_POINTS.MID_LARGE}
                       name={BeneficiaryFields.RELATIONSHIP}
-                      label={localizationText.COMMON.RELATIONSHIP}
+                      label={'COMMON.RELATIONSHIP'}
                     />
                     <IPayDropdown
-                      dropdownType={localizationText.COMMON.CITY}
+                      dropdownType={'COMMON.CITY'}
                       data={cities}
                       size={SNAP_POINTS.MID_LARGE}
                       name={BeneficiaryFields.CITY}
-                      label={localizationText.PROFILE.CITY_NAME}
+                      label={'PROFILE.CITY_NAME'}
                       isSearchable
                     />
                   </>
                 )}
                 {transferType === TransferTypes.BANK && (
                   <>
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.ADDRESS}
-                      label={localizationText.REPLACE_CARD.ADDRESS}
-                    />
+                    <IPayAnimatedTextInput name={BeneficiaryFields.ADDRESS} label={'REPLACE_CARD.ADDRESS'} />
 
                     <IPayFootnoteText
                       color={colors.natural.natural500}
                       style={styles.textStyle}
                       text="COMMON.BANK_DETAILS"
                     />
-                    <IPayAnimatedTextInput
-                      name={BeneficiaryFields.IBAN}
-                      label={localizationText.COMMON.IBAN}
-                      editable
-                    />
+                    <IPayAnimatedTextInput name={BeneficiaryFields.IBAN} label={'COMMON.IBAN'} editable />
                     <IPayDropdown
-                      dropdownType={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
+                      dropdownType={'INTERNATIONAL_TRANSFER.BANK_NAME'}
                       data={BANKS}
                       size={SNAP_POINTS.MID_LARGE}
                       name={BeneficiaryFields.BANK_NAME}
-                      label={localizationText.INTERNATIONAL_TRANSFER.BANK_NAME}
+                      label={'INTERNATIONAL_TRANSFER.BANK_NAME'}
                     />
                   </>
                 )}
@@ -180,11 +161,11 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                       text="NEW_BENEFICIARY.DIGITAL_WALLET_DETAILS"
                     />
                     <IPayDropdown
-                      dropdownType={localizationText.NEW_BENEFICIARY.WALLER_TYPE}
+                      dropdownType={'NEW_BENEFICIARY.WALLER_TYPE'}
                       data={WU_TRANSFER_TYPES}
                       size={SNAP_POINTS.X_SMALL}
                       name={BeneficiaryFields.WALLET_TYPE}
-                      label={localizationText.NEW_BENEFICIARY.WALLER_TYPE}
+                      label={'NEW_BENEFICIARY.WALLER_TYPE'}
                     />
                   </>
                 )}

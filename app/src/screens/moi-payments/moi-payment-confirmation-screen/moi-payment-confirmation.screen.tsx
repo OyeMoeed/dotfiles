@@ -43,12 +43,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader
-        backBtn
-        applyFlex
-        title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
-        titleStyle={styles.screenTitle}
-      />
+      <IPayHeader backBtn applyFlex title={'BILL_PAYMENTS.MOI_PAYMENT'} titleStyle={styles.screenTitle} />
       <IPayView style={styles.container}>
         <IPayAccountBalance balance={availableBalance} availableBalance={currentBalance} showRemainingAmount />
         <IPayBillDetailsOption
@@ -66,7 +61,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.BILL_PAYMENTS.NEW_MOI_BILL}
+        heading={'BILL_PAYMENTS.NEW_MOI_BILL'}
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '97%']}
@@ -91,7 +86,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

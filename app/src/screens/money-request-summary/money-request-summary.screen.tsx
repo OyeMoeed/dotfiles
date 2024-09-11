@@ -216,7 +216,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       ) : (
         <IPayList
-          title={localizationText.REQUEST_SUMMARY.AMOUNT}
+          title={'REQUEST_SUMMARY.AMOUNT'}
           rightText={
             <IPaySubHeadlineText
               color={colors.primary.primary800}
@@ -296,7 +296,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       </IPayView>
 
       <IPayBottomSheet
-        heading={localizationText.REQUEST_SUMMARY.TITLE}
+        heading={'REQUEST_SUMMARY.TITLE'}
         enablePanDownToClose
         simpleBar
         testID="request-money-otp-verification"
@@ -323,7 +323,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

@@ -27,7 +27,7 @@ const TrafficViolationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle} />
+      <IPayHeader backBtn applyFlex title={'TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle'} />
       <IPayView style={styles.rowStyles}>
         <IPayFootnoteText
           color={colors.primary.primary900}
@@ -95,7 +95,7 @@ const TrafficViolationScreen: React.FC = () => {
             iconColor={colors.primary.primary800}
             iconSize={40}
             iconViewStyles={styles.noResultIconView}
-            message={localizationText.SADAD.NO_ACTIVE_BILLS}
+            message={'SADAD.NO_ACTIVE_BILLS'}
           />
           <IPayButton
             medium

@@ -173,7 +173,7 @@ const SendGiftAmountScreen = ({ route }) => {
                 <IPayChip
                   containerStyle={styles.chipColors}
                   icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-                  textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+                  textValue={'TRANSFER_SUMMARY.CHIP_TITLE'}
                   headingStyles={styles.chipColors}
                 />
               </IPayView>
@@ -208,7 +208,7 @@ const SendGiftAmountScreen = ({ route }) => {
                 <IPayChip
                   containerStyle={styles.chipColors}
                   icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-                  textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+                  textValue={'TRANSFER_SUMMARY.CHIP_TITLE'}
                   headingStyles={styles.chipColors}
                 />
               </IPayView>
@@ -384,7 +384,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader title={localizationText.SEND_GIFT.TITLE} applyFlex backBtn />
+      <IPayHeader title={'SEND_GIFT.TITLE'} applyFlex backBtn />
       <IPayScrollView>
         <IPayView style={styles.container}>
           <IPayView>
@@ -425,7 +425,7 @@ const SendGiftAmountScreen = ({ route }) => {
       <IPayView style={styles.buttonContainer}>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && (
           <IPayList
-            title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+            title={'TRANSACTION_HISTORY.TOTAL_AMOUNT'}
             showDetail
             detailTextStyle={styles.listTextStyle}
             detailText={`${amountToShow} ${localizationText.COMMON.SAR}`}
@@ -443,8 +443,8 @@ const SendGiftAmountScreen = ({ route }) => {
       </IPayView>
       <IPayAlert
         testID="removeContactAlert"
-        title={localizationText.SEND_GIFT.REMOVE_CONTACT}
-        message={localizationText.SEND_GIFT.REMOVE_CONFIRM}
+        title={'SEND_GIFT.REMOVE_CONTACT'}
+        message={'SEND_GIFT.REMOVE_CONFIRM'}
         icon={<IPayIcon icon={icons.TRASH} size={64} />}
         visible={alertVisible}
         variant={alertVariant.DESTRUCTIVE}

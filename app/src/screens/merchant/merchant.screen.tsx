@@ -23,7 +23,7 @@ const MerchantScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader testID="all-merchant-ipay-header" backBtn title={localizationText.SHOP.ALL_MERCHANTS} applyFlex />
+      <IPayHeader testID="all-merchant-ipay-header" backBtn title={'SHOP.ALL_MERCHANTS'} applyFlex />
       <IPayView style={styles.contentContainer}>
         <IPayTextInput
           text={search}

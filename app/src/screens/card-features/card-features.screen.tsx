@@ -26,7 +26,7 @@ const CardFeaturesScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.CARD_OPTIONS.CARD_FEATURES} applyFlex />
+      <IPayHeader backBtn title={'CARD_OPTIONS.CARD_FEATURES'} applyFlex />
       <IPayScrollView showsVerticalScrollIndicator={false}>
         <IPayView>
           <IPayImage image={backgroundImage} style={styles.background} />

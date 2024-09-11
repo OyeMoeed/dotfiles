@@ -116,7 +116,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={localizationText.TOP_UP.TRANSFER_SUCCESSFUL}
+          headingText={'TOP_UP.TRANSFER_SUCCESSFUL'}
           descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
         />
@@ -154,8 +154,8 @@ const InternationalTransferSuccessScreen: React.FC = () => {
       <IPayAlert
         visible={isVatInvoice}
         onClose={onVatInvoiceCancel}
-        title={localizationText.INTERNATIONAL_TRANSFER.VAT_INVOICE_WAS_NOT_CREATED}
-        message={localizationText.INTERNATIONAL_TRANSFER.PLEASE_TRY_AGAIN_LATER}
+        title={'INTERNATIONAL_TRANSFER.VAT_INVOICE_WAS_NOT_CREATED'}
+        message={'INTERNATIONAL_TRANSFER.PLEASE_TRY_AGAIN_LATER'}
         type={alertType.DEFAULT}
         closeOnTouchOutside
         variant={alertVariant.DEFAULT}

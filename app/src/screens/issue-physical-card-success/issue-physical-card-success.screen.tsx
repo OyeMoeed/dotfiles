@@ -30,8 +30,8 @@ const IssuePhysicalCardSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.successTextContainer}
-          headingText={localizationText.PHYSICAL_CARD.THE_CARD_HAS_BEEN}
-          descriptionText={localizationText.PHYSICAL_CARD.YOU_CAN_ADD_IT}
+          headingText={'PHYSICAL_CARD.THE_CARD_HAS_BEEN'}
+          descriptionText={'PHYSICAL_CARD.YOU_CAN_ADD_IT'}
           descriptionStyle={styles.descriptionStyle}
         />
         {isIosOS && (

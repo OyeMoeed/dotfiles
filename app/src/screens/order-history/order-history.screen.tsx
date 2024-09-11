@@ -42,7 +42,7 @@ const AllOrdersScreen: React.FC = () => {
     <IPaySafeAreaView>
       <IPayHeader
         backBtn
-        title={localizationText.SHOP.TITLE}
+        title={'SHOP.TITLE'}
         applyFlex
         rightComponent={
           <IPayPressable onPress={handleFiltersShow}>
@@ -77,12 +77,12 @@ const AllOrdersScreen: React.FC = () => {
         {allOrders && allOrders.length > 0 ? (
           <IPayOrdersCard data={allOrders} />
         ) : (
-          <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_ORDER} />
+          <IPayNoResult showEmptyBox message={'SHOP.NO_ORDER'} />
         )}
       </IPayView>
 
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading={'TRANSACTION_HISTORY.FILTER'}
         defaultValues={orderHistoryFilterDefaultValues}
         showDateFilter
         ref={filterRef}

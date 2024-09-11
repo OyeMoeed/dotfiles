@@ -58,7 +58,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.COMMON.CHOOSE_BENEFICIARY} applyFlex />
+      <IPayHeader backBtn title={'COMMON.CHOOSE_BENEFICIARY'} applyFlex />
       <IPayView style={styles.innerStyles}>
         <IPayTextInput
           text={search}

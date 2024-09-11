@@ -101,7 +101,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayView style={styles.cardContainer}>
         <IPayAnimatedTextInput
-          label={localizationText.COMMON.CARD_NAME}
+          label={'COMMON.CARD_NAME'}
           value={cardNamePrimary}
           containerStyle={styles.cardNameInput}
           editable
@@ -115,7 +115,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         />
         <IPayMaskedInput
           type="credit-card"
-          label={localizationText.COMMON.CARD_NUMBER}
+          label={'COMMON.CARD_NUMBER'}
           containerStyle={[styles.inputField, isCardNumberError && { borderColor: colors.error.error500 }]}
           assistiveText={isCardNumberError ? localizationText.TOP_UP.INCORRECT_CARD_NUMBER : ''}
           maxLength={19}
@@ -136,7 +136,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
                 onFocus={openExpiredDateBottomSheet}
                 caretHidden
                 onChangeText={openExpiredDateBottomSheet}
-                label={localizationText.TOP_UP.EXPIRY_DATE}
+                label={'TOP_UP.EXPIRY_DATE'}
                 containerStyle={[isEditingMode ? styles.inputFieldEditing : styles.inputField3]}
                 showLeftIcon
                 text={selectedDate}
@@ -152,7 +152,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
           {!isEditingMode && (
             <IPayAnimatedTextInput
-              label={localizationText.COMMON.CVV}
+              label={'COMMON.CVV'}
               maxLength={3}
               showLeftIcon
               icon={icons.infoIcon}
@@ -184,7 +184,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
         {isSaveCardEnabled && (
           <IPayAnimatedTextInput
-            label={localizationText.COMMON.CARD_NAME}
+            label={'COMMON.CARD_NAME'}
             value={cardNameSecondary}
             containerStyle={styles.cardNameInput}
             editable

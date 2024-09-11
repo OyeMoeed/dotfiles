@@ -15,7 +15,7 @@ const AllCategoriesScreen: React.FC = () => {
   const allCategoriesPress = () => navigate(ScreenNames.SHOP_CATEGORIES);
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
+      <IPayHeader backBtn title={'SHOP.TITLE'} applyFlex />
       <IPayView style={styles.container}>
         <IPayAllCategories data={allCategories} onPress={allCategoriesPress} />
       </IPayView>

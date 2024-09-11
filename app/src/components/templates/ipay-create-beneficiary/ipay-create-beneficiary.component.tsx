@@ -241,7 +241,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               control={control}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
+                  label={'NEW_BENEFICIARY.BENEFECIARY_NAME'}
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
@@ -257,7 +257,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
                   maxLength={24}
-                  label={localizationText.COMMON.IBAN}
+                  label={'COMMON.IBAN'}
                   value={value}
                   onChangeText={(text) => {
                     onChange(text);
@@ -272,7 +272,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             />
             <IPayList
               containerStyle={watch(AddBeneficiary.IBAN).length > 9 ? styles.listContainerStyle : styles.inputVariant}
-              title={localizationText.COMMON.BANK_NAME}
+              title={'COMMON.BANK_NAME'}
               rightText={
                 <IPayView style={styles.rightTextStyle}>
                   {beneficiaryBankDetails?.bankName && (
@@ -291,7 +291,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               control={control}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
+                  label={'NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL'}
                   value={value}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}

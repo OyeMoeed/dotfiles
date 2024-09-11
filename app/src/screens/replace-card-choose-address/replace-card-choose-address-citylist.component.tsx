@@ -52,9 +52,7 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
             />
           ))}
           {!CITIES.filter((key) => (values.cityName ? key.toLowerCase().includes(values.cityName.toLowerCase()) : true))
-            .length && (
-            <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
-          )}
+            .length && <IPayList title={'REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle'} />}
         </>
       )}
     </Formik>

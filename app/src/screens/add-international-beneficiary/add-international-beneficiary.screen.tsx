@@ -79,27 +79,27 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         {isCheck && (
           <>
             <IPayDropdown
-              dropdownType={localizationText.INTERNATIONAL_TRANSFER.COUNTRY}
+              dropdownType={'INTERNATIONAL_TRANSFER.COUNTRY'}
               data={getCountriesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.country}
-              label={localizationText.COMMON.BENEFECIARY_COUNTRY}
+              label={'COMMON.BENEFECIARY_COUNTRY'}
               isSearchable
               onSelectListItem={onSelectCountry}
             />
             <IPayDropdown
-              dropdownType={localizationText.NEW_BENEFICIARY.SELECT_DELIVERY_TYPE}
+              dropdownType={'NEW_BENEFICIARY.SELECT_DELIVERY_TYPE'}
               data={serviceName === alinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : WU_TRANSFER_TYPES}
               size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
               name={AddBeneficiaryFields.transferType}
-              label={localizationText.COMMON.DELIVERY_TYPE}
+              label={'COMMON.DELIVERY_TYPE'}
             />
             <IPayDropdown
-              dropdownType={localizationText.NEW_BENEFICIARY.CHOOSE_CURRENCY}
+              dropdownType={'NEW_BENEFICIARY.CHOOSE_CURRENCY'}
               data={getCurrenciesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.currency}
-              label={localizationText.COMMON.CURRENCY}
+              label={'COMMON.CURRENCY'}
             />
           </>
         )}
@@ -199,7 +199,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     >
       {({ handleSubmit, formState: { isValid } }) => (
         <IPaySafeAreaView>
-          <IPayHeader backBtn title={localizationText.NEW_BENEFICIARY.NEW_BENEFICIARY} applyFlex />
+          <IPayHeader backBtn title={'NEW_BENEFICIARY.NEW_BENEFICIARY'} applyFlex />
           <IPayView style={styles.outerContainer}>
             <IPayFootnoteText
               color={colors.natural.natural500}

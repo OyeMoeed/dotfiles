@@ -188,7 +188,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title={'COMMON.TRANSACTIONS_HISTORY'}
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
@@ -247,7 +247,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading={'TRANSACTION_HISTORY.TRANSACTION_DETAILS'}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={transactionRef}
@@ -259,7 +259,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         <IPayTransactionHistory isBeneficiaryHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading={'TRANSACTION_HISTORY.FILTER'}
         defaultValues={transferHistoryFilterDefaultValues}
         showAmountFilter
         showDateFilter

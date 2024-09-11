@@ -35,7 +35,7 @@ const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, benefi
       <IPayAnimatedTextInput
         value={beneficiaryName}
         onChangeText={setBeneficiaryName}
-        label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
+        label={'NEW_BENEFICIARY.BENEFECIARY_NAME'}
         containerStyle={styles.editBeneficiaryInputText}
       />
       <IPayButton

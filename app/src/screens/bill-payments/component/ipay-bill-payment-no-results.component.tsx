@@ -29,7 +29,7 @@ const IPayBillPaymentNoResultsComponent: React.FC<IPayBillPaymentNoResultsCompon
           iconColor={colors.primary.primary800}
           iconSize={40}
           iconViewStyles={styles.noResultIconView}
-          message={localizationText.SADAD.NO_ACTIVE_BILLS}
+          message={'SADAD.NO_ACTIVE_BILLS'}
         />
         <IPayButton
           medium

@@ -191,7 +191,7 @@ const Settings: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.containerStyle}>
-      <IPayHeader title={localizationText.COMMON.SETTINGS} backBtn applyFlex />
+      <IPayHeader title={'COMMON.SETTINGS'} backBtn applyFlex />
       <IPayView style={[styles.cardStyle, styles.marginTop]}>
         <IPayView style={styles.cardText}>
           <IpayFlagIcon country={selectedLanguage} />

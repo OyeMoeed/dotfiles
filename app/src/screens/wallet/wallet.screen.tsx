@@ -107,7 +107,7 @@ const WalletScreen = () => {
 
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
-      <IPayHeader title={localizationText.HOME.WALLET_INFO} backBtn applyFlex />
+      <IPayHeader title={'HOME.WALLET_INFO'} backBtn applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.limitContainer}>
           <IPayAnimatedCircularProgress
@@ -144,7 +144,7 @@ const WalletScreen = () => {
         <IPayFootnoteText color={colors.natural.natural500}>{localizationText.HOME.WALLET_INFO}</IPayFootnoteText>
         <IPayList
           onPressIcon={() => handleClickOnCopy(1, walletInfo?.fullName)}
-          title={localizationText.COMMON.NAME}
+          title={'COMMON.NAME'}
           isShowSubTitle
           subTitle={walletInfo?.fullName}
           isShowIcon
@@ -156,7 +156,7 @@ const WalletScreen = () => {
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2, walletInfo?.viban)}
-          title={localizationText.COMMON.IBAN}
+          title={'COMMON.IBAN'}
           isShowSubTitle
           subTitle={walletInfo?.viban}
           isShowIcon
@@ -167,9 +167,9 @@ const WalletScreen = () => {
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
         />
         <IPayList
-          title={localizationText.HOME.QR_CODE}
+          title={'HOME.QR_CODE'}
           isShowSubTitle
-          subTitle={localizationText.HOME.FOR_EASY_MONEY_TRANSFERS}
+          subTitle={'HOME.FOR_EASY_MONEY_TRANSFERS'}
           isShowIcon
           textStyle={styles.titleStyle}
           isShowSaveQRButton

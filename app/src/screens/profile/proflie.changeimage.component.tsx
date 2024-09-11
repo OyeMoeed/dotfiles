@@ -147,8 +147,8 @@ const useChangeImage = (): UseChangeImageReturn => {
   const IPayAlertComponent = alertVisible ? (
     <IPayAlert
       testID="removePhotoAlert"
-      title={localizationText.PROFILE.REMOVE_PHOTO}
-      message={localizationText.PROFILE.REMOVE_CONFIRM}
+      title={'PROFILE.REMOVE_PHOTO'}
+      message={'PROFILE.REMOVE_CONFIRM'}
       icon={<IPayIcon icon={icons.TRASH} size={64} />}
       visible={alertVisible}
       variant={alertVariant.DESTRUCTIVE}

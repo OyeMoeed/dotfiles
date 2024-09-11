@@ -355,7 +355,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   <IPayView style={styles.noRecordContainer}>
                     <IPayNoResult
                       containerStyle={styles.noRecordWrapper}
-                      message={localizationText.NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND}
+                      message={'NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND'}
                       showIcon
                       icon={icons.note_remove1}
                       iconSize={40}
@@ -366,7 +366,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
-              heading={localizationText.NEW_SADAD_BILLS.SADAD_BILLS}
+              heading={'NEW_SADAD_BILLS.SADAD_BILLS'}
               customSnapPoint={['1%', isAndroidOS ? '43%' : '50%']}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
@@ -378,8 +378,8 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayContentNotFound
-                title={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
-                message={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
+                title={'NEW_SADAD_BILLS.NO_INVOICE_FOUND'}
+                message={'NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE'}
                 btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}

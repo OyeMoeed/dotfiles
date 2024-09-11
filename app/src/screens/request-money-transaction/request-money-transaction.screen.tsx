@@ -401,7 +401,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         onPress={onPressActionSheet}
       />
       <IPayBottomSheet
-        heading={localizationText.REQUEST_MONEY.REQUEST_DETAILS}
+        heading={'REQUEST_MONEY.REQUEST_DETAILS'}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={requestdetailRef}
@@ -417,7 +417,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading={'TRANSACTION_HISTORY.FILTER'}
         defaultValues={requestMoneyFilterDefaultValues}
         filters={requestMoneyFilterData}
         bottomFilters={requestMoneyBottomFilterData}

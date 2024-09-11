@@ -354,7 +354,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           text={search}
           placeholderTextColor={colors.natural.natural500}
           onChangeText={setSearch}
-          label={localizationText.COMMON.SEARCH}
+          label={'COMMON.SEARCH'}
           placeholder="COMMON.SEARCH"
           rightIcon={searchIcon}
           simpleInput
@@ -381,7 +381,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
-        {getSearchedContacts().length === 0 && <IPayNoResult message={localizationText.COMMON.NO_RESULTS_FOUND} />}
+        {getSearchedContacts().length === 0 && <IPayNoResult message={'COMMON.NO_RESULTS_FOUND'} />}
         <IPayFlatlist
           data={getSearchedContacts()}
           extraData={contacts}
@@ -448,7 +448,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       )}
 
       <IPayPortalBottomSheet
-        heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
+        heading={'WALLET_TO_WALLET.UNSAVED_NUMBER'}
         enablePanDownToClose
         simpleBar
         isVisible={unSavedVisible}
@@ -463,7 +463,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayView style={styles.unsavedBottomSheet}>
               <IPayRHFAnimatedTextInput
                 name="mobileNumber"
-                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                label={'WALLET_TO_WALLET.TYPE_MOBILE_NUMBER'}
                 keyboardType="phone-pad"
                 rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
                 containerStyle={styles.phoneInputStyle}

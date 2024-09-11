@@ -39,7 +39,7 @@ const SendMoneyQRScannerScreen: React.FC = () => {
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
-        title={localizationText.COMMON.SCAN_QR_CODE}
+        title={'COMMON.SCAN_QR_CODE'}
         backBtn
         titleStyle={styles.headerTitle}
         applyFlex
@@ -74,7 +74,7 @@ const SendMoneyQRScannerScreen: React.FC = () => {
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DESTRUCTIVE}
-          title={localizationText.ERROR.INVALID_QRCODE}
+          title={'ERROR.INVALID_QRCODE'}
         />
       )}
     </IPaySafeAreaView>

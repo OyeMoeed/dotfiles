@@ -27,8 +27,8 @@ const ActivateBeneficiarySuccessScreen: React.FC = () => {
               testID="ipay-success"
               headingStyle={styles.headingStyle}
               descriptionStyle={styles.descriptionStyle}
-              headingText={localizationText.ACTIVATE_BENEFICIARY.BENEFECIARY_ACTIVATED}
-              descriptionText={localizationText.ACTIVATE_BENEFICIARY.NOW_YOU_CAN_TRANSFER}
+              headingText={'ACTIVATE_BENEFICIARY.BENEFECIARY_ACTIVATED'}
+              descriptionText={'ACTIVATE_BENEFICIARY.NOW_YOU_CAN_TRANSFER'}
             />
             <IPayView style={styles.buttonWrapper}>
               <IPayButton btnType="primary" btnText={'ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER'} medium btnIconsDisabled />

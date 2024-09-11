@@ -21,8 +21,8 @@ const IPaySessionTimeoutAlert: FC<IPaySessionTimeoutAlertProps> = ({ visible, te
       testID={testID}
       visible={visible}
       onClose={onClose}
-      title={localizationText.COMMON.SESSION_TIMEOUT}
-      message={localizationText.COMMON.INACTIVITY_DESC}
+      title={'COMMON.SESSION_TIMEOUT'}
+      message={'COMMON.INACTIVITY_DESC'}
       closeOnTouchOutside
       variant={alertVariant.DESTRUCTIVE}
       primaryAction={{

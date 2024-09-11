@@ -95,7 +95,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
       showActionBtn={!singleBill && !isSaveOnly}
       rightIcon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} />}
       style={styles.billWrapper}
-      actionBtnText={localizationText.COMMON.REMOVE}
+      actionBtnText={'COMMON.REMOVE'}
       item={item}
       onPress={() => removeItem(item)}
       handleAmountInputFromOutSide

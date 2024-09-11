@@ -102,7 +102,7 @@ const NewSadadBillScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS} applyFlex />
+      <IPayHeader backBtn title={'NEW_SADAD_BILLS.NEW_SADAD_BILLS'} applyFlex />
       <IPayView style={styles.container}>
         <IPayAccountBalance
           accountBalanceTextStyle={styles.darkStyle}
@@ -123,7 +123,7 @@ const NewSadadBillScreen: React.FC = () => {
             <IPaySadadBillDetailsBox
               style={styles.sadadDetailStyle}
               item={item}
-              actionBtnText={localizationText.COMMON.REMOVE}
+              actionBtnText={'COMMON.REMOVE'}
               rightIcon={<IPayIcon icon={icons.trash} size={14} color={colors.primary.primary500} />}
               handleAmountInputFromOutSide
               onChangeAmountOutside={onSetAmount}

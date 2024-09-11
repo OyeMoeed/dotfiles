@@ -117,7 +117,7 @@ const TransferConfirmation: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.LOCAL_TRANSFER.TRANSFER_CONFIRMATION} />
+      <IPayHeader backBtn applyFlex title={'LOCAL_TRANSFER.TRANSFER_CONFIRMATION'} />
       <IPayScrollView style={styles.container}>
         <IPayLinearGradientView gradientColors={colors.bottomsheetGradient} style={styles.beneficiaryDetailsView}>
           <IPayView style={styles.beneficiaryBankDetailsView}>
@@ -179,7 +179,7 @@ const TransferConfirmation: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        heading={'LOCAL_TRANSFER.TRANSFER'}
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '99%']}
@@ -197,7 +197,7 @@ const TransferConfirmation: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn

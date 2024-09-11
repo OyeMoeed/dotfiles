@@ -122,7 +122,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+              textValue={'TRANSFER_SUMMARY.CHIP_TITLE'}
               headingStyles={styles.chipColors}
             />
           </IPayView>

@@ -11,12 +11,7 @@ const NewBeneficiaryScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView testID="new-beneficiary-ipay-view" style={styles.container}>
-      <IPayHeader
-        backBtn
-        title={localizationText.NEW_BENEFICIARY.NEW_BENEFICIARY}
-        applyFlex
-        titleStyle={styles.capitalizeTitle}
-      />
+      <IPayHeader backBtn title={'NEW_BENEFICIARY.NEW_BENEFICIARY'} applyFlex titleStyle={styles.capitalizeTitle} />
       <IPayCreateBeneficiary />
     </IPaySafeAreaView>
   );

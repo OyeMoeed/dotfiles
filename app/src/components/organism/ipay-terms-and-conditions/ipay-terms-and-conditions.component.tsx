@@ -25,7 +25,7 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef
   return (
     <IPayBottomSheet
       noGradient
-      heading={localizationText.COMMON.TERMS_AND_CONDITIONS}
+      heading={'COMMON.TERMS_AND_CONDITIONS'}
       enablePanDownToClose
       cancelBnt
       simpleBar

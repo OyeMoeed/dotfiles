@@ -21,7 +21,7 @@ const SendGiftScreen: React.FC = () => {
   };
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.SEND_GIFT.GIFTS} applyFlex />
+      <IPayHeader backBtn title={'SEND_GIFT.GIFTS'} applyFlex />
       <IPayView style={styles.sendGiftImage}>
         <IPayImage image={images.sendGift} />
       </IPayView>

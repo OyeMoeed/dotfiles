@@ -131,11 +131,11 @@ const PriceCalculatorScreen: React.FC = () => {
   };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.PRICE_CALCULATOR.TITLE} applyFlex />
+      <IPayHeader backBtn title={'PRICE_CALCULATOR.TITLE'} applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayView style={styles.gradientView}>
           <IPayAnimatedTextInput
-            label={localizationText.REPLACE_CARD.COUNTRY}
+            label={'REPLACE_CARD.COUNTRY'}
             editable={false}
             containerStyle={styles.inputContainerStyle}
             value={selectedCountry}
@@ -145,7 +145,7 @@ const PriceCalculatorScreen: React.FC = () => {
           />
 
           <IPayAnimatedTextInput
-            label={localizationText.COMMON.DELIVERY_TYPE}
+            label={'COMMON.DELIVERY_TYPE'}
             editable={false}
             containerStyle={styles.inputContainerStyle}
             value={selectedTransferType}
@@ -155,7 +155,7 @@ const PriceCalculatorScreen: React.FC = () => {
           />
 
           <IPayAnimatedTextInput
-            label={localizationText.COMMON.CURRENCY}
+            label={'COMMON.CURRENCY'}
             editable={false}
             containerStyle={styles.inputContainerStyle}
             value={selectedCurrency}

@@ -25,8 +25,8 @@ const IdentitySuccessMessage = () => {
             style={styles.successContainer}
             iconsStyles={styles.successIcon}
             descriptionStyle={styles.descriptionStyle}
-            headingText={localizationText.PROFILE.IDENTITY_CONFIRMATION}
-            descriptionText={localizationText.PROFILE.UTILIZE_APP_FEATURE}
+            headingText={'PROFILE.IDENTITY_CONFIRMATION'}
+            descriptionText={'PROFILE.UTILIZE_APP_FEATURE'}
           />
           <IPayView style={styles.buttonContainer}>
             <IPayButton

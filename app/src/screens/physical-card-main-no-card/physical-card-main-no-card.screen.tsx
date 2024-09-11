@@ -14,7 +14,7 @@ const PhysicalCardMainNoCardScreen: React.FC = () => {
   const localizationText = useLocalization();
   return (
     <IPaySafeAreaView>
-      <IPayHeader title={localizationText.CARD_OPTIONS.PHYSICAL_CARD} backBtn applyFlex />
+      <IPayHeader title={'CARD_OPTIONS.PHYSICAL_CARD'} backBtn applyFlex />
       <IPayView style={styles.container}>
         <IPayIcon icon={icons.cardSlash} size={24} color={colors.natural.natural500} />
         <IPayFootnoteText

@@ -17,7 +17,7 @@ const ReplaceCardSuccessScreen: React.FC = () => {
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
-        <IPaySuccess headingText={localizationText.REPLACE_CARD_SUCCESS.REPLACEMENT_REQUEST} />
+        <IPaySuccess headingText={'REPLACE_CARD_SUCCESS.REPLACEMENT_REQUEST'} />
 
         <IPayView style={styles.bottomButtonContainer}>
           <IPayView style={styles.descriptionBoxContainer}>

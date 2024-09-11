@@ -339,7 +339,7 @@ const LoginViaPasscode: React.FC = () => {
             otpError={otpError}
             otp={otp}
             showHelp
-            title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            title={'FORGOT_PASSCODE.RECIEVED_PHONE_CODE'}
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
             onResendCodePress={() => {
@@ -432,7 +432,7 @@ const LoginViaPasscode: React.FC = () => {
       </IPayView>
       <IPayPortalBottomSheet
         noGradient
-        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
+        heading={'FORGOT_PASSCODE.FORGET_PASSWORD'}
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -445,7 +445,7 @@ const LoginViaPasscode: React.FC = () => {
 
       <IPayBottomSheet
         noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading={'FORGOT_PASSCODE.HELP_CENTER'}
         enablePanDownToClose
         simpleBar
         backBtn
@@ -455,7 +455,7 @@ const LoginViaPasscode: React.FC = () => {
         <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} hideFAQError />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.COMMON.CONTACT_US}
+        heading={'COMMON.CONTACT_US'}
         customSnapPoint={['1%', '45%']}
         ref={contactUsRef}
         simpleHeader
