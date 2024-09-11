@@ -2,7 +2,7 @@ import { IPayAnimatedView, IPaySubHeadlineText, IPayTitle1Text } from '@app/comp
 import constants from '@app/constants/constants';
 import { animateValue, fadeIn, fadeOut } from '@app/ipay-animations/ipay-animations';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';

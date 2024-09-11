@@ -232,6 +232,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
   const renderPayItem = useMemo(
     () =>
+      // TODO: Fix nested components
       // eslint-disable-next-line react/no-unstable-nested-components
       ({ item }: { item: PayData }) => {
         const { detailsText, leftIcon, label } = item;

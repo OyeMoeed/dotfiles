@@ -56,17 +56,16 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
+  const [, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
+  const { availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
   const { selectedContacts, from, heading, showHistory } = route.params;
   const { transferReasonData } = useConstantData();
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const [amount, setAmount] = useState<number | string>('');
   const [warningStatus, setWarningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
@@ -116,7 +115,8 @@ const SendMoneyFormScreen: React.FC = () => {
   }, []);
 
   const totalAmount = formInstances.reduce(
-    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
+    // eslint-disable-next-line no-useless-escape
+    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || '0'),
     0,
   );
 
@@ -186,13 +186,10 @@ const SendMoneyFormScreen: React.FC = () => {
       // Validate amount and reason
       const hasValidAmount = totalAmount > 0;
       return !hasValidAmount;
-    } else {
-      const hasValidAmount = totalAmount > 0;
-      const hasValidReason = formInstances.every(
-        (instance) => instance.selectedItem?.id && instance.selectedItem?.text,
-      );
-      return !hasValidAmount || !hasValidReason;
     }
+    const hasValidAmount = totalAmount > 0;
+    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
+    return !hasValidAmount || !hasValidReason;
   };
 
   const addForm = () => {
@@ -356,7 +353,7 @@ const SendMoneyFormScreen: React.FC = () => {
             />
           ) : (
             <IPaySendMoneyForm
-              showReason={true}
+              showReason
               subtitle={selectedContacts[0].givenName}
               openReason={openReason}
               setAmount={handleAmountChange}

@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
+const internationalTransferConfirmationStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -181,4 +181,4 @@ const internationlTransferConfirmationStyles = (themeColors: typeof colors) =>
     },
   });
 
-export default internationlTransferConfirmationStyles;
+export default internationalTransferConfirmationStyles;

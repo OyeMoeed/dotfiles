@@ -76,7 +76,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           otpError={otpError}
           isLoading={isLoading}
           apiError={apiError}
-          showHelp={true}
+          showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
         />

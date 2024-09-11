@@ -14,7 +14,6 @@ import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -56,7 +55,6 @@ const TransferSummaryScreen: React.FC = () => {
   const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
@@ -257,38 +255,37 @@ const TransferSummaryScreen: React.FC = () => {
     prepareOtp(false);
   };
 
+  const TransactionList = () => {
+    transfersRequestsList?.map((item) =>
+      item[0].isAlinma ? (
+        <IPayView style={styles.walletBackground} key={item[0].value}>
+          <IPayFlatlist
+            style={styles.detailesFlex}
+            scrollEnabled={false}
+            data={item}
+            renderItem={renderWalletPayItem}
+          />
+        </IPayView>
+      ) : (
+        <IPayView style={styles.walletBackground} key={item[0].value}>
+          <IPayFlatlist
+            style={styles.detailesFlex}
+            scrollEnabled={false}
+            data={item}
+            renderItem={renderNonAlinmaPayItem}
+          />
+        </IPayView>
+      ),
+    );
+  };
+
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>
-            <>
-              {transfersRequestsList?.map((item) => {
-                if (item[0].isAlinma) {
-                  return (
-                    <IPayView style={styles.walletBackground} key={item[0].value}>
-                      <IPayFlatlist
-                        style={styles.detailesFlex}
-                        scrollEnabled={false}
-                        data={item}
-                        renderItem={renderWalletPayItem}
-                      />
-                    </IPayView>
-                  );
-                }
-                return (
-                  <IPayView style={styles.walletBackground} key={item[0].value}>
-                    <IPayFlatlist
-                      style={styles.detailesFlex}
-                      scrollEnabled={false}
-                      data={item}
-                      renderItem={renderNonAlinmaPayItem}
-                    />
-                  </IPayView>
-                );
-              })}
-            </>
+            <TransactionList />
           </IPayScrollView>
         </IPayView>
         <IPayView style={styles.buttonContainer}>
@@ -336,7 +333,7 @@ const TransferSummaryScreen: React.FC = () => {
           apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          timeout={+walletInfo?.otpTimeout}
+          timeout={Number(walletInfo?.otpTimeout)}
           onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>

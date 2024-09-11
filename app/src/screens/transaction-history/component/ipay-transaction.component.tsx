@@ -336,9 +336,12 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       );
     }
 
-    // eslint-disable-next-line react/jsx-no-useless-fragment
-    return <></>;
+    return <IPayView />;
   };
+
+  const isArabicFlag =
+    transaction?.transactionRequestType === TransactionTypes.CIN_SARIE ||
+    transaction?.transactionRequestType === TransactionTypes.COUT_SARIE;
 
   return (
     <IPayPressable
@@ -348,12 +351,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     >
       <IPayView style={styles.commonContainerStyle}>
         <IPayView style={styles.iconStyle}>
-          {transaction?.transactionRequestType === TransactionTypes.CIN_SARIE ||
-          transaction?.transactionRequestType === TransactionTypes.COUT_SARIE ? (
-            <IpayFlagIcon country="ar" testID={testID} />
-          ) : (
-            renderLeftIcon()
-          )}
+          {isArabicFlag ? <IpayFlagIcon country="ar" testID={testID} /> : renderLeftIcon()}
         </IPayView>
         <IPayView style={styles.textContainer}>
           {renderTrxsTopTitle()}
@@ -361,7 +359,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           {renderTrxsSecondTitle()}
         </IPayView>
       </IPayView>
-      {!internationalTransfer && transaction?.status && (
+      {!internationalTransfer && transaction?.status ? (
         <IPayView style={[styles.currencyStyle, styles.textContainer]}>
           {transaction?.status && (
             <IPayCaption1Text
@@ -374,6 +372,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             </IPayCaption1Text>
           )}
         </IPayView>
+      ) : (
+        <IPayView />
       )}
 
       <IPayView style={[styles.currencyStyle, styles.textContainer]}>

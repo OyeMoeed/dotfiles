@@ -1,7 +1,6 @@
 import images from '@app/assets/images';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
@@ -10,11 +9,10 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData } from '@app/network/utilities/encryption-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
-import { isIosOS } from '@app/utilities/constants';
 import icons from '@assets/icons';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { buttonVariants } from '@app/utilities';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
@@ -41,7 +39,6 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
     const timerRef = useRef<any>(null);
     const initialTime = 60; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
-    const { showToast } = useToastContext();
     const { appData } = useTypedSelector((state) => state.appDataReducer);
 
     useEffect(() => {
@@ -76,18 +73,6 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
 
     const handleOnPressHelp = () => {
       if (onPressHelp) onPressHelp();
-    };
-
-    const renderToast = (toastMsg?: string) => {
-      showToast({
-        title: toastMsg || localizationText.COMMON.INCORRECT_CODE,
-        subTitle: localizationText.COMMON.PLEASE_VERIFY_CODE,
-        borderColor: colors.error.error25,
-        isBottomSheet: true,
-        isShowRightIcon: false,
-        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-        containerStyle: { bottom: isIosOS ? scaleSize(80) : scaleSize(24) },
-      });
     };
 
     const validateOtp = async () => {
@@ -148,7 +133,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
 
             <IPayButton
               disabled={counter > 0}
-              btnType="link-button"
+              btnType={buttonVariants.LINK_BUTTON}
               btnText={localizationText.COMMON.SEND_CODE_AGAIN}
               small
               btnStyle={styles.sendCodeBtnStyle}
@@ -166,7 +151,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
               onPress={handleRestart}
             />
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText={localizationText.COMMON.CONFIRM}
               large
               btnIconsDisabled
@@ -189,7 +174,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             )}
             <IPayButton
               onPress={handleOnPressHelp}
-              btnType="link-button"
+              btnType={buttonVariants.LINK_BUTTON}
               btnText={localizationText.COMMON.NEED_HELP}
               large
               btnStyle={styles.needHelpBtn}

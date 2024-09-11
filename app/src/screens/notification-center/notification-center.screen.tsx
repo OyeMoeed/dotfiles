@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayHeader, IPayNoResult } from '@app/components/molecules';
+import { IPayHeader, IPayNoResult, useToastContext } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -20,7 +20,6 @@ import {
   readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 
@@ -60,9 +59,9 @@ const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any
 const NotificationCenterScreen: React.FC = () => {
   // hooks
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { showToast } = useToastContext();
   const localization = useLocalization();
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
 
   // states
   const [notifications, setNotifications] = useState<Notification[]>([] as Notification[]);
@@ -82,14 +81,6 @@ const NotificationCenterScreen: React.FC = () => {
 
   const styles = getNotificationCenterStyles(colors);
 
-  /**
-   * Render toast message
-   * @param title - Title of the toast
-   * @param subTitle - Subtitle of the toast
-   * @param icon - Icon to display in the toast
-   * @param toastType - Type of the toast
-   * @param displayTime - Duration to display the toast
-   */
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -97,7 +88,8 @@ const NotificationCenterScreen: React.FC = () => {
         subTitle,
         toastType,
         isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
       },
       displayTime,
     );

@@ -62,6 +62,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
 
   const getCurrenciesData = () => currenciesData?.map((item, idx) => ({ id: idx + 1, title: item?.code }));
 
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
   const TransferMethods = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
     const isCheck = selectedService?.recordID === recordID;

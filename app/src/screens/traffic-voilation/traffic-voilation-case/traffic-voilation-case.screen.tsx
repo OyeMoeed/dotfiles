@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { TrafficFormValues } from './traffic-voilation-case.interface';
+import TrafficFormValues from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
@@ -27,7 +27,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const styles = trafficPaymentStyles(colors);
   const localizationText = useLocalization();
   const { idTypes } = useConstantData();
-  const [selectedTab, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
+  const [, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
   const [sheetType, setSheetType] = useState<string>('');
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [isRefund, setIsRefund] = useState<boolean>(false);

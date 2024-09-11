@@ -25,9 +25,9 @@ import { IPaySafeAreaView } from '@components/templates';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
 import React, { useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
+import checkUserAccess from '@app/utilities/check-user-access';
 import cardManagementStyles from './card-management.style';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
-import checkUserAccess from '@app/utilities/check-user-access';
 
 const DUMMY_CARDS = [
   {

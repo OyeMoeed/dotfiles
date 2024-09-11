@@ -32,7 +32,7 @@ const SadadBillsScreen: React.FC = () => {
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [apiError, setAPIError] = useState<string>('');
+  const [, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
   const selectedBillsCount = useMemo(
@@ -107,7 +107,7 @@ const SadadBillsScreen: React.FC = () => {
         billNumOrBillingAcct: accountNumber,
         billId: id,
         billNickname: vendor,
-        walletNumber: walletNumber,
+        walletNumber,
         deviceInfo,
       };
 
@@ -151,20 +151,6 @@ const SadadBillsScreen: React.FC = () => {
     });
   };
 
-  const handelEditOrDelete = (index: number) => {
-    if (index === 0) {
-      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
-        billData: billToEditRef.current,
-        setEditBillSuccessToast,
-        billId: '1', // TODO: once api implemented on this screen will update it
-      });
-    } else {
-      setActionSheetOptions(deleteBillOptions);
-    }
-    sadadActionSheetRef?.current?.hide();
-    showActionSheet();
-  };
-
   const deleteBillOptions = {
     title: localizationText.SADAD.DELETE_NEW_BILL,
     showIcon: true,
@@ -183,6 +169,8 @@ const SadadBillsScreen: React.FC = () => {
     cancelButtonIndex: 2,
     showCancel: true,
     destructiveButtonIndex: 1,
+    // TODO: refactor codebase
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     onPress: handelEditOrDelete,
   };
 
@@ -208,6 +196,20 @@ const SadadBillsScreen: React.FC = () => {
     } else {
       setActionSheetOptions(activeBillOptions);
     }
+    showActionSheet();
+  };
+
+  const handelEditOrDelete = (index: number) => {
+    if (index === 0) {
+      navigate(ScreenNames.SADAD_EDIT_BILL_SCREEN, {
+        billData: billToEditRef.current,
+        setEditBillSuccessToast,
+        billId: '1', // TODO: once api implemented on this screen will update it
+      });
+    } else {
+      setActionSheetOptions(deleteBillOptions);
+    }
+    sadadActionSheetRef?.current?.hide();
     showActionSheet();
   };
 

@@ -8,4 +8,5 @@ interface MoiFormFormValues {
   myIdInput: string;
   myIdCheck?: boolean;
 }
-export { MoiFormFormValues };
+
+export default MoiFormFormValues;

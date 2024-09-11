@@ -47,9 +47,9 @@ const AllOrdersScreen: React.FC = () => {
         rightComponent={
           <IPayPressable onPress={handleFiltersShow}>
             <IPayIcon
-              icon={!!filters.length ? icons.filter_edit_purple : icons.filter}
+              icon={filters.length ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={!!filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }

@@ -31,7 +31,7 @@ import { States, spinnerVariant, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
-import { CardKeys } from './profile.interface';
+import CardKeys from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -48,15 +48,6 @@ const Profile = () => {
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
-  const renderToast = (toastMsg: string, apiError: string = '') => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const formatAddress = (userInfoData: any) => {
     const { street, city, townCountry } = userInfoData;
@@ -300,7 +291,7 @@ const Profile = () => {
 
   return (
     <>
-      <IPaySafeAreaView style={styles.SafeAreaView2}>
+      <IPaySafeAreaView style={styles.safeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>

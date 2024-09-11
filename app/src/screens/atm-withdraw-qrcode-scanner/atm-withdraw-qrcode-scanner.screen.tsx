@@ -80,6 +80,8 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
     hideSpinner();
   };
 
+  const goBackQr = () => {};
+
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader

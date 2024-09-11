@@ -42,8 +42,8 @@ const DUMMY_DATA = {
 const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
-  const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
+  const [, setOtp] = useState('');
+  const [, setOtpError] = useState('');
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 

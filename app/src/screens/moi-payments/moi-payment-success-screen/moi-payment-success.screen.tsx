@@ -106,7 +106,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
               text={value}
               color={colors.primary.primary800}
               numberOfLines={1}
-              style={[styles.valueStyle]}
+              style={styles.valueStyle}
             />
             {icon && (
               <IPayPressable style={styles.icon} onPress={() => onPressCopy(value)}>

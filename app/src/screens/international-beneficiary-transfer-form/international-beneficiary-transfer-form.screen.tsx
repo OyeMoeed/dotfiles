@@ -19,7 +19,6 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
@@ -36,11 +35,10 @@ import beneficiaryTransferStyles from './international-beneficiary-transfer-form
 const IBeneficiaryTransferScreen: React.FC = () => {
   const route = useRoute();
   const { colors } = useTheme();
-  const { transferService } = route?.params;
+  const { transferService } = route?.params as { transferService: { transferType: ''; serviceName: '' } };
   const styles = beneficiaryTransferStyles(colors);
   const localizationText = useLocalization();
   const { onSubmit, cities } = useInternationalTransferHook();
-  const {} = getValidationSchemas(localizationText);
   const transferType = transferService?.transferType;
   const validationSchema = Yup.object().shape({});
 
@@ -123,7 +121,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
                     />
                   </>
                 )}
-                {transferType != TransferTypes.CASH && (
+                {transferType !== TransferTypes.CASH && (
                   <>
                     <IPayAnimatedTextInput
                       name={BeneficiaryFields.BENEFICIARY_NAME}

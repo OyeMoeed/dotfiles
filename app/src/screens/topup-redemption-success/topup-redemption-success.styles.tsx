@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { verticalScale } from 'react-native-size-matters';
 
-export const genratedStyles = (colors: any) =>
+const generatedStyles = () =>
   createStyleSheet({
     logoStyles: {
       width: verticalScale(84),
@@ -11,3 +11,5 @@ export const genratedStyles = (colors: any) =>
       flex: 1,
     },
   });
+
+export default generatedStyles;

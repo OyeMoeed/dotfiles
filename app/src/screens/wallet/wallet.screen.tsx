@@ -100,6 +100,11 @@ const WalletScreen = () => {
     return Math.ceil(balancePercentage);
   }
 
+  const QRCodeRef = (ref: any) => {
+    qrRef.current = ref;
+    return null;
+  };
+
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
       <IPayHeader title={localizationText.HOME.WALLET_INFO} backBtn applyFlex />
@@ -171,7 +176,7 @@ const WalletScreen = () => {
           onPressSaveQR={saveQrToDisk}
           icon={
             <QRCode
-              getRef={(ref) => (qrRef.current = ref)}
+              getRef={QRCodeRef}
               value={qrData}
               logo={images.gradientAppIcon}
               size={moderateScale(76)}
