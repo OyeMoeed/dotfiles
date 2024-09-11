@@ -45,12 +45,7 @@ const IpayProgressBar: React.FC<ProgressBarProps> = ({
         colors={colors}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 0 }}
-        style={[
-          styles.progress,
-          // styles.expireStyle,
-          reverse && styles.reverseStyle,
-          gradientWidthStyle,
-        ]}
+        style={[styles.progress, reverse && styles.reverseStyle, gradientWidthStyle]}
       />
     </IPayView>
   );

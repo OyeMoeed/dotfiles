@@ -60,7 +60,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
-  const { selectedContacts, from, heading, showHistory } = route.params;
+  const { selectedContacts, from, heading, showHistory, activeFriends } = route.params;
   const { transferReasonData } = useConstantData();
   const [, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
@@ -69,6 +69,18 @@ const SendMoneyFormScreen: React.FC = () => {
   const [warningStatus, setWarningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
+
+  const isItemHasWallet = (mobile: string): boolean => {
+    const walletNumber = activeFriends?.filter(
+      (activeFriend: IW2WActiveFriends) => activeFriend?.mobileNumber === mobile,
+    )[0]?.walletNumber;
+
+    if (walletNumber == null || !walletNumber) {
+      return false;
+    }
+    return true;
+  };
+
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
     selectedContacts?.map((contact, index) => ({
       id: index + 1,
@@ -77,6 +89,7 @@ const SendMoneyFormScreen: React.FC = () => {
       notes: '',
       selectedItem: { id: '', text: '' },
       mobileNumber: contact.phoneNumbers[0].number,
+      hasWallet: isItemHasWallet(contact.phoneNumbers[0].number),
     })),
   );
 
@@ -209,7 +222,7 @@ const SendMoneyFormScreen: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
-  const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
+  const getW2WTransferFees = async (activeFriendsParam: IW2WActiveFriends[]) => {
     if (constants.MOCK_API_RESPONSE && from === TRANSFERTYPE.REQUEST_MONEY) {
       // Mock API response
       navigate(ScreenNames.TOP_UP_SUCCESS, {
@@ -238,7 +251,7 @@ const SendMoneyFormScreen: React.FC = () => {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
         data: {
-          transfersDetails: { formInstances, fees: apiResponse?.response?.requests, activeFriends },
+          transfersDetails: { formInstances, fees: apiResponse?.response?.requests, activeFriends: activeFriendsParam },
           totalAmount,
         },
       });
