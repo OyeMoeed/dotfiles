@@ -4,6 +4,7 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { REGEX } from '@app/constants/app-validations';
+import { ALINMA_BANK_CODE } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -13,12 +14,12 @@ import {
 } from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
 import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
 import { BeneficiaryBankDetailsReq } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
-import { getValidationSchemas } from '@app/services';
 import LocalBeneficiaryMetaMockProps, {
   LocalBank,
 } from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { getBankIconByCode } from '@app/utilities';
 import {
@@ -38,6 +39,7 @@ import {
   FormValues,
   IPayCreateBeneficiaryProps,
   ListOption,
+  TransferTypes,
 } from './ipay-create-beneficiary.interface';
 import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 
@@ -136,11 +138,17 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         bankCode: beneficiaryBankDetails?.bankCode,
         bankName: beneficiaryBankDetails?.bankName,
       },
+      beneficiaryType:
+        beneficiaryBankDetails?.bankCode === ALINMA_BANK_CODE
+          ? TransferTypes.alinmaBank
+          : TransferTypes.localBankInsideKsa,
     };
+    console.log('onSubmitData', payload);
 
     if (isValid) {
       renderSpinner(true);
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
+      console.log('apiResponse', apiResponse);
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setBeneficiaryData(values);
         navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { response: apiResponse });
