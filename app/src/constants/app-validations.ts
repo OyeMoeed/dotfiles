@@ -4,7 +4,7 @@ const REGEX = {
   longSaudiMobileNumber: /^(9665)([0-9]{8})$/,
   longSaudiMobileNumber2: /^(\+9665)([0-9]{8})$/,
   longSaudiMobileNumber3: /^(009665)([0-9]{8})$/,
-  IBAN: /^(SA)([A-Za-z0-9]){22}$/,
+  IBAN: /^SA[A-Za-z0-9_]{22}$/,
   DIGITS_ONLY: /^\d+$/,
 };
 const STANDARD_MAX_LENGTH = 10;

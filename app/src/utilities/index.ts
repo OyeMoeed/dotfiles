@@ -14,6 +14,7 @@ import dateTimeFormat from './date.const';
 import FilterSelectedValue from './filter-interface.utils';
 
 export { default as shortString } from './string-functions.utils';
+export { default as getBankIconByCode } from './bank-logo';
 
 export * from './enums.util';
 
