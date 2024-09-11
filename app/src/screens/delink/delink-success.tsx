@@ -1,3 +1,5 @@
+import React from 'react';
+
 import images from '@app/assets/images';
 import { delinkAnimation } from '@app/assets/lottie';
 import {
@@ -43,7 +45,7 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
       <IPayView style={styles.container}>
         <IPayView style={styles.linearGradientView}>
           <IPayLinearGradientView
-            style={[styles.innerLinearGradientView]}
+            style={styles.innerLinearGradientView}
             gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
           >
             <IPayLottieAnimation source={delinkAnimation} style={styles.successIcon} />

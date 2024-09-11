@@ -5,7 +5,7 @@ import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organi
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -51,7 +51,7 @@ const TransferInformation: React.FC = () => {
   };
 
   const isTransferButtonDisabled = () => {
-    const hasValidAmount = transferAmount > 0;
+    const hasValidAmount = parseFloat(transferAmount) > 0 || parseFloat(transferAmount);
     const hasValidReason = selectedReason.trim() !== '';
     return !hasValidAmount || !hasValidReason;
   };
@@ -111,7 +111,7 @@ const TransferInformation: React.FC = () => {
             onPress={onPressNext}
             btnType={buttonVariants.PRIMARY}
             large
-            disabled={isTransferButtonDisabled()}
+            disabled={isTransferButtonDisabled() || chipValue}
             btnIconsDisabled
             btnText={localizationText.COMMON.NEXT}
             btnStyle={styles.nextBtn}

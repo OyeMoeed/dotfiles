@@ -9,4 +9,4 @@ interface TrafficFormValues {
   myIdCheck?: boolean;
   voilationNumber: string;
 }
-export { TrafficFormValues };
+export default TrafficFormValues;

@@ -1,4 +1,4 @@
-import MoneyRequestStatus from '@app/enums/money-request-status.enum';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { StyleProp, TextStyle } from 'react-native';
 
 export interface IPayMoneyRequestListProps {

@@ -1,7 +1,7 @@
 import constants from '@app/constants/constants';
 // eslint-disable-next-line import/no-cycle
 import { IPayLinkButton, IPayOutlineButton, IPayPrimaryButton } from '@components/molecules/index';
-import React from 'react';
+import React, { JSX } from 'react';
 import { IPayButtonProps } from './ipay-button.interface';
 
 /**
@@ -49,7 +49,6 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             large={large}
             width={width}
             textColor={textColor}
-            textStyle={textStyle}
           />
         );
       case buttonTypes.OUTLINE:
@@ -62,7 +61,6 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             textStyle={textStyle}
             buttonColor={btnColor}
             style={btnStyle}
-            textStyle={textStyle}
             btnIconsDisabled={btnIconsDisabled}
             leftIcon={leftIcon}
             rightIcon={rightIcon}
@@ -71,7 +69,6 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             large={large}
             width={width}
             textColor={textColor}
-            textStyle={textStyle}
           />
         );
       case buttonTypes.LINK_BUTTON:
@@ -92,7 +89,6 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             large={large}
             width={width}
             textColor={textColor}
-            textStyle={textStyle}
           />
         );
       default:

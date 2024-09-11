@@ -6,14 +6,14 @@ import { IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/componen
 import SectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
 import colors from '@app/styles/colors.const';
 import IPayRequestCard from '@app/components/molecules/ipay-request-card/ipay-request-card.component';
-import { pendingRequests, previousRequests } from './request-list.mock';
-import styles from './request-list.styles';
 import icons from '@app/assets/icons';
 import { FiltersType } from '@app/utilities/enums.util';
 import { IPayFilterBottomSheet } from '@app/components/organism';
 import SelectedFilters from '@app/components/molecules/ipay-selected-filters-list/ipay-selected-filters-list.component';
 import useConstantData from '@app/constants/use-constants';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import styles from './request-list.styles';
+import { pendingRequests, previousRequests } from './request-list.mock';
 
 const RequestListScreen: React.FC = () => {
   const localization = useLocalization();
@@ -49,7 +49,7 @@ const RequestListScreen: React.FC = () => {
           </IPayPressable>
         }
       />
-      <>{filters.length > 0 && <SelectedFilters filters={filters} onRemoveFilter={onRemoveFilter} />}</>
+      {filters.length > 0 ? <SelectedFilters filters={filters} onRemoveFilter={onRemoveFilter} /> : <IPayView />}
 
       <IPayScrollView contentContainerStyle={styles.scrollViewContent}>
         <>
@@ -57,7 +57,7 @@ const RequestListScreen: React.FC = () => {
             <SectionHeader
               containerStyle={styles.sectionHeader}
               leftTextColor={colors.warning.warning500}
-              isLeftTextRegular={true}
+              isLeftTextRegular
               leftText={`${pendingRequests.length} ${localization.NOTIFICATION_CENTER.PENDING_REQUESTS}`}
             />
             {pendingRequests.map((request) => (
@@ -74,7 +74,7 @@ const RequestListScreen: React.FC = () => {
             <SectionHeader
               containerStyle={styles.sectionHeader}
               leftTextColor={colors.natural.natural500}
-              isLeftTextRegular={true}
+              isLeftTextRegular
               leftText={localization.NOTIFICATION_CENTER.PREVIOUS_REQUESTS}
             />
             {previousRequests.map((request) => (

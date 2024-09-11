@@ -1,6 +1,5 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_13 } from '@app/styles/typography.styles';
+import { FONT_SIZE_13, FONT_WEIGHT_NORMAL } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const noResultStyles = () =>
@@ -10,7 +9,7 @@ const noResultStyles = () =>
       justifyContent: 'center',
     },
     messageStyle: {
-      fontWeight: constants.FONT_WEIGHT_NORMAL,
+      fontWeight: FONT_WEIGHT_NORMAL,
       fontSize: FONT_SIZE_13,
       lineHeight: moderateScale(18),
       textAlign: 'center',

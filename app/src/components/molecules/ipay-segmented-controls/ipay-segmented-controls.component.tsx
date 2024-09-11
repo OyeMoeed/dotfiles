@@ -18,7 +18,7 @@ const IPaySegmentedControls: React.FC<IPayTabsProps> = ({
   const styles = tabStyles(colors);
 
   const handleTabClick = (tab: string, index: number) => {
-    onSelect && onSelect(tab, index);
+    onSelect?.(tab, index);
   };
 
   return (

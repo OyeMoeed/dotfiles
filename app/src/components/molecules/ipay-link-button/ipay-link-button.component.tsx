@@ -4,7 +4,7 @@ import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayLinkButtonProps } from './ipay-link-button.interface';
-import genratedStyles from './ipay-link-button.style';
+import generatedStyles from './ipay-link-button.style';
 
 const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   disabled,
@@ -24,7 +24,7 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   textStyle,
 }) => {
   const { colors } = useTheme();
-  const styles = genratedStyles(colors);
+  const styles = generatedStyles();
 
   const btnStyle = useMemo(() => {
     const baseStyle = { width };

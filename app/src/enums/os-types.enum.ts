@@ -1,7 +1,9 @@
 /**
  * Defines os specific types.
  */
-export enum osTypes {
+enum OsTypes {
   ANDROID = 'android',
   IOS = 'ios',
 }
+
+export default OsTypes;

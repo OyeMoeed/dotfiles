@@ -27,8 +27,8 @@ const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
   onRightOptionPress,
   containerStyle,
 }) => {
-  const { colors } = useTheme();
-  const styles = sectionHeaderStyles(colors);
+  const { colors: themeColors } = useTheme();
+  const styles = sectionHeaderStyles(themeColors);
   return (
     <IPayView testID={`${testID}-section-header`} style={[styles.headerRow, containerStyle]}>
       <IPayView style={styles.headerLeft}>
@@ -43,8 +43,12 @@ const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
         )}
       </IPayView>
       <IPayPressable style={styles.headerRight} onPress={onRightOptionPress}>
-        {rightText && <IPaySubHeadlineText color={colors.primary.primary600} regular text={rightText} />}
-        {showRightIcon && <IPayIcon icon={rightIcon} color={colors.primary.primary600} size={14} />}
+        {rightText ? (
+          <IPaySubHeadlineText color={themeColors.primary.primary600} regular text={rightText} />
+        ) : (
+          <IPayView />
+        )}
+        {showRightIcon ? <IPayIcon icon={rightIcon} color={themeColors.primary.primary600} size={14} /> : <IPayView />}
       </IPayPressable>
     </IPayView>
   );

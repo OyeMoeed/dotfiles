@@ -23,7 +23,7 @@ import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -37,7 +37,7 @@ import {
   IW2WCheckActiveReq,
 } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
@@ -56,20 +56,31 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
-  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
+  const [, setTransferReasonData] = useState<ListProps[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance, availableBalance } = walletInfo; // TODO replace with orignal data
+  const { availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
-  const { selectedContacts, from, heading, showHistory } = route.params;
+  const { selectedContacts, from, heading, showHistory, activeFriends } = route.params;
   const { transferReasonData } = useConstantData();
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const [, setContacts] = useState<Contact[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const [amount, setAmount] = useState<number | string>('');
   const [warningStatus, setWarningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
+
+  const isItemHasWallet = (mobile: string): boolean => {
+    const walletNumber = activeFriends?.filter(
+      (activeFriend: IW2WActiveFriends) => activeFriend?.mobileNumber === mobile,
+    )[0]?.walletNumber;
+
+    if (walletNumber == null || !walletNumber) {
+      return false;
+    }
+    return true;
+  };
+
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
     selectedContacts?.map((contact, index) => ({
       id: index + 1,
@@ -78,6 +89,7 @@ const SendMoneyFormScreen: React.FC = () => {
       notes: '',
       selectedItem: { id: '', text: '' },
       mobileNumber: contact.phoneNumbers[0].number,
+      hasWallet: isItemHasWallet(contact.phoneNumbers[0].number),
     })),
   );
 
@@ -116,7 +128,8 @@ const SendMoneyFormScreen: React.FC = () => {
   }, []);
 
   const totalAmount = formInstances.reduce(
-    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
+    // eslint-disable-next-line no-useless-escape
+    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || '0'),
     0,
   );
 
@@ -186,13 +199,10 @@ const SendMoneyFormScreen: React.FC = () => {
       // Validate amount and reason
       const hasValidAmount = totalAmount > 0;
       return !hasValidAmount;
-    } else {
-      const hasValidAmount = totalAmount > 0;
-      const hasValidReason = formInstances.every(
-        (instance) => instance.selectedItem?.id && instance.selectedItem?.text,
-      );
-      return !hasValidAmount || !hasValidReason;
     }
+    const hasValidAmount = totalAmount > 0;
+    const hasValidReason = formInstances.every((instance) => instance.selectedItem?.id && instance.selectedItem?.text);
+    return !hasValidAmount || !hasValidReason;
   };
 
   const addForm = () => {
@@ -212,22 +222,14 @@ const SendMoneyFormScreen: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
-  const getW2WTransferFees = async (activeFriends: IW2WActiveFriends[]) => {
-    if (constants.MOCK_API_RESPONSE) {
+  const getW2WTransferFees = async (activeFriendsParam: IW2WActiveFriends[]) => {
+    if (constants.MOCK_API_RESPONSE && from === TRANSFERTYPE.REQUEST_MONEY) {
       // Mock API response
-      if (from === TRANSFERTYPE.REQUEST_MONEY) {
-        navigate(ScreenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.REQUEST,
-          topupStatus: TopupStatus.SUCCESS,
-          amount: totalAmount,
-        });
-      } else {
-        navigate(ScreenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.WALLET,
-          topupStatus: TopupStatus.SUCCESS,
-          amount: totalAmount,
-        });
-      }
+      navigate(ScreenNames.TOP_UP_SUCCESS, {
+        topupChannel: payChannel.REQUEST,
+        topupStatus: TopupStatus.SUCCESS,
+        amount: totalAmount,
+      });
       return;
     }
 
@@ -249,7 +251,7 @@ const SendMoneyFormScreen: React.FC = () => {
       navigate(ScreenNames.TRANSFER_SUMMARY, {
         variant: TransactionTypes.SEND_MONEY,
         data: {
-          transfersDetails: { formInstances, fees: apiResponse?.response?.requests, activeFriends },
+          transfersDetails: { formInstances, fees: apiResponse?.response?.requests, activeFriends: activeFriendsParam },
           totalAmount,
         },
       });
@@ -356,7 +358,7 @@ const SendMoneyFormScreen: React.FC = () => {
             />
           ) : (
             <IPaySendMoneyForm
-              showReason={true}
+              showReason
               subtitle={selectedContacts[0].givenName}
               openReason={openReason}
               setAmount={handleAmountChange}

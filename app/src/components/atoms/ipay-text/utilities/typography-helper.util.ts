@@ -1,9 +1,8 @@
 import { Platform } from 'react-native';
 
-import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleFont } from '@app/styles/mixins';
 import { moderateScale } from 'react-native-size-matters';
-import { constants } from '../constants.text';
+import { FONT_WEIGHT_BOLD, FONT_WEIGHT_NORMAL } from '@app/styles/typography.styles';
 
 // const FONT_FAMILY = helper.getFonts();
 
@@ -30,40 +29,6 @@ export const fonts = {
   BOLD: 'Inter-Bold',
   EXTRA_BOLD: 'Inter-ExtraBold',
   BLACK: 'Inter-Black',
-};
-
-/**
- * Creates a text style object with the provided parameters.
- * @param {number} fontSize - The font size of the text.
- * @param {number} lineHeight - The line height of the text.
- * @param {number} letterSpacing - The letter spacing of the text.
- * @param {string} fontFamily - The font family of the text.
- * @param {string} [color] - Optional. The color of the text. Defaults to a predefined color if not provided.
- * @param {string} [textDecorationLine] - Optional. The text decoration line of the text (e.g., 'underline', 'line-through').
- * @param {string} [textTransform] - Optional. The text transformation (e.g., 'uppercase', 'lowercase', 'capitalize').
- * @returns {Function} A function that accepts a custom color and returns the text style object.
- */
-export const createTextStyle = (
-  fontSize: number,
-  lineHeight: number,
-  letterSpacing: number,
-  fontFamily: string,
-  fontWeight?: string,
-  color?: string,
-  textDecorationLine?: string,
-  textTransform?: string,
-) => {
-  const { colors } = useTheme();
-  return (customColor?: string) => ({
-    fontSize: scaleFont(fontSize),
-    lineHeight: Platform.OS === 'android' ? scaleFont(lineHeight) : undefined,
-    letterSpacing: scaleFont(letterSpacing),
-    fontFamily,
-    fontWeight,
-    color: customColor || color || colors.natural.natural900,
-    ...(textDecorationLine && { textDecorationLine }),
-    ...(textTransform && { textTransform }),
-  });
 };
 
 const FONT_VARIANTS = {
@@ -143,11 +108,11 @@ export const typography = {
   CUSTOM_FONT_SIZE: createCustomFontScale,
 
   BOLD_TEXT_STYLES: {
-    fontWeight: constants.FONT_WEIGHT_BOLD,
+    fontWeight: FONT_WEIGHT_BOLD,
     letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
   },
   REGULAR_TEXT_STYLES: {
-    fontWeight: constants.FONT_WEIGHT_NORMAL,
+    fontWeight: FONT_WEIGHT_NORMAL,
     letterSpacing: FONT_VARIANTS.TITLE_LARGE.LETTER_SPACING,
   },
 };

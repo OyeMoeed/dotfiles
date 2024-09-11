@@ -1,6 +1,6 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -51,10 +51,10 @@ const styles = (themeColors: typeof colors) =>
     },
     titleText: {
       color: themeColors.primary.primary900,
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     bold: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     messageBox: {
       alignItems: 'center',
