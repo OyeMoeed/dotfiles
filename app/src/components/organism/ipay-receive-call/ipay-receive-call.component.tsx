@@ -20,6 +20,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   testID,
   guideToReceiveCall,
   activateInternationalBeneficiary,
+  hanldePageNavigation,
 }) => {
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
@@ -68,6 +69,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   return (
     <IPayView testID={`${testID}-receive-call`} style={styles.container}>
       <CallIncoming />
+
       <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE} />
       <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_CALL_STEPS} />
 
@@ -85,6 +87,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
             : `${localizationText.ACTIVATE_BENEFICIARY.REQUEST_EXPIRE_IN} ${formatCountdownTime(timeLeft)}`
         }
       />
+
       {expired ? (
         <>
           <IPayCaption1Text
@@ -106,6 +109,15 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
           renderItem={renderGuideStepItem}
         />
       )}
+      <IPayView style={styles.makeTransferStyles}>
+        <IPayButton
+          large
+          btnType="primary"
+          btnText={localizationText.ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER}
+          btnIconsDisabled
+          onPress={hanldePageNavigation}
+        />
+      </IPayView>
     </IPayView>
   );
 };

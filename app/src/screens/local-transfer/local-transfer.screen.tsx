@@ -394,11 +394,18 @@ const LocalTransferScreen: React.FC = () => {
     else handleActivateBeneficiary();
   };
 
+  const makeTransfer = () => {
+    activateBeneficiary?.current?.close();
+    navigate(ScreenNames.LOCAL_TRANSFER);
+    getBeneficiariesData();
+  };
+
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {
       case ActivateViewTypes.RECEIVE_CALL:
         return (
           <IPayReceiveCall
+            hanldePageNavigation={makeTransfer}
             activateInternationalBeneficiary={onPressActivateBeneficiary}
             guideToReceiveCall={guideToReceiveCall}
           />
