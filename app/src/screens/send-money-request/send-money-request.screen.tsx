@@ -90,8 +90,13 @@ const SendMoneyRequest: React.FC = () => {
   };
 
   const isTransferButtonDisabled = () => {
-    const hasValidAmount = totalAmount > 0;
-    return !hasValidAmount;
+    let isDisabled = false;
+    for (let i = 0; i < formInstances.length; i++) {
+      if (!formInstances[i].amount || formInstances[i].amount <= 0) {
+        isDisabled = true;
+      }
+    }
+    return isDisabled;
   };
 
   const addForm = () => {

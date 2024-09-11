@@ -164,9 +164,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
         return [...prevSelectedContacts, contact];
       });
-    } else {
-      // Call the function to render a toast or display a message
-      renderToast();
     }
   };
 

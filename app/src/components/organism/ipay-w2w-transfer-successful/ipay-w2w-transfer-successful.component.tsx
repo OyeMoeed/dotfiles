@@ -80,7 +80,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
     };
 
     summeryArray.push(titleObject());
-    if (transferDetails.apiData[index].transactionId) {
+    if (transferDetails?.apiData[index]?.transactionId) {
       summeryArray.push({
         id: '3',
         label: localizationText.TOP_UP.TRANSACTION_ID,
