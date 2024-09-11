@@ -3,7 +3,6 @@ import IPayText from '../ipay-base-text/ipay-text.component';
 import { typography } from '../utilities/typography-helper.util';
 import { IPaySubHeadlineTextProps } from './ipay-sub-headline-text.interface';
 import styles from './ipay-sub-headline-text.styles';
-import { useTranslation } from 'react-i18next';
 
 /**
  * A component to display localized text.
@@ -20,7 +19,6 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   color,
 }: IPaySubHeadlineTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
-  const { t } = useTranslation();
   return (
     <IPayText
       testID={`${testID}-sub-headline-text`}
@@ -28,7 +26,7 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
     >
-      {t(text || '')}
+      {text || children}
     </IPayText>
   );
 };
