@@ -168,6 +168,12 @@ enum CardTypesCodes {
   SIGNATURE = 'VSCC',
 }
 
+const CardMapping = {
+  classic: 'IPMC',
+  platinum: 'VPPC',
+  signature: 'VSCC',
+};
+
 enum CardOptions {
   PHYSICAL = 'Physical',
   VIRTUAL = 'Virtual',
@@ -357,6 +363,7 @@ export {
   payChannel,
   pickerVariant,
   spinnerVariant,
-  toastTypes
+  toastTypes,
+  CardMapping,
 };
 
