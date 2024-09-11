@@ -7,7 +7,7 @@ import { AppDispatch, RootState, useTypedSelector } from '@store/store';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { IPayBottomSheetProviderProps } from './ipay-bottomsheet-provider.interface';
+import IPayBottomSheetProviderProps from './ipay-bottomsheet-provider.interface';
 
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();

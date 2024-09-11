@@ -13,7 +13,6 @@ import {
 } from './recevied-requests.interface';
 import { getAllRequestsMock, receivedRequestedMoneyConfirmMock } from './recevied-requests.mock';
 
-
 /**
  * Fetches all received requests for a given wallet number.
  *

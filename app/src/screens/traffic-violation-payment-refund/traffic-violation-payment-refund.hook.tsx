@@ -18,7 +18,7 @@ interface BalanceData {
   calculatedBill: string;
 }
 
-//TODO wiill be replaced by API
+// TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
   const { billPayDetailsData } = useConstantData();
@@ -26,10 +26,10 @@ const useBillPaymentConfirmation = () => {
   const otpRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
-  const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
+  const [billPayDetails, setBillPayDetails] = useState<billPayDetail[]>([]);
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [apiError] = useState<string>('');
+  const [isLoading] = useState<boolean>(false);
 
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
@@ -37,14 +37,14 @@ const useBillPaymentConfirmation = () => {
   const handleOtpVerification = () => {
     otpRef?.current?.present();
   };
-  const [balanceData, setBalanceData] = useState<BalanceData>({
+  const [balanceData] = useState<BalanceData>({
     availableBalance: '0',
     balance: '0',
     calculatedBill: '3000',
   });
 
   useEffect(() => {
-    setBillPayDetailes(billPayDetailsData);
+    setBillPayDetails(billPayDetailsData);
   }, []);
 
   const extraDetails: billPayDetail[] = [
@@ -69,7 +69,7 @@ const useBillPaymentConfirmation = () => {
   };
   return {
     localizationText,
-    billPayDetailes,
+    billPayDetailes: billPayDetails,
     balanceData,
     extraDetails,
     handlePay,

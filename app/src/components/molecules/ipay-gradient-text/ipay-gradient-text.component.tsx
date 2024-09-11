@@ -1,3 +1,4 @@
+import React from 'react';
 import Svg, { Defs, LinearGradient, Stop, Text as SvgText } from 'react-native-svg';
 import { IPayGradientTextProps } from './ipay-gradient-text.interface';
 
@@ -22,13 +23,17 @@ const IPayGradientText: React.FC<IPayGradientTextProps> = ({
       <Defs>
         <LinearGradient id={textId} x1="0" y1="0" x2="100%" y2="0">
           {gradientColors.map((color, index) => (
-            <Stop key={index} offset={`${index * (100 / (gradientColors.length - 1))}%`} stopColor={color} />
+            <Stop
+              key={`${`${index}Stop`}`}
+              offset={`${index * (100 / (gradientColors.length - 1))}%`}
+              stopColor={color}
+            />
           ))}
         </LinearGradient>
       </Defs>
       {lines.map((line, index) => (
         <SvgText
-          key={index}
+          key={`${`${index}SvgText`}`}
           fill={`url(#${textId})`}
           fontSize={fontSize}
           fontFamily={fontFamily}

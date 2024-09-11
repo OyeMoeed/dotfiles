@@ -25,9 +25,9 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
+import { isIosOS } from '@app/utilities/constants';
 import { darkCards } from '../send-gift-card/send-gift-card.constants';
 import sendGiftPreviewStyles from './send-gift-preview.style';
-import { isIosOS } from '@app/utilities/constants';
 
 const SendGiftPreview: FC = ({ route }) => {
   const { occasion = '', selectedCard } = { ...route?.params };
@@ -118,7 +118,7 @@ const SendGiftPreview: FC = ({ route }) => {
               <IPayFootnoteText style={styles.messageText} color={themeTextColor} text={message} />
             </IPayScrollView>
             <IPayFootnoteText
-              style={[styles.messagePreviewText]}
+              style={styles.messagePreviewText}
               text={`${localizationText.SEND_GIFT.FROM}: ${firstName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
               color={themeTextColor}

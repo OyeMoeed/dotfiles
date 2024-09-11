@@ -35,6 +35,7 @@ const useAppState = () => {
       const focusListener = AppState.addEventListener('focus', onFocus);
       const blurListener = AppState.addEventListener('blur', onBlur);
 
+      // eslint-disable-next-line consistent-return
       return () => {
         focusListener.remove();
         blurListener.remove();

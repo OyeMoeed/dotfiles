@@ -2,7 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const ipaySupportedCardStyles = (colors: any) =>
+const ipaySupportedCardStyles = () =>
   createStyleSheet({
     cardIconsContainer: {
       flexDirection: 'row',

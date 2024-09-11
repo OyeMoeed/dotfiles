@@ -41,7 +41,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   inputFieldStyle,
 }) => {
   const { colors } = useTheme();
-  const styles = transferInfoStyles(colors, hasWallet);
+  const styles = transferInfoStyles(colors);
 
   const [isFocused, setIsFocused] = useState(false);
   const localizationText = useLocalization();

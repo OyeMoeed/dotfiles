@@ -5,4 +5,4 @@ const shortString = (text: string, length: number) => {
   return `${text.slice(0, length)}...`;
 };
 
-export { shortString };
+export default shortString;

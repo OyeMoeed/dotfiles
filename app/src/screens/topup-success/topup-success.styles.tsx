@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-export const genratedStyles = (colors: any) =>
+const generatedStyles = (colors: any) =>
   createStyleSheet({
     logoStyles: {
       width: verticalScale(84),
@@ -29,3 +29,5 @@ export const genratedStyles = (colors: any) =>
       marginVertical: verticalScale(20),
     },
   });
+
+export default generatedStyles;

@@ -12,7 +12,7 @@ import FullWindowOverlay from './ipay-full-window-home-overlay';
 
 const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProps>(
   ({ children, customSnapPoint, enableDynamicSizing, enablePanDownToClose, onCloseBottomSheet, style }, ref) => {
-    const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
+    const [, setOverlayVisible] = useState<boolean>(false);
     const { colors } = useTheme();
     const styles = bottonSheetStyles(colors);
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -25,12 +25,12 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
     }, []);
 
     const handleSheetChanges = useCallback((index: number) => {
-      if (index == -1) {
+      if (index === -1) {
         setEnableClose(false);
       } else {
         setEnableClose(true);
       }
-      index < 1 && setOverlayVisible(false);
+      if (index < 1) setOverlayVisible(false);
     }, []);
 
     const containerComponent = useCallback((props: any) => <FullWindowOverlay>{props.children}</FullWindowOverlay>, []);
@@ -53,15 +53,28 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
     const onAnimate = (fromIndex: number, toIndex: number) => {
       if (toIndex < 1) {
         bottomSheetModalRef.current?.forceClose();
-        onCloseBottomSheet && onCloseBottomSheet();
+        onCloseBottomSheet?.();
       }
     };
+
+    const handleComponent = () => (
+      <>
+        <IPayLinearGradientView
+          gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
+          style={styles.logoContainer}
+        >
+          <LogoIcon />
+        </IPayLinearGradientView>
+        <IPayBlurView />
+      </>
+    );
+
     const content = (
       <BottomSheetModalProvider>
         <BottomSheetModal
           enableContentPanningGesture={false}
           style={styles.bottmModalStyle}
-          name={'BottomSheet'}
+          name="BottomSheet"
           enableDismissOnClose={false}
           enableHandlePanningGesture={enableClose}
           onDismiss={() => bottomSheetModalRef.current?.close()}
@@ -74,17 +87,7 @@ const IPayBottomSheetHome = forwardRef<BottomSheetModal, IPayBottomSheetHomeProp
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
-          handleComponent={() => (
-            <>
-              <IPayLinearGradientView
-                gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
-                style={styles.logoContainer}
-              >
-                <LogoIcon />
-              </IPayLinearGradientView>
-              <IPayBlurView />
-            </>
-          )}
+          handleComponent={handleComponent}
         >
           <IPayLinearGradientView
             style={styles.bottomSheetStyle}

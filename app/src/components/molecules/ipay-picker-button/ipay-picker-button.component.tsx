@@ -1,9 +1,10 @@
+import React, { JSX, useEffect, useState } from 'react';
 import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
-import { dayPeriod, pickerVariant } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+import { dateTimeFormat } from '@app/utilities';
+import { DayPeriod, PickerVariant } from '@app/utilities/enums.util';
+
 import { IPayPickerButtonProps } from './ipay-picker-button.interface';
 import pickerStyles from './ipay-picker-button.style';
 
@@ -16,7 +17,7 @@ const IPayPickerButton: React.FC<IPayPickerButtonProps> = ({
   dateFormat = dateTimeFormat.ShortMonthYear,
   timeFormat = dateTimeFormat.HourMinute24,
 }: IPayPickerButtonProps): JSX.Element => {
-  const [timePeriod, setTimePeriod] = useState<dayPeriod>(dayPeriod.AM);
+  const [timePeriod, setTimePeriod] = useState<DayPeriod>(DayPeriod.AM);
   const formattedDate = formatDateAndTime(date, dateFormat); // Formatted date string
   const formattedTime = formatDateAndTime(date, timeFormat); // Formatted time string
   const { colors } = useTheme();
@@ -24,12 +25,12 @@ const IPayPickerButton: React.FC<IPayPickerButtonProps> = ({
 
   useEffect(() => {
     if (date) {
-      const initialTimePeriod = date?.getHours() < 12 ? dayPeriod.AM : dayPeriod.PM;
+      const initialTimePeriod = date?.getHours() < 12 ? DayPeriod.AM : DayPeriod.PM;
       setTimePeriod(initialTimePeriod);
     }
   }, []);
 
-  const handleTimePeriodChange = (newPeriod: dayPeriod) => {
+  const handleTimePeriodChange = (newPeriod: DayPeriod) => {
     setTimePeriod(newPeriod);
   };
 
@@ -52,21 +53,21 @@ const IPayPickerButton: React.FC<IPayPickerButtonProps> = ({
       </IPayPressable>
       <IPayView style={styles.segment}>
         <IPayPressable
-          style={[styles.timeButton, timePeriod === dayPeriod.AM && styles.activeButton]}
-          onPress={() => handleTimePeriodChange(dayPeriod.AM)}
+          style={[styles.timeButton, timePeriod === DayPeriod.AM && styles.activeButton]}
+          onPress={() => handleTimePeriodChange(DayPeriod.AM)}
         >
           <IPayFootnoteText
-            style={[styles.activeButtonText, timePeriod === dayPeriod.AM && styles.buttonText]}
-            text={dayPeriod.AM}
+            style={[styles.activeButtonText, timePeriod === DayPeriod.AM && styles.buttonText]}
+            text={DayPeriod.AM}
           />
         </IPayPressable>
         <IPayPressable
-          style={[styles.timeButton, timePeriod === dayPeriod.PM && styles.activeButton]}
-          onPress={() => handleTimePeriodChange(dayPeriod.PM)}
+          style={[styles.timeButton, timePeriod === DayPeriod.PM && styles.activeButton]}
+          onPress={() => handleTimePeriodChange(DayPeriod.PM)}
         >
           <IPayFootnoteText
-            style={[styles.activeButtonText, timePeriod === dayPeriod.PM && styles.buttonText]}
-            text={dayPeriod.PM}
+            style={[styles.activeButtonText, timePeriod === DayPeriod.PM && styles.buttonText]}
+            text={DayPeriod.PM}
           />
         </IPayPressable>
       </IPayView>
@@ -86,10 +87,10 @@ const IPayPickerButton: React.FC<IPayPickerButtonProps> = ({
 
   return (
     <IPayView testID={`${testID}-picker`}>
-      {variant === pickerVariant.Date && renderDateVariant()}
-      {variant === pickerVariant.Text && renderTextVariant()}
-      {variant === pickerVariant.Time && renderTimeVariant()}
-      {variant === pickerVariant.DateAndTime && renderDateAndTimeVariant()}
+      {variant === PickerVariant.Date && renderDateVariant()}
+      {variant === PickerVariant.Text && renderTextVariant()}
+      {variant === PickerVariant.Time && renderTimeVariant()}
+      {variant === PickerVariant.DateAndTime && renderDateAndTimeVariant()}
     </IPayView>
   );
 };

@@ -7,7 +7,7 @@ import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-vi
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -17,7 +17,7 @@ import { getCoreLov } from '@app/network/services/core/lov/get-lov.service';
 import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
 import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { ApiResponseStatusType, APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';

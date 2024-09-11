@@ -5,6 +5,7 @@ interface MockAPIStatusProps {
   requestReference: string;
   type: string;
   desc: string;
+  translation:string
 }
 
 // Define the Data interface
@@ -47,7 +48,7 @@ interface IApiStatus {
 interface ApiResponse<T> {
   status: IApiStatus;
   response?: T;
-  successfulResponse: boolean;
+  successfulResponse?: boolean;
   authentication?: {
     transactionId: string;
   };
@@ -70,7 +71,6 @@ export {
   IApiStatus,
   MockAPIDataProps,
   MockAPIOkProp,
-  MockAPIStatusProps,
-  MockAPIOkProp,
-  MockAPIStatusProps,
+  MockAPIStatusProps
 };
+
