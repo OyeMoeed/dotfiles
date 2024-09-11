@@ -53,7 +53,7 @@ const MarketPlace: React.FC = () => {
   const renderOfferItem = ({ item: { title, image, description } }: { item: MerchantItem }) => (
     <IPayLinearGradientView
       gradientColors={colors.appGradient.gradientPrimary20}
-      useAngle={true}
+      useAngle
       angle={79.03}
       style={styles.gradientView}
     >

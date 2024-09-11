@@ -1,4 +1,5 @@
 interface IPayOrdersCardProps {
+  data: Array;
   testID: string;
   onPressPurchase: () => void;
 }

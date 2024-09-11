@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const genratedStyles = (theme: any) =>
+const generatedStyles = () =>
   createStyleSheet({
     btnLarge: {
       paddingHorizontal: moderateScale(24, 0.3),
@@ -34,4 +34,4 @@ const genratedStyles = (theme: any) =>
     },
   });
 
-export default genratedStyles;
+export default generatedStyles;

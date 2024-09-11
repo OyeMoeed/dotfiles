@@ -14,16 +14,14 @@ import prepareLogin from '@app/network/services/authentication/prepare-login/pre
 import { PrepareForgetPasscodeProps } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { prepareForgetPasscode } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { encryptData } from '@app/network/utilities/encryption-helper';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
+import { getValidationSchemas } from '@app/services';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
-import { Keyboard } from 'react-native';
 import { scale, verticalScale } from 'react-native-size-matters';
 import * as Yup from 'yup';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';

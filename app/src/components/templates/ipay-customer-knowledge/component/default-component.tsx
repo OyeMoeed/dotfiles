@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayText } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
