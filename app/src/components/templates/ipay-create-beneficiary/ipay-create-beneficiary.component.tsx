@@ -151,7 +151,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setBeneficiaryData(values);
         navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { response: apiResponse });
-        renderSpinner(false);
       }
     }
     renderSpinner(false);
