@@ -180,11 +180,13 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       } else {
         cancelRequestRef.current?.hide();
       }
+      showSpinner(true)
       const apiResponse = await cancelRejectRequestService(
         walletInfo.walletNumber,
         requestDetail?.id,
         UpdateRequestType,
       );
+      showSpinner(false);
 
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
@@ -324,10 +326,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     setRequestDetail(mappedItem);
 
     requestdetailRef.current?.present();
-  };
-
-  const onPressActionSheet = () => {
-    rejectRequestRef.current?.hide();
   };
 
   const createRequest = () => {
