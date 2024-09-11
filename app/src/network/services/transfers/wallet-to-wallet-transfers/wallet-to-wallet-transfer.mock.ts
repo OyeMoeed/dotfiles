@@ -1,7 +1,7 @@
 import { WalletToWalletTransferMockProps } from './wallet-to-wallet-transfer.interface';
 
 const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
-  data: {
+  response: {
     transferRequestsResult: {
       groupedCategories: {
         RECEIVED: [

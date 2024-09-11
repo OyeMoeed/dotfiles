@@ -36,7 +36,6 @@ const SendGiftListScreen: React.FC = () => {
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [walletTransferData, setWalletTransferData] = useState({});
-  const [apiError, setAPIError] = useState<string>('');
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
 
@@ -105,7 +104,7 @@ const SendGiftListScreen: React.FC = () => {
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
-      subTitle: apiError,
+      subTitle: '',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -120,7 +119,7 @@ const SendGiftListScreen: React.FC = () => {
       });
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setWalletTransferData(apiResponse.data.transferRequestsResult.groupedCategories);
+          setWalletTransferData(apiResponse?.response?.transferRequestsResult?.groupedCategories);
           break;
         case apiResponse?.apiResponseNotOk:
           renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -172,9 +171,9 @@ const SendGiftListScreen: React.FC = () => {
         rightComponent={
           <IPayPressable onPress={applyFilter}>
             <IPayIcon
-              icon={!!filters.length ? icons.filter_edit_purple : icons.filter}
+              icon={filters.length ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={!!filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }
