@@ -17,7 +17,7 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(16),
     },
     inputContainer: { marginHorizontal: moderateScale(24), marginTop: moderateScale(24), flex: 1 },
-    input: { textAlignVertical: 'top', height: verticalScale(230), paddingLeft: 0 },
+    input: { textAlignVertical: 'top', height: verticalScale(230), paddingTop: 0, paddingLeft: 0 },
     assistiveText: { textAlign: 'right' },
     buttonContainer: {
       marginTop: moderateScale(12),
@@ -42,9 +42,9 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
     previewContainer: {
       borderRadius: moderateScale(12),
       alignItems: 'center',
-      marginHorizontal: moderateScale(36),
+      marginHorizontal: moderateScale(38),
       height: moderateScale(415),
-      width: moderateScale(295),
+      width: moderateScale(291),
       paddingTop: moderateScale(24),
       alignSelf: 'center',
     },

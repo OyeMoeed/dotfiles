@@ -27,7 +27,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
     isLoading,
     otpError,
     setOtpError,
-    apiError,
+    otp,
     otpVerificationRef,
   } = useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
@@ -71,7 +71,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           showHelp={true}
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
