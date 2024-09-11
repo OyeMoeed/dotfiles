@@ -270,7 +270,6 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);

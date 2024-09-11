@@ -57,7 +57,7 @@ const issueNewCardConfirmDetailsStyles = (colors: typeof themeColors) =>
       gap: moderateScale(4),
     },
     button: {
-      borderRadius: moderateScale(16),
+      borderRadius: moderateScale(8),
       paddingVertical: moderateScale(14),
       paddingHorizontal: moderateScale(20),
       justifyContent: 'center',

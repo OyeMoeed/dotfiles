@@ -33,7 +33,7 @@ const IPayCardStatusIndication = ({
             onPress={onPress}
             btnType="primary"
             btnIconsDisabled
-            small
+            // small
             btnStyle={styles.renewBtn}
             btnText={localizationText.CARDS.RENEW_CARD}
           />
