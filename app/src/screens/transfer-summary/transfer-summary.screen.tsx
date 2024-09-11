@@ -85,7 +85,11 @@ const TransferSummaryScreen: React.FC = () => {
           color: colors.primary.primary900,
           isAlinma: false,
         },
-        { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
+        {
+          id: '2',
+          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+          value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        },
         {
           id: '3',
           label: localizationText.TRANSFER_SUMMARY.REASON,
@@ -103,7 +107,11 @@ const TransferSummaryScreen: React.FC = () => {
         leftIcon: images.alinmaP,
         isAlinma: true,
       },
-      { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
+      {
+        id: '2',
+        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+      },
       {
         id: '3',
         // label: localizationText.TRANSFER_SUMMARY.REASON,
@@ -180,33 +188,37 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const prepareOtp = async (showOtpSheet: boolean = true) => {
-    sendMoneyBottomSheetRef.current?.present();
+    try {
+      sendMoneyBottomSheetRef.current?.present();
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    setIsLoading(true);
-    const payload: IW2WTransferPrepareReq = {
-      requests: transfersDetails.formInstances.map((item) => ({
-        mobileNumber: item.mobileNumber,
-        amount: item.amount,
-        note: item.notes,
-        transferPurpose: item.selectedItem.id as string,
-      })),
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      setTransactionId(apiResponse?.authentication?.transactionId);
-      if (showOtpSheet) {
-        sendMoneyBottomSheetRef.current?.present();
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+
+      setIsLoading(true);
+      const payload: IW2WTransferPrepareReq = {
+        requests: transfersDetails.formInstances.map((item) => ({
+          mobileNumber: item.mobileNumber,
+          amount: item.amount,
+          note: item.notes,
+          transferPurpose: item.selectedItem.id as string,
+        })),
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      };
+      const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
+      if (apiResponse.status.type === 'SUCCESS') {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+        setTransactionId(apiResponse?.authentication?.transactionId);
+        if (showOtpSheet) {
+          sendMoneyBottomSheetRef.current?.present();
+        }
       }
+      otpVerificationRef?.current?.resetInterval();
+    } finally {
+      setIsLoading(false);
+      hideSpinner();
     }
-    otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
-    hideSpinner();
   };
 
   const verifyOtp = async () => {
