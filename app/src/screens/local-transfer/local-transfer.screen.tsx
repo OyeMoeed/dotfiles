@@ -396,7 +396,6 @@ const LocalTransferScreen: React.FC = () => {
 
   const makeTransfer = () => {
     activateBeneficiary?.current?.close();
-    navigate(ScreenNames.LOCAL_TRANSFER);
     getBeneficiariesData();
   };
 
