@@ -128,10 +128,7 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
           </IPayView>
 
           <IPayView style={styles.headingView}>
-            <IPayPageDescriptionText
-              heading={'REGISTRATION.CONFIRM_PASSCODE'}
-              text="REGISTRATION.ENTER_PASSCODE_AGAIN"
-            />
+            <IPayPageDescriptionText heading="REGISTRATION.CONFIRM_PASSCODE" text="REGISTRATION.ENTER_PASSCODE_AGAIN" />
           </IPayView>
           <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} passcodeError={passcodeError} />
         </IPayView>

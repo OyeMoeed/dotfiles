@@ -16,8 +16,8 @@ const IPayOfflineAlert: FC<IPayOfflineAlertProps> = ({ onClose, visible, testID 
       onClose={onClose}
       showIcon={false}
       icon={<IPayIcon icon={icons.wifi} size={64} />}
-      title={'INTERNET_STATUS.INTERNET_LOST'}
-      message={'INTERNET_STATUS.OFFLINE_DESC'}
+      title="INTERNET_STATUS.INTERNET_LOST"
+      message="INTERNET_STATUS.OFFLINE_DESC"
       closeOnTouchOutside
       variant={alertVariant.DESTRUCTIVE}
       primaryAction={{

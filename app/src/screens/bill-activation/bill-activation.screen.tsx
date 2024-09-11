@@ -5,7 +5,6 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import { IPayPageWrapper } from '@app/components/templates';
 import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -16,7 +15,6 @@ import ipayBillActivationStyles from './bill-activation.style';
 const BillActivationScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = ipayBillActivationStyles(colors);
-  const localizationText = useLocalization();
   const { activeBillDetails, billHeaderDetail } = useConstantData();
 
   const onPressPayBill = () => {
@@ -30,7 +28,7 @@ const BillActivationScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={'BILL_ACTIVATION.ACTIVATION_MESSAGE'}
+          headingText="BILL_ACTIVATION.ACTIVATION_MESSAGE"
           headingStyle={styles.headingStyle}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -47,7 +45,7 @@ const BillActivationScreen: React.FC = () => {
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={'BILL_ACTIVATION.PAY_BILL'}
+            btnText="BILL_ACTIVATION.PAY_BILL"
             btnStyle={styles.btnStyle}
             btnIconsDisabled
             onPress={onPressPayBill}
@@ -57,7 +55,7 @@ const BillActivationScreen: React.FC = () => {
             large
             btnType={buttonVariants.LINK_BUTTON}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
-            btnText={'COMMON.HOME'}
+            btnText="COMMON.HOME"
           />
         </IPayView>
       </IPayView>

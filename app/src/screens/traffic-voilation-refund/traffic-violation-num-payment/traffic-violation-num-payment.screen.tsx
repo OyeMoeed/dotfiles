@@ -13,22 +13,14 @@ import useBillPaymentConfirmation from './traffic-violation-num-payment.hook';
 import billPaymentStyles from './traffic-violation-num-payment.styles';
 
 const TrafficViolationNumPaymentScreen: React.FC = () => {
-  const {
-    localizationText,
-    billPayDetailes,
-    balanceData,
-    handlePay,
-    helpCenterRef,
-    otpRef,
-    handleOtpVerification,
-    handleOnPressHelp,
-  } = useBillPaymentConfirmation();
+  const { billPayDetailes, balanceData, handlePay, helpCenterRef, otpRef, handleOtpVerification, handleOnPressHelp } =
+    useBillPaymentConfirmation();
   const { calculatedBill } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles();
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={'TRAFFIC_VIOLATION.REFUND_VIOLATION'} backBtn applyFlex />
+      <IPayHeader title="TRAFFIC_VIOLATION.REFUND_VIOLATION" backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
@@ -40,11 +32,11 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
         totalAmount={calculatedBill ?? 0}
         btnText="COMMON.CONFIRM"
         disableBtnIcons
-        totalAmountText={'TRAFFIC_VIOLATION.AMOUNT_REFUND'}
+        totalAmountText="TRAFFIC_VIOLATION.AMOUNT_REFUND"
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet
-        heading={'PAY_BILL.HEADER'}
+        heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         backBtn
@@ -54,7 +46,7 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
         <OtpVerificationComponent onConfirmPress={handlePay} onPressHelp={handleOnPressHelp} />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

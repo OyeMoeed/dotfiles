@@ -180,7 +180,7 @@ const OfferDetailsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader title={'OFFERS.DETAILS'} backBtn applyFlex />
+      <IPayHeader title="OFFERS.DETAILS" backBtn applyFlex />
       <IPayView style={styles.container}>
         {offersData && (
           <IPayLatestOfferCard

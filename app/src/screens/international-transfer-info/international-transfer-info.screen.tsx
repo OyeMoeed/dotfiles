@@ -81,7 +81,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={'TRANSFER.TRANSFER_INFRORMATION'} applyFlex />
+      <IPayHeader backBtn title="TRANSFER.TRANSFER_INFRORMATION" applyFlex />
       <IPayView style={styles.contentContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayView>
@@ -150,7 +150,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
               </IPayView>
               <IPayView>
                 <IPayAnimatedTextInput
-                  label={'COMMON.REASON_OF_TRANSFER'}
+                  label="COMMON.REASON_OF_TRANSFER"
                   editable={false}
                   value={selectedReason}
                   containerStyle={styles.inputContainerStyle}
@@ -174,7 +174,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={'COMMON.REASON_OF_TRANSFER'}
+        heading="COMMON.REASON_OF_TRANSFER"
         customSnapPoint={['1%', '60%']}
         onCloseBottomSheet={() => reasonOfTransferSheet.current.close()}
         ref={reasonOfTransferSheet}
@@ -205,7 +205,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         </IPayView>
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={'INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS'}
+        heading="INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS"
         customSnapPoint={['1%', '90%']}
         onCloseBottomSheet={() => beneficiaryDetailsRef.current.close()}
         ref={beneficiaryDetailsRef}

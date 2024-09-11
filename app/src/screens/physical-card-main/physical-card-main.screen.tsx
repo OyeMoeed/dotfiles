@@ -3,7 +3,6 @@ import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules'
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import { buttonVariants, CarouselModes } from '@app/utilities/enums.util';
@@ -19,7 +18,6 @@ const PhysicalCardMainScreen: React.FC = () => {
   const { colors } = useTheme();
   const { CARD_DATA } = useCardsData();
   const styles = physicalCardMainStyles(colors);
-  const localizationText = useLocalization();
   const [currentCard, setCurrentCard] = useState<CardInterface>(CARD_DATA[0]); // #TODO will be replaced with API data
 
   const onChangeIndex = (index: number) => {
@@ -58,7 +56,7 @@ const PhysicalCardMainScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView testID="ipay-safearea">
-      <IPayHeader title={'CARD_OPTIONS.PHYSICAL_CARD'} backBtn applyFlex />
+      <IPayHeader title="CARD_OPTIONS.PHYSICAL_CARD" backBtn applyFlex />
 
       <IPayFootnoteText
         style={styles.headerText}

@@ -304,18 +304,18 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
 
             <IPayView style={styles.rowInput}>
               <IPayControlledInput
-                label={'TRANSACTION_HISTORY.FROM'}
+                label="TRANSACTION_HISTORY.FROM"
                 control={control}
-                suffix={'COMMON.SAR'}
+                suffix="COMMON.SAR"
                 isError={!!errors?.amountFrom}
-                message={'COMMON.REQUIRED_FIELD'}
+                message="COMMON.REQUIRED_FIELD"
                 name={FiltersType.AMOUNT_FROM}
                 required={!!getValues(FiltersType.AMOUNT_FROM)}
               />
               <IPayControlledInput
-                label={'TRANSACTION_HISTORY.TO_INPUT'}
+                label="TRANSACTION_HISTORY.TO_INPUT"
                 control={control}
-                suffix={'COMMON.SAR'}
+                suffix="COMMON.SAR"
                 isError={!!amountError || !!errors?.amountTo}
                 message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
@@ -336,9 +336,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledDatePicker
                 control={control}
                 isError={!!errors?.dateFrom}
-                label={'TRANSACTION_HISTORY.FROM'}
+                label="TRANSACTION_HISTORY.FROM"
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
-                message={'COMMON.REQUIRED_FIELD'}
+                message="COMMON.REQUIRED_FIELD"
                 name={FiltersType.DATE_FROM}
                 required={!!getValues(FiltersType.DATE_FROM)}
                 showFocusStyle={showFromDatePicker && !showToDatePicker}
@@ -352,7 +352,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledDatePicker
                 control={control}
                 isError={!!dateError || !!errors?.dateTo}
-                label={'TRANSACTION_HISTORY.TO_INPUT'}
+                label="TRANSACTION_HISTORY.TO_INPUT"
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
                 message={dateError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.DATE_TO}
@@ -474,7 +474,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             <IPayView style={styles.noRecordContainer}>
               <IPayNoResult
                 containerStyle={styles.noRecordWrapper}
-                message={'COMMON.NO_RESULTS_FOUND'}
+                message="COMMON.NO_RESULTS_FOUND"
                 showIcon
                 icon={icons.note_remove1}
                 iconSize={40}

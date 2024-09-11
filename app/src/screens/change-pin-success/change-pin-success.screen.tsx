@@ -1,7 +1,6 @@
 import React from 'react';
 
 import useTheme from '@app/styles/hooks/theme.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 
 import { goBack } from '@app/navigation/navigation-service.navigation';
@@ -16,7 +15,6 @@ import { RouteParams } from './change-pin-success.interface';
 const ChangePinSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = changePinSuccessStyles(colors);
-  const localizationText = useLocalization();
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
@@ -36,11 +34,11 @@ const ChangePinSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.flexZero}
-          headingText={'CHANGE_PIN_SUCCESS.CARD_PIN_CHANGES_SUCCESS'}
-          descriptionText={'CHANGE_PIN_SUCCESS.YOU_CAN_USE_PURCHASE'}
+          headingText="CHANGE_PIN_SUCCESS.CARD_PIN_CHANGES_SUCCESS"
+          descriptionText="CHANGE_PIN_SUCCESS.YOU_CAN_USE_PURCHASE"
         />
         <IPayView style={styles.bottomButtonContainer}>
-          <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={goBack} />
+          <IPayButton btnType="primary" btnText="COMMON.DONE" large btnIconsDisabled onPress={goBack} />
         </IPayView>
       </IPayView>
     </IPayPageWrapper>

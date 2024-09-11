@@ -92,7 +92,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
         testID="sadad-edit-bill-header"
         backBtn
         onBackPress={onBackPress}
-        title={'SADAD.EDIT_BILL'}
+        title="SADAD.EDIT_BILL"
         titleStyle={styles.headerText}
         applyFlex
       />
@@ -105,7 +105,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
                 testID="bill-nick-name-input"
-                label={'NEW_SADAD_BILLS.BILL_NICK_NAME'}
+                label="NEW_SADAD_BILLS.BILL_NICK_NAME"
                 labelColor={colors.primary.primary500}
                 editable
                 value={value}
@@ -157,9 +157,9 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
         closeOnTouchOutside
         animationType="fade"
         showIcon={false}
-        title={'SADAD.DISCARD_CHANGES'}
+        title="SADAD.DISCARD_CHANGES"
         onClose={onCloseAlert}
-        message={'SADAD.EDIT_YOU_MADE_WILL_LOST'}
+        message="SADAD.EDIT_YOU_MADE_WILL_LOST"
         primaryAction={{
           text: localizationText.COMMON.YES,
           onPress: () => {

@@ -61,7 +61,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           <IPayChip
             containerStyle={styles.chipColors}
             icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-            textValue={'TRANSFER_SUMMARY.CHIP_TITLE'}
+            textValue="TRANSFER_SUMMARY.CHIP_TITLE"
             headingStyles={styles.chipColors}
           />
         </IPayView>
@@ -81,7 +81,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         ) : (
           <IPayList
             textStyle={styles.titleText}
-            title={'SEND_MONEY_FORM.RECIPIENT'}
+            title="SEND_MONEY_FORM.RECIPIENT"
             subTextStyle={StyleSheet.flatten(styles.subtitleText)}
             isShowSubTitle
             subTitle={subtitle}
@@ -127,7 +127,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             onChangeText={setSelectedItem}
             containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
             labelColor={colors.natural.natural500}
-            label={'COMMON.REASON_OF_TRANSFER'}
+            label="COMMON.REASON_OF_TRANSFER"
             value={selectedItem}
             editable={false}
             showRightIcon

@@ -222,7 +222,7 @@ const MenuScreen: FC = () => {
         <IPayActionSheet
           ref={logoutConfirmationSheet}
           testID="logout-action-sheet"
-          title={'MENU.LOGOUT_CONFIRMATION'}
+          title="MENU.LOGOUT_CONFIRMATION"
           options={[localizationText.COMMON.CANCEL, localizationText.MENU.LOGOUT]}
           cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
           destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}

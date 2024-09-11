@@ -190,7 +190,7 @@ const CardManagementScreen: React.FC = () => {
       }}
       secondaryAction={{ text: localizationText.COMMON.DELETE, onPress: onDeleteCard }}
       variant={alertVariant.DESTRUCTIVE}
-      title={'CARD_MANAGEMENT.DELETE_CARD'}
+      title="CARD_MANAGEMENT.DELETE_CARD"
       message={`${cards[selectedCardIndex].name}\n**** **** **** ${cards[selectedCardIndex].lastFourDigit}`}
     />
   );
@@ -208,7 +208,7 @@ const CardManagementScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={'CARD_MANAGEMENT.CARD_MANAGEMENT'} backBtn applyFlex />
+      <IPayHeader title="CARD_MANAGEMENT.CARD_MANAGEMENT" backBtn applyFlex />
       {cards?.length === 0 ? (
         <IPayNoCardIndicatorComponenent addCard={onAddCard} />
       ) : (
@@ -258,7 +258,7 @@ const CardManagementScreen: React.FC = () => {
       />
 
       <IPayBottomSheet
-        heading={'CARD_MANAGEMENT.EDIT_NICK_NAME'}
+        heading="CARD_MANAGEMENT.EDIT_NICK_NAME"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -280,7 +280,7 @@ const CardManagementScreen: React.FC = () => {
             />
             <IPayView style={styles.inputContainer}>
               <IPayAnimatedTextInput
-                label={'COMMON.CARD_NAME'}
+                label="COMMON.CARD_NAME"
                 value={selectedCardName}
                 containerStyle={styles.inputStyles}
                 editable

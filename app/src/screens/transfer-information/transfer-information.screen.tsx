@@ -76,7 +76,7 @@ const TransferInformation: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={'TRANSFER.TRANSFER_INFRORMATION'} />
+      <IPayHeader backBtn applyFlex title="TRANSFER.TRANSFER_INFRORMATION" />
       <IPayScrollView>
         <IPayView style={styles.container}>
           <IPayAccountBalance
@@ -121,7 +121,7 @@ const TransferInformation: React.FC = () => {
         <IPayView />
       )}
       <IPayBottomSheet
-        heading={'COMMON.REASON_OF_TRANSFER'}
+        heading="COMMON.REASON_OF_TRANSFER"
         onCloseBottomSheet={onCloseSheet}
         customSnapPoint={['20%', '65%']}
         ref={reasonsBottomSheetRef}

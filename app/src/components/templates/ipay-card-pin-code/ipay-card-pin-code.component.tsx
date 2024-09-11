@@ -44,7 +44,7 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCo
         <IPayImage style={styles.securityIcon} image={images.securityCard} />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayTitle2Text text={'CARDS.ENTER_CARD_PIN_CODE'} />
+        <IPayTitle2Text text="CARDS.ENTER_CARD_PIN_CODE" />
       </IPayView>
       <IPayView style={styles.pincodeViewContainer}>
         <IPayPasscode

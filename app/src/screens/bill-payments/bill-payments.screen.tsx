@@ -98,7 +98,7 @@ const BillPaymentsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={'BILL_PAYMENTS.BILL_PAYMENTS'} applyFlex />
+      <IPayHeader backBtn title="BILL_PAYMENTS.BILL_PAYMENTS" applyFlex />
       <IPayView style={styles.container}>
         {sadadBills.length > 0 ? (
           <IPayView style={styles.contentContainer}>
@@ -126,7 +126,7 @@ const BillPaymentsScreen: React.FC = () => {
               onPress={onPressAddNewBill}
               btnStyle={styles.addNewBillBtn}
               btnType={buttonVariants.OUTLINED}
-              btnText={'SADAD.ADD_NEW_BILL'}
+              btnText="SADAD.ADD_NEW_BILL"
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
             />
           </IPayView>

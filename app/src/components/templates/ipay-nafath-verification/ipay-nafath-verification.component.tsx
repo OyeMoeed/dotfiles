@@ -258,10 +258,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       </IPayView>
       {step === 1 ? (
         <>
-          <IPayPageDescriptionText
-            heading={'PROFILE.NAFATH_VALIDATION'}
-            text="SETTINGS.NAFATH_VALIDATION_DESCRIPTION"
-          />
+          <IPayPageDescriptionText heading="PROFILE.NAFATH_VALIDATION" text="SETTINGS.NAFATH_VALIDATION_DESCRIPTION" />
           <IPayPressable style={styles.downloadSection}>
             <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.DOWNLOAD_NAFATH_ACCOUNT" />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
@@ -281,7 +278,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         </>
       ) : (
         <>
-          <IPayPageDescriptionText heading={'SETTINGS.VALIDATE_THROUGH_NAFAH'} />
+          <IPayPageDescriptionText heading="SETTINGS.VALIDATE_THROUGH_NAFAH" />
           <IPayPressable style={styles.stepper}>
             {renderStep('1')}
             <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.OPEN_NAFATH_APP" />

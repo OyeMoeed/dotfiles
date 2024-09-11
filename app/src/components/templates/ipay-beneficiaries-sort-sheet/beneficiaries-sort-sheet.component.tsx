@@ -45,7 +45,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
 
   return (
     <IPayBottomSheet
-      heading={'COMMON.SORT_BY'}
+      heading="COMMON.SORT_BY"
       enablePanDownToClose
       cancelBnt
       bold
@@ -55,7 +55,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
       bgGradientColors={colors.sheetGradientPrimary10}
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
-      doneText={'COMMON.RESET'}
+      doneText="COMMON.RESET"
       onDone={() => setSortByActive(BeneficiaryTypes.ACTIVE)}
     >
       <IPayFlatlist

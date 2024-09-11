@@ -93,8 +93,8 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
           <IPayTransactionHistoryDetails
             ref={transactionHistoryDetailsRef}
             transactionData={getTransactionData()}
-            senderCurrency={'COMMON.SAR'}
-            receiverCurrency={'COMMON.PKR'}
+            senderCurrency="COMMON.SAR"
+            receiverCurrency="COMMON.PKR"
             vatPercentage={getVatPercentage}
           />
         </IPayView>
@@ -106,7 +106,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
                 {beneficiaryName && (
                   <IPayView style={styles.beneficaryNameView}>
                     <IPayFootnoteText
-                      text={'INTERNATIONAL_TRANSFER.NEW_BENEFICIARY_NAME'}
+                      text="INTERNATIONAL_TRANSFER.NEW_BENEFICIARY_NAME"
                       color={colors.natural.natural900}
                     />
                     <IPayFootnoteText text={beneficiaryName} color={colors.natural.natural500} />
@@ -125,7 +125,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
               btnType={buttonVariants.PRIMARY}
               large
               rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.primary.primary500} />}
-              btnText={'TRANSACTION_HISTORY.VAT_INVOICE'}
+              btnText="TRANSACTION_HISTORY.VAT_INVOICE"
               btnStyle={styles.vatBtn}
             />
           </IPayView>

@@ -4,13 +4,11 @@ import { IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import IPayPasscode from '@app/components/organism/ipay-passcode/ipay-passcode.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { scale, verticalScale } from 'react-native-size-matters';
 import passcodeStyles from './set-passcode.style';
 
 const SetPasscode = () => {
   const styles = passcodeStyles();
-  const localizationText = useLocalization();
 
   return (
     <IPaySafeAreaView>
@@ -21,8 +19,8 @@ const SetPasscode = () => {
         </IPayView>
         <IPayView style={styles.headingView}>
           <IPayPageDescriptionText
-            heading={'CHANGE_PIN.CREATE_A_PASSCODE'}
-            text={'COMMON.ENTER_CODE_TO_ACCESS_APPLICATION'}
+            heading="CHANGE_PIN.CREATE_A_PASSCODE"
+            text="COMMON.ENTER_CODE_TO_ACCESS_APPLICATION"
           />
         </IPayView>
         <IPayView style={styles.flex1}>

@@ -225,7 +225,7 @@ const Home: React.FC = () => {
       <>
         {/* ---------Top Navigation------------- */}
         <IPayView style={styles.topNavCon}>
-          <IPayTopbar captionText={'HOME.WELCOME'} userName={firstName} />
+          <IPayTopbar captionText="HOME.WELCOME" userName={firstName} />
         </IPayView>
         {/* ----------BalanceBox------------ */}
         <IPayView style={styles.balanceCon}>
@@ -253,7 +253,7 @@ const Home: React.FC = () => {
         )}
 
         <IPayBottomSheet
-          heading={'COMMON.RE_ARRANGE_SECTIONS'}
+          heading="COMMON.RE_ARRANGE_SECTIONS"
           onCloseBottomSheet={closeBottomSheet}
           customSnapPoint={['90%', '99%', maxHeight]}
           ref={rearrangeRef}
@@ -269,7 +269,7 @@ const Home: React.FC = () => {
 
         <IPayPortalBottomSheet
           noGradient
-          heading={'TOP_UP.ADD_MONEY_USING'}
+          heading="TOP_UP.ADD_MONEY_USING"
           onCloseBottomSheet={closeBottomSheetTopUp}
           customSnapPoint={SNAP_POINT.XS_SMALL}
           ref={topUpSelectionRef}

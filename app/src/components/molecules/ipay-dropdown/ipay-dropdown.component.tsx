@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useImperativeHandle, useState } from 'react';
@@ -15,7 +14,6 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
 ) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
-  const localizationText = useLocalization();
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
   const [selectedListItem, setSelectedListItem] = useState<ListItem | null>(selectedItem || null);
 
@@ -69,7 +67,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
 
   const renderNoResults = () => (
     <IPayView style={styles.noResultsView}>
-      <IPayFootnoteText text={'COMMON.NO_RESULTS_FOUND'} />
+      <IPayFootnoteText text="COMMON.NO_RESULTS_FOUND" />
     </IPayView>
   );
 
@@ -80,7 +78,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
         <IPayInput
           onChangeText={onSearchChangeText}
           text={searchText}
-          placeholder={'COMMON.SEARCH'}
+          placeholder="COMMON.SEARCH"
           style={styles.searchInputText}
         />
       </IPayView>
@@ -104,7 +102,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
           large
           btnIconsDisabled
           btnType={buttonVariants.PRIMARY}
-          btnText={'COMMON.SAVE'}
+          btnText="COMMON.SAVE"
         />
       </IPayView>
     </IPayView>

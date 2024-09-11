@@ -1,17 +1,13 @@
 import { IPayFootnoteText, IPayHeadlineText } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayBottomSheet } from '@components/organism/index';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
 import termsAndConditionsStyles from './ipay-terms-and-conditions.style';
 import { IPayTermsAndConditionsProps } from './ipay-terms-and-conditions.interface';
 
 const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef((_, ref) => {
-  const localizationText = useLocalization();
-  const { colors } = useTheme();
-  const styles = termsAndConditionsStyles(colors);
+  const styles = termsAndConditionsStyles();
   const termsAndConditionSheetRef = useRef<any>(null);
 
   const showTermsAndConditions = () => {
@@ -25,7 +21,7 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef
   return (
     <IPayBottomSheet
       noGradient
-      heading={'COMMON.TERMS_AND_CONDITIONS'}
+      heading="COMMON.TERMS_AND_CONDITIONS"
       enablePanDownToClose
       cancelBnt
       simpleBar
@@ -38,7 +34,7 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef
         <IPayHeadlineText
           regular={false}
           style={styles.termsAndConditionsHeading}
-          text={'COMMON.TERMS_AND_CONDITIONS_HEADING'}
+          text="COMMON.TERMS_AND_CONDITIONS_HEADING"
         />
         <IPayFootnoteText
           regular

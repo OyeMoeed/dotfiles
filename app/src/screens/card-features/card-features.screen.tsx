@@ -6,7 +6,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useRoute } from '@react-navigation/native';
 import { CardOptions } from '@app/utilities/enums.util';
@@ -17,7 +16,6 @@ const CardFeaturesScreen: React.FC = () => {
   const route = useRoute();
   const { currentCard } = route?.params as { currentCard: { cardType: '' } };
   const CURRENT_CARD_TYPE = currentCard.cardType;
-  const localizationText = useLocalization();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
   const styles = cardFeaturesStyles(colors);
@@ -26,7 +24,7 @@ const CardFeaturesScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={'CARD_OPTIONS.CARD_FEATURES'} applyFlex />
+      <IPayHeader backBtn title="CARD_OPTIONS.CARD_FEATURES" applyFlex />
       <IPayScrollView showsVerticalScrollIndicator={false}>
         <IPayView>
           <IPayImage image={backgroundImage} style={styles.background} />

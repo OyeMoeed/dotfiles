@@ -48,7 +48,7 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
             containerStyle={styles.chipContainerStyle}
           />
           <IPayCaption1Text text="-" style={styles.dash} />
-          <IPayCaption1Text text={'ATM_WITHDRAWAL.ALINMA_ATM'} color={colors.natural.natural900} />
+          <IPayCaption1Text text="ATM_WITHDRAWAL.ALINMA_ATM" color={colors.natural.natural900} />
         </IPayView>
       </IPayView>
 
@@ -63,7 +63,7 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
           onPress={onPressGetDirection}
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={'ATM_WITHDRAWAL.GET_DIRECTION'}
+          btnText="ATM_WITHDRAWAL.GET_DIRECTION"
           rightIcon={<IPayIcon icon={icons.add_location} size={20} color={colors.natural.natural0} />}
         />
       </IPayView>

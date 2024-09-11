@@ -60,7 +60,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
           <IPayRHFAnimatedTextInput
             testID="service-provider-input"
             name={MoiPaymentFormFields.SERVICE_PROVIDER}
-            label={'BILL_PAYMENTS.SERVICE_PROVIDER'}
+            label="BILL_PAYMENTS.SERVICE_PROVIDER"
             editable={false}
             containerStyle={styles.inputContainerStyle}
             showRightIcon
@@ -76,7 +76,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
           <IPayRHFAnimatedTextInput
             testID="service-type-input"
             name={MoiPaymentFormFields.SERVICE_TYPE}
-            label={'BILL_PAYMENTS.SERVICE_TYPE'}
+            label="BILL_PAYMENTS.SERVICE_TYPE"
             editable={false}
             showRightIcon
             containerStyle={[styles.inputContainerStyle, !isServiceProviderValue && styles.greyInputStyle]}
@@ -95,7 +95,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
 
       {isServiceTypeValue && (
         <>
-          <IPayCaption2Text regular text={'BILL_PAYMENTS.BENEFECIARY_DETAILS'} />
+          <IPayCaption2Text regular text="BILL_PAYMENTS.BENEFECIARY_DETAILS" />
 
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}
@@ -104,7 +104,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayCheckboxTitle
                 isCheck={myIdCheck || false}
                 testID="my-id"
-                heading={'BILL_PAYMENTS.USE_MY_ID'}
+                heading="BILL_PAYMENTS.USE_MY_ID"
                 onPress={onCheckboxAction}
               />
             )}
@@ -138,7 +138,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayRHFAnimatedTextInput
                 testID="id-type-input"
                 name={MoiPaymentFormFields.ID_TYPE}
-                label={'BILL_PAYMENTS.ID_TYPE'}
+                label="BILL_PAYMENTS.ID_TYPE"
                 editable={false}
                 showRightIcon
                 containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}
@@ -155,7 +155,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayRHFAnimatedTextInput
                 testID="duration-input"
                 name={MoiPaymentFormFields.DURATION}
-                label={'BILL_PAYMENTS.DURATION'}
+                label="BILL_PAYMENTS.DURATION"
                 editable={false}
                 showRightIcon
                 containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}

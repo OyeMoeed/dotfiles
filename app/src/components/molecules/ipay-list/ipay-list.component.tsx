@@ -8,7 +8,6 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayListProps } from './ipay-list.interface';
@@ -63,7 +62,6 @@ const IPayList: React.FC<IPayListProps> = ({
   regularTitle = true,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const dynamicStyles = styles(colors);
 
   const hasRightComponent = () =>
@@ -111,7 +109,7 @@ const IPayList: React.FC<IPayListProps> = ({
               btnStyle={dynamicStyles.buttonStyle}
               onPress={onPressSaveQR}
               btnType="primary"
-              btnText={'COMMON.SAVE'}
+              btnText="COMMON.SAVE"
               textColor={colors.secondary.secondary800}
               rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
             />

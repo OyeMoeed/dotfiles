@@ -2,7 +2,6 @@ import icon from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { ChangeLangPayloadProps } from '@app/network/services/core/change-language/change-language.interface';
 import changeLanguage from '@app/network/services/core/change-language/change-language.service';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -23,7 +22,6 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
   const { bottomSheetModalRef, handleClosePress } = useModalActions(ref);
   const { colors } = useTheme();
   const sheetStyles = styles(colors);
-  const localizationText = useLocalization();
 
   const handleLanguagePress = useLanguageChange(handleClosePress);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -49,7 +47,7 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
 
   return (
     <IPayBottomSheet
-      heading={'COMMON.LANGUAGE'}
+      heading="COMMON.LANGUAGE"
       enablePanDownToClose
       simpleBar
       cancelBnt

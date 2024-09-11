@@ -30,8 +30,8 @@ const IssuePhysicalCardSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.successTextContainer}
-          headingText={'PHYSICAL_CARD.THE_CARD_HAS_BEEN'}
-          descriptionText={'PHYSICAL_CARD.YOU_CAN_ADD_IT'}
+          headingText="PHYSICAL_CARD.THE_CARD_HAS_BEEN"
+          descriptionText="PHYSICAL_CARD.YOU_CAN_ADD_IT"
           descriptionStyle={styles.descriptionStyle}
         />
         {isIosOS && (
@@ -57,7 +57,7 @@ const IssuePhysicalCardSuccessScreen: React.FC = () => {
           <IPayView style={styles.descriptionBoxContainer}>
             <IPayIcon icon={icons.truck_tick} size={24} color={colors.natural.natural950} />
             <IPayView style={styles.captionTextContainer}>
-              <IPayCaption1Text color={colors.natural.natural700} regular text={'PHYSICAL_CARD.COURIER_COMPANY_WILL'} />
+              <IPayCaption1Text color={colors.natural.natural700} regular text="PHYSICAL_CARD.COURIER_COMPANY_WILL" />
             </IPayView>
           </IPayView>
           <IPayButton
@@ -66,14 +66,14 @@ const IssuePhysicalCardSuccessScreen: React.FC = () => {
             medium
             btnType={buttonVariants.PRIMARY}
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
-            btnText={'CARD_OPTIONS.GO_TO_CARD'}
+            btnText="CARD_OPTIONS.GO_TO_CARD"
           />
           <IPayButton
             onPress={onGoToHome}
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
-            btnText={'COMMON.HOME'}
+            btnText="COMMON.HOME"
           />
         </IPayView>
       </IPayView>

@@ -36,7 +36,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.ipaySuccessContainer}
-          headingText={'CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED'}
+          headingText="CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED"
           descriptionText={isIosOS ? localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY : ' '}
         />
         <IPayView style={styles.appleButtonContainer}>
@@ -65,7 +65,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
-            btnText={'CARD_OPTIONS.GO_TO_CARD'}
+            btnText="CARD_OPTIONS.GO_TO_CARD"
             btnStyle={styles.flexStyle}
           />
           <IPayButton
@@ -73,7 +73,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
-            btnText={'COMMON.HOME'}
+            btnText="COMMON.HOME"
             btnStyle={styles.flexStyle}
           />
         </IPayView>

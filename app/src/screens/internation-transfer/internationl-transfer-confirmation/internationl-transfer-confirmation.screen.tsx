@@ -135,7 +135,7 @@ const InternationalTransferConfirmation: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={'INTERNATIONAL_TRANSFER.TRANSFER_CONFIRMATION'} />
+      <IPayHeader backBtn applyFlex title="INTERNATIONAL_TRANSFER.TRANSFER_CONFIRMATION" />
       <IPayView style={styles.container}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayLinearGradientView style={styles.gradientView} gradientColors={contentViewBg}>
@@ -253,7 +253,7 @@ const InternationalTransferConfirmation: React.FC = () => {
 
       <IPayBottomSheet
         testID="promo-code-bottom-sheet"
-        heading={'INTERNATIONAL_TRANSFER.PROMO_CODE'}
+        heading="INTERNATIONAL_TRANSFER.PROMO_CODE"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -270,7 +270,7 @@ const InternationalTransferConfirmation: React.FC = () => {
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
                 testID="promo_code-input"
-                label={'INTERNATIONAL_TRANSFER.PROMO_CODE'}
+                label="INTERNATIONAL_TRANSFER.PROMO_CODE"
                 containerStyle={styles.inputContainerStyle}
                 inputStyle={styles.inputStyle}
                 showRightIcon
@@ -302,7 +302,7 @@ const InternationalTransferConfirmation: React.FC = () => {
       </IPayBottomSheet>
       <IPayBottomSheet
         testID="otp-bottom-sheet"
-        heading={'LOCAL_TRANSFER.TRANSFER'}
+        heading="LOCAL_TRANSFER.TRANSFER"
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '99%']}
@@ -321,7 +321,7 @@ const InternationalTransferConfirmation: React.FC = () => {
 
       <IPayBottomSheet
         testID="help-center-bottom-sheet"
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

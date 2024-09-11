@@ -81,7 +81,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={'CARD_OPTIONS.PRINT_CARD'} backBtn applyFlex />
+      <IPayHeader title="CARD_OPTIONS.PRINT_CARD" backBtn applyFlex />
       <IPayView style={styles.contentContainer}>
         <IPayCardDetails
           containerStyle={styles.zeroMargin}
@@ -90,12 +90,12 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           carHolderName={name}
           cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
         />
-        <IPayFootnoteText text={'REPLACE_CARD.CHOOSE_SHIPPING_ADDRESS'} style={styles.chooseAddressText} />
+        <IPayFootnoteText text="REPLACE_CARD.CHOOSE_SHIPPING_ADDRESS" style={styles.chooseAddressText} />
         <IPayList
           containerStyle={styles.countryButtonStyle}
           textStyle={[styles.titleStyle, styles.textGray]}
           subTextStyle={{ ...styles.subTextStyle, ...styles.textGray }}
-          title={'REPLACE_CARD.COUNTRY'}
+          title="REPLACE_CARD.COUNTRY"
           isShowSubTitle
           subTitle={COUNTRY}
         />
@@ -104,7 +104,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           containerStyle={styles.cityDistrict}
           textStyle={styles.titleStyle}
           subTextStyle={styles.subTextStyle}
-          title={'REPLACE_CARD.CITY_NAME'}
+          title="REPLACE_CARD.CITY_NAME"
           isShowSubTitle
           subTitle={selectedCity}
           isShowIcon
@@ -114,7 +114,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           containerStyle={styles.cityDistrict}
           textStyle={styles.titleStyle}
           subTextStyle={styles.subTextStyle}
-          title={'REPLACE_CARD.DISTRICT'}
+          title="REPLACE_CARD.DISTRICT"
           isShowSubTitle
           subTitle={DISTRICT}
         />
@@ -123,7 +123,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
             <IPayView style={styles.termsChildContainer}>
               <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-              <IPayFootnoteText style={styles.termText} text={'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
+              <IPayFootnoteText style={styles.termText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
               <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
             </IPayView>
           </IPayPressable>
@@ -132,14 +132,14 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
             large
             btnIconsDisabled
             btnType={buttonVariants.PRIMARY}
-            btnText={'COMMON.NEXT'}
+            btnText="COMMON.NEXT"
           />
         </IPayView>
       </IPayView>
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
       <IPayBottomSheet
         noGradient
-        heading={'REPLACE_CARD.SELECT_CITY'}
+        heading="REPLACE_CARD.SELECT_CITY"
         enablePanDownToClose
         simpleHeader
         cancelBnt

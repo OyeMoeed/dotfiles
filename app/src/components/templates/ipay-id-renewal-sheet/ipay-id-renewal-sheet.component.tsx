@@ -178,7 +178,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   return (
     <>
       <IPayPortalBottomSheet
-        heading={'ID_RENEWAL.TITLE'}
+        heading="ID_RENEWAL.TITLE"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={customSnapPoints}
         isVisible={isIdRenewalSheetVisible}
@@ -237,7 +237,7 @@ const IPayIdRenewalSheet: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayPortalBottomSheet
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         onCloseBottomSheet={resetBottomSheet}
         customSnapPoint={['50%', '75%', '95%']}
         isVisible={isHelpBottomSheetVisible}

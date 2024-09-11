@@ -314,7 +314,7 @@ const CardsScreen: React.FC = () => {
             <IPayNoResult
               testID="no-result"
               textColor={colors.primary.primary800}
-              message={'CARDS.YOU_DO_NOT_HAVE_CARD'}
+              message="CARDS.YOU_DO_NOT_HAVE_CARD"
               showEmptyBox
             />
             <IPayButton
@@ -374,7 +374,7 @@ const CardsScreen: React.FC = () => {
       </IPayView>
       {renderCardsCurrentState()}
       <IPayPortalBottomSheet
-        heading={'CARD_OPTIONS.CARD_DETAILS'}
+        heading="CARD_OPTIONS.CARD_DETAILS"
         enablePanDownToClose
         simpleBar
         bold
@@ -400,7 +400,7 @@ const CardsScreen: React.FC = () => {
 
       <IPayBottomSheet
         ref={cardDetailsSheetRef}
-        heading={'CARDS.CARD_DETAILS'}
+        heading="CARDS.CARD_DETAILS"
         customSnapPoint={['1%', '60%']}
         onCloseBottomSheet={onCloseCardSheet}
         simpleBar
@@ -413,7 +413,7 @@ const CardsScreen: React.FC = () => {
         <IPayCardDetails cardDetails={cardDetails} />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={'CARD_ISSUE.ISSUE_NEW_CARD'}
+        heading="CARD_ISSUE.ISSUE_NEW_CARD"
         onCloseBottomSheet={closeCardSheet}
         customSnapPoint={SNAP_POINTS.MID_MEDUIM}
         ref={cardSheetRef}

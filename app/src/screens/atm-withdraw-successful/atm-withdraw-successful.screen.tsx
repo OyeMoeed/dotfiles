@@ -99,7 +99,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
       >
         <IPaySuccess
           style={styles.zeroFlex}
-          headingText={'ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY'}
+          headingText="ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY"
           subHeadingText={`${route?.params?.amount} ${localizationText.COMMON.SAR}`}
           subHeadingTextStyle={styles.subHeadingTextStyle}
         />

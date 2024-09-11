@@ -85,7 +85,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
     <IPayView testID={testID} style={[styles.boxContainer, style]}>
       {isOverPaid && (
         <IPayView style={styles.topInfoWrapper}>
-          <IPayCaption2Text color={colors.natural.natural900} text={'NEW_SADAD_BILLS.OVERPAID_BY'} />
+          <IPayCaption2Text color={colors.natural.natural900} text="NEW_SADAD_BILLS.OVERPAID_BY" />
           <IPayCaption2Text
             color={colors.natural.natural900}
             regular={false}
@@ -135,7 +135,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
       />
       {showAmountToPay && (
         <IPayView style={styles.amountToBePaidWrapper}>
-          <IPayFootnoteText color={colors.natural.natural700} text={'NEW_SADAD_BILLS.AMOUNT_TO_BE_PAID'} />
+          <IPayFootnoteText color={colors.natural.natural700} text="NEW_SADAD_BILLS.AMOUNT_TO_BE_PAID" />
           <IPayView style={styles.amountWrapper}>
             <IPayInput
               style={styles.amountInput}

@@ -347,7 +347,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
       <IPayHeader
         backBtn
         applyFlex
-        title={'SADAD.SADAD_BILLS'}
+        title="SADAD.SADAD_BILLS"
         titleStyle={styles.screenTitle}
         rightComponent={
           <IPayButton
@@ -410,7 +410,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
             iconColor={colors.primary.primary800}
             iconSize={40}
             iconViewStyles={styles.noResultIconView}
-            message={'SADAD.NO_ACTIVE_BILLS'}
+            message="SADAD.NO_ACTIVE_BILLS"
           />
           <IPayButton
             medium

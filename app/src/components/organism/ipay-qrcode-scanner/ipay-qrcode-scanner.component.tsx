@@ -68,8 +68,8 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
               onPress: retryPermission,
             }}
             variant={alertVariant.DESTRUCTIVE}
-            title={'PERMISSIONS.PERMISSION_DENIED'}
-            message={'PERMISSIONS.ENABLE_CAMERA_ACCESS'}
+            title="PERMISSIONS.PERMISSION_DENIED"
+            message="PERMISSIONS.ENABLE_CAMERA_ACCESS"
           />
         );
     }

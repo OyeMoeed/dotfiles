@@ -149,7 +149,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={'TRANSFER_SUMMARY.CHIP_TITLE'}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
               headingStyles={styles.chipColors}
             />
           </IPayView>

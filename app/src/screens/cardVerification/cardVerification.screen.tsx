@@ -2,7 +2,6 @@ import { IPayView, IPayWebView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -18,7 +17,6 @@ import cardVerificationStyles from './cardVerification.styles';
 
 const CardVerificationScreen: React.FC = () => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = cardVerificationStyles(colors);
 
   const route: any = useRoute();
@@ -95,7 +93,7 @@ const CardVerificationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={'TOP_UP.VERIFICATION_TITLE'} applyFlex />
+      <IPayHeader backBtn title="TOP_UP.VERIFICATION_TITLE" applyFlex />
       <IPayView style={styles.container}>
         {redirectUrl && showWebView && (
           <IPayWebView source={{ uri: redirectUrl }} onNavigationStateChange={onNavigationStateChange} />

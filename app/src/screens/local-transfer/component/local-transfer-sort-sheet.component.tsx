@@ -41,7 +41,7 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
 
   return (
     <IPayBottomSheet
-      heading={'COMMON.SORT_BY'}
+      heading="COMMON.SORT_BY"
       enablePanDownToClose
       cancelBnt
       bold
@@ -51,7 +51,7 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
       bgGradientColors={colors.sheetGradientPrimary10}
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
-      doneText={'COMMON.RESET'}
+      doneText="COMMON.RESET"
       onDone={() => setSortBy(BeneficiaryTypes.ACTIVE)}
     >
       <IPayFlatlist

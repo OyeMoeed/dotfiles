@@ -12,8 +12,8 @@ const IPayRenewalIdAlert: FC<Pick<IPayIdRenewalSheetProps, 'visible' | 'onClose'
     <IPayAlert
       visible={visible}
       onClose={onClose}
-      title={'ID_RENEWAL.THANK_YOU'}
-      message={'ID_RENEWAL.ID_UPDATED'}
+      title="ID_RENEWAL.THANK_YOU"
+      message="ID_RENEWAL.ID_UPDATED"
       closeOnTouchOutside
       showIcon={false}
       icon={<IPayIcon icon={icons.tick_square1} size={64} />}

@@ -72,7 +72,7 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
             />
             {isSpecialOffer && (
               <IPayView style={styles.specialOfferContainer}>
-                <IPayCaption2Text color={colors.secondary.secondary500} regular text={'OFFERS.SPECIAL_OFFER'} />
+                <IPayCaption2Text color={colors.secondary.secondary500} regular text="OFFERS.SPECIAL_OFFER" />
               </IPayView>
             )}
           </IPayView>

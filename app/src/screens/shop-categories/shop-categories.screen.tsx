@@ -49,7 +49,7 @@ const ShopCategoriesScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={'SHOP.TITLE'} applyFlex />
+      <IPayHeader backBtn title="SHOP.TITLE" applyFlex />
       <IPayTabs
         tabs={CATEGORY_TABS}
         scrollable
@@ -61,7 +61,7 @@ const ShopCategoriesScreen: React.FC = () => {
         <IPayTextInput
           text={search}
           onChangeText={handleSearch}
-          placeholder={'COMMON.SEARCH'}
+          placeholder="COMMON.SEARCH"
           rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
           simpleInput
           containerStyle={styles.background}
@@ -75,7 +75,7 @@ const ShopCategoriesScreen: React.FC = () => {
           <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={onCardPress} />
         ) : (
           <IPayView style={styles.noResultContainer}>
-            <IPayNoResult showEmptyBox message={'SHOP.NO_RESULT'} />
+            <IPayNoResult showEmptyBox message="SHOP.NO_RESULT" />
           </IPayView>
         )}
       </IPayView>

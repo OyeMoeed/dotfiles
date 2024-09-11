@@ -83,7 +83,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={'HOME.ATM_WITHDRAWALS} titleStyle={styles.titleStyle'} applyFlex />
+      <IPayHeader backBtn title="HOME.ATM_WITHDRAWALS} titleStyle={styles.titleStyle" applyFlex />
 
       <IPayView style={styles.container}>
         <IPayView style={styles.accountBalanceView}>
@@ -153,7 +153,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
       <IPayBottomSheet
         cancelButtonStyle={styles.cancelButtonStyle}
         noGradient
-        heading={'ATM_WITHDRAWAL.WITHDRAW_TUTORIAL'}
+        heading="ATM_WITHDRAWAL.WITHDRAW_TUTORIAL"
         customSnapPoint={['20%', '85%']}
         ref={withdrawTutorialsRef}
         enablePanDownToClose
@@ -167,7 +167,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
 
       <IPayBottomSheet
         noGradient
-        heading={'TOP_UP.ADD_MONEY_USING'}
+        heading="TOP_UP.ADD_MONEY_USING"
         onCloseBottomSheet={closeBottomSheetTopUp}
         customSnapPoint={Platform.OS === 'android' ? ['20%', '45%'] : ['20%', '56%']}
         ref={topUpSelectionRef}

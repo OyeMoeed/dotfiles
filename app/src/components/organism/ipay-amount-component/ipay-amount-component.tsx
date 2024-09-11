@@ -268,7 +268,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     <IPayView style={styles.safeAreaView}>
       {currentState !== TopUpStates.NEW_CARD ? (
         <>
-          <IPayAmountHeader title={'TOP_UP.CARD_TITLE'} channel={channel} />
+          <IPayAmountHeader title="TOP_UP.CARD_TITLE" channel={channel} />
           <IPayRemainingAccountBalance
             currentState={currentState}
             topUpAmount={topUpAmount}

@@ -101,7 +101,7 @@ const OffersListScreen: React.FC = () => {
   return (
     <IPaySafeAreaView style={styles.backgroundColor}>
       <IPayHeader
-        title={'OFFERS.OFFERS_TITLE'}
+        title="OFFERS.OFFERS_TITLE"
         backBtn
         applyFlex
         rightComponent={
@@ -143,13 +143,13 @@ const OffersListScreen: React.FC = () => {
         />
       </IPayView>
       <IPayFilterBottomSheet
-        heading={'TRANSACTION_HISTORY.FILTER'}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={offerFilterDefaultValues}
         ref={filterRef}
         onSubmit={handleSubmit}
         filters={offerFilterData}
         inputStyle={styles.inputContainer}
-        doneText={'TRANSACTION_HISTORY.CLEAR_FILTER'}
+        doneText="TRANSACTION_HISTORY.CLEAR_FILTER"
       />
     </IPaySafeAreaView>
   );

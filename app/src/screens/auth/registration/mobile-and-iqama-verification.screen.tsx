@@ -84,15 +84,12 @@ const MobileAndIqamaVerification: React.FC = () => {
                     <Login />
                   </IPayView>
                   <IPayView style={styles.headingView}>
-                    <IPayPageDescriptionText
-                      heading={'COMMON.ENTER_INFORMATION'}
-                      text="COMMON.ENTER_VALID_ID_OR_IQAMA"
-                    />
+                    <IPayPageDescriptionText heading="COMMON.ENTER_INFORMATION" text="COMMON.ENTER_VALID_ID_OR_IQAMA" />
                   </IPayView>
                   <IPayView style={styles.inputFieldsContainer}>
                     <IPayAnimatedTextInput
                       name="mobileNumber"
-                      label={'PROFILE.MOBILE_NUMBER'}
+                      label="PROFILE.MOBILE_NUMBER"
                       editable
                       keyboardType="phone-pad"
                       maxLength={constants.MOBILE_NUMBER_LENGTH}
@@ -104,7 +101,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                       <IPayAnimatedTextInput
                         ref={iqamaIdRef}
                         name="iqamaId"
-                        label={'COMMON.ID_IQAMA'}
+                        label="COMMON.ID_IQAMA"
                         editable
                         keyboardType="number-pad"
                         maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
@@ -141,7 +138,7 @@ const MobileAndIqamaVerification: React.FC = () => {
             )}
             <IPayPortalBottomSheet
               noGradient
-              heading={'COMMON.LOGIN'}
+              heading="COMMON.LOGIN"
               enablePanDownToClose
               simpleBar
               customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
@@ -167,7 +164,7 @@ const MobileAndIqamaVerification: React.FC = () => {
             </IPayPortalBottomSheet>
             {isLoading && <IPaySpinner />}
             <IPayBottomSheet
-              heading={'FORGOT_PASSCODE.HELP_CENTER'}
+              heading="FORGOT_PASSCODE.HELP_CENTER"
               enablePanDownToClose
               simpleBar
               backBtn

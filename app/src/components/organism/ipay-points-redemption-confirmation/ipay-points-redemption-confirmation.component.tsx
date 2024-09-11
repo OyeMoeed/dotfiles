@@ -137,7 +137,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPaySafeAreaView style={styles.container}>
-        <IPayHeader title={'TOP_UP.REDEEM_POINTS'} backBtn applyFlex />
+        <IPayHeader title="TOP_UP.REDEEM_POINTS" backBtn applyFlex />
 
         <IPayView style={styles.redemptionConfirmDetail}>
           <IPayPointRedemptionCard
@@ -203,7 +203,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPaySafeAreaView>
       <IPayPortalBottomSheet
-        heading={'TOP_UP.REDEEM_POINTS'}
+        heading="TOP_UP.REDEEM_POINTS"
         enablePanDownToClose
         simpleBar
         bold
@@ -228,7 +228,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPayPortalBottomSheet>
       <IPayBottomSheet
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

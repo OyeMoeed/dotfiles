@@ -14,7 +14,6 @@ import billPaymentStyles from './traffic-violation-payment-refund.styles';
 
 const TrafficViolationPaymentRefundScreen: React.FC = () => {
   const {
-    localizationText,
     billPayDetailes,
     extraDetails,
     balanceData,
@@ -37,7 +36,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
   const styles = billPaymentStyles();
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={'TRAFFIC_VIOLATION.TITLE'} backBtn applyFlex />
+      <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
@@ -56,7 +55,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet
-        heading={'PAY_BILL.HEADER'}
+        heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         backBtn
@@ -78,7 +77,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

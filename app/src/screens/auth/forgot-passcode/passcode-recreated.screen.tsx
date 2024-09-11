@@ -1,7 +1,6 @@
 import { IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -10,7 +9,6 @@ import genratedStyles from '../registration-successful/registration-successful.s
 const PasscodeRecreatedSuccessfuly: React.FC = () => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
-  const localizationText = useLocalization();
 
   const handleDonePress = () => {
     goBack();
@@ -23,11 +21,11 @@ const PasscodeRecreatedSuccessfuly: React.FC = () => {
             style={styles.successContainer2}
             iconsStyles={styles.successIcon}
             descriptionStyle={styles.descriptionStyle}
-            headingText={'CHANGE_PIN.PASSCODE_SET'}
-            descriptionText={'FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE'}
+            headingText="CHANGE_PIN.PASSCODE_SET"
+            descriptionText="FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE"
           />
           <IPayView style={styles.buttonContainer}>
-            <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={handleDonePress} />
+            <IPayButton btnType="primary" btnText="COMMON.DONE" large btnIconsDisabled onPress={handleDonePress} />
           </IPayView>
         </IPayView>
       </IPayView>

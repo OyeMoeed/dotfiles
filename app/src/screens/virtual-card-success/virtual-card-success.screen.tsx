@@ -9,10 +9,10 @@ const VirtualCardSuccessScreen = () => {
 
   return (
     <IPayCardSuccess
-      title={'CARD_OPTIONS.ISSUE_CARD'}
+      title="CARD_OPTIONS.ISSUE_CARD"
       subTitle={isIosOS ? localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY : ''}
       isAddAppleWallet={isIosOS}
-      goHomeText={'COMMON.HOME'}
+      goHomeText="COMMON.HOME"
       handleHomePress={() => {
         navigate(ScreenNames.HOME);
       }}

@@ -88,7 +88,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={'CARD_OPTIONS.PRINT_CARD'} backBtn applyFlex />
+      <IPayHeader title="CARD_OPTIONS.PRINT_CARD" backBtn applyFlex />
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance
           showRemainingAmount
@@ -101,12 +101,12 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
             <IPayView style={styles.contentTopMargin}>
               <IPayFootnoteText text="CARDS.CARD_DETAILS" color={colors.natural.natural500} style={styles.header} />
               <IPayList
-                title={'REPLACE_CARD.HOLDERS_NAME'}
+                title="REPLACE_CARD.HOLDERS_NAME"
                 isShowDetail
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
               />
               <IPayList
-                title={'CARDS.CARD_TYPE'}
+                title="CARDS.CARD_TYPE"
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
               />
 
@@ -116,7 +116,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 style={styles.footNoteTextStyle}
               />
               <IPayList
-                title={'REPLACE_CARD.ADDRESS'}
+                title="REPLACE_CARD.ADDRESS"
                 rightText={
                   <IPayPressable onPress={onClose} style={styles.addressStyle}>
                     <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
@@ -130,7 +130,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 style={styles.footNoteTextStyle}
               />
               <IPayList
-                title={'REPLACE_CARD.REPLACEMENT_FEE'}
+                title="REPLACE_CARD.REPLACEMENT_FEE"
                 rightText={
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
@@ -141,7 +141,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               />
 
               <IPayList
-                title={'REPLACE_CARD.SHIPPING_FEE'}
+                title="REPLACE_CARD.SHIPPING_FEE"
                 rightText={
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
@@ -162,7 +162,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
             </IPayPressable>
 
             <IPayList
-              title={'REPLACE_CARD.TOTAL_FEE'}
+              title="REPLACE_CARD.TOTAL_FEE"
               rightText={
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
@@ -182,7 +182,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayBottomSheet
-        heading={'REPLACE_CARD.REPLACE_PHYSICAL_CARD'}
+        heading="REPLACE_CARD.REPLACE_PHYSICAL_CARD"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -197,7 +197,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

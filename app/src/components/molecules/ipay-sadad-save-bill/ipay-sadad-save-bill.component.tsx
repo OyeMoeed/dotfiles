@@ -45,7 +45,7 @@ const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
       </IPayView>
       {saveBillToggle && (
         <IPayAnimatedTextInput
-          label={'NEW_SADAD_BILLS.BILL_NICK_NAME'}
+          label="NEW_SADAD_BILLS.BILL_NICK_NAME"
           editable
           name={billInputName}
           containerStyle={styles.inputContainerStyle}

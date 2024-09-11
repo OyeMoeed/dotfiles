@@ -240,7 +240,7 @@ const MoiPaymentScreen: React.FC = () => {
                   backBtn
                   onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
                   applyFlex
-                  title={'BILL_PAYMENTS.MOI_PAYMENT'}
+                  title="BILL_PAYMENTS.MOI_PAYMENT"
                   titleStyle={styles.screenTitle}
                 />
                 <IPayView style={styles.container}>
@@ -328,7 +328,7 @@ const MoiPaymentScreen: React.FC = () => {
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
-              heading={'BILL_PAYMENTS.MOI_BILLS'}
+              heading="BILL_PAYMENTS.MOI_BILLS"
               customSnapPoint={['1%', isAndroidOS ? '43%' : '44%']}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
@@ -340,8 +340,8 @@ const MoiPaymentScreen: React.FC = () => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayContentNotFound
-                title={'BILL_PAYMENTS.NO_BILLS_WERE_FOUND'}
-                message={'BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE'}
+                title="BILL_PAYMENTS.NO_BILLS_WERE_FOUND"
+                message="BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE"
                 btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}

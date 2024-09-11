@@ -15,7 +15,7 @@ const Delink: FC<DelinkProps> = ({ onPress }) => {
   return (
     <IPayPressable onPress={onPress} style={styles.iconContainer}>
       <IPayIcon icon={icons.logout} size={14} color={colors.primary.primary500} />
-      <IPaySubHeadlineText text={'COMMON.DELINK_ALERT.DELINK'} regular style={styles.back} />
+      <IPaySubHeadlineText text="COMMON.DELINK_ALERT.DELINK" regular style={styles.back} />
     </IPayPressable>
   );
 };

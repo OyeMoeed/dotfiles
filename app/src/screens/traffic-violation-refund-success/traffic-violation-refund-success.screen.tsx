@@ -27,7 +27,7 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={'TRAFFIC_VIOLATION.REFUND_SUCCESS'}
+          headingText="TRAFFIC_VIOLATION.REFUND_SUCCESS"
           descriptionText={`${TOTAL_AMOUNT} ${localizationText.COMMON.SAR}`}
           descriptionStyle={styles.boldStyles}
         />
@@ -38,7 +38,7 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
           textElement={
             <IPayCaption1Text
               color={colors.secondary.secondary500}
-              text={'TRAFFIC_VIOLATION.PROCESS_TAKE_BUSINESS_HOURS'}
+              text="TRAFFIC_VIOLATION.PROCESS_TAKE_BUSINESS_HOURS"
             />
           }
         />
@@ -67,14 +67,14 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
                 onPress={payOtherViolation}
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={'TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION'}
+                btnText="TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION"
               />
 
               <IPayButton
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                btnText={'COMMON.SHARE'}
+                btnText="COMMON.SHARE"
               />
             </IPayView>
           ) : (
@@ -83,7 +83,7 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
               onPress={payOtherViolation}
               btnType={buttonVariants.LINK_BUTTON}
               leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-              btnText={'TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION'}
+              btnText="TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION"
             />
           )}
           <IPayButton
@@ -91,7 +91,7 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
             large
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.natural.natural0} />}
-            btnText={'COMMON.HOME'}
+            btnText="COMMON.HOME"
           />
         </IPayView>
       </IPayView>

@@ -88,7 +88,7 @@ const PlayStationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={'SHOP.PLAYSTATION'} applyFlex />
+      <IPayHeader backBtn title="SHOP.PLAYSTATION" applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.searchRow}>
           <IPayTextInput
@@ -110,7 +110,7 @@ const PlayStationScreen: React.FC = () => {
         <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={sortedData} onPricePress={onPricePress} />
       </IPayView>
       <IPayBottomSheet
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         cancelBnt

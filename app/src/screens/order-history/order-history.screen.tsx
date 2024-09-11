@@ -4,7 +4,6 @@ import { IPayChip, IPayHeader, IPayNoResult, IPayOrdersCard } from '@app/compone
 import { IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
@@ -14,7 +13,6 @@ const AllOrdersScreen: React.FC = () => {
   const { colors } = useTheme();
   const { allOrders, orderHistoryFilterDefaultValues } = useConstantData();
   const styles = allOrdersStyle(colors);
-  const localizationText = useLocalization();
   const [filters, setFilters] = useState<Array<string>>([]);
 
   const filterRef = useRef<bottomSheetTypes>(null);
@@ -42,7 +40,7 @@ const AllOrdersScreen: React.FC = () => {
     <IPaySafeAreaView>
       <IPayHeader
         backBtn
-        title={'SHOP.TITLE'}
+        title="SHOP.TITLE"
         applyFlex
         rightComponent={
           <IPayPressable onPress={handleFiltersShow}>
@@ -77,12 +75,12 @@ const AllOrdersScreen: React.FC = () => {
         {allOrders && allOrders.length > 0 ? (
           <IPayOrdersCard data={allOrders} />
         ) : (
-          <IPayNoResult showEmptyBox message={'SHOP.NO_ORDER'} />
+          <IPayNoResult showEmptyBox message="SHOP.NO_ORDER" />
         )}
       </IPayView>
 
       <IPayFilterBottomSheet
-        heading={'TRANSACTION_HISTORY.FILTER'}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={orderHistoryFilterDefaultValues}
         showDateFilter
         ref={filterRef}

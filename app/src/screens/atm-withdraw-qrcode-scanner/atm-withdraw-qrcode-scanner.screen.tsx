@@ -85,7 +85,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
-        title={'PERMISSIONS.SCAN_QR_CODE'}
+        title="PERMISSIONS.SCAN_QR_CODE"
         backBtn
         applyFlex
         rightComponent={
@@ -104,7 +104,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}
-          title={'ATM.CODE_SCANNED_SUCCESSFULLY'}
+          title="ATM.CODE_SCANNED_SUCCESSFULLY"
           message={scannedCode}
         />
       )}

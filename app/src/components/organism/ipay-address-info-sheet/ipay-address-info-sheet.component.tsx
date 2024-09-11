@@ -1,5 +1,4 @@
 import { IPayCaption1Text, IPayHeadlineText, IPayImage, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayBottomSheet } from '@components/organism/index';
 import React, { forwardRef, useImperativeHandle, useRef } from 'react';
@@ -10,7 +9,6 @@ import ipayAddressInfoSheetStyles from './ipay-address-info-sheet.style';
 import { IPayAddressInfoSheetProps } from './ipay-address-info-sheet.interface';
 
 const IPayAddressInfoSheet: React.FC<IPayAddressInfoSheetProps> = forwardRef((_, ref) => {
-  const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = ipayAddressInfoSheetStyles();
   const ipayAddressInfoSheetRef = useRef<BottomSheetModal>(null);
@@ -26,7 +24,7 @@ const IPayAddressInfoSheet: React.FC<IPayAddressInfoSheetProps> = forwardRef((_,
   return (
     <IPayBottomSheet
       noGradient
-      heading={'COMMON.ADDRESS_INFO'}
+      heading="COMMON.ADDRESS_INFO"
       enablePanDownToClose
       simpleBar
       customSnapPoint={['1%', isIosOS ? '34%' : '29%']}
@@ -34,11 +32,11 @@ const IPayAddressInfoSheet: React.FC<IPayAddressInfoSheetProps> = forwardRef((_,
     >
       <IPayView style={styles.containerStyle}>
         <IPayView style={styles.contentContainer}>
-          <IPayHeadlineText color={colors.primary.primary900} regular={false} text={'REPLACE_CARD.SHIPPING_ADDRESS'} />
+          <IPayHeadlineText color={colors.primary.primary900} regular={false} text="REPLACE_CARD.SHIPPING_ADDRESS" />
           <IPayCaption1Text
             style={styles.descriptionTextStyle}
             color={colors.natural.natural900}
-            text={'PHYSICAL_CARD.CUORIER_COMPANY_WILL'}
+            text="PHYSICAL_CARD.CUORIER_COMPANY_WILL"
           />
         </IPayView>
         <IPayView style={styles.iconContainer}>

@@ -47,7 +47,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
       <IPayAnimatedTextInput
         testID="account-input"
         name={companyInputName}
-        label={'NEW_SADAD_BILLS.COMPANY_NAME'}
+        label="NEW_SADAD_BILLS.COMPANY_NAME"
         editable={false}
         containerStyle={styles.inputContainerStyle}
         showRightIcon
@@ -58,7 +58,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
       <IPayAnimatedTextInput
         testID="service-input"
         name={serviceInputName}
-        label={'NEW_SADAD_BILLS.SERVICE_TYPE'}
+        label="NEW_SADAD_BILLS.SERVICE_TYPE"
         editable={false}
         showRightIcon
         containerStyle={[styles.inputContainerStyle, !isCompanyValue && styles.greyInputStyle]}

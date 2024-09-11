@@ -60,17 +60,17 @@ const TopUpIBAN = () => {
 
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
-      <IPayHeader testID="header" title={'COMMON.TOP_UP'} backBtn applyFlex />
+      <IPayHeader testID="header" title="COMMON.TOP_UP" backBtn applyFlex />
       <IPayView testID="iban-view" style={styles.container}>
         <IPayList
-          title={'TOP_UP.BANK_TRANSFER_TO_MY_WALLET'}
+          title="TOP_UP.BANK_TRANSFER_TO_MY_WALLET"
           leftIcon={<IPayIcon icon={icons.bank} size={moderateScale(18)} color={colors.primary.primary900} />}
           isShowLeftIcon
           containerStyle={styles.containerStyle}
           textStyle={styles.textStyle}
         />
         <IPayPageDescriptionText
-          heading={'TOP_UP.USE_IBAN_NUMBER'}
+          heading="TOP_UP.USE_IBAN_NUMBER"
           text="TOP_UP.TO_ADD_BALANCE_DESCRIPTION"
           style={styles.pageDescriptionStyle}
           alignTextLeft
@@ -79,7 +79,7 @@ const TopUpIBAN = () => {
         <IPayList
           testID="name-list"
           onPressIcon={() => handleClickOnCopy(1, username)}
-          title={'COMMON.NAME'}
+          title="COMMON.NAME"
           isShowSubTitle
           textStyle={styles.textStyle}
           subTitle={username}
@@ -91,7 +91,7 @@ const TopUpIBAN = () => {
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2, iban.toString())}
-          title={'COMMON.IBAN'}
+          title="COMMON.IBAN"
           isShowSubTitle
           textStyle={styles.textStyle}
           subTitle={iban}
@@ -103,7 +103,7 @@ const TopUpIBAN = () => {
         />
         <IPayList
           leftIconContainerStyles={styles.leftIconContainerStyles}
-          title={'TOP_UP.TRANSFER_DURATION_DESCRIPTION'}
+          title="TOP_UP.TRANSFER_DURATION_DESCRIPTION"
           leftIcon={<IPayIcon icon={icons.clock_natural_duotone} size={24} color={colors.primary.primary900} />}
           isShowLeftIcon
           containerStyle={styles.informStyle}

@@ -3,7 +3,6 @@ import { IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import { IPayPasscode } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import icons from '@assets/icons/index';
@@ -13,7 +12,6 @@ import passcodeStyles from './set-passcode.style';
 
 const SetPasscode: React.FC = () => {
   const styles = passcodeStyles();
-  const localizationText = useLocalization();
 
   const handleDigitPress = (newCode: string) => {
     navigate(screenNames.CONFIRM_PASSCODE, { passcode: newCode });
@@ -35,7 +33,7 @@ const SetPasscode: React.FC = () => {
           <icons.bulkLock width={scale(40)} height={verticalScale(40)} />
         </IPayView>
         <IPayView style={styles.headingView}>
-          <IPayPageDescriptionText heading={'CHANGE_PIN.CREATE_A_PASSCODE'} text={'COMMON.CREATE_PASSCODE_DESC'} />
+          <IPayPageDescriptionText heading="CHANGE_PIN.CREATE_A_PASSCODE" text="COMMON.CREATE_PASSCODE_DESC" />
         </IPayView>
         <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />
       </IPayView>

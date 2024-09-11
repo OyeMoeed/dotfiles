@@ -40,8 +40,8 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
     showToast && (
       <IPayToast
         testID="hideBalanceToast"
-        title={'COMMON.INCORRECT_IQAMA'}
-        subTitle={'COMMON.VERIFY_IQAMA'}
+        title="COMMON.INCORRECT_IQAMA"
+        subTitle="COMMON.VERIFY_IQAMA"
         isShowSubTitle
         isShowButton
         borderColor={colors.primary.primary700}
@@ -64,15 +64,15 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
 
             <IPayView>
               <IPayPageDescriptionText
-                heading={'FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING'}
-                text={'FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE'}
+                heading="FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING"
+                text="FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE"
               />
             </IPayView>
 
             <IPayView style={styles.inputFieldsContainer}>
               <IPayView style={styles.inputTextView}>
                 <IPayAnimatedTextInput
-                  label={'COMMON.ID_IQAMA'}
+                  label="COMMON.ID_IQAMA"
                   editable
                   isError={!!passcodeErrorMsg}
                   assistiveText={passcodeErrorMsg}
@@ -85,7 +85,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
             <IPayButton
               onPress={onPressConfirm}
               btnType="primary"
-              btnText={'COMMON.NEXT'}
+              btnText="COMMON.NEXT"
               large
               rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
             />
@@ -93,7 +93,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
             <IPayButton
               onPress={() => navigate(screenNames.REGISTRATION_SUCCESSFUL)}
               btnType="link-button"
-              btnText={'COMMON.NEED_HELP'}
+              btnText="COMMON.NEED_HELP"
               large
               btnStyle={styles.needHelpBtn}
               rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} />}

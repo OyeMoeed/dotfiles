@@ -46,7 +46,7 @@ const ExampleFormProviderUsage = () => {
               {/* This is an Example of TextInput With RHF( React Hook Form Integrated ) */}
               <IPayAnimatedTextInput
                 name="mobileNumber"
-                label={'PROFILE.MOBILE_NUMBER'}
+                label="PROFILE.MOBILE_NUMBER"
                 editable
                 keyboardType="phone-pad"
                 maxLength={constants.MOBILE_NUMBER_LENGTH}
@@ -55,7 +55,7 @@ const ExampleFormProviderUsage = () => {
 
               <IPayAnimatedTextInput
                 name="iqamaId"
-                label={'COMMON.ID_IQAMA'}
+                label="COMMON.ID_IQAMA"
                 editable
                 keyboardType="number-pad"
                 maxLength={constants.IQAMA_ID_NUMBER_LENGTH}

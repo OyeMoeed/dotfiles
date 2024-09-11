@@ -6,7 +6,6 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
@@ -16,7 +15,6 @@ import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
 const MoiPaymentConfirmationScreen: React.FC = () => {
   const styles = moiPaymentConfirmationStyls();
-  const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
@@ -43,7 +41,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={'BILL_PAYMENTS.MOI_PAYMENT'} titleStyle={styles.screenTitle} />
+      <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.MOI_PAYMENT" titleStyle={styles.screenTitle} />
       <IPayView style={styles.container}>
         <IPayAccountBalance balance={availableBalance} availableBalance={currentBalance} showRemainingAmount />
         <IPayBillDetailsOption
@@ -61,7 +59,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={'BILL_PAYMENTS.NEW_MOI_BILL'}
+        heading="BILL_PAYMENTS.NEW_MOI_BILL"
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '97%']}
@@ -86,7 +84,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={'FORGOT_PASSCODE.HELP_CENTER'}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

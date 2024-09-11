@@ -115,10 +115,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
 
       <IPayView style={styles.refundFooterView}>
         <IPayView style={styles.refundCautionView}>
-          <IPayChip
-            textValue={'TRANSACTION_HISTORY.AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT'}
-            variant={States.WARNING}
-          />
+          <IPayChip textValue="TRANSACTION_HISTORY.AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT" variant={States.WARNING} />
         </IPayView>
         <IPayButton
           onPress={onPressRefund}
