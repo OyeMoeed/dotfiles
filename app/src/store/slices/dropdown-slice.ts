@@ -52,9 +52,8 @@ const dropdownSlice = createSlice({
   },
 });
 
-export const selectSelectedValue = (state: RootState, key: string): string => {
-  return state.dropdownReducer.selectedValues[key] || '';
-};
+export const selectSelectedValue = (state: RootState, key: string): string =>
+  state.dropdownReducer.selectedValues[key] || '';
 
 export const { initializeDropdown, hideDropdownSheet, setSelectedType } = dropdownSlice.actions;
 

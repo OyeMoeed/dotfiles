@@ -24,7 +24,7 @@ import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';

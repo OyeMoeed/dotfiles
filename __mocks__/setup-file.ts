@@ -54,7 +54,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => {
   });
 });
 
-jest.mock('@app/network/utilities/device-info-helper');
+jest.mock('@app/network/utilities');
 jest.mock('@network/services/api-call.service');
 jest.mock('@app/store/slices/app-data-slice', () => ({
   setAppData: jest.fn(),

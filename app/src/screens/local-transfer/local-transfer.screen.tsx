@@ -18,8 +18,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
-import { SNAP_POINTS } from '@app/constants/constants';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -34,7 +33,7 @@ import {
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -159,7 +158,7 @@ const LocalTransferScreen: React.FC = () => {
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
     });
   };
 
@@ -177,7 +176,7 @@ const LocalTransferScreen: React.FC = () => {
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
   };

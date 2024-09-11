@@ -1,4 +1,4 @@
-import { inputType } from '@app/utilities/enums.util';
+import { InputType } from '@app/utilities/enums.util';
 import { KeyboardTypeOptions, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -101,7 +101,7 @@ export interface IPaySelectorInputProps {
   /**
    * have two typess for showing phone number and currency field
    */
-  types?: inputType;
+  types?: InputType;
 
   currency?: string;
   /**

@@ -1,6 +1,6 @@
 /**
- * This fucntion is used to get comma seprated number.
- * It expexts a param which can be either number of string and it returns that value in string form.
+ * This function is used to get comma separated number.
+ * It expects a param which can be either number of string and it returns that value in string form.
  * @param {number | string} number
  * @returns {string}
  */
@@ -10,7 +10,7 @@ const commaSeparatedNumber = (number: number | string): string => {
 };
 const formatNumberWithCommas = (value: number | string): string => {
   if (value !== null && value !== undefined) {
-    //accept case where number is 0
+    // accept case where number is 0
     if (typeof value === 'string') {
       return value.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
@@ -26,8 +26,8 @@ const balancePercentage = (monthlySpendingLimit: number, remainingSpendingLimit:
   if (monthlySpendingLimit === 0) {
     return 0;
   }
-  const balancePercentage = (remainingSpendingLimit / monthlySpendingLimit) * 100;
-  return Math.ceil(balancePercentage);
+  const balancePercentageTotal = (remainingSpendingLimit / monthlySpendingLimit) * 100;
+  return Math.ceil(balancePercentageTotal);
 };
 
 export { balancePercentage, commaSeparatedNumber, formatNumberWithCommas, isMultipleOfHundred, removeCommas };

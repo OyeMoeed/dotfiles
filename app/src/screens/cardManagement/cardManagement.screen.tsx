@@ -9,7 +9,7 @@ import React from 'react';
 import cardManagementStyles from './cardManagement.style';
 
 const CardManagementScreen: React.FC = () => {
-  const styles = cardManagementStyles(colors);
+  const styles = cardManagementStyles();
   const localizationText = useLocalization();
 
   return (

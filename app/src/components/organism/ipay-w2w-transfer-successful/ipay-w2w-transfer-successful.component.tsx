@@ -18,7 +18,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import React from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
 import ViewShot from 'react-native-view-shot';

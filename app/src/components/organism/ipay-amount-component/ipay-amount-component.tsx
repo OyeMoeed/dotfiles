@@ -10,7 +10,7 @@ import { ApplePayCheckOutReq } from '@app/network/services/cards-management/appl
 import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
 import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
@@ -18,7 +18,7 @@ import {
   TopUpStates,
   TopupStatus,
   buttonVariants,
-  payChannel,
+  PayChannel,
   spinnerVariant,
 } from '@app/utilities/enums.util';
 
@@ -126,7 +126,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       renderSpinner(false);
 
       navigate(screenNames.TOP_UP, {
-        topupChannel: payChannel.APPLE,
+        topupChannel: PayChannel.APPLE,
         topupStatus: TopupStatus.SUCCESS,
         amount: topUpAmount,
       });
@@ -151,7 +151,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
   const handlePressPay = async () => {
     renderSpinner(true);
-    if (channel === payChannel.APPLE) {
+    if (channel === PayChannel.APPLE) {
       try {
         handlePay();
         return;
@@ -275,7 +275,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             setTopUpAmount={setTopUpAmount}
             chipValue={chipValue}
             walletInfo={walletInfo}
-            payChannelType={payChannel.CARD}
+            payChannelType={PayChannel.CARD}
             openPressExpired={openPressExpired}
             onPressAddCards={addCard}
             handleCardSelect={handleCardObjSelect}
@@ -285,7 +285,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             balanceType="Incoming"
           />
 
-          {channel === payChannel.APPLE ? (
+          {channel === PayChannel.APPLE ? (
             <IPayButton
               large
               btnStyle={[
