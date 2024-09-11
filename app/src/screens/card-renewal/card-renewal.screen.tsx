@@ -148,7 +148,7 @@ const CardRenewalScreen: React.FC = () => {
               large
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.CONFIRM}
+              btnText={'COMMON.CONFIRM'}
             />
           </IPayView>
         </IPayView>

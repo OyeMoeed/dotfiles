@@ -304,7 +304,7 @@ const TransferSummaryScreen: React.FC = () => {
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText={'COMMON.CONFIRM'}
             btnColor={colors.primary.primary500}
             large
             onPress={onSubmit}

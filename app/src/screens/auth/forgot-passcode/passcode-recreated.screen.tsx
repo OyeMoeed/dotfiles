@@ -27,13 +27,7 @@ const PasscodeRecreatedSuccessfuly: React.FC = () => {
             descriptionText={localizationText.FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE}
           />
           <IPayView style={styles.buttonContainer}>
-            <IPayButton
-              btnType="primary"
-              btnText={localizationText.COMMON.DONE}
-              large
-              btnIconsDisabled
-              onPress={handleDonePress}
-            />
+            <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={handleDonePress} />
           </IPayView>
         </IPayView>
       </IPayView>

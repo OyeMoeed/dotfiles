@@ -66,17 +66,11 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
             />
           </IPayView>
           <IPayView style={styles.actionButtons}>
+            <IPayButton medium btnIconsDisabled btnText={'COMMON.CLOSE'} onPress={handleCancel} btnType={'primary'} />
             <IPayButton
               medium
               btnIconsDisabled
-              btnText={localizationText.COMMON.CLOSE}
-              onPress={handleCancel}
-              btnType={'primary'}
-            />
-            <IPayButton
-              medium
-              btnIconsDisabled
-              btnText={localizationText.COMMON.CONTINUE}
+              btnText={'COMMON.CONTINUE'}
               onPress={handleContinue}
               btnType={'outline'}
             />

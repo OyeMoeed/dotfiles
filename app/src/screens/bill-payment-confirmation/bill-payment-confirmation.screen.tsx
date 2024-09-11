@@ -149,7 +149,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           style={styles.margins}
           totalAmount={totalAmount}
           totalAmountText={localizationText.TRAFFIC_VIOLATION.AMOUNT}
-          btnText={localizationText.COMMON.CONFIRM}
+          btnText={'COMMON.CONFIRM'}
           disableBtnIcons
           onPressBtn={onMultiPaymentPrepareBill}
         />

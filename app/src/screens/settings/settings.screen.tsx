@@ -218,7 +218,7 @@ const Settings: React.FC = () => {
           <IPayOutlineButton
             rightIcon={<IPayImage image={images.edit} style={styles.editIconStyle} />}
             onPress={onOpenPasscodeSheet}
-            btnText={localizationText.SETTINGS.CHANGE}
+            btnText={'SETTINGS.CHANGE'}
           />
         </IPayView>
 

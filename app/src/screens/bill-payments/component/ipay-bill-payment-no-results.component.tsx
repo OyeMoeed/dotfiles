@@ -35,7 +35,7 @@ const IPayBillPaymentNoResultsComponent: React.FC<IPayBillPaymentNoResultsCompon
           medium
           onPress={onPressViewAll}
           btnType={buttonVariants.PRIMARY}
-          btnText={localizationText.SADAD.ADD_NEW_BILL}
+          btnText={'SADAD.ADD_NEW_BILL'}
           btnStyle={styles.addNewBillBtn}
           leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
         />

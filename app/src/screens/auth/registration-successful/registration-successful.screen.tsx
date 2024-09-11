@@ -98,7 +98,7 @@ const RegistrationSuccessful: React.FC = () => {
                 />
                 <IPayButton
                   btnType="primary"
-                  btnText={localizationText.COMMON.DONE}
+                  btnText={'COMMON.DONE'}
                   large
                   btnStyle={styles.btnStyle}
                   btnIconsDisabled
@@ -148,7 +148,7 @@ const RegistrationSuccessful: React.FC = () => {
 
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.REGISTRATION.SETUP_NOW}
+                btnText={'REGISTRATION.SETUP_NOW'}
                 large
                 btnIconsDisabled
                 btnStyle={styles.setupButton}
@@ -156,7 +156,7 @@ const RegistrationSuccessful: React.FC = () => {
               />
               <IPayButton
                 btnType="outline"
-                btnText={localizationText.REGISTRATION.SKIP_FOR_NOW}
+                btnText={'REGISTRATION.SKIP_FOR_NOW'}
                 large
                 btnIconsDisabled
                 btnStyle={styles.skipButton}

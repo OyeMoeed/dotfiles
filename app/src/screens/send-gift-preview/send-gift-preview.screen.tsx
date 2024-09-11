@@ -84,7 +84,7 @@ const SendGiftPreview: FC = ({ route }) => {
               btnType={buttonVariants.PRIMARY}
               large
               disabled={!message.length}
-              btnText={localizationText.COMMON.NEXT}
+              btnText={'COMMON.NEXT'}
               btnIconsDisabled
               onPress={onNext}
               btnStyle={styles.sendButton}
@@ -93,7 +93,7 @@ const SendGiftPreview: FC = ({ route }) => {
               btnType={buttonVariants.LINK_BUTTON}
               small
               onPress={onPreview}
-              btnText={localizationText.SEND_GIFT.PREVIEW}
+              btnText={'SEND_GIFT.PREVIEW'}
               leftIcon={<Play style={styles.playIcon} color={colors.primary.primary500} />}
               btnStyle={styles.sendButton}
             />

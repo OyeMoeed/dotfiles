@@ -29,7 +29,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
             btnType={buttonVariants.OUTLINED}
             medium
             leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.primary.primary500} />}
-            btnText={localizationText.TRANSACTION_HISTORY.SPLIT_BILL}
+            btnText={'TRANSACTION_HISTORY.SPLIT_BILL'}
             btnStyle={styles.btnStyles}
           />
           <IPayButton
@@ -37,7 +37,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
             btnType={buttonVariants.OUTLINED}
             medium
             leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
-            btnText={localizationText.TOP_UP.SHARE}
+            btnText={'TOP_UP.SHARE'}
             btnStyle={styles.btnStyles}
           />
         </IPayView>
@@ -50,7 +50,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
             btnType={buttonVariants.OUTLINED}
             medium
             leftIcon={<IPayIcon icon={icons.refresh} size={18} color={colors.primary.primary500} />}
-            btnText={localizationText.TRANSACTION_HISTORY.REFUND}
+            btnText={'TRANSACTION_HISTORY.REFUND'}
             btnStyle={styles.btnStyles}
           />
           <IPayButton
@@ -58,7 +58,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
             btnType={buttonVariants.OUTLINED}
             medium
             leftIcon={<IPayIcon icon={icons.edit_2} size={18} color={colors.primary.primary500} />}
-            btnText={localizationText.TRANSACTION_HISTORY.EDIT_BENEFICIARY}
+            btnText={'TRANSACTION_HISTORY.EDIT_BENEFICIARY'}
             btnStyle={styles.btnStyles}
           />
         </IPayView>
@@ -71,7 +71,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
             btnType={buttonVariants.OUTLINED}
             large
             leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
-            btnText={localizationText.TOP_UP.SHARE}
+            btnText={'TOP_UP.SHARE'}
             btnStyle={styles.shareBtn}
           />
         </IPayView>

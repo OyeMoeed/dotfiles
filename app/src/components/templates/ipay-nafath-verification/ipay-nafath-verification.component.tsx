@@ -275,7 +275,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           </IPayView>
           <IPayButton
             btnType="primary"
-            btnText={localizationText.PROFILE.VALIDATE}
+            btnText={'PROFILE.VALIDATE'}
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
             onPress={() => getNafathRandomNumber()}
             large
@@ -306,7 +306,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
               {isExpired ? (
                 <IPayPrimaryButton
                   btnType="primary"
-                  btnText={localizationText.COMMON.SEND_NEW_CODE}
+                  btnText={'COMMON.SEND_NEW_CODE'}
                   large
                   style={styles.resendButton}
                   onPress={() => getNafathRandomNumber()}

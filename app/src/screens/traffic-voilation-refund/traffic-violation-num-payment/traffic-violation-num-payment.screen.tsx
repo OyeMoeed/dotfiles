@@ -39,7 +39,7 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
         onPressBtn={handleOtpVerification}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
-        btnText={localizationText.COMMON.CONFIRM}
+        btnText={'COMMON.CONFIRM'}
         disableBtnIcons
         totalAmountText={localizationText.TRAFFIC_VIOLATION.AMOUNT_REFUND}
         backgroundGradient={colors.appGradient.buttonBackground}

@@ -173,7 +173,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
               btnIconsDisabled
               btnStyle={styles.confirmButton}
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.CONFIRM}
+              btnText={'COMMON.CONFIRM'}
             />
           </IPayView>
         </IPayView>

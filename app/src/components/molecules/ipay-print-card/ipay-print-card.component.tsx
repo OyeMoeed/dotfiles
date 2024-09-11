@@ -18,7 +18,7 @@ const IPayPrintCard: React.FC<IPayPrintCardProps> = ({ testID, handlePrintCard, 
       <IPayCaption1Text color={colors.natural.natural700} text={'CARD_OPTIONS.PRINT_CARD_DESCRIPTION'} />
       <IPayButton
         medium
-        btnText={localizationText.CARDS.PRINT_CARD}
+        btnText={'CARDS.PRINT_CARD'}
         onPress={handlePrintCard}
         btnType="primary"
         leftIcon={<IPayIcon icon={icons.card} color={colors.natural.natural0} size={18} />}

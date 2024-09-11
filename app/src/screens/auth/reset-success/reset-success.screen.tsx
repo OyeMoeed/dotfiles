@@ -33,13 +33,7 @@ const ResetSuccessful: React.FC = () => {
             descriptionText={localizationText.SETTINGS.SAVE_FOR_LATER}
           />
           <IPayView style={styles.buttonContainer}>
-            <IPayButton
-              btnType="primary"
-              btnText={localizationText.COMMON.DONE}
-              large
-              btnIconsDisabled
-              onPress={logoutConfirm}
-            />
+            <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={logoutConfirm} />
           </IPayView>
         </IPayView>
       </IPayView>

@@ -278,7 +278,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                   )}
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnText={'NEW_SADAD_BILLS.INQUIRY'}
                     btnType="primary"
                     onPress={handleSubmit(onInquireBill)}
                     large
@@ -287,7 +287,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   />
                   {watch(FormFields.SAVE_BILL) && (
                     <IPayButton
-                      btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
+                      btnText={'NEW_SADAD_BILLS.SAVE_ONLY'}
                       btnType="outline"
                       onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
                       large
@@ -328,7 +328,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                     {search && (
                       <IPayButton
-                        btnText={localizationText.COMMON.CANCEL}
+                        btnText={'COMMON.CANCEL'}
                         btnIconsDisabled
                         small
                         btnType="link-button"
@@ -380,7 +380,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               <IPayContentNotFound
                 title={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
                 message={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
-                btnText={localizationText.COMMON.TRY_AGAIN}
+                btnText={'COMMON.TRY_AGAIN'}
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

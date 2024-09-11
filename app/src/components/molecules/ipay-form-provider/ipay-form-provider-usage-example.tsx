@@ -81,7 +81,7 @@ const ExampleFormProviderUsage = () => {
                   )}
                 />
 
-                <IPayButton onPress={handleSubmit(onSubmit)} btnText={localizationText.COMMON.NEXT} />
+                <IPayButton onPress={handleSubmit(onSubmit)} btnText={'COMMON.NEXT'} />
               </>
             </IPayScrollView>
           </IPayView>

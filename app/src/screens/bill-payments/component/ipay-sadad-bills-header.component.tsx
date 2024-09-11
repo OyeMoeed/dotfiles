@@ -35,7 +35,7 @@ const IPaySadadBillsHeader: React.FC<IPaySadadBillsHeaderProps> = ({
         small
         onPress={onPressViewAll}
         btnType={buttonVariants.LINK_BUTTON}
-        btnText={localizationText.COMMON.VIEW_ALL}
+        btnText={'COMMON.VIEW_ALL'}
         textColor={colors.primary.primary600}
         rightIcon={<IPayIcon icon={icons.arrow_right_square} size={14} color={colors.primary.primary600} />}
       />

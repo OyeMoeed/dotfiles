@@ -118,13 +118,7 @@ const CardIssuanceConfirmationScreen = () => {
               onPress={openTermsRef}
             />
             <IPayView>
-              <IPayButton
-                large
-                btnType="primary"
-                btnText={localizationText.COMMON.CONFIRM}
-                btnIconsDisabled
-                onPress={handleConfirm}
-              />
+              <IPayButton large btnType="primary" btnText={'COMMON.CONFIRM'} btnIconsDisabled onPress={handleConfirm} />
             </IPayView>
           </IPayView>
         </IPayView>

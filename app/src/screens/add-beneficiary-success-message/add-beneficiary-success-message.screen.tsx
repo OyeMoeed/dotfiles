@@ -136,7 +136,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                 <IPayView style={styles.buttonWrapper}>
                   <IPayButton
                     btnType="primary"
-                    btnText={localizationText.NEW_BENEFICIARY.ACTIVATE_BENEFICIARY}
+                    btnText={'NEW_BENEFICIARY.ACTIVATE_BENEFICIARY'}
                     medium
                     btnIconsDisabled
                     onPress={handleActivateBeneficiary}

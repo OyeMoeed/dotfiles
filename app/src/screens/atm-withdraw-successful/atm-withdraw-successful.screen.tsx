@@ -117,14 +117,14 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
             onPress={onPressNewWithdarawal}
             btnType={buttonVariants.LINK_BUTTON}
             large
-            btnText={localizationText.ATM_WITHDRAWAL.NEW_WITHDRAWAL}
+            btnText={'ATM_WITHDRAWAL.NEW_WITHDRAWAL'}
             leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
           />
           <IPayButton
             onPress={onPressHome}
             btnType={buttonVariants.PRIMARY}
             large
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
             leftIcon={<IPayIcon icon={icons.HOME} size={20} color={colors.natural.natural0} />}
           />
         </IPayView>

@@ -126,7 +126,7 @@ const BillPaymentsScreen: React.FC = () => {
               onPress={onPressAddNewBill}
               btnStyle={styles.addNewBillBtn}
               btnType={buttonVariants.OUTLINED}
-              btnText={localizationText.SADAD.ADD_NEW_BILL}
+              btnText={'SADAD.ADD_NEW_BILL'}
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
             />
           </IPayView>

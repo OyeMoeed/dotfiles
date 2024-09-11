@@ -120,7 +120,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                   <IPayButton
                     onPress={handleSubmit(onSubmit)}
                     btnType="primary"
-                    btnText={localizationText.COMMON.NEXT}
+                    btnText={'COMMON.NEXT'}
                     large
                     rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
                   />
@@ -132,7 +132,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               <IPayButton
                 onPress={handleOnPressHelp}
                 btnType={buttonVariants.LINK_BUTTON}
-                btnText={localizationText.COMMON.NEED_HELP}
+                btnText={'COMMON.NEED_HELP'}
                 large
                 btnStyle={styles.needHelpBtn}
                 rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}

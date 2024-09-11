@@ -589,7 +589,7 @@ const InternationalTransferScreen: React.FC = () => {
                 />
                 <IPayButton
                   testID="add-new-beneficiary"
-                  btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+                  btnText={'LOCAL_TRANSFER.ADD_NEW_BENEFICIARY'}
                   medium
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.btnStyle}
@@ -603,7 +603,7 @@ const InternationalTransferScreen: React.FC = () => {
             <IPayButton
               onPress={handleAddNewBeneficiray}
               btnStyle={styles.addBeneficiaryBtn}
-              btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+              btnText={'LOCAL_TRANSFER.ADD_NEW_BENEFICIARY'}
               btnType={buttonVariants.OUTLINED}
               large
               leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}

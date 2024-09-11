@@ -50,7 +50,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
                 textColor={colors.primary.primary500}
                 btnIconsDisabled
                 onPress={onPressCancel}
-                btnText={localizationText.COMMON.CANCEL}
+                btnText={'COMMON.CANCEL'}
               />
             )}
             {backBtn && (
@@ -59,7 +59,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
                 small
                 textColor={colors.primary.primary500}
                 btnType="link-button"
-                btnText={localizationText.COMMON.BACK}
+                btnText={'COMMON.BACK'}
                 onPress={onPressCancel}
                 leftIcon={<IPayIcon icon={icons.backBtnIcon} size={14} color={colors.primary.primary500} />}
               />

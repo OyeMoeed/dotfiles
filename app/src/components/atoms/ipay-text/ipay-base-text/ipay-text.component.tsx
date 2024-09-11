@@ -30,7 +30,8 @@ const IPayText: React.FC<IPayTextProps> = ({
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
   const baseTextStyles = styles(getFontFamily as string, colors);
 
-  const mainChildren = typeof children === 'string' ? t(children) : children;
+  const isChildrenString = children?.toString().split(' ').length === 1;
+  const mainChildren = isChildrenString ? t(String(children)) : children;
   const propText = t(`${isAmount ? formatNumberWithCommas(text || '') : text}`);
   const showText = text ? propText : mainChildren;
 

@@ -132,7 +132,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
       <IPayView>
         <SadadFooterComponent
           warning={balanceStatusVariants[accountBalanceStatus]?.warningText}
-          btnText={localizationText.COMMON.PAY}
+          btnText={'COMMON.PAY'}
           disableBtnIcons
           btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
           showButtonOnly={eligibleToPay}

@@ -384,7 +384,7 @@ const LocalTransferScreen: React.FC = () => {
                   testID="no-result"
                 />
                 <IPayButton
-                  btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+                  btnText={'LOCAL_TRANSFER.ADD_NEW_BENEFICIARY'}
                   medium
                   onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
                   btnType={buttonVariants.PRIMARY}
@@ -397,7 +397,7 @@ const LocalTransferScreen: React.FC = () => {
 
           {hasBeneficiariesData() ? (
             <IPayButton
-              btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+              btnText={'LOCAL_TRANSFER.ADD_NEW_BENEFICIARY'}
               btnType={buttonVariants.OUTLINED}
               medium
               leftIcon={<IPayIcon icon={icons.add_bold} size={24} color={colors.primary.primary500} />}
@@ -460,7 +460,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             large
-            btnText={localizationText.COMMON.DONE}
+            btnText={'COMMON.DONE'}
             btnIconsDisabled
             onPress={handleChangeBeneficiaryName}
           />

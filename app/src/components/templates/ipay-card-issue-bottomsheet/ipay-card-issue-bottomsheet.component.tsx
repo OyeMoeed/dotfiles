@@ -51,7 +51,7 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
           hasRightIcon
           rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
           onPress={onNextPress}
-          btnText={localizationText.COMMON.NEXT}
+          btnText={'COMMON.NEXT'}
         />
       </IPayView>
     </IPayView>

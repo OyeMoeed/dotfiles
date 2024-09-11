@@ -216,7 +216,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
               btnStyle={styles.button}
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.CONFIRM}
+              btnText={'COMMON.CONFIRM'}
             />
           </IPayView>
         </IPayView>

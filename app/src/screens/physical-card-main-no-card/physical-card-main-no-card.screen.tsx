@@ -54,7 +54,7 @@ const PhysicalCardMainNoCardScreen: React.FC = () => {
             large
             btnIconsDisabled
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD}
+            btnText={'PHYSICAL_CARD.ISSUE_A_NEW_CARD'}
           />
         </IPayView>
       </IPayView>

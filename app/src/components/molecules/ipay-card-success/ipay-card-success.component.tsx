@@ -80,7 +80,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
                 medium
                 btnType="outline"
                 rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
-                btnText={localizationText.CARD_OPTIONS.GO_TO_CARD}
+                btnText={'CARD_OPTIONS.GO_TO_CARD'}
                 btnStyle={styles.flexStyle}
               />
               <IPayButton
@@ -88,7 +88,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
                 onPress={handleHomePress}
                 btnType="outline"
                 leftIcon={<IPayIcon icon={icons.HOME_2} color={colors.primary.primary500} />}
-                btnText={localizationText.COMMON.HOME}
+                btnText={'COMMON.HOME'}
                 btnStyle={styles.flexStyle}
               />
             </IPayView>

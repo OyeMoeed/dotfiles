@@ -125,7 +125,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
           btnType={buttonVariants.PRIMARY}
           large
           btnColor={colors.error.error500}
-          btnText={localizationText.TRANSACTION_HISTORY.REFUND}
+          btnText={'TRANSACTION_HISTORY.REFUND'}
           textColor={colors.natural.natural0}
           btnIconsDisabled
           btnStyle={styles.refundBtn}
@@ -134,7 +134,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
           onPress={onPressCancel}
           btnType={buttonVariants.OUTLINED}
           large
-          btnText={localizationText.COMMON.CANCEL}
+          btnText={'COMMON.CANCEL'}
           btnIconsDisabled
         />
       </IPayView>

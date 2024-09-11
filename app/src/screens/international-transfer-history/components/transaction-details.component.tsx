@@ -125,7 +125,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
               btnType={buttonVariants.PRIMARY}
               large
               rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.primary.primary500} />}
-              btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+              btnText={'TRANSACTION_HISTORY.VAT_INVOICE'}
               btnStyle={styles.vatBtn}
             />
           </IPayView>

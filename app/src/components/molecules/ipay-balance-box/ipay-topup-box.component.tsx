@@ -51,7 +51,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
               onPress={onTopUpPress}
               btnType="outline"
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-              btnText={localizationText.TOPUP_CONFIRMATION.TOP_UP}
+              btnText={'TOPUP_CONFIRMATION.TOP_UP'}
             />
           )}
         </IPayView>

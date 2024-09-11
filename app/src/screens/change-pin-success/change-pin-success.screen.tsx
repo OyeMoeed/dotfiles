@@ -40,13 +40,7 @@ const ChangePinSuccessScreen: React.FC = () => {
           descriptionText={localizationText.CHANGE_PIN_SUCCESS.YOU_CAN_USE_PURCHASE}
         />
         <IPayView style={styles.bottomButtonContainer}>
-          <IPayButton
-            btnType="primary"
-            btnText={localizationText.COMMON.DONE}
-            large
-            btnIconsDisabled
-            onPress={goBack}
-          />
+          <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={goBack} />
         </IPayView>
       </IPayView>
     </IPayPageWrapper>

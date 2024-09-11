@@ -75,7 +75,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                btnText={localizationText.COMMON.SHARE}
+                btnText={'COMMON.SHARE'}
                 btnStyle={styles.btnStyle}
               />
             )}
@@ -92,7 +92,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.PRIMARY}
                 btnIconsDisabled
-                btnText={localizationText.PAY_BILL.PAY_NOW}
+                btnText={'PAY_BILL.PAY_NOW'}
                 onPress={onPressSaveOnlyPay}
               />
             </IPayView>
@@ -104,7 +104,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
               medium
               btnType={buttonVariants.OUTLINED}
               leftIcon={<IPayIcon icon={icons.ARROW_LEFT} color={colors.primary.primary500} size={16} />}
-              btnText={localizationText.PAY_BILL.VIEW_SADAD_BILLS}
+              btnText={'PAY_BILL.VIEW_SADAD_BILLS'}
               btnStyle={styles.btnStyle}
               onPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
             />
@@ -114,7 +114,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={localizationText.PAY_BILL.PAY_ANOTHER_BILL}
+                btnText={'PAY_BILL.PAY_ANOTHER_BILL'}
                 onPress={() => navigate(ScreenNames.SADAD_BILLS)}
               />
               {isPayOnly && (
@@ -122,7 +122,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                   medium
                   btnType={buttonVariants.LINK_BUTTON}
                   leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                  btnText={localizationText.COMMON.SHARE}
+                  btnText={'COMMON.SHARE'}
                   btnStyle={styles.btnStyle}
                 />
               )}
@@ -135,7 +135,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
             leftIcon={
               <IPayIcon icon={icons.HOME} color={isSaveOnly ? colors.primary.primary500 : colors.natural.natural0} />
             }
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
           />
         </IPayView>
       </IPayView>

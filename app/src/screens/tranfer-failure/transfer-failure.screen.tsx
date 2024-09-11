@@ -32,14 +32,14 @@ const TransferFailureScreen = () => {
             btnType={buttonVariants.PRIMARY}
             large
             leftIcon={<IPayIcon icon={icons.LeftArrow} size={20} color={colors.natural.natural0} />}
-            btnText={localizationText.TOP_UP.START_OVER}
+            btnText={'TOP_UP.START_OVER'}
           />
           <IPayButton
             onPress={onPresHome}
             btnType={buttonVariants.LINK_BUTTON}
             large
             leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
             btnStyle={styles.linkBtn}
           />
         </IPayView>

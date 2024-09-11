@@ -85,7 +85,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
             <IPayButton
               onPress={onPressConfirm}
               btnType="primary"
-              btnText={localizationText.COMMON.NEXT}
+              btnText={'COMMON.NEXT'}
               large
               rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
             />
@@ -93,7 +93,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
             <IPayButton
               onPress={() => navigate(screenNames.REGISTRATION_SUCCESSFUL)}
               btnType="link-button"
-              btnText={localizationText.COMMON.NEED_HELP}
+              btnText={'COMMON.NEED_HELP'}
               large
               btnStyle={styles.needHelpBtn}
               rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} />}

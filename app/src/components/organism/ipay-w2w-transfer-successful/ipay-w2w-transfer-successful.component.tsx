@@ -187,7 +187,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
           <IPayButton
             large
             btnType="primary"
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
             hasLeftIcon
             leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
             onPress={() => navigate(screenNames.HOME)}

@@ -26,14 +26,14 @@ const BillPaymentFailedScreen: React.FC = () => {
             leftIcon={
               <IPayIcon testID="arrow-left-icon" icon={icons.ARROW_LEFT} color={colors.natural.natural0} size={20} />
             }
-            btnText={localizationText.PAY_BILL.VIEW_EDIT_DETAILS}
+            btnText={'PAY_BILL.VIEW_EDIT_DETAILS'}
             btnType={buttonVariants.PRIMARY}
             large
             btnStyle={styles.btnStyle}
           />
           <IPayButton
             leftIcon={<IPayIcon testID="home-2-icon" icon={icons.HOME_2} color={colors.primary.primary500} size={20} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
             btnType={buttonVariants.LINK_BUTTON}
             large
             btnStyle={styles.btnStyle}

@@ -188,7 +188,7 @@ const SendGiftAmountScreen = ({ route }) => {
               <IPayButton
                 btnType="link-button"
                 btnStyle={styles.remove}
-                btnText={localizationText.PROFILE.REMOVE}
+                btnText={'PROFILE.REMOVE'}
                 rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
                 onPress={() => showRemoveAlert(item)}
                 textColor={colors.primary.primary500}
@@ -404,7 +404,7 @@ const SendGiftAmountScreen = ({ route }) => {
                   btnType="link-button"
                   btnStyle={styles.recipientsContainer}
                   textColor={colors.secondary.secondary800}
-                  btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
+                  btnText={'SEND_MONEY_FORM.ADD_MORE_RECIPIENTS'}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
                   onPress={addForm}
@@ -429,7 +429,7 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayButton
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={localizationText.SEND_GIFT.SEND}
+          btnText={'SEND_GIFT.SEND'}
           btnIconsDisabled
           onPress={getW2WActiveFriends}
           disabled={isDisabled || !!warningStatus}

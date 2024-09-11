@@ -59,7 +59,7 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
             <IPayFootnoteText regular color={colors.primary.primary800} text={'COMMON.DELINK_ALERT.NEED_LOGIN'} />
             <IPayButton
               btnType="primary"
-              btnText={localizationText.COMMON.DONE}
+              btnText={'COMMON.DONE'}
               large
               btnStyle={styles.btnStyle}
               btnIconsDisabled

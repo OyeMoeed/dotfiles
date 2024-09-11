@@ -548,7 +548,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               medium
               btnStyle={styles.applyButton}
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.TRANSACTION_HISTORY.APPLY}
+              btnText={'TRANSACTION_HISTORY.APPLY'}
               large
               btnIconsDisabled
               onPress={handleSubmit(onSubmitEvent)}

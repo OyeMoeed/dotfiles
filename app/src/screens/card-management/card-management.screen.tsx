@@ -170,7 +170,7 @@ const CardManagementScreen: React.FC = () => {
             btnStyle={styles.addCardButton}
             btnType={buttonVariants.PRIMARY}
             large
-            btnText={localizationText.MENU.ADD_CARD}
+            btnText={'MENU.ADD_CARD'}
             leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.natural.natural0} />}
           />
         </IPayView>
@@ -246,7 +246,7 @@ const CardManagementScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             btnIconsDisabled
-            btnText={localizationText.COMMON.SAVE}
+            btnText={'COMMON.SAVE'}
             leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.natural.natural0} />}
           />
         </IPayView>

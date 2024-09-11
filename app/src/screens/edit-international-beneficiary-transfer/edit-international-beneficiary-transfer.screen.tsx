@@ -114,7 +114,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
               onPress={handleSubmit(onSubmit)}
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.SAVE_EDITS}
+              btnText={'COMMON.SAVE_EDITS'}
               btnIconsDisabled
               btnStyle={styles.btnStyles}
             />
@@ -122,7 +122,7 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
               onPress={() => goBack()}
               large
               btnType={buttonVariants.OUTLINED}
-              btnText={localizationText.COMMON.CANCEL}
+              btnText={'COMMON.CANCEL'}
               btnIconsDisabled
               btnStyle={styles.cancelBtn}
             />

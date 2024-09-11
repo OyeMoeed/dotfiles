@@ -407,7 +407,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayButton
               medium
               btnIconsDisabled
-              btnText={localizationText.COMMON.DONE}
+              btnText={'COMMON.DONE'}
               disabled={!selectedContacts.length}
               onPress={handleSubmitTransfer}
               btnType={buttonVariants.PRIMARY}
@@ -446,7 +446,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                   medium
                   btnIconsDisabled
                   btnStyle={styles.unsavedButton}
-                  btnText={localizationText.COMMON.DONE}
+                  btnText={'COMMON.DONE'}
                   onPress={handleSubmit(addUnsavedNumber)}
                   btnType="primary"
                 />

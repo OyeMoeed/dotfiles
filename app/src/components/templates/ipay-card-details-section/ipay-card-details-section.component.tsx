@@ -324,7 +324,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             btnType="primary"
             leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
             medium
-            btnText={localizationText.CARDS.PRINT_CARD}
+            btnText={'CARDS.PRINT_CARD'}
             btnStyle={styles.printBtn}
           />
         )}

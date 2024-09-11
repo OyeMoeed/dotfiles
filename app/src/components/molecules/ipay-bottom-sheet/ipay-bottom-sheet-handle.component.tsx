@@ -43,20 +43,14 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
               medium
               btnIconsDisabled
               onPress={onPressCancel}
-              btnText={localizationText.COMMON.CANCEL}
+              btnText={'COMMON.CANCEL'}
             />
 
             <IPaySubHeadlineText style={styles.titleText}>
               {heading || localizationText.COMMON.TITTLE}
             </IPaySubHeadlineText>
 
-            <IPayButton
-              btnType="link-button"
-              medium
-              btnIconsDisabled
-              onPress={onPressDone}
-              btnText={localizationText.COMMON.DONE}
-            />
+            <IPayButton btnType="link-button" medium btnIconsDisabled onPress={onPressDone} btnText={'COMMON.DONE'} />
           </IPayView>
         </>
       )}

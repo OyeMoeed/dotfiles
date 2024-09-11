@@ -34,7 +34,7 @@ const CardManagementScreen: React.FC = () => {
         <IPayButton
           btnType={buttonVariants.PRIMARY}
           medium
-          btnText={localizationText.MENU.ADD_CARD}
+          btnText={'MENU.ADD_CARD'}
           hasRightIcon
           onPress={() => {}}
           btnStyle={styles.sendButton}

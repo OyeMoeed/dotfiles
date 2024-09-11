@@ -209,7 +209,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.NEXT}
+              btnText={'COMMON.NEXT'}
               btnIconsDisabled
               onPress={handleSubmit(handleBeneficiaryTransfer)}
               btnStyle={styles.btnStyles}

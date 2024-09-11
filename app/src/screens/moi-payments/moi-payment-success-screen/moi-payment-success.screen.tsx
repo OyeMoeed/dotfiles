@@ -138,14 +138,14 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                   small
                   onPress={onPressPayOtherBill}
                   leftIcon={<Refresh2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={localizationText.BILL_PAYMENTS.PAY_ANOTHER_BILL}
+                  btnText={'BILL_PAYMENTS.PAY_ANOTHER_BILL'}
                 />
                 <IPayButton
                   onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={localizationText.TOP_UP.SHARE}
+                  btnText={'TOP_UP.SHARE'}
                 />
               </IPayView>
               <IPayButton
@@ -153,7 +153,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 btnType={buttonVariants.PRIMARY}
                 large
                 leftIcon={<Home2 style={styles.homeIcon} color={colors.natural.natural0} />}
-                btnText={localizationText.COMMON.HOME}
+                btnText={'COMMON.HOME'}
               />
             </IPayView>
           }

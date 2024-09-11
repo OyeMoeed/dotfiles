@@ -245,7 +245,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         <IPayView>
           <IPayButton
             btnType="primary"
-            btnText={localizationText.TOP_UP.START_OVER}
+            btnText={'TOP_UP.START_OVER'}
             large
             onPress={goBack}
             btnStyle={styles.btnStyle}
@@ -255,7 +255,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
           <IPayButton
             btnType="outline"
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
             textStyle={styles.text}
             hasLeftIcon
             leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
@@ -273,12 +273,12 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         <IPayButton
           onPress={goBack}
           btnType="link-button"
-          btnText={localizationText.TOP_UP.NEW_TOP_UP}
+          btnText={'TOP_UP.NEW_TOP_UP'}
           leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
         />
         <IPayButton
           btnType="link-button"
-          btnText={localizationText.TOP_UP.SHARE}
+          btnText={'TOP_UP.SHARE'}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>
@@ -290,7 +290,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={[styles.cardButton, styles.margins]}>
         <IPayButton
           btnType="link-button"
-          btnText={localizationText.TOP_UP.SHARE}
+          btnText={'TOP_UP.SHARE'}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>
@@ -302,7 +302,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={styles.shareBackground}>
         <IPayButton
           btnType="link-button"
-          btnText={localizationText.TOP_UP.SHARE}
+          btnText={'TOP_UP.SHARE'}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>
@@ -384,7 +384,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                 <IPayButton
                   btnType="primary"
                   btnStyle={styles.btn}
-                  btnText={localizationText.COMMON.HOME}
+                  btnText={'COMMON.HOME'}
                   btnColor={colors.primary.primary500}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}

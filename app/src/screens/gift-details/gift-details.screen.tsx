@@ -110,7 +110,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       btnType={buttonVariants.LINK_BUTTON}
       small
       onPress={onPressShare}
-      btnText={localizationText.TOP_UP.SHARE}
+      btnText={'TOP_UP.SHARE'}
       leftIcon={<IPayIcon icon={icons.share} size={20} color={colors.primary.primary500} />}
     />
   );
@@ -201,7 +201,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             <IPayButton
               btnType={buttonVariants.LINK_BUTTON}
               small
-              btnText={localizationText.SEND_GIFT.SWIPE_TO_FLIP}
+              btnText={'SEND_GIFT.SWIPE_TO_FLIP'}
               textColor={colors.natural.natural500}
               rightIcon={<IPayIcon icon={icons.repeat} size={14} color={colors.natural.natural500} />}
             />
@@ -227,7 +227,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
             large
-            btnText={localizationText.SEND_GIFT.SAY_THANKS}
+            btnText={'SEND_GIFT.SAY_THANKS'}
             textColor={colors.natural.natural0}
           />
         )}

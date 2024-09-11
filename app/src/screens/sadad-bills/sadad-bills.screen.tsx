@@ -329,7 +329,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
             small
             onPress={onPressAddNewBill}
             btnType={buttonVariants.LINK_BUTTON}
-            btnText={localizationText.COMMON.NEW}
+            btnText={'COMMON.NEW'}
             rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
           />
         }
@@ -390,7 +390,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.SADAD.ADD_NEW_BILL}
+            btnText={'SADAD.ADD_NEW_BILL'}
             btnStyle={styles.addNewBillBtn}
             onPress={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS)}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}

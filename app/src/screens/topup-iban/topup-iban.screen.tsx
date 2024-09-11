@@ -112,7 +112,7 @@ const TopUpIBAN = () => {
           btnStyle={styles.shareBtn}
           btnType="primary"
           testID="share"
-          btnText={localizationText.COMMON.SHARE}
+          btnText={'COMMON.SHARE'}
           large
           leftIcon={<IPayIcon icon={icons.share} size={moderateScale(22)} color={colors.natural.natural0} />}
           onPress={onPressShare}

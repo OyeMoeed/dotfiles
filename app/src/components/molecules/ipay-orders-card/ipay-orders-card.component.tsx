@@ -72,7 +72,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
                   btnStyle={styles.buttonStyles}
                   onPress={onPressView}
                   btnIconsDisabled
-                  btnText={localizationText.SHOP.VIEW_PRODUCT}
+                  btnText={'SHOP.VIEW_PRODUCT'}
                   small
                 />
                 <IPayButton
@@ -80,7 +80,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
                   btnStyle={styles.buttonStyles}
                   btnIconsDisabled
                   onPress={purchaseAgain}
-                  btnText={localizationText.SHOP.PURCHASE_AGAIN}
+                  btnText={'SHOP.PURCHASE_AGAIN'}
                   small
                 />
               </IPayView>

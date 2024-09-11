@@ -43,7 +43,7 @@ const EditBeneficiary: React.FC<EditBeneficiaryProps> = ({ testID, style, benefi
         btnType={buttonVariants.PRIMARY}
         large
         btnIconsDisabled
-        btnText={localizationText.PROFILE.SAVE_CHANGES}
+        btnText={'PROFILE.SAVE_CHANGES'}
       />
     </IPayView>
   );

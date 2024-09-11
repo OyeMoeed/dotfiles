@@ -113,7 +113,7 @@ const TransferInformation: React.FC = () => {
             large
             disabled={isTransferButtonDisabled()}
             btnIconsDisabled
-            btnText={localizationText.COMMON.NEXT}
+            btnText={'COMMON.NEXT'}
             btnStyle={styles.nextBtn}
           />
         </IPayView>

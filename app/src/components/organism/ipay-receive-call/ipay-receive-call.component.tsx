@@ -89,7 +89,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
           <IPayButton
             large
             btnType="primary"
-            btnText={localizationText.ACTIVATE_BENEFICIARY.REQUEST_ANOTHER_CALL}
+            btnText={'ACTIVATE_BENEFICIARY.REQUEST_ANOTHER_CALL'}
             onPress={handleRequestAgain}
             rightIcon={<RefreshIcon style={styles.refreshIcon} color={colors.natural.natural0} />}
           />

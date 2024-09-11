@@ -63,7 +63,7 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
           onPress={onPressGetDirection}
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={localizationText.ATM_WITHDRAWAL.GET_DIRECTION}
+          btnText={'ATM_WITHDRAWAL.GET_DIRECTION'}
           rightIcon={<IPayIcon icon={icons.add_location} size={20} color={colors.natural.natural0} />}
         />
       </IPayView>

@@ -66,14 +66,14 @@ const IssuePhysicalCardSuccessScreen: React.FC = () => {
             medium
             btnType={buttonVariants.PRIMARY}
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
-            btnText={localizationText.CARD_OPTIONS.GO_TO_CARD}
+            btnText={'CARD_OPTIONS.GO_TO_CARD'}
           />
           <IPayButton
             onPress={onGoToHome}
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
           />
         </IPayView>
       </IPayView>

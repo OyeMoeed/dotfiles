@@ -35,7 +35,7 @@ const IPayCardStatusIndication = ({
             btnIconsDisabled
             small
             btnStyle={styles.renewBtn}
-            btnText={localizationText.CARDS.RENEW_CARD}
+            btnText={'CARDS.RENEW_CARD'}
           />
         ),
       },
@@ -50,7 +50,7 @@ const IPayCardStatusIndication = ({
             btnIconsDisabled
             btnStyle={styles.renewBtn}
             small
-            btnText={localizationText.CARDS.RENEW_CARD}
+            btnText={'CARDS.RENEW_CARD'}
           />
         ),
       },
@@ -76,7 +76,7 @@ const IPayCardStatusIndication = ({
             leftIcon={<IPayIcon size={16} icon={icons.add_bold} color={colors.natural.natural0} />}
             small
             btnStyle={styles.topUpBtn}
-            btnText={localizationText.COMMON.TOP_UP}
+            btnText={'COMMON.TOP_UP'}
           />
         ),
       },

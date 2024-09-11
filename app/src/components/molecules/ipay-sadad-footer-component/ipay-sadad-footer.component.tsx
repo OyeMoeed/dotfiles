@@ -107,7 +107,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
           <IPayButton
             large
             btnType={buttonVariants.LINK_BUTTON}
-            btnText={localizationText.SADAD.PAY_PARTIALLY}
+            btnText={'SADAD.PAY_PARTIALLY'}
             btnIconsDisabled
             onPress={onPressPartialPay}
           />

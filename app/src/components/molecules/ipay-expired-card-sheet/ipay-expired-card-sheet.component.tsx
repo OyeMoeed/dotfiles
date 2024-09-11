@@ -76,17 +76,11 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
               <IPayButton
                 large
                 btnIconsDisabled
-                btnText={localizationText.TOP_UP.EDIT_CARD}
+                btnText={'TOP_UP.EDIT_CARD'}
                 onPress={onEditPress}
                 btnType={'primary'}
               />
-              <IPayButton
-                large
-                btnIconsDisabled
-                btnText={localizationText.COMMON.CANCEL}
-                onPress={handleCancel}
-                btnType={'outline'}
-              />
+              <IPayButton large btnIconsDisabled btnText={'COMMON.CANCEL'} onPress={handleCancel} btnType={'outline'} />
             </IPayView>
           </IPayView>
         )}

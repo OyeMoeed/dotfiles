@@ -28,13 +28,7 @@ const IdentitySuccessMessage = () => {
             descriptionText={localizationText.PROFILE.UTILIZE_APP_FEATURE}
           />
           <IPayView style={styles.buttonContainer}>
-            <IPayButton
-              btnType="primary"
-              btnText={localizationText.COMMON.DONE}
-              large
-              btnIconsDisabled
-              onPress={handleDonePress}
-            />
+            <IPayButton btnType="primary" btnText={'COMMON.DONE'} large btnIconsDisabled onPress={handleDonePress} />
           </IPayView>
         </IPayView>
       </IPayView>

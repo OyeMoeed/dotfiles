@@ -37,7 +37,7 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
               large
               btnType="primary"
               btnIconsDisabled={true}
-              btnText={localizationText.COMMON.SAVE}
+              btnText={'COMMON.SAVE'}
               onPress={handleDateChanges}
               btnStyle={styles.buttonStyles}
             />

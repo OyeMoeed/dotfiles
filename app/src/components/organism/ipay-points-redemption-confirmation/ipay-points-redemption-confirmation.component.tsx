@@ -191,7 +191,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         <IPayButton
           onPress={onConfirm}
           btnType="primary"
-          btnText={localizationText.COMMON.CONFIRM}
+          btnText={'COMMON.CONFIRM'}
           btnIconsDisabled
           textColor={colors.natural.natural0}
           btnStyle={[styles.confirmButton]}

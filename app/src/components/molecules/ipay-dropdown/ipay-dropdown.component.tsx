@@ -104,7 +104,7 @@ const IPayDropdownComponent: React.ForwardRefRenderFunction<IPayDropdownComponen
           large
           btnIconsDisabled
           btnType={buttonVariants.PRIMARY}
-          btnText={localizationText.COMMON.SAVE}
+          btnText={'COMMON.SAVE'}
         />
       </IPayView>
     </IPayView>

@@ -95,7 +95,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
         <IPayButton
           btnType="primary"
           large
-          btnText={localizationText.VIRTUAL_CARD.ISSUE_CARD}
+          btnText={'VIRTUAL_CARD.ISSUE_CARD'}
           btnIconsDisabled
           btnStyle={styles.marginStyles}
           onPress={onPressIsssueCard}

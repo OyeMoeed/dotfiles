@@ -142,19 +142,19 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                     <IPayButton
                       onPress={navigateTOAktharPoints}
                       btnType="link-button"
-                      btnText={localizationText.TOP_UP.NEW_TOP_UP}
+                      btnText={'TOP_UP.NEW_TOP_UP'}
                       leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
                     />
                     <IPayButton
                       btnType="link-button"
-                      btnText={localizationText.TOP_UP.SHARE}
+                      btnText={'TOP_UP.SHARE'}
                       leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
                     />
                   </IPayView>
                   <IPayButton
                     btnType="primary"
                     leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
-                    btnText={localizationText.COMMON.HOME}
+                    btnText={'COMMON.HOME'}
                     onPress={goBackToHome}
                     large
                     btnStyle={styles.btnStyle}
@@ -208,7 +208,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
             <IPayView>
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.TOP_UP.START_OVER}
+                btnText={'TOP_UP.START_OVER'}
                 leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />}
                 large
                 onPress={onStartOverPress}
@@ -218,7 +218,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
               <IPayButton
                 btnType="outline"
                 leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.primary.primary500} />}
-                btnText={localizationText.COMMON.HOME}
+                btnText={'COMMON.HOME'}
                 hasLeftIcon
                 large
                 onPress={goBackToHome}

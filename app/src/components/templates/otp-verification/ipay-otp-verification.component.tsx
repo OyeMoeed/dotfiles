@@ -82,7 +82,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         <IPayButton
           disabled={counter > 0}
           btnType="link-button"
-          btnText={localizationText.COMMON.SEND_CODE_AGAIN}
+          btnText={'COMMON.SEND_CODE_AGAIN'}
           small
           btnStyle={styles.sendCodeBtnStyle}
           rightIcon={
@@ -97,7 +97,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         <IPayButton
           btnType="primary"
           disabled={counter <= 0}
-          btnText={localizationText.COMMON.CONFIRM}
+          btnText={'COMMON.CONFIRM'}
           large
           btnIconsDisabled
           onPress={onPressConfirm}
@@ -106,7 +106,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           <IPayButton
             onPress={handleOnPressHelp}
             btnType="link-button"
-            btnText={localizationText.COMMON.NEED_HELP}
+            btnText={'COMMON.NEED_HELP'}
             large
             btnStyle={styles.needHelpBtn}
             rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}

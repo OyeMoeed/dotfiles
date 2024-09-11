@@ -42,7 +42,7 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
             btnStyle={styles.buttonStyle}
             onPress={onVerify}
             btnType="primary"
-            btnText={localizationText.COMMON.VERIFY}
+            btnText={'COMMON.VERIFY'}
             rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={16} color={colors.natural.natural0} />}
           />
         </IPayView>

@@ -213,7 +213,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               <IPayContentNotFound
                 title={localizationText.BILL_PAYMENTS.NO_BILLS_WERE_FOUND}
                 message={localizationText.BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE}
-                btnText={localizationText.COMMON.TRY_AGAIN}
+                btnText={'COMMON.TRY_AGAIN'}
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

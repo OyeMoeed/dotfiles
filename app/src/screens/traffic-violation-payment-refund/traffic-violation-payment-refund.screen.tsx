@@ -51,7 +51,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
         onPressBtn={handleOtpVerification}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
-        btnText={localizationText.TRAFFIC_VIOLATION.REFUND}
+        btnText={'TRAFFIC_VIOLATION.REFUND'}
         disableBtnIcons
         backgroundGradient={colors.appGradient.buttonBackground}
       />

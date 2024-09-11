@@ -196,7 +196,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
               onPress={handleSubmit(onSubmit)}
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
+              btnText={'NEW_BENEFICIARY.ADD_BENEFICIARY'}
               btnIconsDisabled
               btnStyle={styles.btnStyles}
             />

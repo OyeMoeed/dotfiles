@@ -199,7 +199,7 @@ const PriceCalculatorScreen: React.FC = () => {
           btnIconsDisabled
           large
           btnType={buttonVariants.PRIMARY}
-          btnText={localizationText.PRICE_CALCULATOR.TRANSFER_NOW}
+          btnText={'PRICE_CALCULATOR.TRANSFER_NOW'}
           btnStyle={styles.buttonStyles}
           onPress={handleTransfer}
         />

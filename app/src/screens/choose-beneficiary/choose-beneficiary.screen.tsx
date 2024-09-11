@@ -78,7 +78,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
         <IPayView style={styles.addBeneficiaryBtn}>
           <IPayButton
             onPress={handleAddNewBeneficiray}
-            btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+            btnText={'LOCAL_TRANSFER.ADD_NEW_BENEFICIARY'}
             btnType={buttonVariants.OUTLINED}
             medium
             leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
@@ -90,7 +90,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
         large
         disabled={!selectedBeneficiary}
         btnType={buttonVariants.PRIMARY}
-        btnText={localizationText.COMMON.NEXT}
+        btnText={'COMMON.NEXT'}
         btnStyle={styles.buttonStyles}
         onPress={handleBeneficiaryTransfer}
       />

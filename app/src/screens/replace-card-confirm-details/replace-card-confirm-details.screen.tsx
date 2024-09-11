@@ -176,7 +176,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               btnStyle={styles.btn}
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.CONFIRM}
+              btnText={'COMMON.CONFIRM'}
             />
           </IPayView>
         </IPayView>

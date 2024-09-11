@@ -31,15 +31,10 @@ const ActivateBeneficiarySuccessScreen: React.FC = () => {
               descriptionText={localizationText.ACTIVATE_BENEFICIARY.NOW_YOU_CAN_TRANSFER}
             />
             <IPayView style={styles.buttonWrapper}>
-              <IPayButton
-                btnType="primary"
-                btnText={localizationText.ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER}
-                medium
-                btnIconsDisabled
-              />
+              <IPayButton btnType="primary" btnText={'ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER'} medium btnIconsDisabled />
               <IPayButton
                 btnType="outline"
-                btnText={localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE}
+                btnText={'NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE'}
                 medium
                 btnIconsDisabled
                 onPress={() => navigate(ScreenNames.LOCAL_TRANSFER)}

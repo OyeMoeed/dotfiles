@@ -34,7 +34,7 @@ const SendGiftScreen: React.FC = () => {
         <IPaySubHeadlineText text={'SEND_GIFT.GIFT_DESCRIPTION'} regular />
         <IPayButton
           btnType={buttonVariants.PRIMARY}
-          btnText={localizationText.SEND_GIFT.SEND_GIFT_NOW}
+          btnText={'SEND_GIFT.SEND_GIFT_NOW'}
           textStyle={styles.buttonText}
           hasRightIcon
           onPress={sendGiftNow}

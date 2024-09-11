@@ -185,7 +185,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             />
           </IPayView>
           <IPayButton
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText={'COMMON.CONFIRM'}
             btnType={buttonVariants.PRIMARY}
             large
             btnIconsDisabled
@@ -266,7 +266,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           <IPayButton
             onPress={handleSubmit(onSubmitData)}
             disabled={!watch(AddBeneficiary.BENEFICIARY_NAME) || !watch(AddBeneficiary.IBAN)}
-            btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
+            btnText={'NEW_BENEFICIARY.ADD_BENEFICIARY'}
             btnType={buttonVariants.PRIMARY}
             large
             btnStyle={styles.btnStyle}

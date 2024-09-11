@@ -149,7 +149,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
       </IPayView>
 
       <IPayButton
-        btnText={localizationText.COMMON.SAVE}
+        btnText={'COMMON.SAVE'}
         btnType={buttonVariants.PRIMARY}
         onPress={onSubmit}
         large

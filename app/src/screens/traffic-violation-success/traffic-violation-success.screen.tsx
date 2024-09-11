@@ -61,14 +61,14 @@ const TrafficViolationSuccessScreen: React.FC = () => {
                 onPress={payOtherViolation}
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText={localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION}
+                btnText={'TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION'}
               />
 
               <IPayButton
                 medium
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                btnText={localizationText.COMMON.SHARE}
+                btnText={'COMMON.SHARE'}
               />
             </IPayView>
           ) : (
@@ -77,7 +77,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
               onPress={payOtherViolation}
               btnType={buttonVariants.LINK_BUTTON}
               leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-              btnText={localizationText.TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION}
+              btnText={'TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION'}
             />
           )}
           <IPayButton
@@ -85,7 +85,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
             large
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.natural.natural0} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
           />
         </IPayView>
       </IPayView>

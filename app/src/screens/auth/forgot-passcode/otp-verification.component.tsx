@@ -149,7 +149,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             <IPayButton
               disabled={counter > 0}
               btnType="link-button"
-              btnText={localizationText.COMMON.SEND_CODE_AGAIN}
+              btnText={'COMMON.SEND_CODE_AGAIN'}
               small
               btnStyle={styles.sendCodeBtnStyle}
               rightIcon={
@@ -165,13 +165,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
               }
               onPress={handleRestart}
             />
-            <IPayButton
-              btnType="primary"
-              btnText={localizationText.COMMON.CONFIRM}
-              large
-              btnIconsDisabled
-              onPress={onConfirm}
-            />
+            <IPayButton btnType="primary" btnText={'COMMON.CONFIRM'} large btnIconsDisabled onPress={onConfirm} />
 
             {showVerify && (
               <IPayView style={styles.verifyView}>
@@ -190,7 +184,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             <IPayButton
               onPress={handleOnPressHelp}
               btnType="link-button"
-              btnText={localizationText.COMMON.NEED_HELP}
+              btnText={'COMMON.NEED_HELP'}
               large
               btnStyle={styles.needHelpBtn}
               rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}

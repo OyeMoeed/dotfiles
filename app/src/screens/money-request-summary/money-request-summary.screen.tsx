@@ -287,7 +287,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             medium
             onPress={onPay}
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText={'COMMON.CONFIRM'}
             btnIconsDisabled
             disabled={monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining}
           />

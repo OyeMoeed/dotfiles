@@ -187,7 +187,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 <IPayButton
                   btnType="outline"
                   onPress={onPressCancel}
-                  btnText={localizationText.REQUEST_MONEY.CANCEL_REQUEST}
+                  btnText={'REQUEST_MONEY.CANCEL_REQUEST'}
                   medium
                   btnStyle={[styles.button]}
                   leftIcon={<IPayIcon icon={icons.remove} size={18} color={colors.primary.primary500} />}
@@ -198,7 +198,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 <IPayButton
                   btnType={buttonVariants.PRIMARY}
                   onPress={onPressPay}
-                  btnText={localizationText.REQUEST_MONEY.PAY}
+                  btnText={'REQUEST_MONEY.PAY'}
                   large
                   btnIconsDisabled
                   btnStyle={styles.button}
@@ -206,7 +206,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 <IPayButton
                   btnType="outline"
                   onPress={showActionSheet}
-                  btnText={localizationText.REQUEST_MONEY.REJECT}
+                  btnText={'REQUEST_MONEY.REJECT'}
                   large
                   btnIconsDisabled
                   btnStyle={styles.rejectButton}

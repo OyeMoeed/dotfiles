@@ -265,7 +265,7 @@ const OfferDetailsScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} />}
-            btnText={localizationText.OFFERS.VISIT_WEBSITE}
+            btnText={'OFFERS.VISIT_WEBSITE'}
             btnStyle={styles.flexStyle}
           />
           <IPayButton
@@ -273,7 +273,7 @@ const OfferDetailsScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.location1} color={colors.primary.primary500} />}
-            btnText={localizationText.OFFERS.NEAREST_STORE}
+            btnText={'OFFERS.NEAREST_STORE'}
             btnStyle={styles.flexStyle}
           />
         </IPayView>

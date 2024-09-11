@@ -151,7 +151,7 @@ const NewSadadBillScreen: React.FC = () => {
         <SadadFooterComponent
           btnDisbaled={warningMessage}
           btnStyle={styles.footerBtn}
-          btnText={localizationText.TOP_UP.PAY}
+          btnText={'TOP_UP.PAY'}
           disableBtnIcons
           warning={warningMessage}
           onPressBtn={onNavigateToConfirm}

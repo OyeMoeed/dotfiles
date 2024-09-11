@@ -47,7 +47,7 @@ const IPayNearestAtmComponent: React.FC<IPayNearestAtmComponentProps> = ({
         btnType={buttonVariants.OUTLINED}
         large
         btnIconsDisabled
-        btnText={localizationText.ATM_WITHDRAWAL.CHECK_NEAREST_ATM}
+        btnText={'ATM_WITHDRAWAL.CHECK_NEAREST_ATM'}
         btnStyle={styles.btnStyles}
       />
 

@@ -40,7 +40,7 @@ const PhysicalCardMainScreen: React.FC = () => {
             });
           }}
           btnIconsDisabled
-          btnText={localizationText.CARD_OPTIONS.PRINT_CARD}
+          btnText={'CARD_OPTIONS.PRINT_CARD'}
           large
           btnType={buttonVariants.PRIMARY}
           btnStyle={styles.btnStyle}
@@ -102,7 +102,7 @@ const PhysicalCardMainScreen: React.FC = () => {
           }
           btnType={buttonVariants.LINK_BUTTON}
           btnIconsDisabled
-          btnText={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD}
+          btnText={'PHYSICAL_CARD.ISSUE_A_NEW_CARD'}
         />
       </IPayView>
     </IPaySafeAreaView>

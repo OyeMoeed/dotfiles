@@ -98,7 +98,7 @@ const MoiPaymentRefund: React.FC = () => {
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           onPressBtn={onPressConfirm}
-          btnText={localizationText.COMMON.CONFIRM}
+          btnText={'COMMON.CONFIRM'}
           totalAmount={totalAmount}
           btnRightIcon={<IPayIcon size={20} color={colors.natural.natural0} />}
         />

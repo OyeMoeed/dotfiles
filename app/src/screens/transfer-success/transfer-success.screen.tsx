@@ -129,13 +129,13 @@ const TransferSuccessScreen = () => {
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={localizationText.TOP_UP.SHARE}
+                  btnText={'TOP_UP.SHARE'}
                 />
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   rightIcon={<ExportIcon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+                  btnText={'TRANSACTION_HISTORY.VAT_INVOICE'}
                 />
               </IPayView>
               <IPayButton
@@ -143,7 +143,7 @@ const TransferSuccessScreen = () => {
                 btnType={buttonVariants.PRIMARY}
                 large
                 leftIcon={<IPayIcon icon={icons.HOME_2} size={14} color={colors.natural.natural0} />}
-                btnText={localizationText.COMMON.HOME}
+                btnText={'COMMON.HOME'}
               />
             </IPayView>
           }

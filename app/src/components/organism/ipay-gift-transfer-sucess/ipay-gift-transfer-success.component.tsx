@@ -208,7 +208,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayButton
               large
               btnType="primary"
-              btnText={localizationText.COMMON.HOME}
+              btnText={'COMMON.HOME'}
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
               onPress={onHome}

@@ -132,13 +132,13 @@ const InternationalTransferSuccessScreen: React.FC = () => {
               medium
               btnType={buttonVariants.LINK_BUTTON}
               leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-              btnText={localizationText.COMMON.SHARE}
+              btnText={'COMMON.SHARE'}
             />
             <IPayButton
               medium
               btnType={buttonVariants.LINK_BUTTON}
               rightIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} size={16} />}
-              btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+              btnText={'TRANSACTION_HISTORY.VAT_INVOICE'}
               onPress={handleVatInvoice}
             />
           </IPayView>
@@ -146,7 +146,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
             large
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.natural.natural0} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
             onPress={() => navigate(ScreenNames.HOME)}
           />
         </IPayView>

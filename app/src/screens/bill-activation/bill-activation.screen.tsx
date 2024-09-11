@@ -47,7 +47,7 @@ const BillActivationScreen: React.FC = () => {
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.BILL_ACTIVATION.PAY_BILL}
+            btnText={'BILL_ACTIVATION.PAY_BILL'}
             btnStyle={styles.btnStyle}
             btnIconsDisabled
             onPress={onPressPayBill}
@@ -57,7 +57,7 @@ const BillActivationScreen: React.FC = () => {
             large
             btnType={buttonVariants.LINK_BUTTON}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText={'COMMON.HOME'}
           />
         </IPayView>
       </IPayView>

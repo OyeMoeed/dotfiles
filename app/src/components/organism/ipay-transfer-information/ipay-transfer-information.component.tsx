@@ -157,7 +157,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           <IPayButton
             small
             textStyle={styles.btnText}
-            btnText={localizationText.PROFILE.REMOVE}
+            btnText={'PROFILE.REMOVE'}
             hasRightIcon
             rightIcon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} size={14} />}
             btnType={buttonVariants.LINK_BUTTON}

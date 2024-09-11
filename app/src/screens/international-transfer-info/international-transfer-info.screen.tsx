@@ -111,7 +111,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                   <IPayButton
                     btnIconsDisabled
                     btnType={buttonVariants.LINK_BUTTON}
-                    btnText={localizationText.COMMON.VIEW_DETAILS}
+                    btnText={'COMMON.VIEW_DETAILS'}
                     onPress={() => beneficiaryDetailsRef.current.present()}
                   />
                 }
@@ -165,7 +165,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           </IPayView>
         </IPayScrollView>
         <IPayButton
-          btnText={localizationText.COMMON.NEXT}
+          btnText={'COMMON.NEXT'}
           btnType={buttonVariants.PRIMARY}
           large
           disabled={!selectedReason}

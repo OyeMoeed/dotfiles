@@ -132,7 +132,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
             large
             btnIconsDisabled
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.COMMON.NEXT}
+            btnText={'COMMON.NEXT'}
           />
         </IPayView>
       </IPayView>

@@ -249,7 +249,7 @@ const InternationalTransferConfirmation: React.FC = () => {
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.INTERNATIONAL_TRANSFER.TRANSFER}
+              btnText={'INTERNATIONAL_TRANSFER.TRANSFER'}
               btnIconsDisabled
               disabled={!checkTermsAndConditions}
               onPress={onPressTransfer}
@@ -301,7 +301,7 @@ const InternationalTransferConfirmation: React.FC = () => {
           <IPayButton
             large
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.COMMON.SAVE}
+            btnText={'COMMON.SAVE'}
             btnIconsDisabled
             btnStyle={styles.saveBtnStyle}
             onPress={onPressSavePromo}

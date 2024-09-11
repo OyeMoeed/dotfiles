@@ -111,7 +111,7 @@ const IPayList: React.FC<IPayListProps> = ({
               btnStyle={dynamicStyles.buttonStyle}
               onPress={onPressSaveQR}
               btnType="primary"
-              btnText={localizationText.COMMON.SAVE}
+              btnText={'COMMON.SAVE'}
               textColor={colors.secondary.secondary800}
               rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
             />

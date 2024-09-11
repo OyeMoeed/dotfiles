@@ -302,7 +302,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
                 btnType="primary"
-                btnText={localizationText.COMMON.SAVE}
+                btnText={'COMMON.SAVE'}
                 large
                 btnIconsDisabled
                 disabled={!isDirty}

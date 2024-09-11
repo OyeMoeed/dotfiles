@@ -92,7 +92,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               {showSplitButton && (
                 <IPayButton
                   btnType="primary"
-                  btnText={localizationText.TRANSACTION_HISTORY.SPLIT_BILL}
+                  btnText={'TRANSACTION_HISTORY.SPLIT_BILL'}
                   medium
                   btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
                   leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
@@ -103,7 +103,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 <IPayButton
                   btnType="outline"
                   onPress={onPressShare}
-                  btnText={localizationText.TOP_UP.SHARE}
+                  btnText={'TOP_UP.SHARE'}
                   medium
                   btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
                   leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
@@ -112,7 +112,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               {transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER && (
                 <IPayButton
                   btnType="primary"
-                  btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+                  btnText={'TRANSACTION_HISTORY.VAT_INVOICE'}
                   medium
                   btnStyle={styles.button}
                   rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
