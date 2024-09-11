@@ -21,6 +21,7 @@ import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
 import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
@@ -111,7 +112,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
           ...billerItem,
           id: billerItem.billerId,
-          image: '', // TODO: There is no image on get billers response will add image here when receive from response
+          image: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerItem.billerId), // TODO: There is no image on get billers response will add image here when receive from response
           text: billerItem.billerDesc,
           type: billerItem.billerTypeDesc,
         })),
