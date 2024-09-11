@@ -48,7 +48,7 @@ interface IApiStatus {
 interface ApiResponse<T> {
   status: IApiStatus;
   response?: T;
-  successfulResponse: boolean;
+  successfulResponse?: boolean;
   authentication?: {
     transactionId: string;
   };
