@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayScrollView, IPayText, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayList, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
@@ -13,10 +13,15 @@ import React from 'react';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { shortString } from '@app/utilities/string-functions.utils';
+import { shortString } from '@app/utilities';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
+
+interface BillPaymentItemProps {
+  // eslint-disable-next-line react/no-unused-prop-types
+  item: BillPaymentInfosTypes;
+}
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   const { isSaveOnly, isPayOnly, isPayPartially, totalAmount, billPaymentInfos } = route.params;
@@ -96,7 +101,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
 
             <IPayFlatlist
               data={billPaymentInfos}
-              renderItem={({ item }: { item: BillPaymentInfosTypes }) => (
+              renderItem={({ item }: BillPaymentItemProps) => (
                 <IPayBillDetailsOption
                   headerData={{
                     title: item.billNickname,

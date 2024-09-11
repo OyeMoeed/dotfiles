@@ -25,7 +25,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -43,7 +42,7 @@ import {
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -65,7 +64,6 @@ const LocalTransferScreen: React.FC = () => {
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const isKeyboardOpen = useKeyboardStatus();
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
@@ -174,7 +172,7 @@ const LocalTransferScreen: React.FC = () => {
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
   };
@@ -186,8 +184,8 @@ const LocalTransferScreen: React.FC = () => {
       nickname: nickName,
     };
     try {
-      const apiResponse = await editLocalTransferBeneficiary(
-        selectedBeneficiaryRef.current?.beneficiaryCode,
+      await editLocalTransferBeneficiary(
+        selectedBeneficiaryRef?.current?.beneficiaryCode || '',
         activateBeneficiaryPayload,
       );
 
@@ -211,15 +209,9 @@ const LocalTransferScreen: React.FC = () => {
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
-  };
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-    else handleActivateBeneficiary();
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
@@ -240,6 +232,8 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
+                // TODO: fix in another PR
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 onPressBtn(item);
               }}
               btnText={
@@ -330,11 +324,12 @@ const LocalTransferScreen: React.FC = () => {
   const hasBeneficiariesData = () =>
     [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.INACTIVE)]?.length;
 
-  //IVR
+  // IVR
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
       ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
       : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
+  const activateBeneficiary = useRef<bottomSheetTypes>(null);
 
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
@@ -346,19 +341,12 @@ const LocalTransferScreen: React.FC = () => {
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);
-  const activateBeneficiary = useRef<bottomSheetTypes>(null);
-  const handleReceiveCall = useCallback(async () => {
-    const repsonse = await onPressActivateBeneficiary();
-    if (repsonse === ApiResponseStatusType.SUCCESS) {
-      setActivateHeight(SNAP_POINTS.LARGE);
-      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
-    }
-  }, []);
 
   const handleCallAlinma = useCallback(() => {
     setActivateHeight(SNAP_POINTS.LARGE);
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
+
   const onPressActivateBeneficiary = async () => {
     const activateBeneficiaryPayload = {
       beneficiaryCode: selectedBeneficiaryRef.current?.beneficiaryCode,
@@ -370,24 +358,40 @@ const LocalTransferScreen: React.FC = () => {
 
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          return apiResponse?.status?.type;
+          return apiResponse?.status?.type || '';
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
-          break;
+          return null;
         default:
-          break;
+          return null;
       }
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      return null;
     }
   };
+
+  const handleReceiveCall = useCallback(async () => {
+    const repsonse = await onPressActivateBeneficiary();
+    if (repsonse === ApiResponseStatusType.SUCCESS) {
+      setActivateHeight(SNAP_POINTS.LARGE);
+      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
+    }
+  }, []);
 
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
     setActivateHeight(SNAP_POINTS.SMALL);
     setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
   }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
+    else handleActivateBeneficiary();
+  };
+
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {
       case ActivateViewTypes.RECEIVE_CALL:

@@ -21,13 +21,13 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import icons from '@app/assets/icons';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
 import { TermsAndConditionsRefTypes } from '../card-renewal/card-renewal.screen.interface';
-import icons from '@app/assets/icons';
-import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 
 const DUMMY_DATA = {
@@ -122,10 +122,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               <IPayList
                 title={localizationText.REPLACE_CARD.ADDRESS}
                 rightText={
-                  <IPayPressable
-                    onPress={onClose}
-                    style={styles.addressStyle}
-                  >
+                  <IPayPressable onPress={onClose} style={styles.addressStyle}>
                     <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
                     <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
                   </IPayPressable>

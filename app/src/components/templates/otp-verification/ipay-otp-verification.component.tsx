@@ -8,6 +8,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
 import { forwardRef, useImperativeHandle } from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
 import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
@@ -17,7 +18,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     {
       testID,
       onPressConfirm,
-      mobileNumber,
+      mobileNumber = '',
       setOtp,
       setOtpError,
       otpError,
@@ -38,7 +39,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
   ) => {
     const { colors } = useTheme();
     const localizationText = useLocalization();
-    const styles = otpVerificationStyles(colors);
+    const styles = otpVerificationStyles();
     const { showToast } = useToastContext();
     const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
     const renderToast = (toastMsg: string) => {
@@ -88,7 +89,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
           <IPayButton
             disabled={counter > 0}
-            btnType="link-button"
+            btnType={buttonVariants.LINK_BUTTON}
             btnText={localizationText.COMMON.SEND_CODE_AGAIN}
             small
             btnStyle={styles.sendCodeBtnStyle}
@@ -102,7 +103,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
             onPress={onSendCodeAgainPress}
           />
           <IPayButton
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             disabled={counter <= 0}
             btnText={localizationText.COMMON.CONFIRM}
             large
@@ -112,7 +113,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           {showHelp && (
             <IPayButton
               onPress={handleOnPressHelp}
-              btnType="link-button"
+              btnType={buttonVariants.LINK_BUTTON}
               btnText={localizationText.COMMON.NEED_HELP}
               large
               btnStyle={styles.needHelpBtn}

@@ -17,16 +17,15 @@ import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import { default as screenNames } from '@app/navigation/screen-names.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { setPointsRedemptionReset } from '@app/store/slices/reset-state-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
 import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
@@ -55,7 +54,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   };
 
   const goBackToHome = () => {
-    navigation.navigate(screenNames.HOME);
+    navigation.navigate(ScreenNames.HOME);
   };
   const dispatch = useDispatch();
 
@@ -81,13 +80,13 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       const walletInfoResponse: any = await getWalletInfo(payload);
       if (walletInfoResponse?.status?.type === 'SUCCESS') {
         dispatch(setWalletInfo(walletInfoResponse?.response));
-        navigate(screenNames.POINTS_REDEMPTIONS, {
+        navigate(ScreenNames.POINTS_REDEMPTIONS, {
           aktharPointsInfo: aktharPointsResponse?.response,
           isEligible: true,
         });
       }
     } else {
-      navigate(screenNames.POINTS_REDEMPTIONS, { isEligible: false });
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }
     hideSpinner();
   };
@@ -182,7 +181,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                 </IPayView>
 
                 {successDetail.map(({ title, value, icon, pressIcon }, index) => (
-                  <IPayView style={styles.listContainer} key={index}>
+                  <IPayView style={styles.listContainer} key={`${`${index}SuccessDetail`}`}>
                     <IPayView style={styles.listView}>
                       <IPayFootnoteText text={title} color={colors.natural.natural900} />
                       <IPayView style={styles.listDetails}>

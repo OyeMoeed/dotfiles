@@ -3,4 +3,4 @@ enum CardKeys {
   CUSTOMER_KNOWLEDGE_FORM = 'customerKnowledgeForm',
 }
 
-export { CardKeys };
+export default CardKeys;

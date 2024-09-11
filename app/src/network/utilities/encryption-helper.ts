@@ -7,4 +7,4 @@ const encryptData = (msg: string, secret: string) => {
   return jsEncrypt.encrypt(msg);
 };
 
-export { encryptData };
+export default encryptData;

@@ -21,8 +21,8 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
   const [newPin, setNewPin] = useState<string>('');
   const [clearPin, setClearPin] = useState<boolean>();
 
-  const getScreenTitle = (currentView: string) => {
-    switch (currentView) {
+  const getTitle = (selectedView: string) => {
+    switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
         return localizationText.VIRTUAL_CARD.CREATE_CARD_PIN_PIN;
       case ChangeCardPinViewTypes.ConfirmNewPin:
@@ -32,8 +32,8 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
     }
   };
 
-  const getScreenDescription = (currentView: string) => {
-    switch (currentView) {
+  const getDescription = (selectedView: string) => {
+    switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
         return localizationText.VIRTUAL_CARD.FIRST_TIME_CODE;
       case ChangeCardPinViewTypes.ConfirmNewPin:
@@ -43,8 +43,8 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
     }
   };
 
-  const getErrorTitle = (currentView: string) => {
-    switch (currentView) {
+  const getErrorTitle = (selectedView: string) => {
+    switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
         return localizationText.CHANGE_PIN.INVALID_PIN;
       case ChangeCardPinViewTypes.ConfirmNewPin:
@@ -54,8 +54,8 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
     }
   };
 
-  const getErrorDescription = (currentView: string) => {
-    switch (currentView) {
+  const getErrorDescription = (selectedView: string) => {
+    switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
         return localizationText.CHANGE_PIN.OLD_PIN;
       case ChangeCardPinViewTypes.ConfirmNewPin:
@@ -101,31 +101,27 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
         }
         break;
       default:
-        return '';
+        break;
     }
   };
 
-  return (
-    <>
-      {currentView === ChangeCardPinViewTypes.EnterReceiveOtp ? (
-        <OtpVerificationComponent onConfirmPress={onSuccess} onPressHelp={handleOnPressHelp} />
-      ) : (
-        <IPayView style={styles.container}>
-          <IPayImage image={images.securityCard} style={styles.lockIconView} />
-          <IPayView style={styles.headingView}>
-            <IPayPageDescriptionText heading={getScreenTitle(currentView)} text={getScreenDescription(currentView)} />
-          </IPayView>
-          <IPayView style={styles.pincodeViewContainer}>
-            <IPayPasscode
-              clearPin={clearPin}
-              passcodeError={passcodeError}
-              data={constants.DIALER_DATA}
-              onEnterPassCode={onEnterPassCode}
-            />
-          </IPayView>
-        </IPayView>
-      )}
-    </>
+  return currentView === ChangeCardPinViewTypes.EnterReceiveOtp ? (
+    <OtpVerificationComponent onConfirmPress={onSuccess} onPressHelp={handleOnPressHelp} />
+  ) : (
+    <IPayView style={styles.container}>
+      <IPayImage image={images.securityCard} style={styles.lockIconView} />
+      <IPayView style={styles.headingView}>
+        <IPayPageDescriptionText heading={getTitle(currentView)} text={getDescription(currentView)} />
+      </IPayView>
+      <IPayView style={styles.pincodeViewContainer}>
+        <IPayPasscode
+          clearPin={clearPin}
+          passcodeError={passcodeError}
+          data={constants.DIALER_DATA}
+          onEnterPassCode={onEnterPassCode}
+        />
+      </IPayView>
+    </IPayView>
   );
 };
 

@@ -13,15 +13,21 @@ import {
 } from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.interface';
 import addLocalTransferBeneficiary from '@app/network/services/local-transfer/add-new-beneficiary/add-new-beneficiary.service';
 import { BeneficiaryBankDetailsReq } from '@app/network/services/local-transfer/beneficiary-bank-details/beneficiary-bank-details.interface';
+import { getValidationSchemas } from '@app/services';
 import LocalBeneficiaryMetaMockProps, {
   LocalBank,
 } from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
-import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { getBankIconByCode } from '@app/utilities/bank-logo';
-import { AddBeneficiary, AddBeneficiaryKey, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { getBankIconByCode } from '@app/utilities';
+import {
+  AddBeneficiary,
+  AddBeneficiaryKey,
+  ApiResponseStatusType,
+  buttonVariants,
+  spinnerVariant,
+} from '@app/utilities/enums.util';
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
@@ -76,12 +82,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       beneficiaryNickName: '',
     },
   });
-  const formatKey = (key: string) => {
-    return key
+  const formatKey = (key: string) =>
+    key
       .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase words
       .replace(/^./, (str) => str?.toUpperCase()); // Capitalize the first letter
-  };
-
   const generatedData = () => {
     if (beneficiaryData) {
       return Object.entries(beneficiaryData).map(([key, value]) => ({

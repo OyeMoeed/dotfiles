@@ -4,12 +4,12 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import CardDetailsKeys from '@app/enums/card-details-type.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import React from 'react';
 import { cardDetailsProps, FieldKeyMappingProps } from './ipay-card-details.interface';
 import cardDetailsStyle from './ipay-card-details.style';
 
-const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
+const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = cardDetailsStyle(colors);

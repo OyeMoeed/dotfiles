@@ -24,4 +24,3 @@ interface IPayCreateBeneficiaryProps {
 }
 
 export { BankDetails, BeneficiaryBankDetails, FormValues, IPayCreateBeneficiaryProps, ListOption };
-

@@ -9,7 +9,7 @@ import RNRestart from 'react-native-restart';
 
 // Hook for modal actions
 export const useModalActions = (ref: any) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen] = useState(false);
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {
