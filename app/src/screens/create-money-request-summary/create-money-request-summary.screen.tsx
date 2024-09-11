@@ -24,7 +24,7 @@ import {
 } from '@app/network/services/request-management/sent-requests/sent-requests.interface';
 import { createMoneyRequestService } from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';

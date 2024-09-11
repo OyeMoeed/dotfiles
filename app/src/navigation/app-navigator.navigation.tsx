@@ -81,7 +81,7 @@ const MainNavigation: React.FC = () => {
   return (
     <>
       <NavigationContainer ref={navigationRef}>
-        {isAuthorized ? (
+        {true ? (
           <>
             <MainStackNavigator />
             <IPayBlurView />

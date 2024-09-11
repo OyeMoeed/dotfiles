@@ -25,7 +25,7 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
@@ -122,7 +122,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await sendRequestedMoneyPrepare(walletInfo.walletNumber, transId, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       setOtpRef(apiResponse?.response?.otpRef as string);
       setTransactionId(apiResponse?.authentication?.transactionId);
       if (showOtpSheet) {
