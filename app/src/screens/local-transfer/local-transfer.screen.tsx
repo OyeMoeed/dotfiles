@@ -120,6 +120,7 @@ const LocalTransferScreen: React.FC = () => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    setIsLoadingData(true);
   };
 
   useFocusEffect(

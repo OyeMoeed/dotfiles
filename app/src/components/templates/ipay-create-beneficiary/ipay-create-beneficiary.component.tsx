@@ -143,21 +143,18 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           ? TransferTypes.alinmaBank
           : TransferTypes.localBankInsideKsa,
     };
-    console.log('onSubmitData', payload);
 
     if (isValid) {
       renderSpinner(true);
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
-      console.log('apiResponse', apiResponse);
-      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+
+      if (apiResponse) {
         setBeneficiaryData(values);
         navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { response: apiResponse });
         renderSpinner(false);
-      } else {
-        renderSpinner(false);
-        renderToast(apiResponse?.error?.error ?? '');
       }
     }
+    renderSpinner(false);
   };
 
   const onPrepareData = async (values: FormValues) => {
