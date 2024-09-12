@@ -22,7 +22,7 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
   const styles = atmDetailsStyle(colors);
   const localizationText = useLocalization();
   const { title, address, distance, type, location } = data;
-  const initialRegion = constants.INITIAL_REGION;
+  const initialRegion = { ...constants.INITIAL_REGION, longitude: location?.longitude, latitude: location?.latitude };
 
   const memoizedDistance = useMemo(() => {
     const distanceInKm = distance && distance.replace('.', ',');

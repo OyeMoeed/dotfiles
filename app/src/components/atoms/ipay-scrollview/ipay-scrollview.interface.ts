@@ -1,3 +1,4 @@
+import React, { JSX } from 'react';
 import { ScrollViewProps, StyleProp, ViewStyle } from 'react-native';
 
 /**
@@ -29,5 +30,5 @@ export interface IPayScrollViewProps extends ScrollViewProps {
    * this fixed scrolling inside gesture handler
    */
   isGHScrollView?: boolean;
-  showsVerticalScrollIndicator?:boolean;
+  showsVerticalScrollIndicator?: boolean;
 }

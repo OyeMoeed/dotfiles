@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayText } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -16,7 +16,6 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
   onChangeCategory,
   errors,
 }) => {
-  
   const { colors } = useTheme();
   const styles = customerKnowledgeStyles(colors);
   const localizationText = useLocalization();
@@ -49,17 +48,17 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
         rules={{ required: true }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
-            label={localizationText.PROFILE.EMPLOYEE_NAME}
+            label={localizationText.PROFILE.EMPLOYER_NAME}
             editable
             value={value}
             onChangeText={onChange}
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             containerStyle={styles.inputContainerStyle}
-            isError={!!errors?.employee_name}
-            assistiveText={errors?.employee_name && localizationText.COMMON.REQUIRED_FIELD}
+            isError={!!errors?.employer_name}
+            assistiveText={errors?.employer_name && localizationText.COMMON.REQUIRED_FIELD}
           />
         )}
-        name="employee_name"
+        name="employer_name"
       />
       <Controller
         control={control}
@@ -119,7 +118,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -138,7 +137,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -156,7 +155,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       />
       <Controller
         control={control}
-        rules={{ required: true }}
+        rules={{ required: false }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
             label={localizationText.PROFILE.POSTAL_CODE}
@@ -174,7 +173,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -193,7 +192,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput
@@ -212,7 +211,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
       <Controller
         control={control}
         rules={{
-          required: true,
+          required: false,
         }}
         render={({ field: { onChange, value } }) => (
           <IPayAnimatedTextInput

@@ -18,15 +18,10 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
   const navigation = useNavigation();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
+
   useEffect(() => {
     setTopLevelNavigator(navigation);
   });
-
-  useImperativeHandle(ref, () => ({
-    triggerToast: (toastMsg: string) => {
-      renderToast(toastMsg);
-    },
-  }));
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -38,6 +33,13 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
       isBottomSheet: true,
     });
   };
+
+  useImperativeHandle(ref, () => ({
+    triggerToast: (toastMsg: string) => {
+      renderToast(toastMsg);
+    },
+  }));
+
   return (
     <IPayView style={styles.container}>
       <IPayView style={styles.lockIconView}>

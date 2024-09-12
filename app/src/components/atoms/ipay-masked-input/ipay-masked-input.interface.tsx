@@ -1,9 +1,10 @@
 // ipay-masked-input.interface.ts
 
+import { JSX } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { TextInputMaskOptionProp, TextInputMaskTypeProp } from 'react-native-masked-text';
 
-export interface IPayMaskedInputProps {
+interface IPayMaskedInputProps {
   testID?: string;
   label?: string;
   rightIcon?: JSX.Element;

@@ -29,6 +29,15 @@ const CardIssuanceConfirmationScreen = () => {
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
   const helpCenterRef = useRef<OpenBottomSheetRefTypes>(null);
 
+  const renderToast = () => {
+    showToast({
+      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      containerStyle: styles.toast,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
@@ -73,27 +82,16 @@ const CardIssuanceConfirmationScreen = () => {
     openBottomSheet.current?.close();
   };
 
-  const renderItem = ({ item }: IPayListItemProps) => {
-    return (
-      <IPayList
-        detailTextStyle={styles.detailsText}
-        textStyle={styles.titleText}
-        title={item.title}
-        detailText={item.detailText}
-        style={item.style}
-        showDetail
-      />
-    );
-  };
-
-  const renderToast = () => {
-    showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
+  const renderItem = ({ item }: IPayListItemProps) => (
+    <IPayList
+      detailTextStyle={styles.detailsText}
+      textStyle={styles.titleText}
+      title={item.title}
+      detailText={item.detailText}
+      style={item.style}
+      showDetail
+    />
+  );
 
   return (
     <IPaySafeAreaView>
@@ -155,7 +153,7 @@ const CardIssuanceConfirmationScreen = () => {
         customSnapPoint={['1%', '100%']}
         ref={helpCenterRef}
       >
-        <HelpCenterComponent testID={'help-center-bottom-sheet'} />
+        <HelpCenterComponent testID="help-center-bottom-sheet" />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

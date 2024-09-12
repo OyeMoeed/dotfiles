@@ -1,4 +1,4 @@
- import { render, fireEvent } from '@testing-library/react-native';
+import { render, fireEvent } from '@testing-library/react-native';
 import IPayRemainingAccountBalance from './ipay-remaining-account-balance.component';
 
 // Mock data
@@ -20,11 +20,7 @@ const mockWalletInfoWithZero = {
 describe('IPayRemainingAccountBalance Component', () => {
   it('displays progress bar when showProgress is true', () => {
     const { getByTestId } = render(
-      <IPayRemainingAccountBalance
-        testID="ipay-balance"
-        walletInfo={mockWalletInfo}
-        showProgress={true}
-      />
+      <IPayRemainingAccountBalance testID="ipay-balance" walletInfo={mockWalletInfo} showProgress={true} />,
     );
 
     const progressBar = getByTestId('ipay-balance-remaining-balane-base-view'); // Ensure this testID matches your component
@@ -33,11 +29,7 @@ describe('IPayRemainingAccountBalance Component', () => {
 
   it('updates top-up amount when input changes', () => {
     const { getByTestId } = render(
-      <IPayRemainingAccountBalance
-        testID="ipay-balance"
-        walletInfo={mockWalletInfo}
-        showProgress
-      />
+      <IPayRemainingAccountBalance testID="ipay-balance" walletInfo={mockWalletInfo} showProgress />,
     );
 
     const input = getByTestId('ipay-balance-remaining-balane-base-view'); // Use the correct testID for the input
@@ -47,15 +39,9 @@ describe('IPayRemainingAccountBalance Component', () => {
     expect(input.props.topUpAmount);
   });
 
-
-
   it('renders correctly with initial props', () => {
     const { getByTestId } = render(
-      <IPayRemainingAccountBalance
-        testID="ipay-balance"
-        walletInfo={mockWalletInfo}
-        showProgress={true}
-      />
+      <IPayRemainingAccountBalance testID="ipay-balance" walletInfo={mockWalletInfo} showProgress={true} />,
     );
 
     const container = getByTestId('ipay-balance-remaining-balane-base-view');
@@ -64,15 +50,10 @@ describe('IPayRemainingAccountBalance Component', () => {
 
   it('disables input when monthlyRemainingOutgoingAmount is 0', () => {
     const { getByTestId } = render(
-      <IPayRemainingAccountBalance
-        testID="ipay-balance"
-        walletInfo={mockWalletInfoWithZero}
-        showProgress={true}
-      />
+      <IPayRemainingAccountBalance testID="ipay-balance" walletInfo={mockWalletInfoWithZero} showProgress={true} />,
     );
 
     const input = getByTestId('ipay-balance-remaining-balane-base-view');
     expect(input.props.disabled);
   });
-
 });

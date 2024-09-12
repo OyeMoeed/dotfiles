@@ -13,7 +13,7 @@ interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProp
   name: string;
   defaultValue?: string;
   onMaxLengthReach?: (value: string, maxLength: number) => void;
-  mainContainerStyles?:   StyleProp<ViewStyle>;
+  mainContainerStyles?: StyleProp<ViewStyle>;
 }
 
 const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(
@@ -24,7 +24,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
       label,
       rightIcon,
       isError,
-      editable=true,
+      editable = true,
       containerStyle,
       actionDisabled,
       onClearInput,
@@ -91,7 +91,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
     };
 
     return (
-      <IPayView style={[mainContainerStyles]} testID={`${testID}-animated-input`}>
+      <IPayView style={mainContainerStyles} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
             styles.container,
@@ -130,14 +130,14 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
               style={styles.closeIcon}
               onPressIn={onClearInput}
             >
-              {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
+              {customIcon || <IPayIcon icon={icons.close} />}
             </IPayPressable>
           )}
         </IPayView>
         {(errors[name]?.message || assistiveText) && (
           <IPayCaption1Text
             style={errors[name]?.message ? styles.errorAssistiveTextText : styles.assistiveText}
-            text={errors[name]?.message ? errors[name]?.message as string :assistiveText}
+            text={errors[name]?.message ? (errors[name]?.message as string) : assistiveText}
             regular
           />
         )}

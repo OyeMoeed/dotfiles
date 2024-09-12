@@ -1,7 +1,7 @@
 // actionSheetProps.ts
 
 import { FiltersType } from '@app/utilities/enums.util';
-import { FilterSelectedValue } from '@app/utilities/filter-interface.utll';
+import { FilterSelectedValue } from '@app/utilities';
 import React from 'react';
 import { Control, FieldValues } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
@@ -18,6 +18,8 @@ export interface IPayFilterProps {
   /**
    * OnSubmit callback
    */
+  onClearFilters?: () => void;
+
   onSubmit: (event: FilterSelectedValue) => void;
   /**
    * prop for showing amount filter
@@ -40,11 +42,15 @@ export interface IPayFilterProps {
   isSearchShow?: boolean;
   applySearchOn?: string[];
   inputStyle?: StyleProp<ViewStyle>;
+  doneText?: string;
+  customFiltersValue?: boolean;
+  handleCallback?: (sheetName: string) => void;
 }
 
 export enum CurrentViewTypes {
   FILTERS = 'filters',
   FILTER_VALUES = 'filter-values',
+  BOTTOM_SHEET = 'bottom-sheet',
 }
 
 export interface FilterTypes {
@@ -83,4 +89,5 @@ export interface ControlFormField {
   message?: string;
   required?: boolean;
   showFocusStyle?: boolean;
+  suffix?: string;
 }

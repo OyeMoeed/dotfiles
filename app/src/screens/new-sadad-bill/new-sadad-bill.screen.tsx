@@ -5,21 +5,100 @@ import { IPaySadadBillDetailsBox } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import useSadadBillDetailsData from './new-sadad-bill.constant';
+import React, { useEffect, useState } from 'react';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import { useTypedSelector } from '@app/store/store';
 import newsadadBillStyles from './new-sadad-bill.style';
+import { NewSadadBillProps } from './new-sadad-bill.interface';
 
 const NewSadadBillScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = newsadadBillStyles(colors);
   const localizationText = useLocalization();
   // TODO will update on basis of API
-  const BILL_DETAILS = useSadadBillDetailsData();
   const dummyData = {
     balance: '5200',
-    availableBalance: '20,000',
+    availableBalance: '300',
     totalAmount: '550',
   };
+
+  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+
+  const route = useRoute<RouteProps>();
+  type RouteProps = RouteProp<
+    {
+      params: NewSadadBillProps;
+    },
+    'params'
+  >;
+
+  const {
+    billNickname,
+    billerName,
+    billerIcon,
+    totalAmount,
+    billNumOrBillingAcct,
+    dueDate,
+    billerId,
+    billIdType,
+    serviceDescription,
+  } = route.params;
+
+  const [amount, setAmout] = useState(totalAmount);
+  const [warningMessage, setWarningMessage] = useState('');
+
+  const getAmountWarning = () => {
+    if (Number(dummyData.availableBalance) <= 0) {
+      setWarningMessage(localizationText.NEW_SADAD_BILLS.NO_REMAINING_AMOUNT);
+    } else if (Number(dummyData.availableBalance) < Number(amount)) {
+      setWarningMessage(localizationText.NEW_SADAD_BILLS.INSUFFICIENT_BALANCE);
+    } else {
+      setWarningMessage('');
+    }
+  };
+
+  useEffect(() => {
+    getAmountWarning();
+  }, [amount]);
+
+  const onNavigateToConfirm = () => {
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+      isPayOnly: true,
+      showBalanceBox: false,
+      billPaymentInfos: [
+        {
+          billerId,
+          billNumOrBillingAcct,
+          amount: Number(amount),
+          dueDateTime: dueDate,
+          billIdType,
+          billingCycle: '', // TODO: need to confirm where can I get this value
+          billIndex: '0',
+          serviceDescription,
+          billerName,
+          walletNumber,
+          billNickname,
+          billerIcon,
+        },
+      ],
+    });
+  };
+
+  const onSetAmount = (value: string) => {
+    setAmout(value);
+  };
+
+  const billDetailsList = [
+    {
+      currency: localizationText.COMMON.SAR,
+      billTitle: billNickname,
+      vendor: billerName,
+      vendorIcon: billerIcon,
+      billAmount: totalAmount,
+    },
+  ];
 
   return (
     <IPaySafeAreaView>
@@ -39,22 +118,25 @@ const NewSadadBillScreen: React.FC = () => {
         />
         <IPayFlatlist
           showsVerticalScrollIndicator={false}
-          data={BILL_DETAILS}
+          data={billDetailsList}
           renderItem={({ item }) => (
             <IPaySadadBillDetailsBox
               style={styles.sadadDetailStyle}
               item={item}
-              showActionBtn
               actionBtnText={localizationText.COMMON.REMOVE}
               rightIcon={<IPayIcon icon={icons.trash} size={14} color={colors.primary.primary500} />}
+              handleAmountInputFromOutSide
+              onChangeAmountOutside={onSetAmount}
             />
           )}
         />
         <SadadFooterComponent
+          btnDisbaled={warningMessage !== ''}
           btnStyle={styles.footerBtn}
           btnText={localizationText.TOP_UP.PAY}
           disableBtnIcons
-          totalAmount={dummyData.totalAmount}
+          warning={warningMessage}
+          onPressBtn={onNavigateToConfirm}
         />
       </IPayView>
     </IPaySafeAreaView>

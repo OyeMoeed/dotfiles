@@ -48,8 +48,9 @@ const mobileAndIqamaStyles = (colors: any) =>
       color: colors.natural.natural900,
     },
     needHelpBtn: {
-      position: 'absoulute',
+      position: 'absolute',
       bottom: verticalScale(20),
+      alignSelf: 'center',
       zIndex: -1,
     },
     termsAndConditions: {

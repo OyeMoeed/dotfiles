@@ -1,3 +1,4 @@
+/* eslint-disable default-case */
 /* eslint-disable @typescript-eslint/lines-between-class-members */
 /* eslint-disable eqeqeq */
 /* eslint-disable no-alert */
@@ -9,46 +10,44 @@
 /* eslint-disable max-len */
 /* eslint-disable consistent-return */
 export class Crc {
-	scanData = {
-		
-		arr: [],
-  	cashBackObj: {
-			Type: '',
-			WalletNum: '',
-			Amount: '',
-			Currency: '',
-			UID: '',
-		},
-		atmtObj: { Type: '', ID: '' },
-		scannedData: null,
-		merchantWalletObj:{ Type: '', WalletNum: '', UID: '' },
-		crcCheck: null,
+  scanData = {
+    arr: [],
+    cashBackObj: {
+      Type: '',
+      WalletNum: '',
+      Amount: '',
+      Currency: '',
+      UID: '',
+    },
+    atmtObj: { Type: '', ID: '' },
+    scannedData: null,
+    merchantWalletObj: { Type: '', WalletNum: '', UID: '' },
+    crcCheck: null,
 
     scanStringData(str: string) {
-      let CRCData = str.substr(0, str.length - 4);
-			console.log(CRCData);
-			const utils = new Crc();
+      const CRCData = str.substr(0, str.length - 4);
+
+      const utils = new Crc();
       utils.CRCMaster.init();
       let CRCResult = utils.CRCMaster.Calculate(CRCData, 'ASCII').crc16;
       if (CRCResult.length == 1) {
-        CRCResult = '000' + CRCResult;
+        CRCResult = `000${CRCResult}`;
       } else if (CRCResult.length == 2) {
-        CRCResult = '00' + CRCResult;
+        CRCResult = `00${CRCResult}`;
       } else if (CRCResult.length == 3) {
-        CRCResult = '0' + CRCResult;
+        CRCResult = `0${CRCResult}`;
       }
 
       let sentData: any = { name: '', id: '', value: '' };
       let y = 0;
       for (let x = 0; x < str.length; x = y) {
-        let str1 = str.substr(y, 2);
-        let strLength1 = parseInt(str.substr(y + 2, 2));
-        let strValue1 = str.substr(y + 4, strLength1);
+        const str1 = str.substr(y, 2);
+        const strLength1 = parseInt(str.substr(y + 2, 2), 10);
+        const strValue1 = str.substr(y + 4, strLength1);
         y = y + 4 + strLength1;
-        console.log(str1, strLength1, strValue1);
+
         switch (str1) {
           case '00': {
-            console.log('payloadFormatIndicator =' + strValue1);
             sentData.name = 'payloadFormatIndicator';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -57,7 +56,6 @@ export class Crc {
             break;
           }
           case '02': {
-            console.log('merchantAccountInformation_Visa =' + strValue1);
             sentData.name = 'merchantAccountInformation_Visa';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -66,7 +64,6 @@ export class Crc {
             break;
           }
           case '04': {
-            console.log('merchantAccountInformation_Mastercard =' + strValue1);
             sentData.name = 'merchantAccountInformation_Mastercard';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -75,7 +72,6 @@ export class Crc {
             break;
           }
           case '15': {
-            console.log('merchantAccountInformation_UnionPay =' + strValue1);
             sentData.name = 'merchantAccountInformation_UnionPay';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -84,7 +80,6 @@ export class Crc {
             break;
           }
           case '52': {
-            console.log('merchantCategoryCode =' + strValue1);
             sentData.name = 'merchantCategoryCode';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -93,7 +88,6 @@ export class Crc {
             break;
           }
           case '53': {
-            console.log('transactionCurrency =' + strValue1);
             sentData.name = 'transactionCurrency';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -102,7 +96,6 @@ export class Crc {
             break;
           }
           case '54': {
-            console.log('transactionAmount =' + strValue1);
             sentData.name = 'transactionAmount';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -112,7 +105,6 @@ export class Crc {
           }
 
           case '58': {
-            console.log('countryCode =' + strValue1);
             sentData.name = 'countryCode';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -121,7 +113,6 @@ export class Crc {
             break;
           }
           case '59': {
-            console.log('merchantName =' + strValue1);
             sentData.name = 'merchantName';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -130,7 +121,6 @@ export class Crc {
             break;
           }
           case '60': {
-            console.log('merchantCity =' + strValue1);
             sentData.name = 'merchantCity';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -140,7 +130,6 @@ export class Crc {
           }
 
           case '63': {
-            console.log('CRC = ' + strValue1);
             sentData.name = 'CRC';
             sentData.id = str1;
             sentData.value = strValue1;
@@ -156,14 +145,13 @@ export class Crc {
             sentData = { name: '', id: '', value: '' };
             let u = 0;
             for (let z = 0; z < strLength1; z = u) {
-              let str2 = strValue1.substr(u, 2);
-              let strLength2 = parseInt(strValue1.substr(u + 2, 2));
-              let strValue2 = strValue1.substr(u + 4, strLength2);
+              const str2 = strValue1.substr(u, 2);
+              const strLength2 = parseInt(strValue1.substr(u + 2, 2), 10);
+              const strValue2 = strValue1.substr(u + 4, strLength2);
               u = u + 4 + strLength2;
-              console.log(str2, strLength2, strValue2);
+
               switch (str2) {
                 case '00': {
-                  console.log('globallyUniqueIdentifier = ' + strValue2);
                   sentData.name = 'globallyUniqueIdentifier';
                   sentData.id = str2;
                   sentData.value = strValue2;
@@ -172,7 +160,6 @@ export class Crc {
                   break;
                 }
                 case '01': {
-                  console.log('SAQRCodeID = ' + strValue2);
                   sentData.name = 'SAQRCodeID';
                   sentData.id = str2;
                   sentData.value = strValue2;
@@ -181,7 +168,6 @@ export class Crc {
                   break;
                 }
                 case '02': {
-                  console.log('SAQRVersion = ' + strValue2);
                   sentData.name = 'SAQRVersion';
                   sentData.id = str2;
                   sentData.value = strValue2;
@@ -190,7 +176,6 @@ export class Crc {
                   break;
                 }
                 case '03': {
-                  console.log('InstanceID = ' + strValue2);
                   sentData.name = 'InstanceID';
                   sentData.id = str2;
                   sentData.value = strValue2;
@@ -210,14 +195,13 @@ export class Crc {
             sentData = { name: '', id: '', value: '' };
             let u = 0;
             for (let z = 0; z < strLength1; z = u) {
-              let str2 = strValue1.substr(u, 2);
-              let strLength2 = parseInt(strValue1.substr(u + 2, 2));
-              let strValue2 = strValue1.substr(u + 4, strLength2);
+              const str2 = strValue1.substr(u, 2);
+              const strLength2 = parseInt(strValue1.substr(u + 2, 2), 10);
+              const strValue2 = strValue1.substr(u + 4, strLength2);
               u = u + 4 + strLength2;
-              console.log(str2, strLength2, strValue2);
+
               switch (str2) {
                 case '06': {
-                  console.log('customerLabel = ' + strValue2);
                   sentData.name = 'customerLabel';
                   sentData.id = str2;
                   sentData.value = strValue2;
@@ -226,7 +210,6 @@ export class Crc {
                   break;
                 }
                 case '07': {
-                  console.log('terminalLabel = ' + strValue2);
                   sentData.name = 'terminalLabel';
                   sentData.id = str2;
                   sentData.value = strValue2;
@@ -235,7 +218,6 @@ export class Crc {
                   break;
                 }
                 case '08': {
-                  console.log('purposeofTransaction = ' + strValue2);
                   sentData.name = 'purposeofTransaction';
                   sentData.id = str2;
                   sentData.value = strValue2;
@@ -249,10 +231,8 @@ export class Crc {
           }
         }
       }
-      console.log(sentData);
-      console.log(this.arr);
 
-      let type = this.arr[18].value;
+      const type = this.arr[18].value;
       if (type == 'COUT_WALLET' || type == 'PAY_MRCHNT_OUT') {
         this.cashBackObj.Type = this.arr[18].value;
         this.cashBackObj.WalletNum = this.arr[8].value;
@@ -265,7 +245,6 @@ export class Crc {
         this.merchantWalletObj.WalletNum = this.arr[8].value;
         this.merchantWalletObj.UID = this.arr[17].value;
         this.scannedData = this.merchantWalletObj;
-        console.log(this.scannedData);
       } else if (type == 'ATM') {
         this.atmtObj.Type = this.arr[18].value;
         this.atmtObj.ID = this.arr[17].value;
@@ -274,24 +253,19 @@ export class Crc {
       }
       // else {
       // 	this.scannedData = JSON.parse(this.data);
-      // 	console.log("alaaaaaaaaaaaa")
-      // 	console.log(this.scannedData)
+
       // }
-      let ress = this.arr[19].value;
-      console.log(ress);
-      console.log(CRCResult);
+      const ress = this.arr[19].value;
+
       if (ress == CRCResult) {
         this.crcCheck = true;
-        console.log(this.crcCheck);
       } else {
         this.crcCheck = false;
-        console.log(this.crcCheck);
-        console.log(CRCResult);
       }
     },
   };
 
-  //-------------------------------------- Copied from crc file in the old app
+  // -------------------------------------- Copied from crc file in the old app
 
   CRCMaster = {
     StringToCheck: '',
@@ -300,8 +274,8 @@ export class Crc {
     init() {
       this.CRCDNPInit();
     },
-    CleanString(inputType) {
-      if (inputType == 'ASCII') {
+    CleanString(InputType) {
+      if (InputType == 'ASCII') {
         this.CleanedString = this.StringToCheck;
       } else if (this.StringToCheck.match(/^[0-9A-F \t]+$/gi) !== null) {
         this.CleanedString = this._hexStringToString(this.StringToCheck.toUpperCase().replace(/[\t ]/g, ''));
@@ -495,11 +469,11 @@ export class Crc {
     },
     /**
      * str: the frame to compute
-     * inputType: "ASCII" or "hex"
+     * InputType: "ASCII" or "hex"
      * */
-    Calculate(str, inputType) {
+    Calculate(str, InputType) {
       this.StringToCheck = str;
-      if (this.CleanString(inputType)) {
+      if (this.CleanString(InputType)) {
         return {
           //    crc8: this.CRC8().toString().toUpperCase(),
           //    crccittxmodem: "0x"+ this.CRCXModem().toString(16).toUpperCase(),

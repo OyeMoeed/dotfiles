@@ -12,7 +12,7 @@ interface ChangePasswordProps {
     };
     passCode?: string;
     deviceInfo?: IDeveiceInfo;
-  }
+  };
 }
 
 // Define the chnagePasscodeMockMockResponse interface (empty object)

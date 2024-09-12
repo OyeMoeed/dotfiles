@@ -1,6 +1,6 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 
 const limitExceedStyle = () =>
   createStyleSheet({
@@ -17,7 +17,7 @@ const limitExceedStyle = () =>
     actionButtons: {
       gap: scaleSize(8),
     },
-    fontBold: { fontWeight: constants.FONT_WEIGHT_BOLD },
+    fontBold: { fontWeight: FONT_WEIGHT_BOLD },
   });
 
 export default limitExceedStyle;

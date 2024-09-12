@@ -4,6 +4,7 @@ import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-
 import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
 import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
+import IPayServiceErrorToast from '@app/components/organism/ipay-service-error-toast/ipay-service-error-toast.component';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { hideDropdownSheet } from '@app/store/slices/dropdown-slice';
@@ -18,6 +19,7 @@ import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setTopLevelNavigator } from './navigation-service.navigation';
+
 const MainNavigation: React.FC = () => {
   const { selectedLanguage, isAuthorized } = useTypedSelector((state) => ({
     selectedLanguage: state.languageReducer.selectedLanguage,
@@ -41,14 +43,14 @@ const MainNavigation: React.FC = () => {
       languageSheetRef.current.present();
       dispatch(hideLanguageSheet());
     }
-  }, [isLanguageSheetVisible]);
+  }, [dispatch, isLanguageSheetVisible]);
 
   useEffect(() => {
     if (isDropdownVisible && dropdownRef.current) {
       dropdownRef.current.present();
       dispatch(hideDropdownSheet());
     }
-  }, [isDropdownVisible]);
+  }, [dispatch, isDropdownVisible]);
 
   useEffect(() => {
     setTopLevelNavigator(navigationRef.current);
@@ -95,6 +97,7 @@ const MainNavigation: React.FC = () => {
       <IPayPermissionAlert visible={isPermissionVisible} onClose={handlePermissionAlert} />
       <IPaySessionTimeoutAlert visible={isSessionTimeout} />
       <IPayDropdownSheet ref={dropdownRef} />
+      <IPayServiceErrorToast testID={navigationRef?.current?.getCurrentRoute().name} />
     </>
   );
 };

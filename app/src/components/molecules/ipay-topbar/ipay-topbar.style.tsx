@@ -5,52 +5,53 @@ import { moderateScale } from 'react-native-size-matters';
 
 const topBarStyles = (colors: any) =>
   createStyleSheet({
+    topNavCon: {},
     topNavConStyle: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'center'
+      alignItems: 'center',
     },
     handWaveText: {
       fontSize: FONT_SIZE_10,
-      color: colors.natural.natural0
+      color: colors.natural.natural0,
     },
     imageStyle: {
       width: SCALE_32,
       height: SCALE_32,
       marginRight: moderateScale(8),
-      borderRadius: moderateScale(12)
+      borderRadius: moderateScale(12),
     },
     leftNavConStyle: {
-      flexDirection: 'row'
+      flexDirection: 'row',
     },
     buttonStyle: {
       paddingHorizontal: moderateScale(40),
       paddingVertical: moderateScale(30),
       borderWidth: moderateScale(0.5),
       padding: moderateScale(1),
-      marginTop: moderateScale(10)
+      marginTop: moderateScale(10),
     },
     addGap: {
-      gap: SCALE_12
+      gap: SCALE_12,
     },
     popTextStyle: {
-      color: colors.primary.primary500
+      color: colors.primary.primary500,
     },
     listContainer: {
-      width: '100%'
+      width: '100%',
     },
     nameStyle: {
       fontSize: moderateScale(15),
       fontFamily: fonts.BOLD,
       textTransform: 'capitalize',
-      color: colors.natural.natural900
+      color: colors.natural.natural900,
     },
     welcomeText: {
-      color: colors.natural.natural900
+      color: colors.natural.natural900,
     },
     welcomeTextContainer: {
-      flexDirection: 'row'
-    }
+      flexDirection: 'row',
+    },
   });
 
 export default topBarStyles;

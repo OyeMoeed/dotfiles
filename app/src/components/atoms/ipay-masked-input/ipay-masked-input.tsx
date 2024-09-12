@@ -2,13 +2,12 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { TextInputMask } from 'react-native-masked-text'; // Import the masked text input library
 import { moderateScale } from 'react-native-size-matters';
 import IPayMaskedInputProps from './ipay-masked-input.interface';
-import { inputFieldStyles } from './ipay-masked-input.styles';
+import inputFieldStyles from './ipay-masked-input.styles';
 
 const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
   testID,
@@ -34,13 +33,12 @@ const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
   const animatedIsFocused = useRef(new Animated.Value(0)).current;
   const { colors } = useTheme();
   const styles = inputFieldStyles(colors);
-  const { t } = useTranslation();
 
   useEffect(() => {
     Animated.timing(animatedIsFocused, {
       toValue: !isFocused && text === '' ? 0 : 1,
       duration: 200,
-      useNativeDriver: false
+      useNativeDriver: false,
     }).start();
   }, [isFocused]);
 
@@ -48,16 +46,16 @@ const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
     position: 'absolute',
     top: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)]
+      outputRange: [moderateScale(isAndroidOS ? 13 : 16), moderateScale(1)],
     }),
     fontSize: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [moderateScale(13.5), moderateScale(12)]
+      outputRange: [moderateScale(13.5), moderateScale(12)],
     }),
     color: animatedIsFocused.interpolate({
       inputRange: [0, 1],
-      outputRange: [colors.natural.natural500, colors.primary.primary500]
-    })
+      outputRange: [colors.natural.natural500, colors.primary.primary500],
+    }),
   };
 
   const handleFocus = () => {
@@ -107,7 +105,7 @@ const IPayMaskedInput: React.FC<IPayMaskedInputProps> = ({
         </IPayView>
         {showRightIcon && (
           <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-            {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
+            {customIcon || <IPayIcon icon={icons.close} />}
           </IPayPressable>
         )}
       </IPayView>

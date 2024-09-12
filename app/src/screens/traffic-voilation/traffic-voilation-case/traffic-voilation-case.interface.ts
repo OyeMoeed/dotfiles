@@ -7,6 +7,6 @@ interface TrafficFormValues {
   myId: string;
   myIdInput: string;
   myIdCheck?: boolean;
-  voilationNumber:string;
+  voilationNumber: string;
 }
-export { TrafficFormValues };
+export default TrafficFormValues;

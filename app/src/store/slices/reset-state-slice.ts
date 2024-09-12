@@ -1,7 +1,6 @@
 import { SLICE_NAMES } from '@app/store/constants.store';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-
 /**
  * Slice for managing multiple reset state flags in the Redux store.
  * To handle the cases when we navigate back few screens and want the reset state
@@ -10,7 +9,6 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 interface ResetStateInitialStateProps {
   pointsRedemption: boolean;
 }
-
 
 const initialState: ResetStateInitialStateProps = {
   pointsRedemption: false,

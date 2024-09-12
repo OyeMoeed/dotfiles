@@ -16,9 +16,9 @@ const IPayListView: React.FC<IPayListViewProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = listViewStyles();
-  const selectedIcon = (text: string) => (selectedListItem && selectedListItem === text) || false;
+  const selectedIcon = (text: string) => selectedListItem === text || false;
   const iconComponent = (text: string) =>
-    selectedListItem && selectedListItem === text ? (
+    selectedListItem === text ? (
       <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
     ) : undefined;
 
@@ -32,7 +32,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
             style={cardStyles}
             textStyle={styles.titleStyle}
             title={item.text}
-            isShowIcon={selectedIcon(item)}
+            isShowIcon={selectedIcon(item.text)}
             icon={iconComponent(item.text)}
             isShowLeftIcon={item.image}
             leftIcon={item.image && <IPayImage image={item.image} style={styles.listImg} />}

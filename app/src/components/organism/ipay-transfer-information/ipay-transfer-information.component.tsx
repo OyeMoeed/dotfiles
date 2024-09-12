@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
+import { Alinma, NonAlinma } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -13,7 +13,7 @@ import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayChip, IPayList 
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { IPayTransferInformationProps } from './ipay-transfer-information.interface';
 import transferInfoStyles from './ipay-transfer-information.style';
@@ -24,6 +24,8 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   amount,
   setAmount,
   isEditable,
+  currencyStyle,
+  showReason = true,
   openReason,
   setSelectedItem,
   selectedItem,
@@ -34,18 +36,21 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   transferInfo,
   chipValue,
   transferInfoData,
+  maxLength = 70,
   subtitle,
   hasWallet,
+  inputFieldStyle,
 }) => {
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
 
+  const [isFocused, setIsFocused] = useState(false);
   const localizationText = useLocalization();
 
   const notesText = localizationText.TRANSACTION_HISTORY.NOTE;
   const optionalText = localizationText.COMMON.OPTIONAL;
   const notesLabel = `${notesText} ${transferInfo ? `(${optionalText})` : ''}`;
-  const maxLength: number = 70;
+  const defaultValue: string = '0.00';
 
   const getLetterCount = () => `${notes?.length}/${maxLength}`;
 
@@ -84,17 +89,23 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
             isShowIcon
             containerStyle={StyleSheet.flatten(styles.headerContainer)}
-            icon={<IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />}
+            icon={hasWallet ? <Alinma /> : <NonAlinma />}
           />
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        <IPayFootnoteText regular style={styles.text} text={localizationText.TOP_UP.ENTER_AMOUNT} color={colors.natural.natural700} />
+        <IPayFootnoteText
+          regular
+          style={styles.text}
+          text={localizationText.TOP_UP.ENTER_AMOUNT}
+          color={colors.natural.natural700}
+        />
         <IPayAmountInput
           carretHidden={false}
           style={styles.amountInput}
           inputStyles={styles.inputText}
-          currencyStyle={styles.currencyStyle}
+          currencyStyle={[styles.currencyStyle, currencyStyle]}
+          defaultValue={defaultValue}
           amount={amount}
           onAmountChange={setAmount}
           isEditable={isEditable}
@@ -115,24 +126,31 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           />
         )}
       </IPayView>
-      <IPayPressable onPress={openReason} style={styles.reasonsView}>
-        <IPayAnimatedTextInput
-          onChangeText={setSelectedItem}
-          containerStyle={StyleSheet.flatten(styles.inputField)}
-          labelColor={colors.natural.natural500}
-          label={localizationText.TRANSACTION_HISTORY.TRANSFER_REASON}
-          value={selectedItem}
-          editable={false}
-          showRightIcon
-          customIcon={
-            <IPayPressable onPress={openReason}>
-              <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
-            </IPayPressable>
-          }
-        />
-      </IPayPressable>
+      {showReason ? (
+        <IPayPressable onPress={openReason} style={styles.reasonsView}>
+          <IPayAnimatedTextInput
+            onChangeText={setSelectedItem}
+            containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
+            labelColor={colors.natural.natural500}
+            label={localizationText.COMMON.REASON_OF_TRANSFER}
+            value={selectedItem}
+            editable={false}
+            showRightIcon
+            customIcon={
+              <IPayPressable onPress={openReason}>
+                <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
+              </IPayPressable>
+            }
+          />
+        </IPayPressable>
+      ) : (
+        <IPayView />
+      )}
       <IPayAnimatedTextInput
-        containerStyle={StyleSheet.flatten(styles.inputField)}
+        containerStyle={[StyleSheet.flatten(styles.inputField), isFocused && styles.focusedField, inputFieldStyle]}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        selectionColor={colors.primary.primary500}
         label={notesLabel}
         value={notes}
         maxLength={maxLength}

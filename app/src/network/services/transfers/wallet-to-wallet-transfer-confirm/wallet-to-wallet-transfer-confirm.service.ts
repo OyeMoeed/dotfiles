@@ -19,7 +19,10 @@ const walletToWalletTransferConfirm = async (
       method: requestType.POST,
       payload,
     });
-    return apiResponse;
+    if (apiResponse?.status) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
   } catch (error: any) {
     const status: IApiStatus = {
       code: 'NETWORK_ERROR',

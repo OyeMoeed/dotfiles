@@ -49,6 +49,7 @@ const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
           editable
           name={billInputName}
           containerStyle={styles.inputContainerStyle}
+          inputStyle={styles.inputText}
         />
       )}
     </IPayView>

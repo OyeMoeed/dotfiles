@@ -11,7 +11,7 @@ import useConstantData from '@app/constants/use-constants';
 
 import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficTabPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
@@ -19,7 +19,7 @@ import * as Yup from 'yup';
 
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { TrafficFormValues } from './traffic-voilation-case.interface';
+import TrafficFormValues from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
@@ -27,7 +27,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const styles = trafficPaymentStyles(colors);
   const localizationText = useLocalization();
   const { idTypes } = useConstantData();
-  const [selectedTab, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
+  const [, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
   const [sheetType, setSheetType] = useState<string>('');
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [isRefund, setIsRefund] = useState<boolean>(false);
@@ -138,10 +138,10 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             navigate(ScreenNames.TRAFFIC_VOILATION_NUM_REFUND);
           } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && isRefund) {
             navigate(ScreenNames.TRAFFIC_VOILATION_ID_REFUND);
-          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {   
+          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {
             navigate(ScreenNames.TRAFFIC_VOILATION_ID);
           } else {
-            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT,{variant:ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN});
+            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN });
           }
         };
 

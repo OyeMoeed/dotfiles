@@ -1,4 +1,3 @@
-import images from '@app/assets/images';
 import AlinmaExpressBeneficiariesProps from './alinma-express-beneficiary.interface';
 
 const alinmaExpressBeneficiariesData: AlinmaExpressBeneficiariesProps = {
@@ -23,7 +22,7 @@ const alinmaExpressBeneficiariesData: AlinmaExpressBeneficiariesProps = {
         beneficiaryAccountNumber: 'SA2880000000002345567889',
         isIBAN: true,
         countryDesc: 'Pakistan',
-        countryFlag: images.pakFlag,
+        countryCode: 'PK',
         remittanceTypeDesc: 'TO ACCOUNT',
         beneficiaryBankDetail: {
           bankCode: '20',
@@ -41,7 +40,7 @@ const alinmaExpressBeneficiariesData: AlinmaExpressBeneficiariesProps = {
         beneficiaryAccountNumber: 'SA6180000296608013414076',
         isIBAN: true,
         countryDesc: 'Pakistan',
-        countryFlag: images.pakFlag,
+        countryCode: 'PK',
         remittanceTypeDesc: 'TO ACCOUNT',
         beneficiaryBankDetail: {
           bankCode: '20',
@@ -59,9 +58,9 @@ const alinmaExpressBeneficiariesData: AlinmaExpressBeneficiariesProps = {
         fullName: 'arwa Hamdan',
         beneficiaryAccountNumber: 'SA4005000068200020938002',
         isIBAN: true,
-        countryDesc: 'Pakistan', // TODO need to update
-        countryFlag: images.pakFlag, // TODO need to update
-        remittanceTypeDesc: 'TO ACCOUNT', // TODO need to update
+        countryDesc: 'Pakistan',
+        remittanceTypeDesc: 'TO ACCOUNT',
+        countryCode: 'PK',
         beneficiaryBankDetail: {
           bankCode: '99999',
           bankName: 'الانماء',

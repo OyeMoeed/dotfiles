@@ -4,12 +4,11 @@ import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-sectio
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/index';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import getFAQ from '@app/network/services/core/faq/faq.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   IPayCaption1Text,
-  IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
   IPayInput,
@@ -23,27 +22,26 @@ import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import helpCenterStyles from './helpcenter.styles';
-import getFAQ from '@app/network/services/core/faq/faq.service';
 
 const HelpCenter: React.FC = () => {
   const { colors } = useTheme();
   const contactUsRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
-  const [faqItems, setFaqItems] = useState([]);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [currentSection, setCurrentSection] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
   const localizationText = useLocalization();
   const [selectedNumber, setSelectedNumber] = useState<string>('');
-  const inside_sa_phone = '(+966)8004339000'; // need to replace with API
-  const outside_sa_phone = '(+966)90000670'; // need to replace with API
+  const insideSaPhone = '(+966)8004339000'; // need to replace with API
+  const outsideSaPhone = '(+966)920000670'; // need to replace with API
   const scrollViewRef = useRef<ScrollView>(null);
   const sectionListRef = useRef<SectionList<any>>(null);
   const [currentTab, setCurrentTab] = useState<number>(0);
   const [searchText, setSearchText] = useState<string>('');
   const [isTablet, setIsTablet] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
-  const [faqData, setFaqData] = useState(helpCenterMockData);
+  const [, setAPIError] = useState<string>('');
+  const [allFaqItems, setAllFaqItems] = useState([]);
+  const [faqData, setFaqData] = useState([]);
 
   useEffect(() => {
     const checkDeviceType = () => {
@@ -54,16 +52,25 @@ const HelpCenter: React.FC = () => {
     checkDeviceType();
   }, []);
   // Fetch data from the mock API
-  useEffect(() => {
-    fetchFaqItems();
-  }, []);
 
   const fetchFaqItems = async () => {
     try {
       const apiResponse: any = await getFAQ();
 
-      if (apiResponse?.status?.type === "SUCCESS") {
-        setFaqItems(apiResponse?.response?.faqs)
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        const itemsWithCategories = [
+          {
+            id: 1,
+            title: '',
+            data: apiResponse?.response?.faqs.map((question) => ({
+              id: 1,
+              question: question.question,
+              answer: question.answer,
+            })),
+          },
+        ];
+        setAllFaqItems(itemsWithCategories);
+        setFaqData(itemsWithCategories);
       } else if (apiResponse?.apiResponseNotOk) {
         setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       } else {
@@ -74,6 +81,10 @@ const HelpCenter: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    fetchFaqItems();
+  }, []);
+
   const toggleExpand = (index: number, sectionID: number) => {
     setCurrentSection(sectionID);
     setExpandedIndex(expandedIndex === index ? null : index);
@@ -81,16 +92,17 @@ const HelpCenter: React.FC = () => {
 
   useEffect(() => {
     if (!searchText) {
-      setFaqData(helpCenterMockData);
+      setFaqData(allFaqItems);
     } else {
-      let filteredData = [];
-      for (let i = 0; i < helpCenterMockData.length; i++) {
-        let filteredQuestions = helpCenterMockData[i].data.filter((el) =>
+      const filteredData = [];
+      // eslint-disable-next-line no-plusplus
+      for (let i = 0; i < allFaqItems.length; i++) {
+        const filteredQuestions = allFaqItems[i].data.filter((el) =>
           el.question.toUpperCase().includes(searchText.toUpperCase()),
         );
         if (filteredQuestions.length > 0) {
           filteredData.push({
-            ...helpCenterMockData[i],
+            ...allFaqItems[i],
             data: filteredQuestions,
           });
         }
@@ -116,6 +128,7 @@ const HelpCenter: React.FC = () => {
       let tab = currentTab; // Start with the current tab state
       let accumulatedHeight = 0; // Initialize accumulatedHeight
 
+      // eslint-disable-next-line no-plusplus
       for (let i = 0; i < helpCenterMockData.length; i++) {
         const sectionHeight =
           helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Calculate section height
@@ -131,51 +144,13 @@ const HelpCenter: React.FC = () => {
     [currentTab],
   ); // Ensure to include currentTab in the dependency array for useCallback
 
-  const onPressHeaderTab = (sectionIndex: number) => {
-    setCurrentTab(sectionIndex);
-
-    if (sectionListRef.current && scrollViewRef.current) {
-      // Step 1: Scroll SectionList to the section
-      sectionListRef.current.scrollToLocation({
-        sectionIndex,
-        itemIndex: 0,
-        viewPosition: 0.5, // Position at the top of the screen
-        animated: true,
-      });
-
-      // Step 2: Calculate ScrollView scroll position based on section position
-      let yOffset = 0;
-      for (let i = 0; i < sectionIndex; i++) {
-        const sectionHeight =
-          helpCenterMockData[i].data.length * (isTablet ? moderateScale(87, 0.4) : verticalScale(55)); // Adjust according to your item heights and section header height
-        yOffset += sectionHeight;
-      }
-      scrollViewRef.current.scrollTo({ y: yOffset, animated: true });
-    }
-  };
-
   const onSearchChangeText = (text: string) => {
     setSearchText(text);
   };
 
-  const renderHelpCenterHeader = ({ item, index }: { item: string; index: number }) => {
-    return (
-      <IPayPressable
-        onPress={() => onPressHeaderTab(index)}
-        style={currentTab === index ? styles.headerTabSelected : styles.headerTabUnSelected}
-      >
-        <IPayFootnoteText
-          regular={currentTab !== index}
-          text={item}
-          color={currentTab === index ? colors.natural.natural0 : colors.natural.natural500}
-        />
-      </IPayPressable>
-    );
-  };
-
   const contactList = [
-    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: inside_sa_phone },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: outside_sa_phone },
+    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: insideSaPhone },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: outsideSaPhone },
   ];
 
   const openBottomSheet = () => {
@@ -241,9 +216,21 @@ const HelpCenter: React.FC = () => {
         </IPayView>
       </IPayPressable>
       {isOpen(index, section.id) && (
-        <IPayCaption1Text regular style={styles.faqItemAnswer}>
-          {item.answer}
-        </IPayCaption1Text>
+        <>
+          {item.answer.map((question, indexQuestion) => (
+            <IPayCaption1Text
+              key={`${`${indexQuestion}IPayCaption1Text`}`}
+              regular
+              style={[
+                styles.faqItemAnswer,
+                index === 0 ? styles.faqItemAnswerFirstItem : styles.faqItemAnswerListItem,
+                index === item.answer.length - 1 ? styles.faqItemAnswerLastItem : styles.faqItemAnswerListItem,
+              ]}
+            >
+              {question}
+            </IPayCaption1Text>
+          ))}
+        </>
       )}
     </IPayView>
   );
@@ -271,7 +258,8 @@ const HelpCenter: React.FC = () => {
           contactUs
         />
         <IPayView style={styles.container}>
-          <IPayView style={styles.headerTabView}>
+          {/* TODO: remove categories untill implement it from back end */}
+          {/* <IPayView style={styles.headerTabView}>
             <IPayFlatlist
               horizontal
               data={constants.HELP_CENTER_TABS}
@@ -280,7 +268,7 @@ const HelpCenter: React.FC = () => {
               ItemSeparatorComponent={<IPayView style={styles.itemSeparator} />}
               showsHorizontalScrollIndicator={false}
             />
-          </IPayView>
+          </IPayView> */}
 
           <IPayView style={styles.searchBarView}>
             <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />

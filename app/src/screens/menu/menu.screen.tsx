@@ -10,7 +10,6 @@ import {
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -18,43 +17,24 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
 import deviceDelink from '@app/network/services/core/delink/delink.service';
-import { clearSession, logOut } from '@app/network/services/core/logout/logout.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import logOut from '@app/network/services/core/logout/logout.service';
+import { getDeviceInfo } from '@app/network/utilities';
+import clearSession from '@app/network/utilities/network-session-helper';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useCallback, useRef } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
-const MenuScreen: React.FC = () => {
+const MenuScreen: FC = () => {
   const { colors } = useTheme();
   const styles = menuStyles(colors);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
+  const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const localizationText = useLocalization();
-  const dispatch = useTypedDispatch();
-  const [apiError, setAPIError] = useState<string>('');
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-  const [delinkFlag, setDelinkFLag] = useState(appData.isLinkedDevice);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-
-  useEffect(() => {
-    setDelinkFLag(appData.isLinkedDevice);
-  }, [appData, appData.isLinkedDevice]);
-
-  const { showToast } = useToastContext();
-
-  const renderToast = (apiError: string) => {
-    showToast({
-      title: localizationText.api_request_failed,
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {
@@ -81,15 +61,9 @@ const MenuScreen: React.FC = () => {
 
   const logoutConfirm = async () => {
     const apiResponse: any = await logOut();
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       hideLogout();
       clearSession(false);
-    } else if (apiResponse?.apiResponseNotOk) {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-    } else {
-      setAPIError(apiResponse?.error);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -110,16 +84,10 @@ const MenuScreen: React.FC = () => {
 
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         delinkSuccessfullyDone();
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
       }
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
@@ -131,7 +99,7 @@ const MenuScreen: React.FC = () => {
     actionSheetRef.current.hide();
   };
 
-  const delinkSuccessfully = useCallback((index: number) => {
+  const delinkSuccessfully = useCallback((index?: number) => {
     if (index === 1) {
       delinkDevice();
     }
@@ -150,8 +118,8 @@ const MenuScreen: React.FC = () => {
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
   const onNavigateToCardManagement = () => {
-    navigate(screenNames.CARD_MANAGEMENT)
-  }
+    navigate(screenNames.CARD_MANAGEMENT);
+  };
 
   return (
     <IPaySafeAreaView>
@@ -170,7 +138,7 @@ const MenuScreen: React.FC = () => {
                   <IPayHeadlineText
                     numberOfLines={2}
                     regular={false}
-                    text={userInfo?.fullName}
+                    text={fullName}
                     color={colors.primary.primary900}
                     style={styles.profileNameText}
                   />

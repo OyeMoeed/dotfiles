@@ -1,5 +1,6 @@
 // dynamicStyles.ts
-import { StyleSheet, ViewStyle } from 'react-native';
+import { ViewStyle } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
 // Define the interface for the styles
 interface DynamicStyles {
@@ -8,18 +9,21 @@ interface DynamicStyles {
 }
 
 // Function to generate dynamic styles
-export const getDynamicStyles = (size: number, padding: number): DynamicStyles => StyleSheet.create({
-  container: {
-    width: size + padding * 2,
-    height: size + padding * 2,
-  },
-  childrenContainer: {
-    position: 'absolute',
-    top: padding,
-    left: padding,
-    width: size,
-    height: size,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+const getDynamicStyles = (size: number, padding: number): DynamicStyles =>
+  createStyleSheet({
+    childrenContainer: {
+      alignItems: 'center',
+      height: size,
+      justifyContent: 'center',
+      left: padding,
+      position: 'absolute',
+      top: padding,
+      width: size,
+    },
+    container: {
+      height: size + padding * 2,
+      width: size + padding * 2,
+    },
+  });
+
+export default getDynamicStyles;

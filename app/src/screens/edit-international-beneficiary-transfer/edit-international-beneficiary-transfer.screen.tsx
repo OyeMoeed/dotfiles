@@ -5,7 +5,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, CURRENCIES, RELATIONSHIPS, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
@@ -16,13 +15,12 @@ import { BeneficiaryFields, BeneficiaryTransferFormValues } from './edit-interna
 import beneficiaryTransferStyles from './edit-international-beneficiary-transfer.style';
 
 const EditIBeneficiaryTransferScreen: React.FC = () => {
-  const route = useRoute();
+  const { params: { selectedBeneficiary } = {} } = useRoute();
   const { colors } = useTheme();
 
   const styles = beneficiaryTransferStyles(colors);
   const localizationText = useLocalization();
   const { onSubmit, cities } = useInternationalTransferHook();
-  const {} = getValidationSchemas(localizationText);
 
   const validationSchema = Yup.object().shape({});
 
@@ -30,19 +28,16 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
     <IPayFormProvider<BeneficiaryTransferFormValues>
       validationSchema={validationSchema}
       defaultValues={{
-        beneficiaryName: '',
-        iban: '',
-        bankName: '',
+        beneficiaryName: selectedBeneficiary?.fullName,
+        iban: selectedBeneficiary?.beneficiaryAccountNumber,
+        bankName: selectedBeneficiary?.beneficiaryBankDetail?.bankName,
         relationship: '',
         city: '',
         address: '',
-        beneficiaryNickName: '',
+        beneficiaryNickName: selectedBeneficiary?.nickname,
         walletType: '',
-        firstName: '',
-        thirdName: '',
-        secondName: '',
-        lastName: '',
         beneficiaryNationality: '',
+        beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
       }}
     >
       {({ handleSubmit }) => (

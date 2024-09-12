@@ -1,5 +1,6 @@
 import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 import { IW2WActiveFriends } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import { GiftDetails } from '@app/screens/send-gift-card/send-gift-card.interface';
 
 export type SendMoneyType = {
   id: number;
@@ -26,7 +27,7 @@ export interface GiftParamsProps {
     transfersDetails: {
       formInstances: SendMoneyType[];
       fees: IW2WResRequest[];
-      giftDetails: { message: string; occasion: string };
+      giftDetails: { message: string; occasion: string; selectedCard: GiftDetails };
     };
     activeFriends: IW2WActiveFriends[];
     totalAmount: number;

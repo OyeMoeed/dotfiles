@@ -1,3 +1,5 @@
+// TODO: fix max-lines
+/* eslint-disable max-lines-per-function */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/ipay-filter-bottom-sheet.interface';
@@ -5,12 +7,11 @@ import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
@@ -19,6 +20,15 @@ const useConstantData = () => {
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
+  const localTransferReasonData = [
+    { id: 1, text: localizationText.LOCAL_TRANSFER.INVESTMENT },
+    { id: 2, text: localizationText.LOCAL_TRANSFER.TUITION },
+    { id: 7, text: localizationText.LOCAL_TRANSFER.TREATMENT },
+    { id: 3, text: localizationText.LOCAL_TRANSFER.TRAVEL },
+    { id: 4, text: localizationText.LOCAL_TRANSFER.PURCHASES },
+    { id: 5, text: localizationText.LOCAL_TRANSFER.FIRENDS_AND_FAMILY },
+    { id: 6, text: localizationText.LOCAL_TRANSFER.DONATION },
+  ];
   const transferReasonData = [
     { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
     { id: 2, text: localizationText.SEND_MONEY_FORM.ACCOMMODATION_FEES },
@@ -133,6 +143,33 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
   ];
+  const giftRecivedData = [
+    {
+      id: '1',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.NEW,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '2',
+      title: 'Alaa Mahmoud', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.OPENED,
+      amount: '1200',
+      dates: formattedDate,
+    },
+    {
+      id: '3',
+      title: 'Sayed Ismael', // TODO: replaced with api
+      occasion: 'Eiydiah',
+      status: GiftStatus.EXPIRED,
+      amount: '500',
+      dates: formattedDate,
+    },
+  ];
+
   const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
@@ -421,7 +458,7 @@ const useConstantData = () => {
         {
           id: '2',
           key: 'CLOTHS',
-          value: localizationText.OFFERS.CLOTHS,
+          value: localizationText.OFFERS.CLOTHES,
         },
         {
           id: '3',
@@ -476,7 +513,7 @@ const useConstantData = () => {
   ];
 
   const billPayDetailsData = [
-    //TODO will be repleaced by API data
+    // TODO will be repleaced by API data
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
@@ -532,7 +569,7 @@ const useConstantData = () => {
   ];
 
   const billPayDetailsRefundData = [
-    //TODO will be repleaced by API data
+    // TODO will be repleaced by API data
 
     {
       id: '3',
@@ -561,7 +598,7 @@ const useConstantData = () => {
     },
   ];
   const declinedTransationData = [
-    //TODO will be repleaced by API data
+    // TODO will be repleaced by API data
     {
       id: '1',
       label: localizationText.TRAFFIC_VIOLATION.TITLE,
@@ -679,13 +716,13 @@ const useConstantData = () => {
     },
   ];
 
-  const AlinmaDirectData = {
+  const alinmaDirectData = {
     recordID: '123',
     serviceName: 'AlinmaPay Direct',
     serviceLogo: images.alinmaPayDirectLogo,
     type: 'Bank Transfer',
   };
-  const WesternUnionData = {
+  const westernUnionData = {
     recordID: '113',
     serviceName: 'Western Union',
     serviceLogo: images.westernUnionLogo,
@@ -789,6 +826,85 @@ const useConstantData = () => {
     },
   ];
 
+  const internationalTransferHistoryFilterData = [
+    {
+      id: '1',
+      label: localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE,
+      type: FiltersType.DELIVERY_TYPE,
+      filterValues: [
+        {
+          id: '1',
+          title: 'AlinmaPay Direct',
+          image: images.alinmaPayDirectLogo,
+          data: [
+            {
+              id: '1',
+              title: 'Bank Transfer',
+              amount: '10',
+              type: 'AlinmaPay Direct',
+            },
+            {
+              id: '2',
+              title: 'Cash Pickup',
+              amount: '10',
+              type: 'AlinmaPay Direct',
+            },
+          ],
+        },
+        {
+          id: '2',
+          title: 'Western Union',
+          image: images.westernUnionLogo,
+          data: [
+            {
+              id: '1',
+              title: 'Degitial Wallet',
+              amount: '10',
+              type: 'Western Union',
+            },
+            {
+              id: '2',
+              title: 'Bank Transfer',
+              amount: '10',
+              type: 'Western Union',
+            },
+            {
+              id: '3',
+              title: 'Cash Pickup',
+              amount: '10',
+              type: 'Western Union',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      id: '2',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME_LIST,
+      filterValues: [
+        {
+          id: '1',
+          beneficiaryName: 'Ahmed Khan',
+          country: 'Pakistan',
+          icon: images.pakFlag,
+        },
+        {
+          id: '2',
+          beneficiaryName: 'Ahmed Mohamed',
+          country: 'Egypt',
+          icon: images.egyFlag,
+        },
+        {
+          id: '3',
+          beneficiaryName: 'Ahmed Ali',
+          country: 'Nepal',
+          icon: images.nepFlag,
+        },
+      ],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -796,7 +912,7 @@ const useConstantData = () => {
       type: FiltersType.CONTACT_NUMBER,
       searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
       dropdownIcon: icons.user_search,
-      listTitleStyle: { fontWeight: constants.FONT_WEIGHT_BOLD },
+      listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
       filterValues: [
         {
           id: '1',
@@ -827,9 +943,10 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
+    [FiltersType.DELIVERY_TYPE]: '',
   };
 
-  const W2WFilterData = (filterValues) => [
+  const w2WFilterData = (filterValues) => [
     {
       id: '1',
       label: localizationText.WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME,
@@ -841,7 +958,7 @@ const useConstantData = () => {
     },
   ];
 
-  const W2WFilterDefaultValues = {
+  const w2WFilterDefaultValues = {
     [FiltersType.CONTACT_NUMBER]: '',
     [FiltersType.AMOUNT_FROM]: '',
     [FiltersType.AMOUNT_TO]: '',
@@ -926,7 +1043,7 @@ const useConstantData = () => {
     },
   ];
 
-  const OrderHistoryFilterDefaultValues = {
+  const orderHistoryFilterDefaultValues = {
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
   };
@@ -1006,7 +1123,7 @@ const useConstantData = () => {
     },
   ];
   const allOrders = [
-    //TODO: Replaced with api
+    // TODO: Replaced with api
     {
       id: '1',
       image: images.playstation,
@@ -1034,6 +1151,7 @@ const useConstantData = () => {
       id: '1',
       label: localizationText.TOP_UP.TRANSFER_TO,
       value: 'Shatha Mohammed', // TODO:replaced by api
+      leftIcon: 'true',
       isAlinma: true,
     },
     { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
@@ -1045,7 +1163,7 @@ const useConstantData = () => {
     [FiltersType.OFFER_AVAILABILITY]: '',
   };
   const contactList = [
-    //TODO: List will replace by actual data
+    // TODO: List will replace by actual data
     { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '8004339000' },
     { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966) 920000670' },
   ];
@@ -1132,7 +1250,7 @@ const useConstantData = () => {
   ];
 
   const billHeaderDetail = {
-    //TODO wiill be replaced by API
+    // TODO wiill be replaced by API
     title: 'My Electricity Bill',
     companyDetails: '123 - Saudi electricity co.',
     companyImage: images.electricityBill,
@@ -1314,7 +1432,7 @@ const useConstantData = () => {
   };
 
   const allCategories = [
-    //TODO: Replaced with api
+    // TODO: Replaced with api
     {
       id: '1',
       image: images.playStatuon,
@@ -1417,7 +1535,7 @@ const useConstantData = () => {
 
   const contactusList = [
     { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '(+966)8004339000' },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)90000670' },
+    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)920000670' },
   ];
 
   return {
@@ -1466,6 +1584,7 @@ const useConstantData = () => {
     alinmaDetailsUnsaved1,
     alinmaDetailsUnsaved2,
     billSaveDetails,
+    internationalTransferHistoryFilterData,
     requestMoneyFilterData,
     requestMoneyBottomFilterData,
     sendMoneyDetails,
@@ -1475,7 +1594,7 @@ const useConstantData = () => {
     allCategories,
     orderDetails,
     playstationData,
-    OrderHistoryFilterDefaultValues,
+    orderHistoryFilterDefaultValues,
     allOrders,
     merchantData,
     sortingData,
@@ -1484,12 +1603,14 @@ const useConstantData = () => {
     offerDetailData,
     productDetailData,
     shopsOffers,
-    W2WFilterData,
-    W2WFilterDefaultValues,
+    w2WFilterData,
+    giftRecivedData,
+    w2WFilterDefaultValues,
     contactusList,
-    AlinmaDirectData,
-    WesternUnionData,
+    alinmaDirectData,
+    westernUnionData,
     activeBillDetails,
+    localTransferReasonData,
   };
 };
 

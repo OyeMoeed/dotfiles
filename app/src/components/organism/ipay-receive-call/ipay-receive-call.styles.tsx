@@ -2,6 +2,7 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
+
 const receiveCallStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
@@ -41,9 +42,18 @@ const receiveCallStyles = (colors: typeof themeColors) =>
     },
     expiredTimerStyle: {
       color: colors.error.error500,
+      bottom: verticalScale(8),
     },
     timerStyle: {
       color: colors.natural.natural900,
+      bottom: verticalScale(8),
+    },
+    refreshIcon: {
+      height: moderateScale(22),
+      width: moderateScale(22),
+    },
+    progressBar: {
+      height: verticalScale(4),
     },
   });
 

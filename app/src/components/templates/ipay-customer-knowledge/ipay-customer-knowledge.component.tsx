@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
 import getLov from '@app/network/services/core/lov/get-lov.service';
@@ -79,7 +79,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
       'monthly_income',
       monthlyIncomeKeys.filter((el) => el.code === walletInfo.accountBasicInfo.monthlyIncomeAmount)[0],
     );
-    setValue('employee_name', walletInfo.workDetails.industry);
+    setValue('employer_name', walletInfo.workDetails.industry);
     setValue('district', walletInfo.addressDetails.district);
     setValue('street_name', walletInfo.addressDetails.street);
     setValue('postal_code', walletInfo.addressDetails.poBox);
@@ -95,13 +95,14 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     };
 
     const apiResponse = await getLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       setOccupationLov(apiResponse?.response?.lovInfo as LovInfo[]);
       setValue(
         'occupation',
         apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
       );
     }
+
     renderSpinner(false);
   };
 
@@ -112,7 +113,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     };
 
     const apiResponse = await getLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
     }
     renderSpinner(false);
@@ -127,6 +128,10 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     getCitiessLovs();
     setDefaultValues();
   }, []);
+
+  useEffect(() => {
+    setSearch('');
+  }, [category]);
 
   const onSubmitEvent = (formData: IFormData) => {
     if (onSubmit) onSubmit(formData);

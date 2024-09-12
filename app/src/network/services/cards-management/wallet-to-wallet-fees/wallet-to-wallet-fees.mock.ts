@@ -14,7 +14,7 @@ const wallet2WalletFeesMock: ApiResponse<IW2WFeesRes> = {
       {
         mobileNumber: '0568908077',
         amount: '1',
-        note: '',
+        note: 'labor send mony back to sponsor',
         walletNumber: null,
         giftCategory: null,
         feesAmount: '0.00',

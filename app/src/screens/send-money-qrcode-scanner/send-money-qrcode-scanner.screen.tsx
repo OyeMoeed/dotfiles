@@ -21,7 +21,7 @@ const SendMoneyQRScannerScreen: React.FC = () => {
   const { colors } = useTheme();
   const route = useRoute();
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
-  const [_, setScannerCode] = useState('');
+  const [, setScannerCode] = useState('');
 
   const styles = qrCodeScannerStyles();
   const onScannedContact = (scannedCodeData: string) => {
@@ -30,12 +30,11 @@ const SendMoneyQRScannerScreen: React.FC = () => {
     goBack();
   };
 
- const alertGoBackPress = debounce(() => {
+  const alertGoBackPress = debounce(() => {
     route?.params?.onGoBack('');
     setScannerCode('');
     goBack();
   }, 500);
-
 
   return (
     <IPaySafeAreaView style={styles.fill}>
@@ -58,7 +57,6 @@ const SendMoneyQRScannerScreen: React.FC = () => {
               const dataFormatted: IQrData = JSON.parse(data);
               if (dataFormatted.reference !== ALINMA_REFERENCE_NUM) {
                 setRenderQRCodeScanner(false);
-                return;
               } else if (dataFormatted?.contact) {
                 setScannerCode(dataFormatted?.contact);
                 onScannedContact(dataFormatted?.contact);
