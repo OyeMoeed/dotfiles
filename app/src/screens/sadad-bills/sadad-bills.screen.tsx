@@ -49,7 +49,6 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
 
@@ -121,33 +120,29 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
   const handleDeleteBill = async (selectedBill: PaymentInfoProps) => {
     const { billNumOrBillingAcct, billerName, billId } = selectedBill;
-    try {
-      const deviceInfo = await getDeviceInfo();
-      const prepareLoginPayload = {
-        billNumOrBillingAcct,
-        billId,
-        billNickname: billerName,
-        walletNumber,
-        deviceInfo,
-      };
+    const deviceInfo = await getDeviceInfo();
+    const prepareLoginPayload = {
+      billNumOrBillingAcct,
+      billId,
+      billNickname: billerName,
+      walletNumber,
+      deviceInfo,
+    };
 
-      const apiResponse: any = await deleteBill(prepareLoginPayload);
-      if (apiResponse.status.type === APIResponseType.SUCCESS) {
-        setActiveBillsData((prevBillsData) => {
-          const billToDelete = prevBillsData.find((bill) => bill.billId === selectedBillsId);
-          const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
+    const apiResponse: any = await deleteBill(prepareLoginPayload);
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+      setActiveBillsData((prevBillsData) => {
+        const billToDelete = prevBillsData.find((bill) => bill.billId === selectedBillsId);
+        const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
 
-          renderToast({
-            title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
-            subTitle: billToDelete?.billDesc,
-            toastType: ToastTypes.SUCCESS,
-          });
-
-          return updatedBillsData;
+        renderToast({
+          title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+          subTitle: billToDelete?.billDesc,
+          toastType: ToastTypes.SUCCESS,
         });
-      }
-    } catch (error) {
-      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+
+        return updatedBillsData;
+      });
     }
   };
 
@@ -273,23 +268,18 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const getBills = async (tab: string) => {
-    try {
-      const payload: GetSadadBillByStatusProps = {
-        walletNumber,
-        billStatus: tab === BillsStatusTypes.ACTIVE_BILLS ? BillingStatus.ENABLED : BillingStatus.NOT_ENABLED,
-        showloader: true,
-      };
-      const apiResponse: any = await getSadadBillsByStatus(payload);
+    const payload: GetSadadBillByStatusProps = {
+      walletNumber,
+      billStatus: tab === BillsStatusTypes.ACTIVE_BILLS ? BillingStatus.ENABLED : BillingStatus.NOT_ENABLED,
+      showloader: true,
+    };
+    const apiResponse: any = await getSadadBillsByStatus(payload);
 
-      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-        const newBills = apiResponse?.response?.paymentInfoList || [];
-        const updatedData = await addStatusToData(newBills);
-        setDataForBills(updatedData, tab);
-      }
-    } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      const newBills = apiResponse?.response?.paymentInfoList || [];
+      const updatedData = await addStatusToData(newBills);
+      setDataForBills(updatedData, tab);
     }
-
     // Fallback return if an error occurs
     return { data: [], hasMore: false };
   };

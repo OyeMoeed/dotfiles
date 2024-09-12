@@ -9,7 +9,7 @@ interface DeviceInfoProps {
   platform: string;
   platformVersion: string;
   deviceName: string;
-  hashCode: string | null;
+  hashCode: string;
 }
 
 export { DeviceInfoProps, EncryptionVariableProps };

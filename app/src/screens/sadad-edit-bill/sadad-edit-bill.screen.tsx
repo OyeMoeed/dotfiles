@@ -2,8 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SadadEditBillFields } from '@app/enums/edit-sadad-bill.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -36,43 +34,25 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
   const localizationText = useLocalization();
   const [showAlert, setShowAlert] = useState(false);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showToast } = useToastContext();
-
   const { getValues, control, setValue, watch } = useForm();
 
-  const renderToast = ({ title, displayTime }: ToastRendererProps) => {
-    showToast(
-      {
-        title,
-        borderColor: colors.error.error25,
-        isShowRightIcon: false,
-        leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-      },
-      displayTime,
-    );
-  };
-
   const onSubmit = async () => {
-    try {
-      const deviceInfo = await getDeviceInfo();
-      // Handle form submission here
-      const billName = getValues(SadadEditBillFields.BILL_NICK_NAME);
-      if (billName) {
-        const payload: EditBillPayloadTypes = {
-          billNumOrBillingAcct,
-          billId,
-          billNickname: billName,
-          walletNumber,
-          deviceInfo,
-        };
-        const apiResponse = await editBillService(payload);
-        if (apiResponse.status.type === APIResponseType.SUCCESS) {
-          setEditBillSuccessToast(billName);
-          goBack();
-        }
+    const deviceInfo = await getDeviceInfo();
+    // Handle form submission here
+    const billName = getValues(SadadEditBillFields.BILL_NICK_NAME);
+    if (billName) {
+      const payload: EditBillPayloadTypes = {
+        billNumOrBillingAcct,
+        billId,
+        billNickname: billName,
+        walletNumber,
+        deviceInfo,
+      };
+      const apiResponse = await editBillService(payload);
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
+        setEditBillSuccessToast(billName);
+        goBack();
       }
-    } catch (error) {
-      renderToast({ title: localizationText.ERROR.SOMETHING_WENT_WRONG });
     }
   };
 
