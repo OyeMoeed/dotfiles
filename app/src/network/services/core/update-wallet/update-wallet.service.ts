@@ -24,10 +24,15 @@ const walletUpdate = async (
 };
 
 export const removeProfileImage = async (walletNumber: string): Promise<ApiResponse<IUpdateWalletResponse>> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return walletUpdateMock as any;
+  }
+
   const apiResponse: any = await apiCall<IUpdateWalletResponse>({
     endpoint: CORE_URLS.remove_profile_image(walletNumber),
     method: requestType.DELETE,
   });
+
   return apiResponse;
 };
 
