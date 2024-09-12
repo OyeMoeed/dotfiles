@@ -6,11 +6,16 @@ import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organis
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { ChangePinRefTypes, OpenBottomSheetRefTypes } from '@app/screens/card-options/card-options.interface';
+import { ChangePinRefTypes } from '@app/screens/card-options/card-options.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useRef, useState } from 'react';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { ICardIssuanceDetails } from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import { useTypedSelector } from '@app/store/store';
+import { CardInfo } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
+import { buttonVariants } from '@app/utilities';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
@@ -22,61 +27,97 @@ const CardIssuanceConfirmationScreen = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
+  const route = useRoute<RouteProps>();
+  type RouteProps = RouteProp<{ params: { issuanceDetails: ICardIssuanceDetails } }, 'params'>;
+  const { issuanceDetails } = route.params;
+  const { fullName, availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = cardIssuaceConfirmationStyles(colors);
-  const termsRef = useRef<OpenBottomSheetRefTypes>(null);
+  const termsRef = useRef<any>(null);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
-  const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
-  const helpCenterRef = useRef<OpenBottomSheetRefTypes>(null);
+  const openBottomSheet = useRef<any>(null);
+  const helpCenterRef = useRef<any>(null);
 
   const renderToast = () => {
     showToast({
       title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const checkAvailableBalance = (fees: number): boolean => {
+    if (fees > +availableBalance) {
+      showToast({
+        title: localizationText.COMMON.INSUFFICIENT_BALANCE_COMMON,
+        isShowRightIcon: false,
+        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      });
+      return false;
+    }
+    return true;
   };
 
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
 
+  const getTotalFees = () => {
+    const { fees } = issuanceDetails;
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    const totalFees = +fees?.bankFeeAmount + +fees?.bankVatAmount + +fees?.feeAmount + +fees?.vatAmount;
+    return totalFees.toString();
+  };
+
+  const getCardTypeLabel = (): string => {
+    const { cardType } = issuanceDetails;
+    if (cardType === 'IPMC') {
+      return localizationText.VIRTUAL_CARD.CLASSIC;
+    }
+    if (cardType === 'VPPC') {
+      return localizationText.VIRTUAL_CARD.PLATINUM;
+    }
+    if (cardType === 'VSCC') {
+      return localizationText.VIRTUAL_CARD.SIGNATURE;
+    }
+    return '';
+  };
+
+  const listData = [
+    {
+      id: '1',
+      title: localizationText.TOPUP_CONFIRMATION.HOLDERS_NAME,
+      detailText: fullName,
+    },
+    {
+      id: '2',
+      title: localizationText.TOPUP_CONFIRMATION.CARD_TYPE,
+      detailText: getCardTypeLabel(),
+    },
+    {
+      id: '3',
+      title: localizationText.TOPUP_CONFIRMATION.ISSUANCE_FEE,
+      detailText: `${getTotalFees()} ${localizationText.COMMON.SAR}`,
+      style: styles.upperListContainer,
+    },
+  ];
+
   const openTermsRef = () => {
     termsRef.current?.showTermsAndConditions();
   };
-  const handleConfirm = () => {
-    if (isCheckTermsAndCondition) {
-      openBottomSheet.current?.present();
-    } else {
+
+  const handleConfirm = async () => {
+    if (!isCheckTermsAndCondition) {
       renderToast();
+    } else if (checkAvailableBalance(+getTotalFees())) {
+      openBottomSheet.current?.present();
     }
   };
   const handleOnCheckPress = () => {
     setIsCheckTermsAndCondition(!isCheckTermsAndCondition);
   };
 
-  // TODO: Will be repace by API
-  const listData = [
-    {
-      id: '1',
-      title: localizationText.TOPUP_CONFIRMATION.HOLDERS_NAME,
-      detailText: localizationText.TOPUP_CONFIRMATION.ADAM_AHMED,
-    },
-    {
-      id: '2',
-      title: localizationText.TOPUP_CONFIRMATION.CARD_TYPE,
-      detailText: localizationText.TOPUP_CONFIRMATION.MADA_DEBIT_CARD,
-    },
-    {
-      id: '3',
-      title: localizationText.TOPUP_CONFIRMATION.ISSUANCE_FEE,
-      detailText: localizationText.TOPUP_CONFIRMATION.HUNDERED_SAR,
-      style: styles.upperListContainer,
-    },
-  ];
-
-  const balance = formatNumberWithCommas('5200.40');
+  const balance = formatNumberWithCommas(availableBalance);
   const onCloseBottomSheet = () => {
     changePinRef.current?.resetInterval();
     openBottomSheet.current?.close();
@@ -118,7 +159,7 @@ const CardIssuanceConfirmationScreen = () => {
             <IPayView>
               <IPayButton
                 large
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 btnText={localizationText.COMMON.CONFIRM}
                 btnIconsDisabled
                 onPress={handleConfirm}
@@ -139,9 +180,10 @@ const CardIssuanceConfirmationScreen = () => {
       >
         <IssueCardPinCreation
           handleOnPressHelp={handleOnPressHelp}
-          onSuccess={() => {
+          issuanceDetails={issuanceDetails}
+          onSuccess={(cardInfo?: CardInfo) => {
             onCloseBottomSheet();
-            navigate(screenNames.VIRTUAL_CARD_SUCCESS);
+            navigate(screenNames.VIRTUAL_CARD_SUCCESS, { cardInfo });
           }}
         />
       </IPayBottomSheet>
