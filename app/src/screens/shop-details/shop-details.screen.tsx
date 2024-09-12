@@ -34,6 +34,7 @@ const ShopDetails: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = shopDetailStyles(colors);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const animatedHeight = useState(new Animated.Value(100))[0];
   const discountDetail = '20% Discount on Yearly subscribe on Spotify'; // TODO: Replace with API
   const amount = '470.00'; // TODO: Replace with API

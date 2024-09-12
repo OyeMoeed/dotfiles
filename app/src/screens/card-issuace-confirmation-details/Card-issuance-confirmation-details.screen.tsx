@@ -45,7 +45,7 @@ const CardIssuanceConfirmationScreen = () => {
   };
 
   const openTermsRef = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(setTermsConditionsVisibility(true)); //   isVirtualCardTermsAndConditions;
   };
   const handleConfirm = () => {
     if (isCheckTermsAndCondition) {

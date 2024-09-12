@@ -43,6 +43,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
 
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();

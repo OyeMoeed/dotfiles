@@ -48,7 +48,6 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
   const styles = replaceCardStyles(colors);
   const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
 
   const [selectedCity, setSelectedCity] = useState(CITIES[0]);
@@ -57,7 +56,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(setTermsConditionsVisibility(true)); //virtual show needs to be added
   };
 
   const onCloseBottomSheet = () => {

@@ -90,7 +90,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(setTermsConditionsVisibility(true)); //isVirtualCardTermsAndConditions needs to be added
   };
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);

@@ -95,7 +95,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(setTermsConditionsVisibility(true)); //isVirtualCardTermsAndConditions;
   };
 
   const onResendCodePress = () => {

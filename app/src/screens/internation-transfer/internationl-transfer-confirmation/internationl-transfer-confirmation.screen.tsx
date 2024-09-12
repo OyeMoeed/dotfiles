@@ -53,6 +53,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
