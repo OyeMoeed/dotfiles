@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import {
   IPayCaption2Text,
@@ -17,7 +17,6 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayFilterBottomSheet } from '@app/components/organism';
@@ -25,7 +24,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
 import { useTypedSelector } from '@app/store/store';
-import { ApiResponseStatusType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
 import offersListStyles from './offers-list.style';
@@ -34,9 +33,7 @@ const OffersListScreen: React.FC = () => {
   const { colors } = useTheme();
   const { offerFilterData, offerFilterDefaultValues } = useConstantData();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
-  const [isLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [offersData, setOffersData] = useState<OfferItem[] | null>(null);
 
@@ -46,20 +43,6 @@ const OffersListScreen: React.FC = () => {
   const styles = offersListStyles(colors);
 
   const handleSubmit = () => {};
-
-  const renderSpinner = useCallback(
-    (isVisbile: boolean) => {
-      if (isVisbile) {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-      } else {
-        hideSpinner();
-      }
-    },
-    [isLoading],
-  );
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -72,7 +55,6 @@ const OffersListScreen: React.FC = () => {
   };
 
   const getOffersData = async () => {
-    renderSpinner(true);
     try {
       const payload: GetOffersPayload = {
         walletNumber,
@@ -86,9 +68,7 @@ const OffersListScreen: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }

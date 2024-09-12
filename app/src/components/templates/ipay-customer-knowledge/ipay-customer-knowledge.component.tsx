@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -8,7 +7,6 @@ import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.
 import getLov from '@app/network/services/core/lov/get-lov.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import IPayCustomerKnowledgeDefault from './component/default-component';
@@ -38,7 +36,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const [occupationsLov, setOccupationLov] = useState<LovInfo[]>([]);
   const [citiesLov, setCitiesLov] = useState<LovInfo[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const {
     getValues,
@@ -63,17 +60,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     { code: '5', desc: `${localizationText.COMMON.MORE_THAN} 19999` },
   ];
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const setDefaultValues = () => {
     setValue('income_source', incomeSourceKeys.filter((el) => el.code === walletInfo.accountBasicInfo.incomeSource)[0]);
     setValue(
@@ -90,7 +76,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   };
 
   const getOccupationsLovs = async () => {
-    renderSpinner(true);
     const payload: IGetLovPayload = {
       lovType: '36',
     };
@@ -103,12 +88,9 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
         apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
       );
     }
-
-    renderSpinner(false);
   };
 
   const getCitiessLovs = async () => {
-    renderSpinner(true);
     const payload: IGetLovPayload = {
       lovType: '6',
     };
@@ -117,7 +99,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     if (apiResponse?.status.type === 'SUCCESS') {
       setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
     }
-    renderSpinner(false);
     setValue(
       'city_name',
       apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.userContactInfo.city)[0],

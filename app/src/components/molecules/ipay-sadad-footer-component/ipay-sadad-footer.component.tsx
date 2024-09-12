@@ -34,6 +34,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   showButtonOnly,
   textColor,
   totalAmountText,
+  gradientViewStyle,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -66,7 +67,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   return (
     <IPayView testID={`${testID}-sadad-footer`} style={[getFooterStyles(), style]}>
       <IPayLinearGradientView
-        style={styles.gradientView}
+        style={[styles.gradientView, gradientViewStyle]}
         gradientColors={backgroundGradient || colors.appGradient.gradientPrimary10}
       >
         {checkIfSelectedCount && (

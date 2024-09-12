@@ -669,6 +669,7 @@
     "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
+    "OFF_SIMP": "OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
     "BILL_PAYMENTS": "Bill Payments",
     "WALLET_WITH_EVERY_BILL": "on your wallet with \n every bill payment!",
@@ -855,7 +856,8 @@
     "VAT": "VAT",
     "FEES": "Fees",
     "ACTIVE_INACTIVE": "Active - Inactive",
-    "INACTIVE_ACTIVE": "Inactive - Active"
+    "INACTIVE_ACTIVE": "Inactive - Active",
+    "AMOUNT_TO_BE_REFUND": "Amount to be refund"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -909,7 +911,7 @@
     "RECIPIENT": "Recipient",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
-    "UNOPENED": "Unopened",
+    "UNOPENED": "UnOpened",
     "GIFT_DETAILS": "Gift Details",
     "SWIPE_TO_FLIP": "Swipe to Flip",
     "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
