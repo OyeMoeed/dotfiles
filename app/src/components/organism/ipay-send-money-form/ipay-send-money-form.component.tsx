@@ -60,7 +60,6 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
       showRemoveFormOption={() => showRemoveFormOption(id)}
       showRemoveBtn
       hasWallet={hasWallet}
-      showReason={showReason}
       currencyStyle={styles.currencyStyle}
     />
   );

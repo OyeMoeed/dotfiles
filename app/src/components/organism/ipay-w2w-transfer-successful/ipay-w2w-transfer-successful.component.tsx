@@ -51,16 +51,18 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
     renderToast();
   };
 
+  const infoLabel =
+    variant === TransactionTypes.PAYMENT_REQUEST
+      ? localizationText.REQUEST_SUMMARY.FROM
+      : localizationText.TOP_UP.TRANSFER_TO;
+
   const formattedTransfersDetails = transferDetails.formData.map((item, index) => {
     const summeryArray = [];
     const titleObject = () => {
       if (item?.walletNumber) {
         return {
           id: '2',
-          label:
-            variant === TransactionTypes.PAYMENT_REQUEST
-              ? localizationText.REQUEST_SUMMARY.FROM
-              : localizationText.TOP_UP.TRANSFER_TO,
+          label: infoLabel,
           value: item.subtitle,
           icon: null,
           leftIcon: icons.user_square,
@@ -70,10 +72,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
       }
       return {
         id: '2',
-        label:
-          variant === TransactionTypes.PAYMENT_REQUEST
-            ? localizationText.REQUEST_SUMMARY.FROM
-            : localizationText.TOP_UP.TRANSFER_TO,
+        label: infoLabel,
         value: item.subtitle,
         leftIcon: variant === TransactionTypes.PAYMENT_REQUEST ? icons.user_square : images.alinmaP,
         isAlinma: true,
@@ -205,29 +204,27 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
     shareImage();
   };
 
-  const renderCard = () => {
-    return (
-      <IPayFlatlist
-        showsVerticalScrollIndicator={false}
-        data={formattedTransfersDetails}
-        style={styles.cardList}
-        renderItem={({ item }) => (
-          <IPayView
-            key={item[0].value}
-            style={[styles.walletBackground, variant === TransactionTypes.PAYMENT_REQUEST && styles.margin20]}
-          >
-            <IPayFlatlist style={styles.cardList} scrollEnabled={false} data={item} renderItem={renderWallerPayItem} />
-            <IPayButton
-              btnType="link-button"
-              onPress={viewShot}
-              btnText={localizationText.TOP_UP.SHARE}
-              leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
-            />
-          </IPayView>
-        )}
-      />
-    );
-  };
+  const renderCard = () => (
+    <IPayFlatlist
+      showsVerticalScrollIndicator={false}
+      data={formattedTransfersDetails}
+      style={styles.cardList}
+      renderItem={({ item }) => (
+        <IPayView
+          key={item[0].value}
+          style={[styles.walletBackground, variant === TransactionTypes.PAYMENT_REQUEST && styles.margin20]}
+        >
+          <IPayFlatlist style={styles.cardList} scrollEnabled={false} data={item} renderItem={renderWallerPayItem} />
+          <IPayButton
+            btnType={buttonVariants.LINK_BUTTON}
+            onPress={viewShot}
+            btnText={localizationText.TOP_UP.SHARE}
+            leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+          />
+        </IPayView>
+      )}
+    />
+  );
 
   return (
     <IPayView style={styles.container}>

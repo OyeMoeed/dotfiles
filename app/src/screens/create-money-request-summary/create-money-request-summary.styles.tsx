@@ -98,7 +98,6 @@ const createMoneyRequestSummaryStyles = (themeColors: typeof colors) =>
       paddingHorizontal: scaleSize(16),
       color: themeColors.natural.natural700,
     },
-
     reasonContainer: {
       marginTop: moderateScale(24),
       gap: moderateScale(8),

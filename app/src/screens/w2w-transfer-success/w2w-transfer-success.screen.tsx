@@ -1,4 +1,3 @@
-import { IPayPressable } from '@app/components/atoms';
 import IPayW2WTransferSuccess from '@app/components/organism/ipay-w2w-transfer-successful/ipay-w2w-transfer-successful.component';
 import { IW2WTransferSuccessProps } from '@app/components/organism/ipay-w2w-transfer-successful/ipay-w2w-transfer-successful.interface';
 import { IPaySafeAreaView } from '@app/components/templates';

@@ -20,6 +20,7 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import getTotalAmount from '@app/utilities/total-amount-utils';
 import sendMoneyFormStyles from './send-money-request.styles';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-request.interface';
 
@@ -52,11 +53,6 @@ const SendMoneyRequest: React.FC = () => {
   useEffect(() => {
     if (formInstances?.length === 0) goBack();
   }, [formInstances]);
-
-  const totalAmount = formInstances.reduce(
-    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
-    0,
-  );
 
   const showRemoveFormOption = useCallback((id: number) => {
     if (removeFormRef.current) {
@@ -91,8 +87,9 @@ const SendMoneyRequest: React.FC = () => {
 
   const isTransferButtonDisabled = () => {
     let isDisabled = false;
-    for (let i = 0; i < formInstances.length; i++) {
-      if (!formInstances[i].amount || formInstances[i].amount <= 0) {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const instances of formInstances) {
+      if (!instances.amount || instances.amount <= 0) {
         isDisabled = true;
       }
     }
@@ -121,7 +118,7 @@ const SendMoneyRequest: React.FC = () => {
       variant: TransactionTypes.PAYMENT_REQUEST,
       data: {
         transfersDetails: { formInstances },
-        totalAmount,
+        totalAmount: getTotalAmount(formInstances),
       },
     });
   };
@@ -203,19 +200,19 @@ const SendMoneyRequest: React.FC = () => {
                   <IPaySubHeadlineText
                     regular
                     color={colors.primary.primary800}
-                    text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
+                    text={`${getTotalAmount(formInstances) ? formatNumberWithCommas(getTotalAmount(formInstances)) : 0} ${localizationText.COMMON.SAR}`}
                   />
                 }
               />
               <IPayBalanceStatusChip
                 monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
                 currentBalance={Number(availableBalance)}
-                amount={totalAmount}
+                amount={getTotalAmount(formInstances)}
                 setWarningStatus={setWarningStatus}
                 dailySpendingLimit={Number(dailyOutgoingLimit)}
               />
               <IPayButton
-                disabled={isTransferButtonDisabled() || !totalAmount || !!warningStatus}
+                disabled={isTransferButtonDisabled() || !getTotalAmount(formInstances) || !!warningStatus}
                 btnIconsDisabled
                 medium
                 btnType="primary"

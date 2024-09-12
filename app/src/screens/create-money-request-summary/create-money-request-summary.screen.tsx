@@ -30,6 +30,7 @@ import { scaleSize } from '@app/styles/mixins';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
+import getTotalAmount from '@app/utilities/total-amount-utils';
 import { IW2WTransferSummaryItem, ParamsProps } from './create-money-request-summary.interface';
 import createMoneyRequestSummaryStyles from './create-money-request-summary.styles';
 
@@ -134,10 +135,6 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
       </IPayView>
     );
   };
-  const totalAmount = transfersDetails.formInstances.reduce(
-    (total, contact) => total + parseFloat(contact?.amount?.replace(/\,/g, '') || 0),
-    0,
-  );
 
   const renderNonAlinmaPayItem = ({ item, index }: { item: IW2WTransferSummaryItem; index: number }) => {
     const isFirstItem = index === 0;
@@ -161,14 +158,16 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
 
   const isNumeric = (str: string): boolean => /^\d+$/.test(str);
 
+  const requestObject = transfersDetails.formInstances.map((formDetails) => ({
+    mobileNumber: formDetails.mobileNumber,
+    amount: formDetails.amount,
+    note: formDetails.notes,
+    inContactList: isNumeric(formDetails.subtitle) !== true, // TODO: need clearity how can get this value
+  }));
+
   const onSendRequest = async () => {
     const payload: CreateMoneyRequestPayloadTypes = {
-      requests: transfersDetails.formInstances.map((formDetails) => ({
-        mobileNumber: formDetails.mobileNumber,
-        amount: formDetails.amount,
-        note: formDetails.notes,
-        inContactList: isNumeric(formDetails.subtitle) !== true, // TODO: need clearity how can get this value
-      })),
+      requests: requestObject,
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
 
@@ -184,7 +183,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
           formData: transfersDetails.formInstances,
           apiData: apiResponse?.response.moneyRequestsResult,
         },
-        totalAmount,
+        totalAmount: getTotalAmount(transfersDetails.formInstances),
       });
     }
   };
@@ -199,20 +198,17 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
       <IPayView style={styles.container}>
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>
-            {transfersRequestsList?.map((item) => {
-              if (item[0].isAlinma) {
-                return (
-                  <IPayView style={styles.walletBackground} key={item[0].value}>
-                    <IPayFlatlist
-                      style={styles.detailesFlex}
-                      scrollEnabled={false}
-                      data={item}
-                      renderItem={renderWalletPayItem}
-                    />
-                  </IPayView>
-                );
-              }
-              return (
+            {transfersRequestsList?.map((item) =>
+              item[0].isAlinma ? (
+                <IPayView style={styles.walletBackground} key={item[0].value}>
+                  <IPayFlatlist
+                    style={styles.detailesFlex}
+                    scrollEnabled={false}
+                    data={item}
+                    renderItem={renderWalletPayItem}
+                  />
+                </IPayView>
+              ) : (
                 <IPayView style={styles.walletBackground} key={item[0].value}>
                   <IPayFlatlist
                     style={styles.detailesFlex}
@@ -221,8 +217,8 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
                     renderItem={renderNonAlinmaPayItem}
                   />
                 </IPayView>
-              );
-            })}
+              ),
+            )}
           </IPayScrollView>
         </IPayView>
         <IPayView style={styles.buttonContainer}>
