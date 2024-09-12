@@ -31,6 +31,7 @@ import {
   IPayIcon,
   IPayPressable,
   IPaySubHeadlineText,
+  IPayText,
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -309,19 +310,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
               isShowCard: true,
               currentCard,
               cards,
+              isShowAmount: true,
             })
           }
           style={styles.commonContainerStyle}
-        />
-        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {localizationText.COMMON.VIEW_ALL}
-        </IPaySubHeadlineText>
-        <IPayPressable
-          onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
         >
-          <IPayView>
-            <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-          </IPayView>
+          <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
+          <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
         </IPayPressable>
       </IPayView>
       <IPayFlatlist

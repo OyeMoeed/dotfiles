@@ -40,7 +40,14 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const localizationText = useLocalization();
     const styles = otpVerificationStyles();
     const { showToast } = useToastContext();
-    const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
+    const { counter, handleRestart, onChangeText, clearTimer, startTimer } = useOtpVerification(
+      setOtp,
+      setOtpError,
+      timeout,
+    );
+
+    const isCounterEnds = counter <= 0;
+
     const renderToast = (toastMsg: string) => {
       showToast({
         title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
@@ -52,11 +59,18 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         containerStyle: toastContainerStyle,
       });
     };
+
     const onSendCodeAgainPress = () => {
       onResendCodePress();
     };
 
     useImperativeHandle(ref, () => ({
+      startTimer: () => {
+        startTimer();
+      },
+      clearTimer: () => {
+        clearTimer();
+      },
       resetInterval: () => {
         handleRestart();
       },
@@ -101,7 +115,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           />
           <IPayButton
             btnType={buttonVariants.PRIMARY}
-            disabled={counter <= 0}
+            disabled={isCounterEnds}
             btnText={localizationText.COMMON.CONFIRM}
             large
             btnIconsDisabled
