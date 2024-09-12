@@ -14,7 +14,7 @@ interface BeneficiaryBankDetailsRes {
 // Define the LocalTransferBeneficiaryBankDetails interface
 interface LocalTransferBeneficiaryBankDetails {
   data?: BeneficiaryBankDetailsRes; // TODO need to update
-  successfulResponse: boolean;
+  successfulResponse?: boolean;
 }
 
 interface BeneficiaryBankDetailsReq {

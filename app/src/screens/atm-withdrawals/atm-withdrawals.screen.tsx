@@ -17,7 +17,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, PayChannel } from '@app/utilities/enums.util';
+import { PayChannel, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, isMultipleOfHundred } from '@app/utilities/number-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
@@ -129,6 +129,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayRemainingAccountBalance
             walletInfo={walletInfo}
+            currencyStyle={styles.currency}
             topUpBtnVariant={buttonVariants.OUTLINED}
             showProgress={false}
             showIcon={false}

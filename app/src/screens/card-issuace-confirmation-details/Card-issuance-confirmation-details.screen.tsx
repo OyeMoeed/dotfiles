@@ -32,8 +32,8 @@ const CardIssuanceConfirmationScreen = () => {
   const { issuanceDetails } = route.params;
   const { fullName, availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = cardIssuaceConfirmationStyles(colors);
-  const termsRef = useRef<any>(null);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -103,7 +103,7 @@ const CardIssuanceConfirmationScreen = () => {
   ];
 
   const openTermsRef = () => {
-    termsRef.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
   const handleConfirm = async () => {
@@ -168,7 +168,11 @@ const CardIssuanceConfirmationScreen = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+        isVirtualCardTermsAndConditions
+      />
       <IPayBottomSheet
         heading={localizationText.CARDS.VIRTUAL_CARD}
         enablePanDownToClose
