@@ -33,7 +33,7 @@ import getBillersCategoriesService from '@app/network/services/bills-management/
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
-import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import getBillers from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -96,13 +96,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onGetBillers = async () => {
-    const deviceInfo = await getDeviceInfo();
-    const payload = {
-      includeBillerDetails: 'false',
-      deviceInfo,
-      billerStatus: 'E',
-    };
-    const apiResponse = await getBillersService(payload);
+    const apiResponse = await getBillers();
     if (apiResponse.successfulResponse) {
       setBillers(
         apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
