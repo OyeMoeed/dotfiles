@@ -110,15 +110,15 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
           renderItem={renderGuideStepItem}
         />
       )}
-      <IPayView style={styles.makeTransferStyles}>
-        <IPayButton
-          large
-          btnType={buttonVariants.OUTLINED}
-          btnText={localizationText.ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER}
-          btnIconsDisabled
-          onPress={hanldePageNavigation}
-        />
-      </IPayView>
+
+      <IPayButton
+        large
+        btnType={buttonVariants.OUTLINED}
+        btnText={localizationText.ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER}
+        btnIconsDisabled
+        btnStyle={styles.makeTransferStyles}
+        onPress={hanldePageNavigation}
+      />
     </IPayView>
   );
 };
