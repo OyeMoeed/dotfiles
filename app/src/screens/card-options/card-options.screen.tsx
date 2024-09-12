@@ -88,8 +88,7 @@ const CardOptionsScreen: React.FC = () => {
     initOnlinePurchase();
   }, []);
 
-  const getToastSubTitle = () =>
-    `${cardType} ${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
+  const getToastSubTitle = () => `${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
 
   const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
@@ -118,7 +117,7 @@ const CardOptionsScreen: React.FC = () => {
           isOn
             ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
             : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
-          isOn || true,
+          true,
           icons.receipt_item,
           false,
         );
@@ -136,18 +135,17 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   const toggleOnlinePurchase = () => {
-    if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_DISABLE) {
-      changeOnlinePurchase(true, CardStatus.ONLINE_PURCHASE_ENABLE);
-    } else if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
-      changeOnlinePurchase(false, CardStatus.ONLINE_PURCHASE_DISABLE);
-    }
+    changeOnlinePurchase(
+      !isOnlinePurchase,
+      isOnlinePurchase ? CardStatus.ONLINE_PURCHASE_DISABLE : CardStatus.ONLINE_PURCHASE_ENABLE,
+    );
   };
 
   const toggleATMWithdraw = (isOn: boolean) => {
     setIsATMWithDraw((prev) => !prev);
     renderToast(
       isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
-      isOn,
+      true,
       icons.moneys,
       false,
     );
