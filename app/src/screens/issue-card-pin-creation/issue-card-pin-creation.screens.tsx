@@ -196,7 +196,6 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
   );
 
   return currentView === ChangeCardPinViewTypes.EnterReceiveOtp ? (
-    // <OtpVerificationComponent onConfirmPress={onSuccess} onPressHelp={handleOnPressHelp} />
     renderOtpSheet()
   ) : (
     <IPayView style={styles.container}>
