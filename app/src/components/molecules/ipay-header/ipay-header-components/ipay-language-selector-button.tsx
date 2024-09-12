@@ -1,11 +1,11 @@
 // IPayLanguageSelectorButton.tsx
 import icon from '@app/assets/icons';
-import { IPayIcon } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import { LanguageState } from '@app/store/slices/language-sclice.interface';
+import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { showLanguageSheet } from '@app/store/slices/language-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { LanguageCode } from '@app/utilities/enums.util';
+import { buttonVariants, LanguageCode } from '@app/utilities/enums.util';
 import { getFlagComponent, getSelectedLanguage } from '@app/utilities/language.utils';
 import throttle from '@app/utilities/throttle-onPress.util';
 import { FC, useCallback, useState } from 'react';
@@ -38,9 +38,9 @@ const IPayLanguageSelectorButton: FC<IPayLanguageSelectorButtonProps> = ({ color
   return (
     <IPayButton
       onPress={showActionSheet}
-      btnType="link-button"
+      btnType={buttonVariants.LINK_BUTTON}
       btnText={getSelectedLanguage(selectedLanguage)}
-      leftIcon={showFlag ? getFlagComponent(selectedLanguage) : <></>}
+      leftIcon={showFlag ? getFlagComponent(selectedLanguage) : <IPayView />}
       textColor={textColor || colors.natural.natural1000}
       rightIcon={<IPayIcon icon={icon.arrow_down} color={color || colors.natural.natural1000} />}
       disabled={isDisabled} // Disable button based on state

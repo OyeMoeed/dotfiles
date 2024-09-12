@@ -10,12 +10,12 @@ import useConstantData from '@app/constants/use-constants';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import { MultiPaymentPrepareBillPayloadTypes } from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.interface';
 import multiPaymentPrepareBillService from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { shortString } from '@app/utilities/string-functions.utils';
+import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -111,7 +111,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           <IPayFlatlist
             contentContainerStyle={styles.contentContainerStyle}
             data={billPaymentInfos}
-            renderItem={({ item }: { item: BillPaymentInfosTypes }) => (
+            renderItem={({ item }) => (
               <IPayBillDetailsOption
                 headerData={{
                   title: item.billNickname || '-',

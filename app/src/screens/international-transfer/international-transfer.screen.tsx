@@ -9,7 +9,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayGradientList from '@app/components/molecules/ipay-gradient-list/ipay-gradient-list.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -28,28 +27,23 @@ import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { ActivationMethods } from '@app/network/services/international-transfer/activate-international-beneficiary/activate-international-beneficiary.interface';
-import activateInternationalBeneficiary from '@app/network/services/international-transfer/activate-international-beneficiary/activate-international-beneficiary.service';
+import {
+  ActivationMethods,
+  activateInternationalBeneficiary,
+} from '@app/network/services/international-transfer/activate-international-beneficiary';
 import getAlinmaExpressBeneficiaries from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.service';
-import deleteInternationalBeneficiary from '@app/network/services/international-transfer/delete-international-beneficiary/delete-international-beneficiary.service';
+import { deleteInternationalBeneficiary } from '@app/network/services/international-transfer/delete-international-beneficiary';
 import { WesternUnionBeneficiary } from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.interface';
 import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ViewAllStatus } from '@app/types/global.types';
-import {
-  ApiResponseStatusType,
-  alertType,
-  alertVariant,
-  buttonVariants,
-  spinnerVariant,
-  toastTypes,
-} from '@app/utilities/enums.util';
+import { ApiResponseStatusType, ToastTypes, alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Flag from 'react-native-round-flags';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
-import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
+import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
 import { tabOptions } from './international-transfer.constent';
@@ -74,7 +68,7 @@ const InternationalTransferScreen: React.FC = () => {
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [selectedNumber, setSelectedNumber] = useState<string>('');
-  const [nickName, setNickName] = useState('');
+  const [, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
   const editBeneficiaryRef = useRef<any>(null);
@@ -83,8 +77,6 @@ const InternationalTransferScreen: React.FC = () => {
   const [wuBeneficiaryData, setWUBeneficiaryData] = useState([]);
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const { showToast } = useToastContext();
-
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   useEffect(() => {
     setFilteredBeneficiaryData(aeBeneficiaryData);
@@ -100,19 +92,7 @@ const InternationalTransferScreen: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getAEBeneficiariesData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse = await getAlinmaExpressBeneficiaries();
       switch (apiResponse?.status?.type) {
@@ -128,16 +108,13 @@ const InternationalTransferScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getWUBeneficiariesData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse = await getWesternUnionBeneficiaries();
       switch (apiResponse?.status?.type) {
@@ -153,9 +130,7 @@ const InternationalTransferScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -179,7 +154,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, {selectedBeneficiary});
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, { selectedBeneficiary });
   };
 
   const handleBeneficiaryActions = useCallback((index: number) => {
@@ -208,7 +183,6 @@ const InternationalTransferScreen: React.FC = () => {
   };
 
   const handleDeleteBeneficiary = async () => {
-    renderSpinner(true);
     try {
       const apiResponse = await deleteInternationalBeneficiary(selectedBeneficiary?.beneficiaryCode);
       switch (apiResponse?.status?.type) {
@@ -219,7 +193,7 @@ const InternationalTransferScreen: React.FC = () => {
             containerStyle: styles.toast,
             isShowRightIcon: false,
             leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
-            toastType: toastTypes.SUCCESS,
+            toastType: ToastTypes.SUCCESS,
           });
           break;
         case apiResponse?.apiResponseNotOk:
@@ -231,9 +205,7 @@ const InternationalTransferScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -385,20 +357,12 @@ const InternationalTransferScreen: React.FC = () => {
     activateBeneficiary?.current?.close();
   }, []);
 
-  const handleReceiveCall = useCallback(async () => {
-    const repsonse = await onPressActivateBeneficiary();
-    if (repsonse === ApiResponseStatusType.SUCCESS) {
-      setActivateHeight(SNAP_POINTS.LARGE);
-      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
-    }
-  }, []);
-
   const handleCallAlinma = useCallback(() => {
     setActivateHeight(SNAP_POINTS.LARGE);
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
+
   const onPressActivateBeneficiary = async () => {
-   
     const activateBeneficiaryPayload = {
       beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
       activationMethod: ActivationMethods.IVR,
@@ -408,19 +372,27 @@ const InternationalTransferScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           return apiResponse?.status?.type;
-
-          break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
-          break;
+          return '';
         default:
-          break;
+          return '';
       }
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      return '';
     }
   };
+
+  const handleReceiveCall = useCallback(async () => {
+    const repsonse = await onPressActivateBeneficiary();
+    if (repsonse === ApiResponseStatusType.SUCCESS) {
+      setActivateHeight(SNAP_POINTS.LARGE);
+      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
+    }
+  }, []);
+
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {
       case ActivateViewTypes.RECEIVE_CALL:

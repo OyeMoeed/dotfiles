@@ -31,10 +31,6 @@ const PlayStationScreen: React.FC = () => {
     }
   };
 
-  const handleSearch = (newText: string) => {
-    setSearch(newText);
-  };
-
   const onPricePress = () =>
     navigate(ScreenNames.SHOP_DETAILS, {
       details: productDetailData,

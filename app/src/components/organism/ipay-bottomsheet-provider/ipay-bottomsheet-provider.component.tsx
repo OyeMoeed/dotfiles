@@ -8,7 +8,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayTermsAndConditions from '../ipay-terms-and-conditions/ipay-terms-and-conditions.component';
-import { IPayBottomSheetProviderProps } from './ipay-bottomsheet-provider.interface';
+import IPayBottomSheetProviderProps from './ipay-bottomsheet-provider.interface';
 
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();

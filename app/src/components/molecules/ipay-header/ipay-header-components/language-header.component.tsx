@@ -2,8 +2,8 @@ import { IPayIcon, IPayPressable, IPaySubHeadlineText } from '@app/components/at
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
 import { t } from 'i18next';
-import headerStyles from '../ipay-header.styles';
 import React from 'react';
+import headerStyles from '../ipay-header.styles';
 
 const LanguageHeader = () => {
   const { colors } = useTheme();

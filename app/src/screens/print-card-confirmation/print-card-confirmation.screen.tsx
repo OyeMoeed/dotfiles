@@ -41,7 +41,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState<boolean>(false);
+  const [, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();

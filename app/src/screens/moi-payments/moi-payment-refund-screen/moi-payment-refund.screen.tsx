@@ -18,7 +18,7 @@ import moiPaymentRefundStyles from './moi-payment-refund.style';
 
 const MoiPaymentRefund: React.FC = () => {
   const { colors } = useTheme();
-  const styles = moiPaymentRefundStyles();
+  const styles = moiPaymentRefundStyles(colors);
   const localizationText = useLocalization();
   const { moiPaymentDetailes, moiRefundBillSubList } = useMoiPaymentConfirmation();
   const [refundPaymentDetails, setRefundPaymentDetails] = useState<MOIItemProps[]>([]);
@@ -29,8 +29,7 @@ const MoiPaymentRefund: React.FC = () => {
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
   const { otpConfig } = useConstantData();
 
   const helpCenterRef = useRef<any>(null);
@@ -101,6 +100,9 @@ const MoiPaymentRefund: React.FC = () => {
           btnText={localizationText.COMMON.CONFIRM}
           totalAmount={totalAmount}
           btnRightIcon={<IPayIcon size={20} color={colors.natural.natural0} />}
+          totalAmountText={localizationText.LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND}
+          backgroundGradient={[colors.transparent, colors.transparent]}
+          gradientViewStyle={styles.sadadFooterGradient}
         />
       </IPayView>
       <IPayBottomSheet

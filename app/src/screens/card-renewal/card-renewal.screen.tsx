@@ -47,6 +47,7 @@ const CardRenewalScreen: React.FC = () => {
   const {
     currentCard: { cardType, cardHeaderText, name },
   } = route?.params;
+
   const dispatch = useDispatch();
   const localizationText = useLocalization();
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);

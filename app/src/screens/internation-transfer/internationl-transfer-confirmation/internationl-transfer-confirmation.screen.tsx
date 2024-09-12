@@ -33,11 +33,11 @@ import { Controller, useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
-import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
+import internationalTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
 const InternationalTransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
-  const styles = internationlTransferConfirmationStyles(colors);
+  const styles = internationalTransferConfirmationStyles();
   const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);

@@ -1,6 +1,6 @@
 import { IPayPressable, IPayText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { JSX } from 'react';
 import { IPayCounterButtonProps } from './ipay-counter-button.interface';
 import styles from './ipay-counter-button.style';
 
