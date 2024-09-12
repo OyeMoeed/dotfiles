@@ -14,7 +14,7 @@ const AllCategoriesScreen: React.FC = ({ route }) => {
   const localizationText = useLocalization();
 
   const onPressCategory = (category?: MarketPlaceCategoriesProps) => {
-    navigate(ScreenNames.CATEGORY_SCREEN, { category });
+    navigate(ScreenNames.SHOP_CATEGORIES, { categories, selectedCategory: category });
   };
 
   return (

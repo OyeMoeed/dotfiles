@@ -3,12 +3,12 @@ import CardDetails from '@app/enums/card-types.enum';
 interface IPayDescriptiveCardProps {
   testID: string;
   onCardPress: (code: string) => void;
-  cardType: typeof CardDetails;
-  data: CategoriesItem;
+  cardType: CardDetails;
+  data: CategoryItem;
   onPricePress: () => void;
 }
 
-interface CategoriesItem {
+interface CategoryItem {
   price: string;
   discount: string;
   code: string;
@@ -18,4 +18,4 @@ interface CategoriesItem {
   categoryDesc: string;
 }
 
-export { CategoriesItem, IPayDescriptiveCardProps };
+export { CategoryItem, IPayDescriptiveCardProps };

@@ -13,7 +13,7 @@ import CardDetails from '@app/enums/card-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { CategoriesItem, IPayDescriptiveCardProps } from './ipay-descriptive-card.interface';
+import { CategoryItem, IPayDescriptiveCardProps } from './ipay-descriptive-card.interface';
 import IPayDescriptiveCardStyles from './ipay-descriptive-card.styles';
 
 const IPayDescriptiveCard: React.FC<IPayDescriptiveCardProps> = ({
@@ -28,7 +28,7 @@ const IPayDescriptiveCard: React.FC<IPayDescriptiveCardProps> = ({
   const localizationText = useLocalization();
 
   const imageStyle = cardType === CardDetails.NORMAL ? styles.image : styles.singleImage;
-  const renderItem = ({ item }: { item: CategoriesItem }) => {
+  const renderItem = ({ item }: { item: CategoryItem }) => {
     const { desc, iconUrl, categoryDesc, price = '100', discount = '20', code } = item;
     return (
       <IPayView>
