@@ -291,7 +291,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       });
     }
 
-    return filters;
+    return filtersTransaction;
   };
 
   const getTransactionTypesData = async () => {

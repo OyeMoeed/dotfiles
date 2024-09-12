@@ -4,7 +4,7 @@ import { IPayCaption2Text, IPayIcon, IPayImage, IPayPressable, IPayView } from '
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IAPPLECRYPTOREQ } from '@app/network/services/cards-management/apple-pay-crypto/apple-pay-crypto.interface';
 import applePayCrypto from '@app/network/services/cards-management/apple-pay-crypto/apple-pay-crypto.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { isIosOS } from '@app/utilities/constants';

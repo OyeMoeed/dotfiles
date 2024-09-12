@@ -258,7 +258,7 @@ const TransferSummaryScreen: React.FC = () => {
     prepareOtp(false);
   };
 
-  const TransactionList = () => {
+  const TransactionList = () =>
     transfersRequestsList?.map((item) =>
       item[0].isAlinma ? (
         <IPayView style={styles.walletBackground} key={item[0].value}>
@@ -280,7 +280,6 @@ const TransferSummaryScreen: React.FC = () => {
         </IPayView>
       ),
     );
-  };
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>

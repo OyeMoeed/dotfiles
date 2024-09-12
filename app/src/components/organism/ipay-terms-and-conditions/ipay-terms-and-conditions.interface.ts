@@ -1,9 +1,10 @@
-import { Ref } from 'react';
-
 export interface TermsAndConditionsRefTypes {
   showTermsAndConditions: () => void;
 }
 
 export interface IPayTermsAndConditionsProps {
-  ref?: Ref<TermsAndConditionsRefTypes>;
+  showTermsAndConditions: boolean;
+  setShowTermsAndConditions: (show: boolean) => void;
+  termsAndConditionsURL?: string;
+  isVirtualCardTermsAndConditions?: boolean;
 }

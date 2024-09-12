@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const cardStatusIndicationStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -46,8 +46,11 @@ const cardStatusIndicationStyles = (themeColors: typeof colors) =>
       justifyContent: 'center',
     },
     renewBtn: {
-      height: verticalScale(32),
+      borderRadius: moderateScale(12),
+      paddingVertical: moderateScale(8),
+      paddingHorizontal: moderateScale(4),
       justifyContent: 'center',
+      backgroundColor: colors.primary.primary500,
     },
     statusIconContainer: {
       bottom: verticalScale(1),

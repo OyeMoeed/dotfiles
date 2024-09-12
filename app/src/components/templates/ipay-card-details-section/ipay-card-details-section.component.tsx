@@ -250,7 +250,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           </IPayCaption2Text>
           <IPaySubHeadlineText style={styles.accountBalanceText}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
+            <IPaySubHeadlineText regular>{` ${localizationText.COMMON.SAR}`}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />
@@ -303,26 +303,14 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
           </IPayFootnoteText>
         </IPayView>
-        <IPayPressable
-          onPress={() =>
-            navigate(ScreenNames.TRANSACTIONS_HISTORY, {
-              isShowCard: true,
-              currentCard,
-              cards,
-            })
-          }
-          style={styles.commonContainerStyle}
-        />
-        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {localizationText.COMMON.VIEW_ALL}
-        </IPaySubHeadlineText>
-        <IPayPressable
+        <IPayButton
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
-        >
-          <IPayView>
-            <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-          </IPayView>
-        </IPayPressable>
+          btnType={buttonVariants.LINK_BUTTON}
+          hasRightIcon
+          rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
+          medium
+          btnText={localizationText.COMMON.VIEW_ALL}
+        />
       </IPayView>
       <IPayFlatlist
         testID="transaction"
