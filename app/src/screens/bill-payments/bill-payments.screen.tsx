@@ -23,7 +23,8 @@ import {
   buttonVariants,
   spinnerVariant,
 } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+import { useFocusEffect } from '@react-navigation/core';
+import React, { useCallback, useState } from 'react';
 import billPaymentsStyles from './bill-payments.style';
 import IPayBillPaymentNoResultsComponent from './component/ipay-bill-payment-no-results.component';
 import IPayBillPaymentsFooter from './component/ipay-bill-payments-footer.component';
@@ -118,9 +119,14 @@ const BillPaymentsScreen: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    getBills();
-  }, []);
+  // Use useFocusEffect to call the function when the screen comes into focus
+  useFocusEffect(
+    useCallback(() => {
+      getBills();
+      // If needed, add a cleanup function here
+      return () => {};
+    }, []),
+  );
 
   return (
     <IPaySafeAreaView>
