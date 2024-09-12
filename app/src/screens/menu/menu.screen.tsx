@@ -33,7 +33,6 @@ const MenuScreen: FC = () => {
   const localizationText = useLocalization();
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-∏
 
   const onPressSettings = () => {
     navigate(screenNames.SETTINGS);

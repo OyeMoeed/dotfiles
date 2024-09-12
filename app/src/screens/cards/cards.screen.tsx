@@ -14,7 +14,7 @@ import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import screenNames from '@app/navigation/screen-names.navigati∏on';
+import screenNames from '@app/navigation/screen-names.navigation';
 import {
   CardListItem,
   CardsProp,

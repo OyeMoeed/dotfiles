@@ -52,7 +52,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const localizationText = useLocalization();
 
   const route = useRoute();
-  const { selectedContacts, from, heading, showHistory } = route.params as any;
+  const { selectedContacts, from, heading, showHistory, activeFriends } = route.params as any;
 
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
@@ -230,7 +230,7 @@ const SendMoneyFormScreen: React.FC = () => {
         mobileNumber: item.mobileNumber,
         amount: +item.amount,
         note: item.notes,
-        transferPurpose: item.selectedItem.id as string,
+        transferPurpose: item?.selectedItem?.id as string,
       })),
     };
     const apiResponse = await getWalletToWalletFees(walletInfo.walletNumber as string, payload);

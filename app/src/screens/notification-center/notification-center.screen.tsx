@@ -16,6 +16,8 @@ import {
   readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
@@ -55,7 +57,6 @@ const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any
  */
 const NotificationCenterScreen: React.FC = () => {
   // hooks
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const localization = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();

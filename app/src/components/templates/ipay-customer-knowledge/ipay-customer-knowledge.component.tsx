@@ -98,7 +98,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     if (apiResponse?.status.type === 'SUCCESS') {
       setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
     }
-    s;
     setValue(
       'city_name',
       apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.userContactInfo.city)[0],

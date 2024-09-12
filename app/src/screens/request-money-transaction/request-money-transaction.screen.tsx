@@ -146,7 +146,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       }
     } catch (error: any) {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    } finally {
     }
 
     return { data: [], hasMore: false };

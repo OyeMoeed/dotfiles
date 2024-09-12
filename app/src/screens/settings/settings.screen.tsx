@@ -26,6 +26,7 @@ import IPayResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
 import { PasscodeTypes } from './settings.interface';
 import settingStyles from './settings.styles';
 import useSettings from './use-settings.hook';
+
 const Settings: React.FC = () => {
   const localizationText = useLocalization();
   const { colors } = useTheme();

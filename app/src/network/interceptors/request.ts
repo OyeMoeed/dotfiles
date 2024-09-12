@@ -1,9 +1,8 @@
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { store } from '@app/store/store';
 import NetInfo from '@react-native-community/netinfo';
-import Config from 'react-native-config';
 import { InternalAxiosRequestConfig } from 'axios';
-import { showSpinner } from '@app/store/slices/spinner.slice';
+import Config from 'react-native-config';
 
 const { REQUEST_TIMEOUT } = Config;
 
@@ -13,7 +12,6 @@ const onRequestFulfilled = async (config: InternalAxiosRequestConfig) => {
     store.dispatch(showAlert());
   } else {
     store.dispatch(hideAlert());
-    // store.dispatch(showSpinner());
   }
 
   const abortController = new AbortController();

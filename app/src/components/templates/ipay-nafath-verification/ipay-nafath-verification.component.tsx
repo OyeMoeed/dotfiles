@@ -45,7 +45,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const styles = nafathVerificationStyles(colors);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [nafathNumber, setNafathNumber] = useState<number>();
   const [, setNafathRequestId] = useState<string>('');
   const [duration, setDuration] = useState<number>();
@@ -102,7 +101,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       }
       setStartInqiryInterval(true);
     }
-    setIsLoading(false);
   };
 
   const getIamDate = () => {
@@ -205,7 +203,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           break;
       }
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
