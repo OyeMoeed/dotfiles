@@ -40,7 +40,7 @@ const useMobileAndIqamaVerification = () => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [resendOtpPayload, setResendOtpPayload] = useState<LoginUserPayloadProps>();
-  const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { fetchLocation } = useLocation();
@@ -62,7 +62,7 @@ const useMobileAndIqamaVerification = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef?.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
   const onCloseBottomSheet = () => {
@@ -264,9 +264,9 @@ const useMobileAndIqamaVerification = () => {
     checkTermsAndConditions,
     keyboardVisible,
     isOtpSheetVisible,
-    termsAndConditionSheetRef,
     otpVerificationRef,
     helpCenterRef,
+    showTermsAndConditionsSheet,
     onCheckTermsAndConditions,
     onPressTermsAndConditions,
     showToast,
@@ -278,6 +278,7 @@ const useMobileAndIqamaVerification = () => {
     onConfirm,
     setOtpError,
     setIsLoading,
+    setShowTermsAndConditionsSheet,
     otp,
     setOtp,
     resendOtp,

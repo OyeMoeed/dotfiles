@@ -27,7 +27,6 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
@@ -42,7 +41,7 @@ const InternationalTransferConfirmation: React.FC = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
-  const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -61,7 +60,7 @@ const InternationalTransferConfirmation: React.FC = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef?.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
   const handleClosePress = () => {
@@ -255,7 +254,10 @@ const InternationalTransferConfirmation: React.FC = () => {
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+      />
 
       <IPayBottomSheet
         testID="promo-code-bottom-sheet"

@@ -48,33 +48,6 @@ const constants = {
     CREATE_PASSCODE: 'Create Passcode',
     CONFIRM_PASSCODE: 'Confirm Passcode',
   },
-  TERMS_AND_CODITIONS_DUMMY_TEXT: `“Terms and Conditions” is the document governing the contractual relationship between the provider of a service and its user. On the web, this document is often also called “Terms of Service” (ToS), “Terms of Use”, EULA (“End-User License Agreement”), “General Conditions” or “Legal Notes”.
-  
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-  
-  
-The Terms and Conditions therefore, represent the document that helps in dealing with problems or preventing them in the first place. Because of that, the Terms and Conditions are fundamental in many cases in order to mount an adequate and proper defense represent the document that helps in  `,
-
   FAQ_ITEMS: [
     {
       question: 'Can I recover my passcode?',
@@ -708,6 +681,12 @@ const DASHBOARD_ITEMS = [
   FeatureSections.TRANSACTION_HISTORY,
   FeatureSections.LATEST_OFFERS,
 ];
+const TERMS_AND_CONDITIONS_URLS = {
+  ALINMAPAY_REG_TERMS_AR_URL: 'https://www.alinma.com/ADS/channels/retail/assets/docs/RegistrationTerms_ar.pdf',
+  ALINMAPAY_REG_TERMS_EN_URL: 'https://www.alinma.com/ADS/channels/retail/assets/docs/RegistrationTerms_en.pdf',
+  VC_TERMS_AR_URL: 'https://www.alinma.com/ADS/TermsandconditionsforAlinmaPayVirtualCards(Arabic).pdf',
+  VC_TERMS_EN_URL: 'https://www.alinma.com/ADS/TermsandconditionsforAlinmaPayVirtualCards(English).pdf',
+};
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -737,6 +716,7 @@ export {
   VOILATOR_ID,
   WALLET_TIERS,
   WU_TRANSFER_TYPES,
+  TERMS_AND_CONDITIONS_URLS,
 };
 
 export default constants;
