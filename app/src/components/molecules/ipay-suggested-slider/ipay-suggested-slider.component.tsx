@@ -38,7 +38,7 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPa
             <IPayView style={styles.commonConStyle}>
               {/* <icons.receiptIcon /> */}
               <IPayIcon icon={icons.receipt_item} size={18} color={colors.orange.orange500} />
-              <IPayFootnoteText style={styles.footnoteTextStyle} text="HOME.BILL_PAYMENTS"></IPayFootnoteText>
+              <IPayFootnoteText style={styles.footnoteTextStyle} text="HOME.BILL_PAYMENTS" />
             </IPayView>
             <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>
               {t('CARDS.WALLET_WITH_EVERY_BILL')}
@@ -47,7 +47,7 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPa
           {/* Right side Text */}
           <IPayView>
             <IPayLargeTitleText style={styles.largeTextStyle}>45%</IPayLargeTitleText>
-            <IPaySubHeadlineText style={styles.subHeadingTextStyle} text="COMMON.CASH_BACK"></IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.subHeadingTextStyle} text="COMMON.CASH_BACK" />
           </IPayView>
         </IPayView>
         <IPayView style={styles.imagContainer}>

@@ -33,9 +33,9 @@ import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { forwardRef, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
-import { useTranslation } from 'react-i18next';
 
 const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID, onComplete }) => {
   const { colors } = useTheme();

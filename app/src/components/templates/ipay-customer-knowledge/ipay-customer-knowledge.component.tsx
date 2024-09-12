@@ -10,10 +10,10 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
-import { useTranslation } from 'react-i18next';
 
 /**
  * A component that contains customer knowledge input fields.

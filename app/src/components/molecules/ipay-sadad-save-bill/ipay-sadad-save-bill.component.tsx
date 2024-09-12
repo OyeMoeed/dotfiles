@@ -30,7 +30,7 @@ const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
   return (
     <IPayView style={[styles.saveBillContainer, style]}>
       <IPayView style={styles.saveBillStyle}>
-        <IPayFootnoteText color={colors.natural.natural900} text="NEW_SADAD_BILLS.SAVE_BILL_FUTURE"></IPayFootnoteText>
+        <IPayFootnoteText color={colors.natural.natural900} text="NEW_SADAD_BILLS.SAVE_BILL_FUTURE" />
         <Controller
           name={toggleInputName}
           control={toggleControl}

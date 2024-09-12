@@ -2,9 +2,9 @@ import { IPayCaption2Text, IPayCheckbox, IPayFootnoteText, IPayImage, IPayView }
 import { TransferService } from '@app/screens/edit-international-beneficiary-transfer/edit-international-beneficiary-transfer.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayTransactionServiceProps } from './ipay-transaction-service.interface';
 import transactionServiceStyles from './ipay-transaction-service.styles';
-import { useTranslation } from 'react-i18next';
 
 const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
   transaction,

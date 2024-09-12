@@ -4,9 +4,9 @@ import { IPayChip } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPaySadadBillProps } from './ipay-traffic-violation-card.interface';
 import trafficViolationCardStyles from './ipay-traffic-violation-card.style';
-import { useTranslation } from 'react-i18next';
 
 const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
   testID,

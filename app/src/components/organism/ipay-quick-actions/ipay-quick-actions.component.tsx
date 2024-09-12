@@ -4,9 +4,9 @@ import { IPayButton } from '@app/components/molecules';
 import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, PayChannel } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import IPayQuickActionsProps from './ipay-quick-actions.interface';
 import iPayQuickActionsStyles from './ipay-quick-actions.styles';
-import { useTranslation } from 'react-i18next';
 
 const IPayQuickActions: React.FC<IPayQuickActionsProps> = ({
   payChannelType,

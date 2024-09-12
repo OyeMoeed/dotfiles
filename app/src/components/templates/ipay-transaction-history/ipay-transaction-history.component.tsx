@@ -50,7 +50,7 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({ transaction, isDe
         style={styles.headingStyles}
         color={colors.natural.natural900}
         text="TRANSACTION_HISTORY.SENDER_NAME"
-      ></IPayFootnoteText>
+      />
       <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
         {fullName}
       </IPaySubHeadlineText>
@@ -199,7 +199,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
         >
           <IPayView>
             <IPayView style={styles.amountSection}>
-              <IPayFootnoteText color={colors.natural.natural900} text="TRANSACTION_HISTORY.AMOUNT"></IPayFootnoteText>
+              <IPayFootnoteText color={colors.natural.natural900} text="TRANSACTION_HISTORY.AMOUNT" />
               <IPayTitle3Text
                 style={[
                   styles.footnoteBoldTextStyle,
@@ -234,14 +234,14 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   style={styles.headingStyles}
                   color={colors.natural.natural900}
                   text="TRANSACTION_HISTORY.TYPE"
-                ></IPayFootnoteText>
+                />
                 {initiatedWallet && !isCountGift && isNotPayVCardVisa && (
                   <IPaySubHeadlineText
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
                     text="TRANSACTION_HISTORY.AUTHORIZED"
-                  ></IPaySubHeadlineText>
+                  />
                 )}
                 {!isCardIssue && !isPayOneCard && !isCountMusaned && (
                   <IPaySubHeadlineText
@@ -339,7 +339,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.primary.primary800}
                     numberOfLines={2}
                     text="TRANSACTION_HISTORY.ONGOING_SALARY_TRANSFER"
-                  ></IPaySubHeadlineText>
+                  />
                 )}
                 {isCountMusaned && isDebit && (
                   <IPaySubHeadlineText
@@ -347,7 +347,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.primary.primary800}
                     numberOfLines={2}
                     text="TRANSACTION_HISTORY.OUTGOING_SALARY_TRANSFER"
-                  ></IPaySubHeadlineText>
+                  />
                 )}
                 {isPayOneCard && isDebit && (
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
@@ -371,7 +371,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     style={styles.headingStyles}
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.BENEFICIARY_NAME"
-                  ></IPayFootnoteText>
+                  />
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.beneficiaryName}
                   </IPaySubHeadlineText>
@@ -385,7 +385,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     style={styles.headingStyles}
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.PAID_TO"
-                  ></IPayFootnoteText>
+                  />
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.beneficiaryName || transaction?.mobileNumber}
                   </IPaySubHeadlineText>

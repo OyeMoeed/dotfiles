@@ -9,11 +9,11 @@ import {
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { SadadFooterComponentProps } from './ipay-sadad-footer.interface';
 import sadadFooterComponentStyles from './ipay-sadad-footer.style';
-import { useTranslation } from 'react-i18next';
 
 const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   testID,

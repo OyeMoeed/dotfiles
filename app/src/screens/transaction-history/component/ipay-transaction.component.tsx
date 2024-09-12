@@ -15,9 +15,9 @@ import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { dateTimeFormat } from '@app/utilities';
 import getTransationIcon from '@app/utilities/transation-types-helper.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayTransactionProps } from './ipay-transaction.interface';
 import transactionItemStyles from './ipay-transaction.style';
-import { useTranslation } from 'react-i18next';
 
 /**
  * A component consisting of transaction history object

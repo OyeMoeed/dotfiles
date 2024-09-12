@@ -3,9 +3,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import calculateProgress from '@app/utilities/calculate-progress.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useMemo, FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBalanceProgressbarProps from './ipay-balance-progressbar.interface';
 import ipayBalanceProgressStyles from './ipay-balance-progressbar.styles';
-import { useTranslation } from 'react-i18next';
 
 const IPayBalanceProgressbar: FC<IPayBalanceProgressbarProps> = ({
   monthlyRemainingOutgoingAmount = '',

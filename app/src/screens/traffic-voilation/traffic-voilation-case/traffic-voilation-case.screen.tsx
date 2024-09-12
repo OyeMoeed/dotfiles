@@ -18,9 +18,9 @@ import * as Yup from 'yup';
 
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useTranslation } from 'react-i18next';
 import TrafficFormValues from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
-import { useTranslation } from 'react-i18next';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
   const { colors } = useTheme();

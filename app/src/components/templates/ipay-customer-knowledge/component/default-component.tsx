@@ -6,9 +6,9 @@ import { KycFormCategories } from '@app/enums';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import customerKnowledgeStyles from '../ipay-customer-knowledge.style';
 import IPayCustomerKnowledgeDefaultProps from './default-component.interface';
-import { useTranslation } from 'react-i18next';
 
 const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> = ({
   control,

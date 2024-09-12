@@ -16,9 +16,9 @@ import { IPayChip } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import CountryCurrencyBoxProps from './ipay-country-currency-box.interface';
 import countryCurrencyStyles from './ipay-country-currency-box.style';
-import { useTranslation } from 'react-i18next';
 
 /**
  * Properties for the CountryCurrencyBox component.

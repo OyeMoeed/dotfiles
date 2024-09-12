@@ -23,9 +23,9 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FeatureSections } from '@app/enums';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
-import { useTranslation } from 'react-i18next';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -60,11 +60,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
             {isBasicTier && (
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
-                  <IPayFootnoteText style={styles.footnoteTextStyle} text="HOME.NEED_MY_ACTION"></IPayFootnoteText>
-                  <IPayCaption2Text style={styles.captionTextStyle} text={`3 ${t('HOME.PENDING')}`}></IPayCaption2Text>
+                  <IPayFootnoteText style={styles.footnoteTextStyle} text="HOME.NEED_MY_ACTION" />
+                  <IPayCaption2Text style={styles.captionTextStyle} text={`3 ${t('HOME.PENDING')}`} />
                 </IPayView>
                 <IPayPressable style={styles.commonContainerStyle}>
-                  <IPayText style={styles.subheadingTextStyle} text="COMMON.VIEW_ALL"></IPayText>
+                  <IPayText style={styles.subheadingTextStyle} text="COMMON.VIEW_ALL" />
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayPressable>
               </IPayView>
@@ -80,7 +80,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         return (
           <React.Fragment key={section}>
             <IPayView style={styles.suggestedContainerHeading}>
-              <IPayFootnoteText style={styles.footnoteTextStyle} text="COMMON.SUGGESTED_FOR_YOU"></IPayFootnoteText>
+              <IPayFootnoteText style={styles.footnoteTextStyle} text="COMMON.SUGGESTED_FOR_YOU" />
             </IPayView>
             <IPayFlatlist
               contentContainerStyle={styles.adSectionContainer}
@@ -104,10 +104,10 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
           <React.Fragment key={section}>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle} text="COMMON.TRANSACTION_HISTORY"></IPayFootnoteText>
+                <IPayFootnoteText style={styles.footnoteTextStyle} text="COMMON.TRANSACTION_HISTORY" />
               </IPayView>
               <IPayPressable onPress={moveToTransactionHistory} style={styles.commonContainerStyle}>
-                <IPayText style={styles.subheadingTextStyle} text="COMMON.VIEW_ALL"></IPayText>
+                <IPayText style={styles.subheadingTextStyle} text="COMMON.VIEW_ALL" />
                 <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>
             </IPayView>
@@ -139,10 +139,10 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
           <React.Fragment key={section}>
             <IPayView style={styles.headingsContainer}>
               <IPayView style={styles.commonContainerStyle}>
-                <IPayFootnoteText style={styles.footnoteTextStyle} text="COMMON.LATEST_OFFER"></IPayFootnoteText>
+                <IPayFootnoteText style={styles.footnoteTextStyle} text="COMMON.LATEST_OFFER" />
               </IPayView>
               <IPayPressable onPress={() => navigate(ScreenNames.OFFERS_LIST)} style={styles.commonContainerStyle}>
-                <IPayText style={styles.subheadingTextStyle} text="COMMON.VIEW_ALL"></IPayText>
+                <IPayText style={styles.subheadingTextStyle} text="COMMON.VIEW_ALL" />
                 <IPayView>
                   <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
                 </IPayView>
@@ -180,7 +180,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
     <IPayView testID={testID} style={styles.container}>
       {arrangement?.map((section) => renderSection(section))}
       <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-        <IPayText style={styles.subheadingTextStyle} text="COMMON.RE_ARRANGE_SECTIONS"></IPayText>
+        <IPayText style={styles.subheadingTextStyle} text="COMMON.RE_ARRANGE_SECTIONS" />
         <IPayPressable onPress={openBottomSheet}>
           <ArrangeSquare2 color={colors.primary.primary600} style={styles.rearrangeIcon} />
         </IPayPressable>

@@ -6,11 +6,11 @@ import { regex } from '@app/styles/typography.styles';
 import { States, TopUpStates, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { isMultipleOfHundred, removeCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBalanceProgressbar from '../ipay-balance-progressbar/ipay-balance-progressbar.component';
 import IPayQuickActions from '../ipay-quick-actions/ipay-quick-actions.component';
 import ipayRemainingAccountBalanceStyles from './ipay-remaining-account-balance.component.styles';
 import IPayRemainingBalanceProps from './ipay-remaining-account-balance.interface';
-import { useTranslation } from 'react-i18next';
 
 const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   testID,

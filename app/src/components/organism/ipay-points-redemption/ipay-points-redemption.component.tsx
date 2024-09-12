@@ -246,7 +246,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
             <IPayView style={styles.checkmarkPoints}>
               <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
               <IPayFootnoteText
-                text={`${t('TOP_UP.USE_ALL')}` + ` (${aktharPointsInfo?.mazayaPoints} ${t('COMMON.POINTS')})`}
+                text={`${t('TOP_UP.USE_ALL')} (${aktharPointsInfo?.mazayaPoints} ${t('COMMON.POINTS')})`}
               />
             </IPayView>
             <>

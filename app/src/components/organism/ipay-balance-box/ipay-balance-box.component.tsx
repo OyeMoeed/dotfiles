@@ -12,7 +12,6 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayCarousel } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
-import constants from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -23,10 +22,10 @@ import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { forwardRef } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
-import { useTranslation } from 'react-i18next';
 
 /**
  * Props for the IPay Balance Box component.
@@ -52,7 +51,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     monthlyOutgoingLimit,
   }) => {
     const carouselData = useCarouselData();
-    const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
     const { t } = useTranslation();

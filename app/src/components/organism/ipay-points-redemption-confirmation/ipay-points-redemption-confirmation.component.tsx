@@ -20,11 +20,11 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { TopupStatus, spinnerVariant } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayPointRedemptionConfirmatonProps } from './ipay-points-redemption-confirmation.interface';
 import pointRedemptionConfirmation from './ipay-points-redemption-confirmation.style';
-import { useTranslation } from 'react-i18next';
 
 const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> = ({ testID, params }) => {
   const { t } = useTranslation();

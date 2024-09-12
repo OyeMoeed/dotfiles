@@ -10,13 +10,12 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip } from '@app/components/molecules';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayAtmDetailsProps } from './ipay-atm-details.interface';
 import atmDetailsStyle from './ipay-atm-details.style';
-import { useTranslation } from 'react-i18next';
 
 const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, openGoogleMapsWeb }) => {
   const { colors } = useTheme();

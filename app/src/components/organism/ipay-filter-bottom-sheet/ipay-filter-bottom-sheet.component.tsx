@@ -14,6 +14,7 @@ import moment from 'moment';
 import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import {
   ControlFormField,
   CurrentViewTypes,
@@ -22,7 +23,6 @@ import {
   IPayFilterProps,
 } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
-import { useTranslation } from 'react-i18next';
 
 /**
  * Represents a form field controlled by a control instance.

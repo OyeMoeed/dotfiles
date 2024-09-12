@@ -2,10 +2,10 @@ import { IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import ViewShot from 'react-native-view-shot';
+import { useTranslation } from 'react-i18next';
 import useShareableImage from './ipay-shareable-imageview.hook';
 import IPayShareableImageViewProps from './ipay-shareable-imageview.interface';
 import shareableViewStyles from './ipay-shareable-imageview.style';
-import { useTranslation } from 'react-i18next';
 
 const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ children, otherView, style, testID }) => {
   const { t } = useTranslation();

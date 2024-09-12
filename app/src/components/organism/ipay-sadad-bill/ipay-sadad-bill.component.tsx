@@ -15,9 +15,9 @@ import { getDateFormate } from '@app/utilities/date-helper.util';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPaySadadBillProps } from './ipay-sadad-bill.interface';
 import sadadBillStyles from './ipay-sadad-bill.style';
-import { useTranslation } from 'react-i18next';
 
 const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   testID,

@@ -11,10 +11,10 @@ import { IPayButton, IPayGradientTextMasked, IPayList } from '@app/components/mo
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCountdownTime } from '@app/utilities/date-helper.util';
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import useCallReceiverTimer from './ipay-receive-call.hook';
 import { GuideStep, IPayReceiveCallProps } from './ipay-receive-call.interface';
 import receiveCallStyles from './ipay-receive-call.styles';
-import { useTranslation } from 'react-i18next';
 
 const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   testID,

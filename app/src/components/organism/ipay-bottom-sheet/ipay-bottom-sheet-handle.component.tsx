@@ -3,9 +3,9 @@ import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from 
 import { IPayButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayBottomSheetHandleProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
-import { useTranslation } from 'react-i18next';
 
 const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
   backBtn,
