@@ -33,7 +33,7 @@ const textInputStyles = (themeColors: typeof colors) =>
     },
     outerView: {
       flex: 1,
-      paddingBottom: moderateScale(3),
+      paddingTop: moderateScale(2),
     },
     errorContainer: {
       borderColor: themeColors.error.error500,
