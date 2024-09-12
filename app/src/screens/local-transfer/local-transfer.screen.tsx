@@ -49,7 +49,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
-import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
+import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
@@ -214,30 +214,22 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const onPressBtn = (
-    beneficiaryStatus: string,
-    bankCode: string,
-    beneficiaryNickName: string,
-    beneficiaryCode: string,
-  ) => {
-    if (beneficiaryStatus === BeneficiaryTypes.ACTIVE)
-      navigate(ScreenNames.TRANSFER_INFORMATION, {
-        bankCode,
-        beneficiaryNickName,
-        beneficiaryCode,
-      });
+  const activateBeneficiary = useRef<bottomSheetTypes>(null);
+
+  const handleActivateBeneficiary = useCallback(() => {
+    activateBeneficiary?.current?.present();
+    setActivateHeight(SNAP_POINTS.SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
+    else handleActivateBeneficiary();
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
-    const {
-      beneficiaryBankDetail,
-      fullName,
-      bankLogo,
-      beneficiaryAccountNumber,
-      beneficiaryStatus,
-      nickname,
-      beneficiaryCode,
-    } = item;
+    const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
       <IPayList
         containerStyle={styles.listContainer}
@@ -254,7 +246,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
-                onPressBtn(beneficiaryStatus, beneficiaryBankDetail.bankCode, nickname, beneficiaryCode);
+                onPressBtn(item);
               }}
               btnText={
                 beneficiaryStatus === BeneficiaryTypes.ACTIVE
@@ -349,7 +341,6 @@ const LocalTransferScreen: React.FC = () => {
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
       ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
       : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
-  const activateBeneficiary = useRef<bottomSheetTypes>(null);
 
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
@@ -399,18 +390,6 @@ const LocalTransferScreen: React.FC = () => {
       setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
     }
   }, []);
-
-  const handleActivateBeneficiary = useCallback(() => {
-    activateBeneficiary?.current?.present();
-    setActivateHeight(SNAP_POINTS.SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-    else handleActivateBeneficiary();
-  };
 
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {

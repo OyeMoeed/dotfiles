@@ -53,14 +53,12 @@ const TransferConfirmation: React.FC = () => {
   const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
 
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
-  const [isLoadingConfirm, setIsLoadingConfrim] = useState(false);
-  const [apiError, setAPIError] = useState<string>('');
+  const [otpError, setOtpError] = useState();
 
   type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
 
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     amount,
@@ -89,7 +87,21 @@ const TransferConfirmation: React.FC = () => {
       { title: localizationText.COMMON.REF_NUMBER, subTitle: authentication.transactionId, icon: icons.copy },
     ];
     setBeneficiaryData(beneficiaryDataArray);
-  }, []);
+  }, [
+    amount,
+    authentication.transactionId,
+    beneficiaryNickName,
+    instantTransferType,
+    localizationText.COMMON.REF_NUMBER,
+    localizationText.COMMON.SAR,
+    localizationText.INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME,
+    localizationText.TRANSFER_SUMMARY.AMOUNT,
+    localizationText.TRANSFER_SUMMARY.FAST_CONVERSION_BY,
+    localizationText.TRANSFER_SUMMARY.NOTE,
+    localizationText.TRANSFER_SUMMARY.REASON,
+    note,
+    transferPurpose,
+  ]);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -114,16 +126,6 @@ const TransferConfirmation: React.FC = () => {
 
   const onPressTransfer = () => {
     otpBottomSheetRef?.current?.present();
-  };
-
-  const renderToastAPI = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
@@ -161,38 +163,26 @@ const TransferConfirmation: React.FC = () => {
 
   const onConfirm = async () => {
     if (walletNumber) {
-      setIsLoadingConfrim(true);
-      try {
-        const deviceInfo = await getDeviceInfo();
-        const payload: LocalTransferConfirmPayloadTypes = {
-          otp,
-          otpRef,
-          amount,
-          authentication,
-          deviceInfo,
-        };
+      const deviceInfo = await getDeviceInfo();
+      const payload: LocalTransferConfirmPayloadTypes = {
+        otp,
+        otpRef,
+        amount,
+        authentication,
+        deviceInfo,
+      };
 
-        const apiResponse = await localTransferConfirm(walletNumber, payload);
-        if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-          onCloseBottomSheet();
-          navigate(ScreenNames.TRANSFER_SUCCESS, {
-            amount: apiResponse?.response?.amountCredited,
-            beneficiaryNickName: apiResponse?.response?.beneficiaryName,
-            transferPurpose,
-            instantTransferType,
-            note,
-            refNumber: apiResponse?.response?.transactionId,
-          });
-        } else if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        } else {
-          setAPIError(apiResponse?.error);
-        }
-        setIsLoadingConfrim(false);
-      } catch (error) {
-        setIsLoadingConfrim(false);
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToastAPI(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      const apiResponse = await localTransferConfirm(walletNumber, payload);
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+        onCloseBottomSheet();
+        navigate(ScreenNames.TRANSFER_SUCCESS, {
+          amount: apiResponse?.response?.amountCredited,
+          beneficiaryNickName: apiResponse?.response?.beneficiaryName,
+          transferPurpose,
+          instantTransferType,
+          note,
+          refNumber: apiResponse?.response?.transactionId,
+        });
       }
     }
   };
@@ -290,6 +280,7 @@ const TransferConfirmation: React.FC = () => {
           setOtp={setOtp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
+          otpError={otpError !== ''}
         />
       </IPayBottomSheet>
 

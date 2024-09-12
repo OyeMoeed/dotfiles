@@ -37,13 +37,12 @@ const TransferSuccessScreen = () => {
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const gradientColors = [colors.natural.natural50, colors.natural.natural50];
-  const totalTransferedAmount = `3000 ${localizationText.COMMON.SAR}`;
   const bankDetails = constants.BANK_DETAILS;
-  const [beneficiaryDetails, setBeneficiaryDetails] = useState([])
+  const [beneficiaryDetails, setBeneficiaryDetails] = useState([]);
 
   type RouteProps = RouteProp<{ params: TransferDetails }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { amount, beneficiaryNickName, transferPurpose, instantTransferType, note, refNumber } = route?.params;
+  const { amount, beneficiaryNickName, transferPurpose, instantTransferType, note, refNumber } = route.params;
 
   useEffect(() => {
     const beneficiaryDetailsArray = [
@@ -137,7 +136,7 @@ const TransferSuccessScreen = () => {
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPaySuccess
           headingText={localizationText.TOP_UP.TRANSFER_SUCCESSFUL}
-          subHeadingText={totalTransferedAmount}
+          subHeadingText={`${amount} ${localizationText.COMMON.SAR}`}
           style={StyleSheet.flatten(styles.headerView)}
         />
 

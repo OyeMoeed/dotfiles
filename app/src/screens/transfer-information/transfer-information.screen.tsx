@@ -19,7 +19,7 @@ import icons from '@app/assets/icons';
 import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
 import { useRoute, RouteProp } from '@react-navigation/native';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import transferInformationStyles from './transfer-information.style';
 import { TransferInformationProps } from './trasnfer-information.interface';
 
@@ -33,15 +33,13 @@ const TransferInformation: React.FC = () => {
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const reasonsBottomSheetRef = useRef(null);
-  const [isLoadingGetFees, setIsLoadingGetFees] = useState<boolean>(false);
-  const [isLoadingPrepare, setIsLoadingPrepare] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   type RouteProps = RouteProp<{ params: TransferInformationProps }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { bankCode, beneficiaryNickName, beneficiaryCode } = route?.params;
+  const { bankCode, beneficiaryNickName, beneficiaryCode } = route.params;
   const { localTransferReasonData } = useConstantData();
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
@@ -86,13 +84,6 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.present();
   };
 
-  const checkIsButtonDisabled = () => {
-    if (transferAmount && selectedReason) {
-      return false;
-    }
-    return true;
-  };
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -104,10 +95,8 @@ const TransferInformation: React.FC = () => {
   };
 
   const getTransferFee = async () => {
-    setIsLoadingGetFees(true);
     if (walletNumber) {
       try {
-
         const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
         if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
           return apiResponse?.response;
@@ -117,10 +106,8 @@ const TransferInformation: React.FC = () => {
           return null;
         }
         setAPIError(apiResponse?.error);
-        setIsLoadingGetFees(false);
         return null;
       } catch (error) {
-        setIsLoadingGetFees(false);
         setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         return null;
@@ -137,7 +124,6 @@ const TransferInformation: React.FC = () => {
 
   const onLocalTransferPrepare = async () => {
     if (transferAmount && selectedReason && walletNumber) {
-      setIsLoadingPrepare(true);
       const transferFees = await getTransferFee();
       if (transferFees) {
         try {
@@ -174,14 +160,10 @@ const TransferInformation: React.FC = () => {
           } else {
             setAPIError(apiResponse?.error);
           }
-          setIsLoadingPrepare(false);
         } catch (error) {
-          setIsLoadingPrepare(false);
           setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
           renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
         }
-      } else {
-        setIsLoadingPrepare(true);
       }
     }
   };
@@ -220,7 +202,7 @@ const TransferInformation: React.FC = () => {
       {!isKeyboardOpen ? (
         <IPayView style={styles.buttonContainer}>
           <IPayButton
-            onPress={onPressNext}
+            onPress={onLocalTransferPrepare}
             btnType={buttonVariants.PRIMARY}
             large
             disabled={isTransferButtonDisabled() || chipValue}
