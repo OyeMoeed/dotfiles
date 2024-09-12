@@ -40,6 +40,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
+import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { useTypedSelector } from '@app/store/store';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -66,6 +71,25 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
+  const getW2WActiveFriends = async () => {
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
+    };
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          activeFriends: apiResponse.response?.friends,
+          selectedContacts,
+          heading: localizationText.HOME.SEND_MONEY,
+          showReason: true,
+        });
+      }
+    }
+  };
 
   const handleSubmitTransfer = () => {
     switch (from) {
