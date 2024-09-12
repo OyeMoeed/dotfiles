@@ -13,13 +13,12 @@ const IPayListView: React.FC<IPayListViewProps> = ({
   onPressListItem,
   isCompleteItem,
   cardStyles,
-  cardContainerStyle,
 }) => {
   const { colors } = useTheme();
   const styles = listViewStyles();
-  const selectedIcon = (text: string) => (selectedListItem && selectedListItem === text) || false;
+  const selectedIcon = (text: string) => selectedListItem === text || false;
   const iconComponent = (text: string) =>
-    selectedListItem && selectedListItem === text ? (
+    selectedListItem === text ? (
       <IPayIcon icon={icons.tick_mark_default} size={20} color={colors.primary.primary500} />
     ) : undefined;
 
@@ -31,7 +30,6 @@ const IPayListView: React.FC<IPayListViewProps> = ({
         renderItem={({ item }) => (
           <IPayList
             style={cardStyles}
-            containerStyle={cardContainerStyle}
             textStyle={styles.titleStyle}
             title={item.text}
             isShowIcon={selectedIcon(item.text)}

@@ -1,13 +1,10 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import { APIResponseType } from '@app/utilities/enums.util';
 import apiCall from '@network/services/api-call.service';
-import axios, { AxiosResponse } from 'axios';
 import Config from 'react-native-config';
-import { handleApiResponse } from '../../api-call.interceptors';
-import { ApiResponse } from '../../services.interface';
 import CORE_URLS from '../core.urls';
 import { IActivationAbsherReq, PrepareIdRenewalProp } from './nafath-verification.interface';
+
 const { NAFATH_MANAGE } = Config;
 const headers = { contentType: 'application/json', charset: 'utf-8' };
 
@@ -15,71 +12,45 @@ const getNafathRandom = async (payload: PrepareIdRenewalProp): Promise<unknown> 
   if (constants.MOCK_API_RESPONSE) {
     return {};
   }
-  try {
-    console.log(payload);
-    let channelId = payload?.channelId;
 
-    let body = {
+  const apiResponse = apiCall({
+    endpoint: CORE_URLS.GET_NAFATH_RANDOM(payload?.channelId),
+    method: requestType.POST,
+    payload: {
       requestId: payload?.requestId,
-    };
-    let endpoint = `${NAFATH_MANAGE}${CORE_URLS.GET_NAFATH_RANDOM(channelId)}`;
+    },
+    headers,
+    baseURL: NAFATH_MANAGE,
+  });
 
-    const response: AxiosResponse<ApiResponse<any>> = await axios({
-      method: requestType.POST,
-      url: endpoint,
-      data: body,
-      headers: headers,
-    });
-
-    try {
-      return handleApiResponse<any>(response);
-    } catch (error: any) {}
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 const getNafathInquiry = async (payload: PrepareIdRenewalProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return {};
   }
-  try {
-    let channelId = payload?.channelId;
-    let requestId = payload?.requestId;
 
-    let endpoint = `${NAFATH_MANAGE}${CORE_URLS.GET_NAFATH_INQUIRY(channelId, requestId)}`;
+  const apiResponse = apiCall({
+    endpoint: CORE_URLS.GET_NAFATH_INQUIRY(payload?.channelId, payload?.requestId),
+    method: requestType.GET,
+    headers,
+    baseURL: NAFATH_MANAGE,
+  });
 
-    const response: AxiosResponse<ApiResponse<any>> = await axios({
-      method: requestType.GET,
-      url: endpoint,
-      headers: headers,
-    });
-
-    try {
-      return handleApiResponse<any>(response);
-    } catch (error: any) {}
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 const updateWalletTierReq = async (activationAbsherReq: IActivationAbsherReq) => {
-  try {
-    let walletNumber = activationAbsherReq?.walletNumber;
+  const walletNumber = activationAbsherReq?.walletNumber;
 
-    const apiResponse: any = await apiCall({
-      endpoint: CORE_URLS.UPDATE_WALLET_TIER(walletNumber),
-      method: requestType.POST,
-      payload: activationAbsherReq,
-    });
+  const apiResponse: any = await apiCall({
+    endpoint: CORE_URLS.UPDATE_WALLET_TIER(walletNumber),
+    method: requestType.POST,
+    payload: activationAbsherReq,
+  });
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export { getNafathInquiry, getNafathRandom, updateWalletTierReq };

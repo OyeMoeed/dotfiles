@@ -12,24 +12,42 @@ import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React from 'react';
 import { StyleSheet } from 'react-native';
-import { ItemProps } from './atm-withdraw-successful.interface';
+import { formatTimeAndDate } from '@app/utilities/date-helper.util';
+import { ATMWithdrawalSuccessScreenProps, ItemProps } from './atm-withdraw-successful.interface';
 import atmWithdrawSuccessStyles from './atm-withdraw-successful.style';
 
-const AtmWithdrawSuccessful: React.FC = () => {
+const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ route }) => {
   const { colors } = useTheme();
   const styles = atmWithdrawSuccessStyles(colors);
   const localizationText = useLocalization();
-  const withdrawSuccessData = constants.ATM_WITHDRAW_SUCCESS_DATA;
-  const transactionsAmount = 5000;
+  const withdrawSuccessData = [
+    {
+      id: 1,
+      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_TYPE,
+      subTitle: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.ATM_WITHDRAWAL,
+      icon: '',
+    },
+    {
+      id: 2,
+      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.REF_NUMBER,
+      subTitle: route?.params?.referenceNumber,
+      icon: icons.copy,
+    },
+    {
+      id: 3,
+      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_DATE,
+      subTitle: formatTimeAndDate(new Date().toString()),
+      icon: '',
+    },
+  ];
 
   const { showToast } = useToastContext();
 
@@ -56,7 +74,7 @@ const AtmWithdrawSuccessful: React.FC = () => {
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const renderItem = ({ item }: ItemProps) => (
@@ -82,7 +100,7 @@ const AtmWithdrawSuccessful: React.FC = () => {
         <IPaySuccess
           style={styles.zeroFlex}
           headingText={localizationText.ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY}
-          subHeadingText={`${transactionsAmount} ${localizationText.COMMON.SAR}`}
+          subHeadingText={`${route?.params?.amount} ${localizationText.COMMON.SAR}`}
           subHeadingTextStyle={styles.subHeadingTextStyle}
         />
         <IPayView style={styles.dataView}>

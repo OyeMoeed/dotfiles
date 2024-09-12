@@ -4,6 +4,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } f
 import { Animated, Easing, Modal, ScrollView } from 'react-native';
 
 import { IPayButton } from '@app/components/molecules';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { IPayActionSheetProps } from './ipay-actionsheet-interface';
 import { calculateHeight, isset } from './ipay-actionsheet-utils';
 import styles from './ipay-actionsheet.styles';
@@ -22,6 +23,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       showCancel = true,
       customImage,
       bodyStyle,
+      buttonStyle,
       messageStyle,
     },
     ref,
@@ -50,28 +52,6 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       sheetAnim.setValue(calculatedHeight);
     }, [options, title, message, cancelButtonIndex, sheetAnim]);
 
-    useImperativeHandle(ref, () => ({
-      show,
-      hide,
-    }));
-
-    const show = () => {
-      setVisible(true);
-      showSheet();
-    };
-
-    const hide = () => {
-      hideSheet(() => {
-        setVisible(false);
-      });
-    };
-
-    const cancel = () => {
-      if (isset(cancelButtonIndex)) {
-        hide();
-      }
-    };
-
     const showSheet = () => {
       Animated.timing(sheetAnim, {
         toValue: 0,
@@ -79,6 +59,11 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
         easing: Easing.out(Easing.ease),
         useNativeDriver: true,
       }).start();
+    };
+
+    const show = () => {
+      setVisible(true);
+      showSheet();
     };
 
     const hideSheet = (callback: () => void) => {
@@ -89,8 +74,25 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       }).start(callback);
     };
 
+    const hide = () => {
+      hideSheet(() => {
+        setVisible(false);
+      });
+    };
+
+    useImperativeHandle(ref, () => ({
+      show,
+      hide,
+    }));
+
+    const cancel = () => {
+      if (isset(cancelButtonIndex)) {
+        hide();
+      }
+    };
+
     const renderTitle = () => {
-      if (!title) return <></>;
+      if (!title) return null;
       return (
         <IPayView style={sheetStyles.titleBox}>
           {React.isValidElement(title) ? title : <IPayFootnoteText text={title} style={sheetStyles.titleText} />}
@@ -118,36 +120,33 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       );
     };
 
-    const renderCancelButton = () => {
-      if (!isset(cancelButtonIndex) || !showCancel) return <></>;
-      return createButton(options[cancelButtonIndex], cancelButtonIndex);
-    };
-
-    const createButton = (title: string, index: number) => {
-      const btnTextColor = destructiveButtonIndex == index ? colors.error.error500 : colors.primary.primary500;
-      const btnBackground = cancelButtonIndex == index ? colors.backgrounds.greyOverlay : colors.natural.natural0;
-      const btnStyle = cancelButtonIndex == index ? sheetStyles.cancelSpacing : sheetStyles.innerSpacing;
+    const createButton = (buttonText: string, index: number) => {
+      const btnTextColor = destructiveButtonIndex === index ? colors.error.error500 : colors.primary.primary500;
+      const btnBackground = cancelButtonIndex === index ? colors.backgrounds.greyOverlay : colors.natural.natural0;
+      const btnStyle = cancelButtonIndex === index ? sheetStyles.cancelSpacing : sheetStyles.innerSpacing;
 
       return (
         <IPayButton
           onPress={() => onPress(index)}
-          btnType="primary"
-          btnText={title}
+          btnType={buttonVariants.PRIMARY}
+          btnText={buttonText}
           large
-          textStyle={cancelButtonIndex == index && sheetStyles.bold}
+          textStyle={cancelButtonIndex === index && sheetStyles.bold}
           btnIconsDisabled
-          btnStyle={btnStyle}
+          btnStyle={[btnStyle, buttonStyle]}
           textColor={btnTextColor}
           btnColor={btnBackground}
         />
       );
     };
 
-    const renderOptions = () => {
-      return options.map((title, index) => {
-        return cancelButtonIndex === index ? null : createButton(title, index);
-      });
+    const renderCancelButton = () => {
+      if (!isset(cancelButtonIndex) || !showCancel) return null;
+      return createButton(options[cancelButtonIndex], cancelButtonIndex);
     };
+
+    const renderOptions = () =>
+      options.map((optionsTitle, index) => (cancelButtonIndex === index ? null : createButton(optionsTitle, index)));
 
     return (
       <Modal
@@ -157,8 +156,8 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
         transparent
         onRequestClose={cancel}
       >
-        <IPayView style={[sheetStyles.wrapper]}>
-          <IPayPressable style={[sheetStyles.overlay]} onPress={cancel} />
+        <IPayView style={sheetStyles.wrapper}>
+          <IPayPressable style={sheetStyles.overlay} onPress={cancel} />
           <Animated.View
             style={[
               sheetStyles.body,

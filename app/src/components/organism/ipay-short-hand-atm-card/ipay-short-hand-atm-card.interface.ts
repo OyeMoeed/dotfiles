@@ -1,4 +1,4 @@
-type CardDetails = {
+export type CardDetails = {
   title: string;
   cardNumber: string;
   cardType: string;
@@ -6,5 +6,5 @@ type CardDetails = {
 
 export interface IPayShortHandATMCardProps {
   textID?: string;
-  cardData: CardDetails;
+  cardData: any;
 }

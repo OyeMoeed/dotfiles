@@ -18,7 +18,7 @@ describe('IPayList', () => {
         imageSource={images.logoAlinma}
         isShowIcon
         title={testTitle}
-      />
+      />,
     );
 
     const isShowIcon = getByTestId('isShowIcon');
@@ -39,7 +39,7 @@ describe('IPayList', () => {
         icon={<IPayIcon icon="arrow-down" />}
         isShowIcon
         title={Subtitle}
-      />
+      />,
     );
 
     const isShowIcon = getByTestId('isShowIcon');
@@ -54,7 +54,7 @@ describe('IPayList', () => {
 
     // Act
     const { getByTestId } = render(
-      <IPayList testID="isShowIcon" bgColor={bgColor} isShowCounterButton title={title} subTitle={subTitle} />
+      <IPayList testID="isShowIcon" bgColor={bgColor} isShowCounterButton title={title} subTitle={subTitle} />,
     );
 
     const isShowIcon = getByTestId('isShowIcon');

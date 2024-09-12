@@ -1,8 +1,11 @@
+// TODO: fix max-len
+/* eslint-disable max-len */
 /**
  * Defines a set of constants.
  */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { FeatureSections } from '@app/enums';
 import { BillStatus, CardTypes } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
@@ -133,6 +136,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   ],
   HELP_CENTER_TABS: ['All FAQ', 'Account', 'Top-up', 'Money Transfer', 'Others'],
   MOBILE_NUMBER_LENGTH: 10,
+  UNSAVED_NUMBER_LENGTH: 16,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
@@ -147,8 +151,8 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { value: 1000, text: '1000' },
   ],
   INITIAL_REGION: {
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: 24.7208221,
+    longitude: 46.4832712,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   },
@@ -253,19 +257,6 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     { id: 15, title: 'Khobar' },
     { id: 16, title: 'Qatif' },
     { id: 17, title: 'Ras Tanura' },
-    { id: 18, title: 'Khobar' },
-    { id: 19, title: 'Dhahran' },
-    { id: 20, title: 'Qassim' },
-    { id: 21, title: 'Jubail' },
-    { id: 22, title: 'Bisha' },
-    { id: 23, title: 'Al Kharj' },
-    { id: 24, title: 'Arar' },
-    { id: 25, title: 'Al Bahah' },
-    { id: 26, title: 'Sakaka' },
-    { id: 27, title: 'Jeddah' },
-    { id: 28, title: 'Riyadh' },
-    { id: 29, title: 'Makkah' },
-    { id: 30, title: 'Madinah' },
   ],
 
   MOCK_CVV: '123',
@@ -275,6 +266,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     CARD_TYPE_NAME: 'Classic Debit Card',
     CARD_HOLDER_NAME: 'Adam Ahmed',
   },
+  TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   GIFT_CARD_DETAILS: [
     { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
     { id: 2, title: 'Receiver Name', subTitle: 'Ahmed Mohamed', icon: '' },
@@ -290,13 +282,25 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     accountNumber: 'SA380019000500000000263180002',
     icon: images.snb,
   },
+  SUCCESS_BENEFICIARY_DETAILS: [
+    // { title: 'Amount', subTitle: 3000, currency: 'SAR' },
+    { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
+    { title: 'Transfer By', subTitle: '', icon: images.sarie },
+    { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
+    // { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
+    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    { title: 'Fees', subTitle: 10, currency: 'SAR', icon: '' },
+    { title: 'VAT (15%)', subTitle: 40, currency: 'SAR', icon: '' },
+    { title: 'Total Amount', subTitle: 3050, currency: 'SAR', icon: '' },
+  ],
   BENEFICIARY_DETAILS: [
-    { title: 'Amount', subTitle: 3000 },
+    { title: 'Amount', subTitle: 3000, currency: 'SAR' },
     { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
     { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
     { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
-    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
-    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    // { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    // { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
   ],
   OTHER_BILL_TYPES: [
     { id: 1, title: 'Government Payments (MOI)', icon: images.moiLogo },
@@ -334,7 +338,7 @@ const CARDS_MOCK_DATA = [
 export { CARDS_MOCK_DATA, SUPPORTED_CARD };
 
 const CARD_DATA = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
@@ -348,7 +352,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -364,7 +368,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Instant Cashback 1.6% with no Cap.',
@@ -456,10 +460,39 @@ const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_MEDUIM: ['1%', '63%'],
   MID_LARGE: ['1%', '70%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
 };
+
+// Countries data
+
+const COUNTRIES_DATA = [
+  { id: 1, text: 'Saudi Arabia' },
+  { id: 2, text: 'Egypt' },
+  { id: 3, text: 'United Arab Emirates' },
+  { id: 4, text: 'Kuwait' },
+  { id: 5, text: 'Bahrain' },
+  { id: 6, text: 'Oman' },
+  { id: 7, text: 'Qatar' },
+  { id: 8, text: 'Jordan' },
+  { id: 9, text: 'Lebanon' },
+  { id: 10, text: 'Iraq' },
+];
+// Delivery Types data
+export const TRANSFER_METHOD_DATA = [
+  { id: 1, text: 'Digital Wallet' },
+  { id: 2, text: 'Bank Transfer' },
+  { id: 3, text: 'Cash Pickup' },
+];
+
+// Currencies data
+export const CURRENCIES_DATA = [
+  { id: 1, text: 'EGP' },
+  { id: 2, text: 'USD' },
+  { id: 3, text: 'SAR' },
+];
 
 const DURATIONS = {
   VERY_LONG: 2000,
@@ -486,7 +519,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '300',
     dueDate: '20/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Electricity Bill',
   },
   {
     id: 2,
@@ -496,7 +531,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '400',
     dueDate: '20/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
   {
     id: 3,
@@ -506,7 +543,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '340',
     dueDate: '14/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
   {
     id: 4,
@@ -516,7 +555,9 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '0.00',
     dueDate: '20/03/2024',
     billStatus: BillStatus.PAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'License Bill',
   },
   {
     id: 5,
@@ -526,12 +567,14 @@ const ACTIVE_SADAD_BILLS = [
     billAmount: '0.00',
     dueDate: '20/03/2024',
     billStatus: BillStatus.PAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Insurance Bill',
   },
 ];
 
 const TRAFFIC_VIOLATIONS = [
-  //TODO will be replaced by API data, for now its dummy data
+  // TODO will be replaced by API data, for now its dummy data
   {
     id: 1,
     billTitle: 'Traffic violation',
@@ -573,7 +616,9 @@ const INACTIVEACTIVE_SADAD_BILLS = [
     billAmount: '300',
     dueDate: '14/03/2024',
     billStatus: BillStatus.UNPAID,
+    accountNumber: '234234234',
     selected: false,
+    serviceType: 'Mobile Bill',
   },
 ];
 
@@ -584,33 +629,116 @@ const WALLET_TIERS = {
 
 const CONTACT_NUMBER = '(+966) 920000670';
 const VOILATOR_ID = '22321313';
+
 const ALINMA_REFERENCE_NUM = '#IPAY789';
+
+// TODO will be replace from api
+const RELATIONSHIPS = [
+  { id: 1, title: 'Father' },
+  { id: 2, title: 'Mother' },
+  { id: 3, title: 'Spouse' },
+  { id: 4, title: 'Sibling' },
+  { id: 5, title: 'Child' },
+  { id: 6, title: 'Grandparent' },
+  { id: 7, title: 'Uncle' },
+  { id: 8, title: 'Aunt' },
+  { id: 9, title: 'Cousin' },
+  { id: 10, title: 'Friend' },
+  { id: 11, title: 'Colleague' },
+  { id: 12, title: 'Partner' },
+  { id: 13, title: 'Guardian' },
+  { id: 14, title: 'Other' },
+];
+const BANKS = [
+  { id: 1, title: 'Al Rajhi Bank' },
+  { id: 2, title: 'National Commercial Bank (NCB)' },
+  { id: 3, title: 'Saudi British Bank (SABB)' },
+  { id: 4, title: 'Riyad Bank' },
+  { id: 5, title: 'Banque Saudi Fransi' },
+  { id: 6, title: 'Arab National Bank' },
+  { id: 7, title: 'Alinma Bank' },
+  { id: 8, title: 'Bank AlBilad' },
+  { id: 9, title: 'Saudi Investment Bank' },
+  { id: 10, title: 'Gulf International Bank' },
+  { id: 11, title: 'Samba Financial Group' },
+  { id: 12, title: 'Alawwal Bank' },
+];
+const ALINMA_TRANSFER_TYPES = [
+  { id: 1, title: 'Bank Transfer' },
+  { id: 2, title: 'Cash Pickup' },
+];
+const WU_TRANSFER_TYPES = [
+  { id: 1, title: 'Digital Wallet' },
+  { id: 2, title: 'Bank Transfer' },
+  { id: 3, title: 'Cash Pickup' },
+];
+
+// Currencies data
+const CURRENCIES = [
+  { id: 1, title: 'EGP' },
+  { id: 2, title: 'USD' },
+  { id: 3, title: 'SAR' },
+];
+const COUNTRIES = [
+  { id: 1, title: 'Saudi Arabia' },
+  { id: 2, title: 'Egypt' },
+  { id: 3, title: 'United Arab Emirates' },
+  { id: 4, title: 'Kuwait' },
+  { id: 5, title: 'Bahrain' },
+  { id: 6, title: 'Oman' },
+  { id: 7, title: 'Qatar' },
+  { id: 8, title: 'Jordan' },
+  { id: 9, title: 'Lebanon' },
+  { id: 10, title: 'Iraq' },
+];
 const SNAP_POINT = {
   X_SMALL: ['35%', '90%'],
   XS_SMALL: ['40%', '90%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '90%'],
+  MEDIUM_LARGE: ['95%', '95%'],
   LARGE: ['100%', '100%'],
 };
+const ALINMA_BANK_CODE = '999999';
+const NO_INVOICE_ACCOUNT_NUMBER = '1234567890';
+const TOTAL_AMOUNT = '3000';
+const MAX_CONTACTS = 5;
+const DASHBOARD_ITEMS = [
+  FeatureSections.ACTION_SECTIONS,
+  FeatureSections.SUGGESTED_FOR_YOU,
+  FeatureSections.TRANSACTION_HISTORY,
+  FeatureSections.LATEST_OFFERS,
+];
 
 export {
   ACTIVE_SADAD_BILLS,
+  ALINMA_BANK_CODE,
   ALINMA_REFERENCE_NUM,
+  ALINMA_TRANSFER_TYPES,
   ANIMATION_DURATION,
+  BANKS,
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
+  COUNTRIES,
+  COUNTRIES_DATA,
+  CURRENCIES,
   CUSTOM_SNAP_POINT,
+  DASHBOARD_ITEMS,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
+  MAX_CONTACTS,
+  NO_INVOICE_ACCOUNT_NUMBER,
   PROGRESS_INCREMENT_FACTOR,
+  RELATIONSHIPS,
   SNAP_POINT,
   SNAP_POINTS,
+  TOTAL_AMOUNT,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
+  WU_TRANSFER_TYPES,
 };
 
 export default constants;

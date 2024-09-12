@@ -2,12 +2,27 @@ import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
+import { PayChannel } from '@app/utilities/enums.util';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const TopUpSuccessStyles = (themeColors: typeof colors) =>
+export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: string) =>
   createStyleSheet({
     parent: {
       flex: 1,
+    },
+    btn: {
+      borderRadius: moderateScale(16),
+      backgroundColor: themeColors.primary.primary500,
+      paddingVertical: moderateScale(14),
+      justifyContent: 'center',
+    },
+    chipContainer: {
+      marginBottom: moderateScale(10),
+    },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
     },
     container: {
       flex: 1,
@@ -39,8 +54,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginBottom: moderateScale(24),
       marginTop: moderateScale(12),
+      marginBottom: moderateScale(24),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
@@ -50,13 +65,13 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     failedButton: {
       alignItems: 'center',
-      borderWidth: '0',
+      borderWidth: 0,
     },
     home: {
-      marginBottom: moderateScale(30),
+      marginBottom: moderateScale(24),
     },
     btnStyle: {
-      marginBottom: scaleSize(30),
+      marginBottom: scaleSize(24),
       justifyContent: 'center',
       paddingVertical: scaleSize(14),
       paddingHorizontal: scaleSize(20),
@@ -70,7 +85,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     listContainer: {
       backgroundColor: themeColors.natural.natural0,
       width: '100%',
-      borderRadius: scaleSize(16),
+      borderRadius: scaleSize(12),
       marginBottom: moderateScale(8),
     },
 
@@ -135,7 +150,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     copyIcon: {
       alignItems: 'center',
       marginLeft: scaleSize(6),
-      paddingRight: scaleSize(6),
+      paddingRight: scaleSize(2),
     },
 
     detailesFlex: {
@@ -157,7 +172,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
     },
     leftIcon: {
-      paddingRight: moderateScale(12),
+      paddingRight: moderateScale(6),
     },
     toastContainer: {
       borderColor: themeColors.success.success500,
@@ -168,8 +183,10 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.secondary.secondary500,
     },
     walletBackground: {
+      paddingHorizontal: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
-      padding: moderateScale(12),
+      paddingTop: moderateScale(12),
+      borderRadius: topupChannel === PayChannel.WALLET || topupChannel === PayChannel.REQUEST ? moderateScale(22) : 0,
       borderTopLeftRadius: moderateScale(22),
       borderTopRightRadius: moderateScale(22),
     },
@@ -194,7 +211,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     walletListBackground: {
       backgroundColor: themeColors.backgrounds.greyOverlay,
-      borderRadius: moderateScale(22),
+      borderRadius: moderateScale(16),
       paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(18),
       justifyContent: 'space-between',

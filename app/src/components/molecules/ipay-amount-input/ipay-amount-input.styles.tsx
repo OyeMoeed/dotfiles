@@ -1,6 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_20, FONT_SIZE_34, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { isIosOS } from '@app/utilities/constants';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
@@ -16,25 +15,24 @@ const amountInputStyles = (colors) =>
       alignItems: 'center',
     },
     currencyText: {
-      marginHorizontal: moderateScale(isIosOS ? 6 : 0),
+      ...Platform.select({
+        android: {
+          marginHorizontal: 0,
+        },
+        ios: {
+          marginHorizontal: 6,
+        },
+      }),
       fontSize: FONT_SIZE_20,
       color: colors.natural.natural1000,
       lineHeight: moderateScale(20),
       alignSelf: 'flex-end',
-      ...Platform.select({
-        android: {
-          marginBottom: 0,
-        },
-        ios: {
-          marginBottom: 2,
-        },
-      }),
     },
     textAmount: {
       color: colors.natural.natural1000,
       fontSize: FONT_SIZE_34,
       fontWeight: FONT_WEIGHT_BOLD,
-      lineHeight: moderateScale(36),
+      lineHeight: moderateScale(38),
     },
     darkStyle: {
       color: colors.natural.natural300,

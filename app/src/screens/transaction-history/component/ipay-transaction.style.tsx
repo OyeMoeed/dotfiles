@@ -1,8 +1,7 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_12, SCALE_34 } from '@app/styles/spacing.const';
-import { FONT_SIZE_11, FONT_SIZE_12, FONT_SIZE_13 } from '@app/styles/typography.styles';
+import { FONT_SIZE_11, FONT_SIZE_12, FONT_SIZE_13, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transactionItemStyles = (colors: any) =>
@@ -21,6 +20,7 @@ const transactionItemStyles = (colors: any) =>
     commonContainerStyle: {
       flexDirection: 'row',
       alignItems: 'center',
+      maxHeight: verticalScale(52),
     },
     detailView: {
       flex: 0.8,
@@ -29,6 +29,17 @@ const transactionItemStyles = (colors: any) =>
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
       width: moderateScale(146, 0.35),
+    },
+    trasnactionTypeInternationalTransfer: {
+      marginTop: verticalScale(3),
+      color: colors.natural.natural900,
+      fontSize: FONT_SIZE_12,
+      width: moderateScale(146, 0.35),
+    },
+    transactionStatus: {
+      color: colors.natural.natural500,
+      fontSize: FONT_SIZE_12,
+      marginBottom: verticalScale(4),
     },
     iconStyle: {
       width: SCALE_34,
@@ -40,17 +51,22 @@ const transactionItemStyles = (colors: any) =>
       marginRight: moderateScale(8),
     },
     footnoteBoldTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_13,
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
     },
     transactionRequestTypeDescStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_13,
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
       width: moderateScale(146, 0.35),
+    },
+    benficiaryInternationalTransfer: {
+      color: colors.natural.natural900,
+      width: moderateScale(146, 0.35),
+      marginTop: verticalScale(12),
     },
     currencyStyle: {
       alignItems: 'flex-end',

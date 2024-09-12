@@ -22,16 +22,26 @@ const moiPaymentSuccessStyles = (themeColor: typeof colors) =>
     itemSeparatorStyle: {
       height: verticalScale(8),
     },
-    dataView: {
+    listView: {
       height: verticalScale(244),
+    },
+    dataTopView: {
+      flex: 1,
       width: '100%',
       alignItems: 'center',
       marginTop: moderateScale(8),
-      borderTopRightRadius: moderateScale(22),
-      borderTopLeftRadius: moderateScale(22),
+      borderRadius: moderateScale(22),
       backgroundColor: themeColor.natural.natural0,
-      paddingHorizontal: moderateScale(12, 0.3),
-      paddingTop: moderateScale(12, 0.3),
+      padding: moderateScale(12, 0.3),
+    },
+    dataBottomView: {
+      flex: 1,
+      width: '100%',
+      alignItems: 'center',
+      marginTop: moderateScale(16),
+      borderRadius: moderateScale(22),
+      backgroundColor: themeColor.natural.natural0,
+      padding: moderateScale(12, 0.3),
     },
     transactionDetailsView: {
       flex: 1,
@@ -96,6 +106,14 @@ const moiPaymentSuccessStyles = (themeColor: typeof colors) =>
     imageStyle: {
       width: scaleSize(27),
       height: moderateScale(18),
+    },
+    iconStyle: {
+      width: moderateScale(14),
+      height: moderateScale(14),
+    },
+    homeIcon: {
+      width: moderateScale(20),
+      height: moderateScale(20),
     },
   });
 

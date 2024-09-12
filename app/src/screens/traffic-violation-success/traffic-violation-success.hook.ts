@@ -24,8 +24,8 @@ const useTrafficViolationSuccess = () => {
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
   const [declinedBillPayDetails, setDeclinedBillPayDetails] = useState<declinedBilledDetail[]>([]);
   const { billPayDetailsData, declinedTransationData } = useConstantData();
-  const [paidBilled, setPaidBilled] = useState<number>(0);
-  const [paymentDeclined, setPaymentDeclined] = useState<boolean>(false);
+  const [paidBilled] = useState<number>(0);
+  const [paymentDeclined] = useState<boolean>(false);
   const goToHome = useCallback(() => {
     navigate(ScreenNames.HOME);
   }, []);
@@ -34,6 +34,9 @@ const useTrafficViolationSuccess = () => {
     setBillPayDetailes(billPayDetailsData);
     setDeclinedBillPayDetails(declinedTransationData);
   }, []);
+  const payOtherViolation = useCallback(() => {
+    navigate(ScreenNames.TRAFFIC_VOILATION);
+  }, []);
 
   return {
     goToHome,
@@ -41,6 +44,7 @@ const useTrafficViolationSuccess = () => {
     declinedBillPayDetails,
     paidBilled,
     paymentDeclined,
+    payOtherViolation,
   };
 };
 

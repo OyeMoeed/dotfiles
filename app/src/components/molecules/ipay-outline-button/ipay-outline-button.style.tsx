@@ -1,10 +1,11 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const genratedStyles = (theme: any) =>
+const generatedStyles = () =>
   createStyleSheet({
     btnLarge: {
       borderWidth: moderateScale(1),
+      justifyContent: 'center',
       paddingHorizontal: moderateScale(24, 0.3),
       height: verticalScale(50),
       paddingVertical: verticalScale(14),
@@ -21,6 +22,7 @@ const genratedStyles = (theme: any) =>
     btnSmall: {
       paddingHorizontal: moderateScale(6, 0.3),
       paddingVertical: verticalScale(4),
+      justifyContent: 'center',
       height: verticalScale(28),
       borderRadius: moderateScale(8),
       borderWidth: moderateScale(1),
@@ -35,4 +37,4 @@ const genratedStyles = (theme: any) =>
     },
   });
 
-export default genratedStyles;
+export default generatedStyles;

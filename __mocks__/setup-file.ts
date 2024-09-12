@@ -1,3 +1,4 @@
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 import '@testing-library/react-native';
 import 'lottie-react-native';
 import 'react-native-gesture-handler/jestSetup';
@@ -31,6 +32,10 @@ jest.mock('react-native-share', () => ({
   },
 }));
 
+// Mock NetInfo
+
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
+
 jest.mock('react-native-device-info', () => {
   return {
     isTablet: jest.fn(() => false), // Adjust return value as needed
@@ -58,7 +63,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => {
   });
 });
 
-jest.mock('@app/network/utilities/device-info-helper');
+jest.mock('@app/network/utilities');
 jest.mock('@network/services/api-call.service');
 jest.mock('@app/store/slices/app-data-slice', () => ({
   setAppData: jest.fn(),

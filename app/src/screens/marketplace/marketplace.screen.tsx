@@ -88,14 +88,22 @@ const MarketPlace: React.FC = () => {
     navigate(ScreenNames.MERCHANTS);
   };
 
+  const categoryPress = () => navigate(ScreenNames.SHOP_CATEGORIES);
+
+  const allCategoriesPress = () => navigate(ScreenNames.SHOP_ALL_CATEGORIES);
+
+  const allMerchantPress = () => navigate(ScreenNames.MERCHANTS);
+
+  const offerDetailPress = () => navigate(ScreenNames.SHOP_DETAILS, { details: offerDetailData });
+
   const renderOfferItem = ({ item: { title, image, description } }: { item: MerchantItem }) => (
     <IPayLinearGradientView
       gradientColors={colors.appGradient.gradientPrimary20}
-      useAngle={true}
+      useAngle
       angle={79.03}
       style={styles.gradientView}
     >
-      <IPayPressable style={styles.offerCard}>
+      <IPayPressable style={styles.offerCard} onPress={offerDetailPress}>
         <IPayView style={styles.offerDetail}>
           <IPayBodyText text={title} color={colors.natural.natural900} regular={false} />
           <IPayCaption2Text text={description} />
@@ -115,6 +123,8 @@ const MarketPlace: React.FC = () => {
     <IPayCategoryCard item={item} cardContainerStyle={styles.categoryCardContainer} onPressCategory={onPressCategory} />
   );
 
+  const orderHistory = () => navigate(ScreenNames.ALL_ORDERS);
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -122,7 +132,7 @@ const MarketPlace: React.FC = () => {
         title={localizationText.HOME.SHOP}
         applyFlex
         rightComponent={
-          <IPayPressable style={styles.history}>
+          <IPayPressable style={styles.history} onPress={orderHistory}>
             <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
             <IPaySubHeadlineText text={HISTORY} regular color={colors.primary.primary500} />
           </IPayPressable>
@@ -153,6 +163,7 @@ const MarketPlace: React.FC = () => {
         <IPaySectionHeader
           leftText={SHOP_BY_CATEGORIES}
           rightText={VIEW_ALL}
+          onRightOptionPress={allCategoriesPress}
           rightIcon={icons.arrow_right_square}
           showRightIcon
           onPress={onPressViewAllCategories}
@@ -171,6 +182,7 @@ const MarketPlace: React.FC = () => {
           leftText={SHOP_BY_MERCHANTS}
           rightText={VIEW_ALL}
           rightIcon={icons.arrow_right_square}
+          onRightOptionPress={allMerchantPress}
           showRightIcon
           onPress={onPressViewAllMerchants}
         />

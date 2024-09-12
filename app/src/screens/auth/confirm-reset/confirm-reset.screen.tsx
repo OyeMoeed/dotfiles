@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { BulkLock } from '@app/assets/svgs';
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
@@ -12,10 +11,9 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { ChangePasswordProps } from '@app/network/services/core/change-passcode/change-passcode.interface';
 import changePasscodeReq from '@app/network/services/core/change-passcode/change-passcode.service';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import { forwardRef, useState } from 'react';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
 
@@ -27,10 +25,8 @@ const ConfirmPasscode = forwardRef((props) => {
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { mobileNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { savePasscodeState } = useBiometricService();
+  const { mobileNumber, walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {
     showToast({
       title: localizationText.COMMON.PASSCODE_DOES_NOT_MATCH,
@@ -41,63 +37,42 @@ const ConfirmPasscode = forwardRef((props) => {
     });
   };
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const redirectToOtp = () => {
     closeBottomSheet();
     navigate(screenNames.RESET_SUCCESSFUL);
   };
 
   const changePasscode = async (passCode: string) => {
-    renderSpinner(true);
-    try {
-      const payload: ChangePasswordProps = {
-        body: {
-          passCode:
-            encryptData(
-              `${appData?.encryptionData?.passwordEncryptionPrefix}${passCode}`,
-              appData?.encryptionData?.passwordEncryptionKey as string,
-            ) || '',
-          oldPassword:
-            encryptData(
-              `${appData?.encryptionData?.passwordEncryptionPrefix}${props?.currentPasscode}`,
-              appData?.encryptionData?.passwordEncryptionKey as string,
-            ) || '',
-          mobileNumber:
-            encryptData(
-              `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber}`,
-              appData?.encryptionData?.passwordEncryptionKey as string,
-            ) || '',
-          authentication: {
-            transactionId: appData?.transactionId,
-          },
-          deviceInfo: appData?.deviceInfo,
+    const payload: ChangePasswordProps = {
+      body: {
+        passCode:
+          encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${passCode}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+        oldPassword:
+          encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${props?.currentPasscode}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+        mobileNumber:
+          encryptData(
+            `${appData?.encryptionData?.passwordEncryptionPrefix}${mobileNumber}`,
+            appData?.encryptionData?.passwordEncryptionKey as string,
+          ) || '',
+        authentication: {
+          transactionId: appData?.transactionId,
         },
-        walletNumber,
-      };
+        deviceInfo: appData?.deviceInfo,
+      },
+      walletNumber,
+    };
 
-      const apiResponse: any = await changePasscodeReq(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        savePasscodeState(passCode);
-        redirectToOtp();
-      } else if (apiResponse?.apiResponseNotOk) {
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        renderToast(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const apiResponse: any = await changePasscodeReq(payload);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      resetBiometricConfig();
+      savePasscodeState(passCode);
+      redirectToOtp();
     }
   };
 
@@ -110,7 +85,7 @@ const ConfirmPasscode = forwardRef((props) => {
         changePasscode(newCode);
       } else {
         setPasscodeError(true);
-        renderToast(localizationText.PROFILE.PASSCODE_NOT_MATCHED);
+        renderToast(localizationText.COMMON.PLEASE_ENTER_AGAIN);
       }
     }
   };

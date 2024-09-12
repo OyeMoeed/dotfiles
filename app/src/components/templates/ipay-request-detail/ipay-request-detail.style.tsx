@@ -1,9 +1,9 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { CUSTOME_SCALE } from '@app/styles/spacing.const';
-import { FONT_SIZE_17, FONT_SIZE_26 } from '@app/styles/typography.styles';
+import { FONT_SIZE_17, FONT_SIZE_26, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
+import { Platform } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transactionHistoryStyle = (colors: any) =>
@@ -11,6 +11,7 @@ const transactionHistoryStyle = (colors: any) =>
     container: {
       flex: 1,
       marginBottom: isIosOS ? moderateScale(100) : 0,
+      marginTop: moderateScale(30),
     },
     amountSection: {
       justifyContent: 'center',
@@ -19,12 +20,12 @@ const transactionHistoryStyle = (colors: any) =>
       marginBottom: moderateScale(16),
     },
     footnoteBoldTitleTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_17,
       color: colors.primary.primary900,
     },
     footnoteBoldTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_26,
       color: colors.primary.primary900,
     },
@@ -60,7 +61,14 @@ const transactionHistoryStyle = (colors: any) =>
       borderColor: colors.error.error500,
     },
     containerToastStyle: {
-      bottom: verticalScale(60),
+      ...Platform.select({
+        android: {
+          bottom: verticalScale(100),
+        },
+        ios: {
+          bottom: verticalScale(130),
+        },
+      }),
     },
     text: {
       paddingVertical: moderateScale(2),

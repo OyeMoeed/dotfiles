@@ -1,3 +1,4 @@
+import colors from '@app/styles/colors.const';
 import { KeyboardTypeOptions, StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 /**
@@ -115,4 +116,6 @@ props for is focus
   */
   isFocused?: boolean;
   blurOnSubmit?: boolean;
+  selectionColor: typeof colors | undefined;
+  returnKeyLabel?: string;
 }

@@ -1,5 +1,4 @@
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
   IPayButton,
@@ -11,13 +10,15 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { setToken } from '@app/network/client';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
+import { PrepareForgetPasscodeProps } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { prepareForgetPasscode } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
-import { encryptData } from '@app/network/utilities/encryption-helper';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
+import { getValidationSchemas } from '@app/services';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -33,7 +34,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const validationSchema = Yup.object().shape({
     iqamaId: getValidationSchemas(localizationText).iqamaIdSchema,
@@ -51,17 +51,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
     });
   };
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const prepareForgetPass = async (
     encryptedData: {
       passwordEncryptionPrefix: string;
@@ -74,46 +63,54 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       `${encryptedData.passwordEncryptionPrefix}${iqamaId}`,
       encryptedData.passwordEncryptionKey,
     );
+
     const payload = {
       poiNumber: encryptedPoiNumber,
       authentication: { transactionId },
       deviceInfo: appData.deviceInfo,
-    };
-    const apiResponse = await prepareForgetPasscode(payload, dispatch);
-    if (apiResponse?.status.type === 'SUCCESS' && onCallback) {
+    } as PrepareForgetPasscodeProps;
+    const apiResponse: any = await prepareForgetPasscode(payload);
+    if (apiResponse && onCallback) {
+      const { otpRef, walletNumber } = apiResponse?.data?.response || {};
+      dispatch(setAppData({ otpRef, walletNumber }));
       onCallback({
         nextComponent: constants.FORGET_PASSWORD_COMPONENTS.CONFIRM_OTP,
         data: {
           iqamaId,
           otpRef: apiResponse?.response?.otpRef,
           transactionId,
+          resendOtpPayload: payload,
         },
       });
-    } else {
-      renderToast(localizationText.COMMON.INCORRECT_IQAMA);
     }
   };
 
   const prepareEncryptionData = async (iqamaId: string) => {
-  try {
-    renderSpinner(true);
-    const apiResponse: any = await prepareLogin();
-    if (apiResponse.status.type === 'SUCCESS') {
-      dispatch(
-        setAppData({
-          transactionId: apiResponse?.authentication?.transactionId,
-          encryptionData: apiResponse?.response,
-        }),
-      );
-      setToken(apiResponse?.headers?.authorization);
-     await prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
+    try {
+      const deviceInfo = await getDeviceInfo();
+      const prepareLoginPayload: DeviceInfoProps = {
+        ...deviceInfo,
+        locationDetails: {},
+      };
+
+      const apiResponse: any = await prepareLogin(prepareLoginPayload);
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
+        dispatch(
+          setAppData({
+            transactionId: apiResponse?.authentication?.transactionId,
+            encryptionData: apiResponse?.response,
+          }),
+        );
+        setToken(apiResponse?.headers?.authorization);
+        await prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
+      } else {
+        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      }
+    } catch (error) {
+      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    renderSpinner(false);
-  } catch (error) {
-    renderSpinner(false);
-    setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-    renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-  }
   };
 
   const onSubmit = (data: { iqamaId: string }) => {

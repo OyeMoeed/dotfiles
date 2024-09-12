@@ -23,8 +23,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
 import React, { useRef } from 'react';
 import { StyleSheet } from 'react-native';
@@ -43,7 +43,6 @@ const TransferConfirmation: React.FC = () => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
-  const footerParentViewGradient = [colors.primary.primary50, colors.secondary.secondary50];
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const totalAmount = `3020 ${localizationText.COMMON.SAR}`;
   const beneficiaryData = constants.BENEFICIARY_DETAILS;
@@ -67,7 +66,7 @@ const TransferConfirmation: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const onCloseBottomSheet = () => {
@@ -88,7 +87,7 @@ const TransferConfirmation: React.FC = () => {
   };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
-    const { title, subTitle, icon } = item;
+    const { title, subTitle, icon, currency } = item;
     const isImage = checkImage(icon);
     return (
       <IPayView style={styles.dataCardView}>
@@ -97,7 +96,7 @@ const TransferConfirmation: React.FC = () => {
           <IPayView style={styles.detailsView}>
             <IPaySubHeadlineText
               regular
-              text={subTitle}
+              text={subTitle + (currency ? ` ${currency}` : '')}
               color={colors.primary.primary800}
               numberOfLines={1}
               style={[styles.subTitle, subTitle.length > 20 && styles.condtionalWidthSubtitle]}
@@ -154,7 +153,7 @@ const TransferConfirmation: React.FC = () => {
       </IPayScrollView>
 
       <IPayView style={styles.bottomChild}>
-        <IPayLinearGradientView gradientColors={footerParentViewGradient} style={styles.bottomView}>
+        <IPayView style={styles.bottomView}>
           <IPayLinearGradientView gradientColors={footerGradientColors} style={styles.footerView}>
             <IPayView style={styles.transferInfoView}>
               <IPayIcon icon={icons.clock_circle} size={24} color={colors.primary.primary900} />
@@ -180,7 +179,7 @@ const TransferConfirmation: React.FC = () => {
               btnText={localizationText.COMMON.TRANSFER_TEXT}
             />
           </IPayLinearGradientView>
-        </IPayLinearGradientView>
+        </IPayView>
       </IPayView>
       <IPayBottomSheet
         heading={localizationText.LOCAL_TRANSFER.TRANSFER}

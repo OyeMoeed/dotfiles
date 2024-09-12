@@ -8,11 +8,11 @@ import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 import FullWindowOverlay from './ipay-full-window-overlay';
-import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
 const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
   (
     {
+      testId,
       children,
       customSnapPoint,
       enableDynamicSizing,
@@ -94,6 +94,29 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       [],
     );
 
+    const handleComponent = () => (
+      <IPayBottomSheetHandle
+        simpleBar={simpleBar}
+        gradientBar={gradientBar}
+        cancelBnt={cancelBnt}
+        doneBtn={doneBtn}
+        heading={heading}
+        simpleHeader={simpleHeader}
+        backBtn={backBtn}
+        doneButtonStyle={doneButtonStyle}
+        disabled={disabled}
+        cancelButtonStyle={cancelButtonStyle}
+        doneText={doneText}
+        onPressCancel={onPressClose}
+        onPressDone={onPressDone}
+        bold={bold}
+        bgGradientColors={
+          noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
+        }
+        headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
+      />
+    );
+
     return (
       <BottomSheetModalProvider>
         <BottomSheetModal
@@ -106,46 +129,24 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           index={1}
           snapPoints={snapPoints}
           onChange={handleSheetChanges}
-          onAnimate={animate && onAnimate}
+          onAnimate={animate ? onAnimate : () => {}}
           stackBehavior="push"
           backgroundStyle={[styles.backgroundStyle, bottomSheetBgStyles]}
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
           containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
-          handleComponent={() => (
-            <IPayBottomSheetHandle
-              simpleBar={simpleBar}
-              gradientBar={gradientBar}
-              cancelBnt={cancelBnt}
-              doneBtn={doneBtn}
-              heading={heading}
-              simpleHeader={simpleHeader}
-              backBtn={backBtn}
-              doneButtonStyle={doneButtonStyle}
-              disabled={disabled}
-              cancelButtonStyle={cancelButtonStyle}
-              doneText={doneText}
-              onPressCancel={onPressClose}
-              onPressDone={onPressDone}
-              bold={bold}
-              bgGradientColors={
-                noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
-              }
-              headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
-            />
-          )}
+          handleComponent={handleComponent}
         >
           <IPayLinearGradientView
-            gradientColors={noGradient ? [colors.primary.primary10, colors.primary.primary10] : gradient}
+            gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
+            testID={`${testId}-bottom-sheet-view`}
           >
-            <SpinnerProvider>
-              <ToastProvider>
-                <BottomSheetView testID={testID} style={styles.contentContainer}>
-                  {children}
-                </BottomSheetView>
-              </ToastProvider>
-            </SpinnerProvider>
+            <ToastProvider>
+              <BottomSheetView testID={testID} style={styles.contentContainer}>
+                {children}
+              </BottomSheetView>
+            </ToastProvider>
           </IPayLinearGradientView>
         </BottomSheetModal>
       </BottomSheetModalProvider>

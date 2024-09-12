@@ -1,6 +1,5 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import { setAppData } from '@app/store/slices/app-data-slice';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import CORE_URLS from '../core.urls';
@@ -15,41 +14,26 @@ import validateForgetPasscodeMock from './validate-passcode.mock';
 
 const prepareForgetPasscode = async (
   payload: PrepareForgetPasscodeProps,
-  dispatch: (action: any) => void,
-): Promise<ApiResponse<prepareForgetPasscodeOtpRes>> => {
-  try {
-    if (constants.MOCK_API_RESPONSE) {
-      return prepareForgetPasscodeMock;
-    }
-
-    const apiResponse = await apiCall<prepareForgetPasscodeOtpRes>({
-      endpoint: CORE_URLS.PREPARE_FORGET_PASSCODE,
-      method: requestType.POST,
-      payload,
-    });
-
-    if (apiResponse?.status.type === 'SUCCESS') {
-      const { otpRef, walletNumber } = apiResponse?.data?.response || {};
-
-      if (dispatch) {
-        dispatch(setAppData({ otpRef, walletNumber }));
-      }
-
-      return apiResponse;
-    }
-    return apiResponse;
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
+): Promise<ApiResponse<prepareForgetPasscodeOtpRes> | undefined> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return prepareForgetPasscodeMock as any;
   }
+
+  const apiResponse = await apiCall<prepareForgetPasscodeOtpRes>({
+    endpoint: CORE_URLS.PREPARE_FORGET_PASSCODE,
+    method: requestType.POST,
+    payload,
+  });
+  return apiResponse;
 };
 
 const validateForgetPasscodeOtp = async (
   payload: validateForgetPasscodeOtpReq,
 ): Promise<ApiResponse<validateForgetPasscodeOtpRes>> => {
   if (constants.MOCK_API_RESPONSE) {
-    return validateForgetPasscodeMock;
+    return validateForgetPasscodeMock as any;
   }
-  const apiResponse = await apiCall<validateForgetPasscodeOtpRes>({
+  const apiResponse: any = await apiCall<validateForgetPasscodeOtpRes>({
     endpoint: CORE_URLS.VALIDATE_OTP_FORGET_PASSCODE,
     method: requestType.POST,
     payload,

@@ -1,8 +1,23 @@
+/* eslint-disable @typescript-eslint/no-duplicate-enum-values */
 /**
  * Defines all possible transaction types.
  */
 
 enum TransactionTypes {
+  SEND_MONEY = 'send_money',
+  RECEIVED_MONEY = 'received_money',
+  PAY_BILL = 'PAY_BILL',
+  COUT_EXPRESS = 'COUT_EXPRESS',
+  VISA_SIGNATURE_CARD_INSURANCE = 'visa_signature_card_issuance',
+  ATM = 'atm',
+  LOCAL_TRANSFER = 'local_transfer',
+  APPLE_PAY_TOP_UP = 'apple_pay_topup',
+  INTERNATIONAL_TRANSFER = 'international_transfer',
+  CASH_PICKUP = 'cash_pickup',
+  BANK_TRANSFER = 'bank_transfer',
+  SEND_GIFT = 'Send_Gift',
+  TRANSFER_SEND_MONEY = 'transfer_send_money',
+  COUT_SARIE = 'COUT_SARIE',
   COUT_MUSANED = 'COUT_MUSANED',
   CIN_MUSANED = 'CIN_MUSANED',
   PAY_WALLET = 'PAY_WALLET',
@@ -21,11 +36,8 @@ enum TransactionTypes {
   CIN_CARD_VISA_APAY = 'CIN_CARD_VISA_APAY',
   CIN_CARD_MASTER = 'CIN_CARD_MASTER',
   CIN_WU_REV = 'CIN_WU_REV',
-  COUT_MOBILE = 'COUT_MOBILE',
   CIN_SARIE = 'CIN_SARIE',
-  COUT_SARIE = 'COUT_SARIE',
   COUT_IPS = 'COUT_IPS',
-  PAY_BILL = 'PAY_BILL',
   CARD_ISSUE = 'CARD_ISSUE',
   CARD_REISSUE = 'CARD_REISSUE',
   CARD_REPLACE = 'CARD_REPLACE',
@@ -38,7 +50,6 @@ enum TransactionTypes {
   CIN_SARIE_REV = 'CIN_SARIE_REV',
   CIN_WALLET = 'CIN_WALLET',
   CIN_CASH_BACK = 'CIN_CASH_BACK',
-  COUT_EXPRESS = 'COUT_EXPRESS',
   CIN_EXPRESS_REV = 'CIN_EXPRESS_REV',
   PAY_VCARD_REFUND = 'PAY_VCARD_REFUND',
   COUT_GIFT = 'COUT_GIFT',
@@ -61,8 +72,12 @@ enum TransactionTypes {
   PAY_VCARD_REFUND_REV = 'PAY_VCARD_REFUND_REV',
   CIN_MAZAYA = 'CIN_MAZAYA',
   CARD_VCB_REPLACE = 'CARD_VCB_REPLACE',
+  COUT_MOBILE = 'COUT_MOBILE',
+  TRANSFER_RECEIVED_MONEY = 'transfer_received_money',
+  CR = 'CR',
+  DR = 'DR',
   CIN_VISA_CASHBACK_REV = 'CIN_VISA_CASHBACK_REV',
-  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE'
+  CARD_VCB_ISSUE = 'CARD_VCB_ISSUE',
 }
 
 enum TransactionOperations {
@@ -89,14 +104,31 @@ enum KeysToProcess {
   TRANSFER_BY = 'transfer_by',
 }
 
+enum TransactionsStatus {
+  PAID = 'paid',
+  REFUND = 'refund',
+  REJECTED = 'rejected',
+  PENDING = 'pending',
+}
+
+enum TransactionMedium {
+  WESTERN_UNION = 'western_union',
+  ALINMAPAY_DIRECT = 'alinmapay_direct',
+}
+
+enum Countires {
+  PAKISTAN = 'pakistan',
+  EGYPT = 'egypt',
+}
+
 enum LocalizationKeysMapping {
   name = 'NAME',
-  transactionRequestType = 'TRANSACTION_TYPE',
+  transactionType = 'TRANSACTION_TYPE',
   type = 'TYPE',
   amount = 'AMOUNT',
   senderName = 'SENDER',
   receiver = 'RECEIVER',
-  transfer_reason = 'TRANSFER_REASON',
+  transferReason = 'TRANSFER_REASON',
   note = 'NOTE',
   transactionRefNumber = 'REF_NUMBER',
   transactionDateTime = 'TRANSACTION_DATE',
@@ -117,7 +149,6 @@ enum LocalizationKeysMapping {
   CIN_CASH_BACK = 'CASHBACK',
   visa_signature_card_issuance = 'VISA_SIGNATURE_CARD_INSURANCE',
   atm = 'ATM',
-  BKF_TRANSFER = 'LOCAL_TRANSFER',
   apple_pay_topup = 'APPLE_PAY_TOP_UP',
   send_money_type = 'SEND_MONEY_TYPE',
   received_money_type = 'RECEIVED_MONEY_TYPE',
@@ -128,7 +159,36 @@ enum LocalizationKeysMapping {
   apple_pay_topup_type = 'APPLE_PAY_TOP_UP_TYPE',
   atm_transaction = 'ATM_TYPE',
   pos_purchase_type = 'POS_PURCHASE_TYPE',
-  beneficiaryName = 'BENEFICIARY_NICK_NAME',
+  international_transfer = 'INTERNATIONAL_TRANSFER',
+  cash_pickup = 'CASH_PICKUP',
+  bank_transfer = 'BANK_TRANSFER',
+  western_union = 'WESTERN_UNION',
+  alinmapay_direct = 'ALINMAPAY_DIRECT',
+  paid = 'PAID',
+  refund = 'REFUND',
+  rejected = 'REJECTED',
+  pending = 'PENDING',
+  CR = 'CREDIT',
+  DE = 'DEBIT',
+  transactionMedium = 'BANK_TRANSFER',
+  status = 'STATUS',
+  transactionDateTime = 'DATE',
+  country = 'COUNTRY',
+  pakistan = 'PAKISTAN',
+  egypt = 'EGYPT',
+  phoneNumber = 'PHONE_NUMBER',
+  payrollAmount = 'PAYROLL_AMOUNT',
+  exchangeRate = 'EXCHANGE_RATE',
+  includeFees = 'INCLUDE_FEES',
+  bankFeesAmount = 'FEES',
+  promocode = 'PROMOCODE',
+  totalCreditAmount = 'TOTAL_AMOUNT',
+  totalDebitAmount = 'TOTAL_AMOUNT',
+  remittanceRefNumber = 'MTCN',
+  transactionRequestType = 'TRANSACTION_TYPE',
+  iban = 'IBAN',
+  beneficiary = 'BENEFICIARY',
+  beneficiaryName = 'BENEFICIARY',
   transfer_by = 'TRANSFER_BY',
   total_amount = 'TOTAL_AMOUNT',
   sender_nick_name = 'SENDER_NICK_NAME',
@@ -138,11 +198,13 @@ enum LocalizationKeysMapping {
 
 export {
   CopiableKeys,
+  Countires,
   KeysToProcess,
   LocalizationKeys,
   LocalizationKeysMapping,
   TransactionHideItems,
+  TransactionMedium,
   TransactionOperations,
-  TransactionTypes
+  TransactionTypes,
+  TransactionsStatus,
 };
-

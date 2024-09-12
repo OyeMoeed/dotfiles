@@ -10,8 +10,9 @@ const profileStyles = (colors: any) =>
       alignItems: 'center',
       marginTop: scaleSize(30),
     },
-    SafeAreaView2: {
+    safeAreaView2: {
       flex: 1,
+      marginBottom: moderateScale(20),
     },
     imageStyle: {
       width: scaleSize(18.5),
@@ -92,7 +93,7 @@ const profileStyles = (colors: any) =>
       paddingVertical: scaleSize(2),
     },
     actionSheetBody: {
-      bottom: isIosOS ? '27%' : '18%',
+      bottom: isIosOS ? '23%' : '18%',
     },
     containerToastStyle: {
       borderColor: colors.success.success500,

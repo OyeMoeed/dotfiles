@@ -1,4 +1,3 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { CUSTOME_SCALE } from '@app/styles/spacing.const';
@@ -9,6 +8,7 @@ import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 const transactionHistoryStyle = (colors: any) =>
   createStyleSheet({
     container: {
+      width: '100%',
       flex: 1,
       marginBottom: isIosOS ? moderateScale(100) : 0,
     },
@@ -25,7 +25,7 @@ const transactionHistoryStyle = (colors: any) =>
       color: colors.tertiary.tertiary500,
     },
     footnoteBoldTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_20,
       color: colors.natural.natural900,
       lineHeight: moderateScale(20),
@@ -36,10 +36,10 @@ const transactionHistoryStyle = (colors: any) =>
     headingStyles: {
       fontSize: moderateScale(13),
       width: '50%',
+      flex: 1,
     },
     cardStyle: {
       flexDirection: 'row',
-      width: CUSTOME_SCALE(311),
       alignItems: 'center',
       justifyContent: 'space-between',
       backgroundColor: colors.natural.natural0,
@@ -86,7 +86,12 @@ const transactionHistoryStyle = (colors: any) =>
       fontWeight: FONT_WEIGHT_BOLD,
     },
     containerToastIosStyle: {
+      position: 'absolute',
       bottom: verticalScale(120),
+    },
+    fullFlex: {
+      flex: 1,
+      textAlign: 'right',
     },
   });
 

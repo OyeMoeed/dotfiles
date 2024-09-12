@@ -66,8 +66,8 @@ const TrafficViolationIDScreen: React.FC = () => {
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => (
                 <IPayView>
-                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox={true} />
-                  {index === billsData?.length - 1 && selectedBillsCount > 0 && (
+                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox />
+                  {index === (billsData || []).length - 1 && selectedBillsCount > 0 && (
                     <IPayView style={styles.listBottomView} />
                   )}
                 </IPayView>
@@ -77,8 +77,9 @@ const TrafficViolationIDScreen: React.FC = () => {
           {selectedBillsCount > 0 && (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
+                textColor={colors.natural.natural500}
                 onPressBtn={handlePayButton}
-                btnText={`${localizationText.COMMON.PAY} (${selectedBillsAmount} ${localizationText.COMMON.SAR})`}
+                btnText={`${localizationText.COMMON.PAY} : ${selectedBillsAmount} ${localizationText.COMMON.SAR}`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
               />

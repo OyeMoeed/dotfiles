@@ -9,20 +9,14 @@ const changePasscodeReq = async (payload: ChangePasswordProps): Promise<unknown>
   if (constants.MOCK_API_RESPONSE) {
     return chnagePasscodeMock;
   }
-  try {
-    const apiResponse = await apiCall({
-      endpoint: `${CORE_URLS.CHANGE_PASSCODE(payload?.walletNumber)}`,
-      method: requestType.POST,
-      payload: payload?.body
-    });
 
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: `${CORE_URLS.CHANGE_PASSCODE(payload?.walletNumber)}`,
+    method: requestType.POST,
+    payload: payload?.body,
+  });
+
+  return apiResponse;
 };
 
 export default changePasscodeReq;

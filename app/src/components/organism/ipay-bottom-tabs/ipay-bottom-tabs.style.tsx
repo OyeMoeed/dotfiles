@@ -1,7 +1,6 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_24, SCALE_48, SCALE_6 } from '@app/styles/spacing.const';
-import { FONT_SIZE_12 } from '@app/styles/typography.styles';
+import { FONT_SIZE_12, FONT_WEIGHT_BOLD, FONT_WEIGHT_NORMAL } from '@app/styles/typography.styles';
 import { moderateScale } from 'react-native-size-matters';
 
 const bottomTabStyles = (theme: any) =>
@@ -16,8 +15,7 @@ const bottomTabStyles = (theme: any) =>
       justifyContent: 'space-between',
       alignItems: 'center',
       paddingHorizontal: SCALE_24,
-      position: 'absoulte',
-      position: 'absoulte',
+      position: 'absolute',
     },
     tabBar: {
       position: 'absolute',
@@ -40,8 +38,8 @@ const bottomTabStyles = (theme: any) =>
       flex: 1,
       alignItems: 'center',
     },
-    focusedText: { color: theme.primary.primary900, fontWeight: constants.FONT_WEIGHT_BOLD },
-    blurText: { color: theme.natural.natural500, fontWeight: constants.FONT_WEIGHT_NORMAL },
+    focusedText: { color: theme.primary.primary900, fontWeight: FONT_WEIGHT_BOLD },
+    blurText: { color: theme.natural.natural500, fontWeight: FONT_WEIGHT_NORMAL },
   });
 
 export default bottomTabStyles;

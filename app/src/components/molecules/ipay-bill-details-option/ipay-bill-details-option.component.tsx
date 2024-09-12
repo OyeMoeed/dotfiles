@@ -23,6 +23,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
+
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, onPressIcon } = item;
 
@@ -45,7 +46,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
         <IPayView style={styles.rowStyles}>
           <IPayImage image={headerData?.companyImage} style={styles.listLeftImg} />
           <IPayView>
-            <IPaySubHeadlineText color={colors.natural.natural900} text={headerData?.title} />
+            <IPaySubHeadlineText style={styles.title} color={colors.natural.natural900} text={headerData?.title} />
             <IPayCaption2Text
               color={colors.natural.natural900}
               text={headerData?.companyDetails}
@@ -56,7 +57,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
       )}
       <IPayFlatlist
         style={[styles.detailsFlex, listStyles]}
-        scrollEnabled={true}
+        scrollEnabled
         data={data}
         showsVerticalScrollIndicator={false}
         renderItem={renderOption}

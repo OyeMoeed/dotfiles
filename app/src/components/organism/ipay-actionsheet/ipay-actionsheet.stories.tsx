@@ -15,7 +15,7 @@ const IPayActionSheetMeta: Meta<typeof IPayActionSheet> = {
     cancelButtonIndex: 2,
     destructiveButtonIndex: 1,
     showIcon: true,
-    showCancel: true
+    showCancel: true,
   },
   decorators: [
     (Story) => (
@@ -24,8 +24,8 @@ const IPayActionSheetMeta: Meta<typeof IPayActionSheet> = {
           <Story />
         </IPayView>
       </Provider>
-    )
-  ]
+    ),
+  ],
 };
 
 export default IPayActionSheetMeta;
@@ -40,8 +40,8 @@ export const WithCustomColors: StoryObj<typeof IPayActionSheet> = {
     cancelButtonIndex: 2,
     destructiveButtonIndex: 1,
     showIcon: true,
-    showCancel: true
-  }
+    showCancel: true,
+  },
 };
 
 export const WithCustomImage: StoryObj<typeof IPayActionSheet> = {
@@ -52,8 +52,8 @@ export const WithCustomImage: StoryObj<typeof IPayActionSheet> = {
     cancelButtonIndex: 2,
     destructiveButtonIndex: 1,
     showIcon: true,
-    showCancel: true
-  }
+    showCancel: true,
+  },
 };
 
 export const WithoutCancelButton: StoryObj<typeof IPayActionSheet> = {
@@ -65,6 +65,6 @@ export const WithoutCancelButton: StoryObj<typeof IPayActionSheet> = {
     destructiveButtonIndex: 1,
     showIcon: true,
     showCancel: false,
-    options: ['Option 1', 'Option 2']
-  }
+    options: ['Option 1', 'Option 2'],
+  },
 };

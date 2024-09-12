@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPaySafeAreaView } from '@components/templates';
+import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -20,9 +20,15 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import icons from '@app/assets/icons';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
-import { OTPVerificationRefTypes, TermsAndConditionsRefTypes, RouteParams } from './print-card-confirmation.interface';
+
+import {
+  OTPVerificationRefTypes,
+  TermsAndConditionsRefTypes,
+  RouteParams,
+  AddressInfoRefTypes,
+} from './print-card-confirmation.interface';
 import printCardConfirmationStyles from './print-card-confirmation.style';
 
 const DUMMY_DATA = {
@@ -37,6 +43,8 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [otp, setOtp] = useState('');
+  const [, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -51,6 +59,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
+  const addressInfoSheetRef = useRef<AddressInfoRefTypes>(null);
 
   const styles = printCardConfirmationStyles(colors);
 
@@ -89,7 +98,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   const onNavigateToSuccess = () => {
     onCloseBottomSheet();
-    navigate(ScreenNames.REPLACE_CARD_SUCCESS);
+    navigate(ScreenNames.PRINT_CARD_SUCCESS);
   };
 
   return (
@@ -101,9 +110,14 @@ const PrintCardConfirmationScreen: React.FC = () => {
           availableBalance="20,000"
           balance={DUMMY_DATA.balance}
           onPressTopup={() => {}}
+          monthlyIncomingLimit="20,000"
         />
         <IPayView style={styles.contentContainer}>
-          <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
+          <IPayFootnoteText
+            text={localizationText.CARDS.CARD_DETAILS}
+            color={colors.natural.natural500}
+            style={styles.header}
+          />
           <IPayList
             title={localizationText.REPLACE_CARD.HOLDERS_NAME}
             isShowDetail
@@ -122,10 +136,15 @@ const PrintCardConfirmationScreen: React.FC = () => {
           <IPayList
             title={localizationText.PROFILE.NATIONAL_ADDRESS}
             rightText={
-              <IPayView style={styles.addressStyle}>
+              <IPayPressable
+                onPress={() => addressInfoSheetRef.current?.showAddressInfoSheet()}
+                style={styles.addressStyle}
+              >
                 <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
-                <IPayIcon icon={icons.info_circle2} size={16} color={colors.primary.primary500} />
-              </IPayView>
+                <IPayView style={styles.iconStyle}>
+                  <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
+                </IPayView>
+              </IPayPressable>
             }
           />
           <IPayFootnoteText
@@ -156,6 +175,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
               onPress={onPressConfirm}
               large
               btnIconsDisabled
+              btnStyle={styles.confirmButton}
               btnType={buttonVariants.PRIMARY}
               btnText={localizationText.COMMON.CONFIRM}
             />
@@ -163,6 +183,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         noGradient
         heading={localizationText.CARD_OPTIONS.PHYSICAL_CARD}
@@ -173,10 +194,15 @@ const PrintCardConfirmationScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheet}
         ref={veriyOTPSheetRef}
       >
-        <OtpVerificationComponent
-          onConfirmPress={onNavigateToSuccess}
+        <IPayOtpVerification
+          setOtpError={setOtpError}
           ref={otpVerificationRef}
-          onPressHelp={handleOnPressHelp}
+          onPressConfirm={onNavigateToSuccess}
+          mobileNumber="0511110302"
+          setOtp={setOtp}
+          otp={otp}
+          showHelp
+          handleOnPressHelp={handleOnPressHelp}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

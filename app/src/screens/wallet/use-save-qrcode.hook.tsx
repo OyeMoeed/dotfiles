@@ -14,21 +14,29 @@ import IQrData from './use-save-qrcode.interface';
 import walletStyles from './wallet.style';
 
 const useSaveQRCode = () => {
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
   const qrRef = useRef<any>(null);
   const { colors } = useTheme();
   const localization = useLocalization();
   // Define the QR data
   const qrDataObject: IQrData = {
-    name: userInfo?.fullName,
-    IBAN: userInfo?.viban,
-    contact: userInfo?.mobileNumber,
-   reference: ALINMA_REFERENCE_NUM,
+    name: walletInfo?.fullName,
+    IBAN: walletInfo?.viban,
+    contact: walletInfo?.mobileNumber,
+    reference: ALINMA_REFERENCE_NUM,
   };
   const qrData = JSON.stringify(qrDataObject);
 
   const styles = walletStyles(colors);
+
+  const renderToast = (title: string, icon: string) => {
+    showToast({
+      title,
+      leftIcon: <IPayIcon icon={icon} size={18} color={colors.natural.natural0} />,
+      containerStyle: styles.toastContainerStyle,
+    });
+  };
 
   // Save QR code to disk
   const saveQrToDisk = async (): Promise<void> => {
@@ -43,16 +51,8 @@ const useSaveQRCode = () => {
 
         renderToast(localization.HOME.QR_TO_GALLERY, icons.save);
       } catch (error) {
-        console.error(error); //TODO : implement dynatrace
+        // TODO : implement dynatrace
       }
-    });
-  };
-
-  const renderToast = (title: string, icon: string) => {
-    showToast({
-      title,
-      leftIcon: <IPayIcon icon={icon} size={18} color={colors.natural.natural0} />,
-      containerStyle: styles.toastContainerStyle,
     });
   };
 

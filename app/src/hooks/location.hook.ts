@@ -1,65 +1,117 @@
-import { osTypes } from '@app/enums/os-types.enum';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
+import { OsTypes, PermissionsStatus } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
-import { useState } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { Platform } from 'react-native';
 import { PERMISSIONS, request } from 'react-native-permissions';
 import { useDispatch } from 'react-redux';
+import Geolocation from 'react-native-geolocation-service';
+import { IlocationDetails } from '@app/network/services/services.interface';
 
 const useLocation = () => {
-  const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
-  const locaizationText = useLocalization();
+  const [permissionStatus, setPermissionStatus] = useState(PermissionsStatus.UNKNOWN);
+  const localizationText = useLocalization();
+  const [location, setLocation] = useState<IlocationDetails | null>(null);
+  const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const dispatch = useDispatch();
-  const title = locaizationText.LOCATION.PERMISSION_REQUIRED;
-  const description = locaizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
-  const checkPermission = async () => {
-    try {
-      let permission;
-      permission = await requestLocationPermission();
+  const title = localizationText.LOCATION.PERMISSION_REQUIRED;
+  const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
 
-      // Handle the permission status
-      handlePermissionStatus(permission);
-    } catch (error) {
-      setPermissionStatus(permissionsStatus.UNAVAILABLE);
+  const requestLocationPermission = useCallback(async (): Promise<string> => {
+    if (Platform.OS === OsTypes.ANDROID) {
+      return request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
     }
-  };
+    return request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+  }, []);
 
-  const handlePermissionStatus = (status: string) => {
+  const handlePermissionStatus = (status: string): boolean => {
     switch (status) {
-      case permissionsStatus.GRANTED:
-        setPermissionStatus(permissionsStatus.GRANTED);
-        break;
+      case PermissionsStatus.GRANTED:
+        setPermissionStatus(PermissionsStatus.GRANTED);
+        return true;
 
-      case permissionsStatus.DENIED:
-        setPermissionStatus(permissionsStatus.DENIED);
-        break;
+      case PermissionsStatus.DENIED:
+        setPermissionStatus(PermissionsStatus.DENIED);
+        return false;
 
-      case permissionsStatus.BLOCKED:
-        setPermissionStatus(permissionsStatus.BLOCKED);
+      case PermissionsStatus.BLOCKED:
+        setPermissionStatus(PermissionsStatus.BLOCKED);
         dispatch(showPermissionAlert({ title, description }));
+        return false;
 
-        break;
+      case PermissionsStatus.LIMITED:
+        setPermissionStatus(PermissionsStatus.LIMITED);
+        return false;
 
-      case permissionsStatus.LIMITED:
-        setPermissionStatus(permissionsStatus.LIMITED);
-        break;
-
-      case permissionsStatus.UNAVAILABLE:
+      case PermissionsStatus.UNAVAILABLE:
       default:
-        setPermissionStatus(permissionsStatus.UNAVAILABLE);
-        break;
-    }
-  };
-  const requestLocationPermission = async () => {
-    if (Platform.OS === osTypes.ANDROID) {
-      return await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-    } else {
-      return await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+        setPermissionStatus(PermissionsStatus.UNAVAILABLE);
+        return false;
     }
   };
 
-  return { permissionStatus, retryPermission: checkPermission };
+  const checkPermission = async (): Promise<boolean> => {
+    try {
+      const permission = await requestLocationPermission();
+      return handlePermissionStatus(permission);
+    } catch (error) {
+      setPermissionStatus(PermissionsStatus.UNAVAILABLE);
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    checkPermission();
+  }, []);
+
+  const fetchLocation = useCallback(async (): Promise<IlocationDetails | null> => {
+    const hasPermission = await checkPermission();
+
+    if (hasPermission) {
+      setIsFetchingLocation(true);
+      try {
+        const position = await new Promise<Geolocation.GeoPosition>((resolve, reject) => {
+          Geolocation.getCurrentPosition(resolve, reject, {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 10000,
+          });
+        });
+
+        const { latitude, longitude } = position.coords;
+        const locationDetails: IlocationDetails = {
+          latitude: latitude.toString(),
+          longitude: longitude.toString(),
+        };
+        setLocation(locationDetails);
+        return locationDetails;
+      } catch (error) {
+        setPermissionStatus(PermissionsStatus.UNAVAILABLE);
+        return null;
+      } finally {
+        setIsFetchingLocation(false);
+      }
+    }
+    return null;
+  }, [permissionStatus]);
+
+  useEffect(() => {
+    const fetchAndSetLocation = async () => {
+      if (permissionStatus === PermissionsStatus.GRANTED) {
+        await fetchLocation();
+      }
+    };
+    fetchAndSetLocation();
+  }, [permissionStatus, fetchLocation]);
+
+  return {
+    permissionStatus,
+    location,
+    retryPermission: checkPermission,
+    isFetchingLocation,
+    checkPermission,
+    fetchLocation,
+  };
 };
 
 export default useLocation;

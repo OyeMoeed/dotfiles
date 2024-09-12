@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 /**
@@ -29,4 +30,5 @@ export interface IPayTitle2TextProps {
    * Children components to be rendered inside the RNText.
    */
   children?: React.ReactNode;
+  color?: string;
 }

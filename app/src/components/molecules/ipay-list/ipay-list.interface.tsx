@@ -167,6 +167,10 @@ export interface IPayListProps {
    * will show regular title next to main title
    * */
   adjacentTitle?: string;
+  /**
+   * will show regular subTitle next to main subTitle
+   * */
+  adjacentSubTitle?: string;
   children?: React.ReactNode;
   /**
    * Use to truncate subtitle lines

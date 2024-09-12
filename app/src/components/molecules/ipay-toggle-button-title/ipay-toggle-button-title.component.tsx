@@ -1,13 +1,11 @@
 import { IPayTitleAssistive, IPayView } from '@app/components/atoms';
-import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayToggleButton } from '..';
 import { IPayToggleTitleProps } from './ipay-toggle-button-title.interface';
 import toggleTitleStyles from './ipay-toggle-button-title.style';
 
 const IPayToggleTitle: React.FC<IPayToggleTitleProps> = ({ testID, heading, subHeading, onSwitchToggle }) => {
-  const { colors } = useTheme();
-  const styles = toggleTitleStyles(colors);
+  const styles = toggleTitleStyles();
 
   return (
     <IPayView testID={`${testID}-toggle-title`} style={styles.container}>

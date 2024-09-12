@@ -5,6 +5,7 @@ interface MockAPIStatusProps {
   requestReference: string;
   type: string;
   desc: string;
+  translation: string;
 }
 
 // Define the Data interface
@@ -24,7 +25,17 @@ type DeviceInfoProps = {
   deviceName?: string;
   platform?: string;
   deviceInfo?: any;
+  locationDetails?: IlocationDetails;
+  hashCode?: string;
 };
+
+export interface IlocationDetails {
+  district?: string;
+  city?: string;
+  country?: string;
+  latitude?: string;
+  longitude?: string;
+}
 
 interface IApiStatus {
   sessionReference?: string;
@@ -37,7 +48,7 @@ interface IApiStatus {
 interface ApiResponse<T> {
   status: IApiStatus;
   response?: T;
-  successfulResponse: boolean;
+  successfulResponse?: boolean;
   authentication?: {
     transactionId: string;
   };

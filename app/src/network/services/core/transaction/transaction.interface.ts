@@ -88,14 +88,52 @@ interface TransactionsProp {
 }
 
 interface FilterFormDataProp {
-  date_to?: string;
-  date_from?: string;
-  amount_from?: string;
-  amount_to?: string;
+  dateTo?: string;
+  dateFrom?: string;
+  amountFrom?: string;
+  amountTo?: string;
 }
 
 interface CardsProp {
   walletNumber?: string;
+}
+
+interface resetPinCodeProp {
+  walletNumber?: string;
+  cardIndex?: string;
+  body?: {
+    cardPinCode?: string;
+    otp?: string;
+    otpRef?: string;
+    deviceInfo?: any;
+  };
+}
+
+interface getCardDetailsProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string;
+    otp?: string;
+    otpRef?: string;
+    deviceInfo?: any;
+  };
+}
+
+interface prepareShowDetailsProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string;
+    deviceInfo: any;
+  };
+}
+
+interface changeStatusProp {
+  walletNumber?: string;
+  body?: {
+    status?: string;
+    cardIndex?: string;
+    deviceInfo?: any;
+  };
 }
 
 interface CardListItem {
@@ -117,17 +155,28 @@ interface CardListResponse {
   response: {
     referenceNumber: string;
     transactionDate: string;
-    cardList: CardListItem;
+    cards: CardListItem;
   };
   successfulResponse: boolean;
 }
 
+enum CardStatus {
+  ONLINE_PURCHASE_DISABLE = '0',
+  ONLINE_PURCHASE_ENABLE = '100',
+  DISABLE = '700',
+}
+
 export {
+  CardListItem,
+  CardListResponse,
   CardsProp,
   FilterFormDataProp,
   TransactionsMockProps,
   TransactionsProp,
   WalletNumberProp,
-  CardListResponse,
-  CardListItem,
+  resetPinCodeProp,
+  changeStatusProp,
+  CardStatus,
+  prepareShowDetailsProp,
+  getCardDetailsProp,
 };

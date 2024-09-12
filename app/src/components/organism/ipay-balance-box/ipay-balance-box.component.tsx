@@ -18,7 +18,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { dashboardOptions } from '@app/utilities/enums.util';
+import checkUserAccess from '@app/utilities/check-user-access';
+import { DashboardOptions } from '@app/utilities';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { forwardRef } from 'react';
@@ -42,7 +43,6 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
   ({
     testID,
     balance = '5,200.40',
-    totalBalance = '20,500',
     hideBalance,
     walletInfoPress,
     topUpPress,
@@ -58,38 +58,42 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const localizationText = useLocalization();
     const dispatch = useTypedDispatch();
     const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
+    const gradientLocations = [0, 0.8];
 
     const onPressOption = (option: string) => {
       if (quickAction) quickAction();
-      switch (option) {
-        case dashboardOptions.ATM_WITHDRAWALS:
-          navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
-          break;
-        case dashboardOptions.SEND_MONEY:
-          navigate(screenNames.WALLET_TRANSFER);
-          break;
-        case dashboardOptions.LOCAL_TRANSFER:
-          navigate(screenNames.LOCAL_TRANSFER, {});
-          break;
-        case dashboardOptions.BILL_PAYMENTS:
-          navigate(screenNames.MOI_PAYMENT_SCREEN);
-          break;
-        case dashboardOptions.SEND_GIFT:
-          navigate(screenNames.SEND_GIFT);
-          break;
-        case dashboardOptions.REQUEST_MONEY:
-          navigate(screenNames.REQUEST_MONEY);
-          break;
-        default:
-          break;
+      const hasAccess = checkUserAccess();
+      if (hasAccess) {
+        switch (option) {
+          case DashboardOptions.ATM_WITHDRAWALS:
+            navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
+            break;
+          case DashboardOptions.SEND_MONEY:
+            navigate(screenNames.WALLET_TRANSFER);
+            break;
+          case DashboardOptions.LOCAL_TRANSFER:
+            navigate(screenNames.LOCAL_TRANSFER, {});
+            break;
+          case DashboardOptions.INTERNATIONAL_TR:
+            navigate(screenNames.INTERNATIONAL_TRANSFER);
+            break;
+          case DashboardOptions.BILL_PAYMENTS:
+            navigate(screenNames.BILL_PAYMENTS_SCREEN);
+            break;
+          case DashboardOptions.SEND_GIFT:
+            navigate(screenNames.SEND_GIFT);
+            break;
+          case DashboardOptions.REQUEST_MONEY:
+            navigate(screenNames.REQUEST_MONEY);
+            break;
+
+          default:
+            break;
+        }
       }
-      return null; // Consistently return null at the end of the function
     };
 
     const balanceValue = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
-    const totalAvailableBalance = ` ${
-      localizationText.HOME.OF
-    } ${hideBalance ? '*****' : formatNumberWithCommas(totalBalance)}`;
 
     const renderDashboardOption = ({ item }: { item: CarouselItem }) => (
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
@@ -98,7 +102,13 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
             {item.transfer_type === localizationText.HOME.LOCAL_TRANSFER ? (
               item?.icon
             ) : (
-              <IPayGradientIcon icon={item?.icon} size={28} />
+              <IPayGradientIcon
+                icon={item?.icon}
+                size={28}
+                angle={125}
+                gradientLocations={gradientLocations}
+                useAngle
+              />
             )}
           </IPayView>
           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />

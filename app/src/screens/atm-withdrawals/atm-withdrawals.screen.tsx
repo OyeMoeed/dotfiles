@@ -17,7 +17,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, isMultipleOfHundred } from '@app/utilities/number-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
@@ -59,22 +59,24 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     topUpSelectionRef.current.close();
   };
 
-  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount == '' || !isMultipleOfHundred(topUpAmount);
+  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount === '' || !isMultipleOfHundred(topUpAmount);
   const onPressQR = () => {
-    navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER);
+    navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER, { amount: topUpAmount });
     setTopUpAmount('');
   };
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
+    const currentBalance = parseFloat(availableBalance);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
-
     if (monthlyRemaining === 0) {
       setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
       setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+    } else if (updatedTopUpAmount > currentBalance) {
+      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_ACCOUNT_BALANCE);
     } else {
       setChipValue('');
     }
@@ -105,13 +107,16 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               onPress={topUpSelectionBottomSheet}
               small
               btnType={buttonVariants.OUTLINED}
-              leftIcon={<IPayIcon icon={icons.add} size={18} color={colors.primary.primary500} />}
+              leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
               btnText={localizationText.COMMON.TOP_UP}
               btnStyle={styles.topUpBtn}
             />
           </IPayView>
           <IPayView style={styles.gap}>
-            <IPayProgressBar gradientWidth="70%" colors={colors.gradientSecondary} />
+            <IPayProgressBar
+              gradientWidth={`${(+monthlyRemainingOutgoingAmount / +monthlyOutgoingLimit) * 100}%`}
+              colors={colors.gradientSecondary}
+            />
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
@@ -130,7 +135,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             showIcon={false}
             qrScanBtn
             chipValue={chipValue}
-            payChannelType={payChannel.ATM}
+            payChannelType={PayChannel.ATM}
             showQuickAmount
             isQrBtnDisabled={isQrBtnDisabled}
             topUpAmount={topUpAmount}

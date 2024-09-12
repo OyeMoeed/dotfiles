@@ -8,12 +8,13 @@ import { ANIMATION_DURATION } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import useVirtualCardData from '@app/screens/virtual-card/use-virtual-card-data';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
-import useVirtualCardData from '@app/screens/virtual-card/use-virtual-card-data';
+import { useRoute } from '@react-navigation/native';
 import issueNewCardDetailsStyles from './issue-new-card-details.style';
 
 const IssueNewCardDetailsScreen: React.FC = () => {
@@ -40,6 +41,10 @@ const IssueNewCardDetailsScreen: React.FC = () => {
     transform: [{ translateY: translateY.value }],
   }));
 
+  const route = useRoute<any>();
+
+  const { currentCard } = route.params;
+
   const handleTabSelect = useCallback(
     (tab: CardTypes) => {
       const currentTab = tab.toLowerCase();
@@ -48,14 +53,16 @@ const IssueNewCardDetailsScreen: React.FC = () => {
     [selectedCard],
   );
   const onPressIsssueCard = () => {
-    navigate(screenNames.CARD_ISSUE_CONFIRMATION);
+    navigate(screenNames.ISSUE_NEW_CARD_CONFIRM_DETAILS, {
+      currentCard,
+    });
   };
 
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} applyFlex />
       <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
-      <IPayImage image={backgroundImage} style={[styles.background]} />
+      <IPayImage image={backgroundImage} style={styles.background} />
       <IPayAnimatedView
         animationStyles={animatedStyles}
         style={[styles.animatedContainer, isExpanded && styles.expandedBorderRadius]}

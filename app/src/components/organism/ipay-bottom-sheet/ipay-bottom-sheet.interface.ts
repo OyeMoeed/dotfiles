@@ -2,13 +2,13 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 type CommonPros = {
-  isVisible?:boolean;
+  isVisible?: boolean;
   heading?: string;
   simpleBar?: boolean;
   gradientBar?: boolean;
   cancelBnt?: boolean;
   doneBtn?: boolean;
-  disabled: boolean;
+  disabled?: boolean;
   backBtn?: boolean;
   doneText?: string;
   doneButtonStyle?: StyleProp<ViewStyle>;
@@ -19,6 +19,36 @@ type CommonPros = {
 };
 
 export interface IPayBottomSheetProps extends CommonPros {
+  testId?: string;
+  children?: React.JSX.Element | React.JSX.Element[];
+  customSnapPoint?: string[];
+  enableDynamicSizing?: boolean;
+  enablePanDownToClose?: boolean;
+  simpleHeader?: boolean;
+  onCloseBottomSheet?: () => void;
+  onDone?: () => void;
+  bold?: boolean;
+  animate?: boolean;
+  /**
+   * enable scroll for sheet expand while scroll on smaller content.
+   */
+  isPanningGesture?: boolean;
+  doneText?: string;
+  closeBottomSheetOnDone?: boolean;
+  noGradient?: boolean;
+  testID?: string;
+}
+
+export interface IPayBottomSheetHandleProps extends CommonPros {
+  disabled?: boolean;
+  onPressCancel: () => void;
+  onPressDone: () => void;
+  simpleHeader?: boolean;
+  bold?: boolean;
+}
+
+export interface IPayPortalBottomSheetProps extends CommonPros {
+  testId?: string;
   children?: React.JSX.Element | React.JSX.Element[];
   customSnapPoint?: string[];
   enableDynamicSizing?: boolean;
@@ -36,12 +66,4 @@ export interface IPayBottomSheetProps extends CommonPros {
   closeBottomSheetOnDone?: boolean;
   noGradient?: boolean;
   testID?: string;
-}
-
-export interface IPayBottomSheetHandleProps extends CommonPros {
-  disabled: boolean;
-  onPressCancel: () => void;
-  onPressDone: () => void;
-  simpleHeader?: boolean;
-  bold?: boolean;
 }

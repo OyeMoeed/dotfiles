@@ -4,14 +4,30 @@ interface ListOption {
 }
 
 interface FormValues {
-  beneficiary_name: string;
+  beneficiaryName: string;
   iban: string;
+  bankName?: string;
+  beneficiaryNickName?: string;
+}
+interface BeneficiaryBankDetails {
+  bankCode: string;
   bankName: string;
-  beneficiary_nick_name?: string;
+  beneficiaryAccountNo: string;
+}
+interface BankDetails {
+  code: string;
+  desc: string;
+}
+enum TransferTypes {
+  alinmaBank = 1,
+  localBankInsideKsa = 2,
+  international = 3,
+  westernUnion = 4,
+  alinmaExpress = 5,
 }
 
 interface IPayCreateBeneficiaryProps {
   testID?: string;
 }
 
-export { FormValues, IPayCreateBeneficiaryProps, ListOption };
+export { BankDetails, BeneficiaryBankDetails, FormValues, IPayCreateBeneficiaryProps, ListOption, TransferTypes };

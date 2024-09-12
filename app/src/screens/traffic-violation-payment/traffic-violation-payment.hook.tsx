@@ -3,6 +3,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute } from '@react-navigation/core';
 import { useEffect, useRef, useState } from 'react';
 
 interface billPayDetail {
@@ -18,23 +19,32 @@ interface BalanceData {
   calculatedBill: string;
 }
 
-//TODO wiill be replaced by API
+// TODO will be replaced by API
 const useBillPaymentConfirmation = () => {
   const localizationText = useLocalization();
   const { billPayDetailsData } = useConstantData();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const otpRef = useRef<bottomSheetTypes>(null);
+  const [otp, setOtp] = useState<string>('');
+  const [otpError, setOtpError] = useState<boolean>(false);
+  const [apiError] = useState<string>('');
+  const [isLoading] = useState<boolean>(false);
+  const otpVerificationRef = useRef<bottomSheetTypes>(null);
+  const route = useRoute();
+  const payOnly = (route?.params as { payOnly: string })?.payOnly;
 
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
+
   const handleOtpVerification = () => {
     otpRef?.current?.present();
   };
-  const [balanceData, setBalanceData] = useState<BalanceData>({
+
+  const [balanceData] = useState<BalanceData>({
     availableBalance: '0',
     balance: '0',
-    calculatedBill: '0',
+    calculatedBill: '3000',
   });
 
   const [billPayDetailes, setBillPayDetailes] = useState<billPayDetail[]>([]);
@@ -47,13 +57,21 @@ const useBillPaymentConfirmation = () => {
     {
       id: '2',
       label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
-      value: '1000',
+      value: `1000 ${localizationText.COMMON.SAR}`,
     },
   ];
 
-  const handlePay = () => {
+  const onConfirm = () => {
     otpRef?.current?.close();
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS);
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !payOnly });
+  };
+  const handlePay = () => {
+    if (otp === '' || otp.length < 4) {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+    } else {
+      onConfirm();
+    }
   };
   return {
     localizationText,
@@ -65,6 +83,13 @@ const useBillPaymentConfirmation = () => {
     otpRef,
     handleOtpVerification,
     handleOnPressHelp,
+    otp,
+    isLoading,
+    otpError,
+    setOtpError,
+    apiError,
+    setOtp,
+    otpVerificationRef,
   };
 };
 

@@ -1,15 +1,12 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
-import IPayKeyboardAwareScrollView from '@app/components/atoms/ipay-keyboard-aware-scroll-view/ipay-keyboard-aware-scroll-view.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
 import getLov from '@app/network/services/core/lov/get-lov.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import IPayCustomerKnowledgeDefault from './component/default-component';
@@ -39,8 +36,6 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   const [citiesLov, setCitiesLov] = useState<LovInfo[]>([]);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-
   const {
     getValues,
     control,
@@ -64,24 +59,13 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     { code: '5', desc: `${localizationText.COMMON.MORE_THAN} 19999` },
   ];
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const setDefaultValues = () => {
     setValue('income_source', incomeSourceKeys.filter((el) => el.code === walletInfo.accountBasicInfo.incomeSource)[0]);
     setValue(
       'monthly_income',
       monthlyIncomeKeys.filter((el) => el.code === walletInfo.accountBasicInfo.monthlyIncomeAmount)[0],
     );
-    setValue('employee_name', walletInfo.workDetails.industry);
+    setValue('employer_name', walletInfo.workDetails.industry);
     setValue('district', walletInfo.addressDetails.district);
     setValue('street_name', walletInfo.addressDetails.street);
     setValue('postal_code', walletInfo.addressDetails.poBox);
@@ -91,33 +75,29 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   };
 
   const getOccupationsLovs = async () => {
-    renderSpinner(true);
     const payload: IGetLovPayload = {
       lovType: '36',
     };
 
     const apiResponse = await getLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       setOccupationLov(apiResponse?.response?.lovInfo as LovInfo[]);
       setValue(
         'occupation',
         apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.workDetails.occupation)[0],
       );
     }
-    renderSpinner(false);
   };
 
   const getCitiessLovs = async () => {
-    renderSpinner(true);
     const payload: IGetLovPayload = {
       lovType: '6',
     };
 
     const apiResponse = await getLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       setCitiesLov(apiResponse?.response?.lovInfo as LovInfo[]);
     }
-    renderSpinner(false);
     setValue(
       'city_name',
       apiResponse?.response?.lovInfo.filter((el) => el.recTypeCode === walletInfo.userContactInfo.city)[0],
@@ -130,8 +110,11 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     setDefaultValues();
   }, []);
 
-  const onSubmitEvent = (formData: IFormData) => {
+  useEffect(() => {
+    setSearch('');
+  }, [category]);
 
+  const onSubmitEvent = (formData: IFormData) => {
     if (onSubmit) onSubmit(formData);
   };
 
@@ -314,7 +297,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      <IPayKeyboardAwareScrollView showsVerticalScrollIndicator={false} style={styles.main}>{renderFields(category)}</IPayKeyboardAwareScrollView>
+      <IPayScrollView showsVerticalScrollIndicator={false}>{renderFields(category)}</IPayScrollView>
     </IPayView>
   );
 };

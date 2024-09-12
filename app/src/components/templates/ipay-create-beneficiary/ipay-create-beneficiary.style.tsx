@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const createBeneficiaryStyles = (themeColors: typeof colors) =>
@@ -28,6 +29,19 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
     listContainerStyle: {
       backgroundColor: themeColors.primary.primary10,
     },
+    inputVariant: {
+      height: moderateScale(54, 0.35),
+      borderRadius: scaleFont(16),
+      borderWidth: scaleFont(1),
+      borderColor: colors.primary.primary100,
+      paddingVertical: scaleFont(8),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      width: '100%',
+      backgroundColor: colors.natural.natural0,
+    },
+
     rightTextStyle: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -61,6 +75,13 @@ const createBeneficiaryStyles = (themeColors: typeof colors) =>
     },
     flatListWrapper: {
       gap: moderateScale(8),
+    },
+    toast: {
+      bottom: isIosOS ? verticalScale(80) : verticalScale(24),
+    },
+    rightContainer: {
+      width: '50%',
+      justifyContent: 'flex-end',
     },
   });
 

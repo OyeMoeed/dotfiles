@@ -7,6 +7,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
+
 const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   style,
   inputStyles,
@@ -40,7 +41,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         keyboardType="numeric"
         editable={isEditable}
         onBlur={handleBlur}
-        selectionColor={isEditable ? colors.primary.primary500 : 'transparent'}
+        selectionColor={colors.primary.primary500}
         caretHidden={carretHidden}
       />
       <IPayInput

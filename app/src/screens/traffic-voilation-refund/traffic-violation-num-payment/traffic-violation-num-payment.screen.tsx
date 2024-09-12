@@ -16,7 +16,6 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
   const {
     localizationText,
     billPayDetailes,
-    extraDetails,
     balanceData,
     handlePay,
     helpCenterRef,
@@ -41,6 +40,7 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
         totalAmount={calculatedBill ?? 0}
         btnText={localizationText.COMMON.CONFIRM}
         disableBtnIcons
+        totalAmountText={localizationText.TRAFFIC_VIOLATION.AMOUNT_REFUND}
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet

@@ -1,10 +1,11 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -23,11 +24,12 @@ const TransferInformation: React.FC = () => {
   const [selectedReason, setSelectedReason] = useState<string>('');
   const [notes, setNotes] = useState<string>('');
   const reasonsBottomSheetRef = useRef(null);
-  const { transferReasonData } = useConstantData();
+  const { localTransferReasonData } = useConstantData();
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
 
+  const { isKeyboardOpen } = useKeyboardStatus();
   const bankDetails = constants.BANK_DETAILS;
 
   useEffect(() => {
@@ -48,12 +50,17 @@ const TransferInformation: React.FC = () => {
     setTransferAmount(text.toString());
   };
 
+  const isTransferButtonDisabled = () => {
+    const hasValidAmount = parseFloat(transferAmount) > 0 || parseFloat(transferAmount);
+    const hasValidReason = selectedReason.trim() !== '';
+    return !hasValidAmount || !hasValidReason;
+  };
   const onCloseSheet = () => {
     reasonsBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (reason: string) => {
-    setSelectedReason(reason);
+  const onPressListItem = (item: { text: string; id: number }) => {
+    setSelectedReason(item.text);
     onCloseSheet();
   };
 
@@ -70,42 +77,51 @@ const TransferInformation: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.TRANSFER.TRANSFER_INFRORMATION} />
-      <IPayView style={styles.container}>
-        <IPayAccountBalance
-          balance={availableBalance}
-          availableBalance={currentBalance}
-          hideBalance={appData?.hideBalance}
-          showRemainingAmount
-          onPressTopup={() => {}}
-        />
+      <IPayScrollView>
+        <IPayView style={styles.container}>
+          <IPayAccountBalance
+            balance={availableBalance}
+            availableBalance={currentBalance}
+            hideBalance={appData?.hideBalance}
+            showRemainingAmount
+          />
 
-        <IPayView style={styles.bankDetailsView}>
-          <IPayTransferInformation
-            style={styles.transferContainer}
-            amount={transferAmount}
-            setAmount={setAmount}
-            setSelectedItem={setSelectedReason}
-            selectedItem={selectedReason}
-            setNotes={setNotes}
-            notes={notes}
-            chipValue={chipValue}
-            transferInfo
-            transferInfoData={bankDetails}
-            openReason={onPressSelectReason}
+          <IPayView style={styles.bankDetailsView}>
+            <IPayTransferInformation
+              style={styles.transferContainer}
+              amount={transferAmount}
+              currencyStyle={[styles.currency, transferAmount && styles.inputActiveStyle]}
+              setAmount={setAmount}
+              setSelectedItem={setSelectedReason}
+              selectedItem={selectedReason}
+              setNotes={setNotes}
+              notes={notes}
+              chipValue={chipValue}
+              transferInfo
+              transferInfoData={bankDetails}
+              openReason={onPressSelectReason}
+              inputFieldStyle={styles.inputFieldStyle}
+            />
+          </IPayView>
+        </IPayView>
+      </IPayScrollView>
+      {!isKeyboardOpen ? (
+        <IPayView style={styles.buttonContainer}>
+          <IPayButton
+            onPress={onPressNext}
+            btnType={buttonVariants.PRIMARY}
+            large
+            disabled={isTransferButtonDisabled() || chipValue}
+            btnIconsDisabled
+            btnText={localizationText.COMMON.NEXT}
+            btnStyle={styles.nextBtn}
           />
         </IPayView>
-        <IPayButton
-          onPress={onPressNext}
-          btnType={buttonVariants.PRIMARY}
-          large
-          btnIconsDisabled
-          btnText={localizationText.COMMON.NEXT}
-          btnStyle={styles.nextBtn}
-        />
-      </IPayView>
-
+      ) : (
+        <IPayView />
+      )}
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading={localizationText.COMMON.REASON_OF_TRANSFER}
         onCloseBottomSheet={onCloseSheet}
         customSnapPoint={['20%', '65%']}
         ref={reasonsBottomSheetRef}
@@ -114,7 +130,11 @@ const TransferInformation: React.FC = () => {
         cancelBnt
         bold
       >
-        <IPayListView list={transferReasonData} onPressListItem={onPressListItem} selectedListItem={selectedReason} />
+        <IPayListView
+          list={localTransferReasonData}
+          onPressListItem={onPressListItem}
+          selectedListItem={selectedReason}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

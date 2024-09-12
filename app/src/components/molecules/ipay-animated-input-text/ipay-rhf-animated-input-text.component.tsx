@@ -3,7 +3,7 @@ import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/compon
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { forwardRef, useEffect, useRef, useState } from 'react';
-import { useController, UseControllerProps, useFormContext } from 'react-hook-form';
+import { UseControllerProps, useController, useFormContext } from 'react-hook-form';
 import { Animated, StyleProp, TextInput, ViewStyle } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
@@ -13,7 +13,7 @@ interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProp
   name: string;
   defaultValue?: string;
   onMaxLengthReach?: (value: string, maxLength: number) => void;
-  mainContainerStyles?:   StyleProp<ViewStyle>;
+  mainContainerStyles?: StyleProp<ViewStyle>;
 }
 
 const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(
@@ -24,7 +24,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
       label,
       rightIcon,
       isError,
-      editable,
+      editable = true,
       containerStyle,
       actionDisabled,
       onClearInput,
@@ -91,7 +91,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
     };
 
     return (
-      <IPayView style={[mainContainerStyles]} testID={`${testID}-animated-input`}>
+      <IPayView style={mainContainerStyles} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
             styles.container,
@@ -130,14 +130,14 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
               style={styles.closeIcon}
               onPressIn={onClearInput}
             >
-              {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
+              {customIcon || <IPayIcon icon={icons.close} />}
             </IPayPressable>
           )}
         </IPayView>
         {(errors[name]?.message || assistiveText) && (
           <IPayCaption1Text
             style={errors[name]?.message ? styles.errorAssistiveTextText : styles.assistiveText}
-            text={errors[name]?.message ? errors[name]?.message as string :assistiveText}
+            text={errors[name]?.message ? (errors[name]?.message as string) : assistiveText}
             regular
           />
         )}

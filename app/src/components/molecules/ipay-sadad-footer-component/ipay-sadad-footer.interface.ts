@@ -2,9 +2,12 @@ import React from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 export interface SadadFooterComponentProps {
+  textColor?: string;
   testID?: string;
   style?: StyleProp<ViewStyle>;
+  gradientViewStyle?: StyleProp<ViewStyle>;
   totalAmount?: string | number;
+  totalAmountText?: string;
   selectedItemsCount?: number;
   btnText: string;
   btnDisbaled?: boolean;

@@ -9,12 +9,15 @@ interface CommonProps {
 interface IPaySadadBillsHeaderProps extends CommonProps {
   totalSadadBills?: BillDetailsProps[];
   onPressViewAll: () => void;
+  unpaidBillsCount?: number;
 }
 
 interface IPayBillPaymentNoResultsComponentProps extends CommonProps {
   onPressViewAll: () => void;
 }
 
-interface IPayBillPaymentsFooterProps extends CommonProps {}
+interface IPayBillPaymentsFooterProps extends CommonProps {
+  onPressBillPaymentOption?: (title: string) => void;
+}
 
 export { IPayBillPaymentNoResultsComponentProps, IPayBillPaymentsFooterProps, IPaySadadBillsHeaderProps };

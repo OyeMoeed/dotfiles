@@ -1,28 +1,41 @@
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { payChannel } from '@app/utilities/enums.util';
+import { PayChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 
 const useData = () => {
   const localizationText = useLocalization();
-  const { applePayDetails, cardPayDetails, walletPayDetailes, orderDetails } = useConstantData();
+  const {
+    applePayDetails,
+    cardPayDetails,
+    walletPayDetailes,
+    orderDetails,
+    sendMoneyDetails,
+    requestAccepted,
+    requestMoneySuccess,
+    giftPayDetailes,
+  } = useConstantData();
   const route = useRoute();
   const { topupChannel } = route.params;
 
   const getDetails = () => {
     switch (topupChannel) {
-      case payChannel.ORDER:
+      case PayChannel.GIFT:
+        return giftPayDetailes;
+      case PayChannel.ORDER:
         return orderDetails;
-
-      case payChannel.APPLE:
+      case PayChannel.MONEY:
+        return sendMoneyDetails;
+      case PayChannel.APPLE:
         return applePayDetails;
-
-      case payChannel.CARD:
+      case PayChannel.REQUEST_ACCEPT:
+        return requestAccepted;
+      case PayChannel.CARD:
         return cardPayDetails;
-
-      case payChannel.WALLET:
+      case PayChannel.WALLET:
         return walletPayDetailes;
-
+      case PayChannel.REQUEST:
+        return requestMoneySuccess;
       default:
         return null; // Or any default value you'd like to return if no cases match
     }
@@ -30,17 +43,25 @@ const useData = () => {
 
   const renderText = () => {
     switch (topupChannel) {
-      case payChannel.GIFT:
-      return localizationText.TOP_UP.GIFT_SUCCESSFUL;
-      case payChannel.WALLET:
+      case PayChannel.GIFT:
+        return localizationText.TOP_UP.GIFT_SUCCESSFUL;
+
+      case PayChannel.WALLET:
         return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
-      case payChannel.ORDER:
+
+      case PayChannel.MONEY:
+        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+
+      case PayChannel.REQUEST:
+        return localizationText.REQUEST_SUMMARY.REQUEST_SENT;
+      case PayChannel.REQUEST_ACCEPT:
+        return localizationText.REQUEST_MONEY.REQUEST_PAID;
+      case PayChannel.ORDER:
         return localizationText.ORDER_SCREEN.TITLE;
       default:
         return localizationText.TOP_UP.TOPUP_SUCCESS;
     }
   };
-
   return {
     getDetails,
     renderText,

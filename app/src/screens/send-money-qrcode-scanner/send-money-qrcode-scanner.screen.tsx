@@ -12,6 +12,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { useRoute } from '@react-navigation/core';
+import { debounce } from 'lodash';
 import IQrData from '../wallet/use-save-qrcode.interface';
 import qrCodeScannerStyles from './send-money-qrcode-scanner.style';
 
@@ -20,14 +21,20 @@ const SendMoneyQRScannerScreen: React.FC = () => {
   const { colors } = useTheme();
   const route = useRoute();
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
-  const [scannedCode, setScannerCode] = useState('');
+  const [, setScannerCode] = useState('');
 
   const styles = qrCodeScannerStyles();
-  const onScannedContact = (scannedCode: string) => {
-    route?.params?.onGoBack(scannedCode);
+  const onScannedContact = (scannedCodeData: string) => {
+    route?.params?.onGoBack(scannedCodeData);
     setScannerCode('');
     goBack();
   };
+
+  const alertGoBackPress = debounce(() => {
+    route?.params?.onGoBack('');
+    setScannerCode('');
+    goBack();
+  }, 500);
 
   return (
     <IPaySafeAreaView style={styles.fill}>
@@ -50,7 +57,6 @@ const SendMoneyQRScannerScreen: React.FC = () => {
               const dataFormatted: IQrData = JSON.parse(data);
               if (dataFormatted.reference !== ALINMA_REFERENCE_NUM) {
                 setRenderQRCodeScanner(false);
-                return;
               } else if (dataFormatted?.contact) {
                 setScannerCode(dataFormatted?.contact);
                 onScannedContact(dataFormatted?.contact);
@@ -64,11 +70,7 @@ const SendMoneyQRScannerScreen: React.FC = () => {
         <IPayAlert
           secondaryAction={{
             text: localizationText.COMMON.GO_BACK,
-            onPress: () => {
-              route?.params?.onGoBack('');
-              setScannerCode('');
-              goBack();
-            },
+            onPress: alertGoBackPress,
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DESTRUCTIVE}

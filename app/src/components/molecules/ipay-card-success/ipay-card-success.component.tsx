@@ -42,6 +42,15 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
   };
   const localizationText = useLocalization();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
+
+  const handlePrintCard = () => {
+    navigate(screenNames.PRINT_CARD_CONFIRMATION, {
+      currentCard: {
+        cardHeaderText: 'Mada Debit Card', // TODO: will change api response
+        name: 'Adam Ahmed', // TODO: will change api response
+      },
+    });
+  };
   return (
     <IPaySafeAreaView
       testID={`${testID}-success-component`}
@@ -51,7 +60,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
       <IPayView style={styles.linearGradientView}>
         <IPayLinearGradientView
-          style={[styles.innerLinearGradientView]}
+          style={styles.innerLinearGradientView}
           gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
         >
           <IPayView style={[styles.flexStyle, styles.upperView]}>
@@ -64,7 +73,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
             {isAddAppleWallet && isIosOS && <IPayAppleWalletButton onPress={handleAddToAppleWallet} />}
           </IPayView>
           <IPayView style={[styles.flexStyle, styles.alignEnd]}>
-            {showPrintCard && <IPayPrintCard />}
+            {showPrintCard && <IPayPrintCard handlePrintCard={handlePrintCard} />}
             <IPayView style={styles.lowerButtons}>
               <IPayButton
                 onPress={handleGoToCard}
