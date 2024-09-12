@@ -103,6 +103,7 @@ const LocalTransferScreen: React.FC = () => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    setIsLoadingData(false);
   };
 
   useFocusEffect(
@@ -411,15 +412,14 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
   const onDeleteBeneficiary = async () => {
+    setDeleteBeneficiary(false);
     try {
       const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
 
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         getBeneficiariesData();
-        setDeleteBeneficiary(false);
         showDeleteBeneficiaryToast();
       } else {
-        setDeleteBeneficiary(false);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     } catch (error: any) {

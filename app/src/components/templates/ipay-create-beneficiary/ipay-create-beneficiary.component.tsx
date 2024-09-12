@@ -3,6 +3,7 @@ import { IPayFlatlist, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/comp
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { REGEX } from '@app/constants/app-validations';
+import { ALINMA_BANK_CODE } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -31,6 +32,7 @@ import {
   FormValues,
   IPayCreateBeneficiaryProps,
   ListOption,
+  TransferTypes,
 } from './ipay-create-beneficiary.interface';
 import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 
@@ -118,15 +120,18 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         bankCode: beneficiaryBankDetails?.bankCode,
         bankName: beneficiaryBankDetails?.bankName,
       },
+      beneficiaryType:
+        beneficiaryBankDetails?.bankCode === ALINMA_BANK_CODE
+          ? TransferTypes.alinmaBank
+          : TransferTypes.localBankInsideKsa,
     };
 
     if (isValid) {
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
+
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setBeneficiaryData(values);
         navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { response: apiResponse });
-      } else {
-        renderToast(apiResponse?.error?.error ?? '');
       }
     }
   };
