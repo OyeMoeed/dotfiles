@@ -9,7 +9,6 @@ import {
   IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -28,7 +27,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -53,7 +52,6 @@ const TransferSummaryScreen: React.FC = () => {
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
@@ -188,11 +186,6 @@ const TransferSummaryScreen: React.FC = () => {
     try {
       sendMoneyBottomSheetRef.current?.present();
 
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-
       setIsLoading(true);
       const payload: IW2WTransferPrepareReq = {
         requests: transfersDetails.formInstances.map((item) => ({
@@ -214,7 +207,6 @@ const TransferSummaryScreen: React.FC = () => {
       otpVerificationRef?.current?.resetInterval();
     } finally {
       setIsLoading(false);
-      hideSpinner();
     }
   };
 
