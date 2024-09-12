@@ -3,6 +3,7 @@ import React, { useRef, useState } from 'react';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@components/templates';
 
+import icons from '@app/assets/icons';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -13,22 +14,22 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
-import { TermsAndConditionsRefTypes } from '../card-renewal/card-renewal.screen.interface';
-import icons from '@app/assets/icons';
-import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
-import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh',
@@ -40,7 +41,6 @@ const DUMMY_DATA = {
 
 const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
 
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
@@ -69,10 +69,11 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
-
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    dispatch(setTermsConditionsVisibility(true));
   };
+
   const onPressConfirm = () => {
     veriyOTPSheetRef.current?.present();
   };
@@ -122,10 +123,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
               <IPayList
                 title={localizationText.REPLACE_CARD.ADDRESS}
                 rightText={
-                  <IPayPressable
-                    onPress={onClose}
-                    style={styles.addressStyle}
-                  >
+                  <IPayPressable onPress={onClose} style={styles.addressStyle}>
                     <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
                     <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
                   </IPayPressable>
@@ -214,7 +212,6 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         <HelpCenterComponent />
       </IPayBottomSheet>
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
     </IPaySafeAreaView>
   );
 };
