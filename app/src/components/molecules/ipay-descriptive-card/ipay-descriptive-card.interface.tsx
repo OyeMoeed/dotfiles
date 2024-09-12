@@ -2,7 +2,7 @@ import CardDetails from '@app/enums/card-types.enum';
 
 interface IPayDescriptiveCardProps {
   testID: string;
-  onCardPress: () => void;
+  onCardPress: (code: string) => void;
   cardType: typeof CardDetails;
   data: CategoriesItem;
   onPricePress: () => void;

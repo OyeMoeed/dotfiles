@@ -12,10 +12,14 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { LanguageCode } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
+import { MarketPlaceCategoriesProps } from '../marketplace/marketplace.interface';
 import shopCategoriesStyles from './shop-categories.styles';
 
 const ShopCategoriesScreen: React.FC = ({ route }) => {
-  const { categories } = route.params;
+  const {
+    categories,
+    selectedCategory,
+  }: { categories: MarketPlaceCategoriesProps[]; selectedCategory: MarketPlaceCategoriesProps } = route.params;
   const { colors } = useTheme();
   const styles = shopCategoriesStyles(colors);
   const localizationText = useLocalization();
@@ -67,12 +71,12 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
         break;
     }
     setCategoriesTabsData(catagoryTabs);
-    setSelectedTab(catagoryTabs[0]);
+    setSelectedTab(selectedCategory.desc);
   };
 
   useEffect(() => {
     getCategoriesForTabs();
-    const categoryId = categories && categories.length > 0 && categories[0].code;
+    const categoryId = selectedCategory.code;
     if (categoryId) getProducts(categoryId);
   }, [selectedLanguage]);
 
@@ -109,6 +113,8 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
     setSearch(newText);
   };
 
+  const onPressCategoryCard = (code: string) => {};
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SHOP.TITLE_SHOP} applyFlex />
@@ -136,7 +142,11 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
         {/* Conditionally render content based on the selected tab */}
         {categoryProducts.length > 0 ? (
           <IPayView>
-            <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={categoryProducts} />
+            <IPayDescriptiveCard
+              cardType={CardDetails.NORMAL}
+              data={categoryProducts}
+              onCardPress={onPressCategoryCard}
+            />
           </IPayView>
         ) : (
           <IPayView style={styles.noResultContainer}>

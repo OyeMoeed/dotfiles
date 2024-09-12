@@ -29,10 +29,10 @@ const IPayDescriptiveCard: React.FC<IPayDescriptiveCardProps> = ({
 
   const imageStyle = cardType === CardDetails.NORMAL ? styles.image : styles.singleImage;
   const renderItem = ({ item }: { item: CategoriesItem }) => {
-    const { desc, iconUrl, categoryDesc, price = '100', discount = '20' } = item;
+    const { desc, iconUrl, categoryDesc, price = '100', discount = '20', code } = item;
     return (
       <IPayView>
-        <IPayPressable testID={`${testID}-all-categories`} onPress={onCardPress}>
+        <IPayPressable testID={`${testID}-all-categories`} onPress={() => onCardPress?.(code)}>
           <IPayView style={styles.cardContainer}>
             <IPayView style={styles.cardBackground}>
               <IPayView style={cardType === CardDetails.DESVRIPTIVE && styles.imageBackground}>

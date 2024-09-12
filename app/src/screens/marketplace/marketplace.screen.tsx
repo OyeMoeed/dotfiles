@@ -81,7 +81,7 @@ const MarketPlace: React.FC = () => {
   };
 
   const onPressCategory = (category?: MarketPlaceCategoriesProps) => {
-    navigate(ScreenNames.CATEGORY_SCREEN, { category });
+    navigate(ScreenNames.SHOP_CATEGORIES, { categories, selectedCategory: category });
   };
 
   const onPressViewAllMerchants = () => {

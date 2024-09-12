@@ -16,7 +16,7 @@ const categoryScreenStyles = (theme: typeof colors) =>
       borderWidth: 0,
       justifyContent: 'center',
       width: moderateScale(300),
-      height: moderateScale(34),
+      height: moderateScale(40),
     },
     searchRow: {
       gap: moderateScale(12),
