@@ -854,7 +854,8 @@
     "VAT": "VAT",
     "FEES": "Fees",
     "ACTIVE_INACTIVE": "Active - Inactive",
-    "INACTIVE_ACTIVE": "Inactive - Active"
+    "INACTIVE_ACTIVE": "Inactive - Active",
+    "AMOUNT_TO_BE_REFUND": "Amount to be refund"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
