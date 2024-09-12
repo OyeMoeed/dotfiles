@@ -8,12 +8,11 @@ const transactionItemStyles = (colors: any) =>
   createStyleSheet({
     historyContStyle: {
       width: '100%',
-      paddingHorizontal: moderateScale(16),
+      justifyContent: 'center',
       paddingVertical: moderateScale(16),
       borderRadius: moderateScale(28),
       backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
       marginTop: moderateScale(8),
     },
@@ -80,7 +79,6 @@ const transactionItemStyles = (colors: any) =>
     dateStyle: {
       color: colors.natural.natural500,
       fontSize: FONT_SIZE_11,
-      marginTop: verticalScale(6),
     },
     leftImageStyle: {
       height: verticalScale(18),
