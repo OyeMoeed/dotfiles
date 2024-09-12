@@ -24,11 +24,11 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
-import { copyText } from '@app/utilities';
+import { buttonVariants, copyText } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
-import { IGiftTransferSuccessProps, WalletPaymentDetails } from './ipay-gift-transfer-success.interface';
+import { GiftDetails, IGiftTransferSuccessProps, WalletPaymentDetails } from './ipay-gift-transfer-success.interface';
 import { GiftTransferSuccessStyles } from './ipay-gift-transfer-success.styles';
 
 const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
@@ -138,6 +138,36 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     </IPayView>
   );
 
+  const renderDetails = (item: GiftDetails[], index: number) => {
+    const { isAlinma, value } = item[0];
+    const isFirstItem = index === 0;
+    return (
+      <IPayView key={value} style={styles.walletBackground}>
+        {isFirstItem && !isAlinma && (
+          <IPayView style={styles.chipContainer}>
+            <IPayChip
+              containerStyle={styles.chipColors}
+              icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
+              textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+              headingStyles={styles.chipColors}
+            />
+          </IPayView>
+        )}
+        <IPayShareableImageView
+          otherView={
+            <IPayButton
+              btnType={buttonVariants.LINK_BUTTON}
+              btnText={localizationText.TOP_UP.SHARE}
+              leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+            />
+          }
+        >
+          <IPayFlatlist style={styles.detailesFlex} data={item} renderItem={renderWallerPaymentItem} />
+        </IPayShareableImageView>
+      </IPayView>
+    );
+  };
+
   // to chnage text color on basis of card theme.
   const isDarkCard = darkCards.includes(transferDetails?.selectedCard?.id);
 
@@ -170,40 +200,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
               />
             </IPayView>
             <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
-              {formattedTransferDetails.map((item, index) => {
-                const { isAlinma, value } = item[0];
-                const isFirstItem = index === 0;
-                return (
-                  <IPayView key={value} style={styles.walletBackground}>
-                    {isFirstItem && !isAlinma && (
-                      <IPayView style={styles.chipContainer}>
-                        <IPayChip
-                          containerStyle={styles.chipColors}
-                          icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-                          textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
-                          headingStyles={styles.chipColors}
-                        />
-                      </IPayView>
-                    )}
-                    <IPayShareableImageView
-                      otherView={
-                        <IPayButton
-                          btnType="link-button"
-                          btnText={localizationText.TOP_UP.SHARE}
-                          leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
-                        />
-                      }
-                    >
-                      <IPayFlatlist
-                        style={styles.detailesFlex}
-                        scrollnabled
-                        data={item}
-                        renderItem={renderWallerPaymentItem}
-                      />
-                    </IPayShareableImageView>
-                  </IPayView>
-                );
-              })}
+              <IPayView>{formattedTransferDetails?.map((item, index) => renderDetails(item, index))}</IPayView>
             </IPayScrollView>
           </IPayView>
 
@@ -211,7 +208,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             {renderActionLabel()}
             <IPayButton
               large
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText={localizationText.COMMON.HOME}
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
