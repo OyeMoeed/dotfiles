@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayButton,
   IPayContentNotFound,
@@ -33,8 +32,7 @@ import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { spinnerVariant } from '@app/utilities/enums.util';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
@@ -57,7 +55,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [services, setServices] = useState<BillersService[]>();
   const [selectedService, setSelectedService] = useState<BillersService>();
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
@@ -68,17 +65,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     accountNumber,
     billName,
   });
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const onGetBillersCategory = async () => {
     const apiResponse = await getBillersCategoriesService();
@@ -150,9 +136,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       walletNumber,
     };
 
-    renderSpinner(true);
     const apiResponse = await inquireBillService(payload);
-    renderSpinner(false);
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,

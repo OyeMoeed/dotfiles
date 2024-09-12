@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { Message } from '@app/assets/svgs';
-import { IPayCaption1Text, IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -22,7 +22,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setOtp,
       setOtpError,
       otpError,
-      isLoading,
       isBottomSheet = true,
       handleOnPressHelp,
       showHelp = true,
@@ -83,8 +82,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
     return (
       <IPayView testID={`${testID}-otp-verification`} style={[styles.container, containerStyle]}>
-        {isLoading && <IPaySpinner hasBackgroundColor={false} />}
-
         <IPayView style={styles.messageIconView}>
           <Message />
         </IPayView>

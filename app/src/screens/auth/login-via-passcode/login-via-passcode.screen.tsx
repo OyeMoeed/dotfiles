@@ -6,9 +6,7 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
-import { openPhoneNumber } from '@app/utilities';
 import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -34,14 +32,15 @@ import forgetPasscode from '@app/network/services/core/forget-passcode/forget-pa
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo, encryptData } from '@app/network/utilities';
+import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { openPhoneNumber } from '@app/utilities';
+import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -87,7 +86,6 @@ const LoginViaPasscode: React.FC = () => {
   );
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig, contactusList } = useConstantData();
   const contactUsRef = useRef<any>(null);
 
@@ -101,17 +99,6 @@ const LoginViaPasscode: React.FC = () => {
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
   };
 
   const onPressForgetPassword = () => {
@@ -139,7 +126,6 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const resetPasscode = async () => {
-    renderSpinner(true);
     const payload: IconfirmForgetPasscodeOtpReq = {
       poiNumber: encryptData(
         `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
@@ -164,7 +150,6 @@ const LoginViaPasscode: React.FC = () => {
 
       redirectToResetConfirmation();
     }
-    renderSpinner(false);
   };
 
   const onCloseBottomSheet = () => {
@@ -188,7 +173,6 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
-    renderSpinner(true);
     const payload: WalletNumberProp = {
       walletNumber: resWalletNumber as string,
     };
@@ -200,7 +184,6 @@ const LoginViaPasscode: React.FC = () => {
       saveProfileImage(apiResponse?.response);
       redirectToHome(idExpired);
     }
-    renderSpinner(false);
   };
 
   const loginUsingPasscode = async (
@@ -244,11 +227,9 @@ const LoginViaPasscode: React.FC = () => {
     }
     setPasscodeError(false);
 
-    renderSpinner(true);
     const location = await fetchLocation();
     if (!location) {
       setPasscodeError(true);
-      renderSpinner(false);
       return;
     }
     setPasscodeError(false);
@@ -276,9 +257,7 @@ const LoginViaPasscode: React.FC = () => {
       } else {
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -298,21 +277,16 @@ const LoginViaPasscode: React.FC = () => {
 
   const delinkDevice = async () => {
     actionSheetRef.current.hide();
-    renderSpinner(true);
-    try {
-      const delinkReqBody = await getDeviceInfo();
-      const payload: DelinkPayload = {
-        delinkReq: delinkReqBody,
-        walletNumber,
-      };
 
-      const apiResponse: any = await deviceDelink(payload);
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        delinkSuccessfullyDone();
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
+    const delinkReqBody = await getDeviceInfo();
+    const payload: DelinkPayload = {
+      delinkReq: delinkReqBody,
+      walletNumber,
+    };
+
+    const apiResponse: any = await deviceDelink(payload);
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      delinkSuccessfullyDone();
     }
   };
 

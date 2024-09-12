@@ -29,11 +29,6 @@ interface BeneficiaryInfo {
   remittanceType?: string;
 }
 
-// Define the LocalTransferAddBeneficiary interface
-interface LocalTransferAddBeneficiary {
-  data: BeneficiaryDetailsRes;
-  successfulResponse: boolean;
-}
 interface Response {
   beneficiaryCode: string;
   beneficiaryStatus: string;
@@ -41,7 +36,7 @@ interface Response {
 
 // Extend the LocalTransferAddBeneficiaryMockProps interface from LocalTransferAddBeneficiary and MockAPIOkProp
 interface LocalTransferAddBeneficiaryMockProps {
-  status: MockAPIStatusProps; 
+  status: MockAPIStatusProps;
   error?: ApiError;
   response?: Response;
   successfulResponse?: boolean;
