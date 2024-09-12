@@ -61,8 +61,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
 
   const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount === '' || !isMultipleOfHundred(topUpAmount);
   const onPressQR = () => {
-    navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER, { amount: topUpAmount });
-    setTopUpAmount('');
+    navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER, { amount: topUpAmount, setTopUpAmount });
   };
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
