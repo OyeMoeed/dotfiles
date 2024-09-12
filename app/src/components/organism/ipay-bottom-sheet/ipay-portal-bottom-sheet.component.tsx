@@ -71,9 +71,10 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
       [],
     );
 
-    if (!isVisible) {
-      return null;
-    }
+    const closeBottomSheet = () => {
+      bottomSheetModalRef.current?.close();
+    };
+
     const handleComponent = () => (
       <IPayBottomSheetHandle
         simpleBar={simpleBar}
@@ -86,8 +87,8 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
         doneButtonStyle={doneButtonStyle}
         cancelButtonStyle={cancelButtonStyle}
         doneText={doneText}
-        onPressCancel={onCloseBottomSheet}
-        onPressDone={onCloseBottomSheet}
+        onPressCancel={closeBottomSheet}
+        onPressDone={closeBottomSheet}
         bold={bold}
         bgGradientColors={
           noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
@@ -95,6 +96,10 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
         headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
       />
     );
+
+    if (!isVisible) {
+      return null;
+    }
 
     return (
       <Portal>
