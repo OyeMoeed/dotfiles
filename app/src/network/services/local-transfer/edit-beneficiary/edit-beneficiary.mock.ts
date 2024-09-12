@@ -1,6 +1,5 @@
 import { EditBeneficiaryResponse } from './edit-beneficiary.interface';
 
-
 const editBeneficiariesData: EditBeneficiaryResponse = {
   status: {
     code: 'I000000',
