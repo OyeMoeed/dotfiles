@@ -2,36 +2,37 @@ import { IPayFootnoteText, IPayHeadlineText } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { useTypedDispatch } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayBottomSheet } from '@components/organism/index';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import React from 'react';
+import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import termsAndConditionsStyles from './ipay-terms-and-conditions.style';
-import { IPayTermsAndConditionsProps } from './ipay-terms-and-conditions.interface';
 
-const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef((_, ref) => {
+interface IPayTermsAndConditionsProps {
+  isVisible: boolean;
+}
+
+const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({ isVisible = false }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = termsAndConditionsStyles(colors);
-  const termsAndConditionSheetRef = useRef<any>(null);
+  const dispatch = useTypedDispatch();
 
-  const showTermsAndConditions = () => {
-    termsAndConditionSheetRef?.current?.present();
+  const closeTermsAndConditionModal = () => {
+    dispatch(setTermsConditionsVisibility(false));
   };
 
-  useImperativeHandle(ref, () => ({
-    showTermsAndConditions,
-  }));
-
   return (
-    <IPayBottomSheet
+    <IPayPortalBottomSheet
       noGradient
       heading={localizationText.COMMON.TERMS_AND_CONDITIONS}
       enablePanDownToClose
       cancelBnt
       simpleBar
-      customSnapPoint={['1%', '99%']}
-      onCloseBottomSheet={() => {}}
-      ref={termsAndConditionSheetRef}
+      customSnapPoint={['90%', '90%']}
+      onCloseBottomSheet={closeTermsAndConditionModal}
+      isVisible={isVisible}
       bold
     >
       <IPayScrollView showsVerticalScrollIndicator={false} style={styles.termsAndConditions}>
@@ -46,8 +47,8 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = forwardRef
           style={styles.termsAndConditionsText}
         />
       </IPayScrollView>
-    </IPayBottomSheet>
+    </IPayPortalBottomSheet>
   );
-});
+};
 
 export default IPayTermsAndConditions;
