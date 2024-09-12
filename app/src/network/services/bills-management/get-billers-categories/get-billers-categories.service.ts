@@ -3,15 +3,10 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
-import { BillersCategoryType, GetBillersCategoriesResponseTypes } from './get-billers-categories.interface';
+import { BillersCategoryType } from './get-billers-categories.interface';
 import getBillersCategoriesMockResponse from './get-billers-categories.mock';
 
-const getBillersCategoriesService = async (): Promise<
-  | ApiResponse<{ billerCategoryList: BillersCategoryType[] }>
-  | GetBillersCategoriesResponseTypes
-  | undefined
-  | { error: string }
-> => {
+const getBillersCategoriesService = async (): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     return getBillersCategoriesMockResponse;
   }

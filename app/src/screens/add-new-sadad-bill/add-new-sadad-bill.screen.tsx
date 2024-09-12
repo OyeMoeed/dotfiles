@@ -1,6 +1,14 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
+import {
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayPressable,
+  IPayScrollView,
+  IPayView,
+} from '@app/components/atoms';
 import {
   IPayButton,
   IPayContentNotFound,
@@ -12,7 +20,6 @@ import {
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
-import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
@@ -33,6 +40,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { APIResponseType, buttonVariants, LanguageCode } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
@@ -53,8 +61,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [tabOption, setTabOption] = useState<BillersCategoryType[]>();
   const [billers, setBillers] = useState<BillersTypes[]>();
   const [selectedBiller, setSelectedBiller] = useState<BillersTypes>();
+  const [selectedCategory, setSelectedCategory] = useState<string>('0');
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
 
-  const [services, setServices] = useState<BillersService[]>();
+  const [services, setServices] = useState<BillersService[]>([]);
   const [selectedService, setSelectedService] = useState<BillersService>();
   const { showToast } = useToastContext();
 
@@ -79,9 +89,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onGetBillersCategory = async () => {
-    const apiResponse = await getBillersCategoriesService();
-    if (apiResponse.successfulResponse) {
-      setTabOption(apiResponse.response.billerCategoryList.map((el) => ({ ...el, text: el.desc })));
+    const apiResponse: any = await getBillersCategoriesService();
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      setTabOption(apiResponse.response.billerCategoryList);
     }
   };
 
@@ -175,7 +185,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     selectSheeRef.current.present();
   };
 
-  const onSelect = (value: string, tabObject: BillersCategoryType) => {
+  const onSelect = (tabObject: BillersCategoryType) => {
     const billersValue = billers || [];
 
     if (billersValue?.length > 0) {
@@ -186,6 +196,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         setFilterData(filterWithTab);
       }
     }
+    setSelectedCategory(tabObject?.code);
   };
 
   const dataToRenderCompany = filterData?.filter((item) =>
@@ -203,6 +214,15 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const listViewData = sheetType === NewSadadBillType.COMPANY_NAME ? dataToRenderCompany : dataToRenderService;
+
+  const getCategoryText = (caategory: BillersCategoryType) => {
+    switch (selectedLanguage) {
+      case LanguageCode.AR:
+        return caategory.addtionalAttribute1;
+      default:
+        return caategory.desc;
+    }
+  };
 
   return (
     <IPayFormProvider<FormValues>
@@ -282,7 +302,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   )}
                   <IPayButton
                     btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                    btnType="primary"
+                    btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onInquireBill)}
                     large
                     btnIconsDisabled
@@ -291,7 +311,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   {watch(FormFields.SAVE_BILL) && (
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
-                      btnType="outline"
+                      btnType={buttonVariants.OUTLINED}
                       onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
                       large
                       disabled={!watch(FormFields.BILL_NAME)}
@@ -334,13 +354,33 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                         btnText={localizationText.COMMON.CANCEL}
                         btnIconsDisabled
                         small
-                        btnType="link-button"
+                        btnType={buttonVariants.LINK_BUTTON}
                         onPress={() => setSearch('')}
                       />
                     )}
                   </IPayView>
                   {sheetType === NewSadadBillType.COMPANY_NAME && (
-                    <IPayTabs scrollable tabs={tabOption} onSelect={onSelect} />
+                    <IPayFlatlist
+                      horizontal
+                      data={tabOption}
+                      showsHorizontalScrollIndicator={false}
+                      itemSeparatorStyle={styles.categoryItemSeparatorStyle}
+                      renderItem={({ item }) => (
+                        <IPayPressable
+                          style={[
+                            styles.categoryTabView,
+                            selectedCategory === item.code && styles.categoryTabCViewConditional,
+                          ]}
+                          onPress={() => onSelect(item)}
+                        >
+                          <IPayFootnoteText
+                            regular={selectedCategory !== item.code}
+                            text={getCategoryText(item)}
+                            color={selectedCategory === item.code ? colors.natural.natural0 : colors.natural.natural500}
+                          />
+                        </IPayPressable>
+                      )}
+                    />
                   )}
                 </IPayView>
                 {getLength() ? (
