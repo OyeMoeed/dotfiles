@@ -16,20 +16,21 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '@app/screens/auth/forgot-passcode/otp-verification.component';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
 import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
@@ -42,17 +43,11 @@ const InternationalTransferConfirmation: React.FC = () => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
-  const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
   const promoCodeBottomSheetRef = useRef<any>(null);
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { getDataByKey, getTransactionListedData, getLocalizationKeyFromLabel } = useInternationalTransferData();
-  const {
-    getValues,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
@@ -61,12 +56,13 @@ const InternationalTransferConfirmation: React.FC = () => {
   const discountAmount = '10';
   const dummyPromo = '1234';
   const iqamaId = '324234234';
+  const dispatch = useDispatch();
 
   const onCheckTermsAndConditions = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef?.current?.showTermsAndConditions();
+    dispatch(setTermsConditionsVisibility(true));
   };
 
   const handleClosePress = () => {
@@ -260,7 +256,6 @@ const InternationalTransferConfirmation: React.FC = () => {
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
 
       <IPayBottomSheet
         testID="promo-code-bottom-sheet"
