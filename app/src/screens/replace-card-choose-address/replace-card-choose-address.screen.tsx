@@ -1,9 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import useTheme from '@app/styles/hooks/theme.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPaySafeAreaView } from '@app/components/templates';
+import icons from '@app/assets/icons';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -12,19 +9,24 @@ import {
   IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import constants from '@app/constants/constants';
-import icons from '@app/assets/icons';
-import { buttonVariants } from '@app/utilities/enums.util';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
+import { IPaySafeAreaView } from '@app/components/templates';
+import constants from '@app/constants/constants';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import replaceCardStyles from './replace-card-choose-address.style';
-import { TermsAndConditionsRefTypes, RouteParams } from './replace-card-choose-address.interface';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
+import { RouteParams } from './replace-card-choose-address.interface';
+import replaceCardStyles from './replace-card-choose-address.style';
 
 const COUNTRY = 'Saudi Arabia';
 const CITIES = ['Riyadh', 'Al-Khobar', 'Dammam'];
@@ -45,7 +47,6 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const styles = replaceCardStyles(colors);
   const localizationText = useLocalization();
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
 
@@ -53,8 +54,9 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    dispatch(setTermsConditionsVisibility(true));
   };
 
   const onCloseBottomSheet = () => {
@@ -139,7 +141,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           />
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+
       <IPayBottomSheet
         noGradient
         heading={localizationText.REPLACE_CARD.SELECT_CITY}
