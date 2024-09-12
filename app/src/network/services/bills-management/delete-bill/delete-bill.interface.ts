@@ -20,6 +20,7 @@ interface DeleteBillMockProps extends MockAPIOkProp {
   status: MockAPIStatusProps;
   response: DeleteBillResponse;
   successfulResponse: boolean;
+  error?: string;
 }
 
 // Export the interface

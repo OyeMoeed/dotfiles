@@ -1,8 +1,8 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import { APIResponseType } from '@app/utilities/enums.util';
 import apiCall from '@network/services/api-call.service';
 
+import { ApiResponseStatusType } from '@app/utilities';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
 import { DeleteBillMockProps, DeleteBillRequest, DeleteBillResponse } from './delete-bill.interface';
 import deleteBillMock from './delete-bill.mock';
@@ -28,13 +28,40 @@ const deleteBill = async (payload: DeleteBillRequest): Promise<DeleteBillMockPro
       payload,
     });
 
-    // Check if the API response indicates success
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      return {
+        status: apiResponse.status, // or map apiResponse to the required structure
+        response: apiResponse.data,
+        successfulResponse: apiResponse.status.type === ApiResponseStatusType.SUCCESS,
+      } as DeleteBillMockProps;
     }
+    // If apiResponse is undefined, return a default error response
+    return {
+      status: {
+        code: 'ERROR',
+        type: 'ERROR',
+        desc: 'No response from server',
+        sessionReference: '',
+        requestReference: '',
+        translation: '',
+      },
+      response: { billStatus: 'Unknown' }, // or provide appropriate default value
+      successfulResponse: false,
+    };
   } catch (error: any) {
     // Catch any error during API call and return a detailed error message
-    return { error: error?.message || 'An unknown error occurred while attempting to delete the bill.' };
+    return {
+      status: {
+        code: 'ERROR',
+        type: 'ERROR',
+        desc: error?.message || 'An unknown error occurred while attempting to delete the bill.',
+        sessionReference: '',
+        requestReference: '',
+        translation: '',
+      },
+      response: { billStatus: 'Error' }, // or provide appropriate default value
+      successfulResponse: false,
+    };
   }
 };
 

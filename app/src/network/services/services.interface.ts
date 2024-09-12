@@ -46,6 +46,7 @@ interface IApiStatus {
 }
 
 interface ApiResponse<T> {
+  data: DeleteBillResponse;
   status: IApiStatus;
   response?: T;
   successfulResponse?: boolean;
