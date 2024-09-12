@@ -178,10 +178,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const onSelect = (value: string, tabObject: BillersCategoryType) => {
     if (tabObject.code === '0') {
-      setFilterData(billers);
+      setFilterData(billers || []);
     } else {
-      const filterWithTab = billers.filter((item) => item.billerType === tabObject.code);
-      setFilterData(filterWithTab);
+      const filterWithTab = billers?.filter((item) => item.billerType === tabObject.code);
+      setFilterData(filterWithTab || []);
     }
   };
 
