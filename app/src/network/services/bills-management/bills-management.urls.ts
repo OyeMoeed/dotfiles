@@ -1,3 +1,5 @@
+// TODO: fix in another PR
+/* eslint-disable @typescript-eslint/naming-convention */
 const BILLS_MANAGEMENT_URLS = {
   get_billers_categories: () => 'bills-management/v1/billers/biller-categories',
   get_billers_services: (billerID: string) => `bills-management/v1/alinma-payments/billers/${billerID}/services`,

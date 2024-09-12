@@ -22,7 +22,7 @@ import IPayTransactionItem from '@app/screens/transaction-history/component/ipay
 import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import FeatureSections from '@app/utilities/enum/feature-sections.enum';
+import { FeatureSections } from '@app/enums';
 import React from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
@@ -126,7 +126,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (
-                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item ? item : []} />
+                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} />
                   )}
                 />
               </IPayView>

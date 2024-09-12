@@ -1,7 +1,7 @@
 import SmsRetrieverService from '@app/services/sms-retriever.service';
 import DeviceInfo from 'react-native-device-info';
 
-export const getDeviceInfo = async (): Promise<object> => {
+const getDeviceInfo = async (): Promise<object> => {
   const [deviceId, platform, platformVersion, deviceName, hashCode] = await Promise.all([
     DeviceInfo.getUniqueId(),
     DeviceInfo.getSystemName().toUpperCase(),
@@ -20,3 +20,5 @@ export const getDeviceInfo = async (): Promise<object> => {
 
   return deviceInfo;
 };
+
+export default getDeviceInfo;

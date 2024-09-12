@@ -1,9 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayPaginatedFlatlist, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import IPayMoneyRequestList from '@app/components/organism/ipay-money-request-list/ipay-money-request-list.component';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -11,20 +9,23 @@ import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-de
 import IPayRequestDetails from '@app/components/templates/ipay-request-detail/ipay-request-detail.component';
 import { heightMapping } from '@app/components/templates/ipay-request-detail/ipay-request-detail.constant';
 import useConstantData from '@app/constants/use-constants';
-import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
-import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
-import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { formatDate } from '@app/utilities/date-helper.util';
 import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import { FilterSelectedValue } from '@app/utilities/filter-interface.utll';
+import { FilterSelectedValue } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { useTypedSelector } from '@app/store/store';
+import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
+import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import { formatDate } from '@app/utilities/date-helper.util';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import React, { useRef, useState } from 'react';
 import requestMoneyStyles from './request-money-transaction.style';
 
@@ -110,7 +111,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const getRequestsData = async (
     page: number,
     pageSize: number,
-  ): Promise<{ data: Notification[]; hasMore: boolean }> => {    
+  ): Promise<{ data: Notification[]; hasMore: boolean }> => {
     renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,

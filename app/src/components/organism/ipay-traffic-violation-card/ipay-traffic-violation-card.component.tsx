@@ -15,7 +15,7 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
   onSelectBill,
   showCheckBox,
 }) => {
-  const { id, violation_no, amount, currency, description, selected } = billDetails;
+  const { violation_no: violationNo, amount, currency, description, selected } = billDetails;
   const { colors } = useTheme();
   const styles = trafficViolationCardStyles(colors);
   const localizationText = useLocalization();
@@ -23,7 +23,7 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
   const billingAmount = `${amount} ${currency}`;
 
   const onPressCheckBox = () => {
-    if (onSelectBill) onSelectBill(violation_no);
+    if (onSelectBill) onSelectBill(violationNo);
   };
 
   return (
@@ -34,7 +34,7 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
           <IPayImage image={images.traffic} style={styles.vendorIcon} />
           <IPaySubHeadlineText text={description} color={colors.natural.natural900} />
           <IPayCaption2Text
-            text={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violation_no}`}
+            text={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violationNo}`}
             color={colors.natural.natural900}
             style={styles.vendorText}
           />

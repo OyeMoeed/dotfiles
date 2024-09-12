@@ -6,6 +6,8 @@ const useCallReceiverTimer = (activateInternationalBeneficiary: () => Promise<Ap
   const [gradientWidth, setGradientWidth] = useState('0%');
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);
   const [expired, setExpired] = useState(false);
+  // TODO: fix NodeJs types
+  // eslint-disable-next-line no-undef
   let interval: NodeJS.Timeout | null = null;
 
   const startTimer = useCallback(() => {
@@ -38,13 +40,14 @@ const useCallReceiverTimer = (activateInternationalBeneficiary: () => Promise<Ap
     }
   }, [INITIAL_TIMER]);
 
-  useEffect(() => {
-    return () => {
+  useEffect(
+    () => () => {
       if (interval) {
         clearInterval(interval);
       }
-    };
-  }, []);
+    },
+    [],
+  );
 
   return { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain };
 };

@@ -11,13 +11,14 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import {
   GetSadadBillByStatusProps,
   PaymentInfoProps,
 } from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
 import getSadadBillsByStatus from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.service';
 import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
@@ -27,7 +28,7 @@ import {
   BillsStatusTypes,
   buttonVariants,
   spinnerVariant,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
@@ -48,7 +49,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [apiError, setAPIError] = useState<string>('');
+  const [, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
   const { showSpinner, hideSpinner } = useSpinnerContext();
@@ -152,7 +153,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
           renderToast({
             title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
             subTitle: billToDelete?.billDesc,
-            toastType: toastTypes.SUCCESS,
+            toastType: ToastTypes.SUCCESS,
           });
 
           return updatedBillsData;
@@ -181,7 +182,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
       title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
       subTitle: billSubTitle,
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
     });
     getBills(selectedTab);
   };
@@ -219,6 +220,8 @@ const SadadBillsScreen: React.FC = ({ route }) => {
     cancelButtonIndex: 2,
     showCancel: true,
     destructiveButtonIndex: 1,
+    // TODO: refactor codebase
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     onPress: handelEditOrDelete,
   };
 
@@ -254,23 +257,25 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   };
 
   const onPressFooterBtn = () => {
+    const billPaymentDetails = selectedBills?.map((bill) => ({
+      billerId: bill.billerId,
+      billNumOrBillingAcct: bill.billNumOrBillingAcct,
+      amount: Number(bill.amount),
+      dueDateTime: bill.dueDateTime,
+      billIdType: bill.billIdType, // TODO: not receiving this value from response
+      billingCycle: bill.billCycle, // TODO: need to confirm where can I get this value
+      billIndex: bill.billId,
+      serviceDescription: bill.serviceDescription,
+      billerName: bill.billerName,
+      walletNumber,
+      billNickname: bill.billDesc,
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(bill.billerId),
+    }));
+
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: false,
-      billPaymentInfos: selectedBills?.map((el) => ({
-        billerId: el.biller.billerId,
-        billNumOrBillingAcct: el.billAccountNumber,
-        amount: Number(el.dueAmount),
-        dueDateTime: el.dueDateTime,
-        billIdType: '1', // TODO: not receiving this value from response
-        billingCycle: '1', // TODO: need to confirm where can I get this value
-        billIndex: el.billIndex,
-        serviceDescription: el.biller.billerCategoryDesc,
-        billerName: el.biller.billerDesc,
-        walletNumber,
-        billNickname: el.nickName,
-        billerIcon: el.biller.categoryImageURL,
-      })),
+      billPaymentInfos: billPaymentDetails,
     });
   };
 
@@ -304,7 +309,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
         case apiResponse?.apiResponseNotOk:
           renderToast({
             title: localizationText.ERROR.API_ERROR_RESPONSE,
-            toastType: toastTypes.WARNING,
+            toastType: ToastTypes.WARNING,
           });
           break;
 

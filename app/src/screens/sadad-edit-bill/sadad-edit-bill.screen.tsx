@@ -39,13 +39,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const {
-    getValues,
-    control,
-    formState: { errors },
-    setValue,
-    watch,
-  } = useForm();
+  const { getValues, control, setValue, watch } = useForm();
 
   const renderSpinner = (isVisbile: boolean) => {
     if (isVisbile) {

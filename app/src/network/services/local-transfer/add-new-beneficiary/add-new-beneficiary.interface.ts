@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { ApiError, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { ApiError, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Beneficiary Details interface
 interface BeneficiaryDetailsRes {
@@ -9,7 +9,7 @@ interface BeneficiaryDetailsRes {
 
 interface BeneficiaryBankDetail {
   bankCode: string;
-  correspondingBankCode: string;
+  correspondingBankCode?: string;
   bankName: string;
 }
 
@@ -34,12 +34,17 @@ interface LocalTransferAddBeneficiary {
   data: BeneficiaryDetailsRes;
   successfulResponse: boolean;
 }
+interface Response {
+  beneficiaryCode: string;
+  beneficiaryStatus: string;
+}
 
 // Extend the LocalTransferAddBeneficiaryMockProps interface from LocalTransferAddBeneficiary and MockAPIOkProp
-interface LocalTransferAddBeneficiaryMockProps extends MockAPIOkProp, LocalTransferAddBeneficiary {
-  status: MockAPIStatusProps; // Include status directly
-  apiResponseNotOk: boolean;
+interface LocalTransferAddBeneficiaryMockProps {
+  status: MockAPIStatusProps; 
   error?: ApiError;
+  response?: Response;
+  successfulResponse?: boolean;
 }
 
 export { BeneficiaryDetailsRes, BeneficiaryInfo, LocalTransferAddBeneficiaryMockProps };

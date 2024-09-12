@@ -1,6 +1,7 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+
 const styles = (colors: any) =>
   createStyleSheet({
     cancelButtonText: {
@@ -55,7 +56,7 @@ const styles = (colors: any) =>
       alignItems: 'center',
     },
     titleText: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       flex: 1,
       textAlign: 'center',
       color: colors.primary.primary900,

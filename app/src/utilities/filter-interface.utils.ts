@@ -7,4 +7,4 @@ interface FilterSelectedValue {
   status?: string;
 }
 
-export { FilterSelectedValue };
+export default FilterSelectedValue;

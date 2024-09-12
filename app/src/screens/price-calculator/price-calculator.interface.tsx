@@ -11,7 +11,7 @@ export interface TransactionDetails {
   toConvert: string;
   currency?: string;
 }
-//enum for filter types
+// enum for filter types
 export enum FilterType {
   Country = 'Country',
   TransferMethod = 'TransferMethod',

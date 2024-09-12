@@ -2,10 +2,9 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
-import { GetSadadBillProps } from './get-sadad-bills.interface';
 import sadadBillsMock from './get-sadad-bills.mock';
 
-const getSadadBills = async (payload: GetSadadBillProps): Promise<unknown> => {
+const getSadadBills = async (): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
     const response = sadadBillsMock;
     return response;

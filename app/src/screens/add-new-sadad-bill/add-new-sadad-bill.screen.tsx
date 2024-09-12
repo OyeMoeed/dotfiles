@@ -30,8 +30,8 @@ import { BillersTypes } from '@app/network/services/bills-management/get-billers
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getDeviceInfo } from '@app/network/utilities';
+import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { View } from 'react-native';
 import { IPayViewProps } from './ipay-view.interface';
 import styles from './ipay-view.style';

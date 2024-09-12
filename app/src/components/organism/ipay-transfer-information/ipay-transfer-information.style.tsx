@@ -4,7 +4,7 @@ import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const transferInfoStyles = (themeColors: typeof colors, hasWallet: boolean) =>
+const transferInfoStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     chipContainerNotWallet: {
       marginTop: moderateScale(24),
