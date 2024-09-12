@@ -281,10 +281,13 @@ const SendMoneyFormScreen: React.FC = () => {
   };
   const history = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+      isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
+      contacts,
     });
   };
+
   const btnText =
     from === TRANSFERTYPE.REQUEST_MONEY
       ? localizationText.REQUEST_MONEY.SENT_REQUEST
