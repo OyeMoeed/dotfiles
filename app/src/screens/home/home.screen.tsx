@@ -7,7 +7,7 @@ import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
-import { SNAP_POINT } from '@app/constants/constants';
+import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -24,7 +24,7 @@ import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
@@ -61,7 +61,9 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    checkUserAccess();
+    setTimeout(() => {
+      checkUserAccess();
+    }, DURATIONS.MEDIUM);
   }, []);
 
   const renderToast = (toastMsg: string) => {
