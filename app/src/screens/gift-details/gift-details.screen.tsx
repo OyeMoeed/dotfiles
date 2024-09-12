@@ -96,12 +96,12 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     ];
   };
   const titleText = useCallback(
-    (value: string) => {
+    (value: string, item: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
       if (date.isValid()) {
         return formatTimeAndDate(value);
       }
-      return value;
+      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
     },
     [details],
   );
@@ -166,7 +166,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
-            text={`${titleText(details[item])}${item === GiftCardDetailsKey.AMOUNT ? ' ' + localizationText.COMMON.SAR : ''}`}
+            text={titleText(details[item], item)}
             color={getTitleColor(details[item])}
             numberOfLines={1}
             style={getDynamicStyles(styles, details, item)}
