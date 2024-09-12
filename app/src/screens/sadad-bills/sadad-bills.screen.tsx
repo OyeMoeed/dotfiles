@@ -12,12 +12,12 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
+import deleteBill from '@app/network/services/bills-management/delete-bill/delete-bill.service';
 import {
   GetSadadBillByStatusProps,
   PaymentInfoProps,
 } from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
 import getSadadBillsByStatus from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.service';
-import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
