@@ -754,17 +754,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 </IPayView>
               )}
 
-              {transaction?.transactionRequestType !== TransactionTypes.PAY_WALLET &&
-                transaction?.transactionType === TransactionOperations.DEBIT && (
-                  <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {getDate(transaction?.transactionDateTime)}
-                    </IPaySubHeadlineText>
-                  </IPayView>
-                )}
+              {/* {transaction?.transactionRequestType !== TransactionTypes.PAY_WALLET &&
+                transaction?.transactionType === TransactionOperations.DEBIT && ( */}
+              <IPayView style={styles.cardStyle}>
+                <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                  {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
+                </IPayFootnoteText>
+                <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  {getDate(transaction?.transactionDateTime)}
+                </IPaySubHeadlineText>
+              </IPayView>
+              {/* )} */}
             </IPayView>
           </IPayView>
         </IPayShareableImageView>
