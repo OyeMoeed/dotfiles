@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KYC_CHANGE": "تم تحديث نموذج معرفة العميل!",
     "BENEFECIARY_COUNTRY": "بلد المستفيد",
     "RELATIONSHIP": "العلاقة",
     "CITY": "المدينة",

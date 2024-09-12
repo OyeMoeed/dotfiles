@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KYC_CHANGE": "Customer knowledge form has been updated!",
     "CONTACTS_LIMIT_REACHED": "Contacts Limit Reached",
     "INVALID_NUMBER": "Invalid Number",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
