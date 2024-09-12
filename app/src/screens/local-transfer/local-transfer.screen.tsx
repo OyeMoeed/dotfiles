@@ -181,6 +181,7 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const showDeleteBeneficiaryToast = () => {
+    setDeleteBeneficiary(false);
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
