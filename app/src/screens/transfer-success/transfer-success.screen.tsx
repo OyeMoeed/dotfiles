@@ -17,7 +17,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -33,18 +32,17 @@ const TransferSuccessScreen = () => {
   const { colors } = useTheme();
   const styles = transferSuccessStyles(colors);
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const gradientColors = [colors.natural.natural50, colors.natural.natural50];
-  const totalTransferedAmount = `3000 ${localizationText.COMMON.SAR}`;
+  const totalTransferedAmount = `3000 ${t('COMMON.SAR')}`;
   const bankDetails = constants.BANK_DETAILS;
   const beneficiaryDetails = constants.SUCCESS_BENEFICIARY_DETAILS;
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.passcode_error,
+        title: title || t('passcode_error'),
         subTitle,
         toastType,
         isShowRightIcon: false,

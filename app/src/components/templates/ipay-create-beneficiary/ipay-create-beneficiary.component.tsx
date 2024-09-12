@@ -4,7 +4,6 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { REGEX } from '@app/constants/app-validations';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -52,15 +51,13 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const styles = createBeneficiaryStyles(colors);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
-  const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
   const [bankList, setBankList] = useState<LocalBank[]>([]);
   const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetails>();
   const countryCode = 'SA';
 
-  const { beneficiaryNameSchema, ibanSchema, beneficiaryNickNameSchema, bankNameSchema } =
-    getValidationSchemas(localizationText);
+  const { beneficiaryNameSchema, ibanSchema, beneficiaryNickNameSchema, bankNameSchema } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     beneficiaryName: beneficiaryNameSchema,
@@ -207,7 +204,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       if (apiResponse?.bankCode) {
         getBankDetails(apiResponse.bankCode, ibanNumber);
       } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
     }
     renderSpinner(false);

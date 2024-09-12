@@ -10,7 +10,6 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 
 import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficTabPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
@@ -21,11 +20,12 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import TrafficFormValues from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
+import { useTranslation } from 'react-i18next';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficPaymentStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { idTypes } = useConstantData();
   const [, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
   const [sheetType, setSheetType] = useState<string>('');
@@ -34,10 +34,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const tabs = [localizationText.TRAFFIC_VIOLATION.INQUIRE, localizationText.TRAFFIC_VIOLATION.REFUND];
+  const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND]')];
 
-  const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } =
-    getValidationSchemas(localizationText);
+  const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } = getValidationSchemas(t);
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
   const validationSchema = Yup.object().shape({
     serviceProvider,
@@ -165,9 +164,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     errorMessage={errorMessage}
                   />
                   <IPayButton
-                    btnText={
-                      isRefund ? localizationText.TRAFFIC_VIOLATION.REFUND : localizationText.NEW_SADAD_BILLS.INQUIRY
-                    }
+                    btnText={isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('NEW_SADAD_BILLS.INQUIRY')}
                     btnType={buttonVariants.PRIMARY}
                     onPress={onSubmit}
                     large

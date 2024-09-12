@@ -25,8 +25,8 @@ const TopUpIBAN = () => {
 
   const getShareableMessage = () => {
     const appTitle = 'AlinmaPay';
-    const nameLabel = localizationText.COMMON.NAME;
-    const ibanLabel = localizationText.COMMON.IBAN;
+    const nameLabel = t('COMMON.NAME');
+    const ibanLabel = t('COMMON.IBAN');
 
     return `${appTitle}\n${nameLabel} : ${username}\n${ibanLabel} : ${iban}`;
   };

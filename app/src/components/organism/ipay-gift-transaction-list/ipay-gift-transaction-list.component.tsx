@@ -8,7 +8,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { GiftStatus } from '@app/enums/gift-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -31,10 +30,9 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
 }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const styles = giftListStyles(colors);
-  const isReceivedCardExpired = status === GiftStatus.EXPIRED && tab === localizationText.SEND_GIFT.RECEIVED;
-  const isNewCard = status === GiftStatus.NEW && tab === localizationText.SEND_GIFT.RECEIVED;
+  const isReceivedCardExpired = status === GiftStatus.EXPIRED && tab === t('SEND_GIFT.RECEIVED');
+  const isNewCard = status === GiftStatus.NEW && tab === t('SEND_GIFT.RECEIVED');
   // this function should change the color of the status of the gift
   const getGiftStatusStyles = () => {
     switch (status) {
@@ -54,7 +52,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
           leftIconColor: colors.primary.primary900,
         };
       case GiftStatus.NEW:
-        if (tab === localizationText.SEND_GIFT.RECEIVED) {
+        if (tab === t('SEND_GIFT.RECEIVED')) {
           return {
             color: colors.secondary.secondary500,
             text: t('SEND_GIFT.NEW'),
@@ -101,11 +99,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
         {isReceivedCardExpired || isNewCard ? (
           <IPayView />
         ) : (
-          <IPayFootnoteText
-            regular={false}
-            text={`${amount} ${localizationText.COMMON.SAR}`}
-            color={colors.warning.warning800}
-          />
+          <IPayFootnoteText regular={false} text={`${amount} ${t('COMMON.SAR')}`} color={colors.warning.warning800} />
         )}
         {isNewCard && (
           <IPayView style={styles.newIconStyle}>

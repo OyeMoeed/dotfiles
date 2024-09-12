@@ -36,8 +36,9 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
-  const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
+
+  const message = t('SEND_GIFT.GIFT_CARD_MESSAGE');
+  const senderName = t('SEND_GIFT.GIFT_CARD_NAME');
   const GiftTransactionKeys = [
     GiftTransactionKey.STATUS,
     GiftTransactionKey.RECEIVER_NAME,
@@ -49,7 +50,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.passcode_error,
+        title: title || t('ERROR.PASSCODE_NOT_SET'),
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -150,18 +151,14 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       </IPayView>
       <IPayFootnoteText
         style={[styles.messagePreviewText, !isSend && styles.receiveNameText]}
-        text={`${localizationText.SEND_GIFT.FROM}: ${details?.senderName}`}
+        text={`${t('SEND_GIFT.FROM')}: ${details?.senderName}`}
       />
     </IPayView>
   );
 
   const renderCardDetails = ({ item }: ItemProps) => (
     <IPayView style={styles.dataCardView}>
-      <IPayFootnoteText
-        regular
-        text={localizationText.SEND_GIFT[GiftLocalizationKeys[item]]}
-        color={colors.natural.natural900}
-      />
+      <IPayFootnoteText regular text={t('SEND_GIFT[GiftLocalizationKeys[item]]')} color={colors.natural.natural900} />
       <IPayView style={styles.transactionDetailsView}>
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText

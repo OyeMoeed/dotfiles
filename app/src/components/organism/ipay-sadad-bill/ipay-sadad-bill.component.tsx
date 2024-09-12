@@ -9,7 +9,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayChip } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dateTimeFormat } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
@@ -18,6 +17,7 @@ import moment from 'moment';
 import React, { useMemo } from 'react';
 import { IPaySadadBillProps } from './ipay-sadad-bill.interface';
 import sadadBillStyles from './ipay-sadad-bill.style';
+import { useTranslation } from 'react-i18next';
 
 const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   testID,
@@ -40,7 +40,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
 
   const { colors } = useTheme();
   const styles = sadadBillStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
   const statusVariant = useMemo(
     () => (billStatusDesc === BillStatus.UNPAID ? States.NATURAL : States.SUCCESS),
@@ -58,8 +58,8 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
     return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
   }, [dueDateTime]);
 
-  const billingAmount = `${dueAmount} ${localizationText.COMMON.SAR}`;
-  const billingDueDate = `${localizationText.SADAD.DUE} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
+  const billingAmount = `${dueAmount} ${t('COMMON.SAR')}`;
+  const billingDueDate = `${t('SADAD.DUE')} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
 
   const onPressCheckBox = () => {
     if (onSelectBill) onSelectBill(billIndex);

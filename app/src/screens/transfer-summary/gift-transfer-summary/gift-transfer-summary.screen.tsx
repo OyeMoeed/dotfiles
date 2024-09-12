@@ -20,7 +20,6 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -43,7 +42,6 @@ import transferSummaryStyles from './gift-transfer-summary.styles';
 const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const route = useRoute<
     RouteProp<{
       params: GiftParamsProps;
@@ -70,8 +68,7 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>();
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
-  const otpSheetHeading =
-    transactionType === TransactionTypes.SEND_GIFT ? localizationText.HOME.SEND_GIFT : localizationText.HOME.SEND_MONEY;
+  const otpSheetHeading = transactionType === TransactionTypes.SEND_GIFT ? t('HOME.SEND_GIFT') : t('HOME.SEND_MONEY');
 
   const toggleExpandMessage = () => setExpandMsg(!expandMsg);
 
@@ -109,7 +106,7 @@ const TransferSummaryScreen: React.FC = () => {
       {
         id: '2',
         label: t('TRANSFER_SUMMARY.AMOUNT'),
-        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        value: `${item.amount} ${t('COMMON.SAR')}`,
       },
     ];
 
@@ -121,7 +118,7 @@ const TransferSummaryScreen: React.FC = () => {
       <IPayPressable onPress={toggleExpandMessage} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
           <IPayFootnoteText regular style={styles.faqItemText}>
-            {localizationText.COMMON.MESSAGE}
+            {t('COMMON.MESSAGE')}
           </IPayFootnoteText>
           <IPayIcon
             icon={expandMsg ? icons.arrowUp : icons.ARROW_DOWN}
@@ -230,7 +227,7 @@ const TransferSummaryScreen: React.FC = () => {
           setOtpSheetVisible(true);
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'));
           break;
         default:
           break;
@@ -239,7 +236,7 @@ const TransferSummaryScreen: React.FC = () => {
     } catch (error) {
       setAPIError(error?.message);
       hideSpinner();
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -268,7 +265,7 @@ const TransferSummaryScreen: React.FC = () => {
           });
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'));
           break;
         default:
           break;
@@ -276,14 +273,14 @@ const TransferSummaryScreen: React.FC = () => {
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       verifyOtp();
     }
@@ -336,7 +333,7 @@ const TransferSummaryScreen: React.FC = () => {
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
             showDetail
             detailTextStyle={styles.listTextStyle}
-            detailText={`${totalAmount} ${localizationText.COMMON.SAR}`}
+            detailText={`${totalAmount} ${t('COMMON.SAR')}`}
           />
           <IPayButton
             btnType={buttonVariants.PRIMARY}

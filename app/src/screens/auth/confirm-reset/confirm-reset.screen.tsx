@@ -104,7 +104,7 @@ const ConfirmPasscode = forwardRef((props) => {
         changePasscode(newCode);
       } else {
         setPasscodeError(true);
-        renderToast(localizationText.COMMON.PLEASE_ENTER_AGAIN);
+        renderToast(t('COMMON.PLEASE_ENTER_AGAIN'));
       }
     }
   };

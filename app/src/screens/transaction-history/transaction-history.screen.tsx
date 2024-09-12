@@ -33,10 +33,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const styles = transactionsStyles(colors);
   const { t } = useTranslation();
   const localizationText = useLocalization();
-  const TRANSACTION_TABS = [
-    localizationText.TRANSACTION_HISTORY.SEND_MONEY,
-    localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY,
-  ];
+  const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
@@ -142,7 +139,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           }
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -155,8 +152,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     } catch (error: any) {
       setIsLoading(false);
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -189,7 +186,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           setFilteredData(apiResponse?.response?.transactions);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -202,8 +199,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     } catch (error: any) {
       setIsLoadingW2W(false);
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

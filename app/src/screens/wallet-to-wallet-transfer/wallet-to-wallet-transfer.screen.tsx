@@ -29,7 +29,6 @@ import { PermissionsStatus, PermissionTypes } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import usePermissions from '@app/hooks/permissions.hook';
 import { useKeyboardStatus } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services';
@@ -54,7 +53,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
@@ -323,7 +321,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       } as Contact);
     }
   };
-  const { mobileNumberSchema } = getValidationSchemas(localizationText);
+  const { mobileNumberSchema } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,
@@ -339,7 +337,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
-        title={heading || localizationText.HOME.SEND_MONEY}
+        title={heading || t('HOME.SEND_MONEY')}
         isRight
         rightComponent={
           showHistory && (
@@ -401,9 +399,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             {!!selectedContacts?.length && (
               <>
                 <IPayView style={styles.contactCount}>
-                  <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
+                  <IPayFootnoteText text={`${selectedContacts?.length} ${t('HOME.OF')}`} regular={false} />
                   <IPayFootnoteText
-                    text={`${MAX_CONTACTS} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                    text={`${MAX_CONTACTS} ${t('WALLET_TO_WALLET.CONTACTS')}`}
                     color={colors.natural.natural500}
                   />
                 </IPayView>
@@ -478,7 +476,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                 btnStyle={styles.unsavedButton}
                 btnText="COMMON.DONE"
                 onPress={handleSubmit(addUnsavedNumber)}
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
               />
             </IPayView>
           )}

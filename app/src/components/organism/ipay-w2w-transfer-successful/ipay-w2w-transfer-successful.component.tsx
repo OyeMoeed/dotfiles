@@ -14,7 +14,6 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayGradientText, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -30,7 +29,6 @@ import { TopUpSuccessStyles } from './ipay-w2w-transfer-successful.styles';
 const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
   const { viewShotRef, shareImage } = useShareableImage();
 
@@ -115,7 +113,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
       );
     };
 
-    const modifyValue = label === localizationText.COMMON.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
+    const modifyValue = label === t('COMMON.AMOUNT') ? `${value} ${t('COMMON.SAR')}` : value;
     const isFirstItem = index === 0;
     return (
       <IPayView key={item.id}>
@@ -157,7 +155,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
     );
   };
 
-  const renderText = () => localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+  const renderText = () => t('TOP_UP.TRANSFER_SUCCESSFUL');
 
   const renderActionLabel = () => (
     <IPayPressable
@@ -214,7 +212,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
               />
               <IPaySubHeadlineText
                 regular={false}
-                text={`${totalAmount} ${localizationText.COMMON.SAR}`}
+                text={`${totalAmount} ${t('COMMON.SAR')}`}
                 style={styles.headlineText}
               />
             </IPayView>

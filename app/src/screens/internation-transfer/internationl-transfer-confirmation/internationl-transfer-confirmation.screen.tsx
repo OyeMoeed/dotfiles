@@ -84,7 +84,7 @@ const InternationalTransferConfirmation: React.FC = () => {
       });
     } else {
       setIsError(true);
-      setErrorMessage(localizationText.INTERNATIONAL_TRANSFER.PROMO_CODE_DOES_NOT_EXIST);
+      setErrorMessage(t('INTERNATIONAL_TRANSFER.PROMO_CODE_DOES_NOT_EXIST'));
     }
   };
 
@@ -100,13 +100,13 @@ const InternationalTransferConfirmation: React.FC = () => {
   };
 
   const discountFees = useMemo((): string => {
-    const tansferDiscount = localizationText.INTERNATIONAL_TRANSFER.TRANSFER_FEE_DISCOUNT;
-    return `${tansferDiscount}: ${discountAmount} ${localizationText.COMMON.SAR}`;
+    const tansferDiscount = t('INTERNATIONAL_TRANSFER.TRANSFER_FEE_DISCOUNT');
+    return `${tansferDiscount}: ${discountAmount} ${t('COMMON.SAR')}`;
   }, [promoMatchSuccessfuly]);
 
   const totalAmount = () => {
     const amount = getDataByKey(InternationalTransferDataLabels.total_amount)?.value;
-    return `${amount} ${localizationText.COMMON.SAR}`;
+    return `${amount} ${t('COMMON.SAR')}`;
   };
 
   const getWidth = (): string[] => {
@@ -214,7 +214,7 @@ const InternationalTransferConfirmation: React.FC = () => {
                   onPress={onPressEnterPromo}
                 >
                   <IPaySubHeadlineText
-                    text={promoMatchSuccessfuly ? promoCodeText : localizationText.INTERNATIONAL_TRANSFER.ENTER_CODE}
+                    text={promoMatchSuccessfuly ? promoCodeText : t('INTERNATIONAL_TRANSFER.ENTER_CODE')}
                     color={promoMatchSuccessfuly ? colors.success.success800 : colors.primary.primary500}
                     style={styles.enterPromoText}
                   />

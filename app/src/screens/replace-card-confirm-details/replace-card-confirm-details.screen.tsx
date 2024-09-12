@@ -135,7 +135,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${DUMMY_DATA.replaceFee} ${localizationText.COMMON.SAR}`}
+                    text={`${DUMMY_DATA.replaceFee} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -146,7 +146,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${DUMMY_DATA.shippingFee} ${localizationText.COMMON.SAR}`}
+                    text={`${DUMMY_DATA.shippingFee} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -167,7 +167,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
                   regular
-                  text={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
+                  text={`${DUMMY_DATA.totalFee} ${t('COMMON.SAR')}`}
                 />
               }
             />

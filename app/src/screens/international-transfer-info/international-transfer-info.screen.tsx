@@ -51,14 +51,14 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [isCheck, setIsCheck] = useState<number | null>(null);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const transferFees = `${localizationText.LOCAL_TRANSFER.FEES} ${beneficiaryDummyData.fee} ${localizationText.COMMON.AND_VAT} ${beneficiaryDummyData.vat}`;
+  const transferFees = `${t('LOCAL_TRANSFER.FEES')} ${beneficiaryDummyData.fee} ${t('COMMON.AND_VAT')} ${beneficiaryDummyData.vat}`;
 
   const onPressNext = () => navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION);
 
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalBeneficiariesDetails];
-    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
+    const localization = t('INTERNATIONAL_TRANSFER[localizationKey] || label');
 
     return (
       <IPayList
@@ -140,9 +140,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
               <IPayView style={styles.feeContainer}>
                 <IPayView style={styles.feeText}>
                   <IPayView>
-                    <IPayFootnoteText color={colors.natural.natural900}>
-                      {localizationText.COMMON.INCLUDE_FEES}
-                    </IPayFootnoteText>
+                    <IPayFootnoteText color={colors.natural.natural900}>{t('COMMON.INCLUDE_FEES')}</IPayFootnoteText>
                     <IPayCaption1Text color={colors.natural.natural500}>{transferFees}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
@@ -219,13 +217,13 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
             data={internationalTransferBeneficiaryDetails.beneficiaryInfo}
             showsVerticalScrollIndicator={false}
             renderItem={renderOption}
-            ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_INFORMATION)}
+            ListHeaderComponent={renderListHeader(t('INTERNATIONAL_TRANSFER.BENEFECIARY_INFORMATION'))}
           />
           <IPayFlatlist
             data={internationalTransferBeneficiaryDetails.beneficiaryDetails}
             showsVerticalScrollIndicator={false}
             renderItem={renderOption}
-            ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS)}
+            ListHeaderComponent={renderListHeader(t('INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS'))}
           />
         </IPayView>
       </IPayBottomSheet>

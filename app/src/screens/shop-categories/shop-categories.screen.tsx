@@ -21,17 +21,17 @@ const ShopCategoriesScreen: React.FC = () => {
 
   // Tabs and selectedTab state
   const CATEGORY_TABS = [
-    localizationText.SHOP.SHOPPING,
-    localizationText.SHOP.PLAYSTATION,
-    localizationText.SHOP.FOOD,
-    localizationText.SHOP.ENTERTAINMENT,
-    localizationText.SHOP.TELECOM,
-    localizationText.SHOP.GOOGLE,
-    localizationText.SHOP.GAMES,
-    localizationText.SHOP.STORE,
-    localizationText.SHOP.TRANSPORTATION,
-    localizationText.SHOP.XBOX,
-    localizationText.SHOP.ITUNES,
+    t('SHOP.SHOPPING'),
+    t('SHOP.PLAYSTATION'),
+    t('SHOP.FOOD'),
+    t('SHOP.ENTERTAINMENT'),
+    t('SHOP.TELECOM'),
+    t('SHOP.GOOGLE'),
+    t('SHOP.GAMES'),
+    t('SHOP.STORE'),
+    t('SHOP.TRANSPORTATION'),
+    t('SHOP.XBOX'),
+    t('SHOP.ITUNES'),
   ];
 
   const [selectedTab, setSelectedTab] = useState(CATEGORY_TABS[0]);

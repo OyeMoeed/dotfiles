@@ -127,11 +127,7 @@ const RegistrationSuccessful: React.FC = () => {
               <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={60} />
               <IPayFootnoteText text="REGISTRATION.ADDITIONAL_FEATURE" style={styles.additionalFeatureText} />
               <IPayTitle3Text
-                text={
-                  isAndroidOS
-                    ? localizationText.REGISTRATION.ACTIVATE_TOUCH_ID
-                    : localizationText.REGISTRATION.ACTIVATE_FACE_ID
-                }
+                text={isAndroidOS ? t('REGISTRATION.ACTIVATE_TOUCH_ID') : t('REGISTRATION.ACTIVATE_FACE_ID')}
                 style={styles.activateFaceIDText}
               />
 

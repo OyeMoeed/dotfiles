@@ -10,12 +10,12 @@ import {
 
 import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
@@ -27,7 +27,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   openPressExpired,
   onCardSelect,
 }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
@@ -70,7 +70,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     cards?.map((card: any, index: number) => ({
       key: index,
       cardType: card?.cardBrand,
-      text: `${localizationText.TOP_UP.CARD} ${card?.cardBrand}`,
+      text: `${t('TOP_UP.CARD')} ${card?.cardBrand}`,
       cardNumber: `${card?.lastDigits} ****`,
       subtitle: `${card?.lastDigits} ****`,
       expired: isExpired(card),

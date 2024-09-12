@@ -20,7 +20,6 @@ import IPayPointRedemptionCard from '@app/components/atoms/ipay-point-redemption
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import IPointsRedemptionsRouteProps from '@app/screens/points-redemptions/points-redemptions.interface';
@@ -32,12 +31,13 @@ import { fonts } from '@app/styles/typography.styles';
 import { States } from '@app/utilities/enums.util';
 import { useEffect, useState, JSX } from 'react';
 import { useDispatch } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import pointRedemption from './ipay-points-redemption.style';
 
 const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptionsRouteProps }) => {
   const { isEligible } = routeParams;
   const { aktharPointsInfo } = routeParams;
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const amountInput = 'input1';
   const pointsInput = 'input2';
   const { colors } = useTheme();
@@ -77,11 +77,9 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     const isMoreThanDailyLimit = parsedAmount > +walletInfo.limitsDetails.dailyRemainingIncomingAmount;
     const isMoreThanMonthlyLimit = parsedAmount > +walletInfo.limitsDetails.monthlyRemainingIncomingAmount;
     if (isMoreThanDailyLimit && !isMoreThanMonthlyLimit) {
-      setErrorMessage(
-        `${localizationText.TOP_UP.DAILY_LIMIT} ${walletInfo.limitsDetails.dailyRemainingIncomingAmount}`,
-      );
+      setErrorMessage(`${t('TOP_UP.DAILY_LIMIT')} ${walletInfo.limitsDetails.dailyRemainingIncomingAmount}`);
     } else if (isMoreThanMonthlyLimit) {
-      setErrorMessage(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setErrorMessage(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else {
       setErrorMessage(null);
     }
@@ -114,7 +112,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
     const availablePoints = Number(aktharPointsInfo?.mazayaPoints) || 0;
 
     if (parsedPoints > availablePoints) {
-      setErrorMessage(localizationText.TOP_UP.POINTS_EXCEED);
+      setErrorMessage(t('TOP_UP.POINTS_EXCEED'));
     }
   }, [points, aktharPointsInfo?.mazayaPoints, aktharPointsInfo?.exchangeRate]);
 
@@ -171,10 +169,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
           <IPayView style={styles.pointsConversionDetail}>
             <IPayText fontFamily={fonts.REGULAR} style={styles.redeemPointText} text="TOP_UP.REDEEM_THE_POINTS" />
             <IPayChip
-              textValue={localizationText.TOP_UP.POINT_CONVERSION_VALUE.replace(
-                '$points_number',
-                aktharPointsInfo?.exchangeRate,
-              )}
+              textValue={t('TOP_UP.POINT_CONVERSION_VALUE').replace('$points_number', aktharPointsInfo?.exchangeRate)}
               variant={States.SEVERE}
               isShowIcon={false}
             />
@@ -203,7 +198,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     keyboardType="numeric"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {` ${localizationText.COMMON.SAR}`}
+                    {` ${t('COMMON.SAR')}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -234,7 +229,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     keyboardType="number-pad"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {` ${localizationText.COMMON.POINT}`}
+                    {` ${t('COMMON.POINT')}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -251,10 +246,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
             <IPayView style={styles.checkmarkPoints}>
               <IPayCheckbox isCheck={isChecked} onPress={handleCheck} />
               <IPayFootnoteText
-                text={
-                  `${localizationText.TOP_UP.USE_ALL}` +
-                  ` (${aktharPointsInfo?.mazayaPoints} ${localizationText.COMMON.POINTS})`
-                }
+                text={`${t('TOP_UP.USE_ALL')}` + ` (${aktharPointsInfo?.mazayaPoints} ${t('COMMON.POINTS')})`}
               />
             </IPayView>
             <>
@@ -269,8 +261,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                   <IPayCaption2Text style={styles.totalAmount}>
                     {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingIncomingAmount)}`}{' '}
                   </IPayCaption2Text>
-                  {`${localizationText.HOME.OF}` +
-                    ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyIncomingLimit)}`}
+                  {`${t('HOME.OF')}` + ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyIncomingLimit)}`}
                 </IPayCaption2Text>
               </IPayView>
             </>

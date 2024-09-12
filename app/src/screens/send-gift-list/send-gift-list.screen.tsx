@@ -31,7 +31,7 @@ const SendGiftListScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
-  const GIFT_TABS = [localizationText.SEND_GIFT.SENT, localizationText.SEND_GIFT.RECEIVED];
+  const GIFT_TABS = [t('SEND_GIFT.SENT'), t('SEND_GIFT.RECEIVED]')];
   const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
@@ -52,7 +52,7 @@ const SendGiftListScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status, occasion } = data;
-      const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
+      const amountRange = `${amountFrom} - ${amountTo} ${t('COMMON.SAR')}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
 
       filtersArray = [contactNumber, amountRange, dateRange, status, occasion];
@@ -81,13 +81,13 @@ const SendGiftListScreen: React.FC = () => {
 
   let noResultMessage;
 
-  if (selectedTab === localizationText.SEND_GIFT.RECEIVED) {
+  if (selectedTab === t('SEND_GIFT.RECEIVED')) {
     noResultMessage = `
-  ${localizationText.SEND_GIFT.RECIEVE_ANY_GIFT}
+  ${t('SEND_GIFT.RECIEVE_ANY_GIFT')}
   `;
   } else {
     noResultMessage = `
-  ${localizationText.SEND_GIFT.SENT_ANY_GIFT}
+  ${t('SEND_GIFT.SENT_ANY_GIFT')}
   `;
   }
 
@@ -123,7 +123,7 @@ const SendGiftListScreen: React.FC = () => {
           setWalletTransferData(apiResponse.data.transferRequestsResult.groupedCategories);
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'));
           break;
         default:
           break;
@@ -131,7 +131,7 @@ const SendGiftListScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

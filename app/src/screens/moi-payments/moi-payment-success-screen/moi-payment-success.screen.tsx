@@ -36,7 +36,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const [paymentDtails, setPaymentDetails] = useState<ItemProps[]>([]);
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
-  const totalTransferedAmount = `500 ${localizationText.COMMON.SAR}`;
+  const totalTransferedAmount = `500 ${t('COMMON.SAR')}`;
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(

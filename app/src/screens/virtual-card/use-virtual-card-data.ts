@@ -1,18 +1,12 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { CardTypes } from '@app/utilities/enums.util';
 import { useTranslation } from 'react-i18next';
 
 const useVirtualCardData = () => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
 
-  const TAB_LABELS = [
-    localizationText.VIRTUAL_CARD.CLASSIC,
-    localizationText.VIRTUAL_CARD.PLATINUM,
-    localizationText.VIRTUAL_CARD.SIGNATURE,
-  ];
+  const TAB_LABELS = [t('VIRTUAL_CARD.CLASSIC'), t('VIRTUAL_CARD.PLATINUM'), t('VIRTUAL_CARD.SIGNATURE')];
   const CARD_CHIP_DATA = {
     [CardTypes.CLASSIC]: [
       {
@@ -119,7 +113,7 @@ const useVirtualCardData = () => {
       backgroundImage: images.signatueCard,
     },
   ];
-  const SEGMENT_LABEL = [localizationText.CARD_OPTIONS.CARD_FEATURES, localizationText.CARD_OPTIONS.CARD_FEE];
+  const SEGMENT_LABEL = [t('CARD_OPTIONS.CARD_FEATURES'), t('CARD_OPTIONS.CARD_FEE]')];
 
   return { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA, SEGMENT_LABEL };
 };

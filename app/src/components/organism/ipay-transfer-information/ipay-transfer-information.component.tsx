@@ -10,11 +10,11 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayChip, IPayList } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { IPayTransferInformationProps } from './ipay-transfer-information.interface';
 import transferInfoStyles from './ipay-transfer-information.style';
 
@@ -42,13 +42,13 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   inputFieldStyle,
 }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = transferInfoStyles(colors);
 
   const [isFocused, setIsFocused] = useState(false);
-  const localizationText = useLocalization();
 
-  const notesText = localizationText.TRANSACTION_HISTORY.NOTE;
-  const optionalText = localizationText.COMMON.OPTIONAL;
+  const notesText = t('TRANSACTION_HISTORY.NOTE');
+  const optionalText = t('COMMON.OPTIONAL');
   const notesLabel = `${notesText} ${transferInfo ? `(${optionalText})` : ''}`;
   const defaultValue: string = '0.00';
 
@@ -113,7 +113,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             containerStyle={styles.chipContainer}
             icon={
               <IPayIcon
-                icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
+                icon={chipValue === t('TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross')}
                 color={colors.critical.critical800}
                 size={16}
               />

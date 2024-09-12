@@ -131,7 +131,7 @@ const CardRenewalScreen: React.FC = () => {
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
                   regular
-                  text={`${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`}
+                  text={`${DUMMY_DATA.cardRenewalFee} ${t('COMMON.SAR')}`}
                 />
               }
             />

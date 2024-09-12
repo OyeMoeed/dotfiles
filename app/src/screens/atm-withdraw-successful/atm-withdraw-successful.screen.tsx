@@ -57,7 +57,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.passcode_error,
+        title: title || t('passcode_error'),
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -103,7 +103,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
         <IPaySuccess
           style={styles.zeroFlex}
           headingText="ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY"
-          subHeadingText={`${route?.params?.amount} ${localizationText.COMMON.SAR}`}
+          subHeadingText={`${route?.params?.amount} ${t('COMMON.SAR')}`}
           subHeadingTextStyle={styles.subHeadingTextStyle}
         />
         <IPayView style={styles.dataView}>

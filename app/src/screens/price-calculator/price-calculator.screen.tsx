@@ -100,11 +100,11 @@ const PriceCalculatorScreen: React.FC = () => {
   const getDropdownListLabel = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
-        return localizationText.REPLACE_CARD.COUNTRY;
+        return t('REPLACE_CARD.COUNTRY');
       case FilterType.TransferMethod:
-        return localizationText.COMMON.DELIVERY_TYPE;
+        return t('COMMON.DELIVERY_TYPE');
       case FilterType.Currency:
-        return localizationText.COMMON.CURRENCY;
+        return t('COMMON.CURRENCY');
       default:
         return '';
     }
@@ -181,9 +181,7 @@ const PriceCalculatorScreen: React.FC = () => {
         </IPayView>
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
-            <IPayCaption1Text style={styles.textColor}>
-              {localizationText.PRICE_CALCULATOR.INCLUDES_FEES}
-            </IPayCaption1Text>
+            <IPayCaption1Text style={styles.textColor}>{t('PRICE_CALCULATOR.INCLUDES_FEES')}</IPayCaption1Text>
           </IPayView>
           <IPayToggleButton toggleState />
         </IPayView>

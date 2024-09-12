@@ -23,9 +23,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getTitle = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.VIRTUAL_CARD.CREATE_CARD_PIN_PIN;
+        return t('VIRTUAL_CARD.CREATE_CARD_PIN_PIN');
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.CONFIRM_NEW_PIN;
+        return t('CHANGE_PIN.CONFIRM_NEW_PIN');
       default:
         return '';
     }
@@ -34,9 +34,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getDescription = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.YOU_WILL_NEED_TO;
+        return t('CHANGE_PIN.YOU_WILL_NEED_TO');
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENTER_PASS_AGAIN;
+        return t('CHANGE_PIN.ENTER_PASS_AGAIN');
       default:
         return '';
     }
@@ -45,9 +45,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getErrorTitle = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.INVALID_PIN;
+        return t('CHANGE_PIN.INVALID_PIN');
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.PIN_NOT_MATCHING;
+        return t('CHANGE_PIN.PIN_NOT_MATCHING');
       default:
         return '';
     }
@@ -56,9 +56,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getErrorDescription = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.OLD_PIN;
+        return t('CHANGE_PIN.OLD_PIN');
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENSURE_YOU_WRITE;
+        return t('CHANGE_PIN.ENSURE_YOU_WRITE');
       default:
         return '';
     }

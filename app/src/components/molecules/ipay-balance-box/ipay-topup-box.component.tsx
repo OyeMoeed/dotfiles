@@ -2,10 +2,10 @@ import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayProgressBar, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayBalanceBoxProps } from './ipay-topup-box.interface';
 import topUpBoxStyles from './ipay-topup-box.styles';
 
@@ -19,10 +19,10 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
   monthlyIncomingLimit,
   onTopUpPress,
 }: IPayBalanceBoxProps) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = topUpBoxStyles(colors);
-  const localizationText = useLocalization();
-  const remainingTopupLimit = parseFloat(monthlyRemainingIncommingAmount);
+  const remainingTopupLimit = parseFloat(String(monthlyRemainingIncommingAmount));
   const monthlyTopupLimit = parseFloat(monthlyIncomingLimit);
 
   return (
@@ -68,7 +68,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
             <IPayCaption2Text text="TOPUP_CONFIRMATION.REMAINING_AMOUNT" />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text regular={false} text={formatNumberWithCommas(remainingTopupLimit)} />
-              <IPayCaption2Text text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlyTopupLimit)}`} />
+              <IPayCaption2Text text={` ${t('HOME.OF')} ${formatNumberWithCommas(monthlyTopupLimit)}`} />
             </IPayView>
           </IPayView>
         )}

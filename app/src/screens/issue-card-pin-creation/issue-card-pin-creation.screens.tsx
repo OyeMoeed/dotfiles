@@ -24,9 +24,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
   const getTitle = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.VIRTUAL_CARD.CREATE_CARD_PIN_PIN;
+        return t('VIRTUAL_CARD.CREATE_CARD_PIN_PIN');
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.VIRTUAL_CARD.CONFIRM_CARD_PIN;
+        return t('VIRTUAL_CARD.CONFIRM_CARD_PIN');
       default:
         return '';
     }
@@ -35,9 +35,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
   const getDescription = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.VIRTUAL_CARD.FIRST_TIME_CODE;
+        return t('VIRTUAL_CARD.FIRST_TIME_CODE');
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.VIRTUAL_CARD.ENTER_PASSCODE_AGAIN;
+        return t('VIRTUAL_CARD.ENTER_PASSCODE_AGAIN');
       default:
         return '';
     }
@@ -46,9 +46,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
   const getErrorTitle = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.INVALID_PIN;
+        return t('CHANGE_PIN.INVALID_PIN');
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.PIN_NOT_MATCHING;
+        return t('CHANGE_PIN.PIN_NOT_MATCHING');
       default:
         return '';
     }
@@ -57,9 +57,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCard
   const getErrorDescription = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.OLD_PIN;
+        return t('CHANGE_PIN.OLD_PIN');
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENSURE_YOU_WRITE;
+        return t('CHANGE_PIN.ENSURE_YOU_WRITE');
       default:
         return '';
     }

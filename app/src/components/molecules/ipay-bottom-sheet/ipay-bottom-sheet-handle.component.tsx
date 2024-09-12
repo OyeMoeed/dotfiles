@@ -1,8 +1,8 @@
 import { IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayBottomSheetHandleProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 
@@ -16,7 +16,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
   return (
     <IPayView style={styles.headerContainer}>
@@ -40,9 +40,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
           <IPayView style={styles.headerTitlesView}>
             <IPayButton btnType="link-button" medium btnIconsDisabled onPress={onPressCancel} btnText="COMMON.CANCEL" />
 
-            <IPaySubHeadlineText style={styles.titleText}>
-              {heading || localizationText.COMMON.TITTLE}
-            </IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.titleText}>{heading || t('COMMON.TITTLE')}</IPaySubHeadlineText>
 
             <IPayButton btnType="link-button" medium btnIconsDisabled onPress={onPressDone} btnText="COMMON.DONE" />
           </IPayView>

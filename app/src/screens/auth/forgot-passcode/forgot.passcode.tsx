@@ -26,7 +26,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
     if (passcode === correctPasscode) {
       navigation.navigate(screenNames.SET_PASSCODE);
     } else {
-      setPasscodeErrorMsg(localizationText.FORGOT_PASSCODE.INCORRECT_NUMBER);
+      setPasscodeErrorMsg(t('FORGOT_PASSCODE.INCORRECT_NUMBER'));
       setShowToast(true);
       setTimeout(() => setShowToast(false), 3000);
     }

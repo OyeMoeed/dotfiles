@@ -22,7 +22,6 @@ interface BalanceData {
 // TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { billPayDetailsData } = useConstantData();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const otpRef = useRef<bottomSheetTypes>(null);
@@ -58,7 +57,6 @@ const useBillPaymentConfirmation = () => {
     navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { variant: ScreenNames.TRAFFIC_VOILATION_NUM_REFUND });
   };
   return {
-    localizationText,
     billPayDetailes,
     balanceData,
     extraDetails,

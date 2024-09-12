@@ -2,10 +2,10 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useImperativeHandle, useRef, useState } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayExpiredCardSheetProps from './ipay-expired-card-sheet.interface';
 import styles from './ipay-expired-card-sheet.styles';
@@ -13,12 +13,12 @@ import styles from './ipay-expired-card-sheet.styles';
 const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
   ({ openExpirationBottomSheet, openExpiredDateBottomSheet, openCvvBottomSheet, selectedDate, selectedCard }, ref) => {
     const { colors } = useTheme();
+    const { t } = useTranslation();
     const bottomSheetRef = useRef<any>();
 
     const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['50%', '55%']);
 
     const sheetStyles = styles(colors);
-    const localizationText = useLocalization();
     const [showEdit, setShowEdit] = useState(false);
 
     const onEditPress = () => {
@@ -50,7 +50,7 @@ const IPayExpiredCardSheet = forwardRef<any, IPayExpiredCardSheetProps>(
 
     return (
       <IPayBottomSheet
-        heading={showEdit ? localizationText.MENU.EDIT_CARD : localizationText.COMMON.CARD_EXPIRED}
+        heading={showEdit ? t('MENU.EDIT_CARD') : t('COMMON.CARD_EXPIRED')}
         enablePanDownToClose
         simpleBar
         ref={bottomSheetRef}

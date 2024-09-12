@@ -6,17 +6,17 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { useKeyboardStatus } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import transferInformationStyles from './transfer-information.style';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const [chipValue, setChipValue] = useState<string>('');
@@ -38,9 +38,9 @@ const TransferInformation: React.FC = () => {
     const updatedTopUpAmount = parseFloat(transferAmount.replace(/,/g, ''));
 
     if (monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else if (updatedTopUpAmount > monthlyTotalRemainingLimit) {
-      setChipValue(localizationText.TOP_UP.MONTHLY_SPENDING_LIMIT_REACHED);
+      setChipValue(t('TOP_UP.MONTHLY_SPENDING_LIMIT_REACHED'));
     } else {
       setChipValue('');
     }

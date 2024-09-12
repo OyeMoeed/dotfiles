@@ -7,7 +7,6 @@ import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -18,27 +17,26 @@ import { useTranslation } from 'react-i18next';
 const useConstantData = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   const localTransferReasonData = [
-    { id: 1, text: localizationText.LOCAL_TRANSFER.INVESTMENT },
-    { id: 2, text: localizationText.LOCAL_TRANSFER.TUITION },
-    { id: 7, text: localizationText.LOCAL_TRANSFER.TREATMENT },
-    { id: 3, text: localizationText.LOCAL_TRANSFER.TRAVEL },
-    { id: 4, text: localizationText.LOCAL_TRANSFER.PURCHASES },
-    { id: 5, text: localizationText.LOCAL_TRANSFER.FIRENDS_AND_FAMILY },
-    { id: 6, text: localizationText.LOCAL_TRANSFER.DONATION },
+    { id: 1, text: t('LOCAL_TRANSFER.INVESTMENT ') },
+    { id: 2, text: t('LOCAL_TRANSFER.TUITION ') },
+    { id: 7, text: t('LOCAL_TRANSFER.TREATMENT ') },
+    { id: 3, text: t('LOCAL_TRANSFER.TRAVEL ') },
+    { id: 4, text: t('LOCAL_TRANSFER.PURCHASES ') },
+    { id: 5, text: t('LOCAL_TRANSFER.FIRENDS_AND_FAMILY ') },
+    { id: 6, text: t('LOCAL_TRANSFER.DONATION ') },
   ];
   const transferReasonData = [
-    { id: 1, text: localizationText.SEND_MONEY_FORM.LIVING_EXPENSES },
-    { id: 2, text: localizationText.SEND_MONEY_FORM.ACCOMMODATION_FEES },
-    { id: 3, text: localizationText.SEND_MONEY_FORM.BILL_PAYMENT },
-    { id: 4, text: localizationText.SEND_MONEY_FORM.CAR_FINANCE_PAYMENT },
-    { id: 5, text: localizationText.SEND_MONEY_FORM.HOUSE_FINANCE_PAYMENT },
-    { id: 6, text: localizationText.SEND_MONEY_FORM.INSURANCE_PAYMENT },
-    { id: 7, text: localizationText.SEND_MONEY_FORM.RENT_PAYMENT },
+    { id: 1, text: t('SEND_MONEY_FORM.LIVING_EXPENSES ') },
+    { id: 2, text: t('SEND_MONEY_FORM.ACCOMMODATION_FEES ') },
+    { id: 3, text: t('SEND_MONEY_FORM.BILL_PAYMENT ') },
+    { id: 4, text: t('SEND_MONEY_FORM.CAR_FINANCE_PAYMENT ') },
+    { id: 5, text: t('SEND_MONEY_FORM.HOUSE_FINANCE_PAYMENT ') },
+    { id: 6, text: t('SEND_MONEY_FORM.INSURANCE_PAYMENT ') },
+    { id: 7, text: t('SEND_MONEY_FORM.RENT_PAYMENT ') },
   ];
   const nonAlinmaDetails = [
     {
@@ -49,7 +47,7 @@ const useConstantData = () => {
       color: colors.primary.primary900,
       isAlinma: false,
     },
-    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: t('TRANSFER_SUMMARY.AMOUNT_2 ') },
     {
       id: '3',
       label: t('TRANSFER_SUMMARY.REASON'),
@@ -64,13 +62,13 @@ const useConstantData = () => {
       leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
-    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: localizationText.TRANSFER_SUMMARY.MONEY },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: t('TRANSFER_SUMMARY.MONEY ') },
     {
       id: '3',
       label: t('TRANSFER_SUMMARY.REASON'),
       value: t('TRANSFER_SUMMARY.REASON_TRANSFER'),
     },
-    { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
+    { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: t('TRANSFER_SUMMARY.NOTE_DETAIL ') },
   ];
   const alinmaDetailsUnsaved1 = [
     {
@@ -80,7 +78,7 @@ const useConstantData = () => {
       leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
-    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: `500 ${localizationText.COMMON.SAR}` },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: `500 ${t('COMMON.SAR')}` },
     { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: 'Thank You! long message te...' },
   ];
   const alinmaDetailsUnsaved2 = [
@@ -91,7 +89,7 @@ const useConstantData = () => {
       leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
-    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: `800 ${localizationText.COMMON.SAR}` },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: `800 ${t('COMMON.SAR')}` },
     {
       id: '3',
       label: t('TRANSFER_SUMMARY.REASON'),
@@ -137,7 +135,7 @@ const useConstantData = () => {
     {
       id: '3',
       label: t('TRANSFER_SUMMARY.AMOUNT'),
-      value: `${3000} ${localizationText.COMMON.SAR}`,
+      value: `${3000} ${t('COMMON.SAR')}`,
     },
     {
       id: '4',
@@ -218,12 +216,12 @@ const useConstantData = () => {
         {
           id: '1',
           key: 'CARD1',
-          value: `${localizationText.CARD_OPTIONS.DEBIT_CARD} - **** 2222`,
+          value: `${t('CARD_OPTIONS.DEBIT_CARD')} - **** 2222`,
         },
         {
           id: '1',
           key: 'CARD2',
-          value: `${localizationText.TOP_UP.CREDIT_CARD} - **** 2222`,
+          value: `${t('TOP_UP.CREDIT_CARD')} - **** 2222`,
         },
       ],
     },
@@ -519,7 +517,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: t('TRAFFIC_VIOLATION.AMOUNT'),
-      value: `1000 ${localizationText.COMMON.SAR}`,
+      value: `1000 ${t('COMMON.SAR')}`,
     },
     {
       id: '3',
@@ -1101,7 +1099,7 @@ const useConstantData = () => {
       color: colors.primary.primary500,
     },
     { id: '4', label: t('TOP_UP.AMOUNT'), icon: null },
-    { id: '1', label: t('TRANSACTION_HISTORY.TRANSFER_REASON'), value: localizationText.TOP_UP.REASON },
+    { id: '1', label: t('TRANSACTION_HISTORY.TRANSFER_REASON'), value: t('TOP_UP.REASON ') },
   ];
 
   const orderDetails = [
@@ -1110,18 +1108,18 @@ const useConstantData = () => {
     {
       id: '3',
       label: t('ORDER_SCREEN.AMOUNT'),
-      value: `470 ${localizationText.COMMON.SAR}`,
+      value: `470 ${t('COMMON.SAR')}`,
     },
     { id: '4', label: t('ORDER_SCREEN.DISCOUNT'), value: '20%' },
     {
       id: '3',
       label: t('ORDER_SCREEN.FEES'),
-      value: `0.00 ${localizationText.COMMON.SAR}`,
+      value: `0.00 ${t('COMMON.SAR')}`,
     },
     {
       id: '3',
       label: t('ORDER_SCREEN.VAT'),
-      value: `00.2 ${localizationText.COMMON.SAR}`,
+      value: `00.2 ${t('COMMON.SAR')}`,
     },
   ];
   const allOrders = [
@@ -1157,7 +1155,7 @@ const useConstantData = () => {
       isAlinma: true,
     },
     { id: '2', label: t('TOP_UP.AMOUNT'), icon: null },
-    { id: '3', label: t('TOP_UP.OCCASION'), value: localizationText.TOP_UP.EIYDIAH },
+    { id: '3', label: t('TOP_UP.OCCASION'), value: t('TOP_UP.EIYDIAH ') },
   ];
 
   const offerFilterDefaultValues = {
@@ -1190,42 +1188,42 @@ const useConstantData = () => {
   ];
 
   const moiServiceProvider = [
-    { id: 1, text: localizationText.BILL_PAYMENTS.EXPATRIATE_SERVICES },
-    { id: 2, text: localizationText.BILL_PAYMENTS.DRIVING_LICENSE },
-    { id: 3, text: localizationText.BILL_PAYMENTS.SAUDI_PASSPORT },
-    { id: 4, text: localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS },
-    { id: 5, text: localizationText.BILL_PAYMENTS.MOTOR_VEHICLE },
-    { id: 6, text: localizationText.BILL_PAYMENTS.LABOR_IMPORTATION },
-    { id: 7, text: localizationText.BILL_PAYMENTS.CIVIL_REGISTRATION },
-    { id: 8, text: localizationText.BILL_PAYMENTS.NATIONAL_PLATFORM_FOR_VIOLATION },
-    { id: 9, text: localizationText.BILL_PAYMENTS.DEPORTATION_CONTROL },
-    { id: 10, text: localizationText.BILL_PAYMENTS.CIVIL_DEFENSE_DIRECTORATE },
-    { id: 11, text: localizationText.BILL_PAYMENTS.MOI_PVP },
+    { id: 1, text: t('BILL_PAYMENTS.EXPATRIATE_SERVICES ') },
+    { id: 2, text: t('BILL_PAYMENTS.DRIVING_LICENSE ') },
+    { id: 3, text: t('BILL_PAYMENTS.SAUDI_PASSPORT ') },
+    { id: 4, text: t('BILL_PAYMENTS.TRAFFIC_VIOLATIONS ') },
+    { id: 5, text: t('BILL_PAYMENTS.MOTOR_VEHICLE ') },
+    { id: 6, text: t('BILL_PAYMENTS.LABOR_IMPORTATION ') },
+    { id: 7, text: t('BILL_PAYMENTS.CIVIL_REGISTRATION ') },
+    { id: 8, text: t('BILL_PAYMENTS.NATIONAL_PLATFORM_FOR_VIOLATION ') },
+    { id: 9, text: t('BILL_PAYMENTS.DEPORTATION_CONTROL ') },
+    { id: 10, text: t('BILL_PAYMENTS.CIVIL_DEFENSE_DIRECTORATE ') },
+    { id: 11, text: t('BILL_PAYMENTS.MOI_PVP ') },
   ];
 
   const moiServiceType = [
-    { id: 1, text: localizationText.BILL_PAYMENTS.EXTEND_VISITOR_VISA },
-    { id: 2, text: localizationText.BILL_PAYMENTS.RENEW_IQAMAH },
-    { id: 3, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
-    { id: 4, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
-    { id: 5, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
-    { id: 6, text: localizationText.BILL_PAYMENTS.REPLACE_IQAMAH },
-    { id: 7, text: localizationText.BILL_PAYMENTS.TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD },
-    { id: 8, text: localizationText.BILL_PAYMENTS.CHANGE_OF_OCCUPATION },
-    { id: 9, text: localizationText.BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE },
-    { id: 10, text: localizationText.BILL_PAYMENTS.VISA_CANCELLATION },
-    { id: 11, text: localizationText.BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP },
+    { id: 1, text: t('BILL_PAYMENTS.EXTEND_VISITOR_VISA ') },
+    { id: 2, text: t('BILL_PAYMENTS.RENEW_IQAMAH ') },
+    { id: 3, text: t('BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE ') },
+    { id: 4, text: t('BILL_PAYMENTS.VISA_CANCELLATION ') },
+    { id: 5, text: t('BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP ') },
+    { id: 6, text: t('BILL_PAYMENTS.REPLACE_IQAMAH ') },
+    { id: 7, text: t('BILL_PAYMENTS.TRANSFER_DEPENDENT_TO_BE_HEAD_OF_HOUSEHOLD ') },
+    { id: 8, text: t('BILL_PAYMENTS.CHANGE_OF_OCCUPATION ') },
+    { id: 9, text: t('BILL_PAYMENTS.ISSUE_EXIT_RE_ENTRY_VISIT_SINGLE ') },
+    { id: 10, text: t('BILL_PAYMENTS.VISA_CANCELLATION ') },
+    { id: 11, text: t('BILL_PAYMENTS.TRANSFER_OF_SPONSORSHIP ') },
   ];
 
   const idTypes = [
-    { id: 1, text: localizationText.BILL_PAYMENTS.IQAMA_ID },
-    { id: 2, text: localizationText.BILL_PAYMENTS.NATIONAL_ID_NUMBER },
+    { id: 1, text: t('BILL_PAYMENTS.IQAMA_ID ') },
+    { id: 2, text: t('BILL_PAYMENTS.NATIONAL_ID_NUMBER ') },
   ];
 
   const moiPaymentDuration = [
-    { id: 1, text: localizationText.BILL_PAYMENTS.TWELVE_MONTHS },
-    { id: 2, text: localizationText.BILL_PAYMENTS.TWENTY_FOUR_MONTHS },
-    { id: 3, text: localizationText.BILL_PAYMENTS.THIRTY_SIX_MONTHS },
+    { id: 1, text: t('BILL_PAYMENTS.TWELVE_MONTHS ') },
+    { id: 2, text: t('BILL_PAYMENTS.TWENTY_FOUR_MONTHS ') },
+    { id: 3, text: t('BILL_PAYMENTS.THIRTY_SIX_MONTHS ') },
   ];
   const billPaymentDetails = [
     {
@@ -1262,7 +1260,7 @@ const useConstantData = () => {
     {
       id: '1',
       label: t('TRANSACTION_HISTORY.AMOUNT'),
-      value: `300 ${localizationText.COMMON.SAR}`,
+      value: `300 ${t('COMMON.SAR')}`,
     },
     {
       id: '2',
@@ -1365,7 +1363,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: t('REQUEST_SUMMARY.AMOUNT'),
-      value: `${3000} ${localizationText.COMMON.SAR}`,
+      value: `${3000} ${t('COMMON.SAR')}`,
     },
   ];
   const requestMoneySummary = [
@@ -1379,7 +1377,7 @@ const useConstantData = () => {
     {
       id: '2',
       label: t('REQUEST_SUMMARY.AMOUNT'),
-      value: `${3000} ${localizationText.COMMON.SAR}`,
+      value: `${3000} ${t('COMMON.SAR')}`,
     },
     {
       id: '4',
@@ -1395,7 +1393,7 @@ const useConstantData = () => {
       isAlinma: false,
       leftIcon: true,
     },
-    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: t('TRANSFER_SUMMARY.AMOUNT_2 ') },
   ];
 
   const requestAccepted = [
@@ -1495,8 +1493,8 @@ const useConstantData = () => {
     },
   ];
   const sortingData = [
-    { id: 1, text: localizationText.SHOP.HIGH_TO_LOW },
-    { id: 2, text: localizationText.SHOP.LOW_TO_HIGH },
+    { id: 1, text: t('SHOP.HIGH_TO_LOW ') },
+    { id: 2, text: t('SHOP.LOW_TO_HIGH ') },
   ];
 
   const offerDetailData = [

@@ -3,11 +3,11 @@ import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 
 import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficVoilationTypes } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
@@ -43,18 +43,15 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   handleFormTabSelect,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = trafficDetailStyles(colors);
-  const localizationText = useLocalization();
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
     const additionalStyle = (errorMessage && styles.errorStyle) || (myIdCheck && styles.greyInputStyle);
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
-  const tabs = [
-    localizationText.TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER,
-    localizationText.TRAFFIC_VIOLATION.BY_VIOLATION_ID,
-  ];
+  const tabs = [t('TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER'), t('TRAFFIC_VIOLATION.BY_VIOLATION_ID')];
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
@@ -84,7 +81,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
         render={() => (
           <IPayRHFAnimatedTextInput
             name={TrafficPaymentFormFields.MY_ID}
-            label={myIdCheck ? localizationText.BILL_PAYMENTS.MY_ID : localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID}
+            label={myIdCheck ? t('BILL_PAYMENTS.MY_ID') : t('TRAFFIC_VIOLATION.VIOLATOR_ID')}
             labelColor={myIdCheck ? colors.natural.natural500 : colors.primary.primary500}
             showRightIcon={!myIdCheck}
             editable={!myIdCheck}

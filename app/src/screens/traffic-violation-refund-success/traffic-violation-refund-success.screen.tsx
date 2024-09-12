@@ -5,18 +5,18 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import IPayDeclinedCard from '@app/components/molecules/ipay-declined-card/ipay-declined-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
 import { TOTAL_AMOUNT } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import useTrafficViolationSuccess from './traffic-violation-refund-success.hook';
 import trafficViolationSuccessStyles from './traffic-violation-refund-success.style';
+import { useTranslation } from 'react-i18next';
 
 const TrafficViolationRefundSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationSuccessStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { goToHome, billPayDetailes, declinedBillPayDetails, paidBilled, paymentDeclined, payOtherViolation } =
     useTrafficViolationSuccess();
   const route = useRoute();
@@ -28,7 +28,7 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
         <IPaySuccess
           style={styles.minFlex}
           headingText="TRAFFIC_VIOLATION.REFUND_SUCCESS"
-          descriptionText={`${TOTAL_AMOUNT} ${localizationText.COMMON.SAR}`}
+          descriptionText={`${TOTAL_AMOUNT} ${t('COMMON.SAR')}`}
           descriptionStyle={styles.boldStyles}
         />
         <IPayChip

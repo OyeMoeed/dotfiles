@@ -23,7 +23,7 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID,
   const styles = billPaymentsComponentsStyles(colors);
   const localizationText = useLocalization();
   const otherBills = constants.OTHER_BILL_TYPES;
-  const unpaidCount = `(3 ${localizationText.BILL_PAYMENTS.UNPAID})`;
+  const unpaidCount = `(3 ${t('BILL_PAYMENTS.UNPAID')})`;
 
   const getIcon = (icon: string) => {
     const isImage = checkImage(icon);

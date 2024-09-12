@@ -113,7 +113,7 @@ const useMobileAndIqamaVerification = () => {
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
+      title: toastMsg || t('ERROR.API_ERROR_RESPONSE'),
       subTitle: t('CARDS.VERIFY_CODE_ACCURACY'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
@@ -157,7 +157,7 @@ const useMobileAndIqamaVerification = () => {
     } catch (error: any) {
       setIsLoading(false);
       setOtpError(true);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -179,7 +179,7 @@ const useMobileAndIqamaVerification = () => {
     } catch (error: any) {
       renderSpinner(false);
       setOtpError(true);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -225,7 +225,7 @@ const useMobileAndIqamaVerification = () => {
     }
     setOtpError(false);
     if (!checkTermsAndConditions) {
-      renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION);
+      renderToast(t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'));
       return;
     }
     prepareTheLoginService(data);
@@ -254,7 +254,7 @@ const useMobileAndIqamaVerification = () => {
   const onConfirm = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       verifyOtp();
     }

@@ -217,7 +217,7 @@ const SendMoneyFormScreen: React.FC = () => {
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
     message: t('SEND_MONEY_FORM.REMOVE_DETAIL'),
-    options: [localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL],
+    options: [t('PROFILE.REMOVE'), t('COMMON.CANCEL]')],
     cancelButtonIndex: 1,
     showCancel: true,
     destructiveButtonIndex: 0,
@@ -290,13 +290,13 @@ const SendMoneyFormScreen: React.FC = () => {
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
           regular={false}
-          text={`${selectedContactsCount} ${localizationText.HOME.OF}`}
+          text={`${selectedContactsCount} ${t('HOME.OF')}`}
           color={colors.natural.natural900}
         />
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACT} ${t('WALLET_TO_WALLET.CONTACTS')}`}
         />
       </IPayView>
     );
@@ -307,10 +307,7 @@ const SendMoneyFormScreen: React.FC = () => {
       isShowCard: false,
     });
   };
-  const btnText =
-    from === TRANSFERTYPE.REQUEST_MONEY
-      ? localizationText.REQUEST_MONEY.SENT_REQUEST
-      : localizationText.COMMON.TRANSFER;
+  const btnText = from === TRANSFERTYPE.REQUEST_MONEY ? t('REQUEST_MONEY.SENT_REQUEST') : t('COMMON.TRANSFER');
   return (
     <IPaySafeAreaView style={styles.container}>
       <>
@@ -377,7 +374,7 @@ const SendMoneyFormScreen: React.FC = () => {
                   <IPaySubHeadlineText
                     regular
                     color={colors.primary.primary800}
-                    text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
+                    text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${t('COMMON.SAR')}`}
                   />
                 }
               />

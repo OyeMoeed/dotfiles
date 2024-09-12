@@ -79,7 +79,7 @@ const BillPaymentsScreen: React.FC = () => {
           break;
         }
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           renderToast(apiResponse?.error);
@@ -88,7 +88,7 @@ const BillPaymentsScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

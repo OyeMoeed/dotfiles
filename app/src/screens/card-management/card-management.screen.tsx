@@ -153,7 +153,7 @@ const CardManagementScreen: React.FC = () => {
         const filteredData = cards.filter((el) => el.id !== currentCardID);
         setCards(filteredData);
         setShowDeleteAlert(false);
-        renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, icons.trash);
+        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), icons.trash);
       }
     } catch (e) {
       renderSpinner(false);
@@ -199,7 +199,7 @@ const CardManagementScreen: React.FC = () => {
 
   const onPressSave = () => {
     editNickNameSheet.current?.close();
-    renderToast(localizationText.CARD_MANAGEMENT.THE_CARD_HAS_RENAMED, icons.tick_square);
+    renderToast(t('CARD_MANAGEMENT.THE_CARD_HAS_RENAMED'), icons.tick_square);
   };
 
   const onAddCard = () => {
@@ -238,10 +238,10 @@ const CardManagementScreen: React.FC = () => {
         title={cards[selectedCardIndex]?.name || ''}
         message={`**** **** **** ${cards[selectedCardIndex]?.lastFourDigit}` || ''}
         options={[
-          localizationText.CARD_MANAGEMENT.MAKE_IT_DEFAULT,
-          localizationText.CARD_MANAGEMENT.DELETE_CARD,
-          localizationText.COMMON.CANCEL,
-          // localizationText.CARD_MANAGEMENT.EDIT_NICK_NAME,
+          t('CARD_MANAGEMENT.MAKE_IT_DEFAULT'),
+          t('CARD_MANAGEMENT.DELETE_CARD'),
+          t('COMMON.CANCEL'),
+          // t("CARD_MANAGEMENT.EDIT_NICK_NAME"),
         ]}
         cancelButtonIndex={3}
         destructiveButtonIndex={2}

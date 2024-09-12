@@ -18,7 +18,6 @@ import {
 import { IPayButton, IPayChip, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
@@ -35,7 +34,6 @@ import { GiftTransferSuccessStyles } from './ipay-gift-transfer-success.styles';
 const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const styles = GiftTransferSuccessStyles(colors);
   const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
 
@@ -80,7 +78,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
       {
         id: '2',
         label: t('TRANSFER_SUMMARY.AMOUNT'),
-        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        value: `${item.amount} ${t('COMMON.SAR')}`,
       },
       {
         id: '3',
@@ -125,7 +123,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     );
   };
 
-  const renderText = () => localizationText.TOP_UP.GIFT_SUCCESSFUL;
+  const renderText = () => t('TOP_UP.GIFT_SUCCESSFUL');
 
   const renderActionLabel = () => (
     <IPayView style={styles.giftText}>
@@ -168,7 +166,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                 />
                 <IPaySubHeadlineText
                   regular={false}
-                  text={`${totalAmount} ${localizationText.COMMON.SAR}`}
+                  text={`${totalAmount} ${t('COMMON.SAR')}`}
                   style={styles.headlineText}
                 />
               </IPayView>
@@ -241,7 +239,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayFootnoteText
               color={themeTextColor}
               style={styles.messagePreviewText}
-              text={`${localizationText.SEND_GIFT.FROM}: ${name}`}
+              text={`${t('SEND_GIFT.FROM')}: ${name}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
             />
           </IPayView>

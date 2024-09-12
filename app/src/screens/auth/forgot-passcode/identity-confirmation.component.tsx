@@ -8,7 +8,6 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { setToken } from '@app/network/client';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { PrepareForgetPasscodeProps } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
@@ -24,6 +23,7 @@ import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
@@ -32,19 +32,19 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   const { colors } = useTheme();
   const [apiError, setAPIError] = useState<string>('');
   const styles = ForgotPasscodeStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const validationSchema = Yup.object().shape({
-    iqamaId: getValidationSchemas(localizationText).iqamaIdSchema,
+    iqamaId: getValidationSchemas(t).iqamaIdSchema,
   });
 
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      subTitle: apiError || t('CARDS.VERIFY_CODE_ACCURACY'),
       borderColor: colors.error.error25,
       isBottomSheet: true,
       isShowRightIcon: false,
@@ -118,14 +118,14 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         setToken(apiResponse?.headers?.authorization);
         await prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
       } else {
-        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
+        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
       renderSpinner(false);
     } catch (error) {
       renderSpinner(false);
-      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

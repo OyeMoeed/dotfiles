@@ -100,7 +100,7 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const validatePasscode = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
       setPasscodeError(true);
-      renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
+      renderToast(t('COMMON.INCORRECT_CODE'), t('CHANGE_PIN.ENSURE_YOU_WRITE'));
     } else {
       dispatch(
         setAppData({

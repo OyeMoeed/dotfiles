@@ -40,13 +40,13 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
   ) => {
     const { colors } = useTheme();
     const { t } = useTranslation();
-    const localizationText = useLocalization();
     const styles = otpVerificationStyles();
     const { showToast } = useToastContext();
     const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
+
     const renderToast = (toastMsg: string) => {
       showToast({
-        title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
+        title: toastMsg || t('ERROR.API_ERROR_RESPONSE'),
         subTitle: t('CARDS.VERIFY_CODE_ACCURACY'),
         borderColor: colors.error.error25,
         isShowRightIcon: false,
@@ -77,8 +77,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         </IPayView>
         <IPayView style={[styles.headingView, headingContainerStyle]}>
           <IPayPageDescriptionText
-            heading={title || localizationText.COMMON.ENTER_RECEIVED_CODE}
-            text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${hideContactNumber(mobileNumber)}`}
+            heading={title || t('COMMON.ENTER_RECEIVED_CODE')}
+            text={`${t('COMMON.ENTER_FOUR_DIGIT_OTP')} ${hideContactNumber(mobileNumber)}`}
           />
         </IPayView>
 
@@ -86,7 +86,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           <IPayOtpInputText isError={otpError} onChangeText={onChangeText} value={otp} setValue={setOtp} />
 
           <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-            {`${localizationText.COMMON.CODE_EXPIRES_IN} ${formatTime(counter)}`}
+            {`${t('COMMON.CODE_EXPIRES_IN')} ${formatTime(counter)}`}
           </IPayCaption1Text>
 
           <IPayButton

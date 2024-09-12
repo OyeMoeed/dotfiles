@@ -27,7 +27,7 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
+      title: toastMsg || t('ERROR.API_ERROR_RESPONSE'),
       subTitle: t('CHANGE_PIN.PLEASE_ENSURE_PASSCODE'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,

@@ -25,13 +25,14 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { moiServiceProvider, moiServiceType, moiPaymentDuration, idTypes } = useConstantData();
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [sheetType, setSheetType] = useState<string>('');
@@ -45,10 +46,10 @@ const MoiPaymentScreen: React.FC = () => {
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
   const { myBeneficiaryId } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
+  const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND]')];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
-    getValidationSchemas(localizationText);
+    getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     serviceProvider,
@@ -122,13 +123,13 @@ const MoiPaymentScreen: React.FC = () => {
   const getBottomSheetHeading = () => {
     switch (sheetType) {
       case MoiPaymentType.SERVICE_TYPE:
-        return localizationText.BILL_PAYMENTS.SERVICE_TYPE;
+        return t('BILL_PAYMENTS.SERVICE_TYPE');
       case MoiPaymentType.ID_TYPE:
-        return localizationText.BILL_PAYMENTS.ID_TYPE;
+        return t('BILL_PAYMENTS.ID_TYPE');
       case MoiPaymentType.DURATION:
-        return localizationText.BILL_PAYMENTS.DURATION;
+        return t('BILL_PAYMENTS.DURATION');
       default:
-        return localizationText.BILL_PAYMENTS.SERVICE_PROVIDER;
+        return t('BILL_PAYMENTS.SERVICE_PROVIDER');
     }
   };
 
@@ -314,8 +315,8 @@ const MoiPaymentScreen: React.FC = () => {
                         iconViewStyles={styles.iconView}
                         message={
                           sheetType === MoiPaymentType.SERVICE_PROVIDER
-                            ? localizationText.BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND
-                            : localizationText.BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND
+                            ? t('BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND')
+                            : t('BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND')
                         }
                         showIcon
                         icon={icons.note_remove}

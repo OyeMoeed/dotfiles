@@ -38,7 +38,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
   const { showToast } = useToastContext();
   const [transactionDataArray, setTransactionDataArray] = useState<{ key: string; value: any }[]>([]);
 
-  const transactionAmount = `${localizationText.TRANSACTION_HISTORY.REFUND} ${amount} ${localizationText.COMMON.SAR}`;
+  const transactionAmount = `${t('TRANSACTION_HISTORY.REFUND')} ${amount} ${t('COMMON.SAR')}`;
 
   const getTransactionDataToRender = () => {
     if (transactionData) {

@@ -122,12 +122,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     [handleImagePicker, handleCameraPicker, selectedImage],
   );
 
-  const walletOptions = [
-    localizationText.PROFILE.TAKE_PHOTO,
-    localizationText.PROFILE.UPLOAD_PHOTO,
-    localizationText.PROFILE.REMOVE,
-    localizationText.COMMON.CANCEL,
-  ];
+  const walletOptions = [t('PROFILE.TAKE_PHOTO'), t('PROFILE.UPLOAD_PHOTO'), t('PROFILE.REMOVE'), t('COMMON.CANCEL')];
   const actionSheetOptions: IPayActionSheetProps = {
     title: t('PROFILE.CHANGE_PICTURE'),
     showIcon: true,
@@ -136,7 +131,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     options:
       selectedImage || walletInfo.profileImage
         ? walletOptions
-        : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],
+        : [t('PROFILE.TAKE_PHOTO'), t('PROFILE.UPLOAD_PHOTO'), t('COMMON.CANCEL]')],
     cancelButtonIndex: selectedImage || walletInfo.profileImage ? 3 : 2,
     showCancel: true,
     destructiveButtonIndex: selectedImage || walletInfo.profileImage ? 2 : undefined,

@@ -8,13 +8,13 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientTextMasked, IPayList } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCountdownTime } from '@app/utilities/date-helper.util';
 import React, { useEffect } from 'react';
 import useCallReceiverTimer from './ipay-receive-call.hook';
 import { GuideStep, IPayReceiveCallProps } from './ipay-receive-call.interface';
 import receiveCallStyles from './ipay-receive-call.styles';
+import { useTranslation } from 'react-i18next';
 
 const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   testID,
@@ -23,7 +23,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   // TODO: fix NodeJs types
   // eslint-disable-next-line no-undef
   let interval: NodeJS.Timeout;
@@ -81,8 +81,8 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
         style={expired ? styles.expiredTimerStyle : styles.timerStyle}
         text={
           expired
-            ? localizationText.ACTIVATE_BENEFICIARY.REQUEST_EXPIRED
-            : `${localizationText.ACTIVATE_BENEFICIARY.REQUEST_EXPIRE_IN} ${formatCountdownTime(timeLeft)}`
+            ? t('ACTIVATE_BENEFICIARY.REQUEST_EXPIRED')
+            : `${t('ACTIVATE_BENEFICIARY.REQUEST_EXPIRE_IN')} ${formatCountdownTime(timeLeft)}`
         }
       />
       {expired ? (

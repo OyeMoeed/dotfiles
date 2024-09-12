@@ -92,10 +92,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     // TODO will be handle on the basis of api
     {
       icon: icons.freeze_icon,
-      text:
-        actionTypeRef.current === CardActiveStatus.FREEZE
-          ? localizationText.CARDS.FREEZE_CARD
-          : localizationText.CARDS.UNFREEZE_CARD,
+      text: actionTypeRef.current === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
       key: '1',
       onPress: showActionSheet,
     },
@@ -196,7 +193,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           ? CardActiveStatus.UNFREEZE
           : CardActiveStatus.FREEZE;
       setTimeout(() => {
-        renderToast(`${localizationText.CARDS.DEBIT_CARD} ${currentCard.maskedCardNumber}`, type.toLowerCase());
+        renderToast(`${t('CARDS.DEBIT_CARD')} ${currentCard.maskedCardNumber}`, type.toLowerCase());
       }, 500);
       renderSpinner(false);
       return;
@@ -270,12 +267,10 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       )}
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
-          <IPayCaption2Text style={styles.accountBalanceText}>
-            {localizationText.CARDS.ACCOUNT_BALANCE}
-          </IPayCaption2Text>
+          <IPayCaption2Text style={styles.accountBalanceText}>{t('CARDS.ACCOUNT_BALANCE')}</IPayCaption2Text>
           <IPaySubHeadlineText style={styles.accountBalanceText}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
+            <IPaySubHeadlineText regular>{t('COMMON.SAR')}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />
@@ -290,7 +285,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
-            {currentCard.totalCashbackAmt} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
+            {currentCard.totalCashbackAmt} <IPayFootnoteText>{t('COMMON.SAR')}</IPayFootnoteText>
           </IPaySubHeadlineText>
         }
       />
@@ -324,9 +319,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       </IPayView>
       <IPayView style={styles.headingsContainer}>
         <IPayView style={styles.commonContainerStyle}>
-          <IPayFootnoteText style={styles.footnoteTextStyle}>
-            {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
-          </IPayFootnoteText>
+          <IPayFootnoteText style={styles.footnoteTextStyle}>{t('CARDS.CARD_TRANSACTIONS_HISTORY')}</IPayFootnoteText>
         </IPayView>
         <IPayPressable
           onPress={() =>
@@ -339,7 +332,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           style={styles.commonContainerStyle}
         />
         <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {localizationText.COMMON.VIEW_ALL}
+          {t('COMMON.VIEW_ALL')}
         </IPaySubHeadlineText>
         <IPayPressable
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}

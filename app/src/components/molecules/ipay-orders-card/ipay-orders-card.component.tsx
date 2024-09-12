@@ -12,7 +12,6 @@ import {
 } from '@app/components/atoms';
 import useConstantData from '@app/constants/use-constants';
 import SummaryType from '@app/enums/summary-type';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -28,7 +27,6 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
   const { colors } = useTheme();
   const styles = IPayOrdersCardStyle(colors);
   const { productDetailData } = useConstantData();
-  const localizationText = useLocalization();
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
@@ -51,10 +49,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
               <IPayView style={styles.cardRow}>
                 <IPayImage image={image} style={styles.image} resizeMode="contain" />
                 <IPayView style={styles.textView}>
-                  <IPaySubHeadlineText
-                    color={colors.primary.primary900}
-                    text={`${localizationText.COMMON.SAR} ${amount}`}
-                  />
+                  <IPaySubHeadlineText color={colors.primary.primary900} text={`${t('COMMON.SAR')} ${amount}`} />
                   <IPayFootnoteText regular={false} text={title} color={colors.natural.natural900} />
                   <IPayView style={styles.couponRow}>
                     <IPayCaption2Text text={coupon} color={colors.natural.natural700} />

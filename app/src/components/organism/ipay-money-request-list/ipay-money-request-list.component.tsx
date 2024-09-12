@@ -8,7 +8,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -27,7 +26,6 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = moneyRequestListStyles(colors);
 
   // this function should change the color of the status of the gift
@@ -84,11 +82,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
         <IPayView style={[styles.statusView, { backgroundColor }]}>
           <IPaySubHeadlineText regular text={text} color={color} style={styles.text} />
         </IPayView>
-        <IPayFootnoteText
-          regular={false}
-          text={`${amount} ${localizationText.COMMON.SAR}`}
-          color={colors.natural.natural900}
-        />
+        <IPayFootnoteText regular={false} text={`${amount} ${t('COMMON.SAR')}`} color={colors.natural.natural900} />
       </IPayView>
     </IPayPressable>
   );

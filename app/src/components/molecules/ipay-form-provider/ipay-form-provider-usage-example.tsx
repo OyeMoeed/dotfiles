@@ -9,8 +9,8 @@ import {
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services';
+import { useTranslation } from 'react-i18next';
 
 interface FormValues {
   mobileNumber: string;
@@ -19,14 +19,14 @@ interface FormValues {
 }
 
 const ExampleFormProviderUsage = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [searchText, setSearchText] = useState<string>('');
 
   const onSubmit: SubmitHandler<FormValues> = () => {};
 
   const cities = constants.CITIES;
 
-  const { mobileNumberSchema, iqamaIdSchema, city } = getValidationSchemas(localizationText);
+  const { mobileNumberSchema, iqamaIdSchema, city } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,

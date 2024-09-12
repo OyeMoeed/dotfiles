@@ -173,13 +173,13 @@ const CardsScreen: React.FC = () => {
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
-        return localizationText.CARDS.PLATINUM_CASHBACK_PREPAID_CARD;
+        return t('CARDS.PLATINUM_CASHBACK_PREPAID_CARD');
 
       case CardTypes.SIGNATURE:
-        return localizationText.CARDS.SIGNATURE_PREPAID_CARD;
+        return t('CARDS.SIGNATURE_PREPAID_CARD');
 
       case CardTypes.CLASSIC:
-        return localizationText.CARDS.CLASSIC_DEBIT_CARD;
+        return t('CARDS.CLASSIC_DEBIT_CARD');
 
       default:
         return '';
@@ -272,20 +272,20 @@ const CardsScreen: React.FC = () => {
         prepareCardInfoData(apiResponse?.response);
         cardDetailsSheetRef?.current?.present();
       } else {
-        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
+        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
       renderSpinner(false);
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       // resetPassCode();
       getCardDetails();
@@ -363,7 +363,7 @@ const CardsScreen: React.FC = () => {
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
       <IPayView style={styles.topDetails}>
-        <IPayTitle2Text regular={false}>{localizationText.CARDS.CARDS}</IPayTitle2Text>
+        <IPayTitle2Text regular={false}>{t('CARDS.CARDS')}</IPayTitle2Text>
         <IPayButton
           small
           btnType={buttonVariants.LINK_BUTTON}

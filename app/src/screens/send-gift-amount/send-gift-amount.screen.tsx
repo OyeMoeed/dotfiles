@@ -54,11 +54,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const GIFT_TABS = [
-    localizationText.SEND_GIFT.EQUALLY,
-    localizationText.SEND_GIFT.SPLIT,
-    localizationText.SEND_GIFT.MANUAL,
-  ];
+  const GIFT_TABS = [t('SEND_GIFT.EQUALLY'), t('SEND_GIFT.SPLIT'), t('SEND_GIFT.MANUAL')];
 
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const { colors } = useTheme();
@@ -86,13 +82,13 @@ const SendGiftAmountScreen = ({ route }) => {
 
     switch (true) {
       case monthlyRemaining === 0:
-        setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+        setChipValue(t('TOP_UP.LIMIT_REACHED'));
         break;
       case updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining:
-        setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
+        setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${dailyOutgoingLimit} SAR`);
         break;
       case updatedTopUpAmount > monthlyRemaining:
-        setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+        setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
         break;
       default:
         setChipValue('');
@@ -148,10 +144,10 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID, isAlinma } = item;
-    let detailText = `${topUpAmount || 0} ${localizationText.COMMON.SAR}`;
+    let detailText = `${topUpAmount || 0} ${t('COMMON.SAR')}`;
 
     if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
-      detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
+      detailText = `${calculateAmountPerContact()} ${t('COMMON.SAR')}`;
     }
 
     const renderAlinmaIcon = (isAlinmaValid: boolean) => (isAlinmaValid ? <Alinma /> : <NonAlinma />);
@@ -235,7 +231,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const renderAmountInput = () => {
     switch (selectedTab) {
-      case localizationText.SEND_GIFT.EQUALLY:
+      case t('SEND_GIFT.EQUALLY'):
         return (
           <IPayRemainingAccountBalance
             payChannelType={TransactionTypes.SEND_GIFT}
@@ -250,7 +246,7 @@ const SendGiftAmountScreen = ({ route }) => {
             inputStyles={styles.inputStyle}
           />
         );
-      case localizationText.SEND_GIFT.SPLIT:
+      case t('SEND_GIFT.SPLIT'):
         return (
           <IPayRemainingAccountBalance
             payChannelType={TransactionTypes.SEND_GIFT}
@@ -265,7 +261,7 @@ const SendGiftAmountScreen = ({ route }) => {
             inputStyles={styles.inputStyle}
           />
         );
-      case localizationText.SEND_GIFT.MANUAL:
+      case t('SEND_GIFT.MANUAL'):
         return (
           <IPayView style={styles.manual}>
             <IPayFootnoteText style={styles.text} color={colors.primary.primary800}>
@@ -291,13 +287,13 @@ const SendGiftAmountScreen = ({ route }) => {
       >
         <IPayFootnoteText
           regular={false}
-          text={`${selectedContactsCount} ${localizationText.HOME.OF}`}
+          text={`${selectedContactsCount} ${t('HOME.OF')}`}
           color={colors.natural.natural900}
         />
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${MAX_CONTACTS} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACTS} ${t('WALLET_TO_WALLET.CONTACTS')}`}
         />
       </IPayView>
     );
@@ -430,7 +426,7 @@ const SendGiftAmountScreen = ({ route }) => {
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
             showDetail
             detailTextStyle={styles.listTextStyle}
-            detailText={`${amountToShow} ${localizationText.COMMON.SAR}`}
+            detailText={`${amountToShow} ${t('COMMON.SAR')}`}
           />
         )}
         <IPayButton

@@ -42,7 +42,7 @@ const PlayStationScreen: React.FC = () => {
   const handleSort = useCallback(
     (option: string) => {
       const sorted = [...playStationPrices].sort((a, b) =>
-        option === localizationText.SHOP.HIGH_TO_LOW ? b.price - a.price : a.price - b.price,
+        option === t('SHOP.HIGH_TO_LOW') ? b.price - a.price : a.price - b.price,
       );
       setSortedData(sorted);
       if (sortRef.current) {
@@ -76,11 +76,7 @@ const PlayStationScreen: React.FC = () => {
             containerStyle={styles.chip}
             variant={States.SEVERE}
             icon={<IPayIcon icon={icons.CLOSE_SQUARE} color={colors.secondary.secondary500} size={16} />}
-            textValue={
-              selectedOption === localizationText.SHOP.HIGH_TO_LOW
-                ? localizationText.SHOP.HIGH_CHIP
-                : localizationText.SHOP.LOW_CHIP
-            }
+            textValue={selectedOption === localizationText.SHOP.HIGH_TO_LOW ? t('SHOP.HIGH_CHIP') : t('SHOP.LOW_CHIP')}
           />
         </IPayView>
       );

@@ -18,7 +18,6 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
@@ -38,7 +37,6 @@ const TransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
   const styles = transferConfirmationStyles(colors);
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -46,12 +44,12 @@ const TransferConfirmation: React.FC = () => {
   const { userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
-  const totalAmount = `3020 ${localizationText.COMMON.SAR}`;
+  const totalAmount = `3020 ${t('COMMON.SAR')}`;
   const beneficiaryData = constants.BENEFICIARY_DETAILS;
   const transferInfoData = constants.BANK_DETAILS;
-  const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
-  const vat = `${10} ${localizationText.COMMON.SAR}`;
-  const fees = `${10} ${localizationText.COMMON.SAR}`;
+  const vatTax = `${t('LOCAL_TRANSFER.VAT')} (15%)`;
+  const vat = `${10} ${t('COMMON.SAR')}`;
+  const fees = `${10} ${t('COMMON.SAR')}`;
   const iqamaId = '324234234';
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {

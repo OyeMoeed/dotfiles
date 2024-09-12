@@ -9,7 +9,6 @@ import {
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatAmount } from '@app/utilities/currency-helper.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -18,6 +17,7 @@ import getTransationIcon from '@app/utilities/transation-types-helper.util';
 import React from 'react';
 import { IPayTransactionProps } from './ipay-transaction.interface';
 import transactionItemStyles from './ipay-transaction.style';
+import { useTranslation } from 'react-i18next';
 
 /**
  * A component consisting of transaction history object
@@ -34,8 +34,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
-  const localizationText = useLocalization();
-  const trnasactionLocalization = localizationText.TRANSACTION_HISTORY;
+  const { t } = useTranslation();
+  const trnasactionLocalization = t('TRANSACTION_HISTORY');
   const CAPTION_LINES = 1;
 
   const renderLeftIcon = () => {
@@ -120,7 +120,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
         >
-          {localizationText.TRANSACTION_HISTORY.SEND_MONEY}
+          {t('TRANSACTION_HISTORY.SEND_MONEY')}
         </IPayCaption1Text>
       );
     }
@@ -134,7 +134,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
         >
-          {localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY}
+          {t('TRANSACTION_HISTORY.RECEIVED_MONEY')}
         </IPayCaption1Text>
       );
     }
@@ -204,7 +204,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
         >
-          {`${localizationText.TRANSACTION_HISTORY.GIFT_TO} ${
+          {`${t('TRANSACTION_HISTORY.GIFT_TO')} ${
             transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
           }`}
         </IPayCaption1Text>
@@ -246,7 +246,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             style={styles.trasnactionTypeText}
             color={colors.natural.natural900}
           >
-            {`${localizationText.TRANSACTION_HISTORY.GIFT_FROM} ${
+            {`${t('TRANSACTION_HISTORY.GIFT_FROM')} ${
               transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
             }`}
           </IPayCaption1Text>
@@ -255,7 +255,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             style={styles.trasnactionTypeText}
             color={colors.natural.natural900}
           >
-            {`${localizationText.TRANSACTION_HISTORY.PAY_FROM} ${
+            {`${t('TRANSACTION_HISTORY.PAY_FROM')} ${
               transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
             }`}
           </IPayCaption1Text>
@@ -272,7 +272,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
         >
-          {`${localizationText.TRANSACTION_HISTORY.PAY_TO} ${
+          {`${t('TRANSACTION_HISTORY.PAY_TO')} ${
             transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
           }`}
         </IPayCaption1Text>
@@ -403,7 +403,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         >
           {`${
             transaction?.transactionType === TransactionOperations.DEBIT ? '-' : '+'
-          }${formatAmount(transaction?.amount)} ${localizationText.COMMON.SAR}`}
+          }${formatAmount(transaction?.amount)} ${t('COMMON.SAR')}`}
         </IPayFootnoteText>
         <IPayCaption2Text style={styles.dateStyle}>
           {formatDateAndTime(new Date(transaction?.transactionDateTime), dateTimeFormat.DateAndTime)}

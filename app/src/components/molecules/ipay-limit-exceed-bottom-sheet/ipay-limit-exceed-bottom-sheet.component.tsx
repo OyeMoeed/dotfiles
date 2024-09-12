@@ -1,12 +1,12 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { dateTimeFormat } from '@app/utilities';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayLimitExceedProps from './ipay-limit-exceed-bottom-sheet.interface';
 import limitExceedStyle from './ipay-limit-exceed-bottom-sheet.style';
@@ -27,9 +27,9 @@ import limitExceedStyle from './ipay-limit-exceed-bottom-sheet.style';
 
 const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
   ({ testID, handleContinue, close, amount, date }, ref) => {
+    const { t } = useTranslation();
     const { colors } = useTheme();
     const styles = limitExceedStyle();
-    const localizationText = useLocalization();
     const bottomSheetRef = useRef<any>();
 
     const handleCancel = () => {
@@ -48,9 +48,9 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
     }));
 
     const textCaption1 = `
-    ${localizationText.PROFILE.REACHED_SPENDING_LIMIT} 
-    ${amount} ${localizationText.COMMON.SAR} 
-    ${localizationText.PROFILE.NOT_ABLE_TO_SEND_AMOUNT} 
+    ${t('PROFILE.REACHED_SPENDING_LIMIT')} 
+    ${amount} ${t('COMMON.SAR')} 
+    ${t('PROFILE.NOT_ABLE_TO_SEND_AMOUNT')} 
     [${formatDateAndTime(date, dateTimeFormat.ShortDate)}]
     `;
 

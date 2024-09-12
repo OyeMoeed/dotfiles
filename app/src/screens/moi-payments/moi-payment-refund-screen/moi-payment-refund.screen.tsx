@@ -76,7 +76,7 @@ const MoiPaymentRefund: React.FC = () => {
   const handlePay = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       onConfirmPressOtp();
     }

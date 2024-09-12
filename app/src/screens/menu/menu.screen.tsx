@@ -223,7 +223,7 @@ const MenuScreen: FC = () => {
           ref={logoutConfirmationSheet}
           testID="logout-action-sheet"
           title="MENU.LOGOUT_CONFIRMATION"
-          options={[localizationText.COMMON.CANCEL, localizationText.MENU.LOGOUT]}
+          options={[t('COMMON.CANCEL'), t('MENU.LOGOUT]')]}
           cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
           destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
           showIcon={actionSheetOptions.showIcon}

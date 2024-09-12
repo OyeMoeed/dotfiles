@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayProgressBar, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
@@ -28,7 +27,6 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   topUpBtnStyle = {},
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = ipayAccountBalanceStyles(colors);
 
   const currentAvailableBalance = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
@@ -48,13 +46,13 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               color={colors.primary.primary900}
               testID="balance-text"
               style={[styles.textColor, currentBalanceTextStyle]}
-              text={currentAvailableBalance}
+              text={`${currentAvailableBalance} `}
             />
             <IPaySubHeadlineText
               color={colors.primary.primary900}
               style={[styles.textColor, currencyTextStyle]}
               regular
-              text={` ${localizationText.COMMON.SAR}`}
+              text="COMMON.SAR"
             />
           </IPayView>
         </IPayView>
@@ -88,8 +86,12 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               text="HOME.REMAINING_AMOUNT"
             />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />
-              <IPayCaption2Text style={totalAvailableTextStyle} text={` ${localizationText.HOME.OF} `} />
+              <IPayCaption2Text
+                regular={false}
+                style={currentAvailableTextStyle}
+                text={`${currentAvailableBalance} `}
+              />
+              <IPayCaption2Text style={totalAvailableTextStyle} text="HOME.OF" />
               <IPayCaption2Text text={totalAvailableBalance} />
             </IPayView>
           </IPayView>

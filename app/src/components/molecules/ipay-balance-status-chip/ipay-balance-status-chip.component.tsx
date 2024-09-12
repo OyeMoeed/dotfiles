@@ -1,6 +1,5 @@
 import { IPayView } from '@app/components/atoms';
 import { AccountBalanceStatus } from '@app/enums/bill-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { FC, useEffect, useState } from 'react';
@@ -16,7 +15,6 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
   setWarningStatus,
 }) => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const [balanceStatus, setBalanceStatus] = useState('');
   const [exceededAmount, setExceededAmount] = useState<number>(0);
   const checkAccountBalanceStatus = () => {
@@ -50,8 +48,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
     checkAccountBalanceStatus();
   }, [amount]);
 
-  const limitExceedText = (text: string) =>
-    `${text} ${formatNumberWithCommas(exceededAmount)} ${localizationText.COMMON.SAR}`;
+  const limitExceedText = (text: string) => `${text} ${formatNumberWithCommas(exceededAmount)} ${t('COMMON.SAR')}`;
 
   const balanceStatusVariants: BalanceStatusVariants = {
     [AccountBalanceStatus.INSUFFICIENT_BALANCE]: {
@@ -63,7 +60,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_OUTGOING_LIMIT]: {
-      text: limitExceedText(localizationText.COMMON.DAILY_OUTGOING_LIMIT),
+      text: limitExceedText(t('COMMON.DAILY_OUTGOING_LIMIT')),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_INCOMING_LIMIT]: {
@@ -95,7 +92,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
       variant: States.WARNING,
     },
     [AccountBalanceStatus.SPENDING_LIMIT_EXCEED]: {
-      text: limitExceedText(localizationText.COMMON.SPENDING_LIMIT_EXCEED),
+      text: limitExceedText(t('COMMON.SPENDING_LIMIT_EXCEED')),
       variant: States.WARNING,
     },
   };

@@ -27,7 +27,7 @@ const useSettings = () => {
         changeView({ currentCode, nextComponent: PasscodeTypes.NewPasscode });
       } else {
         setPasscodeError(true);
-        currentPasscodeRef.current?.triggerToast(localizationText.PROFILE.PASSCODE_ERROR);
+        currentPasscodeRef.current?.triggerToast(t('PROFILE.PASSCODE_ERROR'));
       }
     } else {
       setPasscodeError(false);

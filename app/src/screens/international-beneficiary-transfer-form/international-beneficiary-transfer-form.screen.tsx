@@ -67,7 +67,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
           <IPayView style={styles.container}>
             <IPayImage image={transferService?.serviceLogo} style={styles.logoStyles} />
             <IPayCaption1Text
-              text={`${localizationText.COMMON.DELIVERY_TYPE}: ${transferService.transferType}`}
+              text={`${t('COMMON.DELIVERY_TYPE')}: ${transferService.transferType}`}
               style={styles.caption}
             />
             <IPayTitle2Text text={transferService.serviceName} style={styles.heading} />

@@ -36,11 +36,7 @@ const TrafficViolationScreen: React.FC = () => {
         />
         <IPayButton
           btnIconsDisabled
-          btnText={
-            selectedBillsCount === billsData?.length
-              ? localizationText.COMMON.DESELECT_ALL
-              : localizationText.COMMON.SELECT_ALL
-          }
+          btnText={selectedBillsCount === billsData?.length ? t('COMMON.DESELECT_ALL') : t('COMMON.SELECT_ALL')}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={selectedBillsCount === billsData?.length ? deselectAllBills : selectAllBills}
         />
@@ -70,7 +66,7 @@ const TrafficViolationScreen: React.FC = () => {
               <SadadFooterComponent
                 textColor={colors.natural.natural500}
                 onPressBtn={handlePayButton}
-                btnText={`${localizationText.COMMON.PAY} (${selectedBillsAmount} ${localizationText.COMMON.SAR})`}
+                btnText={`${t('COMMON.PAY')} (${selectedBillsAmount} ${t('COMMON.SAR')})`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
               />

@@ -38,7 +38,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const filterRef = useRef<bottomSheetTypes>(null);
   const { transferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
 
-  const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
+  const [activeTab, setActiveTab] = useState<string>(t('COMMON.SENT'));
   const transactionRef = React.createRef<any>();
   const [transaction, setTransaction] = useState<BeneficiaryTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
@@ -50,7 +50,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
-  const tabOptions = [localizationText.COMMON.SENT, localizationText.COMMON.RECEIVED];
+  const tabOptions = [t('COMMON.SENT'), t('COMMON.RECEIVED]')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
@@ -117,7 +117,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
           setBeneficiaryHistoryData(apiResponse?.response?.transactions);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error?.error ?? '');
@@ -128,8 +128,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

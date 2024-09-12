@@ -31,7 +31,7 @@ const TrafficViolationIDScreen: React.FC = () => {
       <IPayView style={styles.rowStyles}>
         <IPayList
           title="TRAFFIC_VIOLATION.VIOLATOR_ID"
-          detailText={`${billsData?.length} ${localizationText.TRAFFIC_VIOLATION.VIOLATION}`}
+          detailText={`${billsData?.length} ${t('TRAFFIC_VIOLATION.VIOLATION')}`}
           subTitle={voilatorID}
           isShowSubTitle
           showDetail
@@ -42,11 +42,7 @@ const TrafficViolationIDScreen: React.FC = () => {
         <IPayFootnoteText color={colors.primary.primary900} regular={false} text="TRAFFIC_VIOLATION.FOUND_VIOLATION" />
         <IPayButton
           btnIconsDisabled
-          btnText={
-            selectedBillsCount === billsData?.length
-              ? localizationText.COMMON.DESELECT_ALL
-              : localizationText.COMMON.SELECT_ALL
-          }
+          btnText={selectedBillsCount === billsData?.length ? t('COMMON.DESELECT_ALL') : t('COMMON.SELECT_ALL')}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={selectedBillsCount === billsData?.length ? deselectAllBills : selectAllBills}
         />
@@ -75,7 +71,7 @@ const TrafficViolationIDScreen: React.FC = () => {
               <SadadFooterComponent
                 textColor={colors.natural.natural500}
                 onPressBtn={handlePayButton}
-                btnText={`${localizationText.COMMON.PAY} : ${selectedBillsAmount} ${localizationText.COMMON.SAR}`}
+                btnText={`${t('COMMON.PAY')} : ${selectedBillsAmount} ${t('COMMON.SAR')}`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
               />

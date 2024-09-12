@@ -19,7 +19,7 @@ const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testI
   const { colors } = useTheme();
   const styles = nearestAtmStyles(colors);
   const localizationText = useLocalization();
-  const getDistance = (distance: string | number) => `${distance}  ${localizationText.COMMON.KM}`;
+  const getDistance = (distance: string | number) => `${distance}  ${t('COMMON.KM')}`;
 
   const renderAtms = ({ item }: AtmProps) => (
     <IPayPressable style={styles.atmCard} key={item.address} onPress={() => onPressAtmCard(item)}>

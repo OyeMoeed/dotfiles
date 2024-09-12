@@ -25,15 +25,15 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const variant = route?.params?.variant;
   const headingText =
     variant === ScreenNames.TRAFFIC_VOILATION_NUM_REFUND
-      ? localizationText.TRAFFIC_VIOLATION.VIOLATION_SUCCESS
-      : localizationText.TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS;
+      ? t('TRAFFIC_VIOLATION.VIOLATION_SUCCESS')
+      : t('TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS');
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
           headingText={headingText}
-          descriptionText={`${TOTAL_AMOUNT} ${localizationText.COMMON.SAR}`}
+          descriptionText={`${TOTAL_AMOUNT} ${t('COMMON.SAR')}`}
           descriptionStyle={styles.boldStyles}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>

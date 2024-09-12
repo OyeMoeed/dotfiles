@@ -85,9 +85,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
           btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
           btnType="link-button"
           onPress={toggleAnimation}
-          btnText={
-            isExpanded ? localizationText.VIRTUAL_CARD.CLOSE_DETAILS : localizationText.VIRTUAL_CARD.VIEW_DETAILS
-          }
+          btnText={isExpanded ? t('VIRTUAL_CARD.CLOSE_DETAILS') : t('VIRTUAL_CARD.VIEW_DETAILS')}
           btnIconsDisabled
         />
       </IPayAnimatedView>

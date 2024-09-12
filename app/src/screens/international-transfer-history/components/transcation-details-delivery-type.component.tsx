@@ -20,8 +20,7 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
   const selectedItem = (title: string, type: string) =>
     selectedListItem === title && (selectedListItem !== 'Digital Wallet' ? type === selectTransactionType : true);
 
-  const getAmount = (amount: string) =>
-    `${localizationText.LOCAL_TRANSFER.FEES} ${amount} ${localizationText.COMMON.SAR}`;
+  const getAmount = (amount: string) => `${t('LOCAL_TRANSFER.FEES')} ${amount} ${t('COMMON.SAR')}`;
 
   return (
     <IPayView style={styles.deliveryTypeContainer} testID={`${testID}-delivery-type`}>

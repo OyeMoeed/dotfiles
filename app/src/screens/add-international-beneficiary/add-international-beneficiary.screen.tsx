@@ -7,7 +7,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { ALINMA_TRANSFER_TYPES, CUSTOM_SNAP_POINT, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -24,6 +23,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import {
   AddBeneficiaryFields,
   AddBeneficiaryValues,
@@ -34,7 +34,7 @@ import addBeneficiaryStyles from './add-international-beneficiary.style';
 const AddInternationalBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = addBeneficiaryStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { alinmaDirectData, westernUnionData } = useConstantData();
   const [selectedService, setSelectedService] = useState<ServiceDataProps>();
   const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[]>([]);
@@ -47,7 +47,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const { required } = getValidationSchemas(localizationText);
+  const { required } = getValidationSchemas(t);
   const validationSchema = Yup.object().shape({
     currency: required,
     transferType: required,
@@ -137,10 +137,10 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setBeneficiaryMetaData(apiResponse?.response?.westernUnionCountryList);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
@@ -148,8 +148,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -165,10 +165,10 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setCurrenciesData(apiResponse?.response?.currencies);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
@@ -176,8 +176,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

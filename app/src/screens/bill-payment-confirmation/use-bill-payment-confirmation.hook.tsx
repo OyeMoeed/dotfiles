@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -35,7 +34,6 @@ const useBillPaymentConfirmation = (
   billPaymentInfos?: BillPaymentInfosTypes[],
 ) => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -128,21 +126,20 @@ const useBillPaymentConfirmation = (
         totalAmount: getTotalAmount,
       });
     } else {
-      setAPIError(apiResponse?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const handlePay = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       onConfirm();
     }
   };
 
   return {
-    localizationText,
     billPayDetailes,
     headerData,
     balanceData,

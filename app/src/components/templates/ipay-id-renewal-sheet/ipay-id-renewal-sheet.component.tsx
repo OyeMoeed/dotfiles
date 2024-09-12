@@ -3,7 +3,6 @@ import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ip
 import { IPayButton } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
 import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -21,7 +20,7 @@ import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
 import styles from './ipay-id-renewal-sheet.style';
 
 const IPayIdRenewalSheet: React.FC = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const idRenewalState: IdRenewalState = IdRenewalState.EXPIRE_FLAG_REACHED;
   const [renewId, setRenewId] = useState(false);
   const [otpRef, setOTPRef] = useState<string>('');
@@ -40,7 +39,6 @@ const IPayIdRenewalSheet: React.FC = () => {
 
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const { t } = useTranslation();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const dispatch = useTypedDispatch();
   const isIdRenewalSheetVisible = useTypedSelector(
@@ -152,7 +150,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       getOtpData();
     }

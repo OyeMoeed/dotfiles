@@ -17,7 +17,6 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
@@ -36,12 +35,13 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { FC, useCallback, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
   const selectSheeRef = useRef<any>(null);
@@ -60,7 +60,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
+  const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     companyName,
@@ -235,11 +235,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             <IPayHeader
               testID="sadad-bill-ipay-header"
               backBtn
-              title={
-                isSaveOnly
-                  ? localizationText.NEW_SADAD_BILLS.PAY_SADAD_BILLS
-                  : localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS
-              }
+              title={isSaveOnly ? t('NEW_SADAD_BILLS.PAY_SADAD_BILLS') : t('NEW_SADAD_BILLS.NEW_SADAD_BILLS')}
               titleStyle={styles.headerText}
               applyFlex
             />
@@ -300,9 +296,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             )}
             <IPayBottomSheet
               heading={
-                sheetType === NewSadadBillType.COMPANY_NAME
-                  ? localizationText.COMMON.COMPANY
-                  : localizationText.NEW_SADAD_BILLS.SERVICE_TYPE
+                sheetType === NewSadadBillType.COMPANY_NAME ? t('COMMON.COMPANY') : t('NEW_SADAD_BILLS.SERVICE_TYPE')
               }
               customSnapPoint={['1%', '90%']}
               onCloseBottomSheet={() => selectSheeRef.current.close()}

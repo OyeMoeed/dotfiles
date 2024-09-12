@@ -3,7 +3,6 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import { IPayAnimatedTextInput, IPayButton, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FORMAT_1 } from '@app/utilities/date-helper.util';
@@ -23,6 +22,7 @@ import {
   IPayFilterProps,
 } from './ipay-filter-bottom-sheet.interface';
 import filtersStyles from './ipay-filter-bottom-sheet.style';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Represents a form field controlled by a control instance.
@@ -122,7 +122,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
     },
     ref,
   ) => {
-    const localizationText = useLocalization();
+    const { t } = useTranslation();
     const [category, setCategory] = useState<FiltersType>();
     const [search, setSearch] = useState<string>('');
     const [showToDatePicker, setShowToDatePicker] = useState<boolean>(false);
@@ -148,12 +148,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
 
     const onSubmitEvent = (data: SubmitEvent) => {
       if (moment(moment(getValues('dateTo'), FORMAT_1)).isBefore(moment(getValues('dateFrom'), FORMAT_1))) {
-        setDateError(localizationText.ERROR.DATE_ERROR);
+        setDateError(t('ERROR.DATE_ERROR'));
         return;
       }
 
       if (+getValues(FiltersType.AMOUNT_TO) < +getValues(FiltersType.AMOUNT_FROM)) {
-        setAmountError(localizationText.ERROR.AMOUNT_ERROR);
+        setAmountError(t('ERROR.AMOUNT_ERROR'));
         return;
       }
       filterSheetRef.current?.close();
@@ -317,7 +317,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 control={control}
                 suffix="COMMON.SAR"
                 isError={!!amountError || !!errors?.amountTo}
-                message={amountError || localizationText.COMMON.REQUIRED_FIELD}
+                message={amountError || t('COMMON.REQUIRED_FIELD')}
                 name={FiltersType.AMOUNT_TO}
                 required={!!getValues(FiltersType.AMOUNT_FROM)}
               />
@@ -354,7 +354,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 isError={!!dateError || !!errors?.dateTo}
                 label="TRANSACTION_HISTORY.TO_INPUT"
                 listCheckIcon={listCheckIcon(icons.arrow_circle_down)}
-                message={dateError || localizationText.COMMON.REQUIRED_FIELD}
+                message={dateError || t('COMMON.REQUIRED_FIELD')}
                 name={FiltersType.DATE_TO}
                 required={!!getValues(FiltersType.DATE_FROM)}
                 showFocusStyle={showToDatePicker && showFromDatePicker}
@@ -407,7 +407,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                       setCurrentView(CurrentViewTypes.FILTER_VALUES);
                     }}
                     isError={!!errors[type]}
-                    assistiveText={errors[type] && localizationText.COMMON.REQUIRED_FIELD}
+                    assistiveText={errors[type] && t('COMMON.REQUIRED_FIELD')}
                     onChangeText={() => {}}
                     rightIcon={renderImage(type, icon)}
                   />
@@ -428,7 +428,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               text={search}
               onChangeText={setSearch}
               style={styles.searchInput}
-              placeholder={currentFilter?.searchPlaceholder || localizationText.COMMON.SEARCH}
+              placeholder={currentFilter?.searchPlaceholder || t('COMMON.SEARCH')}
               rightIcon={<IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />}
               simpleInput
               containerStyle={styles.searchInputStyle}
@@ -485,7 +485,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
-    const doneTextValue = doneText || localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
+    const doneTextValue = doneText || t('TRANSACTION_HISTORY.CLEAR_FILTER');
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {

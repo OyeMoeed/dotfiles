@@ -121,7 +121,7 @@ const SendGiftPreview: FC = ({ route }) => {
             </IPayScrollView>
             <IPayFootnoteText
               style={styles.messagePreviewText}
-              text={`${localizationText.SEND_GIFT.FROM}: ${firstName}`}
+              text={`${t('SEND_GIFT.FROM')}: ${firstName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
               color={themeTextColor}
             />
@@ -146,10 +146,7 @@ const SendGiftPreview: FC = ({ route }) => {
               <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
                 <IPayFootnoteText style={styles.messagePreviewText} text={message} />
               </IPayScrollView>
-              <IPayFootnoteText
-                style={styles.messagePreviewText}
-                text={`${localizationText.SEND_GIFT.FROM}: ${firstName}`}
-              />
+              <IPayFootnoteText style={styles.messagePreviewText} text={`${t('SEND_GIFT.FROM')}: ${firstName}`} />
             </IPayView>
           </IPayView>
         </IPayBottomSheet>

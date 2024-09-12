@@ -192,8 +192,8 @@ const Profile = () => {
       button: {
         text:
           walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
+            ? t('PROFILE.EDIT')
+            : t('PROFILE.COMPLETE'),
         iconColor: colors.natural.natural300,
         disabled: false,
         onPress: () => openBottomSheet(),
@@ -304,7 +304,7 @@ const Profile = () => {
         <IPayView>
           <IPayView style={styles.body1}>
             <IPayFootnoteText regular style={styles.containerHeadings}>
-              {localizationText.PROFILE.REGISTERATION_COMPLETION}
+              {t('PROFILE.REGISTERATION_COMPLETION')}
             </IPayFootnoteText>
             <IPayFlatlist
               style={styles.listStyle}
@@ -317,7 +317,7 @@ const Profile = () => {
           </IPayView>
           <IPayView style={styles.body2}>
             <IPayFootnoteText regular style={styles.containerHeadings}>
-              {localizationText.COMMON.PERSONAL_INFO}
+              {t('COMMON.PERSONAL_INFO')}
             </IPayFootnoteText>
             <IPayFlatlist
               // scrollEnabled={false}
@@ -336,7 +336,7 @@ const Profile = () => {
       <IPayPortalBottomSheet
         animate={false}
         noGradient
-        heading={localizationText.PROFILE[category]}
+        heading={t('PROFILE[category]')}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
         ref={kycBottomSheetRef}

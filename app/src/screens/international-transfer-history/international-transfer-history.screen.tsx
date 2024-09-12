@@ -219,7 +219,7 @@ const InternationalTransferHistory: React.FC = () => {
   };
 
   const onPressApplyFilters = (filtersData: TransactionDataFiltersProps) => {
-    const sar = localizationText.COMMON.SAR;
+    const sar = t('COMMON.SAR');
     const filtersArray = Object.entries(filtersData)
       .filter(([key, value]) => value && (key.includes('amount') || key.includes('date') || value))
       .map(([key, value]) => {
@@ -315,7 +315,7 @@ const InternationalTransferHistory: React.FC = () => {
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      setEditBeneficiaryMessage(localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE);
+      setEditBeneficiaryMessage(t('INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE'));
     }
     editBeneficiaryConfirmationActionSheet?.current?.hide();
     transactionDetailsBottomSheet.current?.present();
@@ -326,7 +326,7 @@ const InternationalTransferHistory: React.FC = () => {
     showIcon: true,
     customImage: <IPayIcon icon={icons.warning4} size={48} color={colors.warning.warning500} />,
     message: t('INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_MESSAGE'),
-    options: [localizationText.COMMON.DONE, localizationText.COMMON.CANCEL],
+    options: [t('COMMON.DONE'), t('COMMON.CANCEL]')],
     bodyStyle: styles.actionSheetView,
     btnStyle: styles.actionSheetBtn,
     cancelButtonIndex: 1,

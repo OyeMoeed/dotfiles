@@ -16,13 +16,13 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 import useData from './use-data';
@@ -36,7 +36,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   requestPaidSummaryData,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { getDetails, renderText } = useData();
   const styles = TopUpSuccessStyles(colors, topupChannel);
 
@@ -45,7 +45,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const renderToast = () => {
     showToast({
-      title: topupChannel === PayChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
+      title: topupChannel === PayChannel.ORDER ? t('ORDER_SCREEN.COPY') : t('TOP_UP.COPIED'),
       // subTitle: subTitle,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
@@ -167,11 +167,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           <IPayPressable style={styles.newTopup} onPress={goBack}>
             <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
             <IPaySubHeadlineText
-              text={
-                topupChannel === PayChannel.APPLE
-                  ? localizationText.TOP_UP.NEW_TOP_UP
-                  : localizationText.TOP_UP.NEW_TRANSFER
-              }
+              text={topupChannel === PayChannel.APPLE ? t('TOP_UP.NEW_TOP_UP') : t('TOP_UP.NEW_TRANSFER')}
               style={styles.newTopupText}
               regular
             />
@@ -320,9 +316,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                 <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
                 <IPayView style={styles.linearGradientTextView}>
                   <IPayGradientText
-                    text={
-                      summaryData?.response.pmtResultCd === 'P' ? localizationText.TOP_UP.PENDING_PAYMENT : renderText()
-                    }
+                    text={summaryData?.response.pmtResultCd === 'P' ? t('TOP_UP.PENDING_PAYMENT') : renderText()}
                     gradientColors={gradientColors}
                     style={styles.gradientTextSvg}
                     fontSize={styles.linearGradientText.fontSize}
@@ -330,7 +324,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                   />
                   <IPaySubHeadlineText
                     regular={false}
-                    text={`${amount || summaryData?.response?.totalTransactionAmount} ${localizationText.COMMON.SAR}`}
+                    text={`${amount || summaryData?.response?.totalTransactionAmount} ${t('COMMON.SAR')}`}
                     style={styles.headlineText}
                   />
                 </IPayView>

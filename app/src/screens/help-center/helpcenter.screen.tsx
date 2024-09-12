@@ -74,12 +74,12 @@ const HelpCenter: React.FC = () => {
         setAllFaqItems(itemsWithCategories);
         setFaqData(itemsWithCategories);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
       } else {
         setAPIError(apiResponse?.error);
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -299,10 +299,10 @@ const HelpCenter: React.FC = () => {
             />
             <IPayView style={styles.contactUsContainer}>
               <IPaySubHeadlineText regular style={styles.contactUsText}>
-                {localizationText.COMMON.ASSISTANCE}
+                {t('COMMON.ASSISTANCE')}
               </IPaySubHeadlineText>
               <IPayCaption1Text regular style={styles.contactUsSubText}>
-                {localizationText.COMMON.CONTACT_SERVICE_TEAM}
+                {t('COMMON.CONTACT_SERVICE_TEAM')}
               </IPayCaption1Text>
               <IPayButton
                 btnType="primary"
@@ -319,7 +319,7 @@ const HelpCenter: React.FC = () => {
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
-          options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+          options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL]')]}
           cancelButtonIndex={1}
           showCancel
           onPress={(index) => handleFinalAction(index, selectedNumber)}

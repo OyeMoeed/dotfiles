@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
 import { TextStyle, ViewStyle } from 'react-native';
@@ -18,7 +17,6 @@ const IPayCardStatusIndication = ({
 }: IPayCardStatusIndicationProps) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const fee = 100; // TODO will be updated on the basis of api
 
   const styles = cardStatusIndicationStyles(colors);
@@ -27,7 +25,7 @@ const IPayCardStatusIndication = ({
     expiry: {
       warning: {
         title: t('CARDS.EXPIRING_SOON'),
-        subtitle: `${localizationText.COMMON.ON} ${currentCard?.expiryDate}`,
+        subtitle: `${t('COMMON.ON')} ${currentCard?.expiryDate}`,
         icon: icons.timer,
         rightText: (
           <IPayButton
@@ -63,7 +61,7 @@ const IPayCardStatusIndication = ({
         icon: icons.moneys_warning,
         rightText: (
           <IPaySubHeadlineText style={styles.fee} regular={false}>
-            {fee} <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
+            {fee} <IPaySubHeadlineText regular text="COMMON.SAR" />
           </IPaySubHeadlineText>
         ),
       },

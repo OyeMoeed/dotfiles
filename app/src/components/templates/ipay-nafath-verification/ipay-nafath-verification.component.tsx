@@ -14,7 +14,6 @@ import {
 } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayPageDescriptionText, IPayPrimaryButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -36,15 +35,17 @@ import { APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/
 import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
+import { useTranslation } from 'react-i18next';
 
 const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID, onComplete }) => {
+  const { colors } = useTheme();
+  const { t } = useTranslation();
+  const styles = nafathVerificationStyles(colors);
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+
   const [step, setStep] = useState<number>(1);
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(90); // in seconds
-  const { colors } = useTheme();
-  const localizationText = useLocalization();
-  const styles = nafathVerificationStyles(colors);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [nafathNumber, setNafathNumber] = useState<number>();
@@ -327,9 +328,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                 intervalTime={duration}
               />
               <IPayText style={[styles.expireText, isExpired && styles.expireTextColor]}>
-                {isExpired
-                  ? localizationText.COMMON.CODE_HAS_EXPIRED
-                  : `${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
+                {isExpired ? t('COMMON.CODE_HAS_EXPIRED') : `${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
               </IPayText>
             </IPayView>
           </IPayView>

@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardCategories } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
@@ -21,7 +20,6 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({
   const { colors } = useTheme();
   const styles = cardStyles(colors);
   const { cardHeaderText, cardType, name, maskedCardNumber } = card;
-  const localizationText = useLocalization();
   const { t } = useTranslation();
 
   const getDetailByStatus = (item: CardInterface) => {
@@ -140,9 +138,8 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({
                     card.cardType === CardCategories.PLATINUM ? colors.primary.primary900 : colors.primary.primary50
                   }
                   style={styles.cashbackText}
-                >
-                  {localizationText.CARDS.CASHBACK}
-                </IPayCaption2Text>
+                  text="CARDS.CASHBACK"
+                />
               )}
               <IPayImage
                 testID={`${testID}-bottom-right-image`}

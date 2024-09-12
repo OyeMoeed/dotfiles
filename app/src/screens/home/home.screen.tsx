@@ -116,15 +116,15 @@ const Home: React.FC = () => {
       if (apiResponse?.status?.type === 'SUCCESS') {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
       } else {
         setAPIError(apiResponse?.error);
       }
       renderSpinner(false);
     } catch (error) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

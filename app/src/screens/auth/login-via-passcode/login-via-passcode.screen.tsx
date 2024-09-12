@@ -99,7 +99,7 @@ const LoginViaPasscode: React.FC = () => {
     setPasscodeError(true);
     showToast({
       title: t('COMMON.INCORRECT_CODE'),
-      subTitle: apiErrorValue || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      subTitle: apiErrorValue || t('CARDS.VERIFY_CODE_ACCURACY'),
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
@@ -276,12 +276,12 @@ const LoginViaPasscode: React.FC = () => {
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
       renderSpinner(false);
     } catch (error) {
       renderSpinner(false);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
@@ -32,6 +31,7 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo, encryptData } from '@app/network/utilities';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import cardOptionsStyles from './card-options.style';
 import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
@@ -56,7 +56,7 @@ const CardOptionsScreen: React.FC = () => {
     show() {},
   });
 
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
 
   const styles = cardOptionsStyles(colors);
@@ -129,22 +129,20 @@ const CardOptionsScreen: React.FC = () => {
       case ApiResponseStatusType.SUCCESS:
         setIsOnlinePurchase((prev) => !prev);
         renderToast(
-          isOn
-            ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
-            : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
+          isOn ? t('CARD_OPTIONS.ONLINE_PURCHASE_ENABLED') : t('CARD_OPTIONS.ONLINE_PURCHASE_DISABLED'),
           isOn || true,
           icons.receipt_item,
           false,
         );
         break;
       case apiResponse?.apiResponseNotOk:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       case ApiResponseStatusType.FAILURE:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       default:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
     }
     renderSpinner(false);
@@ -161,7 +159,7 @@ const CardOptionsScreen: React.FC = () => {
   const toggleATMWithdraw = (isOn: boolean) => {
     setIsATMWithDraw((prev) => !prev);
     renderToast(
-      isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
+      isOn ? t('CARD_OPTIONS.ATM_WITHDRAW_ENABLED') : t('CARD_OPTIONS.ATM_WITHDRAW_DISABLED'),
       isOn,
       icons.moneys,
       false,
@@ -188,16 +186,16 @@ const CardOptionsScreen: React.FC = () => {
     switch (apiResponse?.status?.type) {
       case ApiResponseStatusType.SUCCESS:
         navigate(ScreenNames.CARDS);
-        renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, true, icons.trash, true);
+        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
         break;
       case apiResponse?.apiResponseNotOk:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       case ApiResponseStatusType.FAILURE:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       default:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
     }
     renderSpinner(false);
@@ -255,20 +253,20 @@ const CardOptionsScreen: React.FC = () => {
           navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
           break;
         case ApiResponseStatusType.FAILURE:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
           break;
         default:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
           break;
       }
 
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG, false, icons.warning, false);
+      renderToast(t('ERROR.SOMETHING_WENT_WRONG'), false, icons.warning, false);
     }
   };
 
@@ -280,7 +278,7 @@ const CardOptionsScreen: React.FC = () => {
   const onConfirmOtp = (): void => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       resetPassCode();
     }
@@ -375,8 +373,8 @@ const CardOptionsScreen: React.FC = () => {
               leftIcon={icons.receipt_item}
               title={
                 isOnlinePurchase
-                  ? localizationText.CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE
-                  : localizationText.CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE
+                  ? t('CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE')
+                  : t('CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE')
               }
               onToggleChange={toggleOnlinePurchase}
               toggleState={isOnlinePurchase}
@@ -416,7 +414,7 @@ const CardOptionsScreen: React.FC = () => {
         testID="delete-card-action-sheet"
         title="CARD_OPTIONS.DELETE_THE_CARD"
         message="CARD_OPTIONS.YOU_WONT_BE_ABLE_TO_USE"
-        options={[localizationText.COMMON.CANCEL, localizationText.CARD_OPTIONS.DELETE]}
+        options={[t('COMMON.CANCEL'), t('CARD_OPTIONS.DELETE]')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showIcon

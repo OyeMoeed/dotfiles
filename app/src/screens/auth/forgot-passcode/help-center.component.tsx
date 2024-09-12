@@ -93,10 +93,10 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
           />
           <IPayView style={styles.contactUsContainer}>
             <IPaySubHeadlineText regular style={styles.contactUsText}>
-              {localizationText.COMMON.ASSISTANCE}
+              {t('COMMON.ASSISTANCE')}
             </IPaySubHeadlineText>
             <IPayCaption1Text regular style={styles.contactUsSubText}>
-              {localizationText.COMMON.CONTACT_SERVICE_TEAM}
+              {t('COMMON.CONTACT_SERVICE_TEAM')}
             </IPayCaption1Text>
             <IPayButton
               btnType={buttonVariants.PRIMARY}

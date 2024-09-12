@@ -1,10 +1,10 @@
 import { IPayCaption2Text, IPayCheckbox, IPayFootnoteText, IPayImage, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { TransferService } from '@app/screens/edit-international-beneficiary-transfer/edit-international-beneficiary-transfer.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayTransactionServiceProps } from './ipay-transaction-service.interface';
 import transactionServiceStyles from './ipay-transaction-service.styles';
+import { useTranslation } from 'react-i18next';
 
 const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
   transaction,
@@ -14,7 +14,7 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = transactionServiceStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { serviceName, fees, total, serviceLogo, recordID, currency, fromAmount, fromCurrency, toAmount, toCurrency } =
     transaction;
 
@@ -33,7 +33,7 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
           />
           <IPayCaption2Text
             style={[styles.lightTextColor, styles.chipColor]}
-            text={`${localizationText.LOCAL_TRANSFER.FEES}: ${fees} ${currency} `}
+            text={`${t('LOCAL_TRANSFER.FEES')}: ${fees} ${currency} `}
             regular
           />
         </IPayView>

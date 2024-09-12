@@ -3,7 +3,6 @@ import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
@@ -51,7 +50,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [isCardSaved, setIsCardSaved] = useState(true);
   const [chipValue, setChipValue] = useState('');
-  const localizationText = useLocalization();
   const styles = amountStyles(colors);
   const [, setError] = useState('');
   const [, setResponse] = useState<object>();
@@ -205,7 +203,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         break;
       }
       case apiResponse?.apiResponseNotOk:
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
         break;
       case ApiResponseStatusType.FAILURE:
         setAPIError(apiResponse?.error);
@@ -229,13 +227,13 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     if (monthlyRemaining === 0) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+      setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyRemainingIncomingAmount} SAR`);
+      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${limitsDetails.dailyRemainingIncomingAmount} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else {
       if (topUpAmount === '' || topUpAmount === '0') {
         setIsTopUpNextEnable(false);
@@ -244,12 +242,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       }
       setChipValue('');
     }
-  }, [
-    topUpAmount,
-    limitsDetails.monthlyRemainingOutgoingAmount,
-    limitsDetails.dailyRemainingOutgoingAmount,
-    localizationText,
-  ]);
+  }, [topUpAmount, limitsDetails.monthlyRemainingOutgoingAmount, limitsDetails.dailyRemainingOutgoingAmount, t]);
 
   const handleNextPress = () => {
     if (isCardSaved) {
@@ -304,9 +297,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               large
               btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
-              btnText={
-                currentState === TopUpStates.SAVED_CARD ? localizationText.TOP_UP.PAY : localizationText.COMMON.NEXT
-              }
+              btnText={currentState === TopUpStates.SAVED_CARD ? t('TOP_UP.PAY ') : t('COMMON.NEXT)')}
               onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
               disabled={!isTopUpNextEnable}
             />

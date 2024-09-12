@@ -124,7 +124,7 @@ const InternationalTransferScreen: React.FC = () => {
           setAEBeneficiaryData(apiResponse?.response?.beneficiaries);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -135,8 +135,8 @@ const InternationalTransferScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -149,7 +149,7 @@ const InternationalTransferScreen: React.FC = () => {
           setWUBeneficiaryData(apiResponse?.response?.beneficiaries);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -160,8 +160,8 @@ const InternationalTransferScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -227,7 +227,7 @@ const InternationalTransferScreen: React.FC = () => {
           });
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -238,8 +238,8 @@ const InternationalTransferScreen: React.FC = () => {
       renderSpinner(false);
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
     setDeleteBeneficiary(false);
   };
@@ -249,8 +249,8 @@ const InternationalTransferScreen: React.FC = () => {
     const country = countryCode ? countryCode.toUpperCase() : '';
     const btnText =
       beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
-        ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
-        : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE;
+        ? t('INTERNATIONAL_TRANSFER.TRANSFER')
+        : t('INTERNATIONAL_TRANSFER.ACTIVATE');
 
     const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
       setselectedBeneficiary(beneficiary);
@@ -316,15 +316,12 @@ const InternationalTransferScreen: React.FC = () => {
     filteredBeneficiaryData?.filter((item) => item?.beneficiaryStatus === status);
 
   const renderListHeader = (isActive: string, count: number, totalCount: number) => {
-    const statusText =
-      isActive === InternationalBeneficiaryStatus.ACTIVE
-        ? localizationText.COMMON.ACTIVE
-        : localizationText.COMMON.INACTIVE;
+    const statusText = isActive === InternationalBeneficiaryStatus.ACTIVE ? t('COMMON.ACTIVE') : t('COMMON.INACTIVE');
 
     return totalCount ? (
       <IPayView style={styles.listHeader}>
         <IPayFootnoteText text={statusText} />
-        <IPayFootnoteText text={`(${count} ${localizationText.HOME.OF} ${totalCount})`} />
+        <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} />
       </IPayView>
     ) : (
       <IPayView />
@@ -341,7 +338,7 @@ const InternationalTransferScreen: React.FC = () => {
           style={styles.capitalizeTitle}
           color={colors.primary.primary500}
           regular
-          text={viewAllState[statusKey] ? localizationText.COMMON.CLOSE : localizationText.COMMON.VIEW_ALL}
+          text={viewAllState[statusKey] ? t('COMMON.CLOSE') : localizationText.COMMON.VIEW_ALL}
         />
         <IPayIcon
           icon={viewAllState[statusKey] ? icons.arrowUp : icons.arrowDown}
@@ -411,8 +408,8 @@ const InternationalTransferScreen: React.FC = () => {
           return '';
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       return '';
     }
   };
@@ -471,8 +468,8 @@ const InternationalTransferScreen: React.FC = () => {
 
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-      ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
-      : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
+      ? t('ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS')
+      : t('ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE');
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -637,7 +634,7 @@ const InternationalTransferScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+        options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL]')]}
         cancelButtonIndex={1}
         showCancel
         onPress={(index) => handleFinalAction(index, selectedNumber)}
@@ -664,11 +661,7 @@ const InternationalTransferScreen: React.FC = () => {
       />
       <IPayActionSheet
         ref={editBeneficiaryRef}
-        options={[
-          localizationText.COMMON.CANCEL,
-          localizationText.BENEFICIARY_OPTIONS.REVIEW_AND_EDIT,
-          localizationText.BENEFICIARY_OPTIONS.DELETE,
-        ]}
+        options={[t('COMMON.CANCEL'), t('BENEFICIARY_OPTIONS.REVIEW_AND_EDIT'), t('BENEFICIARY_OPTIONS.DELETE')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}

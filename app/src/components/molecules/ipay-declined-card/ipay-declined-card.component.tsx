@@ -1,9 +1,9 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import IPayList from '../ipay-list/ipay-list.component';
@@ -18,9 +18,9 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
   declinedTrasactionData,
   paidViolation,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
-  const localizationText = useLocalization();
 
   const renderOption = ({ item }: { item: BillData }) => {
     const { label, value, violationNumber } = item;
@@ -30,8 +30,8 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
         textStyle={styles.boldStyles}
         containerStyle={[styles.heightStyles, optionsStyles]}
         title={label}
-        subTitle={`${localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER} ${violationNumber || ''}`}
-        detailText={`${value} ${localizationText.COMMON.SAR}`}
+        subTitle={`${t('TRAFFIC_VIOLATION.VIOLATION_NUMBER')} ${violationNumber || ''}`}
+        detailText={`${value} ${t('COMMON.SAR')}`}
         detailTextStyle={styles.detailsText}
         showDetail
         isShowSubTitle
@@ -42,12 +42,12 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
     <IPayView testID={`${testID}-declined-card`}>
       <IPayView style={[styles.rowStyles, styles.centerAlign]}>
         <IPayChip
-          textValue={`${paidViolation} ${localizationText.TRAFFIC_VIOLATION.PAID_VIOLATION}`}
+          textValue={`${paidViolation} ${t('TRAFFIC_VIOLATION.PAID_VIOLATION')}`}
           variant={States.SUCCESS}
           isShowIcon={false}
         />
         <IPayChip
-          textValue={`${declinedTrasactionData?.length} ${localizationText.TRAFFIC_VIOLATION.UNPAID_VIOLATION}`}
+          textValue={`${declinedTrasactionData?.length} ${t('TRAFFIC_VIOLATION.UNPAID_VIOLATION')}`}
           variant={States.ERROR}
           isShowIcon={false}
         />

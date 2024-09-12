@@ -53,9 +53,9 @@ const NewSadadBillScreen: React.FC = () => {
 
   const getAmountWarning = () => {
     if (Number(dummyData.availableBalance) <= 0) {
-      setWarningMessage(localizationText.NEW_SADAD_BILLS.NO_REMAINING_AMOUNT);
+      setWarningMessage(t('NEW_SADAD_BILLS.NO_REMAINING_AMOUNT'));
     } else if (Number(dummyData.availableBalance) < Number(amount)) {
-      setWarningMessage(localizationText.NEW_SADAD_BILLS.INSUFFICIENT_BALANCE);
+      setWarningMessage(t('NEW_SADAD_BILLS.INSUFFICIENT_BALANCE'));
     } else {
       setWarningMessage('');
     }

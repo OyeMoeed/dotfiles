@@ -67,10 +67,10 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
   const determineChipValue = useCallback(() => {
     if (monthlyRemaining === 0) {
-      return localizationText.REQUEST_SUMMARY.NO_REMAINING_AMOUNT;
+      return t('REQUEST_SUMMARY.NO_REMAINING_AMOUNT');
     }
     if (updatedTopUpAmount > monthlyRemaining) {
-      return localizationText.REQUEST_SUMMARY.INSUFFICIENT_BALANCE;
+      return t('REQUEST_SUMMARY.INSUFFICIENT_BALANCE');
     }
     return '';
   }, [monthlyRemaining, updatedTopUpAmount, localizationText]);
@@ -164,7 +164,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       }
     } else {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     }
     setIsLoading(false);
   };
@@ -173,7 +173,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       verifyOtp();
     }
@@ -220,15 +220,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         <IPayList
           title="REQUEST_SUMMARY.AMOUNT"
           rightText={
-            <IPaySubHeadlineText
-              color={colors.primary.primary800}
-              regular
-              text={`${topUpAmount} ${localizationText.COMMON.SAR}`}
-            />
+            <IPaySubHeadlineText color={colors.primary.primary800} regular text={`${topUpAmount} ${t('COMMON.SAR')}`} />
           }
         />
       ),
-    [chipValue, localizationText, topUpAmount, colors, icons],
+    [chipValue, t(' topUpAmount'), colors, icons],
   );
 
   const renderPayItem = useMemo(
@@ -255,7 +251,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           </IPayView>
         );
       },
-    [topUpAmount, localizationText, colors, images],
+    [topUpAmount, t(' colors'), images],
   );
 
   return (

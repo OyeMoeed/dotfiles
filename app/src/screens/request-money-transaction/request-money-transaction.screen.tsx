@@ -165,7 +165,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     } finally {
       renderSpinner(false);
     }
@@ -199,7 +199,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status } = data;
-      const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
+      const amountRange = `${amountFrom} - ${amountTo} ${t('COMMON.SAR')}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
       filtersArray = [contactNumber, amountRange, dateRange, status];
     }
@@ -396,7 +396,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayActionSheet
         ref={rejectRequestRef}
         testID="reject-card-action-sheet"
-        options={[localizationText.COMMON.CANCEL, localizationText.REQUEST_MONEY.REJECT_THIS_REQUEST]}
+        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.REJECT_THIS_REQUEST]')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel

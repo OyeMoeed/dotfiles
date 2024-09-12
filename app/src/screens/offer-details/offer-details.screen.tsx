@@ -94,15 +94,15 @@ const OfferDetailsScreen: React.FC = () => {
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
       } else {
         setAPIError(apiResponse?.error);
       }
       renderSpinner(false);
     } catch (error) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -278,7 +278,7 @@ const OfferDetailsScreen: React.FC = () => {
       <IPayActionSheet
         ref={nearestStoreSheetRef}
         testID="nearest-store-action-sheet"
-        options={[localizationText.COMMON.CANCEL, localizationText.OFFERS.OPEN_GOOGLE_MAP]}
+        options={[t('COMMON.CANCEL'), t('OFFERS.OPEN_GOOGLE_MAP]')]}
         cancelButtonIndex={0}
         showCancel
         onPress={onClickDeleteCardSheet}

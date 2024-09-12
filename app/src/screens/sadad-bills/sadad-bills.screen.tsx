@@ -48,7 +48,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
-  const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
+  const tabs = [t('SADAD.ACTIVE_BILLS'), t('SADAD.INACTIVE_BILLS]')];
 
   const selectedBillsCount = useMemo(
     () =>
@@ -111,7 +111,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const renderButtonText = () => {
     const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.dueAmount), 0);
 
-    return `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`;
+    return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
   };
 
   const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
@@ -157,7 +157,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
         });
       }
     } catch (error) {
-      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -186,7 +186,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
     message: t('SADAD.DELETE_BILL_WARNING_TEXT'),
-    options: [localizationText.COMMON.DELETE, localizationText.COMMON.CANCEL],
+    options: [t('COMMON.DELETE'), t('COMMON.CANCEL]')],
     cancelButtonIndex: 1,
     showCancel: true,
     destructiveButtonIndex: 0,
@@ -195,7 +195,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   };
 
   const editOrDeletedBillOptions = {
-    options: [localizationText.PROFILE.EDIT, localizationText.COMMON.DELETE, localizationText.COMMON.CANCEL],
+    options: [t('PROFILE.EDIT'), t('COMMON.DELETE'), t('COMMON.CANCEL]')],
     cancelButtonIndex: 2,
     showCancel: true,
     destructiveButtonIndex: 1,
@@ -209,7 +209,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
     showIcon: true,
     customImage: <IPayIcon icon={icons.receipt_add} size={48} color={colors.primary.primary500} />,
     message: t('SADAD.ACTIVATE_BILL_MESSAGE'),
-    options: [localizationText.SADAD.ACTIVATE, localizationText.COMMON.CANCEL],
+    options: [t('SADAD.ACTIVATE'), t('COMMON.CANCEL]')],
     cancelButtonIndex: 1,
     showCancel: true,
     onPress: handleActionSheetPress,
@@ -332,7 +332,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
 
     // Fallback return if an error occurs

@@ -1,10 +1,10 @@
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { PayChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 
 const useData = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const {
     applePayDetails,
     cardPayDetails,
@@ -44,22 +44,22 @@ const useData = () => {
   const renderText = () => {
     switch (topupChannel) {
       case PayChannel.GIFT:
-        return localizationText.TOP_UP.GIFT_SUCCESSFUL;
+        return t('TOP_UP.GIFT_SUCCESSFUL');
 
       case PayChannel.WALLET:
-        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+        return t('TOP_UP.TRANSFER_SUCCESSFUL');
 
       case PayChannel.MONEY:
-        return localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+        return t('TOP_UP.TRANSFER_SUCCESSFUL');
 
       case PayChannel.REQUEST:
-        return localizationText.REQUEST_SUMMARY.REQUEST_SENT;
+        return t('REQUEST_SUMMARY.REQUEST_SENT');
       case PayChannel.REQUEST_ACCEPT:
-        return localizationText.REQUEST_MONEY.REQUEST_PAID;
+        return t('REQUEST_MONEY.REQUEST_PAID');
       case PayChannel.ORDER:
-        return localizationText.ORDER_SCREEN.TITLE;
+        return t('ORDER_SCREEN.TITLE');
       default:
-        return localizationText.TOP_UP.TOPUP_SUCCESS;
+        return t('TOP_UP.TOPUP_SUCCESS');
     }
   };
   return {

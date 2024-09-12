@@ -1,5 +1,4 @@
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -23,7 +22,6 @@ interface BalanceData {
 // TODO will be replaced by API
 const useBillPaymentConfirmation = () => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { billPayDetailsData } = useConstantData();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const otpRef = useRef<bottomSheetTypes>(null);
@@ -59,7 +57,7 @@ const useBillPaymentConfirmation = () => {
     {
       id: '2',
       label: t('TRAFFIC_VIOLATION.AMOUNT'),
-      value: `1000 ${localizationText.COMMON.SAR}`,
+      value: `1000 ${t('COMMON.SAR')}`,
     },
   ];
 
@@ -70,13 +68,12 @@ const useBillPaymentConfirmation = () => {
   const handlePay = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       onConfirm();
     }
   };
   return {
-    localizationText,
     billPayDetailes,
     balanceData,
     extraDetails,

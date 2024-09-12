@@ -20,7 +20,7 @@ const IPaySadadBillsHeader: React.FC<IPaySadadBillsHeaderProps> = ({
   const styles = billPaymentsComponentsStyles(colors);
   const localizationText = useLocalization();
 
-  const unpaidBills = `(${unpaidBillsCount} ${localizationText.BILL_PAYMENTS.UNPAID})`;
+  const unpaidBills = `(${unpaidBillsCount} ${t('BILL_PAYMENTS.UNPAID')})`;
 
   return (
     <IPayView testID={`${testID}-sadad-bill`} style={[styles.sadadBillsHeaderView, style]}>

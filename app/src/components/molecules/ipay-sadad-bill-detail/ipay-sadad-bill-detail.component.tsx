@@ -2,9 +2,9 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/components/molecules';
 import { STANDARD_MAX_LENGTH } from '@app/constants/app-validations';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { SadadBillDetailFormProps } from './ipay-sadad-bill-detail.interface';
 import sadadBillDetailStyles from './ipay-sadad-bill-detail.style';
 
@@ -38,9 +38,9 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
 }: SadadBillDetailFormProps) => {
   const { colors } = useTheme();
   const styles = sadadBillDetailStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
-  const AccountTextInputLabel = accountInputLabel || localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER;
+  const AccountTextInputLabel = accountInputLabel || t('NEW_SADAD_BILLS.ACCOUNT_NUMBER');
 
   return (
     <IPayView style={styles.inputWrapper} testID={testID}>

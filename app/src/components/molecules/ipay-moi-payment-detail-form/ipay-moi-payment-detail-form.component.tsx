@@ -2,10 +2,10 @@ import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
 import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
@@ -40,9 +40,9 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   onChangeText,
   errorMessage,
 }: IPayMoiPaymentDetailFormProps) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
-  const localizationText = useLocalization();
 
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
@@ -117,7 +117,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayRHFAnimatedTextInput
                 testID="beneficiary-id-input"
                 name={MoiPaymentFormFields.MY_ID}
-                label={myIdCheck ? localizationText.BILL_PAYMENTS.MY_ID : localizationText.BILL_PAYMENTS.BENEFICIARY_ID}
+                label={myIdCheck ? t('BILL_PAYMENTS.MY_ID') : t('BILL_PAYMENTS.BENEFICIARY_ID')}
                 labelColor={myIdCheck ? colors.natural.natural500 : colors.primary.primary500}
                 showRightIcon={!myIdCheck}
                 editable={!myIdCheck}

@@ -82,15 +82,15 @@ const OffersListScreen: React.FC = () => {
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
       } else {
         setAPIError(apiResponse?.error);
       }
       renderSpinner(false);
     } catch (error) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -116,7 +116,7 @@ const OffersListScreen: React.FC = () => {
           <IPayView style={styles.smallDOT} />
           <IPayCaption2Text
             regular
-            text={`${offersData?.length} ${localizationText.OFFERS.OFFERS_TITLE}`}
+            text={`${offersData?.length} ${t('OFFERS.OFFERS_TITLE')}`}
             color={colors.secondary.secondary500}
           />
         </IPayView>

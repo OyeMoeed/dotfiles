@@ -16,18 +16,19 @@ import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useMemo } from 'react';
 import { IPayAtmDetailsProps } from './ipay-atm-details.interface';
 import atmDetailsStyle from './ipay-atm-details.style';
+import { useTranslation } from 'react-i18next';
 
 const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, openGoogleMapsWeb }) => {
   const { colors } = useTheme();
   const styles = atmDetailsStyle(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { title, address, distance, type, location } = data;
   const initialRegion = { ...constants.INITIAL_REGION, longitude: location?.longitude, latitude: location?.latitude };
 
   const memoizedDistance = useMemo(() => {
     const distanceInKm = distance && distance.replace('.', ',');
-    return `${distanceInKm} ${localizationText.COMMON.KM}`;
-  }, [distance, localizationText]);
+    return `${distanceInKm} ${t('COMMON.KM')}`;
+  }, [distance, t]);
 
   const onPressGetDirection = () => {
     const { latitude, longitude } = location;

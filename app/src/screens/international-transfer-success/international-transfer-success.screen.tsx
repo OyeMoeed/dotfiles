@@ -63,12 +63,12 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const renderOption = ({ item, index }: { item: OptionItem; index: number }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalTransferData];
-    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
+    const localization = t('INTERNATIONAL_TRANSFER[localizationKey] || label');
 
     const getTitleSuffix = (labelKeys: string) => {
       switch (labelKeys) {
         case LabelKey.AMOUNT_TO:
-          return `(${localizationText.COMMON.SAR})`;
+          return `(${t('COMMON.SAR')})`;
         case LabelKey.AMOUNT_FROM:
           return otherCountryName ? `(${otherCountryName})` : '';
         case LabelKey.VAT:
@@ -119,7 +119,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
         <IPaySuccess
           style={styles.minFlex}
           headingText="TOP_UP.TRANSFER_SUCCESSFUL"
-          descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
+          descriptionText={`${totalAmount} ${t('COMMON.SAR')}`}
           descriptionStyle={styles.boldStyles}
         />
         <IPayFlatlist

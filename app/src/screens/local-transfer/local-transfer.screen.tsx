@@ -118,8 +118,8 @@ const LocalTransferScreen: React.FC = () => {
       }
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -195,7 +195,7 @@ const LocalTransferScreen: React.FC = () => {
       editNickNameSheetRef?.current?.close();
       getBeneficiariesData();
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
     setShowEditSheet(false);
 
@@ -240,8 +240,8 @@ const LocalTransferScreen: React.FC = () => {
               }}
               btnText={
                 beneficiaryStatus === BeneficiaryTypes.ACTIVE
-                  ? localizationText.LOCAL_TRANSFER.TRANSFER
-                  : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
+                  ? t('LOCAL_TRANSFER.TRANSFER')
+                  : t('BENEFICIARY_OPTIONS.ACTIVATE')
               }
               btnType={buttonVariants.PRIMARY}
               small
@@ -288,11 +288,9 @@ const LocalTransferScreen: React.FC = () => {
     totalCount ? (
       <IPayView style={styles.listHeader}>
         <IPayFootnoteText
-          text={
-            sortType === BeneficiaryTypes.ACTIVE ? localizationText.COMMON.ACTIVE : localizationText.COMMON.INACTIVE
-          }
+          text={sortType === BeneficiaryTypes.ACTIVE ? t('COMMON.ACTIVE') : localizationText.COMMON.INACTIVE}
         />
-        <IPayFootnoteText text={`(${count} ${localizationText.HOME.OF} ${totalCount})`} />
+        <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} />
       </IPayView>
     ) : (
       <IPayView />
@@ -308,7 +306,7 @@ const LocalTransferScreen: React.FC = () => {
           style={styles.capitalizeTitle}
           color={colors.primary.primary500}
           regular
-          text={viewAll[statusKey] ? localizationText.COMMON.CLOSE : localizationText.COMMON.VIEW_ALL}
+          text={viewAll[statusKey] ? t('COMMON.CLOSE') : localizationText.COMMON.VIEW_ALL}
         />
         <IPayIcon
           icon={viewAll[statusKey] ? icons.arrowUp : icons.arrowDown}
@@ -329,8 +327,8 @@ const LocalTransferScreen: React.FC = () => {
   // IVR
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-      ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
-      : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
+      ? t('ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS')
+      : t('ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE');
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
 
   const showActionSheet = (phoneNumber: string) => {
@@ -368,8 +366,8 @@ const LocalTransferScreen: React.FC = () => {
           return null;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       return null;
     }
   };
@@ -442,12 +440,12 @@ const LocalTransferScreen: React.FC = () => {
         showDeleteBeneficiaryToast();
       } else {
         setDeleteBeneficiary(false);
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
     } catch (error: any) {
       renderSpinner(false);
-      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
   return (
@@ -593,9 +591,9 @@ const LocalTransferScreen: React.FC = () => {
       <IPayActionSheet
         ref={editBeneficiaryRef}
         options={[
-          localizationText.COMMON.CANCEL,
-          localizationText.BENEFICIARY_OPTIONS.EDIT_NICK_NAME,
-          localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY,
+          t('COMMON.CANCEL'),
+          t('BENEFICIARY_OPTIONS.EDIT_NICK_NAME'),
+          t('BENEFICIARY_OPTIONS.DELETE_BENFICIARY'),
         ]}
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
@@ -650,7 +648,7 @@ const LocalTransferScreen: React.FC = () => {
       <IPayBeneficiariesSortSheet sortSheetRef={sortSheetRef} setSortByActive={setSortBy} sortByActive={sortBy} />
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+        options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL]')]}
         cancelButtonIndex={1}
         showCancel
         onPress={(index) => handleFinalAction(index, selectedNumber)}

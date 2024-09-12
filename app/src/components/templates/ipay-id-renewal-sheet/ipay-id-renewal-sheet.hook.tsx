@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons'; // Replace with the actual path to icons
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { IdRenewalState } from '@app/utilities/enums.util'; // Replace with the actual path to enums
 import { IPayIcon } from '@components/atoms';
 import React from 'react';
@@ -8,7 +7,6 @@ import { useTranslation } from 'react-i18next';
 // Custom Hook to determine sheet properties based on the current state
 const useIdRenewal = (state: IdRenewalState, colors: any) => {
   const { t } = useTranslation();
-  const localizationText = useLocalization(); // Fetch localization texts
 
   // Define the properties based on the state
   const sheetProps = React.useMemo(() => {
@@ -50,7 +48,7 @@ const useIdRenewal = (state: IdRenewalState, colors: any) => {
           buttonIcon: icons.clock_1,
         };
     }
-  }, [state, localizationText, colors]);
+  }, [state, t, colors]);
 
   return sheetProps; // Return the computed sheet properties
 };

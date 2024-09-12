@@ -25,11 +25,11 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getTitle = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.CHANGE_PIN.CURRENT_PIN_CODE;
+        return t('CHANGE_PIN.CURRENT_PIN_CODE');
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.NEW_PIN_CODE;
+        return t('CHANGE_PIN.NEW_PIN_CODE');
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.CONFIRM_NEW_PIN;
+        return t('CHANGE_PIN.CONFIRM_NEW_PIN');
       default:
         return '';
     }
@@ -38,11 +38,11 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getDescription = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.CHANGE_PIN.ENTER_CURRENT_PASS;
+        return t('CHANGE_PIN.ENTER_CURRENT_PASS');
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.YOU_WILL_NEED_TO;
+        return t('CHANGE_PIN.YOU_WILL_NEED_TO');
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENTER_PASS_AGAIN;
+        return t('CHANGE_PIN.ENTER_PASS_AGAIN');
       default:
         return '';
     }
@@ -51,11 +51,11 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getErrorDescription = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return localizationText.CHANGE_PIN.PLEASE_ENSURE_PASSCODE;
+        return t('CHANGE_PIN.PLEASE_ENSURE_PASSCODE');
       case ChangeCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.OLD_PIN;
+        return t('CHANGE_PIN.OLD_PIN');
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENSURE_YOU_WRITE;
+        return t('CHANGE_PIN.ENSURE_YOU_WRITE');
       default:
         return '';
     }

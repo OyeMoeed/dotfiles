@@ -10,7 +10,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { JSX } from 'react';
 import { IPaySuggestedSliderProps } from './ipay-suggested-slider.interface';
@@ -24,7 +23,7 @@ import genratedStyles from './ipay-suggested-slider.style';
 const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPaySuggestedSliderProps): JSX.Element => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
-  const localizationText = useLocalization();
+
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
       <IPayLinearGradientView
@@ -39,20 +38,16 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPa
             <IPayView style={styles.commonConStyle}>
               {/* <icons.receiptIcon /> */}
               <IPayIcon icon={icons.receipt_item} size={18} color={colors.orange.orange500} />
-              <IPayFootnoteText style={styles.footnoteTextStyle}>
-                {localizationText.HOME.BILL_PAYMENTS}
-              </IPayFootnoteText>
+              <IPayFootnoteText style={styles.footnoteTextStyle} text="HOME.BILL_PAYMENTS"></IPayFootnoteText>
             </IPayView>
             <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>
-              {localizationText.CARDS.WALLET_WITH_EVERY_BILL}
+              {t('CARDS.WALLET_WITH_EVERY_BILL')}
             </IPayCaption2Text>
           </IPayView>
           {/* Right side Text */}
           <IPayView>
             <IPayLargeTitleText style={styles.largeTextStyle}>45%</IPayLargeTitleText>
-            <IPaySubHeadlineText style={styles.subHeadingTextStyle}>
-              {localizationText.COMMON.CASH_BACK}
-            </IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.subHeadingTextStyle} text="COMMON.CASH_BACK"></IPaySubHeadlineText>
           </IPayView>
         </IPayView>
         <IPayView style={styles.imagContainer}>

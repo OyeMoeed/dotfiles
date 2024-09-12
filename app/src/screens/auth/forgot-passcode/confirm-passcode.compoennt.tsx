@@ -10,9 +10,9 @@ import { isIosOS } from '@app/utilities/constants';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import passcodeStyles from '../set-passcode/set-passcode.style';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
-import { useTranslation } from 'react-i18next';
 
 const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcode, passcodeReacted }) => {
   const { colors } = useTheme();
@@ -24,7 +24,7 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
 
   const renderToast = (title: string) => {
     showToast({
-      title: title || localizationText.COMMON.INCORRECT_CODE,
+      title: title || t('COMMON.INCORRECT_CODE'),
       subTitle: t('REGISTRATION.ENSURE_YOU_WRITE'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
@@ -36,7 +36,7 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
   const handleDigitPress = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
       setPassCodeError(true);
-      renderToast(localizationText.ERROR.PASSODE_NOT_MATCHING);
+      renderToast(t('ERROR.PASSODE_NOT_MATCHING'));
     } else if (passcodeReacted) passcodeReacted();
   };
 

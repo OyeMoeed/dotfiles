@@ -37,7 +37,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     unpaid: '1 Unpaid Bills',
   };
 
-  const successMessage = isSaveOnly ? localizationText.PAY_BILL.SAVED_SUCCESS : localizationText.PAY_BILL.PAID_SUCCESS;
+  const successMessage = isSaveOnly ? t('PAY_BILL.SAVED_SUCCESS') : localizationText.PAY_BILL.PAID_SUCCESS;
   const onPressSaveOnlyPay = () => {
     navigate(ScreenNames.ADD_NEW_SADAD_BILLS, {
       selectedBills: [ACTIVE_SADAD_BILLS[0]],
@@ -75,7 +75,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
         <IPaySuccess
           style={styles.minFlex}
           headingText={successMessage}
-          descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
+          descriptionText={`${totalAmount} ${t('COMMON.SAR')}`}
           descriptionStyle={styles.boldStyles}
           headingStyle={styles.headingStyle}
         />

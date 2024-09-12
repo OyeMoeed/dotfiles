@@ -37,7 +37,7 @@ const NewPasscode = forwardRef((props) => {
     if (newCode.length === 4) {
       if (newCode === props?.currentCode) {
         setPasscodeError(true);
-        renderToast(localizationText.CHANGE_PIN.MATCH_NEW_OLD_PASSCODE);
+        renderToast(t('CHANGE_PIN.MATCH_NEW_OLD_PASSCODE'));
       } else {
         props.changeView({ newCode, nextComponent: PasscodeTypes.ConfirmPasscode });
       }

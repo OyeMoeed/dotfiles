@@ -1,10 +1,10 @@
 import icons from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayRearrangeSheetProps } from './ipay-re-arrange-sheet.interface';
 import genratedStyles from './ipay-re-arrange-sheet.style';
 
@@ -22,9 +22,11 @@ const IPayRearrangeSheet: React.FC<IPayRearrangeSheetProps> = ({ testID, setTemp
       style={[styles.rearrangeContStyle, isActive && styles.activeBg]}
     >
       <>
-        <IPayFootnoteText regular style={styles.footnoteTextStyle}>
-          {localizationText.COMMON[item]}
-        </IPayFootnoteText>
+        <IPayFootnoteText
+          regular
+          style={styles.footnoteTextStyle}
+          text={localizationText.COMMON[item]}
+        ></IPayFootnoteText>
         <IPayIcon icon={icons.rearrange} size={18} color={colors.primary.primary500} />
       </>
     </IPayPressable>

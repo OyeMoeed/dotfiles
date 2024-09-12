@@ -76,7 +76,7 @@ const Settings: React.FC = () => {
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.PROFILE.PASSCODE_ERROR,
+        title: title || t('PROFILE.PASSCODE_ERROR'),
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -90,9 +90,7 @@ const Settings: React.FC = () => {
     // const newHideBalanceMode = !isHideBalanceMode;
     // setHideBalanceMode(newHideBalanceMode);
     renderToast({
-      title: allowEyeIconFunctionality
-        ? localizationText.CARDS.BALANCE_IS_VISIBLE
-        : localizationText.CARDS.BALANCE_IS_HIDDEN,
+      title: allowEyeIconFunctionality ? t('CARDS.BALANCE_IS_VISIBLE') : t('CARDS.BALANCE_IS_HIDDEN'),
       toastType: ToastTypes.INFORMATION,
       icon: (
         <IPayIcon
@@ -133,9 +131,7 @@ const Settings: React.FC = () => {
       const apiResponse = await updateBiomatricStatus(payload, walletInfo.walletNumber);
       if (apiResponse.status.type === 'SUCCESS') {
         renderToast({
-          title: !biomatricToggle
-            ? localizationText.CARDS.BIOMETRIC_STATUS_UPDATED
-            : localizationText.CARDS.BIOMETRIC_STATUS_DISABLED,
+          title: !biomatricToggle ? t('CARDS.BIOMETRIC_STATUS_UPDATED') : t('CARDS.BIOMETRIC_STATUS_DISABLED'),
           toastType: ToastTypes.INFORMATION,
           icon: <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural0} />,
           displayTime: 1000,
@@ -151,7 +147,7 @@ const Settings: React.FC = () => {
       renderSpinner(false);
       renderToast({
         title: t('CARDS.BIOMERTIC_STATUS'),
-        subTitle: error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG,
+        subTitle: error?.message || t('ERROR.SOMETHING_WENT_WRONG'),
       });
     }
   };
@@ -197,7 +193,7 @@ const Settings: React.FC = () => {
       <IPayView style={[styles.cardStyle, styles.marginTop]}>
         <IPayView style={styles.cardText}>
           <IpayFlagIcon country={selectedLanguage} />
-          <IPayFootnoteText style={styles.flagStyle}>{localizationText.COMMON.LANGUAGE}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.flagStyle}>{t('COMMON.LANGUAGE')}</IPayFootnoteText>
         </IPayView>
 
         <IPayLanguageSelectorButton
@@ -207,13 +203,13 @@ const Settings: React.FC = () => {
         />
       </IPayView>
       <IPayView>
-        <IPayFootnoteText style={styles.sectionHeader}>{localizationText.SETTINGS.SECURITY_SETTINGS}</IPayFootnoteText>
+        <IPayFootnoteText style={styles.sectionHeader}>{t('SETTINGS.SECURITY_SETTINGS')}</IPayFootnoteText>
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.LOCK} color={colors.primary.primary900} size={24} />
             <IPayView style={styles.flagStyle}>
-              <IPayFootnoteText style={styles.cardTitleText}>{localizationText.SETTINGS.PASSCODE}</IPayFootnoteText>
-              <IPayCaption1Text style={styles.captionText}>{localizationText.SETTINGS.PIN}</IPayCaption1Text>
+              <IPayFootnoteText style={styles.cardTitleText}>{t('SETTINGS.PASSCODE')}</IPayFootnoteText>
+              <IPayCaption1Text style={styles.captionText}>{t('SETTINGS.PIN')}</IPayCaption1Text>
             </IPayView>
           </IPayView>
 
@@ -229,12 +225,8 @@ const Settings: React.FC = () => {
             <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural900} />
 
             <IPayView style={styles.flagStyle}>
-              <IPayFootnoteText style={styles.cardTitleText}>
-                {localizationText.SETTINGS.ENABLE_BIOMETRICS}
-              </IPayFootnoteText>
-              <IPayCaption1Text style={styles.captionText}>
-                {localizationText.SETTINGS.LOGIN_BIOMETRICS}
-              </IPayCaption1Text>
+              <IPayFootnoteText style={styles.cardTitleText}>{t('SETTINGS.ENABLE_BIOMETRICS')}</IPayFootnoteText>
+              <IPayCaption1Text style={styles.captionText}>{t('SETTINGS.LOGIN_BIOMETRICS')}</IPayCaption1Text>
             </IPayView>
           </IPayView>
           <IPayToggleButton toggleState={biomatricToggle} onToggleChange={checkBiomatric} />
@@ -244,20 +236,18 @@ const Settings: React.FC = () => {
           <IPayView style={styles.cardText}>
             <IPayIcon icon={icons.EYE} size={24} color={colors.primary.primary900} />
             <IPayView style={styles.flagStyle}>
-              <IPayFootnoteText style={styles.cardTitleText}>{localizationText.SETTINGS.HIDE_BALANCE}</IPayFootnoteText>
-              <IPayCaption1Text style={styles.captionText}>{localizationText.SETTINGS.TOGGLE}</IPayCaption1Text>
+              <IPayFootnoteText style={styles.cardTitleText}>{t('SETTINGS.HIDE_BALANCE')}</IPayFootnoteText>
+              <IPayCaption1Text style={styles.captionText}>{t('SETTINGS.TOGGLE')}</IPayCaption1Text>
             </IPayView>
           </IPayView>
           <IPayToggleButton toggleState={allowEyeIconFunctionality} onToggleChange={handleToggleHideBalance} />
         </IPayView>
         <IPayView>
-          <IPayFootnoteText style={styles.sectionHeader}>{localizationText.COMMON.NOTIFICATIONS}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.sectionHeader}>{t('COMMON.NOTIFICATIONS')}</IPayFootnoteText>
           <IPayView style={styles.cardStyle}>
             <IPayView style={styles.cardText}>
               <IPayIcon icon={icons.notification_bing} color={colors.primary.primary900} size={24} />
-              <IPayFootnoteText style={styles.flagStyle}>
-                {localizationText.SETTINGS.ACTIVE_NOTIFICATIONS}
-              </IPayFootnoteText>
+              <IPayFootnoteText style={styles.flagStyle}>{t('SETTINGS.ACTIVE_NOTIFICATIONS')}</IPayFootnoteText>
             </IPayView>
             <IPayToggleButton
               toggleState={notificationSettings?.hasActiveNotification}
@@ -270,11 +260,9 @@ const Settings: React.FC = () => {
                 <IPayView style={styles.cardText}>
                   <IPayView>
                     <IPayFootnoteText style={styles.cardTitleText}>
-                      {localizationText.SETTINGS.GENERAL_NOTIFICATION}
+                      {t('SETTINGS.GENERAL_NOTIFICATION')}
                     </IPayFootnoteText>
-                    <IPayCaption1Text style={styles.captionText}>
-                      {localizationText.SETTINGS.GENERAL_SUBTEXT}
-                    </IPayCaption1Text>
+                    <IPayCaption1Text style={styles.captionText}>{t('SETTINGS.GENERAL_SUBTEXT')}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
                 <IPayToggleButton
@@ -285,10 +273,8 @@ const Settings: React.FC = () => {
               <IPayView style={styles.cardStyle}>
                 <IPayView style={styles.cardText}>
                   <IPayView>
-                    <IPayFootnoteText style={styles.cardTitleText}>{localizationText.SETTINGS.OFFERS}</IPayFootnoteText>
-                    <IPayCaption1Text style={styles.captionText}>
-                      {localizationText.SETTINGS.OFFERS_SUBTEXT}
-                    </IPayCaption1Text>
+                    <IPayFootnoteText style={styles.cardTitleText}>{t('SETTINGS.OFFERS')}</IPayFootnoteText>
+                    <IPayCaption1Text style={styles.captionText}>{t('SETTINGS.OFFERS_SUBTEXT')}</IPayCaption1Text>
                   </IPayView>
                 </IPayView>
                 <IPayToggleButton

@@ -39,7 +39,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
     limitsDetails;
 
-  const monthlyOutgoingLimitFormatted: string = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(monthlyOutgoingLimit)}`;
+  const monthlyOutgoingLimitFormatted: string = ` ${t('HOME.OF')} ${hideBalance ? '*****' : formatNumberWithCommas(monthlyOutgoingLimit)}`;
   const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
     ? '*****'
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
@@ -70,13 +70,13 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     const currentBalance = parseFloat(availableBalance);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
     if (monthlyRemaining === 0) {
-      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+      setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
+      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${dailyOutgoingLimit} SAR`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else if (updatedTopUpAmount > currentBalance) {
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_ACCOUNT_BALANCE);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_ACCOUNT_BALANCE'));
     } else {
       setChipValue('');
     }

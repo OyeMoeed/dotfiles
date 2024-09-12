@@ -18,6 +18,7 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
   const { calculatedBill } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles();
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title="TRAFFIC_VIOLATION.REFUND_VIOLATION" backBtn applyFlex />

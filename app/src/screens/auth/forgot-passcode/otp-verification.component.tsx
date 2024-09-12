@@ -119,7 +119,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             <IPayView style={styles.headingView}>
               <IPayPageDescriptionText
                 heading="COMMON.ENTER_RECEIVED_CODE"
-                text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${replaceFirstSixWithX(phoneNumber)}`}
+                text={`${t('COMMON.ENTER_FOUR_DIGIT_OTP')} ${replaceFirstSixWithX(phoneNumber)}`}
               />
             </IPayView>
 
@@ -128,7 +128,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             </IPayView>
 
             <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-              {`${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
+              {`${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
             </IPayCaption1Text>
 
             <IPayButton
@@ -163,12 +163,12 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
                 <IPayView style={styles.verifyViewRow}>
                   <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
                   <IPayCaption1Text regular style={styles.verifyText} color={colors.primary.primary800}>
-                    {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+                    {t('ID_RENEWAL.WHY_VERIFY_TITLE')}
                   </IPayCaption1Text>
                 </IPayView>
 
                 <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-                  {localizationText.ID_RENEWAL.WHY_VERIFY}
+                  {t('ID_RENEWAL.WHY_VERIFY')}
                 </IPayCaption1Text>
               </IPayView>
             )}

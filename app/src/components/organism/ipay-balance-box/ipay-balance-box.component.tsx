@@ -13,13 +13,12 @@ import {
 import { IPayButton, IPayCarousel } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { DashboardOptions } from '@app/utilities';
+import { buttonVariants, DashboardOptions } from '@app/utilities';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { forwardRef } from 'react';
@@ -27,6 +26,7 @@ import { scale, verticalScale } from 'react-native-size-matters';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Props for the IPay Balance Box component.
@@ -55,7 +55,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     const buttonTypes = constants.BUTTON_TYPES;
     const { colors } = useTheme();
     const styles = genratedStyles(colors);
-    const localizationText = useLocalization();
+    const { t } = useTranslation();
     const dispatch = useTypedDispatch();
     const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
     const gradientLocations = [0, 0.8];
@@ -99,7 +99,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
         <IPayView style={styles.subContainer}>
           <IPayView style={styles.iconConStyle}>
-            {item.transfer_type === localizationText.HOME.LOCAL_TRANSFER ? (
+            {item.transfer_type === t('HOME.LOCAL_TRANSFER') ? (
               item?.icon
             ) : (
               <IPayGradientIcon
@@ -114,7 +114,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
           {item?.isNew && (
             <IPayView style={styles.tagViewContainer}>
-              <IPayText style={styles.tagViewText}>{localizationText.COMMON.NEW}</IPayText>
+              <IPayText style={styles.tagViewText}>{t('COMMON.NEW')}</IPayText>
             </IPayView>
           )}
         </IPayView>
@@ -173,7 +173,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           </IPayView>
           <IPayButton
             onPress={topUpPress}
-            btnType={buttonTypes.PRIMARY}
+            btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.natural.natural0} />}
             btnText="COMMON.TOP_UP"
             btnStyle={styles.btnStyle}
@@ -193,7 +193,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
 
             <IPayCaption2Text
               style={styles.textRegular}
-              text={` ${localizationText.HOME.OF} ${formatNumberWithCommas(monthlySpendingLimit)}`}
+              text={` ${t('HOME.OF')} ${formatNumberWithCommas(monthlySpendingLimit)}`}
             />
           </IPayView>
         </IPayView>

@@ -15,7 +15,6 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
@@ -39,7 +38,6 @@ import transferSummaryStyles from './transfer-summary.styles';
 const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const route = useRoute<
     RouteProp<{
       params: ParamsProps;
@@ -87,7 +85,7 @@ const TransferSummaryScreen: React.FC = () => {
         {
           id: '2',
           label: t('TRANSFER_SUMMARY.AMOUNT'),
-          value: `${item.amount} ${localizationText.COMMON.SAR}`,
+          value: `${item.amount} ${t('COMMON.SAR')}`,
         },
         {
           id: '3',
@@ -109,7 +107,7 @@ const TransferSummaryScreen: React.FC = () => {
       {
         id: '2',
         label: t('TRANSFER_SUMMARY.AMOUNT'),
-        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        value: `${item.amount} ${t('COMMON.SAR')}`,
       },
       {
         id: '3',
@@ -246,7 +244,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
     } else {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     }
     setIsLoading(false);
   };
@@ -254,7 +252,7 @@ const TransferSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       verifyOtp();
     }
@@ -308,7 +306,7 @@ const TransferSummaryScreen: React.FC = () => {
               title={"TRANSACTION_HISTORY.TOTAL_AMOUNT"}
               showDetail
               detailTextStyle={styles.listTextStyle}
-              detailText={`${amount} ${localizationText.COMMON.SAR}`}
+              detailText={`${amount} ${t("COMMON.SAR")}`}
             />
           )} */}
           <IPayButton
@@ -322,11 +320,7 @@ const TransferSummaryScreen: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayBottomSheet
-        heading={
-          transactionType === TransactionTypes.SEND_GIFT
-            ? localizationText.HOME.SEND_GIFT
-            : localizationText.HOME.SEND_MONEY
-        }
+        heading={transactionType === TransactionTypes.SEND_GIFT ? t('HOME.SEND_GIFT') : t('HOME.SEND_MONEY')}
         enablePanDownToClose
         simpleBar
         bold

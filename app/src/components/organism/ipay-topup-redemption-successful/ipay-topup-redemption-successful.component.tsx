@@ -15,7 +15,6 @@ import {
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
@@ -39,7 +38,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const { t } = useTranslation();
   const { colors } = useTheme();
   const navigation = useNavigation();
-  const localizationText = useLocalization();
   const styles = topUpSuccessRedemptionStyles(colors);
   const { showToast } = useToastContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -114,7 +112,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     },
     {
       title: t('TOP_UP.POINTS_REDEEMED'),
-      value: `${params?.redeemPoints} ${localizationText.COMMON.POINTS}`,
+      value: `${params?.redeemPoints} ${t('COMMON.POINTS')}`,
     },
   ];
 
@@ -177,7 +175,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                     fontFamily={styles.linearGradientText.fontFamily}
                   />
                   <IPaySubHeadlineText
-                    text={`${params?.redeemAmount} ${localizationText.COMMON.SAR}`}
+                    text={`${params?.redeemAmount} ${t('COMMON.SAR')}`}
                     style={styles.headlineText}
                   />
                 </IPayView>

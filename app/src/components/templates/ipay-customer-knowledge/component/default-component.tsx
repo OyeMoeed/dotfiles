@@ -3,12 +3,12 @@ import { IPayIcon, IPayText } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
 import { KycFormCategories } from '@app/enums';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import customerKnowledgeStyles from '../ipay-customer-knowledge.style';
 import IPayCustomerKnowledgeDefaultProps from './default-component.interface';
+import { useTranslation } from 'react-i18next';
 
 const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> = ({
   control,
@@ -18,7 +18,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
 }) => {
   const { colors } = useTheme();
   const styles = customerKnowledgeStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
   const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />;
 
@@ -38,7 +38,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             customIcon={listCheckIcon}
             onClearInput={() => onChangeCategory && onChangeCategory(KycFormCategories.OCCUPATION)}
             isError={!!errors?.occupation}
-            assistiveText={errors?.occupation && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.occupation && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="occupation"
@@ -55,7 +55,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             maxLength={STANDARD_TEXT_INPUT_MAX_LENGTH}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.employer_name}
-            assistiveText={errors?.employer_name && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.employer_name && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="employer_name"
@@ -73,7 +73,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             customIcon={listCheckIcon}
             onClearInput={() => onChangeCategory && onChangeCategory(KycFormCategories.INCOME_SOURCE)}
             isError={!!errors?.income_source}
-            assistiveText={errors?.income_source && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.income_source && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="income_source"
@@ -91,7 +91,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             customIcon={listCheckIcon}
             onClearInput={() => onChangeCategory && onChangeCategory(KycFormCategories.MONTHLY_INCOME)}
             isError={!!errors?.monthly_income}
-            assistiveText={errors?.monthly_income && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.monthly_income && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="monthly_income"
@@ -110,7 +110,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             customIcon={listCheckIcon}
             onClearInput={() => onChangeCategory && onChangeCategory(KycFormCategories.SELECT_CITY)}
             isError={!!errors?.city_name}
-            assistiveText={errors?.city_name && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.city_name && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="city_name"
@@ -129,7 +129,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.district}
-            assistiveText={errors?.district && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.district && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="district"
@@ -148,7 +148,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.street_name}
-            assistiveText={errors?.street_name && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.street_name && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="street_name"
@@ -165,7 +165,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.postal_code}
-            assistiveText={errors?.postal_code && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.postal_code && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="postal_code"
@@ -184,7 +184,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.additional_code}
-            assistiveText={errors?.additional_code && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.additional_code && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="additional_code"
@@ -203,7 +203,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.building_number}
-            assistiveText={errors?.building_number && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.building_number && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="building_number"
@@ -222,7 +222,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
             onChangeText={onChange}
             containerStyle={styles.inputContainerStyle}
             isError={!!errors?.unit_number}
-            assistiveText={errors?.unit_number && localizationText.COMMON.REQUIRED_FIELD}
+            assistiveText={errors?.unit_number && t('COMMON.REQUIRED_FIELD')}
           />
         )}
         name="unit_number"
