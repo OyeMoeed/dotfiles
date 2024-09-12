@@ -25,7 +25,7 @@ import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-
 import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
 import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
-import getBillersServicesService from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
+import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
@@ -122,15 +122,14 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const onGetBillersServices = async (billerID: string) => {
     try {
-      const apiResponse = await getBillersServicesService(billerID);
+      const apiResponse = await getBillersServiceProvider(billerID);
       if (apiResponse.successfulResponse) {
-        setServices(
-          apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
-            ...serviceItem,
-            id: serviceItem.serviceId,
-            text: serviceItem.serviceDesc,
-          })),
-        );
+        const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+          ...serviceItem,
+          id: serviceItem.serviceId,
+          text: serviceItem.serviceDesc,
+        }));
+        setServices(serviceList);
       }
     } catch (error: any) {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);

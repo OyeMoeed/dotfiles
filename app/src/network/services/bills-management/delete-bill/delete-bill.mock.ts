@@ -1,4 +1,6 @@
-const deleteBillMock = {
+import { DeleteBillMockProps } from './delete-bill.interface';
+
+const deleteBillMock: DeleteBillMockProps = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',

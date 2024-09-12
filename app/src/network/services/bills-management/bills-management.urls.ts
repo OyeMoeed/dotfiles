@@ -11,6 +11,7 @@ const BILLS_MANAGEMENT_URLS = {
     `bills-management/v1/alinmapay/bills/${walletNumber}?billStatus=${billStatus}`,
   GET_BILLER_IMAGE: (billerId: string) =>
     `https://www.alinma.com/ADS/channels/retail/assets/images/billers/${billerId}.png`,
+  DELETE_BILL: 'v1/alinma-pay/bill',
 };
 
 export default BILLS_MANAGEMENT_URLS;

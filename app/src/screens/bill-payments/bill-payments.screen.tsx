@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySadadBill } from '@app/components/organism';
@@ -20,6 +21,7 @@ import {
   BillPaymentOptions,
   BillStatus,
   buttonVariants,
+  spinnerVariant,
 } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import billPaymentsStyles from './bill-payments.style';
@@ -36,6 +38,18 @@ const BillPaymentsScreen: React.FC = () => {
   const [sadadBills, setSadadBillsData] = useState<PaymentInfoProps[]>([]);
   const [unpaidBillsCount, setUnpaidBillsCount] = useState<number>(0);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -70,6 +84,7 @@ const BillPaymentsScreen: React.FC = () => {
   };
 
   const getBills = async () => {
+    renderSpinner(true);
     try {
       const payload: GetSadadBillByStatusProps = {
         walletNumber,
@@ -96,8 +111,10 @@ const BillPaymentsScreen: React.FC = () => {
         default:
           break;
       }
+      renderSpinner(false);
     } catch (error: any) {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderSpinner(false);
     }
   };
 

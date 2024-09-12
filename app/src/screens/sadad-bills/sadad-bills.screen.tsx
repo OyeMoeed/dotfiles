@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
+import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayNoResult, SadadFooterComponent } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -25,6 +26,7 @@ import {
   BillingStatus,
   BillsStatusTypes,
   buttonVariants,
+  spinnerVariant,
   toastTypes,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -49,6 +51,18 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
+  const { showSpinner, hideSpinner } = useSpinnerContext();
+
+  const renderSpinner = (isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+    } else {
+      hideSpinner();
+    }
+  };
 
   const getSelectedBillsCount = (billsData: BillsProps[]) => {
     const count = billsData.filter((bill) => bill.selected).length;
@@ -117,6 +131,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   };
 
   const handleDeleteBill = async (selectedBill: PaymentInfoProps) => {
+    renderSpinner(true);
     const { billNumOrBillingAcct, billerName, billId } = selectedBill;
     try {
       const deviceInfo = await getDeviceInfo();
@@ -143,8 +158,10 @@ const SadadBillsScreen: React.FC = ({ route }) => {
           return updatedBillsData;
         });
       }
+      renderSpinner(false);
     } catch (error) {
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderSpinner(false);
     }
   };
 
@@ -266,6 +283,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   };
 
   const getBills = async (tab: string) => {
+    renderSpinner(true);
     try {
       const payload: GetSadadBillByStatusProps = {
         walletNumber,
@@ -297,7 +315,9 @@ const SadadBillsScreen: React.FC = ({ route }) => {
         default:
           break;
       }
+      renderSpinner(false);
     } catch (error: any) {
+      renderSpinner(false);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
 
