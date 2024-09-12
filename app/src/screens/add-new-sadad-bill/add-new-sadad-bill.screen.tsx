@@ -132,9 +132,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
-  useEffect(() => {
-    onGetBillersServices(walletNumber);
-  }, [selectedBiller]);
+  // useEffect(() => {
+  //   onGetBillersServices(walletNumber);
+  // }, [selectedBiller]);
 
   useEffect(() => {
     onGetBillersCategory();
@@ -241,6 +241,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             setValue(FormFields.COMPANY_NAME, item.text);
             setSelectedImage(item.image);
             setSelectedBiller(item);
+            onGetBillersServices(item?.id);
           } else {
             setValue(FormFields.SERVICE_TYPE, item.text);
             setSelectedService(item);
