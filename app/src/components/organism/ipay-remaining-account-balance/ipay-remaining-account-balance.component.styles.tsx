@@ -10,7 +10,6 @@ const ipayRemainingAccountBalanceStyles = (colors: typeof themeColors) =>
       paddingVertical: moderateScale(24),
       backgroundColor: colors.natural.natural0,
       borderRadius: scaleSize(28),
-      marginBottom: verticalScale(20),
     },
     centerAlign: {
       alignItems: 'center',

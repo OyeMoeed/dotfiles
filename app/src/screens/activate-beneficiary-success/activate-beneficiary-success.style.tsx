@@ -1,9 +1,8 @@
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
 import { verticalScale } from 'react-native-size-matters';
 
-const beneficiaryAcivationStyles = (colors: typeof themeColors) =>
+const beneficiaryAcivationStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,

@@ -1,7 +1,7 @@
 import {
   DeleteSingleNotificationMockProps,
   GetAllRetainedMessagesMockProps,
-  ReadSingleNotificationMockProps,
+  ReadNotificationMockProps,
 } from './notifications.interface';
 
 const getAllRetainedMessagesMock: GetAllRetainedMessagesMockProps = {
@@ -118,7 +118,7 @@ const getAllRetainedMessagesMock: GetAllRetainedMessagesMockProps = {
   ok: true,
 };
 
-const readSingleNotificationsMock: ReadSingleNotificationMockProps = {
+const readNotificationsMock: ReadNotificationMockProps = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -144,4 +144,4 @@ const deleteSingleNotificationMock: DeleteSingleNotificationMockProps = {
   ok: true,
 };
 
-export { getAllRetainedMessagesMock, readSingleNotificationsMock, deleteSingleNotificationMock };
+export { getAllRetainedMessagesMock, readNotificationsMock, deleteSingleNotificationMock };

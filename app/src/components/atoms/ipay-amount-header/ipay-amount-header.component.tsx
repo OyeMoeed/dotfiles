@@ -3,7 +3,7 @@ import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPaySupportedCards } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { payChannel } from '@app/utilities/enums.util';
+import { PayChannel } from '@app/utilities/enums.util';
 import React from 'react';
 import { IPayAmountHeaderProps } from './ipay-amount-header.interface';
 import componentHeaderStyles from './ipay-amount-header.styles';
@@ -14,21 +14,21 @@ const IPayAmountHeader: React.FC<IPayAmountHeaderProps> = ({ testID, title, chan
   const localizationText = useLocalization();
 
   return (
-    <IPayView testID={`${testID}-amount-header`} style={[styles.cardHeader]}>
+    <IPayView testID={`${testID}-amount-header`} style={styles.cardHeader}>
       <IPayIcon
-        icon={channel === payChannel.APPLE ? icons.apple_pay : icons.cards}
+        icon={channel === PayChannel.APPLE ? icons.apple_pay : icons.cards}
         size={24}
         color={colors.primary.primary900}
       />
       <IPayView style={styles.textContainer}>
         {title && (
           <IPayCaption1Text
-            text={channel === payChannel.APPLE ? localizationText.TOP_UP.APPLE_PAY : localizationText.TOP_UP.CARD_TITLE}
-            style={[styles.headerText]}
+            text={channel === PayChannel.APPLE ? localizationText.TOP_UP.APPLE_PAY : localizationText.TOP_UP.CARD_TITLE}
+            style={styles.headerText}
           />
         )}
       </IPayView>
-      {channel === payChannel.CARD && <IPaySupportedCards />}
+      {channel === PayChannel.CARD && <IPaySupportedCards />}
     </IPayView>
   );
 };

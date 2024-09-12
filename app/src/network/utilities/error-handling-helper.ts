@@ -7,6 +7,8 @@ import { mapApiError } from '../services/api-call.interceptors';
 
 const hideErrorResponse = (response: AxiosResponse | AxiosError) => response?.config?.headers.hide_error_response;
 
+const hideSpinnerLoading = (response: AxiosResponse | AxiosError) => response?.config?.headers.hide_spinner_loading;
+
 const isErrorResponse = (response: AxiosResponse) => {
   if (response?.status !== constants.SUCCESS_RESPONSE) return true;
   if (response?.data?.status?.type === 'SUCCESS') return false;
@@ -24,8 +26,8 @@ const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
   if ((error as AxiosError)?.response?.status === constants.ERROR_CODES.FORBIDDEN) {
     if (auth?.isAuthorized) {
       store.dispatch(showSessionTimeoutAlert());
+      return;
     }
-    return;
   }
   const mappedError = mapApiError(error);
   if (hideErrorResponse(error)) return;
@@ -34,4 +36,4 @@ const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
   }
 };
 
-export { hideErrorResponse, isErrorResponse, handleAxiosError };
+export { hideErrorResponse, hideSpinnerLoading, isErrorResponse, handleAxiosError };

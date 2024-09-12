@@ -1,5 +1,4 @@
 import { IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayDropdownComponent, IPayHeader } from '@app/components/molecules';
 import { ListItem } from '@app/components/molecules/ipay-dropdown/ipay-dropdown.interface';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -10,16 +9,14 @@ import {
   IPayNearestAtmLocations,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetCoreManagementLovPayload } from '@app/network/services/core/lov/get-lov.interface';
 import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
-import { spinnerVariant, TabBase } from '@app/utilities/enums.util';
+import { TabBase } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
@@ -51,7 +48,6 @@ const NearestAtmScreen: React.FC = () => {
   const [atmDetails, setAtmDetials] = useState<AtmDetailsProps | null>(null);
   // const [currentLocation, setCurrentLocation] = useState<{ latitude: number; longitude: number }>();
   const [searchText, setSearchText] = useState<string>('');
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const toRadians = (degree: number) => {
     // degrees to radians
@@ -99,7 +95,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
           type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
@@ -121,7 +117,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedFilterKeys = apiResponse?.response?.lovInfo.map((item) => ({
           id: item.recTypeCode,
@@ -142,7 +138,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       if (apiResponse?.response?.lovInfo) {
         setCities(
           apiResponse?.response?.lovInfo.map((item) => ({
@@ -157,15 +153,8 @@ const NearestAtmScreen: React.FC = () => {
   useEffect(() => {
     Geolocation.getCurrentPosition(
       async (position) => {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-
         await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
         await getCities();
-
-        hideSpinner();
       },
       (error) => {
         // eslint-disable-next-line no-console

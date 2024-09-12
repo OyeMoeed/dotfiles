@@ -1,8 +1,8 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
-import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, moderateVerticalScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -36,7 +36,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary800,
     },
     headlineText: {
-      marginVertical: moderateScale(24),
+      marginVertical: moderateScale(12),
       color: themeColors.primary.primary800,
     },
     linearGradientTextView: {
@@ -46,7 +46,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     failedButton: {
       alignItems: 'center',
-      borderWidth: '0',
+      borderWidth: 0,
     },
     home: {
       marginBottom: moderateScale(30),
@@ -65,10 +65,16 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     listContainer: {
       backgroundColor: themeColors.natural.natural0,
-
-      width: '100%',
       borderRadius: scaleSize(16),
       marginBottom: moderateScale(8),
+    },
+    chipContainer: {
+      marginBottom: moderateScale(10),
+    },
+    chipColors: {
+      alignSelf: 'stretch',
+      backgroundColor: themeColors.secondary.secondary100,
+      color: themeColors.secondary.secondary500,
     },
 
     logoStyles: {
@@ -91,10 +97,10 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       width: '100%',
       justifyContent: 'space-around',
-      marginBottom: verticalScale(16),
+      marginVertical: verticalScale(16),
     },
     margins: {
-      marginTop: verticalScale(58),
+      // marginTop: verticalScale(58),
     },
     leftIconCard: {
       height: moderateScale(22),
@@ -104,12 +110,15 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       paddingVertical: moderateScale(12),
       paddingHorizontal: moderateScale(18),
       justifyContent: 'space-between',
-      width: '100%',
+      // width: '100%',
+      flex: 1,
       flexDirection: 'row',
     },
     listDetails: {
       flexDirection: 'row',
       alignItems: 'center',
+      justifyContent: 'flex-end',
+      flex: 0.45,
     },
     detailsText: { color: themeColors.primary.primary800 },
 
@@ -117,11 +126,11 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
+      marginTop: moderateScale(12),
       marginBottom: moderateScale(16),
     },
     newTopupText: {
       color: themeColors.primary.primary500,
-
       marginLeft: scaleSize(6),
     },
     appleIcon: {
@@ -133,8 +142,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
       marginLeft: scaleSize(6),
     },
 
-    detailesFlex: {
-      flex: 0,
+    cardList: {
+      flex: 1,
     },
     topupContainer: {
       alignItems: 'center',
@@ -147,28 +156,34 @@ export const TopUpSuccessStyles = (themeColors: typeof colors) =>
     },
     iconLabel: {
       flexDirection: 'row',
-      marginRight: scaleSize(2),
+      gap: scaleSize(2),
+
       alignItems: 'center',
-      justifyContent: 'space-between',
+      // justifyContent: 'space-between',
+      flex: 0.6,
     },
     leftIcon: {
-      marginRight: moderateScale(12),
+      // marginRight: moderateScale(12),
     },
     toastContainer: {
       borderColor: themeColors.success.success500,
       backgroundColor: themeColors.success.success500,
     },
     walletBackground: {
+      width: SCREEN_WIDTH - moderateScale(80, 0.9),
       backgroundColor: themeColors.natural.natural0,
       padding: moderateScale(12),
+      marginTop: moderateVerticalScale(12),
+      marginBottom: moderateScale(8),
       borderRadius: moderateScale(22),
     },
     walletListBackground: {
       backgroundColor: themeColors.backgrounds.greyOverlay,
-      borderRadius: moderateScale(22),
+      borderRadius: moderateScale(16),
       paddingVertical: scaleSize(12),
-      paddingHorizontal: scaleSize(18),
+      paddingHorizontal: scaleSize(16),
       justifyContent: 'space-between',
+      gap: 2,
       flexDirection: 'row',
     },
     giftText: {

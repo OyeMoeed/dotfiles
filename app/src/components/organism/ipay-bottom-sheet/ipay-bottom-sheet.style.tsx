@@ -1,6 +1,6 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleFont, scaleSize, SCREEN_HEIGHT, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const bottonSheetStyles = (colors?: any) =>
@@ -27,7 +27,7 @@ const bottonSheetStyles = (colors?: any) =>
       paddingVertical: moderateScale(8),
     },
     boldStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
 
     overlayFullWindowStyles: { position: 'absolute', width: SCREEN_WIDTH, height: '100%', bottom: 0 },

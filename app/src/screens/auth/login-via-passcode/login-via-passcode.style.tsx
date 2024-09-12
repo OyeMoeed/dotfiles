@@ -27,7 +27,7 @@ const loginViaPasscodeStyles = (colors: typeof themeColors) =>
     },
     welcomeText: {
       marginTop: moderateScale(8),
-      marginBottom: moderateScale(4),
+      marginBottom: moderateScale(6),
     },
     linearGradientText: {
       fontSize: moderateScale(22),
