@@ -335,6 +335,7 @@ export {
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
+  CardMapping,
   CardOptions,
   CardStatusIndication,
   CardStatusNumber,
@@ -369,6 +370,4 @@ export {
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  toastTypes,
-  CardMapping,
 };

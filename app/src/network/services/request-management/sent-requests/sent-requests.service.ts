@@ -23,7 +23,7 @@ const getAllSentRequests = async (payload: WalletNumberProp): Promise<unknown> =
   }
   try {
     const apiResponse: any = await apiCall({
-      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber, 'TO', payload.currentPage, 20),
+      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber, 'FROM', payload.currentPage, 20),
       method: requestType.GET,
     });
 
