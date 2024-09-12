@@ -4,6 +4,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface MoiPaymentDetail {
   id: string;
@@ -15,6 +16,7 @@ interface MoiPaymentDetail {
 
 // TODO wiill be replaced by API
 const useMoiPaymentConfirmation = () => {
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
@@ -26,32 +28,32 @@ const useMoiPaymentConfirmation = () => {
   const moiPaymentDetailes: MoiPaymentDetail[] = [
     {
       id: '1',
-      label: localizationText.BILL_PAYMENTS.DUE_AMOUNT,
+      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
       value: '500 SAR',
     },
     {
       id: '2',
-      label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+      label: t('BILL_PAYMENTS.SERVICE_PROVIDER'),
       value: 'Expatriate Services',
     },
     {
       id: '3',
-      label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+      label: t('BILL_PAYMENTS.SERVICE_TYPE'),
       value: 'Renewal of residence',
     },
     {
       id: '4',
-      label: localizationText.BILL_PAYMENTS.BENEFICIARY_ID,
+      label: t('BILL_PAYMENTS.BENEFICIARY_ID'),
       value: '1965873233',
     },
     {
       id: '5',
-      label: localizationText.BILL_PAYMENTS.LICENSE_TYPE,
+      label: t('BILL_PAYMENTS.LICENSE_TYPE'),
       value: 'Expatriate Services',
     },
     {
       id: '6',
-      label: localizationText.BILL_PAYMENTS.DURATION,
+      label: t('BILL_PAYMENTS.DURATION'),
       value: 'Two years',
     },
   ];
@@ -59,27 +61,27 @@ const useMoiPaymentConfirmation = () => {
   const moiPayBillSubList: MoiPaymentDetail[] = [
     {
       id: '1',
-      label: localizationText.BILL_PAYMENTS.BILL_TYPE,
+      label: t('BILL_PAYMENTS.BILL_TYPE'),
       value: 'Traffic Violation',
     },
     {
       id: '2',
-      label: localizationText.BILL_PAYMENTS.TRAFFIC_NUMBER,
+      label: t('BILL_PAYMENTS.TRAFFIC_NUMBER'),
       value: '1965873233',
     },
     {
       id: '5',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
       value: '14/03/2023 - 15:30',
     },
     {
       id: '3',
-      label: localizationText.BILL_PAYMENTS.DUE_AMOUNT,
+      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
       value: '500 SAR',
     },
     {
       id: '6',
-      label: localizationText.COMMON.REF_NUM,
+      label: t('COMMON.REF_NUM'),
       value: 'FAT35346',
       icon: icons.copy,
     },
@@ -88,32 +90,32 @@ const useMoiPaymentConfirmation = () => {
   const moiRefundBillSubList: MoiPaymentDetail[] = [
     {
       id: '1',
-      label: localizationText.BILL_PAYMENTS.DUE_AMOUNT,
+      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
       value: '500 SAR',
     },
     {
       id: '2',
-      label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+      label: t('BILL_PAYMENTS.SERVICE_PROVIDER'),
       value: 'Expatriate Services',
     },
     {
       id: '3',
-      label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+      label: t('BILL_PAYMENTS.SERVICE_TYPE'),
       value: 'Renewal of residence',
     },
     {
       id: '4',
-      label: localizationText.BILL_PAYMENTS.VIOLATION_NUBMER,
+      label: t('BILL_PAYMENTS.VIOLATION_NUBMER'),
       value: '1965873233',
     },
     {
       id: '5',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
       value: '14/03/2023 - 15:30',
     },
     {
       id: '6',
-      label: localizationText.COMMON.REF_NUM,
+      label: t('COMMON.REF_NUM'),
       value: 'FAT35346',
       icon: icons.copy,
     },
@@ -123,7 +125,7 @@ const useMoiPaymentConfirmation = () => {
     otpRef?.current?.close();
     navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
       moiPaymentDetailes,
-      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
+      successMessage: t('BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE'),
       subDetails: moiPayBillSubList,
     });
   };

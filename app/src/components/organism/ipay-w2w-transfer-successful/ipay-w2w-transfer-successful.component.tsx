@@ -23,11 +23,13 @@ import React from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
 import ViewShot from 'react-native-view-shot';
 import useShareableImage from '@app/components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.hook';
+import { useTranslation } from 'react-i18next';
 import { IW2WTransferSuccessProps, PayData } from './ipay-w2w-transfer-successful.interface';
 import { TopUpSuccessStyles } from './ipay-w2w-transfer-successful.styles';
 
 const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const styles = TopUpSuccessStyles(colors);
   const { viewShotRef, shareImage } = useShareableImage();
@@ -40,7 +42,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
       return [
         {
           id: '2',
-          label: localizationText.TOP_UP.TRANSFER_TO,
+          label: t('TOP_UP.TRANSFER_TO'),
           value: item.subtitle,
           icon: null,
           leftIcon: icons.user_square,
@@ -49,39 +51,39 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
         },
         {
           id: '3',
-          label: localizationText.TOP_UP.TRANSACTION_ID,
+          label: t('TOP_UP.TRANSACTION_ID'),
           value: transferDetails.apiData[index].transactionId,
           icon: icons.copy,
           color: colors.primary.primary500,
         },
-        { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: item.amount, icon: null },
-        { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: item.selectedItem.text },
+        { id: '4', label: t('TRANSACTION_HISTORY.AMOUNT, value: item.amount'), icon: null },
+        { id: '1', label: t('TRANSACTION_HISTORY.TRANSFER_REASON'), value: item.selectedItem.text },
       ];
     }
     return [
       {
         id: '2',
-        label: localizationText.TOP_UP.TRANSFER_TO,
+        label: t('TOP_UP.TRANSFER_TO'),
         value: item.subtitle,
         leftIcon: images.alinmaP,
         isAlinma: true,
       },
       {
         id: '3',
-        label: localizationText.TOP_UP.TRANSACTION_ID,
+        label: t('TOP_UP.TRANSACTION_ID'),
         value: transferDetails.apiData?.[index]?.transactionId,
         icon: icons.copy,
         color: colors.primary.primary500,
       },
-      { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: item.amount, icon: null },
-      { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: item?.selectedItem?.text },
+      { id: '4', label: t('TRANSACTION_HISTORY.AMOUNT, value: item.amount'), icon: null },
+      { id: '1', label: t('TRANSACTION_HISTORY.TRANSFER_REASON'), value: item?.selectedItem?.text },
     ];
   });
 
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: t('TOP_UP.COPIED'),
+      subTitle: t('TOP_UP.REF_NUMBER_COPIED'),
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,

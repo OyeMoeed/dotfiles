@@ -11,10 +11,12 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DataItem from './playstation-store.interface';
 import playStationStyles from './playstation-store.styles';
 
 const PlayStationScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { playStationPrices, sortingData, productDetailData } = useConstantData();
   const { colors } = useTheme();
   const styles = playStationStyles(colors);
@@ -34,7 +36,7 @@ const PlayStationScreen: React.FC = () => {
   const onPricePress = () =>
     navigate(ScreenNames.SHOP_DETAILS, {
       details: productDetailData,
-      heading: localizationText.SHOP.PRODUCT_DETAILS,
+      heading: t('SHOP.PRODUCT_DETAILS'),
     });
 
   const handleSort = useCallback(

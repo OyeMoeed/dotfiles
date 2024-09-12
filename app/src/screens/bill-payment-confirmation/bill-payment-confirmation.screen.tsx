@@ -18,6 +18,7 @@ import dateTimeFormat from '@app/utilities/date.const';
 import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
@@ -26,9 +27,9 @@ import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
   const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos } = route.params || {};
   const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { t } = useTranslation();
 
   const {
-    localizationText,
     balanceData,
     handlePay,
     setOtp,
@@ -74,17 +75,17 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
     {
       id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      label: t('PAY_BILL.SERVICE_TYPE'),
       value: shortString(item.serviceDescription, 15),
     },
     {
       id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      label: t('PAY_BILL.ACCOUNT_NUMBER'),
       value: item.billNumOrBillingAcct,
     },
     {
       id: '3',
-      label: localizationText.COMMON.DUE_DATE,
+      label: t('COMMON.DUE_DATE'),
       value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
     },
   ];

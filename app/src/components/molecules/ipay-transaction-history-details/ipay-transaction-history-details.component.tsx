@@ -19,6 +19,7 @@ import { States, ToastTypes } from '@app/utilities/enums.util';
 import getArryFromObject from '@app/utilities/object-to-array.helper';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
@@ -37,6 +38,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     }: IPayTransactionHistoryDetailsProps,
     ref,
   ) => {
+    const { t } = useTranslation();
     const { colors } = useTheme();
     const styles = transactionDetailsStyles(colors);
     const localizationText = useLocalization();
@@ -64,7 +66,7 @@ const IPayTransactionHistoryDetails = forwardRef(
       triggerSuccessToast() {
         renderToast({
           icon: <IPayImage image={images.money_tick} style={styles.moneyTimeImg} />,
-          title: localizationText.TOP_UP.REF_NUMBER_COPIED,
+          title: t('TOP_UP.REF_NUMBER_COPIED'),
           subTitle: `${transactionData?.amount} ${localizationText.COMMON.SAR}`,
           toastType: ToastTypes.SUCCESS,
           displayTime: 2000,
@@ -87,7 +89,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     // when on press copy icon this method will trigger, it will copy the number and render taost message
     const onPressCopyIcon = (refNo: string) => {
       copyText(refNo);
-      renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+      renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
     };
 
     // To get the tile text for list view data of a trnasaction

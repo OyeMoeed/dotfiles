@@ -46,12 +46,14 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
 import { useTypedSelector } from '@app/store/store';
+import { useTranslation } from 'react-i18next';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const { isKeyboardOpen } = useKeyboardStatus();
@@ -90,7 +92,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         navigate(ScreenNames.SEND_MONEY_FORM, {
           activeFriends: apiResponse.response?.friends,
           selectedContacts,
-          heading: localizationText.HOME.SEND_MONEY,
+          heading: t('HOME.SEND_MONEY'),
           showReason: true,
         });
       }
@@ -117,7 +119,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       case TRANSFERTYPE.REQUEST_MONEY:
         navigate(ScreenNames.SEND_MONEY_FORM, {
           selectedContacts,
-          heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
+          heading: t('REQUEST_MONEY.CREATE_REQUEST'),
           from: TRANSFERTYPE.REQUEST_MONEY,
           showHistory: false,
         });
@@ -173,7 +175,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.WALLET_TO_WALLET.CONTACT_LIMIT,
+      title: t('WALLET_TO_WALLET.CONTACT_LIMIT'),
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
@@ -284,7 +286,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         recordID: mobileNumber,
         phoneNumbers: [
           {
-            label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
+            label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
             number: mobileNumber,
           },
         ],
@@ -314,7 +316,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         recordID: mobileNumber,
         phoneNumbers: [
           {
-            label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
+            label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
             number: mobileNumber,
           },
         ],

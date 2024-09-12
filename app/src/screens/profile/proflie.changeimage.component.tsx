@@ -14,6 +14,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { removeProfileImage } from '@app/network/services/core/update-wallet/update-wallet.service';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import { useTranslation } from 'react-i18next';
 import profileStyles from './profile.style';
 
 interface UseChangeImageReturn {
@@ -24,6 +25,8 @@ interface UseChangeImageReturn {
 }
 
 const useChangeImage = (): UseChangeImageReturn => {
+  const { t } = useTranslation();
+
   const actionSheetRef = useRef<any>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
@@ -126,10 +129,10 @@ const useChangeImage = (): UseChangeImageReturn => {
     localizationText.COMMON.CANCEL,
   ];
   const actionSheetOptions: IPayActionSheetProps = {
-    title: localizationText.PROFILE.CHANGE_PICTURE,
+    title: t('PROFILE.CHANGE_PICTURE'),
     showIcon: true,
     customImage: <ProfileIcon />,
-    message: localizationText.PROFILE.SELECT_OPTION,
+    message: t('PROFILE.SELECT_OPTION'),
     options:
       selectedImage || walletInfo.profileImage
         ? walletOptions
@@ -159,13 +162,13 @@ const useChangeImage = (): UseChangeImageReturn => {
         setAlertVisible(false);
       }}
       primaryAction={{
-        text: localizationText.COMMON.CANCEL,
+        text: t('COMMON.CANCEL'),
         onPress: () => {
           setAlertVisible(false);
         },
       }}
       secondaryAction={{
-        text: localizationText.PROFILE.REMOVE,
+        text: t('PROFILE.REMOVE'),
         onPress: handleRemoveImg,
       }}
       type={alertType.SIDE_BY_SIDE}

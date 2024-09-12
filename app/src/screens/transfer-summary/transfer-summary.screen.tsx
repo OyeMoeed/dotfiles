@@ -31,12 +31,14 @@ import { scaleSize } from '@app/styles/mixins';
 import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
 import transferSummaryStyles from './transfer-summary.styles';
 
 const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const route = useRoute<
     RouteProp<{
@@ -76,7 +78,7 @@ const TransferSummaryScreen: React.FC = () => {
       return [
         {
           id: '1',
-          label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+          label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
           value: transfersDetails.formInstances[index]?.subtitle,
           leftIcon: icons.user_square,
           color: colors.primary.primary900,
@@ -84,37 +86,37 @@ const TransferSummaryScreen: React.FC = () => {
         },
         {
           id: '2',
-          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+          label: t('TRANSFER_SUMMARY.AMOUNT'),
           value: `${item.amount} ${localizationText.COMMON.SAR}`,
         },
         {
           id: '3',
-          label: localizationText.TRANSFER_SUMMARY.REASON,
+          label: t('TRANSFER_SUMMARY.REASON'),
           value: transfersDetails.formInstances[index]?.selectedItem?.text,
         },
-        { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
+        { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: item.note },
       ];
     }
 
     return [
       {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
         value: transfersDetails.formInstances[index]?.subtitle,
         leftIcon: images.alinmaP,
         isAlinma: true,
       },
       {
         id: '2',
-        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        label: t('TRANSFER_SUMMARY.AMOUNT'),
         value: `${item.amount} ${localizationText.COMMON.SAR}`,
       },
       {
         id: '3',
-        // label: localizationText.TRANSFER_SUMMARY.REASON,
+        // label: t("TRANSFER_SUMMARY.REASON"),
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
       },
-      { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
+      { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: item.note },
     ];
   });
 

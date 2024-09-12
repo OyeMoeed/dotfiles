@@ -28,6 +28,7 @@ import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
 import React, { useRef } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { BeneficiaryDetailsProps } from './transfer-confirmation.interface';
@@ -36,6 +37,7 @@ import transferConfirmationStyles from './transfer-confirmation.style';
 const TransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
   const styles = transferConfirmationStyles(colors);
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const otpBottomSheetRef = useRef<any>(null);
@@ -66,7 +68,7 @@ const TransferConfirmation: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const onCloseBottomSheet = () => {

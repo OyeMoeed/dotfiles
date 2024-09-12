@@ -22,6 +22,7 @@ import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-she
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import {
   RouteParams,
@@ -41,6 +42,7 @@ const DUMMY_DATA = {
 
 const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -101,7 +103,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      title: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

@@ -21,29 +21,32 @@ import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
+import { useTranslation } from 'react-i18next';
 import { ATMWithdrawalSuccessScreenProps, ItemProps } from './atm-withdraw-successful.interface';
 import atmWithdrawSuccessStyles from './atm-withdraw-successful.style';
 
 const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ route }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = atmWithdrawSuccessStyles(colors);
   const localizationText = useLocalization();
+
   const withdrawSuccessData = [
     {
       id: 1,
-      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_TYPE,
-      subTitle: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.ATM_WITHDRAWAL,
+      title: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_TYPE'),
+      subTitle: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.ATM_WITHDRAWAL'),
       icon: '',
     },
     {
       id: 2,
-      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.REF_NUMBER,
+      title: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.REF_NUMBER'),
       subTitle: route?.params?.referenceNumber,
       icon: icons.copy,
     },
     {
       id: 3,
-      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_DATE,
+      title: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_DATE'),
       subTitle: formatTimeAndDate(new Date().toString()),
       icon: '',
     },
@@ -74,7 +77,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const renderItem = ({ item }: ItemProps) => (

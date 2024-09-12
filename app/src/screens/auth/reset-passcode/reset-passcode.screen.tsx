@@ -10,11 +10,13 @@ import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigat
 import colors from '@app/styles/colors.const';
 import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayResetPasscodeProps from './reset-passcode.interface';
 import resetPasscodeStyles from './reset-passcode.styles';
 
 const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassCode, passcodeError }, ref) => {
   const styles = resetPasscodeStyles();
+  const { t } = useTranslation();
   const navigation = useNavigation();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
@@ -26,7 +28,7 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-      subTitle: localizationText.CHANGE_PIN.PLEASE_ENSURE_PASSCODE,
+      subTitle: t('CHANGE_PIN.PLEASE_ENSURE_PASSCODE'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

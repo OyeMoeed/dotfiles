@@ -9,10 +9,12 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { PasscodeTypes } from '@app/screens/settings/settings.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import newPasscodeStyles from './new-passcode.styles';
 
 const NewPasscode = forwardRef((props) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = newPasscodeStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
@@ -20,7 +22,7 @@ const NewPasscode = forwardRef((props) => {
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.COMMON.TRY_NEW_PASSCODE,
+      title: t('COMMON.TRY_NEW_PASSCODE'),
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,

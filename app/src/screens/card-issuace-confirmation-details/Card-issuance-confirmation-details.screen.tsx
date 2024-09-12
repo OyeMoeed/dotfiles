@@ -3,7 +3,6 @@ import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayTermsAndConditionBanner, IPayTopUpBox } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePinRefTypes, OpenBottomSheetRefTypes } from '@app/screens/card-options/card-options.interface';
@@ -11,6 +10,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
@@ -20,7 +20,7 @@ import cardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.
 
 const CardIssuanceConfirmationScreen = () => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const styles = cardIssuaceConfirmationStyles(colors);
   const termsRef = useRef<OpenBottomSheetRefTypes>(null);
@@ -31,7 +31,7 @@ const CardIssuanceConfirmationScreen = () => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      title: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
@@ -60,18 +60,18 @@ const CardIssuanceConfirmationScreen = () => {
   const listData = [
     {
       id: '1',
-      title: localizationText.TOPUP_CONFIRMATION.HOLDERS_NAME,
-      detailText: localizationText.TOPUP_CONFIRMATION.ADAM_AHMED,
+      title: t('TOPUP_CONFIRMATION.HOLDERS_NAME'),
+      detailText: t('TOPUP_CONFIRMATION.ADAM_AHMED'),
     },
     {
       id: '2',
-      title: localizationText.TOPUP_CONFIRMATION.CARD_TYPE,
-      detailText: localizationText.TOPUP_CONFIRMATION.MADA_DEBIT_CARD,
+      title: t('TOPUP_CONFIRMATION.CARD_TYPE'),
+      detailText: t('TOPUP_CONFIRMATION.MADA_DEBIT_CARD'),
     },
     {
       id: '3',
-      title: localizationText.TOPUP_CONFIRMATION.ISSUANCE_FEE,
-      detailText: localizationText.TOPUP_CONFIRMATION.HUNDERED_SAR,
+      title: t('TOPUP_CONFIRMATION.ISSUANCE_FEE'),
+      detailText: t('TOPUP_CONFIRMATION.HUNDERED_SAR'),
       style: styles.upperListContainer,
     },
   ];

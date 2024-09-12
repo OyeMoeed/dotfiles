@@ -21,6 +21,7 @@ import { LanguageCode, spinnerVariant, ToastTypes } from '@app/utilities/enums.u
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
 import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
 import IPayResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
@@ -29,6 +30,7 @@ import settingStyles from './settings.styles';
 import useSettings from './use-settings.hook';
 
 const Settings: React.FC = () => {
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -140,15 +142,15 @@ const Settings: React.FC = () => {
         });
       } else {
         renderToast({
-          title: localizationText.CARDS.BIOMERTIC_STATUS,
-          subTitle: localizationText.ERROR.API_ERROR_RESPONSE,
+          title: t('CARDS.BIOMERTIC_STATUS'),
+          subTitle: t('ERROR.API_ERROR_RESPONSE'),
         });
       }
       renderSpinner(false);
     } catch (error) {
       renderSpinner(false);
       renderToast({
-        title: localizationText.CARDS.BIOMERTIC_STATUS,
+        title: t('CARDS.BIOMERTIC_STATUS'),
         subTitle: error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG,
       });
     }

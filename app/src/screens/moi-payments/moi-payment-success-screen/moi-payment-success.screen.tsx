@@ -22,10 +22,12 @@ import { copyText } from '@app/utilities';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const { moiPaymentDetailes, successMessage, refund, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
@@ -50,7 +52,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const onPressShare = () => {

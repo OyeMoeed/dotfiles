@@ -10,10 +10,12 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import { useTypedSelector } from '@app/store/store';
+import { useTranslation } from 'react-i18next';
 import newsadadBillStyles from './new-sadad-bill.style';
 import { NewSadadBillProps } from './new-sadad-bill.interface';
 
 const NewSadadBillScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = newsadadBillStyles(colors);
   const localizationText = useLocalization();
@@ -92,7 +94,7 @@ const NewSadadBillScreen: React.FC = () => {
 
   const billDetailsList = [
     {
-      currency: localizationText.COMMON.SAR,
+      currency: t('COMMON.SAR'),
       billTitle: billNickname,
       vendor: billerName,
       vendorIcon: billerIcon,

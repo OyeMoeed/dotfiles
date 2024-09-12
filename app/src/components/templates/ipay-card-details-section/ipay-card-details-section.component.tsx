@@ -36,6 +36,7 @@ import {
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
 import {
   IPayCardDetailsSectionProps,
@@ -50,6 +51,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   currentCard,
   cards,
 }) => {
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
@@ -99,13 +101,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     },
     {
       icon: icons.setting_21,
-      text: localizationText.CARDS.CARD_OPTIONS,
+      text: t('CARDS.CARD_OPTIONS'),
       key: '2',
       onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard }),
     },
     {
       icon: icons.info_circle1,
-      text: localizationText.CARDS.CARD_DETAILS,
+      text: t('CARDS.CARD_DETAILS'),
       key: '3',
       onPress: onOpenOTPSheet,
     },
@@ -113,15 +115,15 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 
   const sheetVariant: SheetVariants = {
     freeze: {
-      title: localizationText.CARDS.FREEZE_CARD,
-      subtitle: localizationText.CARDS.CARD_FREEZE_INDICATION_MESSAGE,
-      option: localizationText.CARDS.FREEZE,
+      title: t('CARDS.FREEZE_CARD'),
+      subtitle: t('CARDS.CARD_FREEZE_INDICATION_MESSAGE'),
+      option: t('CARDS.FREEZE'),
       icon: icons.cardSlash1,
     },
     unfreeze: {
-      title: localizationText.CARDS.UNFREEZE_CARD,
-      subtitle: localizationText.CARDS.CARD_UNFREEZE_INDICATION_MESSAGE,
-      option: localizationText.CARDS.UNFREEZE,
+      title: t('CARDS.UNFREEZE_CARD'),
+      subtitle: t('CARDS.CARD_UNFREEZE_INDICATION_MESSAGE'),
+      option: t('CARDS.UNFREEZE'),
       icon: icons.card_tick11,
     },
   };
@@ -129,12 +131,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const renderToast = (toastMsg: string, type: string) => {
     const toastVariant: ToastVariants = {
       freeze: {
-        title: localizationText.CARDS.CARD_FREEZE_MESSAGE,
+        title: t('CARDS.CARD_FREEZE_MESSAGE'),
         toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },
       unfreeze: {
-        title: localizationText.CARDS.CARD_UNFREEZE_MESSAGE,
+        title: t('CARDS.CARD_UNFREEZE_MESSAGE'),
         toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },

@@ -9,6 +9,7 @@ import { formatTime } from '@app/utilities/date-helper.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
 import { forwardRef, useImperativeHandle } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
@@ -38,6 +39,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     ref,
   ) => {
     const { colors } = useTheme();
+    const { t } = useTranslation();
     const localizationText = useLocalization();
     const styles = otpVerificationStyles();
     const { showToast } = useToastContext();
@@ -45,7 +47,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     const renderToast = (toastMsg: string) => {
       showToast({
         title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-        subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+        subTitle: t('CARDS.VERIFY_CODE_ACCURACY'),
         borderColor: colors.error.error25,
         isShowRightIcon: false,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

@@ -23,6 +23,7 @@ import { copyText } from '@app/utilities';
 import { isIosOS } from '@app/utilities/constants';
 import React, { useState } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
 
@@ -114,6 +115,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   isBeneficiaryHistory,
 }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
   const [isShareable, setIsShareable] = useState<boolean>(false);
@@ -142,7 +144,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
+      title: t('TOP_UP.COPIED'),
       subTitle: value,
       containerStyle: isIosOS ? styles.containerToastIosStyle : styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,

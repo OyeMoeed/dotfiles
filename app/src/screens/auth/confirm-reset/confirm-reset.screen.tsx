@@ -17,11 +17,13 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { spinnerVariant } from '@app/utilities/enums.util';
 import { forwardRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
 
 const ConfirmPasscode = forwardRef((props) => {
   const { closeBottomSheet } = props;
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = ConfirmPasscodeStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
@@ -32,7 +34,7 @@ const ConfirmPasscode = forwardRef((props) => {
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.COMMON.PASSCODE_DOES_NOT_MATCH,
+      title: t('COMMON.PASSCODE_DOES_NOT_MATCH'),
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,

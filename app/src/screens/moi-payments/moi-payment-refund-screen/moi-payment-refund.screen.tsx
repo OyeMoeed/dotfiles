@@ -12,11 +12,13 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import useMoiPaymentConfirmation from '../moi-payment-confirmation-screen/moi-payment-confirmation-details.hook';
 import { MOIItemProps } from './moi-payment-refund.interface';
 import moiPaymentRefundStyles from './moi-payment-refund.style';
 
 const MoiPaymentRefund: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = moiPaymentRefundStyles();
   const localizationText = useLocalization();
@@ -44,7 +46,7 @@ const MoiPaymentRefund: React.FC = () => {
     onCloseBottomSheet();
     navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
       moiPaymentDetailes,
-      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_REFUND_SUCCESS,
+      successMessage: t('BILL_PAYMENTS.PAYMENT_REFUND_SUCCESS'),
       subDetails: moiRefundBillSubList,
       refund: true,
     });

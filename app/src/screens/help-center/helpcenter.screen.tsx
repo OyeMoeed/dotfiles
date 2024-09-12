@@ -21,10 +21,12 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const contactUsRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -149,8 +151,8 @@ const HelpCenter: React.FC = () => {
   };
 
   const contactList = [
-    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: insideSaPhone },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: outsideSaPhone },
+    { title: t('MENU.CALL_WITHIN_SA'), phone_number: insideSaPhone },
+    { title: t('MENU.CALL_OUTSIDE_SA'), phone_number: outsideSaPhone },
   ];
 
   const openBottomSheet = () => {

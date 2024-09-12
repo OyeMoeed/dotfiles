@@ -2,18 +2,18 @@ import images from '@app/assets/images';
 import { IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import React, { useState } from 'react';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
+import { useTranslation } from 'react-i18next';
 import IPayCardPinCodeProps from './ipay-card-pin-code.interface';
 import cardPinCodeStyle from './ipay-card-pin-code.style';
 
 const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCode }) => {
   const pinCode = '1234'; // TODO update with saved pin
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = cardPinCodeStyle();
   const { showToast } = useToastContext();
   const { colors } = useTheme();
@@ -22,8 +22,8 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCo
 
   const renderErrorToast = () => {
     showToast({
-      title: localizationText.CARDS.INCORRECT_CODE,
-      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      title: t('CARDS.INCORRECT_CODE'),
+      subTitle: t('CARDS.VERIFY_CODE_ACCURACY'),
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

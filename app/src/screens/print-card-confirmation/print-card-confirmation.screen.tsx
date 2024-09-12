@@ -21,6 +21,7 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import icons from '@app/assets/icons';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
 import {
@@ -40,6 +41,7 @@ const DUMMY_DATA = {
 };
 
 const PrintCardConfirmationScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
@@ -74,7 +76,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      title: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

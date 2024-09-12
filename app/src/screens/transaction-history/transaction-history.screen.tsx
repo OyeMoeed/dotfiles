@@ -19,6 +19,7 @@ import { ApiResponseStatusType, FiltersType, spinnerVariant } from '@app/utiliti
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
@@ -30,6 +31,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { transactionHistoryFilterDefaultValues, w2WFilterData, w2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const TRANSACTION_TABS = [
     localizationText.TRANSACTION_HISTORY.SEND_MONEY,
@@ -291,7 +293,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
     filtersTransaction.push({
       id: '1',
-      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      label: t('TRANSACTION_HISTORY.TRANSACTION_TYPE'),
       type: FiltersType.TRANSACTION_TYPE,
       filterValues: transactionTypesResMap,
     });
@@ -304,7 +306,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       }));
       filtersTransaction.push({
         id: '2',
-        label: localizationText.TRANSACTION_HISTORY.CARD,
+        label: t('TRANSACTION_HISTORY.CARD'),
         type: FiltersType.CARD,
         filterValues: cardsFilterMap,
       });
@@ -352,7 +354,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       displayValue: item?.displayName,
       value: item?.phoneNumbers[0]?.number,
       description: item?.phoneNumbers[0]?.number,
-      heading: localizationText.WALLET_TO_WALLET.CONTACT_NAME,
+      heading: t('WALLET_TO_WALLET.CONTACT_NAME'),
     }));
 
   const selectedFilterData = isW2WTransactions ? w2WFilterData(onContactsList(contacts)) : transactionHistoryFilterData;
@@ -476,7 +478,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }}
         message="TRANSACTION_HISTORY.NO_RESULTS_DETAIL"
         primaryAction={{
-          text: localizationText.TRANSACTION_HISTORY.GOT_IT,
+          text: t('TRANSACTION_HISTORY.GOT_IT'),
           onPress: () => {
             setNoFilterResult(false);
           },

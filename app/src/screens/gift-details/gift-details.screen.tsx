@@ -24,10 +24,12 @@ import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, ToastTypes } from '
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
+import { useTranslation } from 'react-i18next';
 import { ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
 
 const GiftDetailsScreen: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const { details, isSend } = route.params;
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
@@ -59,7 +61,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const getTitleColor = (subTitle: string) => {
@@ -76,7 +78,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   /// TODO:  It's temporary formate
   const onPressShare = () => {
     const shareOptions = {
-      subject: localizationText.SEND_GIFT.GIFT_DETAILS,
+      subject: t('SEND_GIFT.GIFT_DETAILS'),
       title: senderName,
       message,
       url: 'AlinmaPay',

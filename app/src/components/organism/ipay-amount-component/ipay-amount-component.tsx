@@ -29,6 +29,7 @@ import { getErrorMessage } from '@rnw-community/shared';
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
@@ -42,6 +43,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   openCvvBottomSheet,
   selectedDate,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const [currentState, setCurrentState] = useState(TopUpStates.INITAL_STATE);
   const [topUpAmount, setTopUpAmount] = useState('');
@@ -67,7 +69,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         merchantIdentifier: 'merchant.com.clickpay',
         supportedNetworks: [SupportedNetworkEnum.Visa, SupportedNetworkEnum.Mada, SupportedNetworkEnum.Mastercard],
         countryCode: 'SA',
-        currencyCode: localizationText.COMMON.SAR,
+        currencyCode: t('COMMON.SAR'),
       },
     },
   ];
@@ -75,10 +77,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const paymentDetails: PaymentDetailsInit = {
     total: {
       amount: {
-        currency: localizationText.COMMON.SAR,
+        currency: t('COMMON.SAR'),
         value: topUpAmount,
       },
-      label: localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT,
+      label: t('TRANSACTION_HISTORY.TOTAL_AMOUNT'),
     },
   };
 

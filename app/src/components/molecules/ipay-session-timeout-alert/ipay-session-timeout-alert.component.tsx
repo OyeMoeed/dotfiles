@@ -1,14 +1,14 @@
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import logoutProcess from '@app/network/utilities/network-session-helper';
 import { hideSessionTimeoutAlert } from '@app/store/slices/alert-slice';
 import { store } from '@app/store/store';
 import { alertVariant } from '@app/utilities/enums.util';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPaySessionTimeoutAlertProps } from './ipay-session-timeout-alert.interface';
 
 const IPaySessionTimeoutAlert: FC<IPaySessionTimeoutAlertProps> = ({ visible, testID }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const onClose = async () => {
     const { auth } = store.getState();
     if (auth?.isAuthorized) {
@@ -26,7 +26,7 @@ const IPaySessionTimeoutAlert: FC<IPaySessionTimeoutAlertProps> = ({ visible, te
       closeOnTouchOutside
       variant={alertVariant.DESTRUCTIVE}
       primaryAction={{
-        text: localizationText.COMMON.OK,
+        text: t('COMMON.OK'),
         onPress: onClose,
       }}
     />

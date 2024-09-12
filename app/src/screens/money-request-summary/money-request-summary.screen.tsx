@@ -37,11 +37,13 @@ import {
   sendRequestedMoneyConfirm,
   sendRequestedMoneyPrepare,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import moneyRequestStyles from './money-request-summary.styles';
 import { PayData } from './money-request-summary.interface';
 
 const MoneyRequestSummaryScreen: React.FC = () => {
+  const { t } = useTranslation();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const { colors } = useTheme();
@@ -91,19 +93,19 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const requestPaidSummaryData = (apiResponse: SendRequestedMoneyConfirmRes) => [
     {
       id: '1',
-      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      label: t('REQUEST_SUMMARY.PAY_TO'),
       value: receviedRequestSummaryData[0].detailsText,
       isAlinma: true,
       leftIcon: true,
     },
     {
       id: '2',
-      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      label: t('REQUEST_SUMMARY.MOBILE_NUMBER'),
       value: receviedRequestSummaryData[1].detailsText,
     },
     {
       id: '3',
-      label: localizationText.COMMON.REF_NUM,
+      label: t('COMMON.REF_NUM'),
       value: apiResponse?.response?.transctionRefNumber,
       icon: icons.copy,
     },

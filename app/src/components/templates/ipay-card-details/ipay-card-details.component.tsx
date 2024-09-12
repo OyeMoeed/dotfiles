@@ -6,18 +6,20 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { cardDetailsProps, FieldKeyMappingProps } from './ipay-card-details.interface';
 import cardDetailsStyle from './ipay-card-details.style';
 
 const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const styles = cardDetailsStyle(colors);
   const { showToast } = useToastContext();
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
+      title: t('TOP_UP.COPIED'),
       subTitle: value,
       containerStyle: styles.toast,
       isShowRightIcon: false,

@@ -6,18 +6,18 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayHeader } from '@app/components/molecules';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
 import { ALINMA_REFERENCE_NUM } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { useRoute } from '@react-navigation/core';
 import { debounce } from 'lodash';
+import { useTranslation } from 'react-i18next';
 import IQrData from '../wallet/use-save-qrcode.interface';
 import qrCodeScannerStyles from './send-money-qrcode-scanner.style';
 
 const SendMoneyQRScannerScreen: React.FC = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const route = useRoute();
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
@@ -69,10 +69,10 @@ const SendMoneyQRScannerScreen: React.FC = () => {
       ) : (
         <IPayAlert
           secondaryAction={{
-            text: localizationText.COMMON.GO_BACK,
+            text: t('COMMON.GO_BACK'),
             onPress: alertGoBackPress,
           }}
-          primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
+          primaryAction={{ text: t('COMMON.SCAN_AGAIN'), onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DESTRUCTIVE}
           title="ERROR.INVALID_QRCODE"
         />

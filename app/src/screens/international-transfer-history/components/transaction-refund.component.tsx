@@ -19,6 +19,7 @@ import { copyText } from '@app/utilities';
 import { buttonVariants, States, ToastTypes } from '@app/utilities/enums.util';
 import getArryFromObject from '@app/utilities/object-to-array.helper';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import transactionDetailsCompStyles from './transaction-details-component.style';
 import { TransactionRefundProps } from './transction-details-component.interface';
 
@@ -30,6 +31,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
   onPressRefund,
   onPressCancel,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = transactionDetailsCompStyles(colors);
   const localizationText = useLocalization();
@@ -65,7 +67,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const getValueText = (value: string) => {

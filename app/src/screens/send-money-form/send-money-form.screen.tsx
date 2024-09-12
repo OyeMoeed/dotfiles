@@ -46,6 +46,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Contact } from 'react-native-contacts';
+import { useTranslation } from 'react-i18next';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
@@ -53,6 +54,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const { isKeyboardWillOpen, isKeyboardOpen } = useKeyboardStatus();
   const styles = sendMoneyFormStyles(colors);
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const MAX_CONTACT = 5;
   const [selectedItem, setSelectedItem] = useState<string>('');
@@ -211,10 +213,10 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
   const removeFormOptions = {
-    title: localizationText.SEND_MONEY_FORM.REMOVE,
+    title: t('SEND_MONEY_FORM.REMOVE'),
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
-    message: localizationText.SEND_MONEY_FORM.REMOVE_DETAIL,
+    message: t('SEND_MONEY_FORM.REMOVE_DETAIL'),
     options: [localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL],
     cancelButtonIndex: 1,
     showCancel: true,

@@ -27,10 +27,12 @@ import { formatDate } from '@app/utilities/date-helper.util';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const styles = requestMoneyStyles(colors);
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
@@ -150,7 +152,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
         case 'apiResponseNotOk':
           renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            title: t('ERROR.API_ERROR_RESPONSE'),
             toastType: 'WARNING',
           });
           break;

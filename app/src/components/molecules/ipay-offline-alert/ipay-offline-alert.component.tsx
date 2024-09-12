@@ -1,13 +1,13 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { alertVariant } from '@app/utilities/enums.util';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayOfflineAlertProps } from './ipay-offline-alert.interface';
 
 const IPayOfflineAlert: FC<IPayOfflineAlertProps> = ({ onClose, visible, testID }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
   return (
     <IPayAlert
@@ -21,7 +21,7 @@ const IPayOfflineAlert: FC<IPayOfflineAlertProps> = ({ onClose, visible, testID 
       closeOnTouchOutside
       variant={alertVariant.DESTRUCTIVE}
       primaryAction={{
-        text: localizationText.COMMON.DELINK_ALERT.TRY_AGAIN,
+        text: t('COMMON.DELINK_ALERT.TRY_AGAIN'),
         onPress: onClose,
       }}
     />

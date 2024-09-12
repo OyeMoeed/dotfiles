@@ -25,12 +25,14 @@ import { copyText } from '@app/utilities';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { ItemProps } from './transfer-success.interface';
 import transferSuccessStyles from './transfer-success.style';
 
 const TransferSuccessScreen = () => {
   const { colors } = useTheme();
   const styles = transferSuccessStyles(colors);
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
@@ -53,7 +55,7 @@ const TransferSuccessScreen = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const onPressShare = () => {

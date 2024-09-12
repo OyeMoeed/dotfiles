@@ -44,6 +44,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -70,6 +71,7 @@ const LoginViaPasscode: React.FC = () => {
     otp,
   } = useLogin();
   const dispatch = useTypedDispatch();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
@@ -96,7 +98,7 @@ const LoginViaPasscode: React.FC = () => {
   const renderToast = (apiErrorValue: string) => {
     setPasscodeError(true);
     showToast({
-      title: localizationText.COMMON.INCORRECT_CODE,
+      title: t('COMMON.INCORRECT_CODE'),
       subTitle: apiErrorValue || localizationText.CARDS.VERIFY_CODE_ACCURACY,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

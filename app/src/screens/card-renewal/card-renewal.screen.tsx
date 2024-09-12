@@ -24,6 +24,7 @@ import { buttonVariants, CardTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { OTPVerificationRefTypes, RouteParams, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
 
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -37,6 +38,7 @@ const DUMMY_DATA = {
 };
 
 const CardRenewalScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const route = useRoute<RouteProps>();
@@ -72,8 +74,8 @@ const CardRenewalScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS,
-      subTitle: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      title: t('COMMON.TERMS_AND_CONDITIONS'),
+      subTitle: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

@@ -4,6 +4,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface billPayDetail {
   id: string;
@@ -20,6 +21,7 @@ interface BalanceData {
 
 // TODO wiill be replaced by API
 const useBillPaymentConfirmation = () => {
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { billPayDetailsData } = useConstantData();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
@@ -46,7 +48,7 @@ const useBillPaymentConfirmation = () => {
   const extraDetails: billPayDetail[] = [
     {
       id: '2',
-      label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
+      label: t('TRAFFIC_VIOLATION.AMOUNT'),
       value: '1000',
     },
   ];

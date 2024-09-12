@@ -11,6 +11,7 @@ import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayMoneyRequestListProps } from './ipay-money-request-list.interface';
 import moneyRequestListStyles from './ipay-money-request.list.style';
 
@@ -24,6 +25,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
   testID,
   onPress,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = moneyRequestListStyles(colors);
@@ -34,25 +36,25 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
-          text: localizationText.REQUEST_MONEY.CANCELLED,
+          text: t('REQUEST_MONEY.CANCELLED'),
           backgroundColor: colors.natural.natural100,
         };
       case MoneyRequestStatus.PAID:
         return {
           color: colors.tertiary.tertiary500,
-          text: localizationText.REQUEST_MONEY.PAID,
+          text: t('REQUEST_MONEY.PAID'),
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
         return {
           color: colors.critical.critical800,
-          text: localizationText.REQUEST_MONEY.PENDING,
+          text: t('REQUEST_MONEY.PENDING'),
           backgroundColor: colors.critical.critical25,
         };
       default:
         return {
           color: colors.error.error500,
-          text: localizationText.REQUEST_MONEY.REJECTED,
+          text: t('REQUEST_MONEY.REJECTED'),
           backgroundColor: colors.error.error25,
         };
     }

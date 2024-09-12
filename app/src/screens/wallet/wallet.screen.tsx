@@ -23,6 +23,7 @@ import { useState } from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import useSaveQRCode from './use-save-qrcode.hook';
 import walletStyles from './wallet.style';
 
@@ -31,6 +32,7 @@ const WalletScreen = () => {
   const { showToast } = useToastContext();
   const styles = walletStyles(colors);
   const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { qrRef, qrData, saveQrToDisk } = useSaveQRCode();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -53,7 +55,7 @@ const WalletScreen = () => {
     const otherOptions = {
       subject: 'Wa',
       message: getShareableMessage(),
-      title: localizationText.PROFILE.ALINMA_WALLET_INFO,
+      title: t('PROFILE.ALINMA_WALLET_INFO'),
       social: Share.Social.WHATSAPP,
       whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber,
     };

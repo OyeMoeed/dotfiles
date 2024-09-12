@@ -32,6 +32,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import {
   BankDetails,
   BeneficiaryBankDetails,
@@ -47,6 +48,7 @@ import createBeneficiaryStyles from './ipay-create-beneficiary.style';
  */
 const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = createBeneficiaryStyles(colors);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
@@ -106,7 +108,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
-      subTitle: localizationText.ERROR.SOMETHING_WENT_WRONG,
+      subTitle: t('ERROR.SOMETHING_WENT_WRONG'),
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

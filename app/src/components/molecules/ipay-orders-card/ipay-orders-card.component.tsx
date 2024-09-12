@@ -18,11 +18,13 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { CategoriesItem, IPayOrdersCardProps } from './ipay-orders-card-interface';
 import IPayOrdersCardStyle from './ipay-orders-card.style';
 
 const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = IPayOrdersCardStyle(colors);
   const { productDetailData } = useConstantData();
@@ -38,7 +40,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
     const onPressView = () =>
       navigate(ScreenNames.SHOP_DETAILS, {
         details: productDetailData,
-        heading: localizationText.SHOP.PRODUCT_DETAILS,
+        heading: t('SHOP.PRODUCT_DETAILS'),
       });
 
     return (

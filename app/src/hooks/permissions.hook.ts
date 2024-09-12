@@ -2,13 +2,16 @@ import { OsTypes, PermissionsStatus, PermissionTypes } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities/storage-helper.util';
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Platform } from 'react-native';
 import { PERMISSIONS, check, checkNotifications, openSettings, request } from 'react-native-permissions';
 
 const usePermissions = (permissionType: string, isLocationMandatory = false) => {
+  const { t } = useTranslation();
+  const localizationText = useLocalization();
+
   const [permissionStatus, setPermissionStatus] = useState(PermissionsStatus.UNKNOWN);
   const [alertShown, setAlertShown] = useState(false);
-  const localizationText = useLocalization();
 
   useEffect(() => {
     // Check and handle alertShown state from AsyncStorage on component mount
@@ -106,7 +109,7 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
               localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
               [
                 {
-                  text: localizationText.LOCATION.GO_TO_SETTINGS,
+                  text: t('LOCATION.GO_TO_SETTINGS'),
                   onPress: async () => {
                     await openSettings();
                     setAlertShown(false); // Reset alertShown after returning from settings

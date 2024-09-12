@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 
 import useTheme from '@app/styles/hooks/theme.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import {
@@ -22,6 +21,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import replaceCardStyles from './replace-card-choose-address.style';
 import { TermsAndConditionsRefTypes, RouteParams } from './replace-card-choose-address.interface';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
@@ -44,7 +44,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
   const { showToast } = useToastContext();
 
   const styles = replaceCardStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -63,8 +63,8 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS,
-      subTitle: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      title: t('COMMON.TERMS_AND_CONDITIONS'),
+      subTitle: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

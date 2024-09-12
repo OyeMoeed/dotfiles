@@ -23,12 +23,14 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Keyboard } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { FormValues } from './mobile-and-iqama-verification.interface';
 
 const useMobileAndIqamaVerification = () => {
   const { colors } = useTheme();
   const dispatch = useTypedDispatch();
   const { showToast } = useToastContext();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
@@ -112,7 +114,7 @@ const useMobileAndIqamaVerification = () => {
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      subTitle: t('CARDS.VERIFY_CODE_ACCURACY'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

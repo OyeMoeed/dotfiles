@@ -26,12 +26,14 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
 import { Keyboard } from 'react-native';
 import { isIosOS } from '@app/utilities/constants';
+import { useTranslation } from 'react-i18next';
 import { darkCards } from '../send-gift-card/send-gift-card.constants';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
 const SendGiftPreview: FC = ({ route }) => {
   const { occasion = '', selectedCard } = { ...route?.params };
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const styles = sendGiftPreviewStyles(colors);
   const MAX_LENGTH = 1000;
@@ -52,7 +54,7 @@ const SendGiftPreview: FC = ({ route }) => {
   const onNext = () => {
     navigate(ScreenNames.WALLET_TRANSFER, {
       from: TRANSFERTYPE.SEND_GIFT,
-      heading: localizationText.SEND_GIFT.SEND_GIFT,
+      heading: t('SEND_GIFT.SEND_GIFT'),
       showHistory: false,
       giftDetails: { message, occasion, selectedCard },
     });

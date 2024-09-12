@@ -14,6 +14,7 @@ import { BillPaymentInfosTypes } from '@app/network/services/bills-management/mu
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { shortString } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
@@ -24,6 +25,7 @@ interface BillPaymentItemProps {
 }
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
+  const { t } = useTranslation();
   const { isSaveOnly, isPayOnly, isPayPartially, totalAmount, billPaymentInfos } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
@@ -46,22 +48,22 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
     {
       id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      label: t('PAY_BILL.SERVICE_TYPE'),
       value: shortString(item.serviceDescription, 15),
     },
     {
       id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      label: t('PAY_BILL.ACCOUNT_NUMBER'),
       value: item.billNumOrBillingAcct,
     },
     {
       id: '3',
-      label: localizationText.COMMON.DUE_DATE,
+      label: t('COMMON.DUE_DATE'),
       value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
     },
     {
       id: '4',
-      label: localizationText.COMMON.REF_NUM,
+      label: t('COMMON.REF_NUM'),
       value: item.transactionId,
       icon: icons.copy,
     },

@@ -31,10 +31,12 @@ import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
+import { useTranslation } from 'react-i18next';
 import IPayTopUpSuccessProps from './ipay-topup-redemption-successful.interface';
 import topUpSuccessRedemptionStyles from './ipay-topup-redemption-successful.styles';
 
 const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants, testID, params }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const navigation = useNavigation();
   const localizationText = useLocalization();
@@ -46,8 +48,8 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: t('TOP_UP.COPIED'),
+      subTitle: t('TOP_UP.REF_NUMBER_COPIED'),
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
     });
@@ -93,12 +95,12 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
   const successDetail = [
     {
-      title: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.AKHTAR_POINT,
+      title: t('TOP_UP.TOPUP_TYPE'),
+      value: t('TOP_UP.AKHTAR_POINT'),
       icon: icons.akhtr_pay,
     },
     {
-      title: localizationText.TOP_UP.REF_NUMBER,
+      title: t('TOP_UP.REF_NUMBER'),
       value: params?.referenceNumber,
       icon: icons.copy,
       pressIcon: () => {
@@ -107,11 +109,11 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       },
     },
     {
-      title: localizationText.TOP_UP.TOPUP_DATE,
+      title: t('TOP_UP.TOPUP_DATE'),
       value: formatDateAndTime(new Date(params?.date as string), dateTimeFormat.TimeAndDate),
     },
     {
-      title: localizationText.TOP_UP.POINTS_REDEEMED,
+      title: t('TOP_UP.POINTS_REDEEMED'),
       value: `${params?.redeemPoints} ${localizationText.COMMON.POINTS}`,
     },
   ];

@@ -12,10 +12,12 @@ import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import passcodeStyles from '../set-passcode/set-passcode.style';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
+import { useTranslation } from 'react-i18next';
 
 const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcode, passcodeReacted }) => {
   const { colors } = useTheme();
   const styles = passcodeStyles();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const [passcodeError, setPassCodeError] = useState<boolean>(false);
   const { showToast } = useToastContext();
@@ -23,7 +25,7 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
   const renderToast = (title: string) => {
     showToast({
       title: title || localizationText.COMMON.INCORRECT_CODE,
-      subTitle: localizationText.REGISTRATION.ENSURE_YOU_WRITE,
+      subTitle: t('REGISTRATION.ENSURE_YOU_WRITE'),
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

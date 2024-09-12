@@ -4,6 +4,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { FC, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { BalanceStatusVariants, IPayBalanceStatusChipProps } from './ipay-balance-chip-status.interface';
 
@@ -14,6 +15,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
   dailySpendingLimit,
   setWarningStatus,
 }) => {
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const [balanceStatus, setBalanceStatus] = useState('');
   const [exceededAmount, setExceededAmount] = useState<number>(0);
@@ -53,11 +55,11 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
 
   const balanceStatusVariants: BalanceStatusVariants = {
     [AccountBalanceStatus.INSUFFICIENT_BALANCE]: {
-      text: localizationText.COMMON.INSUFFICIENT_BALANCE,
+      text: t('COMMON.INSUFFICIENT_BALANCE'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.NO_REMAINING_AMOUNT]: {
-      text: localizationText.COMMON.NO_REMAINING_AMOUNT,
+      text: t('COMMON.NO_REMAINING_AMOUNT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_OUTGOING_LIMIT]: {
@@ -65,31 +67,31 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_INCOMING_LIMIT]: {
-      text: localizationText.COMMON.MONTHLY_INCOMING_LIMIT,
+      text: t('COMMON.MONTHLY_INCOMING_LIMIT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_OUTGOING_LIMIT]: {
-      text: localizationText.COMMON.MONTHLY_OUTGOING_LIMIT,
+      text: t('COMMON.MONTHLY_OUTGOING_LIMIT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_INCOMING_LIMIT]: {
-      text: localizationText.COMMON.DAILY_INCOMING_LIMIT,
+      text: t('COMMON.DAILY_INCOMING_LIMIT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_REMAINING_INCOMING_AMOUNT]: {
-      text: localizationText.COMMON.MONTHLY_REMAINING_INCOMING_AMOUNT,
+      text: t('COMMON.MONTHLY_REMAINING_INCOMING_AMOUNT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_REMAINING_OUTGOING_AMOUNT]: {
-      text: localizationText.COMMON.MONTHLY_REMAINING_OUTGOING_AMOUNT,
+      text: t('COMMON.MONTHLY_REMAINING_OUTGOING_AMOUNT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_REMAINING_INCOMING_AMOUNT]: {
-      text: localizationText.COMMON.DAILY_REMAINING_INCOMING_AMOUNT,
+      text: t('COMMON.DAILY_REMAINING_INCOMING_AMOUNT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_REMAINING_OUTGOING_AMOUNT]: {
-      text: localizationText.COMMON.DAILY_REMAINING_OUTGOING_AMOUNT,
+      text: t('COMMON.DAILY_REMAINING_OUTGOING_AMOUNT'),
       variant: States.WARNING,
     },
     [AccountBalanceStatus.SPENDING_LIMIT_EXCEED]: {

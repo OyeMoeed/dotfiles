@@ -27,12 +27,14 @@ import { typography } from '@app/styles/typography.styles';
 import { copyText } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import { IGiftTransferSuccessProps, WalletPaymentDetails } from './ipay-gift-transfer-success.interface';
 import { GiftTransferSuccessStyles } from './ipay-gift-transfer-success.styles';
 
 const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const styles = GiftTransferSuccessStyles(colors);
   const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
@@ -43,8 +45,8 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
 
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: t('TOP_UP.COPIED'),
+      subTitle: t('TOP_UP.REF_NUMBER_COPIED'),
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
@@ -69,7 +71,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     const commonDetails = [
       {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
         value: item?.name,
         leftIcon: item?.walletNumber ? images.alinmaP : icons.user_square,
         isAlinma: !!item?.walletNumber,
@@ -77,12 +79,12 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
       },
       {
         id: '2',
-        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        label: t('TRANSFER_SUMMARY.AMOUNT'),
         value: `${item.amount} ${localizationText.COMMON.SAR}`,
       },
       {
         id: '3',
-        label: localizationText.TOP_UP.OCCASION,
+        label: t('TOP_UP.OCCASION'),
         value: item.transferPurpose,
       },
     ];

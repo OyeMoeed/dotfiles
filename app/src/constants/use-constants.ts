@@ -13,9 +13,11 @@ import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { dateTimeFormat } from '@app/utilities';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 
 const useConstantData = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const date = new Date();
   const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
@@ -41,59 +43,59 @@ const useConstantData = () => {
   const nonAlinmaDetails = [
     {
       id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
       value: 'Esra’ Alturk', // TODO: replace with api data
       leftIcon: icons.user_square,
       color: colors.primary.primary900,
       isAlinma: false,
     },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
     {
       id: '3',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+      label: t('TRANSFER_SUMMARY.REASON'),
+      value: t('TRANSFER_SUMMARY.REASON_TRANSFER'),
     },
   ];
   const alinmaDetails = [
     {
       id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
       value: 'Adam Ahmed', // TODO: replace with api data
       leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.MONEY },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: localizationText.TRANSFER_SUMMARY.MONEY },
     {
       id: '3',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+      label: t('TRANSFER_SUMMARY.REASON'),
+      value: t('TRANSFER_SUMMARY.REASON_TRANSFER'),
     },
-    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
+    { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL },
   ];
   const alinmaDetailsUnsaved1 = [
     {
       id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
       value: '015324234889', // TODO: replace with api data
       leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `500 ${localizationText.COMMON.SAR}` },
-    { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: 'Thank You! long message te...' },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: `500 ${localizationText.COMMON.SAR}` },
+    { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: 'Thank You! long message te...' },
   ];
   const alinmaDetailsUnsaved2 = [
     {
       id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
       value: '010203040505', // TODO: replace with api data
       leftIcon: images.logoIconGradient,
       isAlinma: true,
     },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: `800 ${localizationText.COMMON.SAR}` },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: `800 ${localizationText.COMMON.SAR}` },
     {
       id: '3',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+      label: t('TRANSFER_SUMMARY.REASON'),
+      value: t('TRANSFER_SUMMARY.REASON_TRANSFER'),
     },
   ];
   const giftData = [
@@ -126,21 +128,21 @@ const useConstantData = () => {
   const sendMoneyDetails = [
     {
       id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
       value: 'Adam Ahmed', // TODO: replace with api data
       leftIcon: true,
       isAlinma: true,
     },
-    { id: '2', label: localizationText.TOP_UP.TRANSACTION_ID, value: '21523325', icon: icons.copy },
+    { id: '2', label: t("TOP_UP.TRANSACTION_ID, value: '21523325'"), icon: icons.copy },
     {
       id: '3',
-      label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+      label: t('TRANSFER_SUMMARY.AMOUNT'),
       value: `${3000} ${localizationText.COMMON.SAR}`,
     },
     {
       id: '4',
-      label: localizationText.TRANSFER_SUMMARY.REASON,
-      value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
+      label: t('TRANSFER_SUMMARY.REASON'),
+      value: t('TRANSFER_SUMMARY.REASON_TRANSFER'),
     },
   ];
   const giftRecivedData = [
@@ -173,44 +175,44 @@ const useConstantData = () => {
   const transactionHistoryFilterData: TransactionHistoryFilter[] = [
     {
       id: '1',
-      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      label: t('TRANSACTION_HISTORY.TRANSACTION_TYPE'),
       type: FiltersType.TRANSACTION_TYPE,
       filterValues: [
         {
           id: '1',
           key: 'POS_PURSHASE',
-          value: localizationText.HOME.POS_PURSHASE,
+          value: t('HOME.POS_PURSHASE'),
         },
         {
           id: '2',
           key: 'SEND_MONEY',
-          value: localizationText.HOME.SEND_MONEY,
+          value: t('HOME.SEND_MONEY'),
         },
         {
           id: '3',
           key: 'RECEIVED_MONEY',
-          value: localizationText.HOME.RECEIVED_MONEY,
+          value: t('HOME.RECEIVED_MONEY'),
         },
         {
           id: '4',
           key: 'LOCAL_TRANSFER',
-          value: localizationText.HOME.LOCAL_TRANSFER,
+          value: t('HOME.LOCAL_TRANSFER'),
         },
         {
           id: '5',
           key: 'ATM_WITHDRAWALS',
-          value: localizationText.HOME.ATM_WITHDRAWALS,
+          value: t('HOME.ATM_WITHDRAWALS'),
         },
         {
           id: '6',
           key: 'CASHBACK_PROMO',
-          value: localizationText.HOME.CASHBACK_PROMO,
+          value: t('HOME.CASHBACK_PROMO'),
         },
       ],
     },
     {
       id: '2',
-      label: localizationText.TRANSACTION_HISTORY.CARD,
+      label: t('TRANSACTION_HISTORY.CARD'),
       type: FiltersType.CARD,
       filterValues: [
         {
@@ -282,38 +284,38 @@ const useConstantData = () => {
   const transactionHistoryFilterDataWithoudCard = [
     {
       id: '1',
-      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      label: t('TRANSACTION_HISTORY.TRANSACTION_TYPE'),
       type: FiltersType.TRANSACTION_TYPE,
       filterValues: [
         {
           id: '1',
           key: 'POS_PURSHASE',
-          value: localizationText.HOME.POS_PURSHASE,
+          value: t('HOME.POS_PURSHASE'),
         },
         {
           id: '2',
           key: 'SEND_MONEY',
-          value: localizationText.HOME.SEND_MONEY,
+          value: t('HOME.SEND_MONEY'),
         },
         {
           id: '3',
           key: 'RECEIVED_MONEY',
-          value: localizationText.HOME.RECEIVED_MONEY,
+          value: t('HOME.RECEIVED_MONEY'),
         },
         {
           id: '4',
           key: 'LOCAL_TRANSFER',
-          value: localizationText.HOME.LOCAL_TRANSFER,
+          value: t('HOME.LOCAL_TRANSFER'),
         },
         {
           id: '5',
           key: 'ATM_WITHDRAWALS',
-          value: localizationText.HOME.ATM_WITHDRAWALS,
+          value: t('HOME.ATM_WITHDRAWALS'),
         },
         {
           id: '6',
           key: 'CASHBACK_PROMO',
-          value: localizationText.HOME.CASHBACK_PROMO,
+          value: t('HOME.CASHBACK_PROMO'),
         },
       ],
     },
@@ -428,18 +430,18 @@ const useConstantData = () => {
   const requestSummaryData = [
     {
       id: 1,
-      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      label: t('REQUEST_SUMMARY.PAY_TO'),
       detailsText: 'Ahmed Mohammed', // TODO: replaced with api
       leftIcon: true,
     },
     {
       id: 2,
-      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      label: t('REQUEST_SUMMARY.MOBILE_NUMBER'),
       detailsText: '0503340494', // TODO: replaced by api
     },
     {
       id: 3,
-      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      label: t('REQUEST_SUMMARY.AMOUNT'),
     },
   ];
 
@@ -447,66 +449,66 @@ const useConstantData = () => {
     {
       id: '1',
       isRequired: false,
-      label: localizationText.OFFERS.CATEGORY,
+      label: t('OFFERS.CATEGORY'),
       type: FiltersType.OFFER_CATEGORY,
       filterValues: [
         {
           id: '1',
           key: 'FOOD',
-          value: localizationText.OFFERS.FOOD,
+          value: t('OFFERS.FOOD'),
         },
         {
           id: '2',
           key: 'CLOTHS',
-          value: localizationText.OFFERS.CLOTHES,
+          value: t('OFFERS.CLOTHES'),
         },
         {
           id: '3',
           key: 'ELECTRONICS',
-          value: localizationText.OFFERS.ELECTRONICS,
+          value: t('OFFERS.ELECTRONICS'),
         },
         {
           id: '4',
           key: 'THEATRE',
-          value: localizationText.OFFERS.THEATRE,
+          value: t('OFFERS.THEATRE'),
         },
         {
           id: '6',
           key: 'GAMES',
-          value: localizationText.OFFERS.GAMES,
+          value: t('OFFERS.GAMES'),
         },
         {
           id: '3',
           key: 'Electronics',
-          value: localizationText.OFFERS.ELECTRONICS,
+          value: t('OFFERS.ELECTRONICS'),
         },
         {
           id: '3',
           key: 'Games',
-          value: localizationText.OFFERS.GAMES,
+          value: t('OFFERS.GAMES'),
         },
         {
           id: '4',
           key: 'Theatre',
-          value: localizationText.OFFERS.THEATER,
+          value: t('OFFERS.THEATER'),
         },
       ],
     },
     {
       id: '2',
       isRequired: false,
-      label: localizationText.OFFERS.AVAILABILITY,
+      label: t('OFFERS.AVAILABILITY'),
       type: FiltersType.OFFER_AVAILABILITY,
       filterValues: [
         {
           id: '1',
           key: 'ONLINE',
-          value: localizationText.OFFERS.ONLINE,
+          value: t('OFFERS.ONLINE'),
         },
         {
           id: '2',
           key: 'IN_STORES',
-          value: localizationText.OFFERS.IN_STORES,
+          value: t('OFFERS.IN_STORES'),
         },
       ],
     },
@@ -516,32 +518,32 @@ const useConstantData = () => {
     // TODO will be repleaced by API data
     {
       id: '2',
-      label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
+      label: t('TRAFFIC_VIOLATION.AMOUNT'),
       value: `1000 ${localizationText.COMMON.SAR}`,
     },
     {
       id: '3',
-      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
       value: 'Traffic MOI',
     },
     {
       id: '4',
-      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      label: t('TRAFFIC_VIOLATION.SERVICE_TYPE'),
       value: 'Traffic violation',
     },
     {
       id: '2',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      label: t('TRAFFIC_VIOLATION.VIOLATOR_ID'),
       value: '10061883685',
     },
     {
       id: '3',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      label: t('TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'),
       value: '2432533475',
     },
     {
       id: '4',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
       value: '14/03/2024 - 15:30',
     },
   ];
@@ -573,27 +575,27 @@ const useConstantData = () => {
 
     {
       id: '3',
-      label: localizationText.TRAFFIC_VIOLATION.SERVICE_PROVIDER,
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
       value: 'Traffic MOI',
     },
     {
       id: '4',
-      label: localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE,
+      label: t('TRAFFIC_VIOLATION.SERVICE_TYPE'),
       value: 'Traffic violation',
     },
     {
       id: '2',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID,
+      label: t('TRAFFIC_VIOLATION.VIOLATOR_ID'),
       value: '10061883685',
     },
     {
       id: '3',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL,
+      label: t('TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'),
       value: '2432533475',
     },
     {
       id: '4',
-      label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
+      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
       value: '14/03/2024 - 15:30',
     },
   ];
@@ -601,7 +603,7 @@ const useConstantData = () => {
     // TODO will be repleaced by API data
     {
       id: '1',
-      label: localizationText.TRAFFIC_VIOLATION.TITLE,
+      label: t('TRAFFIC_VIOLATION.TITLE'),
       value: '1000',
       violationNumber: '124355653',
     },
@@ -609,25 +611,25 @@ const useConstantData = () => {
   const orderSummaryData = [
     {
       id: 1,
-      label: localizationText.ORDER_SUMMARY.PRODUCT_NAME,
+      label: t('ORDER_SUMMARY.PRODUCT_NAME'),
       detailsText: 'Subscribe on Spotify', // TODO: replaced with api
     },
     {
       id: 2,
-      label: localizationText.ORDER_SUMMARY.AMOUNT,
+      label: t('ORDER_SUMMARY.AMOUNT'),
     },
     {
       id: 3,
-      label: localizationText.ORDER_SUMMARY.DISCOUNT,
+      label: t('ORDER_SUMMARY.DISCOUNT'),
       detailsText: '20%',
     },
     {
       id: 4,
-      label: localizationText.ORDER_SUMMARY.FEES,
+      label: t('ORDER_SUMMARY.FEES'),
     },
     {
       id: 5,
-      label: localizationText.ORDER_SUMMARY.VAT,
+      label: t('ORDER_SUMMARY.VAT'),
     },
   ];
 
@@ -778,7 +780,7 @@ const useConstantData = () => {
   const transferHistoryFilterData = [
     {
       id: '1',
-      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      label: t('LOCAL_TRANSFER.BENEFICIARY_NAME'),
       type: FiltersType.BENEFICIARY_NAME,
       icon: icons.user1,
       filterValues: [
@@ -801,7 +803,7 @@ const useConstantData = () => {
     },
     {
       id: '2',
-      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      label: t('TRANSACTION_HISTORY.BANK_NAME'),
       type: FiltersType.BANK_NAME_LIST,
       filterValues: [
         {
@@ -829,7 +831,7 @@ const useConstantData = () => {
   const internationalTransferHistoryFilterData = [
     {
       id: '1',
-      label: localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE,
+      label: t('INTERNATIONAL_TRANSFER.DELIVERY_TYPE'),
       type: FiltersType.DELIVERY_TYPE,
       filterValues: [
         {
@@ -880,7 +882,7 @@ const useConstantData = () => {
     },
     {
       id: '2',
-      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      label: t('LOCAL_TRANSFER.BENEFICIARY_NAME'),
       type: FiltersType.BENEFICIARY_NAME_LIST,
       filterValues: [
         {
@@ -908,9 +910,9 @@ const useConstantData = () => {
   const sendGiftFilterData = [
     {
       id: '1',
-      label: localizationText.SEND_GIFT.RECEIVER_NAME,
+      label: t('SEND_GIFT.RECEIVER_NAME'),
       type: FiltersType.CONTACT_NUMBER,
-      searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
+      searchPlaceholder: t('SEND_GIFT.SEARCH_FOR_RECEIVER'),
       dropdownIcon: icons.user_search,
       listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
       filterValues: [
@@ -949,7 +951,7 @@ const useConstantData = () => {
   const w2WFilterData = (filterValues) => [
     {
       id: '1',
-      label: localizationText.WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME,
+      label: t('WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME'),
       type: FiltersType.CONTACT_NUMBER,
       dropdownIcon: icons.user_search,
       editable: true,
@@ -969,29 +971,29 @@ const useConstantData = () => {
   const sendGiftBottomFilterData = [
     {
       id: '1',
-      label: localizationText.SEND_GIFT.STATUS,
+      label: t('SEND_GIFT.STATUS'),
       type: FiltersType.STATUS,
       filterValues: [
         {
           id: '1',
           key: GiftStatus.OPENED,
-          value: localizationText.SEND_GIFT.OPENED,
+          value: t('SEND_GIFT.OPENED'),
         },
         {
           id: '2',
           key: GiftStatus.UNOPENED,
-          value: localizationText.SEND_GIFT.UNOPENED,
+          value: t('SEND_GIFT.UNOPENED'),
         },
         {
           id: '3',
           key: GiftStatus.EXPIRED,
-          value: localizationText.SEND_GIFT.EXPIRED,
+          value: t('SEND_GIFT.EXPIRED'),
         },
       ],
     },
     {
       id: '2',
-      label: localizationText.SEND_GIFT.OCCASION,
+      label: t('SEND_GIFT.OCCASION'),
       type: FiltersType.OCCASION,
       filterValues: [
         {
@@ -1050,19 +1052,19 @@ const useConstantData = () => {
   const applePayDetails = [
     {
       id: '1',
-      label: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.APPLE_PAY,
+      label: t('TOP_UP.TOPUP_TYPE'),
+      value: t('TOP_UP.APPLE_PAY'),
       icon: icons.apple_pay,
       color: colors.primary.primary800,
     },
-    { id: '2', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+    { id: '2', label: t('TOP_UP.TOPUP_DATE, value: formattedDate'), icon: null },
   ];
 
   const cardPayDetails = [
     {
       id: '1',
-      label: localizationText.TOP_UP.TOPUP_TYPE,
-      value: localizationText.TOP_UP.CREDIT_CARD,
+      label: t('TOP_UP.TOPUP_TYPE'),
+      value: t('TOP_UP.CREDIT_CARD'),
       icon: icons.cards,
       color: colors.primary.primary800,
     },
@@ -1075,17 +1077,17 @@ const useConstantData = () => {
     },
     {
       id: '3',
-      label: localizationText.TOP_UP.REF_NUMBER,
+      label: t('TOP_UP.REF_NUMBER'),
       value: '21523325',
       icon: icons.copy,
       color: colors.primary.primary500,
     },
-    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formattedDate, icon: null },
+    { id: '4', label: t('TOP_UP.TOPUP_DATE, value: formattedDate'), icon: null },
   ];
   const walletPayDetailes = [
     {
       id: '2',
-      label: localizationText.TOP_UP.TRANSFER_TO,
+      label: t('TOP_UP.TRANSFER_TO'),
       value: 'Shatha Mohammed', // TODO:replaced by api
       isAlinma: true,
       icon: null,
@@ -1093,32 +1095,32 @@ const useConstantData = () => {
     },
     {
       id: '3',
-      label: localizationText.TOP_UP.TRANSACTION_ID,
+      label: t('TOP_UP.TRANSACTION_ID'),
       value: '21523325',
       icon: icons.copy,
       color: colors.primary.primary500,
     },
-    { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
-    { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: localizationText.TOP_UP.REASON },
+    { id: '4', label: t('TOP_UP.AMOUNT'), icon: null },
+    { id: '1', label: t('TRANSACTION_HISTORY.TRANSFER_REASON'), value: localizationText.TOP_UP.REASON },
   ];
 
   const orderDetails = [
-    { id: '1', label: localizationText.ORDER_SCREEN.COUPON_CODE, value: 'FTA35346', icon: icons.copy },
-    { id: '2', label: localizationText.ORDER_SCREEN.PRODUCT_NAME, value: 'Subscribe on Spotify' },
+    { id: '1', label: t("ORDER_SCREEN.COUPON_CODE, value: 'FTA35346'"), icon: icons.copy },
+    { id: '2', label: t('ORDER_SCREEN.PRODUCT_NAME'), value: 'Subscribe on Spotify' },
     {
       id: '3',
-      label: localizationText.ORDER_SCREEN.AMOUNT,
+      label: t('ORDER_SCREEN.AMOUNT'),
       value: `470 ${localizationText.COMMON.SAR}`,
     },
-    { id: '4', label: localizationText.ORDER_SCREEN.DISCOUNT, value: '20%' },
+    { id: '4', label: t('ORDER_SCREEN.DISCOUNT'), value: '20%' },
     {
       id: '3',
-      label: localizationText.ORDER_SCREEN.FEES,
+      label: t('ORDER_SCREEN.FEES'),
       value: `0.00 ${localizationText.COMMON.SAR}`,
     },
     {
       id: '3',
-      label: localizationText.ORDER_SCREEN.VAT,
+      label: t('ORDER_SCREEN.VAT'),
       value: `00.2 ${localizationText.COMMON.SAR}`,
     },
   ];
@@ -1129,9 +1131,9 @@ const useConstantData = () => {
       image: images.playstation,
       amount: '740.00',
       title: 'Sony PlayStation Network Gift Card.',
-      coupon: localizationText.SHOP.COUPON_CODE,
+      coupon: t('SHOP.COUPON_CODE'),
       code: 'FTA35346',
-      purchase: localizationText.SHOP.PURCHASED_AT,
+      purchase: t('SHOP.PURCHASED_AT'),
       date: formattedDate,
     },
     {
@@ -1139,9 +1141,9 @@ const useConstantData = () => {
       image: images.xbox,
       amount: '470.00',
       title: 'Xbox Network Gift Card.',
-      coupon: localizationText.SHOP.COUPON_CODE,
+      coupon: t('SHOP.COUPON_CODE'),
       code: 'FTA35346',
-      purchase: localizationText.SHOP.PURCHASED_AT,
+      purchase: t('SHOP.PURCHASED_AT'),
       date: formattedDate,
     },
   ];
@@ -1149,13 +1151,13 @@ const useConstantData = () => {
   const giftPayDetailes = [
     {
       id: '1',
-      label: localizationText.TOP_UP.TRANSFER_TO,
+      label: t('TOP_UP.TRANSFER_TO'),
       value: 'Shatha Mohammed', // TODO:replaced by api
       leftIcon: 'true',
       isAlinma: true,
     },
-    { id: '2', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: localizationText.TOP_UP.AMOUNT, icon: null },
-    { id: '3', label: localizationText.TOP_UP.OCCASION, value: localizationText.TOP_UP.EIYDIAH },
+    { id: '2', label: t('TOP_UP.AMOUNT'), icon: null },
+    { id: '3', label: t('TOP_UP.OCCASION'), value: localizationText.TOP_UP.EIYDIAH },
   ];
 
   const offerFilterDefaultValues = {
@@ -1164,26 +1166,26 @@ const useConstantData = () => {
   };
   const contactList = [
     // TODO: List will replace by actual data
-    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '8004339000' },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966) 920000670' },
+    { title: t('MENU.CALL_WITHIN_SA'), phone_number: '8004339000' },
+    { title: t('MENU.CALL_OUTSIDE_SA'), phone_number: '(+966) 920000670' },
   ];
   const guideStepsToCall = [
-    { title: localizationText.ACTIVATE_BENEFICIARY.CALL_FROM_REGISTERED_NUM, stepNumber: '1', isContactList: true },
-    { title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_4, stepNumber: '2', pressNumber: '4' },
+    { title: t("ACTIVATE_BENEFICIARY.CALL_FROM_REGISTERED_NUM, stepNumber: '1'"), isContactList: true },
+    { title: t("ACTIVATE_BENEFICIARY.PRESS_NUMBER_4, stepNumber: '2'"), pressNumber: '4' },
     {
-      title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE,
+      title: t('ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE'),
       stepNumber: '3',
       pressNumber: '1',
-      extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
+      extraText: t('ACTIVATE_BENEFICIARY.TO_ACTIVATE'),
     },
   ];
   const guideToReceiveCall = [
-    { title: localizationText.ACTIVATE_BENEFICIARY.ANSWER_THE_CALL, stepNumber: '1', isContactList: true },
+    { title: t("ACTIVATE_BENEFICIARY.ANSWER_THE_CALL, stepNumber: '1'"), isContactList: true },
     {
-      title: localizationText.ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE,
+      title: t('ACTIVATE_BENEFICIARY.PRESS_NUMBER_1_TO_ACTIVATE'),
       stepNumber: '2',
       pressNumber: '1',
-      extraText: localizationText.ACTIVATE_BENEFICIARY.TO_ACTIVATE,
+      extraText: t('ACTIVATE_BENEFICIARY.TO_ACTIVATE'),
     },
   ];
 
@@ -1228,22 +1230,22 @@ const useConstantData = () => {
   const billPaymentDetails = [
     {
       id: '2',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      label: t('PAY_BILL.SERVICE_TYPE'),
       value: 'Electricity Bill',
     },
     {
       id: '3',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      label: t('PAY_BILL.ACCOUNT_NUMBER'),
       value: 'AZ00876',
     },
     {
       id: '4',
-      label: localizationText.COMMON.DUE_DATE,
+      label: t('COMMON.DUE_DATE'),
       value: '14/03/2024',
     },
     {
       id: '5',
-      label: localizationText.COMMON.REF_NUM,
+      label: t('COMMON.REF_NUM'),
       value: 'FTA35346',
       icon: icons.copy,
     },
@@ -1259,34 +1261,34 @@ const useConstantData = () => {
   const billSaveDetails = [
     {
       id: '1',
-      label: localizationText.TRANSACTION_HISTORY.AMOUNT,
+      label: t('TRANSACTION_HISTORY.AMOUNT'),
       value: `300 ${localizationText.COMMON.SAR}`,
     },
     {
       id: '2',
-      label: localizationText.COMMON.DUE_DATE,
+      label: t('COMMON.DUE_DATE'),
       value: '05/08/2024',
     },
   ];
   const activeBillDetails = [
     {
       id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      label: t('PAY_BILL.SERVICE_TYPE'),
       value: 'Electricity Bill',
     },
     {
       id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      label: t('PAY_BILL.ACCOUNT_NUMBER'),
       value: 'AZ00876',
     },
     {
       id: '3',
-      label: localizationText.COMMON.DUE_DATE,
+      label: t('COMMON.DUE_DATE'),
       value: '14/03/2024',
     },
     {
       id: '4',
-      label: localizationText.TOP_UP.AMOUNT,
+      label: t('TOP_UP.AMOUNT'),
       value: '300 SAR',
     },
   ];
@@ -1294,9 +1296,9 @@ const useConstantData = () => {
   const requestMoneyFilterData = [
     {
       id: '1',
-      label: localizationText.SEND_GIFT.RECEIVER_NAME,
+      label: t('SEND_GIFT.RECEIVER_NAME'),
       type: FiltersType.CONTACT_NUMBER,
-      searchPlaceholder: localizationText.SEND_GIFT.SEARCH_FOR_RECEIVER,
+      searchPlaceholder: t('SEND_GIFT.SEARCH_FOR_RECEIVER'),
       icon: icons.user1,
       listTitleStyle: { fontWeight: FONT_WEIGHT_BOLD },
       filterValues: [
@@ -1325,28 +1327,28 @@ const useConstantData = () => {
   const requestMoneyBottomFilterData = [
     {
       id: '1',
-      label: localizationText.COMMON.STATUS,
+      label: t('COMMON.STATUS'),
       type: FiltersType.STATUS,
       filterValues: [
         {
           id: '1',
           key: MoneyRequestStatus.CANCEL,
-          value: localizationText.REQUEST_MONEY.CANCEL,
+          value: t('REQUEST_MONEY.CANCEL'),
         },
         {
           id: '2',
           key: MoneyRequestStatus.PAID,
-          value: localizationText.REQUEST_MONEY.PAID,
+          value: t('REQUEST_MONEY.PAID'),
         },
         {
           id: '3',
           key: MoneyRequestStatus.PENDING,
-          value: localizationText.REQUEST_MONEY.PENDING,
+          value: t('REQUEST_MONEY.PENDING'),
         },
         {
           id: '3',
           key: MoneyRequestStatus.REJECTED,
-          value: localizationText.REQUEST_MONEY.REJECTED,
+          value: t('REQUEST_MONEY.REJECTED'),
         },
       ],
     },
@@ -1357,12 +1359,12 @@ const useConstantData = () => {
       isAlinma: true,
       leftIcon: true,
       id: '1',
-      label: localizationText.REQUEST_SUMMARY.FROM,
+      label: t('REQUEST_SUMMARY.FROM'),
       value: 'Ahmed Mohammed',
     },
     {
       id: '2',
-      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      label: t('REQUEST_SUMMARY.AMOUNT'),
       value: `${3000} ${localizationText.COMMON.SAR}`,
     },
   ];
@@ -1371,47 +1373,47 @@ const useConstantData = () => {
       isAlinma: true,
       leftIcon: true,
       id: '1',
-      label: localizationText.REQUEST_SUMMARY.FROM,
+      label: t('REQUEST_SUMMARY.FROM'),
       value: 'Ahmed Mohammed',
     },
     {
       id: '2',
-      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      label: t('REQUEST_SUMMARY.AMOUNT'),
       value: `${3000} ${localizationText.COMMON.SAR}`,
     },
     {
       id: '4',
-      label: localizationText.REQUEST_SUMMARY.NOTE,
-      value: localizationText.TRANSFER_SUMMARY.NOTE_DETAIL,
+      label: t('REQUEST_SUMMARY.NOTE'),
+      value: t('TRANSFER_SUMMARY.NOTE_DETAIL'),
     },
   ];
   const requestMoneySummaryNon = [
     {
       id: '1',
-      label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+      label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
       value: 'Esra’ Alturk', // TODO: replace with api data
       isAlinma: false,
       leftIcon: true,
     },
-    { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
+    { id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: localizationText.TRANSFER_SUMMARY.AMOUNT_2 },
   ];
 
   const requestAccepted = [
     {
       id: '1',
-      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      label: t('REQUEST_SUMMARY.PAY_TO'),
       value: 'Ahmed Mohammed', // TODO: replace with api data
       isAlinma: true,
       leftIcon: true,
     },
     {
       id: '2',
-      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      label: t('REQUEST_SUMMARY.MOBILE_NUMBER'),
       value: '0503340494',
     },
     {
       id: '3',
-      label: localizationText.COMMON.REF_NUM,
+      label: t('COMMON.REF_NUM'),
       value: 'FTA35346',
       icon: icons.copy,
     },
@@ -1436,60 +1438,60 @@ const useConstantData = () => {
     {
       id: '1',
       image: images.playStatuon,
-      title: localizationText.SHOP.PLAYSTATION,
+      title: t('SHOP.PLAYSTATION'),
     },
     {
       id: '2',
       image: images.food,
-      title: localizationText.SHOP.FOOD,
+      title: t('SHOP.FOOD'),
     },
     {
       id: '3',
       image: images.entertainment,
-      title: localizationText.SHOP.ENTERTAINMENT,
+      title: t('SHOP.ENTERTAINMENT'),
     },
     {
       id: '4',
       image: images.shopping,
-      title: localizationText.SHOP.SHOPPING,
+      title: t('SHOP.SHOPPING'),
     },
     {
       id: '5',
       image: images.telecom,
-      title: localizationText.SHOP.TELECOM,
+      title: t('SHOP.TELECOM'),
     },
 
     {
       id: '6',
       image: images.googlePlay,
-      title: localizationText.SHOP.GOOGLE,
+      title: t('SHOP.GOOGLE'),
     },
 
     {
       id: '7',
       image: images.onlineGames,
-      title: localizationText.SHOP.GAMES,
+      title: t('SHOP.GAMES'),
     },
     {
       id: '8',
       image: images.onlineStore,
-      title: localizationText.SHOP.STORE,
+      title: t('SHOP.STORE'),
     },
     {
       id: '1',
       image: images.transportation,
-      title: localizationText.SHOP.TRANSPORTATION,
+      title: t('SHOP.TRANSPORTATION'),
     },
 
     {
       id: '1',
       image: images.xbox,
-      title: localizationText.SHOP.XBOX,
+      title: t('SHOP.XBOX'),
     },
     {
       id: '1',
       image: images.itunes,
-      title: localizationText.SHOP.ITUNES,
+      title: t('SHOP.ITUNES'),
     },
   ];
   const sortingData = [
@@ -1534,8 +1536,8 @@ const useConstantData = () => {
   ];
 
   const contactusList = [
-    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: '(+966)8004339000' },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: '(+966)920000670' },
+    { title: t('MENU.CALL_WITHIN_SA'), phone_number: '(+966)8004339000' },
+    { title: t('MENU.CALL_OUTSIDE_SA'), phone_number: '(+966)920000670' },
   ];
 
   return {

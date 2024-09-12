@@ -49,11 +49,13 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
 const LocalTransferScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = localTransferStyles(colors);
   const localizationText = useLocalization();
@@ -167,7 +169,7 @@ const LocalTransferScreen: React.FC = () => {
 
   const showUpdateBeneficiaryToast = () => {
     showToast({
-      title: localizationText.BENEFICIARY_OPTIONS.NAME_CHANGED,
+      title: t('BENEFICIARY_OPTIONS.NAME_CHANGED'),
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
       containerStyle: styles.toast,
       isShowRightIcon: false,
@@ -203,7 +205,7 @@ const LocalTransferScreen: React.FC = () => {
   const showDeleteBeneficiaryToast = () => {
     setDeleteBeneficiary(false);
     showToast({
-      title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
+      title: t('BENEFICIARY_OPTIONS.BENEFICIARY_DELETED'),
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
       containerStyle: styles.toast,
       isShowRightIcon: false,
@@ -580,11 +582,11 @@ const LocalTransferScreen: React.FC = () => {
         icon={<IPayIcon icon={icons.TRASH} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: localizationText.COMMON.CANCEL,
+          text: t('COMMON.CANCEL'),
           onPress: onDeleteCancel,
         }}
         secondaryAction={{
-          text: localizationText.COMMON.DELETE,
+          text: t('COMMON.DELETE'),
           onPress: onDeleteBeneficiary,
         }}
       />

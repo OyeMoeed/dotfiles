@@ -21,6 +21,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { alertType, alertVariant, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { internationalTransferData } from '../international-transfer/international-transfer.constent';
 import { InternationalTransferData, OptionItem } from './international-transfer-success.interface';
 import internationalSuccessStyles from './international-transfer-success.style';
@@ -29,6 +30,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalSuccessStyles(colors);
   const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const [isVatInvoice, setIsVatInvoice] = useState<boolean>(false);
   const totalAmount = '50'; // TODO will be updated on the basis of api
@@ -49,7 +51,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   // Function to check the condition dynamically
@@ -162,7 +164,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
         icon={<IPayIcon icon={icons.note_remove} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: localizationText.COMMON.DONE,
+          text: t('COMMON.DONE'),
           onPress: onVatInvoiceCancel,
         }}
       />

@@ -36,6 +36,7 @@ import {
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Contact } from 'react-native-contacts';
+import { useTranslation } from 'react-i18next';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
 const defaultValue = '0.00';
@@ -43,6 +44,7 @@ const defaultValue = '0.00';
 const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
   const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [topUpAmount, setTopUpAmount] = useState('');
   const [warningStatus] = useState<string>('');
   const MAX_CONTACTS = 5;
@@ -453,11 +455,11 @@ const SendGiftAmountScreen = ({ route }) => {
         showIcon={false}
         onClose={() => setAlertVisible(false)}
         primaryAction={{
-          text: localizationText.COMMON.CANCEL,
+          text: t('COMMON.CANCEL'),
           onPress: () => setAlertVisible(false),
         }}
         secondaryAction={{
-          text: localizationText.PROFILE.REMOVE,
+          text: t('PROFILE.REMOVE'),
           onPress: () => removeContactAndHideAlert(contactToRemove?.recordID),
         }}
         type={alertType.SIDE_BY_SIDE}

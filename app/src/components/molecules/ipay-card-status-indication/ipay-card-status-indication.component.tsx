@@ -4,6 +4,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
 import { TextStyle, ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayList from '../ipay-list/ipay-list.component';
 import { IPayCardStatusIndicationProps } from './ipay-card-status-indication.interface';
@@ -16,6 +17,7 @@ const IPayCardStatusIndication = ({
   currentCard,
 }: IPayCardStatusIndicationProps) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const fee = 100; // TODO will be updated on the basis of api
 
@@ -24,7 +26,7 @@ const IPayCardStatusIndication = ({
   const cardStatusIndication = {
     expiry: {
       warning: {
-        title: localizationText.CARDS.EXPIRING_SOON,
+        title: t('CARDS.EXPIRING_SOON'),
         subtitle: `${localizationText.COMMON.ON} ${currentCard?.expiryDate}`,
         icon: icons.timer,
         rightText: (
@@ -39,8 +41,8 @@ const IPayCardStatusIndication = ({
         ),
       },
       alert: {
-        title: localizationText.CARDS.CARD_EXPIRED,
-        subtitle: localizationText.CARDS.PLEASE_RENEW_CARD,
+        title: t('CARDS.CARD_EXPIRED'),
+        subtitle: t('CARDS.PLEASE_RENEW_CARD'),
         icon: icons.warning2,
         rightText: (
           <IPayButton
@@ -56,7 +58,7 @@ const IPayCardStatusIndication = ({
     },
     annual: {
       warning: {
-        title: localizationText.CARDS.ANNUAL_FEE_COLLECTION,
+        title: t('CARDS.ANNUAL_FEE_COLLECTION'),
         subtitle: currentCard?.expiryDate,
         icon: icons.moneys_warning,
         rightText: (
@@ -66,8 +68,8 @@ const IPayCardStatusIndication = ({
         ),
       },
       alert: {
-        title: localizationText.CARDS.ANNUAL_FEE_COLLECTION_FAILED,
-        subtitle: localizationText.CARDS.ANNUAL_FEE_FAILED_MESSAGE,
+        title: t('CARDS.ANNUAL_FEE_COLLECTION_FAILED'),
+        subtitle: t('CARDS.ANNUAL_FEE_FAILED_MESSAGE'),
         icon: icons.moneys_alert,
         rightText: (
           <IPayButton

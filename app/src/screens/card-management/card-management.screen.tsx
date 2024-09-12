@@ -29,11 +29,13 @@ import { verticalScale } from 'react-native-size-matters';
 import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useTypedSelector } from '@app/store/store';
 import { deleteSavedCard, getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { useTranslation } from 'react-i18next';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 import cardManagementStyles from './card-management.style';
 
 const CardManagementScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const localizationText = useLocalization();
   const [cards, setCards] = useState<any[]>([]);
@@ -185,10 +187,10 @@ const CardManagementScreen: React.FC = () => {
       showIcon={false}
       icon={<IPayIcon icon={icons.TRASH} size={64} color="red" />}
       primaryAction={{
-        text: localizationText.COMMON.CANCEL,
+        text: t('COMMON.CANCEL'),
         onPress: () => setShowDeleteAlert(false),
       }}
-      secondaryAction={{ text: localizationText.COMMON.DELETE, onPress: onDeleteCard }}
+      secondaryAction={{ text: t('COMMON.DELETE'), onPress: onDeleteCard }}
       variant={alertVariant.DESTRUCTIVE}
       title="CARD_MANAGEMENT.DELETE_CARD"
       message={`${cards[selectedCardIndex].name}\n**** **** **** ${cards[selectedCardIndex].lastFourDigit}`}

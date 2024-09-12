@@ -17,6 +17,7 @@ import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { RefreshControl } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import EditBeneficiary from './components/edit-beneficiary.component';
 import IPayInternationalTransferBeneficiries from './components/transaction-details-beneficiary.component';
@@ -34,6 +35,7 @@ const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTrHistoryStyles();
   const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [filteredData, setFilteredData] = useState<InternationalTransferHistoryDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [filters, setFilters] = useState<Array<string>>([]);
@@ -320,10 +322,10 @@ const InternationalTransferHistory: React.FC = () => {
   };
 
   const editBeneficiaryConfirmationOptions = {
-    title: localizationText.INTERNATIONAL_TRANSFER.TRANSACTION_ONLY_UPDATE_MESSAGE,
+    title: t('INTERNATIONAL_TRANSFER.TRANSACTION_ONLY_UPDATE_MESSAGE'),
     showIcon: true,
     customImage: <IPayIcon icon={icons.warning4} size={48} color={colors.warning.warning500} />,
-    message: localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_MESSAGE,
+    message: t('INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_MESSAGE'),
     options: [localizationText.COMMON.DONE, localizationText.COMMON.CANCEL],
     bodyStyle: styles.actionSheetView,
     btnStyle: styles.actionSheetBtn,

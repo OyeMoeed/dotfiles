@@ -50,6 +50,7 @@ import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Flag from 'react-native-round-flags';
+import { useTranslation } from 'react-i18next';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
@@ -60,6 +61,7 @@ import { BeneficiaryDetailsProps } from './international-transfer.interface';
 const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTransferStyles(colors);
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const [activeTab, setActiveTab] = useState<string>(TransferGatewayType.ALINMA_DIRECT);
   const [search, setSearch] = useState<string>('');
@@ -216,7 +218,7 @@ const InternationalTransferScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           showToast({
-            title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
+            title: t('BENEFICIARY_OPTIONS.BENEFICIARY_DELETED'),
             subTitle: `${selectedBeneficiary.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
             containerStyle: styles.toast,
             isShowRightIcon: false,
@@ -652,11 +654,11 @@ const InternationalTransferScreen: React.FC = () => {
         icon={<IPayIcon icon={icons.TRASH} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: localizationText.COMMON.CANCEL,
+          text: t('COMMON.CANCEL'),
           onPress: onDeleteCancel,
         }}
         secondaryAction={{
-          text: localizationText.COMMON.DELETE,
+          text: t('COMMON.DELETE'),
           onPress: handleDeleteBeneficiary,
         }}
       />

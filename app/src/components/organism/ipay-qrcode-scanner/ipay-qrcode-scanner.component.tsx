@@ -8,18 +8,18 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import { IPayImage, IPayView } from '@app/components/atoms';
 import { PermissionsStatus, PermissionTypes } from '@app/enums';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { scaleSize } from '@app/styles/mixins';
 import { alertVariant } from '@app/utilities/enums.util';
 import { debounce } from 'lodash';
 import { ActivityIndicator, Animated } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { useTranslation } from 'react-i18next';
 import { IPayQRCodeScannerProps } from './ipay-qrcode-scanner.interface';
 import qrCodeScannerComponentStyles from './ipay-qrcode-scanner.style';
 
 const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, onRead }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const { permissionStatus: permissionStatusCheck, retryPermission } = usePermissions(PermissionTypes.CAMERA, true);
 
@@ -60,11 +60,11 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
         return (
           <IPayAlert
             secondaryAction={{
-              text: localizationText.COMMON.GO_BACK,
+              text: t('COMMON.GO_BACK'),
               onPress: goBackQr,
             }}
             primaryAction={{
-              text: localizationText.PERMISSIONS.ALLOW_ACCESS,
+              text: t('PERMISSIONS.ALLOW_ACCESS'),
               onPress: retryPermission,
             }}
             variant={alertVariant.DESTRUCTIVE}

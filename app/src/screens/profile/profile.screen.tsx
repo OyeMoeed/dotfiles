@@ -31,11 +31,13 @@ import { States, spinnerVariant, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import CardKeys from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
 const Profile = () => {
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
@@ -74,7 +76,7 @@ const Profile = () => {
 
   const renderUploadSuccessToast = () => {
     showToast({
-      title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
+      title: t('PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE'),
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
     });
@@ -82,7 +84,7 @@ const Profile = () => {
 
   const renderSuccessToast = () => {
     showToast({
-      title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
+      title: t('COMMON.CHANGES_SAVED_SUCCESSFULLY'),
       toastType: ToastTypes.INFORMATION,
       leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
     });
@@ -174,10 +176,10 @@ const Profile = () => {
     {
       key: CardKeys.IDENTITY_VERIFICATION,
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-      text: localizationText.COMMON.INDENTITY_VERIFICATION,
+      text: t('COMMON.INDENTITY_VERIFICATION'),
       iconRight: isBasicTier ? icons.ARROW_RIGHT : undefined,
       button: {
-        text: localizationText.COMMON.VERIFY,
+        text: t('COMMON.VERIFY'),
         iconColor: colors.primary.primary500,
         disabled: false,
         onPress: () => openNafathBottomSheet(),
@@ -186,7 +188,7 @@ const Profile = () => {
     {
       key: CardKeys.CUSTOMER_KNOWLEDGE_FORM,
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+      text: t('PROFILE.CUSTOMER_KNOWLEDGE_FORM'),
       button: {
         text:
           walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete

@@ -28,6 +28,7 @@ import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import SummaryType from '@app/enums/summary-type';
+import { useTranslation } from 'react-i18next';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
 import { getTypeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
@@ -39,6 +40,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   showActionSheet,
 }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
   const applyStatusKeys: (keyof IPayRequestMoneyProps)[] = [LocalizationKeys.STATUS];
@@ -50,25 +52,25 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   const receviedRequestSummaryData = [
     {
       id: 1,
-      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      label: t('REQUEST_SUMMARY.PAY_TO'),
       detailsText: transaction.title,
       leftIcon: true,
     },
     {
       id: 2,
-      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      label: t('REQUEST_SUMMARY.MOBILE_NUMBER'),
       detailsText: transaction.receiver_mobile_number,
     },
     {
       id: 3,
-      label: localizationText.REQUEST_SUMMARY.AMOUNT,
+      label: t('REQUEST_SUMMARY.AMOUNT'),
       detailsText: transaction.amount,
     },
   ];
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
+      title: t('TOP_UP.COPIED'),
       subTitle: value,
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
@@ -81,25 +83,25 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
-          text: localizationText.REQUEST_MONEY.CANCELLED,
+          text: t('REQUEST_MONEY.CANCELLED'),
           backgroundColor: colors.natural.natural100,
         };
       case MoneyRequestStatus.PAID:
         return {
           color: colors.tertiary.tertiary500,
-          text: localizationText.REQUEST_MONEY.PAID,
+          text: t('REQUEST_MONEY.PAID'),
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
         return {
           color: colors.critical.critical800,
-          text: localizationText.REQUEST_MONEY.PENDING,
+          text: t('REQUEST_MONEY.PENDING'),
           backgroundColor: colors.critical.critical25,
         };
       default:
         return {
           color: colors.error.error500,
-          text: localizationText.REQUEST_MONEY.REJECTED,
+          text: t('REQUEST_MONEY.REJECTED'),
           backgroundColor: colors.error.error25,
         };
     }
@@ -122,7 +124,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
       screen: SummaryType.MONEY_REQUEST_SUMMARY,
       receviedRequestSummaryData,
       transId: transaction.id,
-      heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
+      heading: t('REQUEST_MONEY.MONEY_REQUESTS'),
     });
   };
 

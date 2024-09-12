@@ -27,6 +27,7 @@ import {
   ToastTypes,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
 import sadadBillsStyles from './sadad-bills.style';
@@ -35,6 +36,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   const { sadadBills } = route.params;
   const { colors } = useTheme();
   const styles = sadadBillsStyles();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const [selectedTab, setSelectedTab] = useState<string>(BillsStatusTypes.ACTIVE_BILLS);
   const [activeBillsData, setActiveBillsData] = useState<BillsProps[]>([]);
@@ -146,7 +148,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
           const updatedBillsData = prevBillsData.filter((bill) => bill.id !== selectedBillsId);
 
           renderToast({
-            title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+            title: t('SADAD.BILL_HAS_BEEN_DELETED'),
             subTitle: billToDelete?.billTitle,
             toastType: ToastTypes.SUCCESS,
           });
@@ -172,7 +174,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
 
   const setEditBillSuccessToast = (billSubTitle: string) => {
     renderToast({
-      title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
+      title: t('SADAD.INVOICE_UPDATED_SUCCESSFULLY'),
       subTitle: billSubTitle,
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
@@ -180,10 +182,10 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   };
 
   const deleteBillOptions = {
-    title: localizationText.SADAD.DELETE_NEW_BILL,
+    title: t('SADAD.DELETE_NEW_BILL'),
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
-    message: localizationText.SADAD.DELETE_BILL_WARNING_TEXT,
+    message: t('SADAD.DELETE_BILL_WARNING_TEXT'),
     options: [localizationText.COMMON.DELETE, localizationText.COMMON.CANCEL],
     cancelButtonIndex: 1,
     showCancel: true,
@@ -203,10 +205,10 @@ const SadadBillsScreen: React.FC = ({ route }) => {
   };
 
   const activeBillOptions = {
-    title: localizationText.SADAD.ACTIVATE_BILL,
+    title: t('SADAD.ACTIVATE_BILL'),
     showIcon: true,
     customImage: <IPayIcon icon={icons.receipt_add} size={48} color={colors.primary.primary500} />,
-    message: localizationText.SADAD.ACTIVATE_BILL_MESSAGE,
+    message: t('SADAD.ACTIVATE_BILL_MESSAGE'),
     options: [localizationText.SADAD.ACTIVATE, localizationText.COMMON.CANCEL],
     cancelButtonIndex: 1,
     showCancel: true,
@@ -317,7 +319,7 @@ const SadadBillsScreen: React.FC = ({ route }) => {
 
         case apiResponse?.apiResponseNotOk:
           renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            title: t('ERROR.API_ERROR_RESPONSE'),
             toastType: ToastTypes.WARNING,
           });
           break;

@@ -6,7 +6,6 @@ import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/m
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SadadEditBillFields } from '@app/enums/edit-sadad-bill.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
 import editBillService from '@app/network/services/bills-management/edit-bill/edit-bill.service';
@@ -15,6 +14,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
 
 const SadadEditBillsScreen: React.FC = ({ route }) => {
@@ -28,7 +28,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   }: BillDetailsProps = billData;
   const { colors } = useTheme();
   const styles = sadadEditBillsStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -161,14 +161,14 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
         onClose={onCloseAlert}
         message="SADAD.EDIT_YOU_MADE_WILL_LOST"
         primaryAction={{
-          text: localizationText.COMMON.YES,
+          text: t('COMMON.YES'),
           onPress: () => {
             setShowAlert(false);
             goBack();
           },
         }}
         tertiaryAction={{
-          text: localizationText.COMMON.CANCEL,
+          text: t('COMMON.CANCEL'),
           onPress: () => {
             setShowAlert(false);
           },

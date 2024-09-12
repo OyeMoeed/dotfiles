@@ -36,11 +36,13 @@ import { scaleSize } from '@app/styles/mixins';
 import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { GiftParamsProps, GiftTransferSummaryItem, SendMoneyType } from './gift-transfer-summary.interface';
 import transferSummaryStyles from './gift-transfer-summary.styles';
 
 const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const localizationText = useLocalization();
   const route = useRoute<
     RouteProp<{
@@ -98,7 +100,7 @@ const TransferSummaryScreen: React.FC = () => {
     const transferDetails = [
       {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
         value: item?.name,
         leftIcon: isAlinma ? images.alinmaP : icons.user_square,
         color: isAlinma ? undefined : colors.primary.primary900,
@@ -106,7 +108,7 @@ const TransferSummaryScreen: React.FC = () => {
       },
       {
         id: '2',
-        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        label: t('TRANSFER_SUMMARY.AMOUNT'),
         value: `${item.amount} ${localizationText.COMMON.SAR}`,
       },
     ];
