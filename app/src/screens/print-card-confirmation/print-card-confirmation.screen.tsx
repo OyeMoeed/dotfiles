@@ -1,6 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
+import icons from '@app/assets/icons';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -9,26 +7,25 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { IPayBottomSheet } from '@app/components/organism';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import icons from '@app/assets/icons';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
-import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
 
-import {
-  OTPVerificationRefTypes,
-  TermsAndConditionsRefTypes,
-  RouteParams,
-  AddressInfoRefTypes,
-} from './print-card-confirmation.interface';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { useDispatch } from 'react-redux';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import { AddressInfoRefTypes, OTPVerificationRefTypes, RouteParams } from './print-card-confirmation.interface';
 import printCardConfirmationStyles from './print-card-confirmation.style';
 
 const DUMMY_DATA = {
@@ -58,7 +55,6 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const addressInfoSheetRef = useRef<AddressInfoRefTypes>(null);
 
   const styles = printCardConfirmationStyles(colors);
@@ -90,8 +86,9 @@ const PrintCardConfirmationScreen: React.FC = () => {
     }
   };
 
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    dispatch(setTermsConditionsVisibility(true));
   };
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
@@ -100,6 +97,8 @@ const PrintCardConfirmationScreen: React.FC = () => {
     onCloseBottomSheet();
     navigate(ScreenNames.PRINT_CARD_SUCCESS);
   };
+
+  const onResendCodePress = () => {};
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -182,7 +181,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         noGradient
@@ -195,6 +194,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
         ref={veriyOTPSheetRef}
       >
         <IPayOtpVerification
+          otpError={otpError}
           setOtpError={setOtpError}
           ref={otpVerificationRef}
           onPressConfirm={onNavigateToSuccess}
@@ -203,6 +203,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           otp={otp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
+          onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>
       <IPayBottomSheet
