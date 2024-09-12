@@ -32,9 +32,6 @@ const deleteBill = async (payload: DeleteBillRequest): Promise<DeleteBillMockPro
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
     }
-
-    // Handle unsuccessful response
-    return { error: 'Failed to delete bill. Please try again later.' };
   } catch (error: any) {
     // Catch any error during API call and return a detailed error message
     return { error: error?.message || 'An unknown error occurred while attempting to delete the bill.' };

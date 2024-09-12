@@ -16,7 +16,7 @@ import { dateTimeFormat } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import moment from 'moment';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { IPaySadadBillProps } from './ipay-sadad-bill.interface';
 import sadadBillStyles from './ipay-sadad-bill.style';
 
@@ -59,15 +59,17 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   };
 
   const onPressMore = () => {
-    if (onPressMoreOptions) onPressMoreOptions(billId);
+    onPressMoreOptions?.(billId);
   };
+
+  const getBillerImage = useCallback(() => BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId), [billerId]);
 
   return (
     <IPayView testID={`${testID}-sadad-bill`} style={[styles.container, style]}>
       {showCheckBox && <IPayCheckbox isCheck={selected} onPress={onPressCheckBox} />}
       <IPayView style={styles.contentView}>
         <IPayView>
-          <IPayImage image={BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId)} style={styles.vendorIcon} />
+          <IPayImage image={getBillerImage()} style={styles.vendorIcon} />
           <IPaySubHeadlineText text={billDesc} color={colors.natural.natural900} />
           <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>

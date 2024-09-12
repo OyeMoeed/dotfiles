@@ -16,7 +16,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { SadadEditBillsScreenProps } from './sadad-edit-bill.interface';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
@@ -24,8 +24,8 @@ import sadadEditBillsStyles from './sadad-edit-bill.style';
 const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) => {
   const { billData, setEditBillSuccessToast } = route.params;
   const {
-    billerId = '004',
-    billId = '1',
+    billerId,
+    billId,
     billDesc = '',
     billerName = '',
     serviceDescription = '',
@@ -104,6 +104,8 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
 
   const isSaveButtonDisabled = !billNickName || checkIfNickNameUpdated();
 
+  const getBillerImage = useCallback(() => BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId), [billerId]);
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -134,7 +136,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
 
           <IPayView style={styles.diabledCardView}>
             <IPayView style={styles.infoView}>
-              <IPayImage image={BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId)} style={styles.vendorIcon} />
+              <IPayImage image={getBillerImage()} style={styles.vendorIcon} />
               <IPayView>
                 <IPayCaption1Text
                   text={localizationText.NEW_SADAD_BILLS.COMPANY_NAME}

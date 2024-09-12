@@ -78,24 +78,15 @@ const BillPaymentsScreen: React.FC = () => {
         showloader: true,
       };
       const apiResponse: any = await getSadadBillsByStatus(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS: {
-          if (apiResponse?.response?.paymentInfoList.length > 0) {
-            const newBills = apiResponse?.response?.paymentInfoList || [];
-            const updatedData = await addStatusToData(newBills);
-            setSadadBillsData(updatedData.slice(0, 3));
-            setBillsData(updatedData);
-          }
-          break;
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        if (apiResponse?.response?.paymentInfoList.length > 0) {
+          const newBills = apiResponse?.response?.paymentInfoList || [];
+          const updatedData = await addStatusToData(newBills);
+          setSadadBillsData(updatedData.slice(0, 3));
+          setBillsData(updatedData);
         }
-        case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderToast(apiResponse?.error);
-          break;
-        default:
-          break;
+      } else {
+        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
       }
     } catch (error: any) {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);

@@ -281,28 +281,10 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
       };
       const apiResponse: any = await getSadadBillsByStatus(payload);
 
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          {
-            const newBills = apiResponse?.response?.paymentInfoList || [];
-            const updatedData = await addStatusToData(newBills);
-
-            setDataForBills(updatedData, tab);
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
-            toastType: ToastTypes.WARNING,
-          });
-          break;
-
-        case ApiResponseStatusType.FAILURE:
-          renderToast(apiResponse?.error);
-          break;
-
-        default:
-          break;
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        const newBills = apiResponse?.response?.paymentInfoList || [];
+        const updatedData = await addStatusToData(newBills);
+        setDataForBills(updatedData, tab);
       }
     } catch (error: any) {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
