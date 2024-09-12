@@ -15,10 +15,9 @@ import {
   IPayPageDescriptionText,
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -39,9 +38,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     onCheckTermsAndConditions,
     checkTermsAndConditions,
     onPressTermsAndConditions,
-    termsAndConditionSheetRef,
     isOtpSheetVisible,
-    helpCenterRef,
     onCloseBottomSheet,
     handleOnPressHelp,
     keyboardVisible,
@@ -53,7 +50,9 @@ const MobileAndIqamaVerification: React.FC = () => {
     setOtp,
     otpVerificationRef,
     resendOtp,
-    otp
+    otp,
+    isHelpSheetVisible,
+    onCloseHelpSheet,
   } = useMobileAndIqamaVerification();
 
   const { colors } = useTheme();
@@ -169,17 +168,17 @@ const MobileAndIqamaVerification: React.FC = () => {
               />
             </IPayPortalBottomSheet>
             {isLoading && <IPaySpinner />}
-            <IPayBottomSheet
+            <IPayPortalBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
               enablePanDownToClose
               simpleBar
               backBtn
-              customSnapPoint={SNAP_POINTS.LARGE}
-              ref={helpCenterRef}
+              customSnapPoint={['60%', '90%']}
+              isVisible={isHelpSheetVisible}
+              onCloseBottomSheet={onCloseHelpSheet}
             >
               <HelpCenterComponent hideFAQError />
-            </IPayBottomSheet>
-            <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+            </IPayPortalBottomSheet>
           </>
         </IPaySafeAreaView>
       )}
