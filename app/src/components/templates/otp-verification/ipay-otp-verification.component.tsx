@@ -47,7 +47,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     );
 
     const isCounterEnds = counter <= 0;
-    const isConfirmationEnabled = isCounterEnds;
 
     const renderToast = (toastMsg: string) => {
       showToast({
@@ -116,7 +115,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           />
           <IPayButton
             btnType={buttonVariants.PRIMARY}
-            disabled={isConfirmationEnabled}
+            disabled={isCounterEnds}
             btnText={localizationText.COMMON.CONFIRM}
             large
             btnIconsDisabled
