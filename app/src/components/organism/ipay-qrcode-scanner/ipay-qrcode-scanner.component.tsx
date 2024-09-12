@@ -7,8 +7,7 @@ import React from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import { IPayImage, IPayView } from '@app/components/atoms';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import PermissionTypes from '@app/enums/permissions-types.enum';
+import { PermissionsStatus, PermissionTypes } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { scaleSize } from '@app/styles/mixins';
@@ -33,13 +32,13 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
 
   const renderComponent = () => {
     switch (permissionStatusCheck) {
-      case permissionsStatus.UNKNOWN:
+      case PermissionsStatus.UNKNOWN:
         return (
           <IPayView testID="qrcode-loader" style={[styles.fill, styles.loaderContainer]}>
             <ActivityIndicator size="small" color={colors.primary.primary500} />
           </IPayView>
         );
-      case permissionsStatus.GRANTED:
+      case PermissionsStatus.GRANTED:
         return (
           <IPayView testID="qrcode-scanner" style={[styles.fill, styles.cameraContainerStyles]}>
             <QRCodeScanner

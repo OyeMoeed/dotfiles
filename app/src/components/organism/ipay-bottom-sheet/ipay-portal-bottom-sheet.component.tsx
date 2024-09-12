@@ -1,5 +1,4 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
-import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import BottomSheet, {
@@ -13,6 +12,7 @@ import { Portal } from 'react-native-portalize';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
 import { IPayPortalBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
+
 const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheetProps>(
   (
     {
@@ -79,6 +79,28 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
       [],
     );
 
+    const handleComponent = () => (
+      <IPayBottomSheetHandle
+        simpleBar={simpleBar}
+        gradientBar={gradientBar}
+        cancelBnt={cancelBnt}
+        doneBtn={doneBtn}
+        heading={heading}
+        simpleHeader={simpleHeader}
+        backBtn={backBtn}
+        doneButtonStyle={doneButtonStyle}
+        cancelButtonStyle={cancelButtonStyle}
+        doneText={doneText}
+        onPressCancel={onCloseBottomSheet}
+        onPressDone={onCloseBottomSheet}
+        bold={bold}
+        bgGradientColors={
+          noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
+        }
+        headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
+      />
+    );
+
     return (
       <Portal>
         <BottomSheet
@@ -94,36 +116,14 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
-          handleComponent={() => (
-            <IPayBottomSheetHandle
-              simpleBar={simpleBar}
-              gradientBar={gradientBar}
-              cancelBnt={cancelBnt}
-              doneBtn={doneBtn}
-              heading={heading}
-              simpleHeader={simpleHeader}
-              backBtn={backBtn}
-              doneButtonStyle={doneButtonStyle}
-              cancelButtonStyle={cancelButtonStyle}
-              doneText={doneText}
-              onPressCancel={onCloseBottomSheet}
-              onPressDone={onCloseBottomSheet}
-              bold={bold}
-              bgGradientColors={
-                noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
-              }
-              headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
-            />
-          )}
+          handleComponent={handleComponent}
         >
           <IPayLinearGradientView
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
           >
-            <SpinnerProvider>
-              <ToastProvider>
-                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
-              </ToastProvider>
-            </SpinnerProvider>
+            <ToastProvider>
+              <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+            </ToastProvider>
           </IPayLinearGradientView>
         </BottomSheet>
       </Portal>

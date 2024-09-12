@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const mapViewStyles = (colors: any) =>
+const mapViewStyles = () =>
   createStyleSheet({
     mapView: {
       flex: 1,

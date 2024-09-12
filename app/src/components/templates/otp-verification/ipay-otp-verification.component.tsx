@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { Message } from '@app/assets/svgs';
-import { IPayCaption1Text, IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -8,6 +8,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
 import { forwardRef, useImperativeHandle } from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
 import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
@@ -17,11 +18,10 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
     {
       testID,
       onPressConfirm,
-      mobileNumber,
+      mobileNumber = '',
       setOtp,
       setOtpError,
       otpError,
-      isLoading,
       isBottomSheet = true,
       handleOnPressHelp,
       showHelp = true,
@@ -38,7 +38,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
   ) => {
     const { colors } = useTheme();
     const localizationText = useLocalization();
-    const styles = otpVerificationStyles(colors);
+    const styles = otpVerificationStyles();
     const { showToast } = useToastContext();
     const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
     const renderToast = (toastMsg: string) => {
@@ -67,8 +67,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
     return (
       <IPayView testID={`${testID}-otp-verification`} style={[styles.container, containerStyle]}>
-        {isLoading && <IPaySpinner hasBackgroundColor={false} />}
-
         <IPayView style={styles.messageIconView}>
           <Message />
         </IPayView>
@@ -88,7 +86,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
           <IPayButton
             disabled={counter > 0}
-            btnType="link-button"
+            btnType={buttonVariants.LINK_BUTTON}
             btnText={localizationText.COMMON.SEND_CODE_AGAIN}
             small
             btnStyle={styles.sendCodeBtnStyle}
@@ -102,7 +100,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
             onPress={onSendCodeAgainPress}
           />
           <IPayButton
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             disabled={counter <= 0}
             btnText={localizationText.COMMON.CONFIRM}
             large
@@ -112,7 +110,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           {showHelp && (
             <IPayButton
               onPress={handleOnPressHelp}
-              btnType="link-button"
+              btnType={buttonVariants.LINK_BUTTON}
               btnText={localizationText.COMMON.NEED_HELP}
               large
               btnStyle={styles.needHelpBtn}

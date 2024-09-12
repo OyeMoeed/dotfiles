@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const sectionListStyles = (theme: any) =>
+const sectionListStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,

@@ -1,5 +1,4 @@
-import { ActivateBeneficiaryResponse } from "./activate-international-beneficiary.interface";
-
+import { ActivateBeneficiaryResponse } from './activate-international-beneficiary.interface';
 
 const activateBeneficiariesData: ActivateBeneficiaryResponse = {
   status: {

@@ -7,14 +7,15 @@ interface GradientTextProps {
   colors: string[];
   [x: string]: any;
 }
-const IPayGradientCircleProgressbar: React.FC<GradientTextProps> = ({ colors, ...rest }: GradientTextProps) => {
-  return (
-    <MaskedView maskElement={<View {...rest} />}>
-      <LinearGradient colors={colors} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }}>
-        <View {...rest} style={[rest.style, { opacity: 0 }]} />
-      </LinearGradient>
-    </MaskedView>
-  );
-};
+
+const opacity0 = { opacity: 0 };
+
+const IPayGradientCircleProgressbar: React.FC<GradientTextProps> = ({ colors, ...rest }: GradientTextProps) => (
+  <MaskedView maskElement={<View {...rest} />}>
+    <LinearGradient colors={colors} start={{ x: 0, y: 1 }} end={{ x: 1, y: 0 }}>
+      <View {...rest} style={[rest.style, opacity0]} />
+    </LinearGradient>
+  </MaskedView>
+);
 
 export default IPayGradientCircleProgressbar;

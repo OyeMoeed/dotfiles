@@ -14,8 +14,8 @@ import { CardMapping, CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
-import issueNewCardDetailsStyles from './issue-new-card-details.style';
 import { useRoute } from '@react-navigation/native';
+import issueNewCardDetailsStyles from './issue-new-card-details.style';
 
 const IssueNewCardDetailsScreen: React.FC = () => {
   const localizationText = useLocalization();
@@ -62,7 +62,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} applyFlex />
       <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
-      <IPayImage image={backgroundImage} style={[styles.background]} />
+      <IPayImage image={backgroundImage} style={styles.background} />
       <IPayAnimatedView
         animationStyles={animatedStyles}
         style={[styles.animatedContainer, isExpanded && styles.expandedBorderRadius]}

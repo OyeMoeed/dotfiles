@@ -32,11 +32,11 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
-import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
+import internationalTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
 const InternationalTransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
-  const styles = internationlTransferConfirmationStyles(colors);
+  const styles = internationalTransferConfirmationStyles();
   const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
@@ -47,12 +47,7 @@ const InternationalTransferConfirmation: React.FC = () => {
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { getDataByKey, getTransactionListedData, getLocalizationKeyFromLabel } = useInternationalTransferData();
-  const {
-    getValues,
-    control,
-    setValue,
-    formState: { errors },
-  } = useForm();
+  const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];

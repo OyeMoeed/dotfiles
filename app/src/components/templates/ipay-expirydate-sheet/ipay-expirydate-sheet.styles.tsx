@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+
 const IPayExpiryDateStyles = (themeColor: typeof colors) =>
   createStyleSheet({
     headerText: {

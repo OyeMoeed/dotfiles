@@ -1,4 +1,5 @@
 import { alertType, alertVariant } from '@app/utilities/enums.util';
+import React from 'react';
 
 /**
  * Defines the props interface for the IpayAlert component.
@@ -44,4 +45,6 @@ export interface IPayAlertProps {
 
   // Indicates whether to display the icon within the alert or not
   showIcon?: boolean;
+
+  leftIcon?: React.JSX.Element;
 }

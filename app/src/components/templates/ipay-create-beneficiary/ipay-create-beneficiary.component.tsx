@@ -1,9 +1,9 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { REGEX } from '@app/constants/app-validations';
+import { ALINMA_BANK_CODE } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -18,12 +18,12 @@ import LocalBeneficiaryMetaMockProps, {
 } from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { getBankIconByCode } from '@app/utilities/bank-logo';
-import { AddBeneficiary, AddBeneficiaryKey, ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { getBankIconByCode } from '@app/utilities';
+import { AddBeneficiary, AddBeneficiaryKey, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { yupResolver } from '@hookform/resolvers/yup';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import {
@@ -32,6 +32,7 @@ import {
   FormValues,
   IPayCreateBeneficiaryProps,
   ListOption,
+  TransferTypes,
 } from './ipay-create-beneficiary.interface';
 import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 
@@ -42,7 +43,6 @@ import createBeneficiaryStyles from './ipay-create-beneficiary.style';
 const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID }) => {
   const { colors } = useTheme();
   const styles = createBeneficiaryStyles(colors);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
   const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
@@ -76,12 +76,10 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       beneficiaryNickName: '',
     },
   });
-  const formatKey = (key: string) => {
-    return key
+  const formatKey = (key: string) =>
+    key
       .replace(/([a-z])([A-Z])/g, '$1 $2') // Add space between camelCase words
       .replace(/^./, (str) => str?.toUpperCase()); // Capitalize the first letter
-  };
-
   const generatedData = () => {
     if (beneficiaryData) {
       return Object.entries(beneficiaryData).map(([key, value]) => ({
@@ -109,16 +107,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
   useEffect(() => {
     getBankList();
   }, []);
@@ -132,18 +120,18 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         bankCode: beneficiaryBankDetails?.bankCode,
         bankName: beneficiaryBankDetails?.bankName,
       },
+      beneficiaryType:
+        beneficiaryBankDetails?.bankCode === ALINMA_BANK_CODE
+          ? TransferTypes.alinmaBank
+          : TransferTypes.localBankInsideKsa,
     };
 
     if (isValid) {
-      renderSpinner(true);
       const apiResponse: LocalTransferAddBeneficiaryMockProps = await addLocalTransferBeneficiary(payload);
+
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setBeneficiaryData(values);
         navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { response: apiResponse });
-        renderSpinner(false);
-      } else {
-        renderSpinner(false);
-        renderToast(apiResponse?.error?.error ?? '');
       }
     }
   };
@@ -196,7 +184,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       countryCode,
     };
     if (REGEX.IBAN.test(ibanNumber)) {
-      renderSpinner(true);
       const apiResponse = await validateIBAN(params);
       if (apiResponse?.bankCode) {
         getBankDetails(apiResponse.bankCode, ibanNumber);
@@ -204,7 +191,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
     }
-    renderSpinner(false);
   };
 
   return (

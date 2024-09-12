@@ -1,13 +1,18 @@
+import { JSX } from 'react';
 import colors from '@app/styles/colors.const';
-import { Meta, Story } from '@storybook/react';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Meta, StoryFn } from '@storybook/react';
 import IPayLinearGradientView from './ipay-linear-gradient.component';
+import { IPayLinearGradientViewProps } from './ipay-linear-gradient.interface';
 
 export default {
   title: 'components/gradient/IPayLinearGradientView',
   component: IPayLinearGradientView,
 } as Meta;
 
-const Template: Story = (args) => <IPayLinearGradientView {...args} />;
+const Template: StoryFn = (args: JSX.IntrinsicAttributes & IPayLinearGradientViewProps) => (
+  <IPayLinearGradientView {...args} />
+);
 
 export const PrimaryGradientText = Template.bind({});
 PrimaryGradientText.args = {

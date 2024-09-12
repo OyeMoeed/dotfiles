@@ -5,7 +5,6 @@ import {
   IPayIcon,
   IPayPressable,
   IPayScrollView,
-  IPaySpinner,
   IPayView,
 } from '@app/components/atoms';
 import {
@@ -20,9 +19,9 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
@@ -49,11 +48,10 @@ const MobileAndIqamaVerification: React.FC = () => {
     onConfirm,
     otpError,
     setOtpError,
-    isLoading,
     setOtp,
     otpVerificationRef,
     resendOtp,
-    otp
+    otp,
   } = useMobileAndIqamaVerification();
 
   const { colors } = useTheme();
@@ -75,7 +73,6 @@ const MobileAndIqamaVerification: React.FC = () => {
       {({ handleSubmit, watch }) => (
         <IPaySafeAreaView>
           <>
-            {isLoading && <IPaySpinner />}
             <IPayHeader languageBtn />
             <IPayView style={styles.container}>
               <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -168,7 +165,6 @@ const MobileAndIqamaVerification: React.FC = () => {
                 otp={otp}
               />
             </IPayPortalBottomSheet>
-            {isLoading && <IPaySpinner />}
             <IPayBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
               enablePanDownToClose

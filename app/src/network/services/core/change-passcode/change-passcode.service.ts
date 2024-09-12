@@ -15,7 +15,7 @@ const changePasscodeReq = async (payload: ChangePasswordProps): Promise<unknown>
     method: requestType.POST,
     payload: payload?.body,
   });
-  
+
   return apiResponse;
 };
 
