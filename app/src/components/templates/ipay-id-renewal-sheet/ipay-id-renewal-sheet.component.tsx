@@ -157,19 +157,21 @@ const IPayIdRenewalSheet: React.FC = () => {
   };
   const formattedSubtitle = isAboutToExpire && !idExpired ? t('ID_RENEWAL.ID_UPDATION_DES', extraParams) : subtitle;
 
-  const disclaimerSection: React.FC = () => {
-    <IPayView style={styles.verifyView}>
-      <IPayView style={styles.verifyViewRow}>
-        <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
-        <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
-          {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
-        </IPayFootnoteText>
-      </IPayView>
+  const DisclaimerSection = () => {
+    return (
+      <IPayView style={styles.verifyView}>
+        <IPayView style={styles.verifyViewRow}>
+          <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
+          <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
+            {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+          </IPayFootnoteText>
+        </IPayView>
 
-      <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-        {localizationText.ID_RENEWAL.WHY_VERIFY}
-      </IPayCaption1Text>
-    </IPayView>;
+        <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+          {localizationText.ID_RENEWAL.WHY_VERIFY}
+        </IPayCaption1Text>
+      </IPayView>
+    );
   };
 
   return (
@@ -178,7 +180,7 @@ const IPayIdRenewalSheet: React.FC = () => {
         heading={localizationText.ID_RENEWAL.TITLE}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={customSnapPoints}
-        isVisible={isIdRenewalSheetVisible}
+        isVisible={true}
         simpleHeader
         simpleBar
         bold
@@ -196,8 +198,8 @@ const IPayIdRenewalSheet: React.FC = () => {
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}
-            hasDisclaimerSection
-            disclaimerSection={disclaimerSection}
+            hasDisclaimerSection={true}
+            disclaimerSection={<DisclaimerSection />}
           />
         ) : (
           <IPayView style={styles.profileContainer}>
