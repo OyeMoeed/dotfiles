@@ -5,7 +5,6 @@ import {
   IPayIcon,
   IPayPressable,
   IPayScrollView,
-  IPaySpinner,
   IPayView,
 } from '@app/components/atoms';
 import {
@@ -50,7 +49,6 @@ const MobileAndIqamaVerification: React.FC = () => {
     onConfirm,
     otpError,
     setOtpError,
-    isLoading,
     setOtp,
     otpVerificationRef,
     resendOtp,
@@ -76,7 +74,6 @@ const MobileAndIqamaVerification: React.FC = () => {
       {({ handleSubmit, watch }) => (
         <IPaySafeAreaView>
           <>
-            {isLoading && <IPaySpinner />}
             <IPayHeader languageBtn />
             <IPayView style={styles.container}>
               <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -169,7 +166,6 @@ const MobileAndIqamaVerification: React.FC = () => {
                 otp={otp}
               />
             </IPayPortalBottomSheet>
-            {isLoading && <IPaySpinner />}
             <IPayBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
               enablePanDownToClose

@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayChip, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -19,10 +18,10 @@ import getlocalTransaction from '@app/network/services/local-transfer/transfer-h
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, FiltersType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import {
   BeneficiaryData,
@@ -47,7 +46,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const [filters, setFilters] = useState<Array<string>>([]);
   const [appliedFilters, setAppliedFilters] = useState<BeneficiaryData>({});
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
   const tabOptions = [localizationText.COMMON.SENT, localizationText.COMMON.RECEIVED];
@@ -78,17 +76,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     filterRef.current?.showFilters();
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -100,7 +87,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const getBeneficiariesHistory = async () => {
-    renderSpinner(true);
     const payload: LocalTransferReqParams = {
       walletNumber,
       bankName: appliedFilters?.beneficiaryBankName,
@@ -125,9 +111,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
