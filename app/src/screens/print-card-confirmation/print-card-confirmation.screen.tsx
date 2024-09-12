@@ -25,6 +25,7 @@ import React, { useRef, useState } from 'react';
 import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+
 import { AddressInfoRefTypes, OTPVerificationRefTypes, RouteParams } from './print-card-confirmation.interface';
 import printCardConfirmationStyles from './print-card-confirmation.style';
 
@@ -40,6 +41,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const [otp, setOtp] = useState('');
   const [, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
@@ -181,7 +183,6 @@ const PrintCardConfirmationScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         noGradient

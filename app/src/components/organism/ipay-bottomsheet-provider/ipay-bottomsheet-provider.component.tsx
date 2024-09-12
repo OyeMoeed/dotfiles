@@ -62,7 +62,7 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
         <IPayNafathVerification onComplete={onCloseNafathSheet} />
       </IPayPortalBottomSheet>
 
-      <IPayTermsAndConditions isVisible={isTermsConditionsVisible} />
+      <IPayTermsAndConditions showTermsAndConditions={isTermsConditionsVisible} />
 
       <IPayIdRenewalSheet />
     </>

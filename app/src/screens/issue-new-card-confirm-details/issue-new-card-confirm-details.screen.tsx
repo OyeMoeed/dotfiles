@@ -43,6 +43,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -236,7 +237,6 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
       >
         <IPayCreateCardPin onSuccess={onSuccessPin} />
       </IPayBottomSheet>
-
       <IPayBottomSheet
         testID="ipay-bottom-physical-card"
         heading={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD}

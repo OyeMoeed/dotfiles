@@ -1,26 +1,50 @@
-import { IPayFootnoteText, IPayHeadlineText } from '@app/components/atoms';
-import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
-import constants from '@app/constants/constants';
+import IPayPdfViewer from '@app/components/atoms/ipay-pdf-viewer/ipay-pdf-viewer.component';
+import { SNAP_POINT, TERMS_AND_CONDITIONS_URLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { useTypedDispatch } from '@app/store/store';
-import useTheme from '@app/styles/hooks/theme.hook';
+import { LanguageCode } from '@app/utilities/enums.util';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import termsAndConditionsStyles from './ipay-terms-and-conditions.style';
+import { IPayTermsAndConditionsProps } from './ipay-terms-and-conditions.interface';
 
-interface IPayTermsAndConditionsProps {
-  isVisible: boolean;
-}
-
-const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({ isVisible = false }) => {
+const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({
+  showTermsAndConditions,
+  termsAndConditionsURL,
+  isVirtualCardTermsAndConditions = false,
+}) => {
   const localizationText = useLocalization();
-  const { colors } = useTheme();
-  const styles = termsAndConditionsStyles(colors);
+
+  const selectedLanguage =
+    useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
+    LanguageCode.EN;
+
   const dispatch = useTypedDispatch();
 
   const closeTermsAndConditionModal = () => {
     dispatch(setTermsConditionsVisibility(false));
+  };
+
+  const getTermsAndConditionsURL = () => {
+    if (termsAndConditionsURL) {
+      return termsAndConditionsURL;
+    }
+
+    if (isVirtualCardTermsAndConditions) {
+      if (selectedLanguage === LanguageCode.AR) {
+        return TERMS_AND_CONDITIONS_URLS.VC_TERMS_AR_URL;
+      }
+
+      return TERMS_AND_CONDITIONS_URLS.VC_TERMS_EN_URL;
+    }
+
+    if (selectedLanguage === LanguageCode.AR) {
+      return TERMS_AND_CONDITIONS_URLS.ALINMAPAY_REG_TERMS_AR_URL;
+    }
+
+    return TERMS_AND_CONDITIONS_URLS.ALINMAPAY_REG_TERMS_EN_URL;
   };
 
   return (
@@ -28,25 +52,13 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({ isVisib
       noGradient
       heading={localizationText.COMMON.TERMS_AND_CONDITIONS}
       enablePanDownToClose
-      cancelBnt
       simpleBar
-      customSnapPoint={['90%', '90%']}
+      cancelBnt
+      customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
       onCloseBottomSheet={closeTermsAndConditionModal}
-      isVisible={isVisible}
-      bold
+      isVisible={showTermsAndConditions}
     >
-      <IPayScrollView showsVerticalScrollIndicator={false} style={styles.termsAndConditions}>
-        <IPayHeadlineText
-          regular={false}
-          style={styles.termsAndConditionsHeading}
-          text={localizationText.COMMON.TERMS_AND_CONDITIONS_HEADING}
-        />
-        <IPayFootnoteText
-          regular
-          text={constants.TERMS_AND_CODITIONS_DUMMY_TEXT}
-          style={styles.termsAndConditionsText}
-        />
-      </IPayScrollView>
+      <IPayPdfViewer sourceURL={getTermsAndConditionsURL()} />
     </IPayPortalBottomSheet>
   );
 };

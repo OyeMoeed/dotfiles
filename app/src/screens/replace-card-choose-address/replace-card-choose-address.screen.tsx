@@ -48,6 +48,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
   const styles = replaceCardStyles(colors);
   const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
 
   const [selectedCity, setSelectedCity] = useState(CITIES[0]);
@@ -141,7 +142,6 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           />
         </IPayView>
       </IPayView>
-
       <IPayBottomSheet
         noGradient
         heading={localizationText.REPLACE_CARD.SELECT_CITY}

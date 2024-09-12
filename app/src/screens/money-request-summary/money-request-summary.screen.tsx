@@ -28,7 +28,7 @@ import {
   sendRequestedMoneyPrepare,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import getDeviceInfo from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { PayChannel, States, TopupStatus, buttonVariants } from '@app/utilities/enums.util';
