@@ -18,7 +18,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   secondaryAction,
   tertiaryAction,
   variant = alertVariant.DEFAULT,
-  showIcon = false,
+  // showIcon = false,
   visible = true,
   onClose,
   closeOnTouchOutside = false,
@@ -41,15 +41,12 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
         <IPayView style={styles.centeredView}>
           <IPayView style={styles.modalView}>
             {icon}
-            {!icon && (
-              <>
-                {variant === alertVariant.DEFAULT ? (
-                  <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
-                ) : (
-                  <IPayIcon icon={icons.alertWaring} size={64} color={colors.error.error500} />
-                )}
-              </>
-            )}
+            {!icon &&
+              (variant === alertVariant.DEFAULT ? (
+                <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
+              ) : (
+                <IPayIcon icon={icons.alertWaring} size={64} color={colors.error.error500} />
+              ))}
             <IPayView style={styles.textsView}>
               {title && <IPayBodyText text={title} style={styles.modalTitle} regular={false} />}
               {message && <IPayFootnoteText regular text={message} style={styles.modalMessage} />}
