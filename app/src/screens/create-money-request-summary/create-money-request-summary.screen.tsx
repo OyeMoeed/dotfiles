@@ -14,7 +14,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -28,7 +27,7 @@ import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { IW2WTransferSummaryItem, ParamsProps } from './create-money-request-summary.interface';
@@ -45,7 +44,6 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
     }>
   >();
   const { transfersDetails } = (route.params as ParamsProps).data;
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const styles = createMoneyRequestSummaryStyles(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -164,10 +162,6 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
   const isNumeric = (str: string): boolean => /^\d+$/.test(str);
 
   const onSendRequest = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: CreateMoneyRequestPayloadTypes = {
       requests: transfersDetails.formInstances.map((formDetails) => ({
         mobileNumber: formDetails.mobileNumber,
@@ -182,7 +176,6 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
       walletInfo.walletNumber,
       payload,
     );
-    hideSpinner();
 
     if (apiResponse.status.type === ApiResponseStatusType.SUCCESS) {
       navigate(ScreenNames.W2W_TRANSFER_SUCCESS, {
