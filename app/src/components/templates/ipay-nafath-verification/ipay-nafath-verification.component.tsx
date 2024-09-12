@@ -29,15 +29,17 @@ import {
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
 import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import { forwardRef, useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
-const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID, onComplete }) => {
+const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID, onComplete }) => {
   const [step, setStep] = useState<number>(1);
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(90); // in seconds
@@ -45,12 +47,10 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const localizationText = useLocalization();
   const styles = nafathVerificationStyles(colors);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [nafathNumber, setNafathNumber] = useState<number>();
-  const [nafathRequestId, setNafathRequestId] = useState<string>('');
   const [duration, setDuration] = useState<number>();
-  const [waitngScnds, setWaitngScnds] = useState<number>(20);
+  const waitngScnds = 20;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
@@ -117,7 +117,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const apiResponse: any = await getNafathRandom(payLoad);
 
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      setNafathRequestId(apiResponse.response.nafathRequestId);
       setNafathNumber(
         Number.isNaN(apiResponse.response.token) ? atob(apiResponse.response.token) : apiResponse.response.token,
       );
@@ -209,6 +208,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     );
     renderSpinner(false);
   };
+  const dispatch = useDispatch();
+
+  const openTermsAndConditionModal = () => {
+    dispatch(setTermsConditionsVisibility(true));
+  };
 
   const nafathInquiry = async () => {
     const payLoad: PrepareIdRenewalProp = {
@@ -225,11 +229,9 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           break;
         case NAFATH_STATUSES.EXPIRED:
           setStartInqiryInterval(false);
-          setAPIError('Sorry! Nafath session has expired. Please try again later');
           break;
         case NAFATH_STATUSES.REJECTED:
           setStartInqiryInterval(false);
-          setAPIError('Sorry ! Nafath request was rejected. Please try again later');
           setStep(1);
           break;
         default:
@@ -245,15 +247,16 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const onResend = () => {
-    onComplete();
-    navigate(screenNames.IDENTITY_SUCCESSFUL);
-  };
+  // const onResend = () => {
+  //   onComplete();
+  //   navigate(screenNames.IDENTITY_SUCCESSFUL);
+  // };
 
   const onTimerCompete = () => {
     setIsExpired(true);
     setStartInqiryInterval(false);
   };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -273,13 +276,13 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
-          <IPayView style={styles.disclaimer}>
+          <IPayPressable onPress={openTermsAndConditionModal} style={styles.disclaimer}>
             <IPayFootnoteText
               color={colors.natural.natural900}
               text={localizationText.SETTINGS.NAFATH_TERMS_AND_CONDITION}
             />
             <IPayIcon icon={icons.infoIcon} size={20} />
-          </IPayView>
+          </IPayPressable>
           <IPayButton
             btnType="primary"
             btnText={localizationText.PROFILE.VALIDATE}
@@ -362,6 +365,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       )}
     </IPayView>
   );
-});
+};
 
 export default IPayNafathVerification;
