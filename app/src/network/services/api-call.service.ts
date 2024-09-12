@@ -51,8 +51,8 @@ const apiCall = async <T>({
 
     const response: AxiosResponse<T> = await axiosClient(config);
     if (isErrorResponse(response)) {
-      await handleAxiosError(response);
       store.dispatch(hideSpinner());
+      await handleAxiosError(response);
       return undefined;
     }
     store.dispatch(hideSpinner());

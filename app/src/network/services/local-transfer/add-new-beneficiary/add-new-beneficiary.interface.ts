@@ -29,12 +29,6 @@ interface BeneficiaryInfo {
   remittanceType?: string;
 }
 
-// Define the LocalTransferAddBeneficiary interface
-// interface LocalTransferAddBeneficiary {
-//   data: BeneficiaryDetailsRes;
-//   successfulResponse: boolean;
-// }
-
 interface Response {
   beneficiaryCode: string;
   beneficiaryStatus: string;

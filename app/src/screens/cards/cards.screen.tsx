@@ -278,57 +278,58 @@ const CardsScreen: React.FC = () => {
   }, []);
 
   const renderCardsCurrentState = () => {
-    switch (cardsCurrentState) {
-      case CardScreenCurrentState.NO_DATA:
-        return (
-          <IPayView style={styles.noResultContainer}>
-            <IPayNoResult
-              testID="no-result"
-              textColor={colors.primary.primary800}
-              message={localizationText.CARDS.YOU_DO_NOT_HAVE_CARD}
-              showEmptyBox
-            />
-            <IPayButton
-              btnStyle={styles.buttonStyle}
-              btnText={localizationText.CARDS.CREATE_NEW_CARD}
-              btnType={buttonVariants.PRIMARY}
-              large
-              onPress={openCardSheet}
-              leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
+    if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
+      return (
+        <IPayView style={styles.noResultContainer}>
+          <IPayNoResult
+            testID="no-result"
+            textColor={colors.primary.primary800}
+            message={localizationText.CARDS.YOU_DO_NOT_HAVE_CARD}
+            showEmptyBox
+          />
+          <IPayButton
+            btnStyle={styles.buttonStyle}
+            btnText={localizationText.CARDS.CREATE_NEW_CARD}
+            btnType={buttonVariants.PRIMARY}
+            large
+            onPress={openCardSheet}
+            leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
+          />
+        </IPayView>
+      );
+    }
+
+    if (CardScreenCurrentState.HAS_DATA) {
+      return (
+        <>
+          <IPayView style={styles.cardsContainer}>
+            <IPayCarousel
+              data={[...cardsData, { newCard: true }]}
+              modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
+              mode={CarouselModes.PARALLAX}
+              width={SCREEN_WIDTH}
+              loop={false}
+              height={verticalScale(350)}
+              onChangeIndex={onChangeIndex}
+              renderItem={({ item }) =>
+                (item as { newCard?: boolean }).newCard ? (
+                  newCard
+                ) : (
+                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} />
+                )
+              }
             />
           </IPayView>
-        );
-      case CardScreenCurrentState.HAS_DATA:
-        return (
-          <>
-            <IPayView style={styles.cardsContainer}>
-              <IPayCarousel
-                data={[...cardsData, { newCard: true }]}
-                modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-                mode={CarouselModes.PARALLAX}
-                width={SCREEN_WIDTH}
-                loop={false}
-                height={verticalScale(350)}
-                onChangeIndex={onChangeIndex}
-                renderItem={({ item }) =>
-                  (item as { newCard?: boolean }).newCard ? (
-                    newCard
-                  ) : (
-                    <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} />
-                  )
-                }
-              />
-            </IPayView>
-            {boxHeight > 0 && currentCard && (
-              <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-                <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} cards={cardsData} />
-              </IPayCustomSheet>
-            )}
-          </>
-        );
-      default:
-        return <IPayView />;
+          {boxHeight > 0 && currentCard && (
+            <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
+              <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} cards={cardsData} />
+            </IPayCustomSheet>
+          )}
+        </>
+      );
     }
+
+    return <IPayView />;
   };
 
   return (

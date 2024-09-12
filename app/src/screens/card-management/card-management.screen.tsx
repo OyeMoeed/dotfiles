@@ -133,7 +133,7 @@ const CardManagementScreen: React.FC = () => {
     const registrationId = cards[selectedCardIndex]?.registrationId;
 
     const apiResponse = await deleteSavedCard(walletNumber, registrationId);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       setSelectedCardIndex(0);
       const filteredData = cards.filter((el) => el.id !== currentCardID);
       setCards(filteredData);
