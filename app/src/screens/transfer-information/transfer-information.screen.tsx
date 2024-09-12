@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
@@ -20,11 +19,12 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { ApiResponseStatusType, APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import transferInformationStyles from './transfer-information.style';
+import { ReasonListItem } from './trasnfer-information.interface';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
@@ -33,7 +33,7 @@ const TransferInformation: React.FC = () => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const [chipValue, setChipValue] = useState<string>('');
   const [transferAmount, setTransferAmount] = useState<string>('');
-  const [selectedReason, setSelectedReason] = useState<string>('');
+  const [selectedReason, setSelectedReason] = useState<ReasonListItem>({});
   const [notes, setNotes] = useState<string>('');
   const reasonsBottomSheetRef = useRef(null);
   const [apiError, setAPIError] = useState<string>('');
@@ -59,8 +59,6 @@ const TransferInformation: React.FC = () => {
     beneficiaryAccountNumber,
   } = route.params.beneficiaryDetails;
   const { bankCode, bankName } = beneficiaryBankDetail;
-
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
@@ -93,15 +91,15 @@ const TransferInformation: React.FC = () => {
 
   const isTransferButtonDisabled = () => {
     const hasValidAmount = parseFloat(transferAmount) > 0 || parseFloat(transferAmount);
-    const hasValidReason = selectedReason.trim() !== '';
+    const hasValidReason = selectedReason?.text?.trim() !== '';
     return !hasValidAmount || !hasValidReason;
   };
   const onCloseSheet = () => {
     reasonsBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (item: { text: string; id: number }) => {
-    setSelectedReason(item.text);
+  const onPressListItem = (item: ReasonListItem) => {
+    setSelectedReason(item);
     onCloseSheet();
   };
 
@@ -148,14 +146,14 @@ const TransferInformation: React.FC = () => {
   };
 
   const onLocalTransferPrepare = async () => {
-    if (transferAmount && selectedReason && walletNumber) {
+    if (transferAmount && selectedReason?.id && walletNumber) {
       const transferFees = await getTransferFee();
       if (transferFees) {
         try {
           const deviceInfo = await getDeviceInfo();
           const payload: LocalTransferPreparePayloadTypes = {
             beneficiaryCode,
-            transferPurpose: selectedReason,
+            transferPurpose: selectedReason?.id,
             feesAmount: transferFees.feeAmount,
             vatAmount: transferFees.vatAmount,
             bankFeesAmount: transferFees.bankFeeAmount,
@@ -165,13 +163,12 @@ const TransferInformation: React.FC = () => {
             deductFeesFromAmount: false,
             deviceInfo,
           };
-
           const apiResponse = await localTransferPrepare(walletNumber, payload);
           if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
             navigate(ScreenNames.TRANSFER_CONFIRMATION, {
               amount: transferAmount,
               beneficiaryNickName,
-              transferPurpose: selectedReason,
+              transferPurpose: selectedReason?.text,
               instantTransferType: localizationText.TRANSFER_SUMMARY.SARIE,
               note: notes,
               otpRef: apiResponse.response.otpRef,
@@ -195,10 +192,6 @@ const TransferInformation: React.FC = () => {
   };
 
   const getTransferreasonLovs = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IGetCoreLovPayload = {
       lovType: '184',
       lovCode2: 'W',
@@ -214,7 +207,6 @@ const TransferInformation: React.FC = () => {
           })),
         );
     }
-    hideSpinner();
   };
 
   useEffect(() => {
@@ -242,8 +234,7 @@ const TransferInformation: React.FC = () => {
               amount={transferAmount}
               currencyStyle={[styles.currency, transferAmount && styles.inputActiveStyle]}
               setAmount={setAmount}
-              setSelectedItem={setSelectedReason}
-              selectedItem={selectedReason}
+              selectedItem={selectedReason?.text}
               setNotes={setNotes}
               notes={notes}
               chipValue={chipValue}
@@ -261,7 +252,7 @@ const TransferInformation: React.FC = () => {
             onPress={onLocalTransferPrepare}
             btnType={buttonVariants.PRIMARY}
             large
-            disabled={isTransferButtonDisabled() || chipValue}
+            disabled={isTransferButtonDisabled() || Boolean(chipValue)}
             btnIconsDisabled
             btnText={localizationText.COMMON.NEXT}
             btnStyle={styles.nextBtn}
@@ -280,7 +271,7 @@ const TransferInformation: React.FC = () => {
         cancelBnt
         bold
       >
-        <IPayListView list={transferReason} onPressListItem={onPressListItem} selectedListItem={selectedReason} />
+        <IPayListView list={transferReason} onPressListItem={onPressListItem} selectedListItem={selectedReason?.text} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );
