@@ -2,8 +2,7 @@ import colors from '@app/styles/colors.const';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { moderateScale } from 'react-native-size-matters';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const cardStatusIndicationStyles = (themeColors: typeof colors) =>
   createStyleSheet({
