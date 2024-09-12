@@ -9,6 +9,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { debounce } from 'lodash';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
@@ -114,9 +115,9 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
     setSearch('');
   }, [category]);
 
-  const onSubmitEvent = (formData: IFormData) => {
+  const onSubmitEvent = debounce((formData: IFormData) => {
     if (onSubmit) onSubmit(formData);
-  };
+  }, 300);
 
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
   const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;

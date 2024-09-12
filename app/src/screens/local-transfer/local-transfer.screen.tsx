@@ -604,6 +604,7 @@ const LocalTransferScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             btnText={localizationText.COMMON.DONE}
+            disabled={!nickName}
             btnIconsDisabled
             onPress={() => {
               Keyboard.dismiss();

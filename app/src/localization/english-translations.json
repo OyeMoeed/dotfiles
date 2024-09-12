@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KYC_CHANGE": "Customer knowledge form has been updated!",
     "CONTACTS_LIMIT_REACHED": "Contacts Limit Reached",
     "INVALID_NUMBER": "Invalid Number",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
@@ -168,6 +169,8 @@
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
     "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
+    "YES": "Yes",
+    "NO": "No",
     "AMOUNT": "Amount"
   },
   "ONBOARDING": {
@@ -668,6 +671,7 @@
     "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
+    "OFF_SIMP": "OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
     "BILL_PAYMENTS": "Bill Payments",
     "WALLET_WITH_EVERY_BILL": "on your wallet with \n every bill payment!",
@@ -1069,7 +1073,8 @@
     "COUNTRY_NAME": "Country Name",
     "CITY_NAME": "City Name",
     "DELIVERY_TYPE": "Delivery Type",
-    "CURRENCY": "Currency"
+    "CURRENCY": "Currency",
+    "INCLUDE_FEES": "Include Fees"
   },
   "BENEFICIARY_OPTIONS": {
     "REVIEW_AND_EDIT": "Review & Edit",
