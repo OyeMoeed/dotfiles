@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayLanguageSelectorButton, IPayOutlineButton, IPayToggleButton } from '@app/components/molecules';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -17,7 +16,7 @@ import { setAllowEyeIconFunctionality, setAppData, setNotificationSettings } fro
 import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { LanguageCode, spinnerVariant, ToastTypes } from '@app/utilities/enums.util';
+import { LanguageCode, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -39,7 +38,6 @@ const Settings: React.FC = () => {
 
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   // use setting hook
   const {
@@ -109,19 +107,7 @@ const Settings: React.FC = () => {
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const updateBiomatricStatusOnServer = async (bioRecognition: boolean) => {
-    renderSpinner(true);
     try {
       const payload: UpdateBiomatricStatusProps = {
         bioRecognition,
@@ -144,9 +130,7 @@ const Settings: React.FC = () => {
           subTitle: localizationText.ERROR.API_ERROR_RESPONSE,
         });
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       renderToast({
         title: localizationText.CARDS.BIOMERTIC_STATUS,
         subTitle: error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG,
