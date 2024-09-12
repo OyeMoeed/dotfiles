@@ -9,7 +9,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-section-list.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayAccountBalance,
   IPayAnimatedTextInput,
@@ -37,8 +36,8 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import React, { useEffect, useRef, useState } from 'react';
 import Flag from 'react-native-round-flags';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
 import beneficiaryKeysMapping from './international-transfer-info.constant';
@@ -62,8 +61,6 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [apiError, setAPIError] = useState<string>('');
   const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
   const [wuFeesInquiryData, setWUFeesInquiryData] = useState({});
-
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { showToast } = useToastContext();
 
@@ -116,17 +113,6 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
       feesInquiryData: { beneficiaryCurrencyAmount, remitterCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
     });
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -138,7 +124,6 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   };
 
   const getBeneficiariesDetailsData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse: WUBeneficiaryDetailsMetaDataProps = await getWUBeneficiaryInfoMetaData(
         transferData?.beneficiaryCode,
@@ -156,16 +141,13 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const wuFeesInquiry = async () => {
-    renderSpinner(true);
     const payload: FeesInquiryPayload = {
       amount: '',
       amountCurrency: remitterCurrencyAmount,
@@ -189,9 +171,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -216,6 +196,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const feeAmount = `${wuFeesInquiryData?.feeAmount ?? ''} ${localizationText.COMMON.SAR}`;
   const transferVat = localizationText.COMMON.AND_VAT;
   const vatAmount = `${wuFeesInquiryData?.vatAmount ?? ''} ${localizationText.COMMON.SAR}`;
+
+  const onTransferGateway = (methodName: string, index: number) => {
+    setTransferGateway({ transferMethod: methodName, index });
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -258,18 +242,19 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
               <IPaySectionList
                 ref={sectionListRef}
                 sections={transferMethods}
-                renderItem={({ item: transferMethod, index }) => (
-                  <IPayCountryCurrencyBox
-                    transferMethod={transferMethod}
-                    isChecked={transferGateway?.index === index}
-                    onRemitterAmountChange={handleAmountInputChange}
-                    remitterCurrencyAmount={remitterCurrencyAmount}
-                    beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
-                    onTransferMethodChange={() =>
-                      setTransferGateway({ transferMethod: transferMethod?.transferMethodName, index })
-                    }
-                  />
-                )}
+                renderItem={({ item: transferMethod, index }) => {
+                  const isCheck = transferGateway?.index === index;
+                  return (
+                    <IPayCountryCurrencyBox
+                      transferMethod={transferMethod}
+                      isChecked={isCheck}
+                      onRemitterAmountChange={handleAmountInputChange}
+                      remitterCurrencyAmount={remitterCurrencyAmount}
+                      beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
+                      onTransferMethodChange={() => onTransferGateway(transferMethod?.transferMethodName, index)}
+                    />
+                  );
+                }}
                 showsVerticalScrollIndicator={false}
               />
             </IPayView>

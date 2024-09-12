@@ -26,8 +26,6 @@ enum LocalizationKeysMapping {
   amountTo = 'AMOUNT_TO',
   amountFrom = 'AMOUNT_FROM',
   exchangeRate = 'EXCHANGE_RATE',
-  vat = 'VAT',
-  fees = 'FEES',
   totalAmount = 'TOTAL_AMOUNT',
   nickname = 'BENEFICIARY_NICK_NAME',
   fullName = 'BENEFICIARY_FULL_NAME',

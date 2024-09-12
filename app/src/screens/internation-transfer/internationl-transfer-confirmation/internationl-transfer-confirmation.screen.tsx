@@ -14,7 +14,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
@@ -34,9 +33,9 @@ import beneficiaryKeysMapping from '@app/screens/international-transfer-info/int
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Flag from 'react-native-round-flags';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
@@ -69,13 +68,10 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
 
   const [apiError, setAPIError] = useState<string>('');
   const [validateBeneficiaryData, setValidateBeneficiaryData] = useState({});
-  const [transferWesternUnionData, setTransferWesternUnionData] = useState({});
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
 
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { showToast } = useToastContext();
 
@@ -151,17 +147,6 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       ?.filter((key) => beneficiaryKeysMapping[BeneficiariesDetails.FEES].includes(key?.label));
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -173,7 +158,6 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   };
 
   const validateWUBeneficiary = async () => {
-    renderSpinner(true);
     const payload: ValidateWUTransferPayload = {
       amount: feesInquiryData?.beneficiaryCurrencyAmount,
       amountCurrency: feesInquiryData?.remitterCurrencyAmount,
@@ -202,16 +186,13 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const transferWesternUnion = async () => {
-    renderSpinner(true);
     const payload: WUTransferPayload = {
       authentication: validateBeneficiaryData?.transactionId,
       otpRef: validateBeneficiaryData?.otpRef,
@@ -222,7 +203,6 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       const apiResponse = await westernUnionTransfer(beneficiaryData?.beneficiaryCode, payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setTransferWesternUnionData(apiResponse?.response);
           onCloseBottomSheet();
           navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
           break;
@@ -235,9 +215,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
