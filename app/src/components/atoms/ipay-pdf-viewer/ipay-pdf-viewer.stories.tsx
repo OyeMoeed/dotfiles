@@ -1,11 +1,11 @@
 // IPayPdfViewer.stories.tsx
 
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { Meta, Story } from '@storybook/react';
-import { StyleSheet } from 'react-native';
 import IPayPdfViewer from './ipay-pdf-viewer.component';
 import { IPayPdfViewerProps } from './ipay-pdf-viewer.interface';
 
-const styles = StyleSheet.create({
+const styles = createStyleSheet({
   container: {
     width: '100%',
     height: '100%',
