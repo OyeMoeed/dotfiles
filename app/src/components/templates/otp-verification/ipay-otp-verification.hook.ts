@@ -15,12 +15,16 @@ const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (error: 
     }
   };
 
+  const clearTimer = () => {
+    clearInterval(timerRef.current);
+  };
+
   const startTimer = () => {
     timerRef.current = setInterval(updateCounter, 1000);
   };
 
   const resetInterval = () => {
-    clearInterval(timerRef.current);
+    clearTimer();
     endTimeRef.current = Date.now() + INITIAL_TIMER * 1000;
     setCounter(INITIAL_TIMER);
     startTimer();
@@ -28,7 +32,8 @@ const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (error: 
 
   useEffect(() => {
     startTimer();
-    return () => clearInterval(timerRef.current);
+
+    return () => clearTimer();
   }, []);
 
   useImperativeHandle(timerRef, () => ({
@@ -44,7 +49,7 @@ const useOtpVerification = (setOtp: (otp: string) => void, setOtpError: (error: 
     setOtpError(false);
   };
 
-  return { counter, handleRestart, onChangeText };
+  return { counter, handleRestart, onChangeText, startTimer, clearTimer };
 };
 
 export default useOtpVerification;

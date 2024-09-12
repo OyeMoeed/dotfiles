@@ -1,15 +1,13 @@
-import { TransferRequestsResult } from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.interface';
 import { SendMoneyType } from '@app/screens/transfer-summary/gift-transfer-summary/gift-transfer-summary.interface';
 
-export interface IGiftTransferSuccessProps {
+interface IGiftTransferSuccessProps {
   transferDetails: {
     formData: SendMoneyType[];
-    apiData: TransferRequestsResult[];
   };
   totalAmount: number;
 }
 
-export interface WalletPaymentDetails {
+interface WalletPaymentDetails {
   id: string;
   leftIcon: string;
   detailsText: string;
@@ -21,3 +19,10 @@ export interface WalletPaymentDetails {
   index: number;
   transferPurpose?: string;
 }
+
+interface GiftDetails {
+  isAlinma: boolean;
+  value: string;
+}
+
+export { GiftDetails, IGiftTransferSuccessProps, WalletPaymentDetails };

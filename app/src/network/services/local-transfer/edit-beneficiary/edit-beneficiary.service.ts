@@ -3,12 +3,12 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
-import { EditBeneficiaryResponse, editBeneficiaryPayload } from './edit-beneficiary.interface';
+import { EditBeneficiaryPayload, EditBeneficiaryResponse } from './edit-beneficiary.interface';
 import localTransferEditBeneficiaryMock from './edit-beneficiary.mock';
 
 const editLocalTransferBeneficiary = async (
   beneficiaryCode: string,
-  payload: editBeneficiaryPayload,
+  payload: EditBeneficiaryPayload,
 ): Promise<EditBeneficiaryResponse | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return localTransferEditBeneficiaryMock;

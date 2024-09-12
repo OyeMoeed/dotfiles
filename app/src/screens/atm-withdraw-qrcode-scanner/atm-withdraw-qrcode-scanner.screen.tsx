@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayPressable } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
@@ -16,7 +15,7 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { alertVariant, spinnerVariant } from '@app/utilities/enums.util';
+import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { ATMWithdrawQRCodeScannerScreenProps } from './atm-withdraw-qrcode-scanner.interface';
 import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
@@ -25,7 +24,6 @@ import { Crc } from './crc.util';
 const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenProps> = ({ route }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannedCode] = useState('');
@@ -35,7 +33,6 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
   const styles = qrCodeScannerStyles();
 
   const onReadQrCodeFaild = () => {
-    hideSpinner();
     showToast({
       title: localizationText.ATM.SCAN_UNSUCCESSFUL,
       borderColor: colors.error.error25,
@@ -45,10 +42,6 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
   };
 
   const onReadQrCode = async (code: string) => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     setScannedCode(code);
     const crc = new Crc();
     crc.scanData.scanStringData(code);
@@ -72,12 +65,14 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
         });
       }
 
-      hideSpinner();
+      if (route?.params?.setTopUpAmount != null) {
+        route?.params?.setTopUpAmount(0);
+      }
+
       return;
     }
 
     onReadQrCodeFaild();
-    hideSpinner();
   };
 
   const goBackQr = () => {};
