@@ -50,7 +50,7 @@ import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { ActivateViewTypes } from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
+import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
@@ -417,7 +417,7 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const onPressCall = (value: string) => {
-    openPhoneNumber(value, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber: value, colors, showToast, translate: t });
     hideContactUs();
   };
   const handleFinalAction = useCallback((index: number, value: string) => {

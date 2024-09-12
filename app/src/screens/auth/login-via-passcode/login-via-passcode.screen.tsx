@@ -392,7 +392,7 @@ const LoginViaPasscode: React.FC = () => {
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
   const onCall = (phoneNumber: string) => {
-    openPhoneNumber(phoneNumber, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber, colors, showToast, translate: t });
   };
 
   return (

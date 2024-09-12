@@ -448,7 +448,7 @@ const InternationalTransferScreen: React.FC = () => {
   };
 
   const onPressCall = (value: string) => {
-    openPhoneNumber(value, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber: value, colors, showToast, translate: t });
     hideContactUs();
   };
 

@@ -19,11 +19,13 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { openPhoneNumber } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import ActivateViewTypes from './add-beneficiary-success-message.enum';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
 const AddBeneficiarySuccessScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const route = useRoute();
   const styles = beneficiarySuccessStyles(colors);
@@ -78,7 +80,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   }, [currentOption]);
 
   const onPressCall = (value: string) => {
-    openPhoneNumber(value, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber: value, colors, showToast, translate: t });
   };
 
   const hideContactUs = () => {
