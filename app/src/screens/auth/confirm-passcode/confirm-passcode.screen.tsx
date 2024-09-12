@@ -1,5 +1,4 @@
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
@@ -16,7 +15,6 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -32,7 +30,6 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const renderToast = (toastHeading: string, toastMsg: string) => {
     showToast({
@@ -44,22 +41,9 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
     });
   };
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
   const setNewPasscode = async (newCode: string) => {
-    renderSpinner(true);
-
     const payload: SetPasscodeServiceProps = {
       passCode:
         encryptData(
@@ -93,8 +77,6 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
       dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
       navigate(screenNames.REGISTRATION_SUCCESSFUL);
     }
-
-    renderSpinner(false);
   };
 
   const validatePasscode = (newCode: string) => {

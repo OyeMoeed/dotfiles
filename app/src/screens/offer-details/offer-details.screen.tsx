@@ -17,14 +17,13 @@ import {
   IPayTitle1Text,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
 import { useTypedSelector } from '@app/store/store';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
@@ -50,27 +49,12 @@ const OfferDetailsScreen: React.FC = () => {
   type RouteProps = RouteProp<{ params: { id: string } }, 'params'>;
   const route = useRoute<RouteProps>();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
+
   const { showToast } = useToastContext();
-  const [isLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [offersData, setOffersData] = useState<OfferItem[] | null>([]);
 
   const { id } = route.params;
-
-  const renderSpinner = useCallback(
-    (isVisbile: boolean) => {
-      if (isVisbile) {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-      } else {
-        hideSpinner();
-      }
-    },
-    [isLoading],
-  );
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -83,7 +67,6 @@ const OfferDetailsScreen: React.FC = () => {
   };
 
   const getOffersData = async () => {
-    renderSpinner(true);
     try {
       const payload: GetOffersPayload = {
         walletNumber,
@@ -98,9 +81,7 @@ const OfferDetailsScreen: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
