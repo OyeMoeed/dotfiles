@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayTermsAndConditionBanner, IPayTopUpBox } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -16,6 +16,8 @@ import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 import { IPayListItemProps } from './Card-issuance-confirmation-details.interface';
 
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { useDispatch } from 'react-redux';
 import cardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
 
 const CardIssuanceConfirmationScreen = () => {
@@ -23,18 +25,18 @@ const CardIssuanceConfirmationScreen = () => {
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const styles = cardIssuaceConfirmationStyles(colors);
-  const termsRef = useRef<OpenBottomSheetRefTypes>(null);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
   const helpCenterRef = useRef<OpenBottomSheetRefTypes>(null);
+  const dispatch = useDispatch();
 
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
 
   const openTermsRef = () => {
-    termsRef.current?.showTermsAndConditions();
+    dispatch(setTermsConditionsVisibility(true));
   };
   const handleConfirm = () => {
     if (isCheckTermsAndCondition) {
@@ -129,7 +131,6 @@ const CardIssuanceConfirmationScreen = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsRef} />
       <IPayBottomSheet
         heading={localizationText.CARDS.VIRTUAL_CARD}
         enablePanDownToClose
