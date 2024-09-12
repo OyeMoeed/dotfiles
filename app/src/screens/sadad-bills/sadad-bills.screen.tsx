@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayNoResult, SadadFooterComponent } from '@app/components/molecules';
@@ -31,9 +32,10 @@ import {
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
+import { SadadBillsScreenProps } from './sadad-bills.interface';
 import sadadBillsStyles from './sadad-bills.style';
 
-const SadadBillsScreen: React.FC = ({ route }) => {
+const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const { sadadBills } = route.params;
   const { colors } = useTheme();
   const styles = sadadBillsStyles();

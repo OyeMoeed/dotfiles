@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
@@ -13,15 +12,16 @@ import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-
 import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
 import editBillService from '@app/network/services/bills-management/edit-bill/edit-bill.service';
 import { PaymentInfoProps } from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { SadadEditBillsScreenProps } from './sadad-edit-bill.interface';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
 
-const SadadEditBillsScreen: React.FC = ({ route }) => {
+const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) => {
   const { billData, setEditBillSuccessToast } = route.params;
   const {
     billerId = '004',
@@ -37,20 +37,8 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   const [showAlert, setShowAlert] = useState(false);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { getValues, control, setValue, watch } = useForm();
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
 
   const renderToast = ({ title, displayTime }: ToastRendererProps) => {
     showToast(
@@ -65,7 +53,6 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   };
 
   const onSubmit = async () => {
-    renderSpinner(true);
     try {
       const deviceInfo = await getDeviceInfo();
       // Handle form submission here
@@ -84,9 +71,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
           goBack();
         }
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       renderToast({ title: localizationText.ERROR.SOMETHING_WENT_WRONG });
     }
   };
