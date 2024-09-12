@@ -3,6 +3,7 @@ import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
 import IPayButton from '../ipay-button/ipay-button.component';
 import BackComponent from './ipay-header-components/back.component';
 import CustomComponent from './ipay-header-components/custom.component';
@@ -19,7 +20,6 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
   leftComponent,
   rightComponent,
   languageHeader,
-  backHeader,
   titleStyle,
   isRight,
   isLeft,
@@ -52,7 +52,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
             {menu && languageBtn && <IPayLanguageSelectorButton />}
             {backBtn && <BackComponent onPress={onBackPress || onPressBackBtn} backIconOnly={backIconOnly} />}
             {isLeft && <CustomComponent text={leftText} onPress={onPressLeft} />}
-            {isDelink && <Delink onPress={onPress} />}
+            {isDelink && <Delink onPress={() => onPress?.()} />}
           </>
         )}
       </IPayView>
@@ -68,7 +68,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
             {isRight && <CustomComponent text={rightText} onPress={onPressRight} isRight={isRight} />}
             {contactUs && (
               <IPayButton
-                btnType="link-button"
+                btnType={buttonVariants.LINK_BUTTON}
                 onPress={onPress}
                 btnText=""
                 small

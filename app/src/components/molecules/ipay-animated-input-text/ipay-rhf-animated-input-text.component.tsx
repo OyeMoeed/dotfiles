@@ -91,7 +91,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
     };
 
     return (
-      <IPayView style={[mainContainerStyles]} testID={`${testID}-animated-input`}>
+      <IPayView style={mainContainerStyles} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
             styles.container,
@@ -130,7 +130,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
               style={styles.closeIcon}
               onPressIn={onClearInput}
             >
-              {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
+              {customIcon || <IPayIcon icon={icons.close} />}
             </IPayPressable>
           )}
         </IPayView>

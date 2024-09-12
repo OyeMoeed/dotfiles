@@ -1,11 +1,11 @@
 import React from 'react';
-import { useStepper } from '@app/hooks/stepper.hook';
+import { useStepper } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
 import images from '@assets/images';
-import { OnboardingSteps } from './onboarding-enum.util';
+import OnboardingSteps from './onboarding-enum.util';
 import OnboardingScreen from './onboarding.component'; // Adjust the import path as needed
 
 const UserOnBoarding: React.FC = () => {

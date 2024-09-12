@@ -1,8 +1,7 @@
 enum GiftStatus {
-  UNOPENED = 'unopened',
-  OPENED = 'opened',
-  EXPIRED = 'expired',
-  NEW = 'new',
+  INITIATED = 'initiated',
+  EXECUTED = 'executed',
+  FAILED = 'failed',
 }
 
 enum GiftLocalizationKeys {

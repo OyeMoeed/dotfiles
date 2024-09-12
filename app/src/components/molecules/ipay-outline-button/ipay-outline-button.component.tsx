@@ -4,7 +4,7 @@ import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayOutlineButtonProps } from './ipay-outline-button.interface';
-import genratedStyles from './ipay-outline-button.style';
+import generatedStyles from './ipay-outline-button.style';
 
 const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   disabled,
@@ -25,7 +25,7 @@ const IPayOutlineButton: React.FC<IPayOutlineButtonProps> = ({
   textColor,
 }) => {
   const { colors } = useTheme();
-  const styles = genratedStyles(colors);
+  const styles = generatedStyles(colors);
 
   const btnStyle = useMemo(() => {
     const baseStyle = {

@@ -1,26 +1,24 @@
-import React, { useEffect, useState } from 'react';
-import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayHeader, IPayNoResult } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import IPayNotificationList from '@app/components/organism/ipay-notification-list/ipay-notification-list.component';
 import icons from '@app/assets/icons';
+import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayHeader, IPayNoResult, useToastContext } from '@app/components/molecules';
+import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
+import IPaySectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
+import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
+import IPayNotificationList from '@app/components/organism/ipay-notification-list/ipay-notification-list.component';
+import { IPaySafeAreaView } from '@app/components/templates';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import IPaySectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
-import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import {
   deleteSingleNotification,
   getAllRetainedMessages,
   readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import React, { useEffect, useState } from 'react';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 
@@ -59,10 +57,9 @@ const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any
  */
 const NotificationCenterScreen: React.FC = () => {
   // hooks
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { showToast } = useToastContext();
   const localization = useLocalization();
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
 
   // states
   const [notifications, setNotifications] = useState<Notification[]>([] as Notification[]);
@@ -82,14 +79,6 @@ const NotificationCenterScreen: React.FC = () => {
 
   const styles = getNotificationCenterStyles(colors);
 
-  /**
-   * Render toast message
-   * @param title - Title of the toast
-   * @param subTitle - Subtitle of the toast
-   * @param icon - Icon to display in the toast
-   * @param toastType - Type of the toast
-   * @param displayTime - Duration to display the toast
-   */
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -97,31 +86,17 @@ const NotificationCenterScreen: React.FC = () => {
         subTitle,
         toastType,
         isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
       },
       displayTime,
     );
   };
 
   /**
-   * Render spinner
-   * @param isVisible - Boolean to show or hide spinner
-   */ const renderSpinner = (isVisible: boolean) => {
-    if (isVisible) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
-  /**
    * Handle delete notification
    * @param id - Notification ID
    */ const handleDeleteNotification = async (id: string) => {
-    renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       messageId: id,
@@ -131,7 +106,6 @@ const NotificationCenterScreen: React.FC = () => {
       const apiResponse = await deleteSingleNotification(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
-        renderSpinner(false);
         // remove the deleted notification from the list
         setNotifications((prevNotifications) =>
           prevNotifications?.filter((notification) => notification.messageId !== id),
@@ -140,7 +114,6 @@ const NotificationCenterScreen: React.FC = () => {
       }
       return { apiResponseNotOk: true };
     } catch (error: any) {
-      renderSpinner(false);
       return { error: error.message || 'Unknown error' };
     }
   };
@@ -150,7 +123,6 @@ const NotificationCenterScreen: React.FC = () => {
    * @param id - Notification ID
    */
   const handleAllMarkAsRead = async () => {
-    renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       apiPayload: {
@@ -163,7 +135,6 @@ const NotificationCenterScreen: React.FC = () => {
       const apiResponse = await readNotification(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
-        renderSpinner(false);
         // mark the notification as read
         setNotifications((prevNotifications) =>
           prevNotifications?.map((notification) => ({ ...notification, read: true })),
@@ -172,8 +143,6 @@ const NotificationCenterScreen: React.FC = () => {
       }
       return { apiResponseNotOk: true };
     } catch (error: any) {
-      renderSpinner(false);
-
       return { error: error.message || 'Unknown error' };
     }
   };
@@ -183,7 +152,6 @@ const NotificationCenterScreen: React.FC = () => {
    * @param id - Notification ID
    */
   const handleMarkAsRead = async (id: string) => {
-    renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       apiPayload: {
@@ -196,7 +164,6 @@ const NotificationCenterScreen: React.FC = () => {
       const apiResponse = await readNotification(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
-        renderSpinner(false);
         // mark the notification as read
         setNotifications((prevNotifications) =>
           prevNotifications?.map((notification) =>
@@ -207,8 +174,6 @@ const NotificationCenterScreen: React.FC = () => {
       }
       return { apiResponseNotOk: true };
     } catch (error: any) {
-      renderSpinner(false);
-
       return { error: error.message || 'Unknown error' };
     }
   };
@@ -223,7 +188,6 @@ const NotificationCenterScreen: React.FC = () => {
     page: number,
     pageSize: number,
   ): Promise<{ data: Notification[]; hasMore: boolean }> => {
-    renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       currentPage: page,
@@ -246,7 +210,6 @@ const NotificationCenterScreen: React.FC = () => {
             setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
           }
 
-          renderSpinner(false);
           return { data: paginatedData, hasMore };
         }
 
@@ -266,8 +229,6 @@ const NotificationCenterScreen: React.FC = () => {
       }
     } catch (error: any) {
       renderToast(error?.message || localization.ERROR.SOMETHING_WENT_WRONG);
-    } finally {
-      renderSpinner(false);
     }
 
     return { data: [], hasMore: false };

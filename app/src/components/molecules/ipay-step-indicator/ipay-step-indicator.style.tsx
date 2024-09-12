@@ -1,8 +1,7 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-export const stepIndicatorStyles = (colors: any) =>
+const stepIndicatorStyles = (colors: any) =>
   createStyleSheet({
     // Step indicator styles
     filled: {
@@ -25,3 +24,5 @@ export const stepIndicatorStyles = (colors: any) =>
     absoulteStyle: { position: 'absolute' },
     lowOpacity: { opacity: 0.2 },
   });
+
+export default stepIndicatorStyles;

@@ -17,7 +17,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, payChannel } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, isMultipleOfHundred } from '@app/utilities/number-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
@@ -59,7 +59,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     topUpSelectionRef.current.close();
   };
 
-  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount == '' || !isMultipleOfHundred(topUpAmount);
+  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount === '' || !isMultipleOfHundred(topUpAmount);
   const onPressQR = () => {
     navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER, { amount: topUpAmount, setTopUpAmount });
   };
@@ -134,7 +134,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
             showIcon={false}
             qrScanBtn
             chipValue={chipValue}
-            payChannelType={payChannel.ATM}
+            payChannelType={PayChannel.ATM}
             showQuickAmount
             isQrBtnDisabled={isQrBtnDisabled}
             topUpAmount={topUpAmount}

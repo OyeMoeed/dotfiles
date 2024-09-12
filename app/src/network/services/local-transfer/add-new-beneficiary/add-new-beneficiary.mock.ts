@@ -1,11 +1,6 @@
 import { LocalTransferAddBeneficiaryMockProps } from './add-new-beneficiary.interface';
 
-const localTransferAddBeneficiaryMock: LocalTransferAddBeneficiaryMockProps = {
-  data: {
-    beneficiaryCode: '10587981-8',
-    beneficiaryStatus: 'newBeneficiary',
-  },
-  successfulResponse: true,
+const localTransferAddBeneficiaryMock : LocalTransferAddBeneficiaryMockProps = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -13,8 +8,8 @@ const localTransferAddBeneficiaryMock: LocalTransferAddBeneficiaryMockProps = {
     sessionReference: 'SSPAYC8cfc4056e31948f0ac43b4d301602b58',
     requestReference: '08432016497290053143',
   },
-  ok: false,
-  apiResponseNotOk: false,
+  response: { beneficiaryCode: '10587981-8', beneficiaryStatus: 'newBeneficiary' },
+  successfulResponse: true,
 };
 
 export default localTransferAddBeneficiaryMock;

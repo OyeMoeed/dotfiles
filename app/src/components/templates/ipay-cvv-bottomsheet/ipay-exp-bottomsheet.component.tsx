@@ -7,7 +7,7 @@ import { forwardRef } from 'react';
 import { IPayExpBottomSheetProps } from './ipay-exp-bottomsheet.interface';
 import IPayExpBottomSheetStyles from './ipay-exp-bottomsheet.styles';
 
-const IPayExpBottomSheet = forwardRef<IPayExpBottomSheetProps>(({ testID, type = InfoTypes.CVV }, ref) => {
+const IPayExpBottomSheet = forwardRef<IPayExpBottomSheetProps>(({ testID, type = InfoTypes.CVV }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = IPayExpBottomSheetStyles(colors);

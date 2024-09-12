@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react-native';
 import IPayAnimatedImage from './ipay-animated-image.component';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import { animateValue } from '@app/ipay-animations/ipay-animations';
 
 // Mock components and utilities

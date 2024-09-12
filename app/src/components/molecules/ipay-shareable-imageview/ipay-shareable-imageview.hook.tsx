@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import Share from 'react-native-share';
 import ViewShot from 'react-native-view-shot';
 
-export const useShareableImage = () => {
+const useShareableImage = () => {
   const viewShotRef = useRef<ViewShot | null>(null); // Explicit typing
   const [imageUri, setImageUri] = useState<string | null>(null);
 
@@ -13,7 +13,7 @@ export const useShareableImage = () => {
         const uri = await viewShot.capture();
         setImageUri(uri);
       } catch (error) {
-        console.error('Error capturing view:', error);
+        // console.error('Error capturing view:', error);
       }
     }
   };
@@ -26,11 +26,15 @@ export const useShareableImage = () => {
           url: uri,
         });
         setImageUri(uri);
-      } catch (error) {}
+      } catch (error) {
+        // wrong url
+      }
     } else {
-      //catch error
+      // catch error
     }
   };
 
   return { viewShotRef, imageUri, captureView, shareImage };
 };
+
+export default useShareableImage;

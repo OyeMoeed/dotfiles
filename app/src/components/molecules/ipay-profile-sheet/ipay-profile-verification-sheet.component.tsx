@@ -27,11 +27,11 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         isShowLeftIcon
         detailText={verified ? localizationText.COMMON.VERIFIED : localizationText.COMMON.VERIFY}
         isShowIcon={!verified} // Show icon only if verified is false
-        icon={<IPayIcon icon={'arrow-right'} size={20} color={colors.primary.primary500} />}
+        icon={<IPayIcon icon="arrow-right" size={20} color={colors.primary.primary500} />}
         onPressIcon={verified ? undefined : onPress} // Call the function to open the verification sheet
       />
       <IPayList
-        leftIcon={<IPayIcon icon={'document'} size={18} color={colors.primary.primary500} />}
+        leftIcon={<IPayIcon icon="document" size={18} color={colors.primary.primary500} />}
         detailTextStyle={verified ? styles.detailTextStyle : [styles.detailTextStyle, styles.completTextStyle]}
         title={localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM}
         isShowLeftIcon
@@ -39,7 +39,7 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
         isShowIcon
         icon={
           <IPayIcon
-            icon={'arrow-right'}
+            icon="arrow-right"
             size={20}
             color={verified ? colors.primary.primary500 : colors.natural.natural300}
           />
