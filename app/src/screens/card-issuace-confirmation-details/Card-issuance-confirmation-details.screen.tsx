@@ -23,8 +23,8 @@ const CardIssuanceConfirmationScreen = () => {
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const styles = cardIssuaceConfirmationStyles(colors);
-  const termsRef = useRef<OpenBottomSheetRefTypes>(null);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<OpenBottomSheetRefTypes>(null);
   const helpCenterRef = useRef<OpenBottomSheetRefTypes>(null);
@@ -43,7 +43,7 @@ const CardIssuanceConfirmationScreen = () => {
   };
 
   const openTermsRef = () => {
-    termsRef.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
   const handleConfirm = () => {
     if (isCheckTermsAndCondition) {
@@ -127,7 +127,11 @@ const CardIssuanceConfirmationScreen = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+        isVirtualCardTermsAndConditions
+      />
       <IPayBottomSheet
         heading={localizationText.CARDS.VIRTUAL_CARD}
         enablePanDownToClose

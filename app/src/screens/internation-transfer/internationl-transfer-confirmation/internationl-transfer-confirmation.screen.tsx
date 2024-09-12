@@ -27,7 +27,7 @@ import { ValidateWUTransferPayload } from '@app/network/services/international-t
 import wuValidateTransfer from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.service';
 import { WUTransferPayload } from '@app/network/services/international-transfer/wu-transfer/wu-transfer.interface';
 import westernUnionTransfer from '@app/network/services/international-transfer/wu-transfer/wu-transfer.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import beneficiaryKeysMapping from '@app/screens/international-transfer-info/international-transfer-info.constant';
 import { useTypedSelector } from '@app/store/store';
@@ -51,7 +51,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
-  const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -81,7 +81,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef?.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
   const handleClosePress = () => {
@@ -340,7 +340,10 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+      />
 
       <IPayBottomSheet
         testID="promo-code-bottom-sheet"

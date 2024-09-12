@@ -24,7 +24,7 @@ import { buttonVariants, CardTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { OTPVerificationRefTypes, RouteParams, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
+import { OTPVerificationRefTypes, RouteParams } from './card-renewal.screen.interface';
 
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
@@ -47,18 +47,18 @@ const CardRenewalScreen: React.FC = () => {
   } = route?.params as unknown as { currentCard: { cardType: CardTypes; cardHeaderText: ''; name: '' } };
 
   const localizationText = useLocalization();
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
 
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
   const onCloseBottomSheet = () => {
@@ -153,7 +153,11 @@ const CardRenewalScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+        isVirtualCardTermsAndConditions
+      />
       <IPayBottomSheet
         heading={localizationText.CARD_RENEWAL.CARD_RENEWAL}
         enablePanDownToClose
