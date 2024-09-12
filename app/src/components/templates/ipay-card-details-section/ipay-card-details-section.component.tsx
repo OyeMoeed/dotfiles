@@ -31,7 +31,6 @@ import {
   IPayIcon,
   IPayPressable,
   IPaySubHeadlineText,
-  IPayText,
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -304,7 +303,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
           </IPayFootnoteText>
         </IPayView>
-        />
         <IPayButton
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
           btnType={buttonVariants.LINK_BUTTON}

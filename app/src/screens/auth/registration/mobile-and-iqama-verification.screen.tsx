@@ -38,7 +38,8 @@ const MobileAndIqamaVerification: React.FC = () => {
     onCheckTermsAndConditions,
     checkTermsAndConditions,
     onPressTermsAndConditions,
-    termsAndConditionSheetRef,
+    showTermsAndConditionsSheet,
+    setShowTermsAndConditionsSheet,
     isOtpSheetVisible,
     helpCenterRef,
     onCloseBottomSheet,
@@ -175,7 +176,10 @@ const MobileAndIqamaVerification: React.FC = () => {
             >
               <HelpCenterComponent hideFAQError />
             </IPayBottomSheet>
-            <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+            <IPayTermsAndConditions
+              showTermsAndConditions={showTermsAndConditionsSheet}
+              setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+            />
           </>
         </IPaySafeAreaView>
       )}
