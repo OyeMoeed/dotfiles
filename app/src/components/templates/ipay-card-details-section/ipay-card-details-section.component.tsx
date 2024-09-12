@@ -314,12 +314,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             })
           }
           style={styles.commonContainerStyle}
-        />
-        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {localizationText.COMMON.VIEW_ALL}
-        </IPaySubHeadlineText>
-        <IPayPressable
-          onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
         >
           <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
           <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
