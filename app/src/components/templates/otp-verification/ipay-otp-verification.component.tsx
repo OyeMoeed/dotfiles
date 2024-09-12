@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { Message } from '@app/assets/svgs';
-import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -26,7 +26,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       handleOnPressHelp,
       showHelp = true,
       title,
-      showVerify,
+      hasDisclaimerSection,
+      disclaimerSection,
       timeout = 60,
       containerStyle,
       innerContainerStyle,
@@ -122,20 +123,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
             btnIconsDisabled
             onPress={onPressConfirm}
           />
-          {showVerify && (
-            <IPayView style={styles.verifyView}>
-              <IPayView style={styles.verifyViewRow}>
-                <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
-                <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
-                  {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
-                </IPayFootnoteText>
-              </IPayView>
 
-              <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-                {localizationText.ID_RENEWAL.WHY_VERIFY}
-              </IPayCaption1Text>
-            </IPayView>
-          )}
+          {hasDisclaimerSection && <>{disclaimerSection}</>}
           {showHelp && (
             <IPayButton
               onPress={handleOnPressHelp}
