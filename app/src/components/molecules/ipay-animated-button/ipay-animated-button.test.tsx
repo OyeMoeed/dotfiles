@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, fireEvent } from '@testing-library/react-native';
 import IPayAnimatedButton from './ipay-animated-button.component';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 
 describe('IPayAnimatedButton', () => {
   const defaultProps = {

@@ -9,11 +9,13 @@ const changePasscodeReq = async (payload: ChangePasswordProps): Promise<unknown>
   if (constants.MOCK_API_RESPONSE) {
     return chnagePasscodeMock;
   }
+
   const apiResponse = await apiCall({
     endpoint: `${CORE_URLS.CHANGE_PASSCODE(payload?.walletNumber)}`,
     method: requestType.POST,
     payload: payload?.body,
   });
+
   return apiResponse;
 };
 

@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -33,8 +32,8 @@ import {
 import getWURemittanceTypes from '@app/network/services/international-transfer/wu-remittance-types/wu-remittance-types.service';
 import { getValidationSchemas } from '@app/services/validation-service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useState } from 'react';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { TransferService } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import {
@@ -62,7 +61,6 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const [remittanceType, setRemittanceType] = useState<string>('');
 
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { required } = getValidationSchemas(localizationText);
   const validationSchema = Yup.object().shape({
@@ -145,19 +143,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getWUBeneficiaryMetaDataData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData();
       switch (apiResponse?.status?.type) {
@@ -173,16 +159,13 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getWUBeneficiaryCurrenciesData = async () => {
-    renderSpinner(true);
     const payload = {
       countryCode,
     };
@@ -201,9 +184,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -332,8 +313,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               style={styles.textStyle}
               text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
             />
-            <TransferMethods data={AlinmaDirectData} />
-            <TransferMethods data={WesternUnionData} />
+            <TransferMethods data={alinmaDirectData} />
+            <TransferMethods data={westernUnionData} />
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}

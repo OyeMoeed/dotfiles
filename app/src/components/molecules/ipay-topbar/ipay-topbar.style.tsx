@@ -5,6 +5,7 @@ import { moderateScale } from 'react-native-size-matters';
 
 const topBarStyles = (colors: any) =>
   createStyleSheet({
+    topNavCon: {},
     topNavConStyle: {
       flexDirection: 'row',
       justifyContent: 'space-between',

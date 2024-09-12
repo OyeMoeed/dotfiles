@@ -8,7 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 
-const useSplashScreenAnimations = () => {
+const useSplashAnimations = () => {
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.5)).current;
   const blurAnim = useRef(new Animated.Value(0)).current;
@@ -50,4 +50,4 @@ const useSplashScreenAnimations = () => {
   return { opacityAnim, scaleAnim, blurAnim };
 };
 
-export default useSplashScreenAnimations;
+export default useSplashAnimations;

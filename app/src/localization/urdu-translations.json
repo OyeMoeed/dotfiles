@@ -496,6 +496,7 @@
     "VERIFY_CODE_ACCURACY": "براہ کرم کوڈ کی درستگی کی تصدیق کریں۔",
     "ENTER_CARD_PIN_CODE": "کارڈ کا پن کوڈ درج کریں",
     "CARD_TYPE": "کارڈ کی قسم",
+    "CVV": "cvv",
     "CARD_NUMBER": "کارڈ نمبر",
     "CARD_HOLDER_NAME": "کارڈ کے حامل کا نام",
     "EXPIRY_DATE": "خاتمے کی تاریخ",

@@ -8,6 +8,16 @@ docs/
 packages/**
 patches/**
 *.stories.tsx
-*.test.tsx
+
 .eslintrc.js
 ReactotronConfig.js
+/__mocks__
+/app/src/assets
+
+# ignore test files
+*.test.tsx
+*.test.ts
+
+# ignore mock files
+*.mock.ts
+*.mock.tsx

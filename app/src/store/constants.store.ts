@@ -10,10 +10,11 @@ export const SLICE_NAMES = {
   APP_DATA_SLICE: 'appDataSlice',
   WALLET_INFO_SLICE: 'walletInfoSlice',
   ALERT_SLICE: 'alertSlice',
+  SPINNER_SLICE: 'spinnerSlice',
   DROPDOWN_SLICE: 'dropdownSlice',
   PERMISSION_ALERT_SLICE: 'permissionAlertSlice',
   RESET_STATE_SLICE: 'resetStateSlice',
   NAFAT_VERIFICATION_SLICE: 'nafathVerificationSlice',
 };
 
-export const WHITELISTED_DATA = ['appDataReducer', 'userInfoReducer', 'languageReducer', 'rearrangement'];
+export const WHITELISTED_DATA = ['appDataReducer', 'languageReducer', 'rearrangement', 'walletInfoReducer'];

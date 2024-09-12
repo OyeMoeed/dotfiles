@@ -4,6 +4,7 @@ import {
   IPayCaption1Text,
   IPayFootnoteText,
   IPayImage,
+  IPayLottieAnimation,
   IPayScrollView,
   IPayTitle1Text,
   IPayView,
@@ -17,15 +18,19 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useRef, useState } from 'react';
+import { Keyboard } from 'react-native';
+import { isIosOS } from '@app/utilities/constants';
+import { darkCards } from '../send-gift-card/send-gift-card.constants';
 import sendGiftPreviewStyles from './send-gift-preview.style';
 
 const SendGiftPreview: FC = ({ route }) => {
-  const { occasion = '' } = { ...route?.params };
+  const { occasion = '', selectedCard } = { ...route?.params };
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = sendGiftPreviewStyles(colors);
@@ -33,7 +38,7 @@ const SendGiftPreview: FC = ({ route }) => {
   const AMOUNT = '100';
   const [message, setMessage] = useState<string>('');
   const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
-  const senderName = 'Adam';
+  const { firstName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const onChangeText = (value: string) => {
     setMessage(value);
@@ -41,6 +46,7 @@ const SendGiftPreview: FC = ({ route }) => {
 
   const onPreview = () => {
     previewBottomSheetRef.current?.present();
+    Keyboard.dismiss();
   };
 
   const onNext = () => {
@@ -48,9 +54,16 @@ const SendGiftPreview: FC = ({ route }) => {
       from: TRANSFERTYPE.SEND_GIFT,
       heading: localizationText.SEND_GIFT.SEND_GIFT,
       showHistory: false,
-      giftDetails: { message, occasion },
+      giftDetails: { message, occasion, selectedCard },
     });
   };
+
+  // to change text color on basis of card theme.
+  const isDarkCard = darkCards.includes(selectedCard?.id);
+
+  const logoImage = isDarkCard ? images.textLogoLight : images.logo;
+
+  const themeTextColor = isDarkCard ? colors.natural.natural0 : colors.primary.primary950;
 
   return (
     <IPaySafeAreaView>
@@ -64,6 +77,7 @@ const SendGiftPreview: FC = ({ route }) => {
             multiline
             maxLength={MAX_LENGTH}
             style={styles.input}
+            returnKeyLabel="return"
             containerStyle={styles.message}
             assistiveText={`${message.length}/${MAX_LENGTH}`}
             assistiveTextStyle={styles.assistiveText}
@@ -97,18 +111,17 @@ const SendGiftPreview: FC = ({ route }) => {
         simpleBar
       >
         <IPayView style={styles.bottomSheetContainer}>
-          <IPayView style={styles.previewContainer}>
-            <IPayImage image={images.logo} style={styles.smallAlinmaLogo} />
-            <IPayImage image={images.eidMubarak} style={styles.image} />
-
+          <IPayView style={[styles.previewContainer, { backgroundColor: selectedCard?.bgColor }]}>
+            <IPayImage image={logoImage} style={styles.smallAlinmaLogo} />
+            <IPayLottieAnimation source={selectedCard?.path} style={styles.image} loop />
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
-              <IPayFootnoteText style={styles.messageText} color={colors.primary.primary950} text={message} />
+              <IPayFootnoteText style={styles.messageText} color={themeTextColor} text={message} />
             </IPayScrollView>
             <IPayFootnoteText
-              style={[styles.messagePreviewText]}
-              text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
+              style={styles.messagePreviewText}
+              text={`${localizationText.SEND_GIFT.FROM}: ${firstName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
-              color={colors.primary.primary950}
+              color={themeTextColor}
             />
           </IPayView>
         </IPayView>
@@ -116,7 +129,7 @@ const SendGiftPreview: FC = ({ route }) => {
         <IPayBottomSheet
           heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
           ref={previewBottomSheetRef}
-          customSnapPoint={SNAP_POINTS.MID_LARGE}
+          customSnapPoint={isIosOS ? SNAP_POINTS.MID_LARGE : SNAP_POINTS.X_SMALL}
           enablePanDownToClose
           cancelBnt
         >
@@ -137,7 +150,7 @@ const SendGiftPreview: FC = ({ route }) => {
               </IPayScrollView>
               <IPayFootnoteText
                 style={styles.messagePreviewText}
-                text={`${localizationText.SEND_GIFT.FROM}: ${senderName}`}
+                text={`${localizationText.SEND_GIFT.FROM}: ${firstName}`}
               />
             </IPayView>
           </IPayView>

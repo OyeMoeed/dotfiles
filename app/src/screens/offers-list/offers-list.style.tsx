@@ -1,17 +1,25 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
-import { StyleSheet } from 'react-native';
+import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const offersListStyles = (themeColors: typeof colors) =>
-  StyleSheet.create({
+  createStyleSheet({
+    backgroundColor: { backgroundColor: colors.backgrounds.lightGradient },
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
     },
     contentContainerStyle: {
-      // gap: moderateScale(20),
       marginTop: moderateScale(16),
+    },
+    inputContainer: {
+      borderColor: colors.primary.primary100,
+      borderRadius: moderateScale(22),
+      marginTop: moderateScale(8),
+    },
+    lastItem: {
+      height: moderateScale(50),
     },
     lineImageStyle: {
       height: '90%',
@@ -36,15 +44,6 @@ const offersListStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       gap: moderateScale(8),
       marginTop: moderateScale(24),
-    },
-    inputContainer: {
-      borderColor: colors.primary.primary100,
-      borderRadius: moderateScale(22),
-      marginTop: moderateScale(8),
-    },
-    backgroundColor: { backgroundColor: colors.backgrounds.lightGradient },
-    lastItem: {
-      height: moderateScale(50),
     },
   });
 

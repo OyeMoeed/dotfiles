@@ -1,5 +1,6 @@
 import { IPayCaption2Text, IPayCheckbox, IPayFootnoteText, IPayImage, IPayView } from '@app/components/atoms';
 import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-section-list.component';
+import { TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -27,10 +28,9 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
       <IPaySectionList
         data={deliveryTypesData}
         itemSeparatorStyle={styles.deliveryTypeItemSeparator}
-        renderItem={({ item: { title, amount, image, type } }) => (
+        renderItem={({ item: { title, amount, type } }) => (
           <IPayView style={styles.deliveryTypeCard}>
             <IPayView style={styles.titleView}>
-              <IPayImage image={image} style={styles.deliveryTypeImage} />
               <IPayFootnoteText text={title} color={colors.natural.natural900} />
             </IPayView>
             <IPayView style={styles.checkBoxView}>
@@ -44,11 +44,16 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
             </IPayView>
           </IPayView>
         )}
-        renderSectionHeader={({ section: { id, title } }) => (
-          <IPayFootnoteText
-            text={title}
-            style={[styles.deliveryTypeTitleText, id === '1' && styles.deliveryTypeTitleTextConditional]}
-          />
+        renderSectionHeader={({ section: { title, image } }) => (
+          <IPayView
+            style={[
+              styles.deliveryTypeHeader,
+              title === TransferGatewayType.WESTERN_UNION && styles.deliveryTypeHeaderConditional,
+            ]}
+          >
+            <IPayImage image={image} style={styles.deliveryTypeImage} />
+            <IPayFootnoteText text={title} style={styles.deliveryTypeTitleTextConditional} />
+          </IPayView>
         )}
       />
     </IPayView>

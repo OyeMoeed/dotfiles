@@ -3,7 +3,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import ViewShot from 'react-native-view-shot';
-import { useShareableImage } from './ipay-shareable-imageview.hook';
+import useShareableImage from './ipay-shareable-imageview.hook';
 import IPayShareableImageViewProps from './ipay-shareable-imageview.interface';
 import shareableViewStyles from './ipay-shareable-imageview.style';
 
@@ -23,7 +23,7 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
           onPress: () => {
             shareImage();
             setTimeout(() => {
-              element?.props?.onPress && element.props.onPress();
+              element?.props?.onPress?.();
             }, 300);
           },
         });

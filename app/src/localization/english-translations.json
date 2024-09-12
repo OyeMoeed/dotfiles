@@ -1,5 +1,7 @@
 {
   "COMMON": {
+    "CONTACTS_LIMIT_REACHED": "Contacts Limit Reached",
+    "INVALID_NUMBER": "Invalid Number",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
     "CHOOSE_BENEFICIARY": "Choose Beneficiary",
     "PRICE_VARY": "Prices vary depending on the bank.",
@@ -165,7 +167,8 @@
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
-    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully"
+    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
+    "AMOUNT": "Amount"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -421,6 +424,7 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "The Ref. Number has been copied!",
+    "TRANSACTION_ID_COPIED": "The Transaction Id has been copied",
     "TRANSFER_TO": "Transfer To",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
@@ -570,7 +574,8 @@
     "TYPE_MOBILE_NUMBER": "Type mobile number",
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
-    "CONTACT_NAME": "Contact Name"
+    "CONTACT_NAME": "Contact Name",
+    "CONTACT_LIMIT": "Contacts limit reached"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -604,7 +609,9 @@
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
     "GO_TO_CARD": "Go to Card",
-    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted",
+    "CHANGE_PIN": "Change pincode",
+    "CARD_DETAILS": "Card Details"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -676,6 +683,7 @@
     "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
     "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
     "CARD_TYPE": "Card Type",
+    "CVV": "cvv",
     "CARD_NUMBER": "Card Number",
     "CARD_HOLDER_NAME": "Card's Holder Name",
     "EXPIRY_DATE": "Expiry date",
@@ -723,7 +731,9 @@
     "FIRST_TIME_CODE": "You will use this code for the first time using this card",
     "HEADER": "Virtual Card",
     "CLASSIC_DEBIT_CARD": "Classic Debit Card",
-    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "DESCRIPTION": "your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "SIGNATURE_DETAILS": "your secure choice for Shopping, online purchase or at points of sales and gives you instant cashback on all your domestic and international purchases. ",
+    "MADA_DETAILS": "your secure choice for Shopping, online purchase or at points of sales , you can add the card on Apple Pay & Mada Pay",
     "VIEW_DETAILS": "View all Details",
     "CLOSE_DETAILS": "Close Details",
     "ISSUE_CARD": "Issue Card",
@@ -823,6 +833,7 @@
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
   },
   "LOCAL_TRANSFER": {
+    "AMOUNT": "Amount",
     "INVESTMENT": "Investment",
     "TUITION": "Tuition Expenses",
     "TRAVEL": "Travel Expenses",
@@ -843,7 +854,8 @@
     "VAT": "VAT",
     "FEES": "Fees",
     "ACTIVE_INACTIVE": "Active - Inactive",
-    "INACTIVE_ACTIVE": "Inactive - Active"
+    "INACTIVE_ACTIVE": "Inactive - Active",
+    "AMOUNT_TO_BE_REFUND": "Amount to be refund"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -897,7 +909,7 @@
     "RECIPIENT": "Recipient",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
-    "UNOPENED": "Unopened",
+    "UNOPENED": "UnOpened",
     "GIFT_DETAILS": "Gift Details",
     "SWIPE_TO_FLIP": "Swipe to Flip",
     "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
@@ -992,9 +1004,8 @@
     "MINUTES": "Minutes",
     "SECONDS": "Seconds",
     "IN_STORES": "In-Stores",
-    "THEATRE": "Theatre",
     "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
+    "THEATRE": "Theatre",
     "GAMES": "Games",
     "CLOTHES": "Clothes"
   },
@@ -1294,8 +1305,10 @@
     "NO_REMAINING_AMOUNT": "No Remaining Amount "
   },
   "REQUEST_MONEY": {
+    "MAKE_NEW_REQUEST": "Make new Request",
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
+    "SENT_REQUEST": "Send Request",
     "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
@@ -1304,6 +1317,7 @@
     "MONEY_REQUESTS": "money requests",
     "PENDING": "Pending",
     "CANCEL": "Cancel",
+    "CANCELLED": "Cancelled",
     "PAID": "Paid",
     "SEND_REQUEST_TO": "Send Request to",
     "REJECTED": "Rejected",
@@ -1324,7 +1338,8 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "MAKE_NEW_REQUEST": "Make new Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",
@@ -1359,6 +1374,11 @@
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
     "REJECT_THIS_REQUEST": "Reject this request"
+  },
+  "PRICE_CALCULATOR": {
+    "TITLE": "Price Calculator",
+    "TRANSFER_NOW": "Transfer now",
+    "INCLUDES_FEES": "Include Fees"
   },
 
   "PHYSICAL_CARD": {

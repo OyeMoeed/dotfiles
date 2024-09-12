@@ -10,7 +10,7 @@ import IPayBanner from '@app/components/molecules/ipay-banner/ipay-banner.compon
 import IPayButton from '@app/components/molecules/ipay-button/ipay-button.component';
 import IPayCarousel from '@app/components/molecules/ipay-carousel/ipay-carousel.component';
 import IPayChip from '@app/components/molecules/ipay-chip/ipay-chip.component';
-import { IPayGradientText as IPayGradientTextMasked } from '@app/components/molecules/ipay-gradient-text/ipay-gradien-text.component';
+import IPayGradientTextMasked from '@app/components/molecules/ipay-gradient-text/ipay-gradien-text.component';
 import IPayGradientText from '@app/components/molecules/ipay-gradient-text/ipay-gradient-text.component';
 import IPayLanguageSelectorButton from '@app/components/molecules/ipay-header/ipay-header-components/ipay-language-selector-button';
 import IPayHeader from '@app/components/molecules/ipay-header/ipay-header.component';
@@ -44,6 +44,7 @@ import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-st
 import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAccountBalance from './ipay-account-balance/ipay-account-balance.component';
@@ -133,4 +134,5 @@ export {
   IPayTransactionHistoryDetails,
   IPayUserAvatar,
   SadadFooterComponent,
+  useToastContext,
 };

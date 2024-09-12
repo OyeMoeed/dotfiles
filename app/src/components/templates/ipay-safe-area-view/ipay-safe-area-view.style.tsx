@@ -1,6 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 
-const safeAreaViewStyles = (colors: any) =>
+const safeAreaViewStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,

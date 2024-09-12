@@ -1,21 +1,20 @@
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { VOILATOR_ID } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getTrafficViolationData from '@app/network/services/core/traffic-violation/traffic-violation.service';
-import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { useEffect, useMemo, useState } from 'react';
 
 const useTrafficViolation = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>();
-  const [apiError, setAPIError] = useState<string>('');
-  const [voilatorID, setVoilatorID] = useState<string>(VOILATOR_ID);
-  const selectedBillsAmount = useMemo(() => {
-    return (billsData ?? [])
-      .filter(({ selected }) => selected)
-      .reduce((total, { amount }) => total + (amount ? parseFloat(amount) : 0), 0);
-  }, [billsData]);
+  const [voilatorID] = useState<string>(VOILATOR_ID);
+  const selectedBillsAmount = useMemo(
+    () =>
+      (billsData ?? [])
+        .filter(({ selected }) => selected)
+        .reduce((total, { amount }) => total + (amount ? parseFloat(amount) : 0), 0),
+    [billsData],
+  );
 
   const selectedBillsCount = useMemo(() => billsData?.filter(({ selected }) => selected).length ?? 0, [billsData]);
 
@@ -36,28 +35,11 @@ const useTrafficViolation = () => {
   const handlePayButton = () => {
     navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_REFUND);
   };
-  const localizationText = useLocalization();
 
   const getTrafficVoilationData = async () => {
-    try {
-      const apiResponse: any = await getTrafficViolationData();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          const bills = apiResponse?.response?.trafficViolationList;
-          setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+    const apiResponse: any = await getTrafficViolationData();
+    const bills = apiResponse?.response?.trafficViolationList;
+    setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
   };
   useEffect(() => {
     getTrafficVoilationData();

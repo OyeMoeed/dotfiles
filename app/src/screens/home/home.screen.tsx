@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
@@ -20,15 +19,14 @@ import { getTransactions } from '@app/network/services/core/transaction/transact
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
-import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -40,21 +38,19 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
-  const [isLoading] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
 
   const dispatch = useTypedDispatch();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const openProfileBottomSheet = () => {
     dispatch(setProfileSheetVisibility(true));
@@ -74,48 +70,19 @@ const Home: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback(
-    (isVisbile: boolean) => {
-      if (isVisbile) {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-      } else {
-        hideSpinner();
-      }
-    },
-    [isLoading],
-  );
-
   const getTransactionsData = async () => {
-    renderSpinner(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '3',
-        offset: '1',
-      };
+    const payload: TransactionsProp = {
+      walletNumber,
+      maxRecords: '3',
+      offset: '1',
+    };
 
-      const apiResponse: any = await getTransactions(payload);
+    const apiResponse: any = await getTransactions(payload);
 
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        setTransactionsData(apiResponse?.response?.transactions);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+    setTransactionsData(apiResponse?.response?.transactions);
   };
 
   const getOffersData = async () => {
-    renderSpinner(true);
     try {
       const payload: HomeOffersProp = {
         walletNumber,
@@ -130,9 +97,7 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -153,11 +118,7 @@ const Home: React.FC = () => {
   };
 
   const navigateTOAktharPoints = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
@@ -166,7 +127,6 @@ const Home: React.FC = () => {
     } else {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }
-    hideSpinner();
   };
 
   const topupItemSelected = (routeName: string, params: {}) => {
@@ -212,7 +172,7 @@ const Home: React.FC = () => {
       walletNumber: walletNumber as string,
     };
     const apiResponse: any = await getWalletInfo(payload);
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+    if (apiResponse) {
       dispatch(setWalletInfo(apiResponse?.response));
     }
   };
@@ -235,19 +195,19 @@ const Home: React.FC = () => {
       <>
         {/* ---------Top Navigation------------- */}
         <IPayView style={styles.topNavCon}>
-          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={userInfo?.firstName} />
+          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={firstName} />
         </IPayView>
         {/* ----------BalanceBox------------ */}
         <IPayView style={styles.balanceCon}>
           <IPayBalanceBox
-            balance={walletInfo?.availableBalance}
-            totalBalance={walletInfo?.currentBalance}
+            balance={availableBalance}
+            totalBalance={currentBalance}
             hideBalance={appData?.hideBalance}
             walletInfoPress={() => navigate(ScreenNames.WALLET)}
             topUpPress={topUpSelectionBottomSheet}
             setBoxHeight={setBalanceBoxHeight}
-            monthlyRemainingOutgoingAmount={walletInfo.limitsDetails.monthlyRemainingOutgoingAmount}
-            monthlyOutgoingLimit={walletInfo.limitsDetails.monthlyOutgoingLimit}
+            monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
+            monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}

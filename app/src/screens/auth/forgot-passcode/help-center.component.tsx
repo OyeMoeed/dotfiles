@@ -1,5 +1,4 @@
 import { IPayButton } from '@app/components/molecules';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
@@ -17,10 +16,11 @@ import {
 import React, { useEffect, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import getFAQ from '@app/network/services/core/faq/faq.service';
+import { buttonVariants } from '@app/utilities';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
-const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs }) => {
+const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs, hideFAQError = false }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
@@ -31,7 +31,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
   const [faqsItems, setFaqsItems] = useState([]);
 
   const fetchFaqItems = async () => {
-    const apiResponse: any = await getFAQ();
+    const apiResponse: any = await getFAQ(hideFAQError);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       setFaqsItems(apiResponse?.response?.faqs);
@@ -60,7 +60,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
         <>
           {item.answer.map((ques, answerIndex) => (
             <IPayCaption1Text
-              key={answerIndex}
+              key={`${`${answerIndex}IPayCaption1Text`}`}
               regular
               style={[
                 styles.faqItemAnswer,
@@ -99,7 +99,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
               {localizationText.COMMON.CONTACT_SERVICE_TEAM}
             </IPayCaption1Text>
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
               btnText={localizationText.COMMON.CONTACT_US}
               textColor={colors.secondary.secondary800}
