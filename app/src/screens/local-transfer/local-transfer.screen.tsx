@@ -78,6 +78,7 @@ const LocalTransferScreen: React.FC = () => {
     NEW_BENEFICIARY: false,
   });
   const [sortBy, setSortBy] = useState<string>(BeneficiaryTypes.ACTIVE);
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [showEditSheet, setShowEditSheet] = useState<boolean>(false);
 
   const renderToast = (toastMsg: string) => {
@@ -92,6 +93,7 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const getBeneficiariesData = async () => {
+    setIsLoadingData(true);
     try {
       const apiResponse: LocalTransferBeneficiariesMockProps = await getlocalTransferBeneficiaries();
       if (apiResponse?.successfulResponse) {
@@ -101,6 +103,7 @@ const LocalTransferScreen: React.FC = () => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
+    setIsLoadingData(false);
   };
 
   useFocusEffect(
@@ -506,23 +509,27 @@ const LocalTransferScreen: React.FC = () => {
               </IPayView>
             ) : (
               <IPayView style={styles.noResultContainer}>
-                <IPayNoResult
-                  showIcon
-                  icon={icons.user_search}
-                  iconColor={colors.primary.primary800}
-                  iconSize={40}
-                  message={localizationText.LOCAL_TRANSFER.NO_BENEFICIARIES}
-                  containerStyle={styles.noResult as ViewStyle}
-                  testID="no-result"
-                />
-                <IPayButton
-                  btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
-                  medium
-                  onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
-                  btnType={buttonVariants.PRIMARY}
-                  btnStyle={styles.btnStyle}
-                  leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
-                />
+                {!isLoadingData && (
+                  <>
+                    <IPayNoResult
+                      showIcon
+                      icon={icons.user_search}
+                      iconColor={colors.primary.primary800}
+                      iconSize={40}
+                      message={localizationText.LOCAL_TRANSFER.NO_BENEFICIARIES}
+                      containerStyle={styles.noResult as ViewStyle}
+                      testID="no-result"
+                    />
+                    <IPayButton
+                      btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+                      medium
+                      onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
+                      btnType={buttonVariants.PRIMARY}
+                      btnStyle={styles.btnStyle}
+                      leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
+                    />
+                  </>
+                )}
               </IPayView>
             )}
           </IPayView>
