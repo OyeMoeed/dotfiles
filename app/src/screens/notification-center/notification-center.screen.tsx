@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayHeader, IPayNoResult } from '@app/components/molecules';
+import { IPayHeader, IPayNoResult, useToastContext } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -17,10 +17,10 @@ import { spinnerVariant } from '@app/utilities/enums.util';
 import {
   deleteSingleNotification,
   getAllRetainedMessages,
-  readSingleNotification,
+  readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 
@@ -60,9 +60,9 @@ const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any
 const NotificationCenterScreen: React.FC = () => {
   // hooks
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { showToast } = useToastContext();
   const localization = useLocalization();
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
 
   // states
   const [notifications, setNotifications] = useState<Notification[]>([] as Notification[]);
@@ -76,18 +76,12 @@ const NotificationCenterScreen: React.FC = () => {
   const pendingNotificationsCount = pendingNotifications.length;
   const hasPendingRequest = pendingNotificationsCount > 0;
   const hasNotifications = notifications.length > 0;
-  const unreadNotificationCount = 1;
+  const unreadNotificationCount = notifications.filter((notification) => !notification.read).length;
+  const notificationSubText =
+    unreadNotificationCount > 0 ? `${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}` : undefined;
 
   const styles = getNotificationCenterStyles(colors);
 
-  /**
-   * Render toast message
-   * @param title - Title of the toast
-   * @param subTitle - Subtitle of the toast
-   * @param icon - Icon to display in the toast
-   * @param toastType - Type of the toast
-   * @param displayTime - Duration to display the toast
-   */
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -95,7 +89,8 @@ const NotificationCenterScreen: React.FC = () => {
         subTitle,
         toastType,
         isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
       },
       displayTime,
     );
@@ -144,6 +139,39 @@ const NotificationCenterScreen: React.FC = () => {
   };
 
   /**
+   * Handle mark all as read
+   * @param id - Notification ID
+   */
+  const handleAllMarkAsRead = async () => {
+    renderSpinner(true);
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      apiPayload: {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        messageIds: [],
+      },
+    };
+
+    try {
+      const apiResponse = await readNotification(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        renderSpinner(false);
+        // mark the notification as read
+        setNotifications((prevNotifications) =>
+          prevNotifications?.map((notification) => ({ ...notification, read: true })),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
+      renderSpinner(false);
+
+      return { error: error.message || 'Unknown error' };
+    }
+  };
+
+  /**
    * Handle mark as read
    * @param id - Notification ID
    */
@@ -158,7 +186,7 @@ const NotificationCenterScreen: React.FC = () => {
     };
 
     try {
-      const apiResponse = await readSingleNotification(payload);
+      const apiResponse = await readNotification(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
         renderSpinner(false);
@@ -271,9 +299,11 @@ const NotificationCenterScreen: React.FC = () => {
             subTextColor={colors.primary.primary500}
             showDotBeforeSubtext
             leftText={localization.NOTIFICATION_CENTER.NOTIFICATIONS}
-            subText={`${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}`}
+            subText={notificationSubText}
             rightText={localization.NOTIFICATION_CENTER.READ_ALL}
+            onRightOptionPress={handleAllMarkAsRead}
           />
+
           <IPayTabs
             scrollEnabled
             scrollable

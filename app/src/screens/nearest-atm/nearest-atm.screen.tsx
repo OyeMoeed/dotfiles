@@ -10,13 +10,11 @@ import {
   IPayNearestAtmLocations,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import useLocation from '@app/hooks/location.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetCoreManagementLovPayload } from '@app/network/services/core/lov/get-lov.interface';
 import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
 import { spinnerVariant, TabBase } from '@app/utilities/enums.util';
@@ -99,7 +97,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
           type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
@@ -121,7 +119,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedFilterKeys = apiResponse?.response?.lovInfo.map((item) => ({
           id: item.recTypeCode,
@@ -142,7 +140,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       if (apiResponse?.response?.lovInfo) {
         setCities(
           apiResponse?.response?.lovInfo.map((item) => ({

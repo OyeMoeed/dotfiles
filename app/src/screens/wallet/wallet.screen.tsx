@@ -7,7 +7,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { shareOptions } from '@app/utilities/shared.util';
 import {
@@ -34,8 +34,6 @@ const WalletScreen = () => {
   const { qrRef, qrData, saveQrToDisk } = useSaveQRCode();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
 
   const [isNameCopied, setIsNameCopied] = useState(false);
   const [isIbanCopied, setIsIbanCopied] = useState(false);
@@ -48,7 +46,7 @@ const WalletScreen = () => {
     const nameLabel = localizationText.COMMON.NAME;
     const ibanLabel = localizationText.COMMON.IBAN;
 
-    return `${appTitle}\n${walletInfoLabel}\n${nameLabel} : ${userInfo?.fullName}\n${ibanLabel} : ${walletInfo?.viban}`;
+    return `${appTitle}\n${walletInfoLabel}\n${nameLabel} : ${walletInfo?.fullName}\n${ibanLabel} : ${walletInfo?.viban}`;
   };
 
   const bottonSheetOpen = async () => {
@@ -102,6 +100,11 @@ const WalletScreen = () => {
     return Math.ceil(balancePercentage);
   }
 
+  const QRCodeRef = (ref: any) => {
+    qrRef.current = ref;
+    return null;
+  };
+
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
       <IPayHeader title={localizationText.HOME.WALLET_INFO} backBtn applyFlex />
@@ -140,10 +143,10 @@ const WalletScreen = () => {
         </IPayView>
         <IPayFootnoteText color={colors.natural.natural500}>{localizationText.HOME.WALLET_INFO}</IPayFootnoteText>
         <IPayList
-          onPressIcon={() => handleClickOnCopy(1, userInfo?.fullName)}
+          onPressIcon={() => handleClickOnCopy(1, walletInfo?.fullName)}
           title={localizationText.COMMON.NAME}
           isShowSubTitle
-          subTitle={userInfo?.fullName}
+          subTitle={walletInfo?.fullName}
           isShowIcon
           isShowDetail
           textStyle={styles.titleStyle}
@@ -173,7 +176,7 @@ const WalletScreen = () => {
           onPressSaveQR={saveQrToDisk}
           icon={
             <QRCode
-              getRef={(ref) => (qrRef.current = ref)}
+              getRef={QRCodeRef}
               value={qrData}
               logo={images.gradientAppIcon}
               size={moderateScale(76)}

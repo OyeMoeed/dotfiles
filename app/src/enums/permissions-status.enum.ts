@@ -1,7 +1,7 @@
 /**
  * Defines possible statuses while asking for permissions.
  */
-export enum permissionsStatus {
+enum PermissionsStatus {
   GRANTED = 'granted',
   DENIED = 'denied',
   UNKNOWN = 'unknown',
@@ -9,3 +9,5 @@ export enum permissionsStatus {
   LIMITED = 'limited',
   UNAVAILABLE = 'unavailable',
 }
+
+export default PermissionsStatus;

@@ -42,19 +42,17 @@ const scaleFont = (size: number, factor: number = 0.3): number => moderateScale(
  * @param {number} left left margin
  * @param {'margin' | 'padding'} property dimension type
  */
-const dimensions = (
-  top: number,
-  right: number = top,
-  bottom: number = top,
-  left: number = right,
-  property: 'margin' | 'padding',
-): any => {
+const dimensions = (top: number, right: number, bottom: number, left: number, property: 'margin' | 'padding'): any => {
+  const rightProperty: number = right || top;
+  const bottomProperty: number = bottom || top;
+  const leftProperty: number = left || right;
+
   const styles: any = {};
 
   styles[`${property}Top`] = top;
-  styles[`${property}Right`] = right;
-  styles[`${property}Bottom`] = bottom;
-  styles[`${property}Left`] = left;
+  styles[`${property}Right`] = rightProperty;
+  styles[`${property}Bottom`] = bottomProperty;
+  styles[`${property}Left`] = leftProperty;
 
   return styles;
 };
@@ -129,14 +127,10 @@ const StatusBarHeight = Platform.select({
 });
 
 // Utility function to get width percentage
-const widthPercent = (percentage: Percentage) => {
-  return wp(percentage);
-};
+const widthPercent = (percentage: Percentage) => wp(percentage);
 
 // Utility function to get height percentage
-const heightPercent = (percentage: Percentage) => {
-  return hp(percentage);
-};
+const heightPercent = (percentage: Percentage) => hp(percentage);
 
 export {
   SCREEN_HEIGHT,

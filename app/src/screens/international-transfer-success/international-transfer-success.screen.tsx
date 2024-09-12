@@ -21,8 +21,8 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { alertType, alertVariant, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import Flag from 'react-native-round-flags';
 import {
@@ -54,7 +54,7 @@ const InternationalTransferSuccessScreen: React.FC<InternationalTransferSuccessP
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   // Function to check the condition dynamically

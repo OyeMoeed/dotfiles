@@ -19,7 +19,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { dashboardOptions } from '@app/utilities/enums.util';
+import { DashboardOptions } from '@app/utilities';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { forwardRef } from 'react';
@@ -65,25 +65,25 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       const hasAccess = checkUserAccess();
       if (hasAccess) {
         switch (option) {
-          case dashboardOptions.ATM_WITHDRAWALS:
+          case DashboardOptions.ATM_WITHDRAWALS:
             navigate(screenNames.ATM_WITHDRAWALS, { hideBalance });
             break;
-          case dashboardOptions.SEND_MONEY:
+          case DashboardOptions.SEND_MONEY:
             navigate(screenNames.WALLET_TRANSFER);
             break;
-          case dashboardOptions.LOCAL_TRANSFER:
+          case DashboardOptions.LOCAL_TRANSFER:
             navigate(screenNames.LOCAL_TRANSFER, {});
             break;
-          case dashboardOptions.INTERNATIONAL_TR:
+          case DashboardOptions.INTERNATIONAL_TR:
             navigate(screenNames.INTERNATIONAL_TRANSFER);
             break;
-          case dashboardOptions.BILL_PAYMENTS:
-            navigate(screenNames.MOI_PAYMENT_SCREEN);
+          case DashboardOptions.BILL_PAYMENTS:
+            navigate(screenNames.BILL_PAYMENTS_SCREEN);
             break;
-          case dashboardOptions.SEND_GIFT:
+          case DashboardOptions.SEND_GIFT:
             navigate(screenNames.SEND_GIFT);
             break;
-          case dashboardOptions.REQUEST_MONEY:
+          case DashboardOptions.REQUEST_MONEY:
             navigate(screenNames.REQUEST_MONEY);
             break;
 

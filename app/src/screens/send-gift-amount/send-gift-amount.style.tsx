@@ -13,6 +13,11 @@ import { moderateScale } from 'react-native-size-matters';
 
 const sendGiftAmountStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    recipientsContainer: {
+      backgroundColor: colors.secondary.secondary100,
+      marginTop: moderateScale(6),
+      alignSelf: 'center',
+    },
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24),
@@ -56,6 +61,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(16),
     },
     buttonContainer: {
+      marginHorizontal: moderateScale(24),
       gap: moderateScale(16),
       bottom: moderateScale(0),
       left: moderateScale(0),
@@ -92,7 +98,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(18),
       paddingVertical: moderateScale(16),
-      marginBottom: moderateScale(16),
+      marginBottom: moderateScale(8),
     },
     iconHeader: {
       flexDirection: 'row',
@@ -129,11 +135,18 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       gap: moderateScale(8),
     },
     remove: {
-      marginTop: moderateScale(16),
+      marginTop: moderateScale(6),
     },
 
     input: {
-      paddingVertical: moderateScale(12),
+      ...Platform.select({
+        android: {
+          paddingVertical: moderateScale(-5),
+        },
+        ios: {
+          paddingVertical: moderateScale(12),
+        },
+      }),
       marginVertical: moderateScale(2),
     },
     manualInput: {
@@ -163,7 +176,8 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       fontWeight: FONT_WEIGHT_BOLD,
       ...Platform.select({
         android: {
-          lineHeight: moderateScale(50),
+          paddingTop: moderateScale(24),
+          lineHeight: moderateScale(30),
         },
         ios: {
           lineHeight: 0,
@@ -173,7 +187,6 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
     currencyManual: {
       fontSize: FONT_SIZE_17,
-      paddingTop: moderateScale(15),
       ...Platform.select({
         android: {
           paddingTop: moderateScale(15),

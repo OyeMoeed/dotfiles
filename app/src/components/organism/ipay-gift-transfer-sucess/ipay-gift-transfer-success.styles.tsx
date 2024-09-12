@@ -9,6 +9,11 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
     container: {
       flex: 1,
     },
+    btnBackground: {
+      flex: 0,
+      backgroundColor: themeColors.appGradient.buttonBackground,
+    },
+
     contentContainer: {
       marginHorizontal: moderateScale(24, 0.3),
       alignItems: 'center',
@@ -137,6 +142,7 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.success.success500,
     },
     walletBackground: {
+      marginBottom: moderateScale(8),
       backgroundColor: themeColors.natural.natural0,
       padding: moderateScale(12),
       borderRadius: moderateScale(22),
@@ -162,6 +168,7 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       height: moderateScale(23),
       width: moderateScale(75),
     },
+    scrollViewStyle: { flex: 0, height: verticalScale(280) },
   });
 
 export default GiftTransferSuccessStyles;

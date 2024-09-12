@@ -12,10 +12,10 @@ import loginUser from '@app/network/services/authentication/login/login.service'
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
 import otpVerification from '@app/network/services/authentication/otp-verification/otp-verification.service';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { getDeviceInfo, encryptData } from '@app/network/utilities';
 import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
@@ -23,7 +23,6 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Keyboard } from 'react-native';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { FormValues } from './mobile-and-iqama-verification.interface';
 
 const useMobileAndIqamaVerification = () => {
@@ -67,12 +66,11 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onCloseBottomSheet = () => {
+    setOtpSheetVisible(false);
     otpVerificationRef.current?.resetInterval();
   };
   const redirectToOtp = () => {
     setIsLoading(false);
-    onCloseBottomSheet();
-    setOtpSheetVisible(false);
     setOtpSheetVisible(true);
   };
 
@@ -105,7 +103,7 @@ const useMobileAndIqamaVerification = () => {
     };
     const apiResponse: any = await otpVerification(payload, dispatch);
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      dispatch(setUserInfo(apiResponse?.response));
+      dispatch(setWalletInfo(apiResponse?.response));
       if (onPressConfirm) onPressConfirm(apiResponse?.response?.newMember);
     }
     setIsLoading(false);
@@ -245,6 +243,12 @@ const useMobileAndIqamaVerification = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (isOtpSheetVisible) {
+      setOtp('');
+    }
+  }, [isOtpSheetVisible]);
+
   const onConfirm = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
@@ -274,6 +278,7 @@ const useMobileAndIqamaVerification = () => {
     onConfirm,
     setOtpError,
     setIsLoading,
+    otp,
     setOtp,
     resendOtp,
   };

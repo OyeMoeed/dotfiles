@@ -1,4 +1,4 @@
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import { ImageStyle } from 'react-native';
 
 export interface IPayAnimatedImageProps {

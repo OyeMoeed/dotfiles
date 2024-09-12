@@ -13,11 +13,12 @@ const NativeFullWindowOverlay: React.ComponentType<
 > = FullWindowOverlayNativeComponent as any;
 
 const FullWindowOverlay = (props: { children: ReactNode }) => {
+  const { children } = props;
   const styles = bottonSheetStyles();
   if (Platform.OS !== 'ios') {
     return <IPayView {...props} />;
   }
-  return <NativeFullWindowOverlay style={styles.fullWindowOverlay}>{props.children}</NativeFullWindowOverlay>;
+  return <NativeFullWindowOverlay style={styles.fullWindowOverlay}>{children}</NativeFullWindowOverlay>;
 };
 
 export default FullWindowOverlay;

@@ -60,12 +60,12 @@ import {
   InternationalTransferConfirmationProps,
 } from './international-transfer-confirmation.interface';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
-import internationlTransferConfirmationStyles from './internationl-transfer-confirmation.style';
+import internationalTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
 const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmationProps> = ({ route }) => {
   const { beneficiaryData, feesInquiryData } = route.params;
   const { colors } = useTheme();
-  const styles = internationlTransferConfirmationStyles(colors);
+  const styles = internationalTransferConfirmationStyles();
   const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
