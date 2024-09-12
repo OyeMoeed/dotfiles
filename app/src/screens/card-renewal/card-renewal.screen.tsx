@@ -17,15 +17,17 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { OTPVerificationRefTypes, RouteParams, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
+import { OTPVerificationRefTypes, RouteParams } from './card-renewal.screen.interface';
 
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import cardRenewalStyles from './card-renewal.style';
@@ -45,9 +47,8 @@ const CardRenewalScreen: React.FC = () => {
   const {
     currentCard: { cardType, cardHeaderText, name },
   } = route?.params;
-
+  const dispatch = useDispatch();
   const localizationText = useLocalization();
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
@@ -58,7 +59,7 @@ const CardRenewalScreen: React.FC = () => {
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    dispatch(setTermsConditionsVisibility(true));
   };
 
   const onCloseBottomSheet = () => {
@@ -153,7 +154,6 @@ const CardRenewalScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
       <IPayBottomSheet
         heading={localizationText.CARD_RENEWAL.CARD_RENEWAL}
         enablePanDownToClose
