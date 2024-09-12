@@ -1,5 +1,4 @@
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
   IPayButton,
@@ -19,7 +18,7 @@ import { getValidationSchemas } from '@app/services';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -35,7 +34,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const validationSchema = Yup.object().shape({
     iqamaId: getValidationSchemas(localizationText).iqamaIdSchema,
@@ -51,17 +49,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainerStyle,
     });
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
   };
 
   const prepareForgetPass = async (
@@ -100,7 +87,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
   const prepareEncryptionData = async (iqamaId: string) => {
     try {
-      renderSpinner(true);
       const deviceInfo = await getDeviceInfo();
       const prepareLoginPayload: DeviceInfoProps = {
         ...deviceInfo,
@@ -121,9 +107,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
