@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { ApiError, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { ApiError, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Beneficiary Details interface
 interface BeneficiaryDetailsRes {
@@ -40,11 +40,11 @@ interface Response {
 }
 
 // Extend the LocalTransferAddBeneficiaryMockProps interface from LocalTransferAddBeneficiary and MockAPIOkProp
-interface LocalTransferAddBeneficiaryMockProps extends MockAPIOkProp, LocalTransferAddBeneficiary {
-  status: MockAPIStatusProps; // Include status directly
+interface LocalTransferAddBeneficiaryMockProps {
+  status: MockAPIStatusProps; 
   error?: ApiError;
-  response: Response;
-  successfulResponse: boolean;
+  response?: Response;
+  successfulResponse?: boolean;
 }
 
 export { BeneficiaryDetailsRes, BeneficiaryInfo, LocalTransferAddBeneficiaryMockProps };

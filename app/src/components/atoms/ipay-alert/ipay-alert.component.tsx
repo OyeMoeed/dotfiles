@@ -18,7 +18,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   secondaryAction,
   tertiaryAction,
   variant = alertVariant.DEFAULT,
-  showIcon = true,
+  showIcon = false,
   visible = true,
   onClose,
   closeOnTouchOutside = false,
@@ -41,10 +41,14 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
         <IPayView style={styles.centeredView}>
           <IPayView style={styles.modalView}>
             {icon}
-            {showIcon && variant === alertVariant.DEFAULT ? (
-              <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
-            ) : (
-              <IPayIcon icon={icons.alertWaring} size={64} color={colors.error.error500} />
+            {!icon && (
+              <>
+                {variant === alertVariant.DEFAULT ? (
+                  <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
+                ) : (
+                  <IPayIcon icon={icons.alertWaring} size={64} color={colors.error.error500} />
+                )}
+              </>
             )}
             <IPayView style={styles.textsView}>
               {title && <IPayBodyText text={title} style={styles.modalTitle} regular={false} />}
@@ -53,6 +57,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
             <IPayView style={type === alertType.SIDE_BY_SIDE ? styles.sideBySideContainer : styles.buttonContainer}>
               {primaryAction && (
                 <IPayButton
+                  btnIconsDisabled={!leftIcon}
                   medium
                   leftIcon={leftIcon}
                   btnStyle={[
@@ -68,6 +73,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
               )}
               {secondaryAction && (
                 <IPayButton
+                  btnIconsDisabled={!leftIcon}
                   medium
                   leftIcon={leftIcon}
                   btnStyle={[
@@ -83,6 +89,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
               )}
               {tertiaryAction && (
                 <IPayButton
+                  btnIconsDisabled={!leftIcon}
                   btnType={buttonVariants.OUTLINED}
                   medium
                   leftIcon={leftIcon}
