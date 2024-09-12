@@ -30,6 +30,7 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
     },
     balanceContainer: {
       flexDirection: 'row',
+      marginTop: 3,
     },
     currencyStyle: {
       marginLeft: moderateScale(3),
