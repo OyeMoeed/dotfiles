@@ -1,14 +1,17 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPaySpinner, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
+import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayNoResult, useToastContext } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -23,29 +26,18 @@ import {
   otpGetCardDetails,
   prepareShowCardDetails,
 } from '@app/network/services/core/transaction/transactions.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
-import {
-  CarouselModes,
-  buttonVariants,
-  CardOptions,
-  CardStatusNumber,
-  CardTypes,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { buttonVariants, CardOptions, CardStatusNumber, CardTypes, CarouselModes } from '@app/utilities/enums.util';
+import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
-import { getDeviceInfo } from '@app/network/utilities';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
-import cardScreenStyles from './cards.style';
 import CardScreenCurrentState from './cards.screen.interface';
+import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -64,7 +56,6 @@ const CardsScreen: React.FC = () => {
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [, setAPIError] = useState<string>('');
@@ -126,19 +117,7 @@ const CardsScreen: React.FC = () => {
     </IPayView>
   );
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
-    renderSpinner(true);
     const payload: prepareShowDetailsProp = {
       walletNumber,
       body: {
@@ -155,7 +134,6 @@ const CardsScreen: React.FC = () => {
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    renderSpinner(false);
   };
 
   const onPinCodeSheet = () => {
@@ -206,13 +184,10 @@ const CardsScreen: React.FC = () => {
     return mappedCards;
   };
   const getCardsData = async () => {
-    renderSpinner(true);
-
     const payload: CardsProp = {
       walletNumber,
     };
     const apiResponse: any = await getCards(payload);
-    renderSpinner(false);
 
     if (apiResponse) {
       const availableCards = apiResponse?.response?.cards.filter(
@@ -255,7 +230,6 @@ const CardsScreen: React.FC = () => {
 
   const getCardDetails = async () => {
     try {
-      renderSpinner(true);
       const payload: getCardDetailsProp = {
         walletNumber,
         body: {
@@ -275,7 +249,6 @@ const CardsScreen: React.FC = () => {
         setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
         renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
       }
-      renderSpinner(false);
     } catch (error: any) {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
@@ -305,59 +278,58 @@ const CardsScreen: React.FC = () => {
   }, []);
 
   const renderCardsCurrentState = () => {
-    switch (cardsCurrentState) {
-      case CardScreenCurrentState.FETCHING:
-        return <IPaySpinner testID="spinner" />;
-      case CardScreenCurrentState.NO_DATA:
-        return (
-          <IPayView style={styles.noResultContainer}>
-            <IPayNoResult
-              testID="no-result"
-              textColor={colors.primary.primary800}
-              message={localizationText.CARDS.YOU_DO_NOT_HAVE_CARD}
-              showEmptyBox
-            />
-            <IPayButton
-              btnStyle={styles.buttonStyle}
-              btnText={localizationText.CARDS.CREATE_NEW_CARD}
-              btnType={buttonVariants.PRIMARY}
-              large
-              onPress={openCardSheet}
-              leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
+    if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
+      return (
+        <IPayView style={styles.noResultContainer}>
+          <IPayNoResult
+            testID="no-result"
+            textColor={colors.primary.primary800}
+            message={localizationText.CARDS.YOU_DO_NOT_HAVE_CARD}
+            showEmptyBox
+          />
+          <IPayButton
+            btnStyle={styles.buttonStyle}
+            btnText={localizationText.CARDS.CREATE_NEW_CARD}
+            btnType={buttonVariants.PRIMARY}
+            large
+            onPress={openCardSheet}
+            leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
+          />
+        </IPayView>
+      );
+    }
+
+    if (CardScreenCurrentState.HAS_DATA) {
+      return (
+        <>
+          <IPayView style={styles.cardsContainer}>
+            <IPayCarousel
+              data={[...cardsData, { newCard: true }]}
+              modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
+              mode={CarouselModes.PARALLAX}
+              width={SCREEN_WIDTH}
+              loop={false}
+              height={verticalScale(350)}
+              onChangeIndex={onChangeIndex}
+              renderItem={({ item }) =>
+                (item as { newCard?: boolean }).newCard ? (
+                  newCard
+                ) : (
+                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} />
+                )
+              }
             />
           </IPayView>
-        );
-      case CardScreenCurrentState.HAS_DATA:
-        return (
-          <>
-            <IPayView style={styles.cardsContainer}>
-              <IPayCarousel
-                data={[...cardsData, { newCard: true }]}
-                modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-                mode={CarouselModes.PARALLAX}
-                width={SCREEN_WIDTH}
-                loop={false}
-                height={verticalScale(350)}
-                onChangeIndex={onChangeIndex}
-                renderItem={({ item }) =>
-                  (item as { newCard?: boolean }).newCard ? (
-                    newCard
-                  ) : (
-                    <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} />
-                  )
-                }
-              />
-            </IPayView>
-            {boxHeight > 0 && currentCard && (
-              <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-                <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} cards={cardsData} />
-              </IPayCustomSheet>
-            )}
-          </>
-        );
-      default:
-        return <IPayView />;
+          {boxHeight > 0 && currentCard && (
+            <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
+              <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} cards={cardsData} />
+            </IPayCustomSheet>
+          )}
+        </>
+      );
     }
+
+    return <IPayView />;
   };
 
   return (
