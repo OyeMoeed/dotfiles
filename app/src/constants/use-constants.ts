@@ -10,8 +10,8 @@ import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { dateTimeFormat } from '@app/utilities';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { FiltersType, TransactionHistoryFilter } from '@app/utilities/enums.util';
 
 const useConstantData = () => {
@@ -96,32 +96,6 @@ const useConstantData = () => {
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
     },
   ];
-  const giftData = [
-    {
-      id: '1',
-      title: 'Ibrahim Abdullah', // TODO: replaced with api
-      occasion: 'Eiydiah',
-      status: GiftStatus.UNOPENED,
-      amount: '2000',
-      dates: formattedDate,
-    },
-    {
-      id: '2',
-      title: 'Sayed Ismael', // TODO: replaced with api
-      occasion: 'Eiydiah',
-      status: GiftStatus.EXPIRED,
-      amount: '500',
-      dates: formattedDate,
-    },
-    {
-      id: '3',
-      title: 'Alaa Mahmoud', // TODO: replaced with api
-      occasion: 'Eiydiah',
-      status: GiftStatus.OPENED,
-      amount: '1200',
-      dates: formattedDate,
-    },
-  ];
 
   const sendMoneyDetails = [
     {
@@ -141,32 +115,6 @@ const useConstantData = () => {
       id: '4',
       label: localizationText.TRANSFER_SUMMARY.REASON,
       value: localizationText.TRANSFER_SUMMARY.REASON_TRANSFER,
-    },
-  ];
-  const giftRecivedData = [
-    {
-      id: '1',
-      title: 'Alaa Mahmoud', // TODO: replaced with api
-      occasion: 'Eiydiah',
-      status: GiftStatus.NEW,
-      amount: '1200',
-      dates: formattedDate,
-    },
-    {
-      id: '2',
-      title: 'Alaa Mahmoud', // TODO: replaced with api
-      occasion: 'Eiydiah',
-      status: GiftStatus.OPENED,
-      amount: '1200',
-      dates: formattedDate,
-    },
-    {
-      id: '3',
-      title: 'Sayed Ismael', // TODO: replaced with api
-      occasion: 'Eiydiah',
-      status: GiftStatus.EXPIRED,
-      amount: '500',
-      dates: formattedDate,
     },
   ];
 
@@ -978,17 +926,17 @@ const useConstantData = () => {
       filterValues: [
         {
           id: '1',
-          key: GiftStatus.OPENED,
+          key: GiftStatus.EXECUTED,
           value: localizationText.SEND_GIFT.OPENED,
         },
         {
           id: '2',
-          key: GiftStatus.UNOPENED,
+          key: GiftStatus.INITIATED,
           value: localizationText.SEND_GIFT.UNOPENED,
         },
         {
           id: '3',
-          key: GiftStatus.EXPIRED,
+          key: GiftStatus.FAILED,
           value: localizationText.SEND_GIFT.EXPIRED,
         },
       ],
@@ -1581,7 +1529,6 @@ const useConstantData = () => {
     guideStepsToCall,
     requestMoneySuccess,
     guideToReceiveCall,
-    giftData,
     notificationRequestFilters,
     sadadBillsCompanyData,
     sadadServiceTypeData,
@@ -1624,7 +1571,6 @@ const useConstantData = () => {
     productDetailData,
     shopsOffers,
     w2WFilterData,
-    giftRecivedData,
     w2WFilterDefaultValues,
     contactusList,
     alinmaDirectData,

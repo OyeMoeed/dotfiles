@@ -31,28 +31,13 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = giftListStyles(colors);
-  const isReceivedCardExpired = status === GiftStatus.EXPIRED && tab === localizationText.SEND_GIFT.RECEIVED;
-  const isNewCard = status === GiftStatus.NEW && tab === localizationText.SEND_GIFT.RECEIVED;
+  const isReceivedCardExpired = status === GiftStatus.FAILED && tab === localizationText.SEND_GIFT.RECEIVED;
+  const isNewCard = status === GiftStatus.INITIATED && tab === localizationText.SEND_GIFT.RECEIVED;
 
   // this function should change the color of the status of the gift
   const getGiftStatusStyles = () => {
     switch (status) {
-      case GiftStatus.UNOPENED:
-        return {
-          color: colors.warning.warning500,
-          textColor: colors.warning.warning800,
-          text: localizationText.SEND_GIFT.UNOPENED,
-          leftIconColor: colors.warning.warning500,
-          leftIconBg: styles.iconBackground,
-        };
-      case GiftStatus.OPENED:
-        return {
-          color: colors.success.success500,
-          textColor: colors.success.success800,
-          text: localizationText.SEND_GIFT.OPENED,
-          leftIconColor: colors.primary.primary900,
-        };
-      case GiftStatus.NEW:
+      case GiftStatus.INITIATED:
         if (tab === localizationText.SEND_GIFT.RECEIVED) {
           return {
             color: colors.secondary.secondary500,
@@ -61,13 +46,34 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
             leftIconBg: styles.newStyle,
           };
         }
-        return {};
-      default:
+        return {
+          color: colors.warning.warning500,
+          textColor: colors.warning.warning800,
+          text: localizationText.SEND_GIFT.UNOPENED,
+          leftIconColor: colors.warning.warning500,
+          leftIconBg: styles.iconBackground,
+        };
+      case GiftStatus.EXECUTED:
+        return {
+          color: colors.success.success500,
+          textColor: colors.success.success800,
+          text: localizationText.SEND_GIFT.OPENED,
+          leftIconColor: colors.primary.primary900,
+        };
+      case GiftStatus.FAILED:
         return {
           color: colors.error.error500,
           textColor: colors.error.error800,
           text: localizationText.SEND_GIFT.EXPIRED,
           leftIconColor: colors.primary.primary900,
+        };
+      default:
+        return {
+          color: colors.warning.warning500,
+          textColor: colors.warning.warning800,
+          text: localizationText.SEND_GIFT.UNOPENED,
+          leftIconColor: colors.warning.warning500,
+          leftIconBg: styles.iconBackground,
         };
     }
   };
