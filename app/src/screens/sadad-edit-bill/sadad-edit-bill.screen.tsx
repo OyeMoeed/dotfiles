@@ -1,57 +1,55 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
-import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SadadEditBillFields } from '@app/enums/edit-sadad-bill.enum';
 import { goBack } from '@app/navigation/navigation-service.navigation';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
 import editBillService from '@app/network/services/bills-management/edit-bill/edit-bill.service';
+import { PaymentInfoProps } from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { SadadEditBillsScreenProps } from './sadad-edit-bill.interface';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
 
-const SadadEditBillsScreen: React.FC = ({ route }) => {
-  const { billData, setEditBillSuccessToast, billId } = route.params;
+const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) => {
+  const { billData, setEditBillSuccessToast } = route.params;
   const {
-    billTitle = '',
-    vendor = '',
-    vendorIcon = images.saudi_electricity_co,
-    serviceType = '',
-    accountNumber = '',
-  }: BillDetailsProps = billData;
+    billerId,
+    billId,
+    billDesc = '',
+    billerName = '',
+    serviceDescription = '',
+    billNumOrBillingAcct = '',
+  }: PaymentInfoProps = billData;
   const { colors } = useTheme();
   const styles = sadadEditBillsStyles(colors);
   const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
   const { getValues, control, setValue, watch } = useForm();
 
   const onSubmit = async () => {
+    const deviceInfo = await getDeviceInfo();
     // Handle form submission here
     const billName = getValues(SadadEditBillFields.BILL_NICK_NAME);
     if (billName) {
       const payload: EditBillPayloadTypes = {
-        billNumOrBillingAcct: accountNumber,
+        billNumOrBillingAcct,
         billId,
         billNickname: billName,
         walletNumber,
-        deviceInfo: {
-          platformVersion: '',
-          deviceId: '',
-          deviceName: '',
-          platform: '',
-        },
+        deviceInfo,
       };
       const apiResponse = await editBillService(payload);
-      if (apiResponse.successfulResponse) {
+      if (apiResponse.status.type === APIResponseType.SUCCESS) {
         setEditBillSuccessToast(billName);
         goBack();
       }
@@ -59,14 +57,14 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   };
 
   useEffect(() => {
-    setValue(SadadEditBillFields.BILL_NICK_NAME, billTitle);
+    setValue(SadadEditBillFields.BILL_NICK_NAME, billDesc);
   }, []);
 
   // Watch the bill nickname field to dynamically update button state
   const billNickName = watch(SadadEditBillFields.BILL_NICK_NAME);
 
   const checkIfNickNameUpdated = () => {
-    if (billNickName !== billTitle) {
+    if (billNickName !== billDesc) {
       return false;
     }
     return true;
@@ -85,6 +83,8 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
   };
 
   const isSaveButtonDisabled = !billNickName || checkIfNickNameUpdated();
+
+  const getBillerImage = useCallback(() => BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId), [billerId]);
 
   return (
     <IPaySafeAreaView>
@@ -116,10 +116,10 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
 
           <IPayView style={styles.diabledCardView}>
             <IPayView style={styles.infoView}>
-              <IPayImage image={vendorIcon} style={styles.vendorIcon} />
+              <IPayImage image={getBillerImage()} style={styles.vendorIcon} />
               <IPayView>
                 <IPayCaption1Text text="NEW_SADAD_BILLS.COMPANY_NAME" color={colors.natural.natural500} />
-                <IPaySubHeadlineText regular text={vendor} style={styles.inputValueText} />
+                <IPaySubHeadlineText regular text={billerName} style={styles.inputValueText} />
               </IPayView>
             </IPayView>
             <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.natural.natural500} />
@@ -128,7 +128,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
           <IPayView style={styles.diabledCardView}>
             <IPayView>
               <IPayCaption1Text text="NEW_SADAD_BILLS.SERVICE_TYPE" color={colors.natural.natural500} />
-              <IPaySubHeadlineText regular text={serviceType} style={styles.inputValueText} />
+              <IPaySubHeadlineText regular text={serviceDescription} style={styles.inputValueText} />
             </IPayView>
             <IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.natural.natural500} />
           </IPayView>
@@ -136,7 +136,7 @@ const SadadEditBillsScreen: React.FC = ({ route }) => {
           <IPayView style={styles.diabledCardView}>
             <IPayView>
               <IPayCaption1Text text="NEW_SADAD_BILLS.ACCOUNT_NUMBER" color={colors.natural.natural500} />
-              <IPaySubHeadlineText regular text={accountNumber} style={styles.inputValueText} />
+              <IPaySubHeadlineText regular text={billNumOrBillingAcct} style={styles.inputValueText} />
             </IPayView>
           </IPayView>
         </IPayView>

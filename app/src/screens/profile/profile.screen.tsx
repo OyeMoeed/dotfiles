@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayChip, IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { KycFormCategories } from '@app/enums';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import {
@@ -31,13 +30,12 @@ import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from 
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import CardKeys from './profile.interface';
+import { CardKeys, UserFieldKeys } from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
 const Profile = () => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
@@ -144,7 +142,11 @@ const Profile = () => {
       <IPayFootnoteText style={styles.personalInfoCardTitleText} regular>
         {item.text}
       </IPayFootnoteText>
-      <IPaySubHeadlineText regular style={styles.subHeadline} numberOfLines={2}>
+      <IPaySubHeadlineText
+        regular
+        style={styles.subHeadline}
+        numberOfLines={item?.key === UserFieldKeys.NATIONAL_ADDRESS ? 1 : 2}
+      >
         {item.details}
       </IPaySubHeadlineText>
     </IPayView>
@@ -271,7 +273,6 @@ const Profile = () => {
       setKycVisible(false);
     }
   };
-
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView2}>
