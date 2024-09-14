@@ -34,12 +34,11 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { States, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -72,14 +71,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const getW2WActiveFriends = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IW2WCheckActiveReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
@@ -92,10 +86,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           selectedContacts,
           heading: t('HOME.SEND_MONEY'),
           showReason: true,
+          showHistory: true,
         });
       }
-    } else {
-      hideSpinner();
     }
   };
 

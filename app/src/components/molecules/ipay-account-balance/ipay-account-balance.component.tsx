@@ -86,13 +86,13 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               text="HOME.REMAINING_AMOUNT"
             />
             <IPayView style={styles.remainingBalanceView}>
+              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />
               <IPayCaption2Text
-                regular={false}
-                style={currentAvailableTextStyle}
-                text={`${currentAvailableBalance} `}
+                style={totalAvailableTextStyle}
+                color={colors.natural.natural500}
+                text={` ${'HOME.OF'} `}
               />
-              <IPayCaption2Text style={totalAvailableTextStyle} text="HOME.OF" />
-              <IPayCaption2Text text={totalAvailableBalance} />
+              <IPayCaption2Text text={totalAvailableBalance} color={colors.natural.natural500} />
             </IPayView>
           </IPayView>
         </IPayView>

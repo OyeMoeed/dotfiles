@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -12,14 +11,7 @@ import { topupCheckout } from '@app/network/services/core/topup-cards/topup-card
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import {
-  ApiResponseStatusType,
-  TopUpStates,
-  TopupStatus,
-  buttonVariants,
-  PayChannel,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants, PayChannel, TopUpStates, TopupStatus } from '@app/utilities/enums.util';
 
 // TODO: fix no-extraneous-dependencies
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -27,11 +19,11 @@ import { getErrorMessage } from '@rnw-community/shared';
 
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useEffect, useState } from 'react';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
+import { useTranslation } from 'react-i18next';
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
@@ -58,7 +50,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [, setAPIError] = useState<string>('');
   const [, setRedirectUrl] = useState<string>('');
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const methodData: PaymentMethodData[] = [
     {
@@ -82,17 +73,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     },
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const createPaymentRequest = (): PaymentRequest => {
     setError('');
     setResponse(undefined);
@@ -100,11 +80,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   };
 
   const applePayCheckOutId = async (paymentResponse: IosPaymentResponse): Promise<void> => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-
     const applePayCheckOutPayload: ApplePayCheckOutReq = {
       clickPayApplePayToken: {
         transactionIdentifier: paymentResponse.details.applePayToken.transactionIdentifier,
@@ -122,18 +97,12 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
 
     const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
     if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
-      hideSpinner();
-      renderSpinner(false);
-
       navigate(screenNames.TOP_UP, {
         topupChannel: PayChannel.APPLE,
         topupStatus: TopupStatus.SUCCESS,
         amount: topUpAmount,
       });
     }
-
-    hideSpinner();
-    renderSpinner(false);
   };
 
   const handlePay = (): void => {
@@ -150,15 +119,12 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   };
 
   const handlePressPay = async () => {
-    renderSpinner(true);
     if (channel === PayChannel.APPLE) {
       try {
         handlePay();
         return;
       } catch (error) {
         return;
-      } finally {
-        renderSpinner(false);
       }
     }
     const deviceInfo = await getDeviceInfo();
@@ -211,8 +177,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       default:
         break;
     }
-
-    renderSpinner(false);
   };
 
   const addCard = () => {

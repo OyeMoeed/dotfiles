@@ -1,18 +1,16 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayCaption2Text, IPayIcon, IPayImage, IPayPressable, IPayView } from '@app/components/atoms';
+import { IAPPLECRYPTOREQ } from '@app/network/services/cards-management/apple-pay-crypto/apple-pay-crypto.interface';
+import applePayCrypto from '@app/network/services/cards-management/apple-pay-crypto/apple-pay-crypto.service';
+import { getDeviceInfo } from '@app/network/utilities';
+import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { isIosOS } from '@app/utilities/constants';
 import React, { useEffect, useState } from 'react';
 import { NativeModules } from 'react-native';
-import { getDeviceInfo } from '@app/network/utilities';
-import applePayCrypto from '@app/network/services/cards-management/apple-pay-crypto/apple-pay-crypto.service';
-import { IAPPLECRYPTOREQ } from '@app/network/services/cards-management/apple-pay-crypto/apple-pay-crypto.interface';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { spinnerVariant } from '@app/utilities/enums.util';
-import addAppleWalletStyles from './ipay-add-apple-wallet-button.styles';
 import IPayAddAppleWalletProps from './ipay-add-apple-wallet-button.interface';
+import addAppleWalletStyles from './ipay-add-apple-wallet-button.styles';
 
 const { AppleWallet } = NativeModules;
 
@@ -20,24 +18,12 @@ const IPayAddAppleWalletButton: React.FC<IPayAddAppleWalletProps> = ({ selectedC
   const styles = addAppleWalletStyles(colors);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [addedSuccessfully, setAddedSuccessfully] = useState<boolean>(false);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { cardIndex, cardNumber, linkedName, maskedCardNumber } = selectedCard ?? {};
   const cardSuffix = selectedCard?.cardNumber?.slice(12, 16);
   const { embossingName: linkEmbossingName } = linkedName ?? {};
   const cardholderName = cardNumber || linkEmbossingName;
   const [isEligible, setIsEligible] = useState(false);
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
 
   const getCardNetworkName = (): string => {
     if (selectedCard?.cardTypeId === 'IPMC') {
@@ -83,7 +69,6 @@ const IPayAddAppleWalletButton: React.FC<IPayAddAppleWalletProps> = ({ selectedC
   }, [cardholderName, maskedCardNumber]);
 
   const completeProvisionning = async (body: IAPPLECRYPTOREQ) => {
-    renderSpinner(true);
     const apiResponse = await applePayCrypto(walletNumber as string, body);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
@@ -102,12 +87,10 @@ const IPayAddAppleWalletButton: React.FC<IPayAddAppleWalletProps> = ({ selectedC
           setAddedSuccessfully(true);
         })
         .catch((e: any) => {
-          renderSpinner(false);
           // eslint-disable-next-line no-console
           console.log(e);
         });
     }
-    renderSpinner(false);
   };
 
   const setWalletListener = async () => {

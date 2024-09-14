@@ -94,15 +94,16 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     stylesValue.subTitle,
     dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
     item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftCardStatus.EXPIRED && stylesValue.textStyle,
+    item === GiftCardDetailsKey.AMOUNT && stylesValue.currencyStyle,
   ];
 
   const titleText = useCallback(
-    (value: string) => {
+    (value: string, item: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
       if (date.isValid()) {
         return formatTimeAndDate(value);
       }
-      return value;
+      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
     },
     [details],
   );
@@ -163,7 +164,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
-            text={titleText(details[item])}
+            text={titleText(details[item], item)}
             color={getTitleColor(details[item])}
             numberOfLines={1}
             style={getDynamicStyles(styles, details, item)}
@@ -188,7 +189,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
-            isExpired={details?.status === GiftCardStatus.EXPIRED}
+            isExpired={details?.status === GiftCardStatus.EXPIRED && isSend}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton
@@ -208,7 +209,9 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         {isSend ? (
           <IPayView style={styles.bottomView}>
             <IPayFlatlist
-              data={Object.keys(details).filter((key) => GiftTransactionKeys.includes(key))}
+              data={Object.keys(details)
+                .filter((key) => GiftTransactionKeys.includes(key))
+                .sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
               keyExtractor={(_, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={renderCardDetails}

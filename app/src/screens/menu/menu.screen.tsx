@@ -8,7 +8,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -22,7 +21,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import clearSession from '@app/network/utilities/network-session-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType } from '@app/utilities/enums.util';
 import { FC, useCallback, useRef } from 'react';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
@@ -34,18 +33,6 @@ const MenuScreen: FC = () => {
   const localizationText = useLocalization();
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
 
   const onPressSettings = () => {
     navigate(screenNames.SETTINGS);
@@ -72,22 +59,16 @@ const MenuScreen: FC = () => {
   };
 
   const delinkDevice = async () => {
-    renderSpinner(true);
-    try {
-      const delinkReqBody = await getDeviceInfo();
-      const payload: DelinkPayload = {
-        delinkReq: delinkReqBody,
-        walletNumber,
-      };
+    const delinkReqBody = await getDeviceInfo();
+    const payload: DelinkPayload = {
+      delinkReq: delinkReqBody,
+      walletNumber,
+    };
 
-      const apiResponse: any = await deviceDelink(payload);
+    const apiResponse: any = await deviceDelink(payload);
 
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        delinkSuccessfullyDone();
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      delinkSuccessfullyDone();
     }
   };
 

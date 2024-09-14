@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPaySpinner, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
@@ -15,11 +14,11 @@ import { getTransactionTypes, getTransactions } from '@app/network/services/core
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, FiltersType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
@@ -46,7 +45,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [, setIsLoadingW2W] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
@@ -102,19 +100,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getTransactionsData = async (filtersData?: any) => {
-    renderSpinner(true);
     setIsLoading(true);
     try {
       const payload: TransactionsProp = {
@@ -148,10 +134,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           break;
       }
       setIsLoading(false);
-      renderSpinner(false);
     } catch (error: any) {
       setIsLoading(false);
-      renderSpinner(false);
       setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
@@ -163,7 +147,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
-    renderSpinner(true);
     setIsLoadingW2W(true);
     setTransactionsData([]);
     setFilteredData([]);
@@ -195,10 +178,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           break;
       }
       setIsLoadingW2W(false);
-      renderSpinner(false);
     } catch (error: any) {
       setIsLoadingW2W(false);
-      renderSpinner(false);
       setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
@@ -309,18 +290,15 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       });
     }
 
-    return filters;
+    return filtersTransaction;
   };
 
   const getTransactionTypesData = async () => {
-    renderSpinner(true);
     const apiResponse: any = await getTransactionTypes();
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
     }
-
-    renderSpinner(false);
   };
 
   useEffect(() => {

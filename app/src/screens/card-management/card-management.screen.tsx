@@ -13,25 +13,24 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayCardListItem from '@app/components/molecules/ipay-card-list-item/ipay-card-list-item.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { TopUpCardItem, WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { TopUpCardItem, WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
+import { deleteSavedCard, getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { alertType, alertVariant, buttonVariants, PayChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { alertType, alertVariant, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useTypedSelector } from '@app/store/store';
-import { deleteSavedCard, getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTranslation } from 'react-i18next';
-import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 import cardManagementStyles from './card-management.style';
+import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 
 const CardManagementScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -48,19 +47,7 @@ const CardManagementScreen: React.FC = () => {
   const [selectedCardName, setSelectedCardName] = useState('');
   const { isKeyboardOpen } = useKeyboardStatus();
   const styles = cardManagementStyles(colors);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const getCardImage = (cardType: string): any => {
     if (cardType.toLowerCase() === 'visa') {
@@ -79,8 +66,6 @@ const CardManagementScreen: React.FC = () => {
   };
 
   const getTopupCardsData = async () => {
-    renderSpinner(true);
-
     const payload: WalletNumberProp = {
       walletNumber,
     };
@@ -100,7 +85,6 @@ const CardManagementScreen: React.FC = () => {
         setCards(mappedData);
       }
     }
-    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -143,22 +127,17 @@ const CardManagementScreen: React.FC = () => {
   };
 
   const onDeleteCard = async () => {
-    renderSpinner(true);
     setShowDeleteAlert(false);
     const registrationId = cards[selectedCardIndex]?.registrationId;
-    try {
-      const apiResponse = await deleteSavedCard(walletNumber, registrationId);
-      if (apiResponse.status.type === 'SUCCESS') {
-        setSelectedCardIndex(0);
-        const filteredData = cards.filter((el) => el.id !== currentCardID);
-        setCards(filteredData);
-        setShowDeleteAlert(false);
-        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), icons.trash);
-      }
-    } catch (e) {
-      renderSpinner(false);
+
+    const apiResponse = await deleteSavedCard(walletNumber, registrationId);
+    if (apiResponse) {
+      setSelectedCardIndex(0);
+      const filteredData = cards.filter((el) => el.id !== currentCardID);
+      setCards(filteredData);
+      setShowDeleteAlert(false);
+      renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), icons.trash);
     }
-    renderSpinner(false);
   };
 
   const hideBottomSheet = () => {

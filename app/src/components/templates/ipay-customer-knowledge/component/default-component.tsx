@@ -20,7 +20,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
   const styles = customerKnowledgeStyles(colors);
   const { t } = useTranslation();
 
-  const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />;
+  const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />;
 
   return (
     <>

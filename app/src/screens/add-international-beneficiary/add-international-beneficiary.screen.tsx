@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -20,8 +19,8 @@ import WUBeneficiaryMetaDataProps, {
 import getWUBeneficiaryMetaData from '@app/network/services/international-transfer/wu-beneficiary-metadata/wu-beneficiary-metadata.service';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useState } from 'react';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import {
@@ -45,7 +44,6 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, { transferService: { ...data, ...selectedService } });
   };
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { required } = getValidationSchemas(t);
   const validationSchema = Yup.object().shape({
@@ -117,19 +115,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getWUBeneficiaryMetaDataData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData();
       switch (apiResponse?.status?.type) {
@@ -145,16 +131,13 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const getWUBeneficiaryCurrenciesData = async () => {
-    renderSpinner(true);
     const payload = {
       countryCode,
     };
@@ -173,9 +156,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }

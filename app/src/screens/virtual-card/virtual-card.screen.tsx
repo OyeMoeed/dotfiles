@@ -8,7 +8,7 @@ import { ANIMATION_DURATION } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardOptions, CardTypes } from '@app/utilities/enums.util';
+import { CardMapping, CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
@@ -43,7 +43,7 @@ const VirtualCardScreen: React.FC = () => {
   const handleTabSelect = useCallback(
     (tab: CardTypes) => {
       const currentTab = tab.toLowerCase();
-      setSelectedCard(currentTab);
+      setSelectedCard(CardMapping[currentTab]);
     },
     [selectedCard],
   );

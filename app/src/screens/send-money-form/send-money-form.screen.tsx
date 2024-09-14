@@ -7,7 +7,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayBalanceStatusChip,
   IPayButton,
@@ -20,7 +19,6 @@ import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-vi
 import { IPayActionSheet, IPayBottomSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks';
@@ -40,12 +38,11 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { PayChannel, TopupStatus } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Contact } from 'react-native-contacts';
 import { useTranslation } from 'react-i18next';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
@@ -55,22 +52,17 @@ const SendMoneyFormScreen: React.FC = () => {
   const { isKeyboardWillOpen, isKeyboardOpen } = useKeyboardStatus();
   const styles = sendMoneyFormStyles(colors);
   const { t } = useTranslation();
-  const localizationText = useLocalization();
-  const MAX_CONTACT = 5;
-  const [selectedItem, setSelectedItem] = useState<string>('');
-  const [, setTransferReasonData] = useState<ListProps[]>([]);
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { availableBalance } = walletInfo; // TODO replace with orignal data
-  const route = useRoute();
-  const { selectedContacts, from, heading, showHistory, activeFriends } = route.params;
-  const { transferReasonData } = useConstantData();
-  const [, setContacts] = useState<Contact[]>([]);
-  const [selectedId, setSelectedId] = useState<number | string>('');
-  const reasonBottomRef = useRef<bottomSheetTypes>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const [warningStatus, setWarningStatus] = useState<string>('');
 
+  const route = useRoute();
+  const { selectedContacts, from, heading, showHistory, activeFriends } = route.params as any;
+
+  const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
+
+  const [selectedItem, setSelectedItem] = useState<string>('');
+  const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
+  const [selectedId, setSelectedId] = useState<number | string>('');
+  const [warningStatus, setWarningStatus] = useState<string>('');
 
   const isItemHasWallet = (mobile: string): boolean => {
     const walletNumber = activeFriends?.filter(
@@ -84,7 +76,7 @@ const SendMoneyFormScreen: React.FC = () => {
   };
 
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
-    selectedContacts?.map((contact, index) => ({
+    selectedContacts?.map((contact: any, index: number) => ({
       id: index + 1,
       subtitle: contact.givenName,
       amount: '',
@@ -95,11 +87,12 @@ const SendMoneyFormScreen: React.FC = () => {
     })),
   );
 
-  const getTransferreasonLovs = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { availableBalance } = walletInfo; // TODO replace with orignal data
+
+  const MAX_CONTACT = 5;
+
+  const getTransferReasonLovs = async () => {
     const payload: IGetCoreLovPayload = {
       lovType: '184',
       lovCode2: 'W',
@@ -115,18 +108,14 @@ const SendMoneyFormScreen: React.FC = () => {
           })),
         );
     }
-    hideSpinner();
   };
 
-  useEffect(() => {
-    setContacts(selectedContacts);
-  }, [selectedContacts]);
   useEffect(() => {
     if (formInstances?.length === 0) goBack();
   }, [formInstances]);
 
   useEffect(() => {
-    getTransferreasonLovs();
+    getTransferReasonLovs();
   }, []);
 
   const totalAmount = formInstances.reduce(
@@ -228,24 +217,20 @@ const SendMoneyFormScreen: React.FC = () => {
     if (constants.MOCK_API_RESPONSE && from === TRANSFERTYPE.REQUEST_MONEY) {
       // Mock API response
       navigate(ScreenNames.TOP_UP_SUCCESS, {
-        topupChannel: payChannel.REQUEST,
+        topupChannel: PayChannel.REQUEST,
         topupStatus: TopupStatus.SUCCESS,
         amount: totalAmount,
       });
       return;
     }
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IW2WFeesReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       requests: formInstances.map((item) => ({
         mobileNumber: item.mobileNumber,
         amount: +item.amount,
         note: item.notes,
-        transferPurpose: item.selectedItem.id as string,
+        transferPurpose: item?.selectedItem?.id as string,
       })),
     };
     const apiResponse = await getWalletToWalletFees(walletInfo.walletNumber as string, payload);
@@ -258,14 +243,9 @@ const SendMoneyFormScreen: React.FC = () => {
         },
       });
     }
-    hideSpinner();
   };
 
   const getW2WActiveFriends = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IW2WCheckActiveReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
@@ -275,8 +255,6 @@ const SendMoneyFormScreen: React.FC = () => {
       if (apiResponse.response?.friends) {
         getW2WTransferFees(apiResponse.response?.friends);
       }
-    } else {
-      hideSpinner();
     }
   };
 
@@ -303,8 +281,10 @@ const SendMoneyFormScreen: React.FC = () => {
   };
   const history = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+      isW2WTransactions: true,
       isShowTabs: true,
       isShowCard: false,
+      contacts: selectedContacts,
     });
   };
   const btnText = from === TRANSFERTYPE.REQUEST_MONEY ? t('REQUEST_MONEY.SENT_REQUEST') : t('COMMON.TRANSFER');
@@ -424,7 +404,7 @@ const SendMoneyFormScreen: React.FC = () => {
           bold
         >
           <IPayListView
-            list={transferReasonData}
+            list={transferReason}
             onPressListItem={onPressListItem}
             selectedListItem={getSelectedItem()}
             cardContainerStyle={styles.reasonItemStyle}

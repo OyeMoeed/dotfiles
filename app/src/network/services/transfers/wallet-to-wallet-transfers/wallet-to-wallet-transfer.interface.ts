@@ -1,5 +1,5 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import { MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 interface WalletNumberProp {
   walletNumber: string;
@@ -22,12 +22,12 @@ interface TransferItem {
   vatAmt: string | null;
   bankVATAmt: string | null;
   userNotes: string;
-  status: 'initiated' | 'executed'; // Assuming status is one of these two values
+  status: 'initiated' | 'executed' | 'failed'; // Assuming status is one of these two values
 }
 
-// Define the WalletToWalletTransferResponseDetails interface that extends MockAPIDataProps with a specific response
-interface WalletToWalletTransferResponseDetails extends MockAPIDataProps {
-  data: {
+// Define the WalletToWalletTransferResponseDetails
+interface WalletToWalletTransferResponseDetails {
+  response: {
     transferRequestsResult: {
       groupedCategories: {
         RECEIVED: TransferItem[];
@@ -36,13 +36,10 @@ interface WalletToWalletTransferResponseDetails extends MockAPIDataProps {
     };
   };
   successfulResponse: boolean;
-  status: MockAPIStatusProps;
 }
 
 // Extend the WalletToWalletTransferMockProps interface from WalletToWalletTransferResponseDetails and MockAPIOkProp
-interface WalletToWalletTransferMockProps extends MockAPIOkProp {
-  data: WalletToWalletTransferResponseDetails['data']; // Reference 'data' directly without nesting again
-  successfulResponse: WalletToWalletTransferResponseDetails['successfulResponse']; // Include successfulResponse directly
+interface WalletToWalletTransferMockProps extends WalletToWalletTransferResponseDetails, MockAPIOkProp {
   status: MockAPIStatusProps; // Include status directly
 }
 

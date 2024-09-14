@@ -1,8 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPaySafeAreaView } from '@app/components/templates';
+import icons from '@app/assets/icons';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -12,18 +10,20 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import constants from '@app/constants/constants';
-import icons from '@app/assets/icons';
-import { buttonVariants } from '@app/utilities/enums.util';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayTermsAndConditions, IPayBottomSheet } from '@app/components/organism';
-import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import constants from '@app/constants/constants';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
+import { IPaySafeAreaView } from '@app/components/templates';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute, RouteProp } from '@react-navigation/native';
+import { buttonVariants } from '@app/utilities/enums.util';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { useTranslation } from 'react-i18next';
+import { RouteParams } from './replace-card-choose-address.interface';
 import replaceCardStyles from './replace-card-choose-address.style';
-import { TermsAndConditionsRefTypes, RouteParams } from './replace-card-choose-address.interface';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
 
 const COUNTRY = 'Saudi Arabia';
@@ -45,8 +45,8 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const styles = replaceCardStyles(colors);
   const { t } = useTranslation();
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
 
   const [selectedCity, setSelectedCity] = useState(CITIES[0]);
@@ -54,7 +54,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    setCheckTermsAndConditions(true);
   };
 
   const onCloseBottomSheet = () => {
@@ -136,7 +136,11 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           />
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+        isVirtualCardTermsAndConditions
+      />
       <IPayBottomSheet
         noGradient
         heading="REPLACE_CARD.SELECT_CITY"

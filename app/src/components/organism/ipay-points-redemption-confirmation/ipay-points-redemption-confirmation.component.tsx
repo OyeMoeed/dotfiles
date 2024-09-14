@@ -1,6 +1,5 @@
 import { IPayFootnoteText, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import IPayPointRedemptionCard from '@app/components/atoms/ipay-point-redemption-card/ipay-point-redemption-card.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
@@ -17,7 +16,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopupStatus, spinnerVariant } from '@app/utilities/enums.util';
+import { TopupStatus } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,22 +36,10 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const styles = pointRedemptionConfirmation(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
+
   const { otpConfig } = useConstantData();
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const onConfirm = async (showOtpPopup: boolean = true) => {
-    renderSpinner(true);
     const apiResponse = await redeemPointsPrepare(walletInfo.walletNumber, {
       deviceInfo: await getDeviceInfo(),
     });
@@ -62,7 +49,6 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    renderSpinner(false);
   };
 
   const handleOnPressHelp = () => {
@@ -89,7 +75,6 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   };
 
   const verifyOtp = async () => {
-    renderSpinner(true);
     const payload: IRedeemPointsConfirmReq = {
       deviceInfo: await getDeviceInfo(),
       otp,
@@ -112,7 +97,6 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         topupStatus: TopupStatus.FAILED,
       } as IRedeemPointsConfirmRes);
     }
-    renderSpinner(false);
   };
 
   const onConfirmOtp = () => {

@@ -12,7 +12,6 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -25,7 +24,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
+import { TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -41,7 +40,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   const styles = topUpSuccessRedemptionStyles(colors);
   const { showToast } = useToastContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const renderToast = () => {
@@ -64,10 +62,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
   };
 
   const navigateTOAktharPoints = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
     dispatch(setPointsRedemptionReset(true));
     if (
@@ -88,7 +82,6 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
     } else {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }
-    hideSpinner();
   };
 
   const successDetail = [

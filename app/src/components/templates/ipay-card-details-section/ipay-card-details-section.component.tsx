@@ -1,11 +1,9 @@
 import icons from '@app/assets/icons';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
@@ -23,7 +21,6 @@ import {
   CardStatusIndication,
   CardStatusNumber,
   CardStatusType,
-  spinnerVariant,
   ToastTypes,
 } from '@app/utilities/enums.util';
 import {
@@ -52,7 +49,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   cards,
 }) => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const styles = cardBalanceSectionStyles(colors);
@@ -73,9 +69,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
   const [isCardPrinted, setIsCardPrinted] = useState();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
 
   const showActionSheet = () => {
@@ -158,19 +152,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const onFreeze = async (type: string) => {
-    renderSpinner(true);
     const cardStatusPayload: CardStatusReq = {
       status:
         type.toLowerCase() === CardActiveStatus.UNFREEZE
@@ -195,11 +177,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       setTimeout(() => {
         renderToast(`${t('CARDS.DEBIT_CARD')} ${currentCard.maskedCardNumber}`, type.toLowerCase());
       }, 500);
-      renderSpinner(false);
       return;
     }
 
-    renderSpinner(false);
     actionSheetRef.current.hide();
   };
 
@@ -217,8 +197,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   }, []);
 
   const getTransactionsData = async () => {
-    renderSpinner(true);
-
     const payload: TransactionsProp = {
       walletNumber: walletInfo.walletNumber,
       maxRecords: '10',
@@ -230,11 +208,8 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     const apiResponse: any = await getTransactions(payload);
 
     if (apiResponse) {
-      renderSpinner(false);
       setTransactionsData(apiResponse?.response?.transactions);
     }
-
-    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -270,7 +245,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           <IPayCaption2Text style={styles.accountBalanceText}>{t('CARDS.ACCOUNT_BALANCE')}</IPayCaption2Text>
           <IPaySubHeadlineText style={styles.accountBalanceText}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular>{t('COMMON.SAR')}</IPaySubHeadlineText>
+            <IPaySubHeadlineText regular>{` ${t('COMMON.SAR')}`}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />
@@ -321,26 +296,14 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         <IPayView style={styles.commonContainerStyle}>
           <IPayFootnoteText style={styles.footnoteTextStyle}>{t('CARDS.CARD_TRANSACTIONS_HISTORY')}</IPayFootnoteText>
         </IPayView>
-        <IPayPressable
-          onPress={() =>
-            navigate(ScreenNames.TRANSACTIONS_HISTORY, {
-              isShowCard: true,
-              currentCard,
-              cards,
-            })
-          }
-          style={styles.commonContainerStyle}
-        />
-        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {t('COMMON.VIEW_ALL')}
-        </IPaySubHeadlineText>
-        <IPayPressable
+        <IPayButton
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
-        >
-          <IPayView>
-            <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-          </IPayView>
-        </IPayPressable>
+          btnType={buttonVariants.LINK_BUTTON}
+          hasRightIcon
+          rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
+          medium
+          btnText={t('COMMON.VIEW_ALL')}
+        />
       </IPayView>
       <IPayFlatlist
         testID="transaction"
@@ -352,7 +315,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       <IPayActionSheet
         ref={actionSheetRef}
         bodyStyle={styles.actionSheetStyle}
-        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, localizationText.COMMON.CANCEL]}
+        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, t('COMMON.CANCEL')]}
         cancelButtonIndex={1}
         onPress={(index) => handleFinalAction(index, sheetVariant[actionTypeRef.current as keyof SheetVariants].option)}
         showCancel

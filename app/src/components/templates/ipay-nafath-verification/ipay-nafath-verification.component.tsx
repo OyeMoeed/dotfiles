@@ -12,7 +12,6 @@ import {
   IPayText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayPageDescriptionText, IPayPrimaryButton } from '@app/components/molecules';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -31,9 +30,9 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import { forwardRef, useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
+import { forwardRef, useEffect, useState } from 'react';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
@@ -47,13 +46,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(90); // in seconds
   const [, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [nafathNumber, setNafathNumber] = useState<number>();
   const [, setNafathRequestId] = useState<string>('');
   const [duration, setDuration] = useState<number>();
   const [waitngScnds] = useState<number>(20);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
 
   useEffect(() => {
@@ -69,20 +66,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     onComplete();
   };
 
-  const renderSpinner = useCallback(
-    (isVisbile: boolean) => {
-      if (isVisbile) {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-      } else {
-        hideSpinner();
-      }
-    },
-    [isLoading],
-  );
-
   const renderStep = (_step: string) => (
     <IPayView style={styles.stepIndicator}>
       <IPayGradientText
@@ -97,7 +80,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   );
 
   const getNafathRandomNumber = async () => {
-    renderSpinner(true);
     const payLoad: PrepareIdRenewalProp = {
       requestId: appData?.loginData?.iamRequestId,
       channelId: appData?.loginData?.channelId,
@@ -120,8 +102,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       }
       setStartInqiryInterval(true);
     }
-    setIsLoading(false);
-    renderSpinner(false);
   };
 
   const getIamDate = () => {
@@ -133,7 +113,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   };
 
   const updateWalletTier = async (nafathRes: INafathInqRes) => {
-    renderSpinner(true);
     const { dispatch } = store || {};
 
     const deviceInfo = await getDeviceInfo();
@@ -184,7 +163,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
       onCloseNafathVerificationSheet();
       navigate(screenNames.IDENTITY_SUCCESSFUL);
-      renderSpinner(false);
+
       return;
     }
 
@@ -197,7 +176,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         ...updatedValues,
       }),
     );
-    renderSpinner(false);
   };
 
   const nafathInquiry = async () => {
@@ -226,7 +204,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
           break;
       }
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {

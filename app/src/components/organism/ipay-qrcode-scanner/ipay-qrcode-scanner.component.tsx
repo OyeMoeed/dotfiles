@@ -15,19 +15,24 @@ import { debounce } from 'lodash';
 import { ActivityIndicator, Animated } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { useTranslation } from 'react-i18next';
+import { openSettings } from 'react-native-permissions';
 import { IPayQRCodeScannerProps } from './ipay-qrcode-scanner.interface';
 import qrCodeScannerComponentStyles from './ipay-qrcode-scanner.style';
 
 const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, onRead }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { permissionStatus: permissionStatusCheck, retryPermission } = usePermissions(PermissionTypes.CAMERA, true);
+  const { permissionStatus: permissionStatusCheck } = usePermissions(PermissionTypes.CAMERA, true);
 
   const styles = qrCodeScannerComponentStyles();
   const animatedStyle = useLoopingAnimation(1000, [0, -scaleSize(120)]);
 
   const goBackQr = debounce(() => {
     goBack();
+  }, 100);
+
+  const goToSettings = debounce(async () => {
+    await openSettings();
   }, 100);
 
   const renderComponent = () => {
@@ -65,7 +70,7 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
             }}
             primaryAction={{
               text: t('PERMISSIONS.ALLOW_ACCESS'),
-              onPress: retryPermission,
+              onPress: goToSettings,
             }}
             variant={alertVariant.DESTRUCTIVE}
             title="PERMISSIONS.PERMISSION_DENIED"

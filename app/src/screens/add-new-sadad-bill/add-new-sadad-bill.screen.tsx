@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayButton,
   IPayContentNotFound,
@@ -32,8 +31,7 @@ import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { spinnerVariant } from '@app/utilities/enums.util';
-import { FC, useCallback, useEffect, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
@@ -57,7 +55,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [services, setServices] = useState<BillersService[]>();
   const [selectedService, setSelectedService] = useState<BillersService>();
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(t);
@@ -68,17 +65,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     accountNumber,
     billName,
   });
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const onGetBillersCategory = async () => {
     const apiResponse = await getBillersCategoriesService();
@@ -150,9 +136,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       walletNumber,
     };
 
-    renderSpinner(true);
     const apiResponse = await inquireBillService(payload);
-    renderSpinner(false);
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
@@ -177,11 +161,15 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onSelect = (value: string, tabObject: BillersCategoryType) => {
-    if (tabObject.code === '0') {
-      setFilterData(billers);
-    } else {
-      const filterWithTab = billers.filter((item) => item.billerType === tabObject.code);
-      setFilterData(filterWithTab);
+    const billersValue = billers || [];
+
+    if (billersValue?.length > 0) {
+      if (tabObject.code === '0') {
+        setFilterData(billersValue);
+      } else {
+        const filterWithTab = billersValue?.filter((item) => item.billerType === tabObject.code);
+        setFilterData(filterWithTab);
+      }
     }
   };
 

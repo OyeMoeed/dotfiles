@@ -8,18 +8,17 @@ import {
   IPayView,
 } from '@app/components/atoms';
 
-import { buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useCallback, useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
 import IPayCardItemProps from './ipay-card.interface';
+import { useTranslation } from 'react-i18next';
 
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   testID,
@@ -32,7 +31,6 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const styles = IPayCardSelectorStyles(colors);
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
   const [, setSelectedCardObj] = useState<any>({});
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [topupCards, setTopupcards] = useState<any[]>([]);
 
@@ -43,17 +41,6 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const handleCardSelectObj = (item: any) => {
     setSelectedCardObj(item);
   };
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const isExpired = (card: any) => {
     const todayDate = new Date();
@@ -82,8 +69,6 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   }, [topupCards]);
 
   const getTopupCardsData = async () => {
-    renderSpinner(true);
-
     const payload: WalletNumberProp = {
       walletNumber,
     };
@@ -93,8 +78,6 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     if (apiResponse) {
       await setTopupcards(mapTopupcards(apiResponse?.response?.cardList));
     }
-
-    renderSpinner(false);
   };
 
   useEffect(() => {

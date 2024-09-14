@@ -11,7 +11,6 @@ import {
   IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -32,7 +31,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -61,7 +60,6 @@ const TransferSummaryScreen: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [expandMsg, setExpandMsg] = useState<boolean>(false);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
   const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
@@ -205,10 +203,7 @@ const TransferSummaryScreen: React.FC = () => {
 
   const prepareOtp = async () => {
     setOtpSheetVisible(true);
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
+
     try {
       const payload: IW2WTransferPrepareReq = {
         requests: transfersDetails?.formInstances?.map((item) => ({
@@ -232,10 +227,8 @@ const TransferSummaryScreen: React.FC = () => {
         default:
           break;
       }
-      hideSpinner();
     } catch (error) {
       setAPIError(error?.message);
-      hideSpinner();
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
