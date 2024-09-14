@@ -1,12 +1,12 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import apiCall from '@network/services/api-call.service';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
+import apiCall from '@network/services/api-call.service';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
 import { GetBillersServicesResponseTypes } from './get-billers-services.interface';
 import getBillersServicesMockResponse from './get-billers-services.mock';
 
-const getBillersServicesService = async (billerID: string): Promise<GetBillersServicesResponseTypes> => {
+const getBillersServiceProvider = async (billerID: string): Promise<GetBillersServicesResponseTypes> => {
   if (constants.MOCK_API_RESPONSE) {
     return getBillersServicesMockResponse;
   }
@@ -25,4 +25,4 @@ const getBillersServicesService = async (billerID: string): Promise<GetBillersSe
   }
 };
 
-export default getBillersServicesService;
+export default getBillersServiceProvider;
