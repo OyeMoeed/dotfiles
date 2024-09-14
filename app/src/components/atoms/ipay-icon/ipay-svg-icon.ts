@@ -22,7 +22,7 @@ const IPaySvgIcon = ({
   const initialStyle: CSSProperties = {
     display: 'inline-block',
     stroke: color || 'currentColor', // Apply color to stroke
-    fill: color || 'currentColor' // Apply color to fill
+    fill: color || 'currentColor', // Apply color to fill
   };
 
   if (native) {
@@ -33,7 +33,7 @@ const IPaySvgIcon = ({
 
   const computedStyle = {
     ...(removeInlineStyle ? {} : initialStyle),
-    ...(size ? { width: size, height: size } : {})
+    ...(size ? { width: size, height: size } : {}),
   };
 
   const { width = '1024' } = currentIcon.icon;
@@ -47,7 +47,7 @@ const IPaySvgIcon = ({
       d: path,
       key: icon + index,
       ...(!disableFill && attrs ? attrs : {}),
-      ...(disableStokeColor ? {} : { stroke: color }), 
+      ...(disableStokeColor ? {} : { stroke: color }),
     };
 
     return createElement(PathComponent || 'path', pathProps);

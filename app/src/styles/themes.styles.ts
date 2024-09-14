@@ -1,7 +1,7 @@
 /**
  * Defines themes for the application.
  */
-const enum themes {
+const enum Themes {
   LIGHT_THEME = 'lightTheme',
   DARK_THEME = 'darkTheme',
   NATIONAL_DAY = 'nationalDay',
@@ -10,4 +10,4 @@ const enum themes {
 /**
  * Represents the possible theme types.
  */
-export type ThemeType = themes.LIGHT_THEME | themes.DARK_THEME | themes.NATIONAL_DAY;
+export type ThemeType = Themes.LIGHT_THEME | Themes.DARK_THEME | Themes.NATIONAL_DAY;

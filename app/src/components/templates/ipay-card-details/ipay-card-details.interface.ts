@@ -1,5 +1,8 @@
-interface FieldKeyMappingProps {
+export interface FieldKeyMappingProps {
   [key: string]: string;
 }
 
-export default FieldKeyMappingProps;
+export interface cardDetailsProps {
+  testID?: string;
+  cardDetails?: any;
+}

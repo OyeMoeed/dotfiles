@@ -1,7 +1,7 @@
-import { payChannel } from '@app/utilities/enums.util';
+import { PayChannel } from '@app/utilities/enums.util';
 
 export interface IPayAmountHeaderProps {
-  testID?:string;
-  channel?: payChannel;
+  testID?: string;
+  channel?: PayChannel;
   title?: string;
 }

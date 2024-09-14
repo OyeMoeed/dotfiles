@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import IPayText from '../ipay-base-text/ipay-text.component';
 import { typography } from '../utilities/typography-helper.util';
 import { IPaySubHeadlineTextProps } from './ipay-sub-headline-text.interface';
@@ -18,7 +18,7 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   children,
   color,
 }: IPaySubHeadlineTextProps): JSX.Element => {
-  const textColor = color ?  { color } : {};
+  const textColor = color ? { color } : {};
   return (
     <IPayText
       testID={`${testID}-sub-headline-text`}

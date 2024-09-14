@@ -3,7 +3,6 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayDatePicker, IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollview.component';
 import { IPayAnimatedTextInput, IPayButton, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
-import { REGEX } from '@app/constants/app-validations';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -38,7 +37,7 @@ import filtersStyles from './ipay-filter-bottom-sheet.style';
  * @returns {JSX.Element} - The rendered component.
  */
 
-const IPayControlledInput = ({ control, label, message, isError, name, required }: ControlFormField) => {
+const IPayControlledInput = ({ control, label, message, isError, name, required, suffix }: ControlFormField) => {
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
 
@@ -52,6 +51,7 @@ const IPayControlledInput = ({ control, label, message, isError, name, required 
           editable
           inputMode="numeric"
           value={value}
+          suffix={suffix}
           onChangeText={onChange}
           containerStyle={styles.amount}
           isError={isError}
@@ -230,13 +230,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       }
     };
 
-    const numberValidation = (type: string) => {
-      if (type === FiltersType.CONTACT_NUMBER && REGEX.DIGITS_ONLY.test(getValues(FiltersType.CONTACT_NUMBER))) {
-        return { value: REGEX.SaudiMobileNumber, message: localizationText.COMMON.INCORRECT_MOBILE_NUMBER };
-      }
-      return {};
-    };
-
     const extractTitleByValue = (value: string) => {
       const filterData = getFilterType();
       if (filterData?.type === FiltersType.CONTACT_NUMBER) {
@@ -256,7 +249,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       closeFilter,
       getChildFilterType: () => getFilterType()?.filterValues,
       setCurrentViewAndSearch: (categoryType: FiltersType, value: string, type?: string) => {
-        if (type !== 'Digital Wallet') setValue('transactionType', type);
+        setValue('transactionType', type);
         setValue(categoryType, value);
         setCurrentView(CurrentViewTypes.FILTERS); // Ensure CurrentViewTypes.FILTERS is a valid enum value
         setSearch('');
@@ -276,7 +269,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         <IPayFlatlist
           scrollEnabled={false}
           data={filters}
-          renderItem={({ item: { type, label, icon, dropdownIcon, isRequired = true, editable = false } }) => (
+          renderItem={({ item: { type, label, icon, dropdownIcon, editable = false } }) => (
             <Controller
               control={control}
               name={type}
@@ -316,6 +309,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.FROM}
                 control={control}
+                suffix={localizationText.COMMON.SAR}
                 isError={!!errors?.amountFrom}
                 message={localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_FROM}
@@ -324,6 +318,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               <IPayControlledInput
                 label={localizationText.TRANSACTION_HISTORY.TO_INPUT}
                 control={control}
+                suffix={localizationText.COMMON.SAR}
                 isError={!!amountError || !!errors?.amountTo}
                 message={amountError || localizationText.COMMON.REQUIRED_FIELD}
                 name={FiltersType.AMOUNT_TO}
@@ -496,7 +491,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         </IPayView>
       );
     };
-    const doneTextValue = doneText ? doneText : localizationText.TRANSACTION_HISTORY.CLEAR_FILTERS;
+    const doneTextValue = doneText || localizationText.TRANSACTION_HISTORY.CLEAR_FILTER;
 
     const renderFilterUI = () => {
       if (currentView === CurrentViewTypes.FILTERS) {
@@ -530,7 +525,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         doneButtonStyle={styles.actionButtonStyle}
         cancelButtonStyle={styles.actionButtonStyle}
         doneText={doneTextValue}
-        disabled={!isDirty}
+        disabled={!isDirty && !getValues(FiltersType.DATE_FROM) && !getValues(FiltersType.DATE_TO)}
         onDone={onPressDone}
         customSnapPoint={customSnapPoint}
         onCloseBottomSheet={onCloseFilterSheet}

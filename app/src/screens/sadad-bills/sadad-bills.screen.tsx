@@ -1,45 +1,61 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayPaginatedFlatlist, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayNoResult, SadadFooterComponent } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySadadBill } from '@app/components/organism';
-import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
+import { BillDetailsProps, BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { ACTIVE_SADAD_BILLS, INACTIVEACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import {
+  BillProps,
+  GetSadadBillProps,
+} from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.interface';
+import getSadadBills from '@app/network/services/bills-management/get-sadad-bills/get-sadad-bills.service';
 import deleteBill from '@app/network/services/sadad-bill/delete-bill/delete-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, BillsStatusTypes, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import {
+  ApiResponseStatusType,
+  APIResponseType,
+  BillsStatusTypes,
+  buttonVariants,
+  ToastTypes,
+} from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
 import sadadBillsStyles from './sadad-bills.style';
 
-const SadadBillsScreen: React.FC = () => {
+const SadadBillsScreen: React.FC = ({ route }) => {
+  const { sadadBills } = route.params;
   const { colors } = useTheme();
   const styles = sadadBillsStyles();
   const localizationText = useLocalization();
   const [selectedTab, setSelectedTab] = useState<string>(BillsStatusTypes.ACTIVE_BILLS);
-  const [billsData, setBillsData] = useState<BillDetailsProps[]>([]);
-  const [selectedBills, setSelectedBills] = useState<BillDetailsProps[]>([]);
+  const [activeBillsData, setActiveBillsData] = useState<BillsProps[]>([]);
+  const [inactiveBillsData, setInactiveBillsData] = useState<BillsProps[]>([]);
+  const [selectedBills, setSelectedBills] = useState<BillsProps[]>([]);
   const [selectedBillsId, setSelectedBillId] = useState<number | null>(null);
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const [apiError, setAPIError] = useState<string>('');
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
   const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
+
   const selectedBillsCount = useMemo(
-    () => billsData.filter((bill) => bill.selected).length,
-    [billsData, ACTIVE_SADAD_BILLS],
+    () =>
+      (selectedTab === BillsStatusTypes.ACTIVE_BILLS ? activeBillsData : inactiveBillsData).filter(
+        (bill) => bill.selected,
+      ).length,
+    [activeBillsData, sadadBills, inactiveBillsData],
   );
-  const multipleBillsSelected = selectedBillsCount > 1;
+  const multipleBillsSelected = selectedBillsCount >= 1;
 
   const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -56,34 +72,44 @@ const SadadBillsScreen: React.FC = () => {
   };
 
   const onSelectBill = (billId: string | number) => {
-    const bills = billsData.map((bill) => (bill.id === billId ? { ...bill, selected: !bill.selected } : bill));
+    const bills = activeBillsData.map((bill) =>
+      bill.billIndex === billId ? { ...bill, selected: !bill.selected } : bill,
+    );
     const newSelectedBills = bills.filter((bill) => bill.selected);
-    setBillsData(bills);
+    setActiveBillsData(bills);
     setSelectedBills(newSelectedBills);
   };
 
   const handleTabSelect = useCallback(
-    (tab: string) => {
+    (tab: string, billsData?: BillProps[]) => {
+      const sadadBillDetails = billsData || activeBillsData || [];
+      const sadadBill = Array.isArray(sadadBillDetails) ? sadadBillDetails : [];
       if (tab === BillsStatusTypes.ACTIVE_BILLS) {
-        setBillsData(ACTIVE_SADAD_BILLS);
+        const activeSadadBill = sadadBill?.filter((bill) => bill.active);
+        setActiveBillsData(activeSadadBill);
       } else {
-        setBillsData(INACTIVEACTIVE_SADAD_BILLS);
+        const notActiveSadadBill = sadadBill?.filter((bill) => !bill?.active);
+        setInactiveBillsData(notActiveSadadBill);
       }
       setSelectedTab(tab);
     },
-    [selectedTab, ACTIVE_SADAD_BILLS],
+    [selectedTab, sadadBills, activeBillsData, inactiveBillsData],
   );
 
+  const setDataForBills = (billsData: BillProps[]) => {
+    setActiveBillsData(billsData.filter((bill: BillProps) => bill.active));
+    setInactiveBillsData(billsData.filter((bill: BillProps) => !bill.active));
+  };
+
   useEffect(() => {
-    handleTabSelect(selectedTab);
+    setDataForBills(sadadBills);
+    handleTabSelect(selectedTab, sadadBills);
   }, []);
 
   const renderButtonText = () => {
-    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.billAmount), 0);
+    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.dueAmount), 0);
 
-    return multipleBillsSelected
-      ? `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`
-      : localizationText.SADAD.COMPLETE_PAYMENT;
+    return `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`;
   };
 
   const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
@@ -109,20 +135,20 @@ const SadadBillsScreen: React.FC = () => {
         billNumOrBillingAcct: accountNumber,
         billId: id,
         billNickname: vendor,
-        walletNumber: walletNumber,
+        walletNumber,
         deviceInfo,
       };
 
       const apiResponse: any = await deleteBill(prepareLoginPayload);
       if (apiResponse.status.type === APIResponseType.SUCCESS) {
-        setBillsData((prevBillsData) => {
+        setActiveBillsData((prevBillsData) => {
           const billToDelete = prevBillsData.find((bill) => bill.id === selectedBillsId);
           const updatedBillsData = prevBillsData.filter((bill) => bill.id !== selectedBillsId);
 
           renderToast({
             title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
             subTitle: billToDelete?.billTitle,
-            toastType: toastTypes.SUCCESS,
+            toastType: ToastTypes.SUCCESS,
           });
 
           return updatedBillsData;
@@ -150,7 +176,7 @@ const SadadBillsScreen: React.FC = () => {
       title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
       subTitle: billSubTitle,
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
     });
   };
 
@@ -172,6 +198,8 @@ const SadadBillsScreen: React.FC = () => {
     cancelButtonIndex: 2,
     showCancel: true,
     destructiveButtonIndex: 1,
+    // TODO: refactor codebase
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     onPress: handelEditOrDelete,
   };
 
@@ -221,8 +249,99 @@ const SadadBillsScreen: React.FC = () => {
   };
 
   const onPressFooterBtn = () => {
-    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION);
+    const billPaymentDetails = selectedBills?.map((bill) => ({
+      billerId: bill.biller.billerId,
+      billNumOrBillingAcct: bill.billAccountNumber,
+      amount: Number(bill.dueAmount),
+      dueDateTime: bill.dueDateTime,
+      billIdType: '1', // TODO: not receiving this value from response
+      billingCycle: '1', // TODO: need to confirm where can I get this value
+      billIndex: bill.billIndex,
+      serviceDescription: bill.biller.billerCategoryDesc,
+      billerName: bill.biller.billerDesc,
+      walletNumber,
+      billNickname: bill.nickName,
+      billerIcon: bill.biller.categoryImageURL,
+    }));
+
+    navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
+      isPayOnly: true,
+      showBalanceBox: false,
+      billPaymentInfos: billPaymentDetails,
+    });
   };
+
+  const addStatusToData = async (newBills: BillProps[]) => {
+    const newData = newBills.map((element) => ({
+      ...element,
+      selected: false,
+    }));
+    return newData;
+  };
+
+  const getBills = async (page: number, pageSize: number): Promise<{ data: BillsProps[]; hasMore: boolean }> => {
+    try {
+      const payload: GetSadadBillProps = {
+        filterType: 'payment',
+        offset: page,
+        maxRecords: pageSize,
+        showloader: true,
+      };
+
+      const apiResponse: any = await getSadadBills(payload);
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS: {
+          const newBills = apiResponse?.response?.bills || [];
+          const updatedData = await addStatusToData(newBills);
+
+          // Pagination logic
+          const start = (page - 1) * pageSize;
+          const end = page * pageSize;
+          const paginatedData = updatedData.slice(start, end);
+
+          const hasMore = updatedData.length > end;
+
+          // Update state with paginated data
+          if (page === 1) {
+            // Reset data if it's the first page
+            setDataForBills(paginatedData);
+          } else {
+            // Append to existing data for subsequent pages
+            const combinedData = [...activeBillsData, ...inactiveBillsData, ...paginatedData];
+            setDataForBills(combinedData);
+          }
+
+          // Return paginated data and hasMore flag
+          return { data: paginatedData, hasMore };
+        }
+
+        case apiResponse?.apiResponseNotOk:
+          renderToast({
+            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            toastType: ToastTypes.WARNING,
+          });
+          break;
+
+        case ApiResponseStatusType.FAILURE:
+          renderToast(apiResponse?.error);
+          break;
+
+        default:
+          break;
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+
+    // Fallback return if an error occurs
+    return { data: [], hasMore: false };
+  };
+
+  const sadadBillsData = useMemo(
+    () => (selectedTab === BillsStatusTypes.ACTIVE_BILLS ? activeBillsData : inactiveBillsData),
+    [sadadBills, activeBillsData, inactiveBillsData],
+  );
 
   return (
     <IPaySafeAreaView>
@@ -244,13 +363,12 @@ const SadadBillsScreen: React.FC = () => {
       <IPayView style={styles.headerStyle}>
         <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
       </IPayView>
-      {billsData?.length > 0 ? (
+      {sadadBillsData?.length > 0 ? (
         <IPayView style={styles.container}>
           <IPayView style={styles.listView}>
-            <IPayFlatlist
+            <IPayPaginatedFlatlist
               testID="ipay-flatlist"
-              data={billsData}
-              keyExtractor={(_, index) => index.toString()}
+              externalData={sadadBillsData}
               itemSeparatorStyle={styles.itemSeparatorStyle}
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => (
@@ -258,22 +376,24 @@ const SadadBillsScreen: React.FC = () => {
                   <IPaySadadBill
                     billDetails={item}
                     onSelectBill={onSelectBill}
-                    onPressMoreOptions={(id) => onPressMoreOptions(id, item)}
+                    onPressMoreOptions={(id) => onPressMoreOptions(Number(id), item)}
                     showCheckBox={selectedTab === BillsStatusTypes.ACTIVE_BILLS}
                   />
-                  {index === billsData.length - 1 && selectedBillsCount > 0 && (
+                  {index === activeBillsData.length - 1 && selectedBillsCount > 0 && (
                     <IPayView
                       style={selectedBillsCount > 1 ? styles.listBottomConditionalView : styles.listBottomView}
                     />
                   )}
                 </IPayView>
               )}
+              fetchData={getBills}
             />
           </IPayView>
           {selectedBillsCount > 0 && (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
                 btnText={renderButtonText()}
+                btnStyle={styles.btn}
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}

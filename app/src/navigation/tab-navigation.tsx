@@ -1,3 +1,5 @@
+// TODO: fix nested-components
+/* eslint-disable react/no-unstable-nested-components */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { CardIcon, MenuIcon, ShoppingCartIcon } from '@app/assets/svgs';
@@ -13,24 +15,23 @@ import MenuScreen from '@app/screens/menu/menu.screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useRoute } from '@react-navigation/native';
 import { moderateScale } from 'react-native-size-matters';
+import TabBarIconProps from './tab-navigation.interface';
 
 const Tab = createBottomTabNavigator();
 
 const TabNavigation = () => {
   const { params } = useRoute();
+  const backgroundTransparent = { backgroundColor: 'transparent' };
 
   return (
-    <Tab.Navigator
-      sceneContainerStyle={{ backgroundColor: 'transparent' }}
-      tabBar={(props) => <IPayBottomTabs {...props} />}
-    >
+    <Tab.Navigator sceneContainerStyle={backgroundTransparent} tabBar={(props) => <IPayBottomTabs {...props} />}>
       <Tab.Screen
         name={screenNames.HOME}
         component={Home}
         initialParams={params}
         options={{
           headerShown: false,
-          tabBarIcon: ({ color, isFocused }: TabBarIconProps) => (
+          tabBarIcon: ({ isFocused }: TabBarIconProps) => (
             <IPayImage
               style={{ width: moderateScale(24), height: moderateScale(24) }}
               image={isFocused ? images.logoTab : images.logoTabDim}
@@ -45,7 +46,7 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarIcon: ({ color, isFocused }: TabBarIconProps) => {
             if (isFocused) return <IPayIcon icon={icons.card_focused} color={color} size={24} />;
-            else return <CardIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
+            return <CardIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
           },
         }}
       />
@@ -56,8 +57,7 @@ const TabNavigation = () => {
           headerShown: false,
           tabBarIcon: ({ color, isFocused }: TabBarIconProps) => {
             if (isFocused) return <IPayIcon icon={icons.shopping_cart} size={24} color={color} />;
-            else
-              return <ShoppingCartIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
+            return <ShoppingCartIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
           },
         }}
       />
@@ -69,7 +69,7 @@ const TabNavigation = () => {
           tabBarIcon: ({ color, isFocused }: TabBarIconProps) => {
             if (isFocused)
               return <IPayIcon icon={isFocused ? icons.menu_filled : icons.menu_new} size={24} color={color} />;
-            else return <MenuIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
+            return <MenuIcon color={color} style={{ width: moderateScale(24), height: moderateScale(24) }} />;
           },
         }}
       />

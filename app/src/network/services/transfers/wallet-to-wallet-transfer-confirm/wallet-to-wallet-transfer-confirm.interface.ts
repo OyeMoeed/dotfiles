@@ -10,16 +10,12 @@ export interface IW2WTransferConfirmReq {
 }
 
 export interface IW2WTransferConfirmRes {
-  transferRequestsResult: TransferRequestsResult[];
+  receivedRequestsResult: ReceivedRequestsResult[];
 }
 
-export interface TransferRequestsResult {
-  mobileNumber: string;
-  amount: any;
-  note: string;
-  walletNumber?: string;
-  status: string;
-  statusDesc?: string;
-  transactionId: any;
-  transferPurpose?: string;
+export interface ReceivedRequestsResult {
+  transctionRefNumber: string;
+  transactionId: string;
+  totalTansactionAmount: string;
+  beneficiaryName: string;
 }

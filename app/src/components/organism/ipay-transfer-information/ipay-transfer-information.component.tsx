@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
+import { Alinma, NonAlinma } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -25,6 +25,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   setAmount,
   isEditable,
   currencyStyle,
+  showReason = true,
   openReason,
   setSelectedItem,
   selectedItem,
@@ -88,7 +89,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
             isShowIcon
             containerStyle={StyleSheet.flatten(styles.headerContainer)}
-            icon={<IPayImage image={images.alinmaP} style={styles.alinmaLogo} resizeMode="contain" />}
+            icon={hasWallet ? <Alinma /> : <NonAlinma />}
           />
         )}
       </IPayView>
@@ -125,22 +126,26 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           />
         )}
       </IPayView>
-      <IPayPressable onPress={openReason} style={styles.reasonsView}>
-        <IPayAnimatedTextInput
-          onChangeText={setSelectedItem}
-          containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
-          labelColor={colors.natural.natural500}
-          label={localizationText.COMMON.REASON_OF_TRANSFER}
-          value={selectedItem}
-          editable={false}
-          showRightIcon
-          customIcon={
-            <IPayPressable onPress={openReason}>
-              <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
-            </IPayPressable>
-          }
-        />
-      </IPayPressable>
+      {showReason ? (
+        <IPayPressable onPress={openReason} style={styles.reasonsView}>
+          <IPayAnimatedTextInput
+            onChangeText={setSelectedItem}
+            containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
+            labelColor={colors.natural.natural500}
+            label={localizationText.COMMON.REASON_OF_TRANSFER}
+            value={selectedItem}
+            editable={false}
+            showRightIcon
+            customIcon={
+              <IPayPressable onPress={openReason}>
+                <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
+              </IPayPressable>
+            }
+          />
+        </IPayPressable>
+      ) : (
+        <IPayView />
+      )}
       <IPayAnimatedTextInput
         containerStyle={[StyleSheet.flatten(styles.inputField), isFocused && styles.focusedField, inputFieldStyle]}
         onFocus={() => setIsFocused(true)}

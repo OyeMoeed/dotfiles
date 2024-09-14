@@ -4,4 +4,4 @@ enum ActivateViewTypes {
   CALL_ALINMA = 'CallAlinma',
 }
 
-export { ActivateViewTypes };
+export default ActivateViewTypes;

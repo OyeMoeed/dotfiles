@@ -36,11 +36,8 @@ interface BeneficiaryTransferFormValues {
   address: string;
   beneficiaryNickName?: string;
   walletType: string;
-  firstName: string;
-  thirdName: string;
-  secondName: string;
-  lastName: string;
   beneficiaryNationality: string;
+  beneficiaryCode: string;
 }
 
 export { BeneficiaryFields, BeneficiaryInformation, BeneficiaryTransferFormValues, TransferService, TransferTypes };

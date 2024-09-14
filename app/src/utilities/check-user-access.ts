@@ -1,6 +1,5 @@
 import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
-import { isBasicTierSelector } from '@app/store/slices/user-information-slice';
-import { openIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
+import { isBasicTierSelector, openIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { store } from '@store/store';
 
 const checkUserAccess = () => {

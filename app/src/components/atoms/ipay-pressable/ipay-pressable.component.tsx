@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import { Pressable } from 'react-native';
 import { IPayPressableProps } from './ipay-pressable.interface';
 import styles from './ipay-pressable.style';
@@ -18,26 +18,24 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
   onPressIn,
   onPressOut,
   onLongPress,
-}: IPayPressableProps): JSX.Element => {
-  return (
-    <Pressable
-      testID={`${testID}-pressable`}
-      style={({ pressed }) => [
-        styles.container,
-        {
-          opacity: pressed ? activeOpacity : 1,
-        },
-        style,
-      ]}
-      disabled={disabled}
-      onPress={onPress}
-      onPressIn={onPressIn}
-      onPressOut={onPressOut}
-      onLongPress={onLongPress}
-    >
-      {children}
-    </Pressable>
-  );
-};
+}: IPayPressableProps): JSX.Element => (
+  <Pressable
+    testID={`${testID}-pressable`}
+    style={({ pressed }) => [
+      styles.container,
+      {
+        opacity: pressed ? activeOpacity : 1,
+      },
+      style,
+    ]}
+    disabled={disabled}
+    onPress={onPress}
+    onPressIn={onPressIn}
+    onPressOut={onPressOut}
+    onLongPress={onLongPress}
+  >
+    {children}
+  </Pressable>
+);
 
 export default IPayPressable;

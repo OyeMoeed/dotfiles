@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
@@ -27,6 +27,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   inputStyle,
   errorMessageViewStyle,
   errorMessageStyle,
+  suffix,
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
@@ -98,7 +99,15 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
               editable={editable}
             />
           </IPayView>
+          {suffix && value && (
+            <IPayView style={styles.suffix}>
+              <IPaySubHeadlineText color={colors.natural.natural900} regular>
+                {suffix}
+              </IPaySubHeadlineText>
+            </IPayView>
+          )}
         </IPayView>
+
         {showRightIcon && (
           <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
             {customIcon || <IPayIcon icon={icons.close} />}

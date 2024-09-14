@@ -10,7 +10,6 @@ import HindiTranslations from '@app/localization/hindi-translations.json';
 import NepaliTranslations from '@app/localization/nepali-translations.json';
 import TagalogTranslations from '@app/localization/tagalog-translations.json';
 
-
 export const translations = {
   [LanguageCode.EN]: {
     translation: EnglishTranslations,
@@ -18,28 +17,26 @@ export const translations = {
   [LanguageCode.AR]: {
     translation: ArabicTranslations,
   },
-  [LanguageCode.UR]:{
-    translation: UrduTranslations
+  [LanguageCode.UR]: {
+    translation: UrduTranslations,
   },
-  [LanguageCode.BN]:{
-    translation: BengaliTranslations
+  [LanguageCode.BN]: {
+    translation: BengaliTranslations,
   },
-  [LanguageCode.HI]:{
-    translation: HindiTranslations
+  [LanguageCode.HI]: {
+    translation: HindiTranslations,
   },
-  [LanguageCode.TL]:{
-    translation: TagalogTranslations
+  [LanguageCode.TL]: {
+    translation: TagalogTranslations,
   },
-  [LanguageCode.NE]:{
-    translation: NepaliTranslations
-  }
+  [LanguageCode.NE]: {
+    translation: NepaliTranslations,
+  },
 } as const;
 
 export const appText = translations;
 
-
-
-type TranslationType = typeof translations[LanguageCode.EN]['translation'];
+type TranslationType = (typeof translations)[LanguageCode.EN]['translation'];
 
 export type LocalizationKeys = keyof typeof translations;
 export type LocalizationText = TranslationType;

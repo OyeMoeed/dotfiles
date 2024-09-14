@@ -43,13 +43,9 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, car
     }
   };
 
-  const maskCardNumber = (cardNumber: string): string => {
-    const parts = cardNumber.split(' ');
-    return `**** ${parts[parts.length - 1]}`;
-  };
-
   const textColor =
     cardData?.cardType === CardTypes.SIGNATURE_CARD ? colors.natural.natural0 : colors.primary.primary900;
+
   return (
     <IPayView style={styles.atmCardView} testID={`${textID}-short-hand-atm-card`}>
       <IPayImageBackground image={getCardImage()} resizeMode="stretch" style={styles.atmCardImg}>
@@ -57,11 +53,7 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, car
           <IPayView>
             <IPayView style={styles.titleAndCardNumberView}>
               <IPayFootnoteText regular={false} text={cardData.name} color={textColor} />
-              <IPayCaption2Text
-                text={cardData?.maskedCardNumber}
-                style={styles.cardNumberText}
-                color={textColor}
-              />
+              <IPayCaption2Text text={cardData?.maskedCardNumber} style={styles.cardNumberText} color={textColor} />
             </IPayView>
             <IPayCaption2Text text={cardData.cardClassDesc} color={textColor} />
           </IPayView>

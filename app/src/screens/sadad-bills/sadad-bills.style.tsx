@@ -47,6 +47,9 @@ const sadadBillsStyles = () =>
     listBottomConditionalView: {
       marginBottom: moderateScale(210, 0.3),
     },
+    btn: {
+      justifyContent: 'center',
+    },
   });
 
 export default sadadBillsStyles;

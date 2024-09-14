@@ -7,7 +7,7 @@ export interface SadadFooterComponentProps {
   style?: StyleProp<ViewStyle>;
   gradientViewStyle?: StyleProp<ViewStyle>;
   totalAmount?: string | number;
-  totalAmountText?:string;
+  totalAmountText?: string;
   selectedItemsCount?: number;
   btnText: string;
   btnDisbaled?: boolean;

@@ -5,7 +5,7 @@ describe('IPayToggleButton', () => {
   const defaultProps = {
     testID: 'toggle-button',
     toggleState: true,
-    onToggleChange: jest.fn()
+    onToggleChange: jest.fn(),
   };
 
   it('renders correctly with default props', () => {

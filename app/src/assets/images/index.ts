@@ -111,6 +111,7 @@ const images = {
   offerPlaceholder: require('./offer-placeholder.png'),
   eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
+  mastercardIcon: require('./mastercard-icon.png'),
   truckTime: require('./truck-time.png'),
 };
 

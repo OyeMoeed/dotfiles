@@ -8,13 +8,11 @@ import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode/set-passcode.interface';
 import setPasscode from '@app/network/services/core/set-passcode/set-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { encryptData } from '@app/network/utilities/encryption-helper';
+import { encryptData } from '@app/network/utilities';
 import { setAppData } from '@app/store/slices/app-data-slice';
-import { setUserInfo } from '@app/store/slices/user-information-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -24,13 +22,13 @@ import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import passcodeStyles from '../set-passcode/set-passcode.style';
 
-const ConfirmPasscode: React.FC = ({ route }: any) => {
+const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const { passcode } = route.params;
   const { colors } = useTheme();
-  const styles = passcodeStyles(colors);
+  const styles = passcodeStyles();
   const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
-  const [apiError, setAPIError] = useState<string>('');
+  const [apiError] = useState<string>('');
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
@@ -61,68 +59,42 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
 
   const setNewPasscode = async (newCode: string) => {
     renderSpinner(true);
-    try {
-      const payload: SetPasscodeServiceProps = {
-        passCode:
-          encryptData(
-            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + newCode,
-            isExist(appData?.encryptionData?.passwordEncryptionKey),
-          ) || '',
-        authentication: { transactionId: appData?.transactionId },
-        deviceInfo: appData.deviceInfo as DeviceInfoProps,
-        mobileNumber:
-          encryptData(
-            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.mobileNumber),
-            isExist(appData?.encryptionData?.passwordEncryptionKey),
-          ) || '',
-        poiNumber:
-          encryptData(
-            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.poiNumber),
-            isExist(appData?.encryptionData?.passwordEncryptionKey),
-          ) || '',
-      };
 
-      const apiResponse: any = await setPasscode(payload, dispatch);
-      if (apiResponse.status.type === 'SUCCESS') {
-        getWalletInformation(apiResponse?.response?.walletNumber);
-      } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-      } else {
-        setAPIError(apiResponse?.error);
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const payload: SetPasscodeServiceProps = {
+      passCode:
+        encryptData(
+          isExist(appData?.encryptionData?.passwordEncryptionPrefix) + newCode,
+          isExist(appData?.encryptionData?.passwordEncryptionKey),
+        ) || '',
+      authentication: { transactionId: appData?.transactionId },
+      deviceInfo: appData.deviceInfo as DeviceInfoProps,
+      mobileNumber:
+        encryptData(
+          isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.mobileNumber),
+          isExist(appData?.encryptionData?.passwordEncryptionKey),
+        ) || '',
+      poiNumber:
+        encryptData(
+          isExist(appData?.encryptionData?.passwordEncryptionPrefix) + isExist(appData?.poiNumber),
+          isExist(appData?.encryptionData?.passwordEncryptionKey),
+        ) || '',
+    };
+
+    const apiResponse: any = await setPasscode(payload, dispatch);
+
+    if (apiResponse) {
+      const walletNumber = apiResponse?.response?.walletNumber;
+      dispatch(
+        setAppData({
+          isLinkedDevice: true,
+        }),
+      );
+      // TODO: replace with real user data
+      dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
+      navigate(screenNames.REGISTRATION_SUCCESSFUL);
     }
-  };
 
-  const getWalletInformation = async (walletNumber: string) => {
-    try {
-      const payload = {
-        walletNumber,
-      };
-
-      const apiResponse = await getWalletInfo(payload, dispatch);
-      renderSpinner(false);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        dispatch(
-          setAppData({
-            isLinkedDevice: true,
-          }),
-        );
-        dispatch(setWalletInfo({ walletNumber: walletNumber }));
-        dispatch(
-          setUserInfo({ fullName: apiResponse?.response?.fullName, firstName: apiResponse?.response?.fullName }),
-        );
-        navigate(screenNames.REGISTRATION_SUCCESSFUL);
-      }
-    } catch (error) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.PASSCODE_NOT_SET, localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
+    renderSpinner(false);
   };
 
   const validatePasscode = (newCode: string) => {
@@ -168,4 +140,4 @@ const ConfirmPasscode: React.FC = ({ route }: any) => {
   );
 };
 
-export default ConfirmPasscode;
+export default ConfirmPasscodeScreen;

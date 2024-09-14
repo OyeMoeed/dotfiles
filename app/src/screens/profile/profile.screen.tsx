@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayChip, IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -25,13 +25,13 @@ import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.serv
 import { IWalletUpdatePayload } from '@app/network/services/core/update-wallet/update-wallet.interface';
 import walletUpdate from '@app/network/services/core/update-wallet/update-wallet.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { isBasicTierSelector, setUserInfo } from '@app/store/slices/user-information-slice';
+import { isBasicTierSelector, setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
+import { States, spinnerVariant, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
-import { CardKeys } from './profile.interface';
+import CardKeys from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -43,21 +43,11 @@ const Profile = () => {
   const [kycVisible, setKycVisible] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
   const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
-  const renderToast = (toastMsg: string, apiError: string = '') => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const formatAddress = (userInfoData: any) => {
     const { street, city, townCountry } = userInfoData;
@@ -93,7 +83,7 @@ const Profile = () => {
   const renderSuccessToast = () => {
     showToast({
       title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
-      toastType: toastTypes.INFORMATION,
+      toastType: ToastTypes.INFORMATION,
       leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
     });
   };
@@ -107,14 +97,12 @@ const Profile = () => {
       },
       walletInfo.walletNumber,
     );
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      dispatch(setUserInfo({ profileImage: `${selectedImage}` }));
+    if (apiResponse) {
+      dispatch(setWalletInfo({ profileImage: `${selectedImage}` }));
       renderSpinner(false);
       renderUploadSuccessToast();
-    } else {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderSpinner(false);
     }
+    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -130,9 +118,9 @@ const Profile = () => {
   ];
 
   useEffect(() => {
-    if (userInfo && walletInfo) {
+    if (walletInfo) {
       const userInfoData: any = {
-        fullName: userInfo.fullName,
+        fullName: walletInfo.fullName,
         ...walletInfo.addressDetails,
         ...walletInfo.userContactInfo,
         ...walletInfo.accountBasicInfo,
@@ -143,7 +131,7 @@ const Profile = () => {
       const transformedData = mapUserDataToDesiredFormat(userInfoData);
       setUserData(transformedData);
     }
-  }, [userInfo, walletInfo]);
+  }, [walletInfo]);
 
   const kycBottomSheetRef = useRef<BottomSheetModal>(null);
   const nafathVerificationBottomSheetRef = useRef(null);
@@ -219,7 +207,7 @@ const Profile = () => {
         </IPayFootnoteText>
       </IPayView>
       {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
-        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED}></IPayChip>
+        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED} />
       ) : (
         <IPayOutlineButton
           rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
@@ -245,12 +233,13 @@ const Profile = () => {
   };
 
   const getUpadatedWalletData = async (walletNumber: string) => {
-    // renderSpinner(true);
     const payload = {
       walletNumber,
     };
-    await getWalletInfo(payload, dispatch);
-    // renderSpinner(false);
+    const apiResponse: any = await getWalletInfo(payload);
+    if (apiResponse) {
+      dispatch(setWalletInfo(apiResponse?.response));
+    }
   };
 
   const updateWalletKYC = async (formData: IFormData) => {
@@ -277,7 +266,7 @@ const Profile = () => {
       deviceInfo: appData.deviceInfo as DeviceInfoProps,
     };
     renderSpinner(true);
-    const walletUpdateResponse = await walletUpdate(payload, userInfo.walletNumber as string);
+    const walletUpdateResponse = await walletUpdate(payload, walletInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
       await getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
       renderSuccessToast();
@@ -302,11 +291,11 @@ const Profile = () => {
 
   return (
     <>
-      <IPaySafeAreaView style={styles.SafeAreaView2}>
+      <IPaySafeAreaView style={styles.safeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
-            <IPayUserAvatar image={userInfo.profileImage} />
+            <IPayUserAvatar image={walletInfo.profileImage} />
             {renderOverlayIcon()}
           </IPayPressable>
         </IPayView>

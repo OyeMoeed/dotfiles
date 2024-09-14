@@ -1,8 +1,10 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17 } from '@app/styles/typography.styles';
 import { moderateScale, moderateVerticalScale, verticalScale } from 'react-native-size-matters';
+
+const innerWidth = SCREEN_WIDTH - scaleSize(40);
 
 const walletTransferStyles = (themeColors: typeof colors, selectedContact: boolean) =>
   createStyleSheet({
@@ -40,13 +42,14 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
       marginBottom: scaleSize(24),
-      backgroundColor: colors.transparent,
       overflow: 'hidden',
-      padding: scaleSize(20),
+      paddingHorizontal: scaleSize(16),
+      backgroundColor: colors.appGradient.buttonBackground,
+      paddingVertical: moderateScale(16),
       justifyContent: 'center',
-      flex: !selectedContact ? 0.1 : 0.2,
-      borderRadius: scaleSize(16),
-      marginHorizontal: scaleSize(20),
+      flex: selectedContact ? 0.2 : 0,
+      borderRadius: scaleSize(28),
+      marginHorizontal: scaleSize(24),
       alignSelf: 'stretch',
     },
     checkmarkPoints: {
@@ -95,15 +98,17 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
     arrow: {},
     inputStyle: {
       fontSize: FONT_SIZE_17,
-      paddingBottom: 0 ,
+      paddingBottom: 0,
     },
     inputStyleAndroid: {
-
+      paddingBottom: moderateScale(5),
+      height: verticalScale(40),
     },
     topMargin: {
       top: verticalScale(4),
     },
     emptyItemStyle: { height: moderateVerticalScale(20) },
+    toastContainer: { width: innerWidth, marginLeft: moderateScale(5) },
   });
 
 export default walletTransferStyles;

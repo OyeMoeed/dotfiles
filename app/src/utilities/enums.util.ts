@@ -26,23 +26,28 @@ enum BarStyle {
 
 /**
  * Defines button variants types used in application.
+ * note if remove disable you need to fix/change more than 200 files
  */
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum buttonVariants {
   OUTLINED = 'outline',
   LINK_BUTTON = 'link-button',
   PRIMARY = 'primary',
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum alertVariant {
   DEFAULT = 'default',
   DESTRUCTIVE = 'destructive',
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum alertType {
   DEFAULT = 'default',
   SIDE_BY_SIDE = 'sideByside',
 }
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 enum spinnerVariant {
   TEXT = 'text',
   DEFAULT = 'default',
@@ -51,7 +56,7 @@ enum spinnerVariant {
 /**
  * Defines variants types used for timePeriod.
  */
-enum dayPeriod {
+enum DayPeriod {
   AM = 'AM',
   PM = 'PM',
 }
@@ -59,31 +64,31 @@ enum dayPeriod {
 /**
  * Defines variants types used for picker button.
  */
-enum pickerVariant {
+enum PickerVariant {
   Date = 'date',
   Text = 'text',
   Time = 'time',
   DateAndTime = 'dateAndTime',
 }
 
-enum inputType {
+enum InputType {
   CURRENCY = 'Currency',
   PHONE_NUMBER = 'PhoneNumber',
 }
 
-enum CAROUSEL_MODES {
+enum CarouselModes {
   DEFAULT = 'default',
   STACK = 'stack',
   PARALLAX = 'parallax',
 }
 
-enum fallbackVariants {
+enum FallbackVariants {
   IMAGE = 'image',
   LOADER = 'loader',
   LOGO = 'logo',
 }
 
-enum payChannel {
+enum PayChannel {
   REQUEST_ACCEPT = 'request_accept',
   MONEY = 'money',
   REQUEST = 'request',
@@ -135,7 +140,7 @@ enum TopupStatus {
   FAILED = 'failed',
 }
 
-enum toastTypes {
+enum ToastTypes {
   WARNING = 'warning',
   SUCCESS = 'success',
   INFORMATION = 'information',
@@ -155,16 +160,14 @@ enum CardTypes {
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
 }
-enum CardStatusNumber{
-    ActiveWithoutOnlinePurchase = '0',
-    ActiveWithOnlinePurchase = '100',
-    Stolen = '700',
-    Freezed = '850'
-
-
+enum CardStatusNumber {
+  ActiveWithoutOnlinePurchase = '0',
+  ActiveWithOnlinePurchase = '100',
+  Stolen = '700',
+  Freezed = '850',
 }
 
-enum CardTypesCodes{
+enum CardTypesCodes {
   MADA = 'IPMC',
   PLATINUM = 'VPPC',
   SIGNATURE = 'VSCC',
@@ -192,7 +195,7 @@ enum CardDetailsSegment {
   CARD_FEES = 'Card Fees',
 }
 
-enum dashboardOptions {
+enum DashboardOptions {
   SEND_MONEY = 'Send Money',
   REQUEST_MONEY = 'Request Money',
   SEND_GIFT = 'Send Gift',
@@ -221,9 +224,14 @@ enum AddBeneficiary {
   BENEFICIARY_NAME = 'beneficiaryName',
   BENEFICIARY_NICK_NAME = 'beneficiaryNickName',
 }
+
+enum AddBeneficiaryKey {
+  BANK_NAME = 'Bank Name',
+  IBAN = 'Iban',
+}
 enum BeneficiaryTypes {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
+  ACTIVE = 'ACTIVATE',
+  INACTIVE = 'NEW_BENEFICIARY',
 }
 
 enum APIResponseType {
@@ -266,13 +274,20 @@ interface Filter {
   icon?: string;
 }
 enum GiftCardStatus {
-  OPENED = 'Opened',
-  UNOPENED = 'Unopened',
-  EXPIRED = 'Expired',
+  OPENED = 'opened',
+  UNOPENED = 'unopened',
+  EXPIRED = 'expired',
 }
+
+enum GiftCardDetailsKey {
+  AMOUNT = 'amount',
+  REF_NUMBER = 'refNumber',
+}
+
 enum ApiResponseStatusType {
   SUCCESS = 'SUCCESS',
   FAILURE = 'FAILURE',
+  ERROR = 'ERROR',
 }
 
 enum MoiPaymentTypes {
@@ -293,35 +308,52 @@ enum BillPaymentOptions {
   TRAFFIC_VIOLATION = 'Traffic Violation',
 }
 
+enum BillingStatus {
+  ENABLED = 'ENABLED',
+  NOT_ENABLED = 'NOT_ENABLED',
+}
+
 // Export all enums
 export {
   APIResponseType,
   AddBeneficiary,
+  AddBeneficiaryKey,
   ApiResponseStatusType,
   BarStyle,
   BeneficiaryTypes,
   BillPaymentOptions,
   BillStatus,
+  BillingStatus,
   BillsStatusTypes,
   BiometricErrorTypes,
-  CAROUSEL_MODES,
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
   CardOptions,
   CardStatusIndication,
+  CardStatusNumber,
   CardStatusType,
   CardTypes,
+  CardTypesCodes,
+  CarouselModes,
+  DashboardOptions,
+  DayPeriod,
+  FallbackVariants,
   Filter,
   FilterValue,
   FiltersType,
+  GiftCardDetailsKey,
   GiftCardStatus,
   IdRenewalState,
   InfoTypes,
+  InputType,
   LanguageCode,
   MoiPaymentTypes,
+  PayChannel,
+  PickerVariant,
   States,
   TabBase,
+  ToastTypes,
   TopUpStates,
   TopupStatus,
   TrafficTabPaymentTypes,
@@ -330,14 +362,5 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  dashboardOptions,
-  dayPeriod,
-  fallbackVariants,
-  inputType,
-  payChannel,
-  pickerVariant,
   spinnerVariant,
-  toastTypes,
-  CardStatusNumber,
-  CardTypesCodes
 };

@@ -14,7 +14,6 @@ import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -25,7 +24,7 @@ import { IW2WTransferConfirmReq } from '@app/network/services/transfers/wallet-t
 import walletToWalletTransferConfirm from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.service';
 import { IW2WTransferPrepareReq } from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.interface';
 import walletToWalletTransferPrepare from '@app/network/services/transfers/wallet-to-wallet-transfer-prepare/wallet-to-wallet-transfer-prepare.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
@@ -53,11 +52,8 @@ const TransferSummaryScreen: React.FC = () => {
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
   const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { otpConfig } = useConstantData();
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
@@ -86,12 +82,17 @@ const TransferSummaryScreen: React.FC = () => {
           color: colors.primary.primary900,
           isAlinma: false,
         },
-        { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
+        {
+          id: '2',
+          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+          value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        },
         {
           id: '3',
           label: localizationText.TRANSFER_SUMMARY.REASON,
           value: transfersDetails.formInstances[index]?.selectedItem?.text,
         },
+        { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
       ];
     }
 
@@ -103,10 +104,14 @@ const TransferSummaryScreen: React.FC = () => {
         leftIcon: images.alinmaP,
         isAlinma: true,
       },
-      { id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount },
+      {
+        id: '2',
+        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
+        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+      },
       {
         id: '3',
-        label: localizationText.TRANSFER_SUMMARY.REASON,
+        // label: localizationText.TRANSFER_SUMMARY.REASON,
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
       },
       { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
@@ -137,10 +142,10 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayView style={styles.walletListBackground}>
           <IPayView style={styles.iconLabel}>
             {renderLeftIcon()}
-            <IPayFootnoteText text={item?.label} style={styles.label} />
+            <IPayFootnoteText text={item?.label} style={styles.label} numberOfLines={2} />
           </IPayView>
           <IPayView style={styles.listDetails}>
-            <IPayFootnoteText text={item?.value} style={styles.detailsText} />
+            <IPayFootnoteText text={item?.value} style={styles.detailsText} numberOfLines={2} />
             {item?.icon && (
               <IPayPressable style={styles.appleIcon} onPress={item?.onPress}>
                 <IPayIcon icon={item?.icon} style={styles.appleIcon} color={item?.color} size={scaleSize(18)} />
@@ -180,33 +185,37 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const prepareOtp = async (showOtpSheet: boolean = true) => {
-    sendMoneyBottomSheetRef.current?.present();
+    try {
+      sendMoneyBottomSheetRef.current?.present();
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    setIsLoading(true);
-    const payload: IW2WTransferPrepareReq = {
-      requests: transfersDetails.formInstances.map((item) => ({
-        mobileNumber: item.mobileNumber,
-        amount: item.amount,
-        note: item.notes,
-        transferPurpose: item.selectedItem.id as string,
-      })),
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      setTransactionId(apiResponse?.authentication?.transactionId);
-      if (showOtpSheet) {
-        sendMoneyBottomSheetRef.current?.present();
+      showSpinner({
+        variant: spinnerVariant.DEFAULT,
+        hasBackgroundColor: true,
+      });
+
+      setIsLoading(true);
+      const payload: IW2WTransferPrepareReq = {
+        requests: transfersDetails.formInstances.map((item) => ({
+          mobileNumber: item.mobileNumber,
+          amount: item.amount,
+          note: item.notes,
+          transferPurpose: item.selectedItem.id as string,
+        })),
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      };
+      const apiResponse = await walletToWalletTransferPrepare(walletInfo.walletNumber, payload);
+      if (apiResponse.status.type === 'SUCCESS') {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+        setTransactionId(apiResponse?.authentication?.transactionId);
+        if (showOtpSheet) {
+          sendMoneyBottomSheetRef.current?.present();
+        }
       }
+      otpVerificationRef?.current?.resetInterval();
+    } finally {
+      setIsLoading(false);
+      hideSpinner();
     }
-    otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
-    hideSpinner();
   };
 
   const verifyOtp = async () => {
@@ -235,7 +244,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
     } else {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     }
     setIsLoading(false);
   };
@@ -243,7 +252,7 @@ const TransferSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       verifyOtp();
     }
@@ -257,38 +266,37 @@ const TransferSummaryScreen: React.FC = () => {
     prepareOtp(false);
   };
 
+  const TransactionList = () => {
+    transfersRequestsList?.map((item) =>
+      item[0].isAlinma ? (
+        <IPayView style={styles.walletBackground} key={item[0].value}>
+          <IPayFlatlist
+            style={styles.detailesFlex}
+            scrollEnabled={false}
+            data={item}
+            renderItem={renderWalletPayItem}
+          />
+        </IPayView>
+      ) : (
+        <IPayView style={styles.walletBackground} key={item[0].value}>
+          <IPayFlatlist
+            style={styles.detailesFlex}
+            scrollEnabled={false}
+            data={item}
+            renderItem={renderNonAlinmaPayItem}
+          />
+        </IPayView>
+      ),
+    );
+  };
+
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>
-            <>
-              {transfersRequestsList.map((item) => {
-                if (item[0].isAlinma) {
-                  return (
-                    <IPayView style={styles.walletBackground} key={item[0].value}>
-                      <IPayFlatlist
-                        style={styles.detailesFlex}
-                        scrollEnabled={false}
-                        data={item}
-                        renderItem={renderWalletPayItem}
-                      />
-                    </IPayView>
-                  );
-                }
-                return (
-                  <IPayView style={styles.walletBackground} key={item[0].value}>
-                    <IPayFlatlist
-                      style={styles.detailesFlex}
-                      scrollEnabled={false}
-                      data={item}
-                      renderItem={renderNonAlinmaPayItem}
-                    />
-                  </IPayView>
-                );
-              })}
-            </>
+            <TransactionList />
           </IPayScrollView>
         </IPayView>
         <IPayView style={styles.buttonContainer}>
@@ -328,15 +336,15 @@ const TransferSummaryScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={walletInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          timeout={+userInfo?.otpTimeout}
+          timeout={Number(walletInfo?.otpTimeout)}
           onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>

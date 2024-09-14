@@ -15,13 +15,13 @@ const useTheme = () => {
   /**
    * Retrieves the current theme object from the theme index.
    */
-  const currnetTheme = theme.theme && (appTheme as ThemeType) && theme.theme[appTheme as ThemeType];
+  const currentTheme = theme.theme && (appTheme as ThemeType) && theme.theme[appTheme as ThemeType];
 
   /**
    * Returns colors and icons based on the current theme.
    */
   return {
-    colors: currnetTheme.colors,
+    colors: currentTheme.colors,
   };
 };
 

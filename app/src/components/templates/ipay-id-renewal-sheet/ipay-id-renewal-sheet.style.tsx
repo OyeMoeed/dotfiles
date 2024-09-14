@@ -6,64 +6,64 @@ import { StyleSheet } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const styles = StyleSheet.create({
-  topStyles: {
-    marginVertical: scaleSize(30)
-  },
-  profileContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: spacing.CUSTOME_SCALE(24)
-  },
-  titleTextStyle: {
-    fontWeight: '700',
-    fontSize: FONT_SIZE_22,
-    color: colors.primary.primary900,
-    lineHeight: spacing.CUSTOME_SCALE(28),
-    textAlign: 'center' ,
-    marginTop:SCALE_16
-  },
-  captionTextStyle: {
+  bodyTextStyle: {
+    color: colors.white,
+    fontSize: moderateScale(17),
     fontWeight: '400',
-    fontSize: FONT_SIZE_12,
-    lineHeight: SCALE_16,
-    textAlign: 'center',
-    color: colors.primary.primary800,
-    marginVertical: SCALE_4
+    lineHeight: moderateScale(22),
   },
   buttonStyle: {
-    minWidth: '100%',
-    minHeight: spacing.CUSTOME_SCALE(48),
-    width: 'auto',
-    height: 'auto',
-    borderRadius: SCALE_16,
     backgroundColor: colors.primary.primary500,
+    borderRadius: SCALE_16,
     flexDirection: 'row',
+    height: 'auto',
     justifyContent: 'center',
-    marginTop: 30
+    marginTop: 30,
+    minHeight: spacing.CUSTOME_SCALE(48),
+    minWidth: '100%',
+    width: 'auto',
+  },
+  captionTextStyle: {
+    color: colors.primary.primary800,
+    fontSize: FONT_SIZE_12,
+    fontWeight: '400',
+    lineHeight: SCALE_16,
+    marginVertical: SCALE_4,
+    textAlign: 'center',
   },
   imageStyle: {
-    width: moderateScale(64),
     height: moderateScale(64),
+    marginBottom: verticalScale(16),
     marginTop: verticalScale(30),
-    marginBottom: verticalScale(16)
+    width: moderateScale(64),
   },
-  bodyTextStyle: {
-    fontSize: moderateScale(17),
-    lineHeight: moderateScale(22),
-    fontWeight: '400',
-    color: colors.white
-  },
-  skipTextStyle: {
-    fontSize: moderateScale(17),
-    lineHeight: moderateScale(22),
-    fontWeight: '400',
-    color: colors.primary.primary500
+  profileContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: spacing.CUSTOME_SCALE(24),
   },
   skipBtnStyle: {
-    backgroundColor: 'transparent',
+    backgroundColor: colors.transparent,
+    borderColor: colors.primary.primary500,
     borderWidth: 1,
-    borderColor: colors.primary.primary500
-  }
+  },
+  skipTextStyle: {
+    color: colors.primary.primary500,
+    fontSize: moderateScale(17),
+    fontWeight: '400',
+    lineHeight: moderateScale(22),
+  },
+  titleTextStyle: {
+    color: colors.primary.primary900,
+    fontSize: FONT_SIZE_22,
+    fontWeight: '700',
+    lineHeight: spacing.CUSTOME_SCALE(28),
+    marginTop: SCALE_16,
+    textAlign: 'center',
+  },
+  topStyles: {
+    marginVertical: scaleSize(30),
+  },
 });
 
 export default styles;

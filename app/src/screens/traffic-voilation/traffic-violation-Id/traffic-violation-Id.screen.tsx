@@ -25,7 +25,6 @@ const TrafficViolationIDScreen: React.FC = () => {
     voilatorID,
   } = useTrafficViolation();
 
-
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title={localizationText.TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle} />
@@ -67,8 +66,8 @@ const TrafficViolationIDScreen: React.FC = () => {
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => (
                 <IPayView>
-                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox={true} />
-                  {index === billsData?.length - 1 && selectedBillsCount > 0 && (
+                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox />
+                  {index === (billsData || []).length - 1 && selectedBillsCount > 0 && (
                     <IPayView style={styles.listBottomView} />
                   )}
                 </IPayView>

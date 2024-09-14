@@ -50,7 +50,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
         name: 'Adam Ahmed', // TODO: will change api response
       },
     });
-  }
+  };
   return (
     <IPaySafeAreaView
       testID={`${testID}-success-component`}
@@ -60,7 +60,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
       <IPayView style={styles.linearGradientView}>
         <IPayLinearGradientView
-          style={[styles.innerLinearGradientView]}
+          style={styles.innerLinearGradientView}
           gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
         >
           <IPayView style={[styles.flexStyle, styles.upperView]}>
