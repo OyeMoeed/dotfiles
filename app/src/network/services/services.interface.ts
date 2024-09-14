@@ -1,3 +1,5 @@
+import { DeleteBillResponse } from './bills-management/delete-bill/delete-bill.interface';
+
 // Define the Status interface
 interface MockAPIStatusProps {
   sessionReference: string;
