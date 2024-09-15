@@ -18,9 +18,8 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
   );
   const isNafathSheetVisible = useTypedSelector((state) => state.nafathVerificationReducer.isNafathSheetVisible);
 
-  const { isTermsConditionsVisible, termsAndConditionsURL, isVirtualCardTermsAndConditions } = useTypedSelector(
-    (state: RootState) => state.nafathVerificationReducer,
-  );
+  const { isTermsConditionsVisible, termsAndConditionsURL, isVirtualCardTermsAndConditions, isNafathTerms } =
+    useTypedSelector((state: RootState) => state.nafathVerificationReducer);
 
   const onCloseProfileSheet = () => {
     dispatch(setProfileSheetVisibility(false));
@@ -67,6 +66,7 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
         isVirtualCardTermsAndConditions={isVirtualCardTermsAndConditions}
         termsAndConditionsURL={termsAndConditionsURL}
         showTermsAndConditions={isTermsConditionsVisible}
+        isNafathTerms={isNafathTerms}
       />
 
       <IPayIdRenewalSheet />
