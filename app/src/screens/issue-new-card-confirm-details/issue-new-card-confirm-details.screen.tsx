@@ -11,17 +11,19 @@ import {
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayCreateCardPin from '../create-card-pin/create-card-pin.screen';
 import { AddressInfoRefTypes, RouteParams } from './issue-new-card-confirm-details.interface';
@@ -41,7 +43,6 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -91,8 +92,18 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    setShowTermsAndConditionsSheet(true);
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
+  };
+
+  const onResendCodePress = () => {
+    // Add Code Later during API INTEGRATION
   };
 
   const renderToast = () => {
@@ -230,11 +241,6 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
       >
         <IPayCreateCardPin onSuccess={onSuccessPin} />
       </IPayBottomSheet>
-      <IPayTermsAndConditions
-        showTermsAndConditions={showTermsAndConditionsSheet}
-        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
-        isVirtualCardTermsAndConditions
-      />
       <IPayBottomSheet
         testID="ipay-bottom-physical-card"
         heading={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD}
@@ -255,6 +261,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
           handleOnPressHelp={handleOnPressHelp}
           otp={otp}
           otpError={otpError}
+          onResendCodePress={onResendCodePress} // Add logic Later in Api Integration
         />
       </IPayBottomSheet>
       <IPayBottomSheet

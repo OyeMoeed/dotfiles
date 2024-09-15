@@ -102,7 +102,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     {
       id: '3',
       label: localizationText.COMMON.REF_NUM,
-      value: apiResponse?.response?.transctionRefNumber,
+      value: apiResponse?.response?.referenceNumber,
       icon: icons.copy,
     },
   ];
@@ -145,7 +145,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         navigate(ScreenNames.TOP_UP_SUCCESS, {
           topupChannel: PayChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
-          amount: apiResponse?.response?.totalTansactionAmount,
+          amount: topUpAmount,
           requestPaidSummaryData: requestPaidSummaryData(apiResponse),
         });
       }

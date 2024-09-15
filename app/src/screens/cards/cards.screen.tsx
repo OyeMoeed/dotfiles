@@ -214,15 +214,18 @@ const CardsScreen: React.FC = () => {
 
   const prepareCardInfoData = (data: any) => {
     const cardExpireDate = data?.expiryDate;
+    const cardType = data?.cardTypeDesc;
     const cardNumberValue = data?.cardNumber;
     const cardNumber = [...cardNumberValue]
       .map((d, i) => (i % 4 === 0 ? ` ${d}` : d))
       .join('')
       .trim();
+
     const cardInfo = {
       ...data,
       expiryDate: cardExpireDate,
       cardNumber,
+      cardType,
     };
 
     setCardDetails(cardInfo);
@@ -322,7 +325,12 @@ const CardsScreen: React.FC = () => {
           </IPayView>
           {boxHeight > 0 && currentCard && (
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-              <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} cards={cardsData} />
+              <IPayCardSection
+                currentCard={currentCard}
+                setCurrentCard={setCurrentCard}
+                onOpenOTPSheet={onPinCodeSheet}
+                cards={cardsData}
+              />
             </IPayCustomSheet>
           )}
         </>
@@ -370,10 +378,10 @@ const CardsScreen: React.FC = () => {
         />
       </IPayPortalBottomSheet>
 
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         ref={cardDetailsSheetRef}
         heading={localizationText.CARDS.CARD_DETAILS}
-        customSnapPoint={['1%', '60%']}
+        customSnapPoint={['50%', '60%']}
         onCloseBottomSheet={onCloseCardSheet}
         simpleBar
         cancelBnt
@@ -383,7 +391,7 @@ const CardsScreen: React.FC = () => {
         bottomSheetBgStyles={styles.sheetBackground}
       >
         <IPayCardDetails cardDetails={cardDetails} />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
         onCloseBottomSheet={closeCardSheet}

@@ -51,7 +51,6 @@ const mobileAndIqamaStyles = (colors: any) =>
       position: 'absolute',
       bottom: verticalScale(20),
       alignSelf: 'center',
-      zIndex: -1,
     },
     termsAndConditions: {
       paddingVertical: moderateScale(24), // Fixed typo (madding to padding)
