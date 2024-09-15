@@ -217,7 +217,7 @@ const HelpCenter: React.FC = () => {
           <IPayIcon
             icon={isOpen(index, section.id) ? icons.arrowUp : icons.ARROW_DOWN}
             size={18}
-            color={colors.primary.primary500}
+            color={isOpen(index, section.id) ? colors.primary.primary500 : colors.primary.primary900}
             style={isOpen(index, section.id) ? styles.faqItemIconExpanded : styles.faqItemIcon}
           />
         </IPayView>
