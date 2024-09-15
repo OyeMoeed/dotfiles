@@ -1,12 +1,13 @@
-import { TransferRequestsResult } from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.interface';
+import { ReceivedRequestsResult } from '@app/network/services/transfers/wallet-to-wallet-transfer-confirm/wallet-to-wallet-transfer-confirm.interface';
 import { SendMoneyFormType } from '@app/screens/send-money-form/send-money-form.interface';
 
 export interface IW2WTransferSuccessProps {
   transferDetails: {
     formData: SendMoneyFormType[];
-    apiData: TransferRequestsResult[];
+    apiData: ReceivedRequestsResult[];
   };
   totalAmount: number;
+  variant: string;
 }
 
 export interface PayData {

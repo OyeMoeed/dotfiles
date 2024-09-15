@@ -17,8 +17,8 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   addForm,
   formInstances,
   setNotes,
-  showReason,
   setSelectedItem,
+  showReason = true,
 }) => {
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);

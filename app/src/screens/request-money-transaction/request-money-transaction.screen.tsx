@@ -16,14 +16,16 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
-import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FilterSelectedValue } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { formatDate } from '@app/utilities/date-helper.util';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -37,6 +39,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
   const requestdetailRef = React.createRef<bottomSheetTypes>();
   const rejectRequestRef = React.createRef<bottomSheetTypes>();
+  const cancelRequestRef = React.createRef<bottomSheetTypes>();
   const [sentRequestsPage, setSentRequestsPage] = useState(1);
   const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
 
@@ -153,6 +156,58 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     return { data: [], hasMore: false };
   };
 
+  const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
+    try {
+      if (UpdateRequestType === UpdateRequestTypes.reject) {
+        rejectRequestRef.current?.hide();
+      } else {
+        cancelRequestRef.current?.hide();
+      }
+      const apiResponse = await cancelRejectRequestService(
+        walletInfo.walletNumber,
+        requestDetail?.id,
+        UpdateRequestType,
+      );
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          getRequestsData(1, 20);
+          break;
+        case 'apiResponseNotOk':
+          renderToast({
+            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            toastType: ToastTypes.WARNING,
+          });
+          break;
+
+        case ApiResponseStatusType.FAILURE:
+          renderToast(apiResponse?.error);
+          break;
+
+        default:
+          break;
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const onPressRejectActionSheet = async (index: number) => {
+    if (index === 0) {
+      rejectRequestRef.current?.hide();
+    } else {
+      onCallCancelOrRejectRequest(UpdateRequestTypes.reject);
+    }
+  };
+
+  const onPressCancelActionSheet = async (index: number) => {
+    if (index === 0) {
+      cancelRequestRef.current?.hide();
+    } else {
+      onCallCancelOrRejectRequest(UpdateRequestTypes.cancel);
+    }
+  };
+
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
     if (tab === SEND_REQUESTS) {
@@ -186,13 +241,20 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     setFilters(filtersArray);
   };
 
-  const closeBottomSheet = () => {
+  const closeRequestDetailsBottomSheet = () => {
     requestdetailRef.current?.forceClose();
   };
 
-  const showActionSheet = () => {
-    requestdetailRef.current?.forceClose();
+  // function to open reject action sheet
+  const showRejectActionSheet = () => {
+    closeRequestDetailsBottomSheet();
     rejectRequestRef.current?.show();
+  };
+
+  // function to open cancel action sheet
+  const showCancelActionSheet = () => {
+    closeRequestDetailsBottomSheet();
+    cancelRequestRef.current?.show();
   };
 
   const mapTransactionKeys = (item: any) => {
@@ -245,9 +307,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     setRequestDetail(mappedItem);
 
     requestdetailRef.current?.present();
-  };
-  const onPressActionSheet = () => {
-    rejectRequestRef.current?.hide();
   };
 
   const createRequest = () => {
@@ -380,11 +439,20 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel
-        onPress={onPressActionSheet}
+        onPress={onPressRejectActionSheet}
+      />
+      <IPayActionSheet
+        ref={cancelRequestRef}
+        testID="reject-card-action-sheet"
+        options={[localizationText.COMMON.CANCEL, localizationText.REQUEST_MONEY.CANCEL_REQUEST]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={1}
+        showCancel
+        onPress={onPressCancelActionSheet}
       />
       <IPayBottomSheet
         heading="REQUEST_MONEY.REQUEST_DETAILS"
-        onCloseBottomSheet={closeBottomSheet}
+        onCloseBottomSheet={closeRequestDetailsBottomSheet}
         customSnapPoint={snapPoint}
         ref={requestdetailRef}
         simpleHeader
@@ -394,8 +462,9 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       >
         <IPayRequestDetails
           transaction={requestDetail}
-          onCloseBottomSheet={closeBottomSheet}
-          showActionSheet={showActionSheet}
+          onCloseBottomSheet={closeRequestDetailsBottomSheet}
+          showRejectActionSheet={showRejectActionSheet}
+          showCancelActionSheet={showCancelActionSheet}
         />
       </IPayBottomSheet>
       <IPayFilterBottomSheet

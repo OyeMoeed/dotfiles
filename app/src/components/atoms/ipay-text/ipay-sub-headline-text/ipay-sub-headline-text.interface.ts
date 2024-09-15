@@ -12,7 +12,7 @@ export interface IPaySubHeadlineTextProps {
   /**
    * The text content to be displayed.
    */
-  text: string | null;
+  text?: string | null;
   /**
    * Regular font family for the text.
    */

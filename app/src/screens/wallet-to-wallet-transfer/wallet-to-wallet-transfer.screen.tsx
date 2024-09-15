@@ -71,31 +71,15 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const getW2WActiveFriends = async () => {
-    const payload: IW2WCheckActiveReq = {
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
-    };
-    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      if (apiResponse.response?.friends) {
-        navigate(ScreenNames.SEND_MONEY_FORM, {
-          activeFriends: apiResponse.response?.friends,
-          selectedContacts,
-          heading: t('HOME.SEND_MONEY'),
-          showReason: true,
-          showHistory: true,
-        });
-      }
-    }
-  };
 
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        getW2WActiveFriends();
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          selectedContacts,
+          heading: t('HOME.SEND_MONEY'),
+          showReason: true,
+        });
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
@@ -108,7 +92,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         break;
 
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(ScreenNames.SEND_MONEY_FORM, {
+        navigate(ScreenNames.SEND_MONEY_REQUEST, {
           selectedContacts,
           heading: t('REQUEST_MONEY.CREATE_REQUEST'),
           from: TRANSFERTYPE.REQUEST_MONEY,
@@ -163,6 +147,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   }, [permissionStatus]);
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
+  const clearIcon = <IPayIcon icon={icons.CLOSE_SQUARE} size={20} color={colors.primary.primary500} />;
 
   const renderToast = () => {
     showToast({
@@ -193,9 +178,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
         return [...prevSelectedContacts, contact];
       });
-    } else {
-      // Call the function to render a toast or display a message
-      renderToast();
     }
   };
 
@@ -227,7 +209,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       });
     }
   };
-
   const handleContentSizeChange = (contentSizeWidth: number) => {
     setContentWidth(contentSizeWidth);
   };
@@ -298,7 +279,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const getSearchedContacts = () =>
-    contacts.filter((item) => item?.phoneNumbers[0]?.number?.includes(search) || item?.givenName?.includes(search));
+    contacts.filter(
+      (item) =>
+        item?.phoneNumbers[0]?.number?.includes(search) ||
+        item?.givenName.toUpperCase()?.includes(search.toUpperCase()),
+    );
 
   const qrCodeCallBack = (mobileNumber: string) => {
     if (mobileNumber) {
@@ -326,6 +311,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const renderFooterItem = () => <IPayView style={styles.emptyItemStyle} />;
 
+  const onClearSearchBox = () => {
+    setSearch('');
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -350,9 +339,12 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           label="COMMON.SEARCH"
           placeholder="COMMON.SEARCH"
           rightIcon={searchIcon}
+          showLeftIcon={!!search}
+          leftIcon={clearIcon}
+          onClearInput={onClearSearchBox}
           simpleInput
           containerStyle={styles.searchInputStyle}
-          style={[styles.inputStyle, isIosOS && styles.topMargin]}
+          style={[styles.inputStyle, isIosOS && styles.topMargin, styles.textInputContainerStyle]}
         />
         <IPayView style={styles.unsavedAndQr}>
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>

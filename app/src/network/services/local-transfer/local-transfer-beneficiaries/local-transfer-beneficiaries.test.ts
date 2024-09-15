@@ -23,13 +23,13 @@ describe('getlocalTransferBeneficiaries', () => {
   });
 
   it('should return mock data when MOCK_API_RESPONSE is true', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = true;
+    constants.MOCK_API_RESPONSE = true;
     const result = await getlocalTransferBeneficiaries();
     expect(result).toBe(localTransferBeneficiariesMock);
   });
 
   it('should call apiCall with correct parameters when MOCK_API_RESPONSE is false', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
+    constants.MOCK_API_RESPONSE = false;
     (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
@@ -43,7 +43,7 @@ describe('getlocalTransferBeneficiaries', () => {
   });
 
   it('should return { apiResponseNotOk: true } when api response is not ok', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
+    constants.MOCK_API_RESPONSE = false;
     (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockResolvedValue({ ok: false });
 
@@ -53,7 +53,7 @@ describe('getlocalTransferBeneficiaries', () => {
   });
 
   it('should return an error message when an error occurs', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
+    constants.MOCK_API_RESPONSE = false;
     (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockRejectedValue(mockErrorResponse);
 
@@ -63,7 +63,7 @@ describe('getlocalTransferBeneficiaries', () => {
   });
 
   it('should return "Unknown error" when an error occurs without a message', async () => {
-    (constants.MOCK_API_RESPONSE as boolean) = false;
+    constants.MOCK_API_RESPONSE = false;
     (LOCAL_TRANSFERS_URLS.get_local_transfer_beneficiaries as jest.Mock).mockReturnValue('url');
     (apiCall as jest.Mock).mockRejectedValue({});
 

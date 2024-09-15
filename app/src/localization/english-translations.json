@@ -561,7 +561,9 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2": "500 SAR"
+    "AMOUNT_2": "500 SAR",
+    "FAST_CONVERSION_BY": "Fast conversion by",
+    "SARIE": "Sarie"
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
@@ -579,6 +581,7 @@
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
     "CONTACT_NAME": "Contact Name",
+    "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
     "CONTACT_LIMIT": "Contacts limit reached"
   },
   "CARD_OPTIONS": {
@@ -1347,7 +1350,7 @@
     "PAY": "Pay",
     "REJECT": "Reject",
     "REJECT_THIS_REQUEST": "Reject this request",
-    "MAKE_NEW_REQUEST": "Make new Request"
+    "SEND_REQUEST_TITLE": "Send Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",

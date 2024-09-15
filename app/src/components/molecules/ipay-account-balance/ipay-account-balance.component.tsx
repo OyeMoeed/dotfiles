@@ -12,6 +12,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   style,
   balance,
   availableBalance,
+  monthlyIncomingLimit,
   hideBalance,
   showRemainingAmount = false,
   onPressTopup,
@@ -30,6 +31,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   const styles = ipayAccountBalanceStyles(colors);
 
   const currentAvailableBalance = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
+  const monthlyAvailableBalance = hideBalance ? '*****' : `${formatNumberWithCommas(monthlyIncomingLimit)}`;
   const totalAvailableBalance = hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance || '0')}`;
 
   return (
@@ -86,7 +88,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               text="HOME.REMAINING_AMOUNT"
             />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={currentAvailableBalance} />
+              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={monthlyAvailableBalance} />
               <IPayCaption2Text
                 style={totalAvailableTextStyle}
                 color={colors.natural.natural500}

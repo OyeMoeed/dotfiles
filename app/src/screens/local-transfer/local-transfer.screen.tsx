@@ -156,7 +156,6 @@ const LocalTransferScreen: React.FC = () => {
     showToast({
       title: t('BENEFICIARY_OPTIONS.NAME_CHANGED'),
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
@@ -188,13 +187,26 @@ const LocalTransferScreen: React.FC = () => {
     showToast({
       title: t('BENEFICIARY_OPTIONS.BENEFICIARY_DELETED'),
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
+  };
+
+  const activateBeneficiary = useRef<bottomSheetTypes>(null);
+
+  const handleActivateBeneficiary = useCallback(() => {
+    activateBeneficiary?.current?.present();
+    setActivateHeight(SNAP_POINTS.SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
+    else handleActivateBeneficiary();
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
@@ -215,8 +227,6 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
-                // TODO: fix in another PR
-                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 onPressBtn(item);
               }}
               btnText={
@@ -268,9 +278,7 @@ const LocalTransferScreen: React.FC = () => {
   const renderHeader = (sortType: string, count: number, totalCount: number) =>
     totalCount ? (
       <IPayView style={styles.listHeader}>
-        <IPayFootnoteText
-          text={sortType === BeneficiaryTypes.ACTIVE ? t('COMMON.ACTIVE') : localizationText.COMMON.INACTIVE}
-        />
+        <IPayFootnoteText text={sortType === BeneficiaryTypes.ACTIVE ? 'COMMON.ACTIVE' : 'COMMON.INACTIVE'} />
         <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} />
       </IPayView>
     ) : (
@@ -308,9 +316,8 @@ const LocalTransferScreen: React.FC = () => {
   // IVR
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-      ? t('ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS')
-      : t('ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE');
-  const activateBeneficiary = useRef<bottomSheetTypes>(null);
+      ? 'ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS'
+      : 'ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE';
 
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
@@ -361,18 +368,6 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
 
-  const handleActivateBeneficiary = useCallback(() => {
-    activateBeneficiary?.current?.present();
-    setActivateHeight(SNAP_POINTS.SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-    else handleActivateBeneficiary();
-  };
-
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {
       case ActivateViewTypes.RECEIVE_CALL:
@@ -411,6 +406,7 @@ const LocalTransferScreen: React.FC = () => {
         break;
     }
   }, []);
+
   const onDeleteBeneficiary = async () => {
     setDeleteBeneficiary(false);
     try {
