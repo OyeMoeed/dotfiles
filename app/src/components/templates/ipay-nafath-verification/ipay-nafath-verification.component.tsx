@@ -294,7 +294,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                   large
                   style={styles.resendButton}
                   onPress={() => getNafathRandomNumber()}
-                  rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0} />}
+                  rightIcon={<icons.dottedRefresh />}
                 />
               ) : (
                 <IPayPressable style={styles.codeWrapper}>
