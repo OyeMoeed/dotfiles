@@ -249,6 +249,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             balanceType="Incoming"
           />
 
+          <IPayView style={styles.nextButton} />
           {channel === PayChannel.APPLE ? (
             <IPayButton
               large
