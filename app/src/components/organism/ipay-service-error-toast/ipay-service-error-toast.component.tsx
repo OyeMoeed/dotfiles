@@ -5,12 +5,10 @@ import { store, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import icons from '@assets/icons';
 import { FC, useEffect } from 'react';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayServiceErrorToastProps } from './ipay-service-error-toast.interface';
 import IPayServiceErrorToastStyles from './ipay-service-error-toast.styles';
 
 const IPayServiceErrorToast: FC<IPayServiceErrorToastProps> = ({ testID }) => {
-  const localizationText = useLocalization();
   const styles = IPayServiceErrorToastStyles();
   const serviceCallError = useTypedSelector((state) => state.alertReducer.serviceCallError);
   const TOAST_DURATION = 4000;
@@ -28,7 +26,7 @@ const IPayServiceErrorToast: FC<IPayServiceErrorToastProps> = ({ testID }) => {
   return serviceCallError ? (
     <IPayToast
       testID={`error-toast-${testID}`}
-      title={localizationText.ERROR[serviceCallError as keyof typeof localizationText.ERROR] || serviceCallError}
+      title={t(`ERROR[${serviceCallError}]`)}
       isShowSubTitle
       isShowLeftIcon
       leftIcon={<IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />}

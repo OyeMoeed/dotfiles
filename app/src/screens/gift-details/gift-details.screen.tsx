@@ -159,7 +159,11 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   const renderCardDetails = ({ item }: ItemProps) => (
     <IPayView style={styles.dataCardView}>
-      <IPayFootnoteText regular text={t('SEND_GIFT[GiftLocalizationKeys[item]]')} color={colors.natural.natural900} />
+      <IPayFootnoteText
+        regular
+        text={localizationText.SEND_GIFT[GiftLocalizationKeys[item]]}
+        color={colors.natural.natural900}
+      />
       <IPayView style={styles.transactionDetailsView}>
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText

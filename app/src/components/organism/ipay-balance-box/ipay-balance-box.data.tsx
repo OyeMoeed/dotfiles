@@ -35,7 +35,7 @@ const useCarouselData = () => {
           icon: icons.global_1,
           navigate: DashboardOptions.INTERNATIONAL_TR,
         },
-        { text: t('HOME.ATM_WITHDRAWALS, icon: icons.card'), navigate: DashboardOptions.ATM_WITHDRAWALS },
+        { text: t('HOME.ATM_WITHDRAWALS'), icon: icons.card, navigate: DashboardOptions.ATM_WITHDRAWALS },
       ],
     },
     {
@@ -46,7 +46,7 @@ const useCarouselData = () => {
           transfer_type: t('HOME.LOCAL_TRANSFER'),
           navigate: DashboardOptions.LOCAL_TRANSFER,
         },
-        { text: t('HOME.QR_ACCEPTANCE, icon: icons.scanner'), isNew: true },
+        { text: t('HOME.QR_ACCEPTANCE'), icon: icons.scanner, isNew: true },
         { text: t('HOME.SPENDING_LIMIT'), icon: icons.calculator },
         { text: t('HOME.MY_ACCOUNT'), icon: icons.user_tag },
       ],

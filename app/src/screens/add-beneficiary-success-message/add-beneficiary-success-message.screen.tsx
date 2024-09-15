@@ -178,7 +178,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL]')]}
+        options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}
         cancelButtonIndex={1}
         showCancel
         onPress={(index) => handleFinalAction(index, selectedNumber)}

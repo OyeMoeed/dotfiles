@@ -30,7 +30,7 @@ const SendGiftListScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = sendGiftStyles(colors);
-  const GIFT_TABS = [t('SEND_GIFT.SENT'), t('SEND_GIFT.RECEIVED]')];
+  const GIFT_TABS = [t('SEND_GIFT.SENT'), t('SEND_GIFT.RECEIVED')];
   const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);

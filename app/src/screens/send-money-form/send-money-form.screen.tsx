@@ -205,7 +205,7 @@ const SendMoneyFormScreen: React.FC = () => {
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
     message: t('SEND_MONEY_FORM.REMOVE_DETAIL'),
-    options: [t('PROFILE.REMOVE'), t('COMMON.CANCEL]')],
+    options: [t('PROFILE.REMOVE'), t('COMMON.CANCEL')],
     cancelButtonIndex: 1,
     showCancel: true,
     destructiveButtonIndex: 0,

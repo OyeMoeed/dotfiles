@@ -376,7 +376,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayActionSheet
         ref={rejectRequestRef}
         testID="reject-card-action-sheet"
-        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.REJECT_THIS_REQUEST]')]}
+        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.REJECT_THIS_REQUEST')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel

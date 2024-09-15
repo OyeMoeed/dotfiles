@@ -301,12 +301,8 @@ const HelpCenter: React.FC = () => {
               showsVerticalScrollIndicator={false}
             />
             <IPayView style={styles.contactUsContainer}>
-              <IPaySubHeadlineText regular style={styles.contactUsText}>
-                {t('COMMON.ASSISTANCE')}
-              </IPaySubHeadlineText>
-              <IPayCaption1Text regular style={styles.contactUsSubText}>
-                {t('COMMON.CONTACT_SERVICE_TEAM')}
-              </IPayCaption1Text>
+              <IPaySubHeadlineText regular style={styles.contactUsText} text="COMMON.ASSISTANCE" />
+              <IPayCaption1Text regular style={styles.contactUsSubText} text="COMMON.CONTACT_SERVICE_TEAM" />
               <IPayButton
                 btnType="primary"
                 rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
@@ -322,7 +318,7 @@ const HelpCenter: React.FC = () => {
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
-          options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL]')]}
+          options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}
           cancelButtonIndex={1}
           showCancel
           onPress={(index) => handleFinalAction(index, selectedNumber)}

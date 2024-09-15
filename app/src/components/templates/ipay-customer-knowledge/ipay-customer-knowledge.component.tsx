@@ -145,7 +145,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 );
 
                 if (!filteredData.length) {
-                  return <IPayList title="REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle" />;
+                  return <IPayList title="REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH" style={styles.listStyle} />;
                 }
                 return (
                   <>

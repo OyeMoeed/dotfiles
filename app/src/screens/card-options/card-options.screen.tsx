@@ -388,7 +388,7 @@ const CardOptionsScreen: React.FC = () => {
         testID="delete-card-action-sheet"
         title="CARD_OPTIONS.DELETE_THE_CARD"
         message="CARD_OPTIONS.YOU_WONT_BE_ABLE_TO_USE"
-        options={[t('COMMON.CANCEL'), t('CARD_OPTIONS.DELETE]')]}
+        options={[t('COMMON.CANCEL'), t('CARD_OPTIONS.DELETE')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showIcon

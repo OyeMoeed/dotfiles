@@ -204,7 +204,7 @@ const MenuScreen: FC = () => {
           ref={logoutConfirmationSheet}
           testID="logout-action-sheet"
           title="MENU.LOGOUT_CONFIRMATION"
-          options={[t('COMMON.CANCEL'), t('MENU.LOGOUT]')]}
+          options={[t('COMMON.CANCEL'), t('MENU.LOGOUT')]}
           cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
           destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
           showIcon={actionSheetOptions.showIcon}

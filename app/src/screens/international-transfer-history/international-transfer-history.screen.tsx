@@ -326,7 +326,7 @@ const InternationalTransferHistory: React.FC = () => {
     showIcon: true,
     customImage: <IPayIcon icon={icons.warning4} size={48} color={colors.warning.warning500} />,
     message: t('INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_MESSAGE'),
-    options: [t('COMMON.DONE'), t('COMMON.CANCEL]')],
+    options: [t('COMMON.DONE'), t('COMMON.CANCEL')],
     bodyStyle: styles.actionSheetView,
     btnStyle: styles.actionSheetBtn,
     cancelButtonIndex: 1,

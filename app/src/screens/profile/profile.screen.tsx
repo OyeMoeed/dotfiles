@@ -285,9 +285,11 @@ const Profile = () => {
         </IPayView>
         <IPayView>
           <IPayView style={styles.body1}>
-            <IPayFootnoteText regular style={styles.containerHeadings}>
-              {t('PROFILE.REGISTERATION_COMPLETION')}
-            </IPayFootnoteText>
+            <IPayFootnoteText
+              regular
+              style={styles.containerHeadings}
+              text="PROFILE.REGISTERATION_COMPLETION"
+            ></IPayFootnoteText>
             <IPayFlatlist
               style={styles.listStyle}
               testID="profile"
@@ -298,9 +300,7 @@ const Profile = () => {
             />
           </IPayView>
           <IPayView style={styles.body2}>
-            <IPayFootnoteText regular style={styles.containerHeadings}>
-              {t('COMMON.PERSONAL_INFO')}
-            </IPayFootnoteText>
+            <IPayFootnoteText regular style={styles.containerHeadings} text="COMMON.PERSONAL_INFO"></IPayFootnoteText>
             <IPayFlatlist
               // scrollEnabled={false}
               showsVerticalScrollIndicator={false}
@@ -318,7 +318,7 @@ const Profile = () => {
       <IPayPortalBottomSheet
         animate={false}
         noGradient
-        heading={t('PROFILE[category]')}
+        heading={t([`PROFILE.${category}`, 'PROFILE.TITLE'])}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
         ref={kycBottomSheetRef}

@@ -129,7 +129,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     options:
       selectedImage || walletInfo.profileImage
         ? walletOptions
-        : [t('PROFILE.TAKE_PHOTO'), t('PROFILE.UPLOAD_PHOTO'), t('COMMON.CANCEL]')],
+        : [t('PROFILE.TAKE_PHOTO'), t('PROFILE.UPLOAD_PHOTO'), t('COMMON.CANCEL')],
     cancelButtonIndex: selectedImage || walletInfo.profileImage ? 3 : 2,
     showCancel: true,
     destructiveButtonIndex: selectedImage || walletInfo.profileImage ? 2 : undefined,

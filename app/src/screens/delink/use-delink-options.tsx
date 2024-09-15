@@ -23,7 +23,7 @@ const useActionSheetOptions = (delinkSucessfully: (index?: number) => void): Act
     customImage: <IPayIcon icon={icons.delinked} size={48} />,
     showIcon: true,
     message: t('COMMON.DELINK_ALERT.LOGIN_AGAIN'),
-    options: [t('COMMON.CANCEL'), t('COMMON.DELINK_ALERT.DELINK]')],
+    options: [t('COMMON.CANCEL'), t('COMMON.DELINK_ALERT.DELINK')],
     cancelButtonIndex: 0,
     showCancel: true,
     destructiveButtonIndex: 1,

@@ -52,7 +52,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
 
   const { showToast } = useToastContext();
 
-  const tabOptions = [t('COMMON.SENT'), t('COMMON.RECEIVED]')];
+  const tabOptions = [t('COMMON.SENT'), t('COMMON.RECEIVED')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {

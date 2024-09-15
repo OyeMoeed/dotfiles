@@ -8,8 +8,10 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { cardDetailsProps, FieldKeyMappingProps } from './ipay-card-details.interface';
 import cardDetailsStyle from './ipay-card-details.style';
+import useLocalization from '@app/localization/hooks/localization.hook';
 
 const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
+  const localizationText = useLocalization();
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = cardDetailsStyle(colors);
@@ -34,10 +36,10 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   };
 
   const fieldKeyMapping: FieldKeyMappingProps = {
-    [CardDetailsKeys.CARD_NUMBER]: t('CARDS[CardDetailsKeys.CARD_NUMBER]'),
-    [CardDetailsKeys.CARD_HOLDER_NAME]: t('CARDS[CardDetailsKeys.CARD_HOLDER_NAME]'),
-    [CardDetailsKeys.CVV]: t('CARDS[CardDetailsKeys.CVV]'),
-    [CardDetailsKeys.EXPIRY_DATE]: t('CARDS[CardDetailsKeys.EXPIRY_DATE]'),
+    [CardDetailsKeys.CARD_NUMBER]: localizationText.CARDS[CardDetailsKeys.CARD_NUMBER],
+    [CardDetailsKeys.CARD_HOLDER_NAME]: localizationText.CARDS[CardDetailsKeys.CARD_HOLDER_NAME],
+    [CardDetailsKeys.CVV]: localizationText.CARDS[CardDetailsKeys.CVV],
+    [CardDetailsKeys.EXPIRY_DATE]: localizationText.CARDS[CardDetailsKeys.EXPIRY_DATE],
   };
 
   const copyRefNo = (value: string) => {

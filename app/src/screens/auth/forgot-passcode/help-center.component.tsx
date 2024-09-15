@@ -92,12 +92,12 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
             keyExtractor={(item, index) => index.toString()}
           />
           <IPayView style={styles.contactUsContainer}>
-            <IPaySubHeadlineText regular style={styles.contactUsText}>
-              {t('COMMON.ASSISTANCE')}
-            </IPaySubHeadlineText>
-            <IPayCaption1Text regular style={styles.contactUsSubText}>
-              {t('COMMON.CONTACT_SERVICE_TEAM')}
-            </IPayCaption1Text>
+            <IPaySubHeadlineText regular style={styles.contactUsText} text={'COMMON.ASSISTANCE'}></IPaySubHeadlineText>
+            <IPayCaption1Text
+              regular
+              style={styles.contactUsSubText}
+              text="COMMON.CONTACT_SERVICE_TEAM"
+            ></IPayCaption1Text>
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}

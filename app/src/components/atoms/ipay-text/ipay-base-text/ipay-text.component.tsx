@@ -8,6 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { IPayTextProps } from './ipay-text.interface';
 import styles from './ipay-text.style';
 
+function isNumber(n) {
+  return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
+}
+
 /**
  * A component to display localized text.
  * @param {RNTextProps} props - The props for the RNText component.
@@ -30,10 +34,11 @@ const IPayText: React.FC<IPayTextProps> = ({
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
   const baseTextStyles = styles(getFontFamily as string, colors);
 
-  const isChildrenString = children?.toString().split(' ').length === 1;
-  const mainChildren = isChildrenString ? t(String(children)) : children;
-  const propText = t(`${isAmount ? formatNumberWithCommas(text || '') : text}`);
-  const showText = text ? propText : mainChildren;
+  const texted = children ? String(children) : text;
+  const propText = isAmount ? formatNumberWithCommas(texted || '') : texted;
+  const isPropTextString = !isNumber(propText);
+  const propsTextHasOneChar = propText?.toString().split(' ').length === 1;
+  const showText = isPropTextString && propsTextHasOneChar ? t(String(propText)) : propText;
 
   return (
     <Text

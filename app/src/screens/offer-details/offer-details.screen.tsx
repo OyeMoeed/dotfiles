@@ -259,7 +259,7 @@ const OfferDetailsScreen: React.FC = () => {
       <IPayActionSheet
         ref={nearestStoreSheetRef}
         testID="nearest-store-action-sheet"
-        options={[t('COMMON.CANCEL'), t('OFFERS.OPEN_GOOGLE_MAP]')]}
+        options={[t('COMMON.CANCEL'), t('OFFERS.OPEN_GOOGLE_MAP')]}
         cancelButtonIndex={0}
         showCancel
         onPress={onClickDeleteCardSheet}

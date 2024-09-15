@@ -2,6 +2,7 @@ import { useTypedDispatch } from '@app/store/store';
 import { LanguageCode } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { setSelectedLanguage } from '@store/slices/language-slice';
+import i18next from 'i18next';
 import { useCallback, useImperativeHandle, useRef, useState } from 'react';
 import { I18nManager } from 'react-native';
 import RNRestart from 'react-native-restart';
@@ -35,9 +36,12 @@ export const useLanguageChange = (handleClosePress: () => void) => {
     (language: string, isRTL: boolean, code: LanguageCode) => {
       handleClosePress();
 
+      i18next.changeLanguage(code);
+
       setTimeout(() => {
         dispatch(setSelectedLanguage(code));
         I18nManager.forceRTL(isRTL);
+        I18nManager.allowRTL(isRTL);
         RNRestart.restart();
       }, 300);
     },

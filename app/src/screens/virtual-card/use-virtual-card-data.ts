@@ -113,7 +113,7 @@ const useVirtualCardData = () => {
       backgroundImage: images.signatueCard,
     },
   ];
-  const SEGMENT_LABEL = [t('CARD_OPTIONS.CARD_FEATURES'), t('CARD_OPTIONS.CARD_FEE]')];
+  const SEGMENT_LABEL = [t('CARD_OPTIONS.CARD_FEATURES'), t('CARD_OPTIONS.CARD_FEE')];
 
   return { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA, SEGMENT_LABEL };
 };
