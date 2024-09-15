@@ -27,6 +27,7 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
+import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -168,8 +169,10 @@ const Home: React.FC = () => {
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
   const getUpadatedWalletData = async () => {
-    const payload = {
-      walletNumber: walletNumber as string,
+    const payload: WalletNumberProp = {
+      walletNumber,
+      hideError: true,
+      hideSpinner: true,
     };
     const apiResponse: any = await getWalletInfo(payload);
     if (apiResponse) {
