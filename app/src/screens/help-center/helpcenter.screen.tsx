@@ -58,6 +58,7 @@ const HelpCenter: React.FC = () => {
     if (constants.MOCK_API_RESPONSE) {
       setAllFaqItems(helpCenterMockData);
       setFaqData(helpCenterMockData);
+      return;
     }
     try {
       const apiResponse: any = await getFAQ();
@@ -88,7 +89,7 @@ const HelpCenter: React.FC = () => {
 
   useEffect(() => {
     fetchFaqItems();
-  }, []);
+  }, [fetchFaqItems]);
 
   const toggleExpand = (index: number, sectionID: number) => {
     setCurrentSection(sectionID);
@@ -216,6 +217,7 @@ const HelpCenter: React.FC = () => {
           <IPayIcon
             icon={isOpen(index, section.id) ? icons.arrowUp : icons.ARROW_DOWN}
             size={18}
+            color={colors.primary.primary500}
             style={isOpen(index, section.id) ? styles.faqItemIconExpanded : styles.faqItemIcon}
           />
         </IPayView>
