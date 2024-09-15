@@ -10,6 +10,12 @@ import { heightMapping } from '@app/components/templates/ipay-transaction-histor
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
+import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
+import LocalBeneficiaryMetaMockProps, {
+  LocalBank,
+} from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
+import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import {
   BeneficiaryTransaction,
   LocalTransferMockProps,
@@ -23,6 +29,7 @@ import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import {
   BeneficiaryData,
@@ -36,7 +43,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const styles = transactionHistoryStyles(colors);
   const localizationText = useLocalization();
   const filterRef = useRef<bottomSheetTypes>(null);
-  const { transferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
+  const { transferHistoryFilterDefaultValues } = useConstantData();
 
   const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
   const transactionRef = React.createRef<any>();
@@ -47,6 +54,13 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const [showTransactionSheet, setShowTransactionSheet] = useState<boolean>(false);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [appliedFilters, setAppliedFilters] = useState<BeneficiaryData>({});
+  const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
+  const [bankList, setBankList] = useState<LocalBank[]>([]);
+  const transactionRequestTypes = [
+    TransactionTypes.COUT_ALINMA,
+    TransactionTypes.COUT_SARIE,
+    TransactionTypes.COUT_IPS,
+  ];
 
   const { showToast } = useToastContext();
 
@@ -54,7 +68,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
-    const calculatedSnapPoint = [heightMapping[item?.transactionRequestType], '100%'];
+    const calculatedSnapPoint = [heightMapping[item?.transactionType], '100%'];
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
     setShowTransactionSheet(true);
@@ -65,13 +79,13 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const transactionType: TransactionType = {
-    [localizationText.COMMON.SENT]: TransactionTypes.PAY_WALLET,
-    [localizationText.COMMON.RECEIVED]: TransactionTypes.CIN_SARIE_REV,
+    [localizationText.COMMON.SENT]: TransactionTypes.DR,
+    [localizationText.COMMON.RECEIVED]: TransactionTypes.CR,
   };
 
   const generatedData = () =>
     beneficiaryHistoryData?.filter(
-      (item) => item?.transactionRequestType === transactionType[activeTab as keyof TransactionType],
+      (item) => item?.transactionType === transactionType[activeTab as keyof TransactionType],
     );
 
   const handleFiltersShow = () => {
@@ -88,10 +102,60 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     });
   };
 
-  const getBeneficiariesHistory = async () => {
+  const getBankList = async () => {
+    const apiResponse: LocalBeneficiaryMetaMockProps = await getlocalBeneficiaryMetaData();
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setBankList(apiResponse.response.localBanks);
+    }
+  };
+
+  const getBeneficiariesData = async () => {
+    try {
+      const apiResponse: LocalTransferBeneficiariesMockProps = await getlocalTransferBeneficiaries();
+      if (apiResponse?.successfulResponse) {
+        setBeneficiaryData(apiResponse?.response?.beneficiaries);
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const getBeneficiryNamesList = () =>
+    beneficiaryData?.map((item) => ({
+      id: item.beneficiaryCode,
+      key: item.fullName,
+      value: item.fullName,
+    }));
+
+  const getLocalBankList = () =>
+    bankList?.map((item) => ({
+      id: item?.code,
+      key: item?.code,
+      value: item?.desc,
+      image: item?.code,
+    }));
+
+  const filtersList = [
+    {
+      id: '1',
+      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      type: FiltersType.BENEFICIARY_NAME,
+      icon: icons.user1,
+      filterValues: getBeneficiryNamesList(),
+    },
+    {
+      id: '2',
+      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      type: FiltersType.BANK_NAME_LIST,
+      filterValues: getLocalBankList(),
+    },
+  ];
+
+  const getBeneficiariesHistory = async (trxReqType: string) => {
     const payload: LocalTransferReqParams = {
       walletNumber,
-      bankName: appliedFilters?.beneficiaryBankName,
+      trxReqType,
       beneficiaryName: appliedFilters?.beneficiaryName,
       toDate: appliedFilters?.dateTo,
       fromDate: appliedFilters?.dateFrom,
@@ -102,7 +166,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       const apiResponse: LocalTransferMockProps = await getlocalTransaction(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryHistoryData(apiResponse?.response?.transactions);
+          setBeneficiaryHistoryData([...beneficiaryHistoryData, ...apiResponse.response.transactions]);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -119,8 +183,12 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     }
   };
 
+  const getLocalTransactionsData = () => transactionRequestTypes?.map((item) => getBeneficiariesHistory(item));
+
   useEffect(() => {
-    getBeneficiariesHistory();
+    getLocalTransactionsData();
+    getBeneficiariesData();
+    getBankList();
   }, []);
 
   const handleSubmit = (data: BeneficiaryData) => {
@@ -132,6 +200,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     const filterValues = filtersArray.filter((item) => item !== '');
     setAppliedFilters(data);
     setFilters(filterValues);
+    getLocalTransactionsData();
   };
 
   const removeFilter = (filter: string, allFilters: any) => {
@@ -267,7 +336,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         showAmountFilter
         showDateFilter
         ref={filterRef}
-        filters={transferHistoryFilterData}
+        filters={filtersList}
         applySearchOn={[FiltersType.BANK_NAME_LIST]}
         onSubmit={handleSubmit}
       />

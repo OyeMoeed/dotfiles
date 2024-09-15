@@ -546,7 +546,8 @@
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
     "DATE_AND_TIME": "Transaction Date",
-    "ACCOUNT": "Account"
+    "ACCOUNT": "Account",
+    "REASON_OF_TRANSFER": "Reason of Transfer"
   },
   "TRANSFER_SUMMARY": {
     "NAME": "Name",
