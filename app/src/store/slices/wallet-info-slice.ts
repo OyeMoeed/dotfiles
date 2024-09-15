@@ -103,6 +103,7 @@ const initialState: WalletInformationProps = {
     myBeneficiaryId: '',
     otpTimeout: '',
   },
+  withdrawingCashFromATMCardList: [],
 };
 
 /**
@@ -137,13 +138,27 @@ const walletInfoSlice = createSlice({
     resetWalletInfo(state) {
       state.walletInfo = initialState.walletInfo;
     },
+
+    setWithdrawingCashFromATMCardList(state, action: PayloadAction<string[]>) {
+      state.withdrawingCashFromATMCardList = action.payload;
+    },
+
+    resetWithdrawingCashFromATMCardList(state) {
+      state.withdrawingCashFromATMCardList = initialState.withdrawingCashFromATMCardList;
+    },
   },
 });
 
 /**
  * Action creators for setting the wallet info and login data.
  */
-export const { setWalletInfo, openIdRenewalSheet, closeIdRenewalSheet, resetWalletInfo } = walletInfoSlice.actions;
+export const {
+  setWalletInfo,
+  openIdRenewalSheet,
+  closeIdRenewalSheet,
+  resetWalletInfo,
+  setWithdrawingCashFromATMCardList,
+} = walletInfoSlice.actions;
 
 /**
  * Selectors for setting the user info and login data.

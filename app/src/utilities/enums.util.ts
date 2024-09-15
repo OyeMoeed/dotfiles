@@ -369,6 +369,5 @@ export {
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  toastTypes,
   CardMapping,
 };

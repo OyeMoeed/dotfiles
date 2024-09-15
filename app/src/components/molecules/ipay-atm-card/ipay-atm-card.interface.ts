@@ -60,6 +60,10 @@ export interface CardInterface {
    * card printing status
    */
   isCardPrinted?: boolean;
+  /**
+   * card type description
+   */
+  cardTypeDesc?: string;
 }
 
 export interface IPayATMCardProps {
