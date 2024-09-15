@@ -1,4 +1,5 @@
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import { Dispatch, SetStateAction } from 'react';
 
 interface IPayCardDetailsSectionProps {
   testID?: string;
@@ -6,6 +7,7 @@ interface IPayCardDetailsSectionProps {
   onOpenOTPSheet?: () => void;
   currentCard: CardInterface;
   cards: CardInterface[];
+  setCurrentCard: Dispatch<SetStateAction<CardInterface | undefined>>;
 }
 
 interface Option {

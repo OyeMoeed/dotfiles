@@ -31,6 +31,8 @@ import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -40,8 +42,11 @@ import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const dispatch = useDispatch();
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+
+  const { cashWithdrawalCardsList } = useSelector((state) => state.walletInfoReducer);
 
   const {
     currentCard,
@@ -85,11 +90,12 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    const isATMWithDrawEnabled = cashWithdrawalCardsList?.includes(currentCard.cardIndex || '');
+    setIsATMWithDraw(isATMWithDrawEnabled);
     initOnlinePurchase();
   }, []);
 
-  const getToastSubTitle = () =>
-    `${cardType} ${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
+  const getToastSubTitle = () => `${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
 
   const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
@@ -118,7 +124,7 @@ const CardOptionsScreen: React.FC = () => {
           isOn
             ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
             : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
-          isOn || true,
+          true,
           icons.receipt_item,
           false,
         );
@@ -136,18 +142,25 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   const toggleOnlinePurchase = () => {
-    if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_DISABLE) {
-      changeOnlinePurchase(true, CardStatus.ONLINE_PURCHASE_ENABLE);
-    } else if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
-      changeOnlinePurchase(false, CardStatus.ONLINE_PURCHASE_DISABLE);
-    }
+    changeOnlinePurchase(
+      !isOnlinePurchase,
+      isOnlinePurchase ? CardStatus.ONLINE_PURCHASE_DISABLE : CardStatus.ONLINE_PURCHASE_ENABLE,
+    );
   };
 
   const toggleATMWithdraw = (isOn: boolean) => {
-    setIsATMWithDraw((prev) => !prev);
+    if (isOn) {
+      const newCardList = new Set<string>([...cashWithdrawalCardsList, currentCard.cardIndex || '']);
+      dispatch(setCashWithdrawalCardsList([...newCardList]));
+    } else {
+      const newCardList = cashWithdrawalCardsList?.filter((cardIndex: string) => cardIndex !== currentCard.cardIndex);
+      dispatch(setCashWithdrawalCardsList([...new Set<string>(newCardList)]));
+    }
+
+    setIsATMWithDraw(isOn);
     renderToast(
       isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
-      isOn,
+      true,
       icons.moneys,
       false,
     );

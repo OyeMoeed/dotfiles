@@ -48,6 +48,9 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
       gap: moderateScale(10),
       color: colors.secondary.secondary500,
     },
+    contentContainerStyle: {
+      flex: 1,
+    },
   });
 
 export default requestMoneyStyles;

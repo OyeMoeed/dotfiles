@@ -28,7 +28,7 @@ import {
   sendRequestedMoneyPrepare,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import getDeviceInfo from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { PayChannel, States, TopupStatus, buttonVariants } from '@app/utilities/enums.util';
@@ -102,7 +102,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     {
       id: '3',
       label: localizationText.COMMON.REF_NUM,
-      value: apiResponse?.response?.transctionRefNumber,
+      value: apiResponse?.response?.referenceNumber,
       icon: icons.copy,
     },
   ];
@@ -111,12 +111,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     createRequestBottomSheetRef.current?.present();
 
-    setIsLoading(true);
     const payload: SendRequestedMoneyPrepareReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await sendRequestedMoneyPrepare(walletInfo.walletNumber, transId, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       setOtpRef(apiResponse?.response?.otpRef as string);
       setTransactionId(apiResponse?.authentication?.transactionId);
       if (showOtpSheet) {
@@ -124,7 +123,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
   };
 
   // Verify OTP for sending requested money
@@ -147,7 +145,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         navigate(ScreenNames.TOP_UP_SUCCESS, {
           topupChannel: PayChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
-          amount: apiResponse?.response?.totalTansactionAmount,
+          amount: topUpAmount,
           requestPaidSummaryData: requestPaidSummaryData(apiResponse),
         });
       }
