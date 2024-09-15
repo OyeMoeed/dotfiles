@@ -60,6 +60,12 @@ export interface CardInterface {
    * card printing status
    */
   isCardPrinted?: boolean;
+  /**
+   * card printing status
+   */
+  annualFeeDue?: any;
+  nextAnnualFeeAmt?: any;
+  nextAnnualFeeVAT?: any;
 }
 
 export interface IPayATMCardProps {
