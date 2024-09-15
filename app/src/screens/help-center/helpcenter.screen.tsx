@@ -316,7 +316,7 @@ const HelpCenter: React.FC = () => {
               <IPayButton
                 btnType="primary"
                 rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
-                btnText={localizationText.COMMON.CONTACT_US}
+                btnText={localizationText.COMMON.NEED_ASSISTANCE}
                 textColor={colors.secondary.secondary800}
                 textStyle={styles.buttonText}
                 btnStyle={styles.buttonBg}
