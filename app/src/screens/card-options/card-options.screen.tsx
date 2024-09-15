@@ -302,6 +302,8 @@ const CardOptionsScreen: React.FC = () => {
     }
   }, [isOtpSheetVisible]);
 
+  const cardLastFourDigit = maskedCardNumber?.slice(-4);
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
@@ -311,7 +313,7 @@ const CardOptionsScreen: React.FC = () => {
             cardType={cardType}
             cardTypeName={cardHeaderText}
             carHolderName={name}
-            cardLastFourDigit={maskedCardNumber || ''}
+            cardLastFourDigit={cardLastFourDigit || ''}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
@@ -326,7 +328,6 @@ const CardOptionsScreen: React.FC = () => {
               openBottomSheet.current?.present();
             }}
           />
-
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}
