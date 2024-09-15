@@ -11,9 +11,10 @@ import loginUser from '@app/network/services/authentication/login/login.service'
 import { OtpVerificationProps } from '@app/network/services/authentication/otp-verification/otp-verification.interface';
 import otpVerification from '@app/network/services/authentication/otp-verification/otp-verification.service';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
-import { getDeviceInfo, encryptData } from '@app/network/utilities';
+import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -39,17 +40,22 @@ const useMobileAndIqamaVerification = () => {
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [resendOtpPayload, setResendOtpPayload] = useState<LoginUserPayloadProps>();
-  const termsAndConditionSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-  const helpCenterRef = useRef<bottomSheetTypes>(null);
+
+  const [isHelpSheetVisible, setHelpSheetVisible] = useState(false);
   const { fetchLocation } = useLocation();
   const { checkAndHandlePermission } = useLocationPermission();
 
   const onCheckTermsAndConditions = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
+
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef?.current?.showTermsAndConditions();
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
 
   const onCloseBottomSheet = () => {
@@ -62,7 +68,11 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const handleOnPressHelp = () => {
-    helpCenterRef?.current?.present();
+    setHelpSheetVisible(true);
+  };
+
+  const onCloseHelpSheet = () => {
+    setHelpSheetVisible(false);
   };
 
   const onPressConfirm = (isNewMember: boolean) => {
@@ -248,9 +258,7 @@ const useMobileAndIqamaVerification = () => {
     checkTermsAndConditions,
     keyboardVisible,
     isOtpSheetVisible,
-    termsAndConditionSheetRef,
     otpVerificationRef,
-    helpCenterRef,
     onCheckTermsAndConditions,
     onPressTermsAndConditions,
     showToast,
@@ -265,6 +273,8 @@ const useMobileAndIqamaVerification = () => {
     otp,
     setOtp,
     resendOtp,
+    isHelpSheetVisible,
+    onCloseHelpSheet,
   };
 };
 

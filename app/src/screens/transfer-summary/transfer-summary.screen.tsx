@@ -109,7 +109,6 @@ const TransferSummaryScreen: React.FC = () => {
       },
       {
         id: '3',
-        // label: localizationText.TRANSFER_SUMMARY.REASON,
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
       },
       { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
@@ -258,7 +257,7 @@ const TransferSummaryScreen: React.FC = () => {
     prepareOtp(false);
   };
 
-  const TransactionList = () => {
+  const TransactionList = () =>
     transfersRequestsList?.map((item) =>
       item[0].isAlinma ? (
         <IPayView style={styles.walletBackground} key={item[0].value}>
@@ -280,7 +279,6 @@ const TransferSummaryScreen: React.FC = () => {
         </IPayView>
       ),
     );
-  };
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
@@ -354,5 +352,4 @@ const TransferSummaryScreen: React.FC = () => {
     </IPaySafeAreaView>
   );
 };
-
 export default TransferSummaryScreen;

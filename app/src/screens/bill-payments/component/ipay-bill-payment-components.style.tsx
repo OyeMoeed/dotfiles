@@ -97,6 +97,10 @@ const billPaymentsComponentsStyles = (colors: any) =>
       marginTop: moderateScale(24, 0.3),
       width: moderateScale(175, 0.35),
     },
+    viewAllIcon: {
+      width: moderateScale(14),
+      height: moderateScale(14),
+    },
   });
 
 export default billPaymentsComponentsStyles;

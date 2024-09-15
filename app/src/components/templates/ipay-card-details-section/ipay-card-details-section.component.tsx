@@ -19,6 +19,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import {
   buttonVariants,
   CardActiveStatus,
+  CardCategories,
   CardStatusIndication,
   CardStatusNumber,
   CardStatusType,
@@ -55,18 +56,31 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const actionSheetRef = useRef<any>(null);
   const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
   const [statusIndication, setStatusIndication] = useState<CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY>();
+  const [cardStatusType, setCardStatusType] = useState<CardStatusType.ALERT | CardStatusType.WARNING>(
+    CardStatusType.WARNING,
+  ); // TODO will be updated on the basis of api
 
   useEffect(() => {
     if (currentCard?.reissueDue && currentCard?.cardStatus !== '450') {
       setStatusIndication(CardStatusIndication.EXPIRY);
-    } else if (currentCard?.reissueDue && currentCard?.cardStatus === '400') {
+    } else if (
+      currentCard?.annualFeeDue &&
+      currentCard?.cardType !== CardCategories.CLASSIC &&
+      currentCard?.cardStatus !== CardStatusNumber?.Expired
+    ) {
       setStatusIndication(CardStatusIndication.ANNUAL);
+      setCardStatusType(CardStatusType.WARNING);
+    } else if (
+      currentCard?.annualFeeDue &&
+      currentCard?.cardType !== CardCategories.CLASSIC &&
+      currentCard?.cardStatus === CardStatusNumber?.Expired
+    ) {
+      setStatusIndication(CardStatusIndication.ANNUAL);
+      setCardStatusType(CardStatusType.ALERT);
     } else {
       setStatusIndication(undefined);
     }
   }, [currentCard]);
-
-  const cardStatusType = currentCard?.expired || currentCard?.suspended ? CardStatusType.ALERT : CardStatusType.WARNING; // TODO will be updated on the basis of api
 
   const [isCardPrinted, setIsCardPrinted] = useState();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -237,7 +251,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         <IPayCardStatusIndication
           currentCard={currentCard}
           onPress={() => {
-            navigate(ScreenNames.CARD_RENEWAL, { currentCard });
+            navigate(ScreenNames.CARD_RENEWAL, { currentCard, statusIndication });
           }}
           cardStatusType={cardStatusType}
           statusIndication={statusIndication}
@@ -250,7 +264,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           </IPayCaption2Text>
           <IPaySubHeadlineText style={styles.accountBalanceText}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular>{localizationText.COMMON.SAR}</IPaySubHeadlineText>
+            <IPaySubHeadlineText regular>{` ${localizationText.COMMON.SAR}`}</IPaySubHeadlineText>
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />
@@ -303,26 +317,14 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
           </IPayFootnoteText>
         </IPayView>
-        <IPayPressable
-          onPress={() =>
-            navigate(ScreenNames.TRANSACTIONS_HISTORY, {
-              isShowCard: true,
-              currentCard,
-              cards,
-            })
-          }
-          style={styles.commonContainerStyle}
-        />
-        <IPaySubHeadlineText regular style={styles.subheadingTextStyle}>
-          {localizationText.COMMON.VIEW_ALL}
-        </IPaySubHeadlineText>
-        <IPayPressable
+        <IPayButton
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
-        >
-          <IPayView>
-            <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
-          </IPayView>
-        </IPayPressable>
+          btnType={buttonVariants.LINK_BUTTON}
+          hasRightIcon
+          rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
+          medium
+          btnText={localizationText.COMMON.VIEW_ALL}
+        />
       </IPayView>
       <IPayFlatlist
         testID="transaction"

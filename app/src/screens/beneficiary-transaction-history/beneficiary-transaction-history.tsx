@@ -4,6 +4,7 @@ import { IPayChip, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import useConstantData from '@app/constants/use-constants';
@@ -40,9 +41,10 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
   const transactionRef = React.createRef<any>();
   const [transaction, setTransaction] = useState<BeneficiaryTransactionItemProps | null>(null);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['95%', isAndroidOS ? '95%' : '100%']);
   const [beneficiaryHistoryData, setBeneficiaryHistoryData] = useState<BeneficiaryTransaction[] | undefined>([]);
   const [apiError, setAPIError] = useState<string>('');
+  const [showTransactionSheet, setShowTransactionSheet] = useState<boolean>(false);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [appliedFilters, setAppliedFilters] = useState<BeneficiaryData>({});
 
@@ -52,10 +54,10 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], '100%'];
+    const calculatedSnapPoint = [heightMapping[item?.transactionRequestType], '100%'];
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
-    transactionRef.current?.present();
+    setShowTransactionSheet(true);
   };
 
   const closeBottomSheet = () => {
@@ -242,6 +244,23 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       >
         <IPayTransactionHistory isBeneficiaryHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
+      <IPayPortalBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        onCloseBottomSheet={() => setShowTransactionSheet(false)}
+        customSnapPoint={snapPoint}
+        simpleHeader
+        simpleBar
+        cancelBnt
+        enablePanDownToClose
+        bold
+        isVisible={showTransactionSheet}
+      >
+        <IPayTransactionHistory
+          isBeneficiaryHistory
+          transaction={transaction}
+          onCloseBottomSheet={() => setShowTransactionSheet(false)}
+        />
+      </IPayPortalBottomSheet>
       <IPayFilterBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.FILTER}
         defaultValues={transferHistoryFilterDefaultValues}

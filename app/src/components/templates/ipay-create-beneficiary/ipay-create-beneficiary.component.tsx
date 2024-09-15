@@ -238,7 +238,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               control={control}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  maxLength={24}
+                  maxLength={34}
                   label={localizationText.COMMON.IBAN}
                   value={value}
                   onChangeText={(text) => {

@@ -20,8 +20,10 @@ const IPayCardStatusIndication = ({
   const fee = 100; // TODO will be updated on the basis of api
 
   const styles = cardStatusIndicationStyles(colors);
+  const alertSubTitle = `${localizationText.CARDS.ANNUAL_FEE_FAILED_MESSAGE} 
+    ${Number(currentCard?.nextAnnualFeeAmt) + Number(currentCard?.nextAnnualFeeVAT)} ${localizationText.COMMON.SAR}`;
 
-  const cardStatusIndication = {
+  const cardStatusIndication: any = {
     expiry: {
       warning: {
         title: localizationText.CARDS.EXPIRING_SOON,
@@ -32,7 +34,6 @@ const IPayCardStatusIndication = ({
             onPress={onPress}
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
-            small
             btnStyle={styles.renewBtn}
             btnText={localizationText.CARDS.RENEW_CARD}
           />
@@ -57,7 +58,7 @@ const IPayCardStatusIndication = ({
     annual: {
       warning: {
         title: localizationText.CARDS.ANNUAL_FEE_COLLECTION,
-        subtitle: currentCard?.expiryDate,
+        subtitle: currentCard?.creditCardDetails?.nextAnnualFeesDueDate,
         icon: icons.moneys_warning,
         rightText: (
           <IPaySubHeadlineText style={styles.fee} regular={false}>
@@ -67,10 +68,11 @@ const IPayCardStatusIndication = ({
       },
       alert: {
         title: localizationText.CARDS.ANNUAL_FEE_COLLECTION_FAILED,
-        subtitle: localizationText.CARDS.ANNUAL_FEE_FAILED_MESSAGE,
+        subtitle: alertSubTitle,
         icon: icons.moneys_alert,
         rightText: (
           <IPayButton
+            onPress={onPress}
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={16} icon={icons.add_bold} color={colors.natural.natural0} />}
             small
