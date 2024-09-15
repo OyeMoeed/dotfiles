@@ -4,14 +4,14 @@ import { IPayAccountBalance, IPayHeader, SadadFooterComponent } from '@app/compo
 import { IPaySadadBillDetailsBox } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useEffect, useState } from 'react';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
-import newsadadBillStyles from './new-sadad-bill.style';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { NewSadadBillProps } from './new-sadad-bill.interface';
+import newsadadBillStyles from './new-sadad-bill.style';
 
 const NewSadadBillScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -24,7 +24,7 @@ const NewSadadBillScreen: React.FC = () => {
     totalAmount: '550',
   };
 
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<
