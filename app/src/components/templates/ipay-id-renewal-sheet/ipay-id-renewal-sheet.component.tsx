@@ -213,7 +213,7 @@ const IPayIdRenewalSheet: React.FC = () => {
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
               btnType="primary"
-              btnText={isAboutToExpire  && !idExpired ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
+              btnText={isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
               textColor={colors.natural.natural0}
               rightIcon={
                 <IPayIcon

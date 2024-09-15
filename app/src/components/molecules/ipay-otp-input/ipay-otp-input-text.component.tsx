@@ -9,7 +9,13 @@ import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-
 import { IPayOtpInputTextProps } from './ipay-otp-input-text.interface';
 import genratedStyles from './ipay-otp-input-text.style';
 
-const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({ testID, isError, onChangeText, value, setValue }) => {
+const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({
+  testID,
+  isError,
+  onChangeText,
+  value,
+  setValue = () => {},
+}) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const ref = useBlurOnFulfill({ value, cellCount: constants.OTP_CELL_COUNT });
@@ -19,7 +25,7 @@ const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({ testID, isError, on
   });
 
   const onChange = (text: string) => {
-    setValue(text);
+    setValue?.(text);
     if (onChangeText) onChangeText(text);
   };
 
