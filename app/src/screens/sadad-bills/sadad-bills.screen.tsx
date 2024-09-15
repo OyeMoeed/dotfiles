@@ -102,7 +102,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   }, []);
 
   const renderButtonText = () => {
-    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount), 0);
+    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
 
     return `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`;
   };
@@ -244,7 +244,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     const billPaymentDetails = selectedBills?.map((bill) => ({
       billerId: bill.billerId,
       billNumOrBillingAcct: bill.billNumOrBillingAcct,
-      amount: Number(bill.amount),
+      amount: Number(bill.amount || 0),
       dueDateTime: bill.dueDateTime,
       billIdType: bill.billIdType,
       billingCycle: bill.billCycle,

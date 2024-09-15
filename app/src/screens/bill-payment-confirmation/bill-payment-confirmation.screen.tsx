@@ -130,7 +130,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         </IPayView>
         <SadadFooterComponent
           style={styles.margins}
-          totalAmount={billPaymentInfos.reduce((sum, item) => sum + item.amount, 0)}
+          totalAmount={billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) || '0'}
           btnText={localizationText.COMMON.CONFIRM}
           disableBtnIcons
           onPressBtn={onMultiPaymentPrepareBill}
