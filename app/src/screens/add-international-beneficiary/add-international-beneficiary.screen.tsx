@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -19,10 +18,10 @@ import WUBeneficiaryMetaDataProps, {
   WesternUnionCountries,
 } from '@app/network/services/international-transfer/wu-beneficiary-metadata/wu-beneficiary-metadata.interface';
 import getWUBeneficiaryMetaData from '@app/network/services/international-transfer/wu-beneficiary-metadata/wu-beneficiary-metadata.service';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useState } from 'react';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import {
   AddBeneficiaryFields,
@@ -35,7 +34,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = addBeneficiaryStyles(colors);
   const localizationText = useLocalization();
-  const { AlinmaDirectData, WesternUnionData } = useConstantData();
+  const { alinmaDirectData, westernUnionData } = useConstantData();
   const [selectedService, setSelectedService] = useState<ServiceDataProps>();
   const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[]>([]);
   const [currenciesData, setCurrenciesData] = useState<Currencies[]>([]);
@@ -45,7 +44,6 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, { transferService: { ...data, ...selectedService } });
   };
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const { required } = getValidationSchemas(localizationText);
   const validationSchema = Yup.object().shape({
@@ -62,6 +60,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
 
   const getCurrenciesData = () => currenciesData?.map((item, idx) => ({ id: idx + 1, title: item?.code }));
 
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
   const TransferMethods = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
     const isCheck = selectedService?.recordID === recordID;
@@ -87,7 +87,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
             />
             <IPayDropdown
               dropdownType={localizationText.NEW_BENEFICIARY.SELECT_DELIVERY_TYPE}
-              data={serviceName === AlinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : WU_TRANSFER_TYPES}
+              data={serviceName === alinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : WU_TRANSFER_TYPES}
               size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
               name={AddBeneficiaryFields.transferType}
               label={localizationText.COMMON.DELIVERY_TYPE}
@@ -115,19 +115,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getWUBeneficiaryMetaDataData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData();
       switch (apiResponse?.status?.type) {
@@ -143,16 +131,13 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getWUBeneficiaryCurrenciesData = async () => {
-    renderSpinner(true);
     const payload = {
       countryCode,
     };
@@ -171,9 +156,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -204,8 +187,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               style={styles.textStyle}
               text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
             />
-            <TransferMethods data={AlinmaDirectData} />
-            <TransferMethods data={WesternUnionData} />
+            <TransferMethods data={alinmaDirectData} />
+            <TransferMethods data={westernUnionData} />
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}

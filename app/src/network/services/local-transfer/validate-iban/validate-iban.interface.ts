@@ -15,4 +15,3 @@ interface ValidateIBANResponse {
   successfulResponse: boolean;
 }
 export { ValidateIBANResponse, ValidateIBANResponseReq };
-

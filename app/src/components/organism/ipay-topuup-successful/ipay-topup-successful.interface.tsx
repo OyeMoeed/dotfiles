@@ -1,11 +1,11 @@
-export default interface IpayTopupSuccessProps {
+interface IPayTopUpSuccessProps {
   completionStatus: string;
   /**
    * This Tells wether if the topup is successfull or failed
    */
 
   topupChannel: string;
-  /***
+  /** *
    * this tells wether the screens belongs to the APPLE or CARD variant of the topup
    */
 
@@ -31,3 +31,5 @@ export interface PayData {
   isAlinma: boolean;
   index: number;
 }
+
+export default IPayTopUpSuccessProps;

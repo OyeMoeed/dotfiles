@@ -20,23 +20,23 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { CardStatusIndication, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
+import { CardStatusIndication, buttonVariants, spinnerVariant, CardTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { OTPVerificationRefTypes, RouteParams, TermsAndConditionsRefTypes } from './card-renewal.screen.interface';
+import { OTPVerificationRefTypes, RouteParams } from './card-renewal.screen.interface';
 
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import cardRenewalStyles from './card-renewal.style';
 import { useTypedSelector } from '@app/store/store';
 import useConstantData from '@app/constants/use-constants';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { otpRenewCard, prepareRenewCard } from '@app/network/services/core/transaction/transactions.service';
 import { prepareRenewCardProp, renewCardProp } from '@app/network/services/core/transaction/transaction.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { getDeviceInfo } from '@app/network/utilities';
+import { hideSpinner, showSpinner } from '@app/store/slices/spinner.slice';
 
 const DUMMY_DATA = {
   balance: '5,200.40',
@@ -52,13 +52,12 @@ const CardRenewalScreen: React.FC = () => {
 
   const {
     currentCard: { cardType, cardHeaderText, name, nextAnnualFeeAmt, nextAnnualFeeVAT , maskedCardNumber, cardIndex}, statusIndication
-  } = route?.params;
+  } = route?.params
 
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
   );
   const localizationText = useLocalization();
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
@@ -66,18 +65,18 @@ const CardRenewalScreen: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [otpRef, setOtpRef] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
 
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
 
@@ -129,10 +128,7 @@ const CardRenewalScreen: React.FC = () => {
 
   const renderSpinner = useCallback((isVisbile: boolean) => {
     if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
+      showSpinner();
     } else {
       hideSpinner();
     }
@@ -270,9 +266,13 @@ const CardRenewalScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+        isVirtualCardTermsAndConditions
+      />
       <IPayPortalBottomSheet
-        heading={localizationText.CARD_OPTIONS.CARD_DETAILS}
+        heading={localizationText.CARD_RENEWAL.CARD_RENEWAL}
         enablePanDownToClose
         simpleBar
         bold

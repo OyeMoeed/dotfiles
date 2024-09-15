@@ -1,9 +1,10 @@
+import React from 'react';
+
 // Define the props interface
 export interface IPayAnimatedCircularProgressProps {
   size?: number;
   width?: number;
   fill?: number;
-  rotation?: number;
   arcSweepAngle?: number;
   gradientColors?: string[];
   backgroundColor?: string;

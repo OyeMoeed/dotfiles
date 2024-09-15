@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const mapViewStyles = (colors: any) =>
+const mapViewStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,

@@ -2,11 +2,12 @@ import icon from '@app/assets/icons';
 import { IPayAnimatedView, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { animateValue } from '@app/ipay-animations/ipay-animations';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
-import { onboardingStyles } from '@app/screens/auth/onboarding/onboardingStyles.style';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
+import onboardingStyles from '@app/screens/auth/onboarding/onboardingStyles.style';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import { buttonVariants } from '@app/utilities';
 import { IPayAnimatedButtonProps } from './ipay-animated-button.interface';
 
 const IPayAnimatedButton: React.FC<IPayAnimatedButtonProps> = ({
@@ -47,7 +48,7 @@ const IPayAnimatedButton: React.FC<IPayAnimatedButtonProps> = ({
         {type !== OnboardingSteps.PurchasesStep && (
           <IPayButton
             onPress={onSkip}
-            btnType="link-button"
+            btnType={buttonVariants.LINK_BUTTON}
             btnIconsDisabled
             btnText={skipText}
             textStyle={styles.blackText}
@@ -56,7 +57,7 @@ const IPayAnimatedButton: React.FC<IPayAnimatedButtonProps> = ({
         <IPayAnimatedView style={type === OnboardingSteps.PurchasesStep && animatedButtonWidth}>
           <IPayButton
             onPress={onNext}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             btnText={nextText}
             textColor={colors.natural.natural1000}
             textStyle={styles.blackText}

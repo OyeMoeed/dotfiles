@@ -1,10 +1,10 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayChip, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import useConstantData from '@app/constants/use-constants';
@@ -19,10 +19,10 @@ import getlocalTransaction from '@app/network/services/local-transfer/transfer-h
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, FiltersType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import {
   BeneficiaryData,
@@ -41,23 +41,23 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
   const transactionRef = React.createRef<any>();
   const [transaction, setTransaction] = useState<BeneficiaryTransactionItemProps | null>(null);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['95%', isAndroidOS ? '95%' : '100%']);
   const [beneficiaryHistoryData, setBeneficiaryHistoryData] = useState<BeneficiaryTransaction[] | undefined>([]);
   const [apiError, setAPIError] = useState<string>('');
+  const [showTransactionSheet, setShowTransactionSheet] = useState<boolean>(false);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [appliedFilters, setAppliedFilters] = useState<BeneficiaryData>({});
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
   const tabOptions = [localizationText.COMMON.SENT, localizationText.COMMON.RECEIVED];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], '100%'];
+    const calculatedSnapPoint = [heightMapping[item?.transactionRequestType], '100%'];
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
-    transactionRef.current?.present();
+    setShowTransactionSheet(true);
   };
 
   const closeBottomSheet = () => {
@@ -78,17 +78,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     filterRef.current?.showFilters();
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
@@ -100,7 +89,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const getBeneficiariesHistory = async () => {
-    renderSpinner(true);
     const payload: LocalTransferReqParams = {
       walletNumber,
       bankName: appliedFilters?.beneficiaryBankName,
@@ -125,9 +113,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -258,6 +244,23 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       >
         <IPayTransactionHistory isBeneficiaryHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
+      <IPayPortalBottomSheet
+        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        onCloseBottomSheet={() => setShowTransactionSheet(false)}
+        customSnapPoint={snapPoint}
+        simpleHeader
+        simpleBar
+        cancelBnt
+        enablePanDownToClose
+        bold
+        isVisible={showTransactionSheet}
+      >
+        <IPayTransactionHistory
+          isBeneficiaryHistory
+          transaction={transaction}
+          onCloseBottomSheet={() => setShowTransactionSheet(false)}
+        />
+      </IPayPortalBottomSheet>
       <IPayFilterBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.FILTER}
         defaultValues={transferHistoryFilterDefaultValues}

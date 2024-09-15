@@ -4,4 +4,4 @@ interface IPayBottomSheetProviderProps {
   children: ReactNode;
 }
 
-export { IPayBottomSheetProviderProps };
+export default IPayBottomSheetProviderProps;

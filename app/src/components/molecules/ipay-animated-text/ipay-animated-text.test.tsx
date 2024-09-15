@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react-native';
 import IPayAnimatedText from './ipay-animated-text.component';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 
 // Mock components and utilities
 jest.mock('@app/components/atoms', () => ({

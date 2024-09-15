@@ -1,25 +1,16 @@
-import images from '@app/assets/images';
+import { BeneficiariesDetails } from '@app/enums/international-beneficiary-status.enum';
 
-const beneficiaryDummyData = {
-  accountBalance: '5,200.40',
-  remainingAmount: '5200',
-  totalAmount: '10,000',
-  defaultAmount: '0',
-  fee: '15 SAR',
-  vat: '4.00 SAR',
-  egp: 'EGP',
-  beneficiaryName: 'Ahmed Mohamed',
-  beneficiaryCountry: 'Egypt',
-  beneficiaryType: 'Bank Transfer',
-  beneficiaryCurrencyFlag: images.egyFlag,
-  reasonOfTransfer: [
-    'Investment',
-    'Tuition Expenses',
-    'Treatment',
-    'Travel Expenses',
-    'Purchases',
-    'Friends and Family Expenses',
-    'Donations',
+const beneficiaryKeysMapping = {
+  [BeneficiariesDetails.INFORMATIONS]: ['nickname', 'fullName', 'relationship', 'countryDesc', 'city'],
+  [BeneficiariesDetails.DETAILS]: ['remittanceTypeDesc', 'iban', 'bankName', 'currency'],
+  [BeneficiariesDetails.FEES]: [
+    'remitterCurrencyAmount',
+    'beneficiaryCurrencyAmount',
+    'exchangeRate',
+    'isIncludeFees',
+    'vatAmount',
+    'feeAmount',
   ],
 };
-export default beneficiaryDummyData;
+
+export default beneficiaryKeysMapping;

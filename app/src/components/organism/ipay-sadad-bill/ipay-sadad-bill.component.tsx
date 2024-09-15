@@ -10,12 +10,13 @@ import {
 } from '@app/components/atoms';
 import { IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dateTimeFormat } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import moment from 'moment';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { IPaySadadBillProps } from './ipay-sadad-bill.interface';
 import sadadBillStyles from './ipay-sadad-bill.style';
 
@@ -28,15 +29,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   onPressMoreOptions,
   showMoreOption = true,
 }) => {
-  const {
-    billIndex,
-    nickName,
-    biller: { billerDesc, imageURL },
-    dueAmount,
-    dueDateTime,
-    billStatusDesc,
-    selected = false,
-  } = billDetails;
+  const { billId, billerId, billerName, amount, billDesc, dueDateTime, billStatusDesc, selected = false } = billDetails;
 
   const { colors } = useTheme();
   const styles = sadadBillStyles(colors);
@@ -48,8 +41,8 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   );
 
   const billingAmountColor = useMemo(
-    () => (Number(dueAmount) > 0 ? colors.natural.natural900 : colors.natural.natural300),
-    [dueAmount],
+    () => (Number(amount) > 0 ? colors.natural.natural900 : colors.natural.natural300),
+    [amount],
   );
 
   const dueDateColor = useMemo(() => {
@@ -58,25 +51,27 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
     return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
   }, [dueDateTime]);
 
-  const billingAmount = `${dueAmount} ${localizationText.COMMON.SAR}`;
+  const billingAmount = `${amount || 0} ${localizationText.COMMON.SAR}`;
   const billingDueDate = `${localizationText.SADAD.DUE} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
 
   const onPressCheckBox = () => {
-    if (onSelectBill) onSelectBill(billIndex);
+    if (onSelectBill) onSelectBill(billId);
   };
 
   const onPressMore = () => {
-    if (onPressMoreOptions) onPressMoreOptions(billIndex);
+    onPressMoreOptions?.(billId);
   };
+
+  const getBillerImage = useCallback(() => BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId), [billerId]);
 
   return (
     <IPayView testID={`${testID}-sadad-bill`} style={[styles.container, style]}>
       {showCheckBox && <IPayCheckbox isCheck={selected} onPress={onPressCheckBox} />}
       <IPayView style={styles.contentView}>
         <IPayView>
-          <IPayImage image={imageURL} style={styles.vendorIcon} />
-          <IPaySubHeadlineText text={nickName} color={colors.natural.natural900} />
-          <IPayCaption2Text text={billerDesc} color={colors.natural.natural900} style={styles.vendorText} />
+          <IPayImage image={getBillerImage()} style={styles.vendorIcon} />
+          <IPaySubHeadlineText text={billDesc} color={colors.natural.natural900} />
+          <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>
         <IPayView style={styles.contentChildView}>
           <IPayChip

@@ -3,7 +3,7 @@ import requestType from '@app/network/request-types.network';
 import transactionMock from '@app/network/services/core/transaction/transaction.mock';
 import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
-import { CardListResponse, CardsProp, TransactionsProp, changeStatusProp, getCardDetailsProp, prepareRenewCardProp, prepareShowDetailsProp, renewCardProp, resetPinCodeProp } from './transaction.interface';
+import { CardsProp, TransactionsProp, changeStatusProp, getCardDetailsProp, prepareRenewCardProp, prepareShowDetailsProp, renewCardProp, resetPinCodeProp } from './transaction.interface';
 import cardsListMock from './cards-list.mock';
 import { APIResponseType } from '@app/utilities/enums.util';
 
@@ -33,12 +33,15 @@ const getCards = async (payload: CardsProp): Promise<any> => {
     return cardsListMock;
   }
   try {
+    const header = {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
+      'api-version': 'v2',
+    };
+
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
       method: requestType.GET,
-      headers: {
-        'api-version': 'v2',
-      },
+      headers: header,
     });
 
     // return cardsListMock;
@@ -51,14 +54,12 @@ const getCards = async (payload: CardsProp): Promise<any> => {
   }
 };
 
-
-
 const resetPinCode = async (payload: resetPinCodeProp): Promise<any> => {
   try {
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.RESET_PINCODE(payload?.walletNumber, payload?.cardIndex),
       method: requestType.POST,
-      payload: payload?.body
+      payload: payload?.body,
     });
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
@@ -68,15 +69,13 @@ const resetPinCode = async (payload: resetPinCodeProp): Promise<any> => {
     return { error: error.message || 'Unknown error' };
   }
 };
-
-
 
 const changeStatus = async (payload: changeStatusProp): Promise<any> => {
   try {
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.ACTIVATE_ONLINE_PURCHASE(payload?.walletNumber),
       method: requestType.POST,
-      payload: payload?.body
+      payload: payload?.body,
     });
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
@@ -86,14 +85,13 @@ const changeStatus = async (payload: changeStatusProp): Promise<any> => {
     return { error: error.message || 'Unknown error' };
   }
 };
-
 
 const prepareResetCardPinCode = async (payload: resetPinCodeProp): Promise<any> => {
   try {
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.PREPARE_CARD_RESET(payload?.walletNumber, payload?.cardIndex),
       method: requestType.POST,
-      payload: payload?.body
+      payload: payload?.body,
     });
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
@@ -104,14 +102,12 @@ const prepareResetCardPinCode = async (payload: resetPinCodeProp): Promise<any> 
   }
 };
 
-
-
 const prepareShowCardDetails = async (payload: prepareShowDetailsProp): Promise<any> => {
   try {
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.PREPARE_SHOW_DETAILS(payload?.walletNumber),
       method: requestType.POST,
-      payload: payload?.body
+      payload: payload?.body,
     });
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
@@ -127,7 +123,7 @@ const otpGetCardDetails = async (payload: getCardDetailsProp): Promise<any> => {
     const apiResponse = await apiCall({
       endpoint: CORE_URLS.OTP_GET_CARD_DETAILS(payload?.walletNumber),
       method: requestType.POST,
-      payload: payload?.body
+      payload: payload?.body,
     });
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;

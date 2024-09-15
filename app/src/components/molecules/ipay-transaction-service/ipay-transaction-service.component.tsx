@@ -25,7 +25,7 @@ const IPayTransactionService: React.FC<IPayTransactionServiceProps> = ({
           <IPayImage image={serviceLogo} style={styles.logoStyles} />
           <IPayFootnoteText style={styles.textColor} regular={false} text={serviceName} />
         </IPayView>
-        <IPayView style={[styles.rowStyles]}>
+        <IPayView style={styles.rowStyles}>
           <IPayCaption2Text
             style={[styles.lightTextColor, styles.chipColor]}
             text={`${fromAmount} ${fromCurrency} = ${toAmount} ${toCurrency}`}

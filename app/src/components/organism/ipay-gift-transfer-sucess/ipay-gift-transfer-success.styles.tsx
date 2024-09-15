@@ -168,6 +168,7 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       height: moderateScale(23),
       width: moderateScale(75),
     },
+    scrollViewStyle: { flex: 0, height: verticalScale(280) },
   });
 
 export default GiftTransferSuccessStyles;

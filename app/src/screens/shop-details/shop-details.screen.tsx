@@ -22,9 +22,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Animated } from 'react-native';
-import { TermsAndConditionsRefTypes } from '../card-renewal/card-renewal.screen.interface';
 import { RenderItemProps } from '../send-gift-card/send-gift-card.interface';
 import shopDetailStyles from './shop-details.style';
 
@@ -32,8 +31,8 @@ const ShopDetails: React.FC = ({ route }) => {
   const { heading = '', details = [] } = route?.params || {};
   const { colors } = useTheme();
   const styles = shopDetailStyles(colors);
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const animatedHeight = useState(new Animated.Value(100))[0];
   const discountDetail = '20% Discount on Yearly subscribe on Spotify'; // TODO: Replace with API
   const amount = '470.00'; // TODO: Replace with API
@@ -62,12 +61,12 @@ const ShopDetails: React.FC = ({ route }) => {
   };
 
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
   const renderCarouselItem = ({ item }: RenderItemProps) => (
     <IPayView style={[styles.carouselItem, { backgroundColor: item.background }]}>
-      <IPayImage image={item.image} style={styles.image}></IPayImage>
+      <IPayImage image={item.image} style={styles.image} />
     </IPayView>
   );
   const renderBulletPoints = (point: string, index: number) => (
@@ -142,7 +141,10 @@ const ShopDetails: React.FC = ({ route }) => {
         <IPayLoadFailed />
       )}
 
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+      />
     </IPaySafeAreaView>
   );
 };

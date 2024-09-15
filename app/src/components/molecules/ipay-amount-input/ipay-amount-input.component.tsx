@@ -7,6 +7,7 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
+
 const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   style,
   inputStyles,

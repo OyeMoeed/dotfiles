@@ -13,6 +13,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   style,
   balance,
   availableBalance,
+  monthlyIncomingLimit,
   hideBalance,
   showRemainingAmount = false,
   onPressTopup,
@@ -25,8 +26,6 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   gradientWidth,
   gradientColors,
   gradientBgStyle,
-  dailyRemainingOutgoingAmount,
-  monthlyIncomingLimit,
   topUpBtnStyle = {},
 }) => {
   const { colors } = useTheme();
@@ -66,12 +65,11 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
           testID="topup-button"
           onPress={onPressTopup}
           small
-          btnStyle={styles.topupButton}
+          btnStyle={[styles.topupButton, topUpBtnStyle]}
           btnType={buttonVariants.OUTLINED}
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
           btnText={localizationText.COMMON.TOP_UP}
           textColor={colors.primary.primary500}
-          btnStyle={topUpBtnStyle}
         />
       </IPayView>
 
@@ -93,8 +91,12 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
             />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={monthlyAvailableBalance} />
-              <IPayCaption2Text style={totalAvailableTextStyle} text={` ${localizationText.HOME.OF} `} />
-              <IPayCaption2Text text={totalAvailableBalance} />
+              <IPayCaption2Text
+                style={totalAvailableTextStyle}
+                color={colors.natural.natural500}
+                text={` ${localizationText.HOME.OF} `}
+              />
+              <IPayCaption2Text text={totalAvailableBalance} color={colors.natural.natural500} />
             </IPayView>
           </IPayView>
         </IPayView>

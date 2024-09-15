@@ -1,19 +1,16 @@
-import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
 import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { IdRenewalState, spinnerVariant } from '@app/utilities/enums.util';
+import { IdRenewalState } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -28,7 +25,6 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [renewId, setRenewId] = useState(false);
   const [otpRef, setOTPRef] = useState<string>('');
   const [isHelpBottomSheetVisible, setIsHelpBottomSheetVisible] = useState(false);
-  const { showToast } = useToastContext();
   const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const {
@@ -44,34 +40,13 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const { t } = useTranslation();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const dispatch = useTypedDispatch();
   const isIdRenewalSheetVisible = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo.isIdRenewalSheetVisible,
   );
 
-  const renderToast = (apiErrorMessage: string) => {
-    showToast({
-      title: localizationText.ERROR.API_ERROR_RESPONSE,
-      subTitle: apiErrorMessage || localizationText.CARDS.VERIFY_CODE_ACCURACY,
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
   const resetBottomSheet = () => {
     setIsHelpBottomSheetVisible(false);
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
   };
 
   const { title, subtitle, primaryButtonText, secondaryButtonText, icon, buttonIcon } = useIdRenewal(
@@ -88,7 +63,6 @@ const IPayIdRenewalSheet: React.FC = () => {
         deviceInfo: idRenewalPrepareBody,
         walletNumber,
       };
-      renderSpinner(true);
       const apiResponse: any = await prepareRenewId(payload);
 
       if (apiResponse) {
@@ -96,7 +70,6 @@ const IPayIdRenewalSheet: React.FC = () => {
         setRenewId(true);
         setCustomSnapPoints(['95%', '95%']);
       }
-      renderSpinner(false);
     }
   };
 
@@ -128,19 +101,16 @@ const IPayIdRenewalSheet: React.FC = () => {
       deviceInfo: idRenewalPrepareBody,
       walletNumber,
     };
-    renderSpinner(true);
     const apiResponse: any = await prepareRenewId(payload);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       otpVerificationRef?.current?.resetInterval();
       setOTPRef(apiResponse?.response?.otpRef);
     }
-    renderSpinner(false);
   };
 
   const getOtpData = async () => {
     const OTP_LENGHT = 4;
-    renderSpinner(true);
     if (otp?.length === OTP_LENGHT) {
       const idRenewalPrepareBody = await getDeviceInfo();
       const payload: ConfirmIdRenewalProp = {
@@ -154,7 +124,6 @@ const IPayIdRenewalSheet: React.FC = () => {
       };
 
       const apiResponse: any = await confirmRenewId(payload);
-      renderSpinner(false);
       if (apiResponse?.status?.type === 'SUCCESS') {
         showSuccessAlert();
       }
@@ -181,15 +150,11 @@ const IPayIdRenewalSheet: React.FC = () => {
     }
   }, [isIdRenewalSheetVisible, renewId]);
 
-  const formattedSubtitle =
-    isAboutToExpire && !idExpired
-      ? t('ID_RENEWAL.ID_UPDATION_DES', {
-          DAYS: remainingNumberOfDaysToExpire,
-          DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
-        })
-      : subtitle;
-
-
+  const extraParams = {
+    DAYS: remainingNumberOfDaysToExpire,
+    DATE: moment(expiryDate, 'YYYY-MM-DD').format('DD-MM-YYYY'),
+  };
+  const formattedSubtitle = isAboutToExpire && !idExpired ? t('ID_RENEWAL.ID_UPDATION_DES', extraParams) : subtitle;
 
   return (
     <>

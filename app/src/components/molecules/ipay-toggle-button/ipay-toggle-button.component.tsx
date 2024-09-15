@@ -1,6 +1,6 @@
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayPressable, IPayView } from '@components/atoms';
-import React, { useEffect, useState } from 'react';
+import React, { JSX, useEffect, useState } from 'react';
 import { IPayToggleButtonProps } from './ipay-toggle-button.interface';
 import toggleButtonStyles from './ipay-toggle-button.style';
 
@@ -34,14 +34,11 @@ const IPayToggleButton: React.FC<IPayToggleButtonProps> = ({
     });
   };
 
-  const diabledColor = {
-    backgroundColor: disabled
-      ? toggleState
-        ? colors.tertiary.tertiary100
-        : colors.natural.natural200
-      : isOn
-        ? colors.tertiary.tertiary500
-        : colors.natural.natural200,
+  const notDisabledIsOn = isOn ? colors.tertiary.tertiary500 : colors.natural.natural200;
+  const disabledColorToggleOn = toggleState ? colors.tertiary.tertiary100 : colors.natural.natural200;
+
+  const disabledColor = {
+    backgroundColor: disabled ? disabledColorToggleOn : notDisabledIsOn,
   };
 
   const toggleBtnStyles = isOn ? styles.isOnParent : styles.isOffParent;
@@ -50,7 +47,7 @@ const IPayToggleButton: React.FC<IPayToggleButtonProps> = ({
     <IPayPressable
       testID={`${testID}-pressable-toggle`}
       activeOpacity={1}
-      style={[styles.container, toggleBtnStyles, diabledColor, style]}
+      style={[styles.container, toggleBtnStyles, disabledColor, style]}
       onPress={onPress}
     >
       <IPayView style={[styles.childContainer, isOn ? styles.isOnChild : styles.isOffChild]} />

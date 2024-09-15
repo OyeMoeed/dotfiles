@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
+import { buttonVariants, CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
 import { TextStyle, ViewStyle } from 'react-native';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayList from '../ipay-list/ipay-list.component';
@@ -17,12 +17,11 @@ const IPayCardStatusIndication = ({
 }: IPayCardStatusIndicationProps) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
-  const expiryDate = '12 May 2024'; // TODO will be updated on the basis of api
   const fee = 100; // TODO will be updated on the basis of api
 
   const styles = cardStatusIndicationStyles(colors);
 
-  const cardStatusIndication = {
+  const cardStatusIndication: any = {
     expiry: {
       warning: {
         title: localizationText.CARDS.EXPIRING_SOON,
@@ -31,9 +30,8 @@ const IPayCardStatusIndication = ({
         rightText: (
           <IPayButton
             onPress={onPress}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
-            small
             btnStyle={styles.renewBtn}
             btnText={localizationText.CARDS.RENEW_CARD}
           />
@@ -46,7 +44,7 @@ const IPayCardStatusIndication = ({
         rightText: (
           <IPayButton
             onPress={onPress}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
             btnStyle={styles.renewBtn}
             small
@@ -73,7 +71,7 @@ const IPayCardStatusIndication = ({
         rightText: (
           <IPayButton
             onPress={onPress}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={16} icon={icons.add_bold} color={colors.natural.natural0} />}
             small
             btnStyle={styles.topUpBtn}

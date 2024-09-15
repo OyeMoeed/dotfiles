@@ -9,6 +9,9 @@ const atmWithdrawalsStyles = (colors: any) =>
       marginHorizontal: moderateScale(24, 0.3),
       paddingVertical: moderateScale(18),
     },
+    currency: {
+      lineHeight: moderateScale(13),
+    },
     accountBalanceView: {
       borderWidth: moderateScale(1),
       borderRadius: moderateScale(16),

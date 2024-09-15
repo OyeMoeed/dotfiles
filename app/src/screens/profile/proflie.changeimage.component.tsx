@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { ProfileIcon } from '@app/assets/svgs';
-import { IPayIcon } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayActionSheetProps } from '@app/components/organism/ipay-actionsheet/ipay-actionsheet-interface';
 import IPayActionSheet from '@app/components/organism/ipay-actionsheet/ipay-actionsheet.component';
@@ -30,8 +30,7 @@ const useChangeImage = (): UseChangeImageReturn => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const [, setIsLoading] = useState<boolean>(false);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const dispatch = useTypedDispatch();
   const showActionSheet = useCallback(() => {
@@ -120,6 +119,12 @@ const useChangeImage = (): UseChangeImageReturn => {
     [handleImagePicker, handleCameraPicker, selectedImage],
   );
 
+  const walletOptions = [
+    localizationText.PROFILE.TAKE_PHOTO,
+    localizationText.PROFILE.UPLOAD_PHOTO,
+    localizationText.PROFILE.REMOVE,
+    localizationText.COMMON.CANCEL,
+  ];
   const actionSheetOptions: IPayActionSheetProps = {
     title: localizationText.PROFILE.CHANGE_PICTURE,
     showIcon: true,
@@ -127,12 +132,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     message: localizationText.PROFILE.SELECT_OPTION,
     options:
       selectedImage || walletInfo.profileImage
-        ? [
-            localizationText.PROFILE.TAKE_PHOTO,
-            localizationText.PROFILE.UPLOAD_PHOTO,
-            localizationText.PROFILE.REMOVE,
-            localizationText.COMMON.CANCEL,
-          ]
+        ? walletOptions
         : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],
     cancelButtonIndex: selectedImage || walletInfo.profileImage ? 3 : 2,
     showCancel: true,
@@ -144,7 +144,7 @@ const useChangeImage = (): UseChangeImageReturn => {
     <IPayActionSheet bodyStyle={styles.actionSheetBody} ref={actionSheetRef} {...actionSheetOptions} />
   );
 
-  const IPayAlertComponent = alertVisible && (
+  const IPayAlertComponent = alertVisible ? (
     <IPayAlert
       testID="removePhotoAlert"
       title={localizationText.PROFILE.REMOVE_PHOTO}
@@ -170,12 +170,16 @@ const useChangeImage = (): UseChangeImageReturn => {
       }}
       type={alertType.SIDE_BY_SIDE}
     />
+  ) : (
+    <IPayView />
   );
 
   return {
     selectedImage,
     showActionSheet,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     IPayActionSheetComponent,
+    // eslint-disable-next-line @typescript-eslint/naming-convention
     IPayAlertComponent,
   };
 };

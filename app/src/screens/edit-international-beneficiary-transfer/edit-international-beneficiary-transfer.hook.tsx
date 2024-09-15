@@ -40,10 +40,12 @@ const useInternationalTransferHook = () => {
           navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, {
             type: ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER,
           });
+          break;
 
-        case ApiResponseStatusType.FAILURE:
+        case ApiResponseStatusType.FAILURE: {
           setAPIError(apiResponse?.error);
           break;
+        }
         default:
           break;
       }

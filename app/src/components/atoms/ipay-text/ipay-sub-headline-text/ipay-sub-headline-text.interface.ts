@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 /**
@@ -11,7 +12,7 @@ export interface IPaySubHeadlineTextProps {
   /**
    * The text content to be displayed.
    */
-  text?: string;
+  text: string | null;
   /**
    * Regular font family for the text.
    */
