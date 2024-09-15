@@ -72,7 +72,11 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   };
   const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
 
   const onPressConfirm = () => {

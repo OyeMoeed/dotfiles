@@ -41,7 +41,6 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const [otp, setOtp] = useState('');
   const [, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
@@ -90,7 +89,12 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true)); //isVirtualCardTermsAndConditions needs to be added
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
   };
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);

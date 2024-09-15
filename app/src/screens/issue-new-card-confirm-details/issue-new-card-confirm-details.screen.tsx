@@ -43,7 +43,6 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -95,7 +94,12 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true)); //isVirtualCardTermsAndConditions;
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
   };
 
   const onResendCodePress = () => {

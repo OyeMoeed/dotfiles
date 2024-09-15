@@ -56,7 +56,12 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true)); //virtual show needs to be added
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
   };
 
   const onCloseBottomSheet = () => {

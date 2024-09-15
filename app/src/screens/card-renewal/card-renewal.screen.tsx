@@ -56,12 +56,16 @@ const CardRenewalScreen: React.FC = () => {
 
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true)); //   isVirtualCardTermsAndConditions;
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
   };
 
   const onCloseBottomSheet = () => {

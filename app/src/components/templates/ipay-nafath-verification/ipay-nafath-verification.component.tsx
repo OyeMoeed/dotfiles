@@ -179,7 +179,11 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
   const dispatch = useDispatch();
 
   const openTermsAndConditionModal = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
 
   const nafathInquiry = async () => {

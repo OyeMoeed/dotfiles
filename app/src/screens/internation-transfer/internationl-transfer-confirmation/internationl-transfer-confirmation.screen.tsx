@@ -53,7 +53,6 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -67,7 +66,6 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const promoAmount = '70';
   const discountAmount = '10';
   const dummyPromo = '1234';
-  const iqamaId = '324234234';
   const dispatch = useDispatch();
 
   const [apiError, setAPIError] = useState<string>('');
@@ -85,7 +83,11 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
   };
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
 
   const handleClosePress = () => {

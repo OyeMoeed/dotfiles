@@ -24,7 +24,11 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({
   const dispatch = useTypedDispatch();
 
   const closeTermsAndConditionModal = () => {
-    dispatch(setTermsConditionsVisibility(false));
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: false,
+      }),
+    );
   };
 
   const getTermsAndConditionsURL = () => {

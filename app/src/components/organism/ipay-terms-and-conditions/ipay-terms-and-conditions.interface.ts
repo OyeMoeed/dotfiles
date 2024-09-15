@@ -4,6 +4,6 @@ export interface TermsAndConditionsRefTypes {
 
 export interface IPayTermsAndConditionsProps {
   showTermsAndConditions: boolean;
-  termsAndConditionsURL?: string;
+  termsAndConditionsURL?: string | null;
   isVirtualCardTermsAndConditions?: boolean;
 }

@@ -51,7 +51,11 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onPressTermsAndConditions = () => {
-    dispatch(setTermsConditionsVisibility(true));
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
 
   const onCloseBottomSheet = () => {
