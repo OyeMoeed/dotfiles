@@ -131,6 +131,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                     keyboardType="numeric"
                     editable
                     onChangeText={onRemitterAmountChange}
+                    maxLength={5}
                   />
                   <IPayHeadlineText style={[styles.currencyText, remitterCurrencyAmount ? styles.darkStyle : {}]}>
                     {remitterCurrency}
@@ -163,6 +164,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                     keyboardType="numeric"
                     editable
                     onChangeText={onBeneficiaryAmountChange}
+                    maxLength={5}
                   />
                   <IPayHeadlineText style={[styles.currencyText, beneficiaryCurrencyAmount ? styles.darkStyle : {}]}>
                     {beneficiaryCurrency}

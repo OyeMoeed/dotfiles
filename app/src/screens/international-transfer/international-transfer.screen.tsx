@@ -9,7 +9,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayGradientList from '@app/components/molecules/ipay-gradient-list/ipay-gradient-list.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
@@ -38,21 +37,13 @@ import { WesternUnionBeneficiary } from '@app/network/services/international-tra
 import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ViewAllStatus } from '@app/types/global.types';
-import {
-  ApiResponseStatusType,
-  ToastTypes,
-  alertType,
-  alertVariant,
-  buttonVariants,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
+import { ApiResponseStatusType, ToastTypes, alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Flag from 'react-native-round-flags';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
-import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
 import { tabOptions } from './international-transfer.constent';
 import { BeneficiaryDetailsProps } from './international-transfer.interface';
@@ -78,15 +69,13 @@ const InternationalTransferScreen: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const [, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
   const editBeneficiaryRef = useRef<any>(null);
   const [apiError, setAPIError] = useState<string>('');
   const [aeBeneficiaryData, setAEBeneficiaryData] = useState([]);
   const [wuBeneficiaryData, setWUBeneficiaryData] = useState([]);
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const { showToast } = useToastContext();
-
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   useEffect(() => {
     setFilteredBeneficiaryData(aeBeneficiaryData);
@@ -102,19 +91,7 @@ const InternationalTransferScreen: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getAEBeneficiariesData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse = await getAlinmaExpressBeneficiaries();
       switch (apiResponse?.status?.type) {
@@ -130,16 +107,13 @@ const InternationalTransferScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   const getWUBeneficiariesData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse = await getWesternUnionBeneficiaries();
       switch (apiResponse?.status?.type) {
@@ -155,9 +129,7 @@ const InternationalTransferScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -200,7 +172,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
     setNickName(item?.name ?? '');
-    setselectedBeneficiary(item);
+    setSelectedBeneficiary(item);
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
@@ -210,7 +182,6 @@ const InternationalTransferScreen: React.FC = () => {
   };
 
   const handleDeleteBeneficiary = async () => {
-    renderSpinner(true);
     try {
       const apiResponse = await deleteInternationalBeneficiary(selectedBeneficiary?.beneficiaryCode);
       switch (apiResponse?.status?.type) {
@@ -233,9 +204,7 @@ const InternationalTransferScreen: React.FC = () => {
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -251,9 +220,12 @@ const InternationalTransferScreen: React.FC = () => {
         : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE;
 
     const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
-      setselectedBeneficiary(beneficiary);
+      setSelectedBeneficiary(beneficiary);
       if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
-        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
+        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
+          transferData: item,
+          transferGateway: activeTab,
+        });
       } else {
         handleActivateBeneficiary();
       }

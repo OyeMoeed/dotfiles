@@ -10,7 +10,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import {
@@ -36,20 +35,18 @@ import LocalTransferBeneficiariesMockProps from '@app/network/services/local-tra
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
-  ApiResponseStatusType,
-  BeneficiaryTypes,
-  ToastTypes,
   alertType,
   alertVariant,
+  ApiResponseStatusType,
+  BeneficiaryTypes,
   buttonVariants,
-  spinnerVariant,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
-
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
@@ -69,7 +66,6 @@ const LocalTransferScreen: React.FC = () => {
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
   const selectedBeneficiaryRef = useRef<BeneficiaryDetails | null>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [apiError, setAPIError] = useState<string>('');
   const sortSheetRef = useRef<bottomSheetTypes>(null);
   const actionSheetRef = useRef<any>(null);
@@ -84,16 +80,6 @@ const LocalTransferScreen: React.FC = () => {
   const [sortBy, setSortBy] = useState<string>(BeneficiaryTypes.ACTIVE);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [showEditSheet, setShowEditSheet] = useState<boolean>(false);
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -108,15 +94,12 @@ const LocalTransferScreen: React.FC = () => {
 
   const getBeneficiariesData = async () => {
     setIsLoadingData(true);
-    renderSpinner(true);
     try {
       const apiResponse: LocalTransferBeneficiariesMockProps = await getlocalTransferBeneficiaries();
       if (apiResponse?.successfulResponse) {
         setBeneficiaryData(apiResponse?.response?.beneficiaries);
-        renderSpinner(false);
       }
     } catch (error: any) {
-      renderSpinner(false);
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
@@ -171,7 +154,6 @@ const LocalTransferScreen: React.FC = () => {
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.NAME_CHANGED,
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
@@ -180,8 +162,6 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const handleChangeBeneficiaryName = async () => {
-    renderSpinner(true);
-
     const activateBeneficiaryPayload = {
       nickname: nickName,
     };
@@ -198,8 +178,6 @@ const LocalTransferScreen: React.FC = () => {
       setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
     setShowEditSheet(false);
-
-    renderSpinner(false);
   };
 
   const showDeleteBeneficiaryToast = () => {
@@ -207,13 +185,26 @@ const LocalTransferScreen: React.FC = () => {
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
+  };
+
+  const activateBeneficiary = useRef<bottomSheetTypes>(null);
+
+  const handleActivateBeneficiary = useCallback(() => {
+    activateBeneficiary?.current?.present();
+    setActivateHeight(SNAP_POINTS.SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
+    else handleActivateBeneficiary();
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
@@ -234,8 +225,6 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
-                // TODO: fix in another PR
-                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 onPressBtn(item);
               }}
               btnText={
@@ -331,7 +320,6 @@ const LocalTransferScreen: React.FC = () => {
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
       ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
       : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
-  const activateBeneficiary = useRef<bottomSheetTypes>(null);
 
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
@@ -382,18 +370,6 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
 
-  const handleActivateBeneficiary = useCallback(() => {
-    activateBeneficiary?.current?.present();
-    setActivateHeight(SNAP_POINTS.SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-    else handleActivateBeneficiary();
-  };
-
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {
       case ActivateViewTypes.RECEIVE_CALL:
@@ -432,9 +408,9 @@ const LocalTransferScreen: React.FC = () => {
         break;
     }
   }, []);
+
   const onDeleteBeneficiary = async () => {
     setDeleteBeneficiary(false);
-    renderSpinner(true);
     try {
       const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
 
@@ -448,7 +424,6 @@ const LocalTransferScreen: React.FC = () => {
       setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
       renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-    renderSpinner(false);
   };
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -627,6 +602,7 @@ const LocalTransferScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             btnText={localizationText.COMMON.DONE}
+            disabled={!nickName}
             btnIconsDisabled
             onPress={() => {
               Keyboard.dismiss();

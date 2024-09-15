@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KYC_CHANGE": "Customer knowledge form has been updated!",
     "CONTACTS_LIMIT_REACHED": "Contacts Limit Reached",
     "INVALID_NUMBER": "Invalid Number",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
@@ -167,7 +168,10 @@
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "INSUFFICIENT_BALANCE_COMMON": "Insufficient balance",
     "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
+    "YES": "Yes",
+    "NO": "No",
     "AMOUNT": "Amount"
   },
   "ONBOARDING": {
@@ -339,9 +343,9 @@
     "ENTER_CONFIRM": "Enter the passcode again for confirmation",
     "PASSCODE_CHANGED_SUCCESSFULY": "Passcode Changed Successfully",
     "SAVE_FOR_LATER": "you will need to save it for later",
-    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download\nNafath App, accept the request to verify your identity, and then\nreturn back to AlinmaPay App",
+    "NAFATH_VALIDATION_DESCRIPTION": "To complete your registration process, you will need to download\nNafath App, accept the request to verify your identity, and then\nreturn back to AlinmaPay App",
     "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account\non Nafath application.",
-    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read\nand agree th the Terms & Conditions",
+    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read\nand agree the Terms & Conditions",
     "VALIDATE_THROUGH_NAFAH": "Validate through Nafath",
     "OPEN_NAFATH_APP": "Open Nafath application."
   },
@@ -557,7 +561,9 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2": "500 SAR"
+    "AMOUNT_2": "500 SAR",
+    "FAST_CONVERSION_BY": "Fast conversion by",
+    "SARIE": "Sarie"
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
@@ -575,6 +581,7 @@
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
     "CONTACT_NAME": "Contact Name",
+    "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
     "CONTACT_LIMIT": "Contacts limit reached"
   },
   "CARD_OPTIONS": {
@@ -668,6 +675,7 @@
     "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
+    "OFF_SIMP": "OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
     "BILL_PAYMENTS": "Bill Payments",
     "WALLET_WITH_EVERY_BILL": "on your wallet with \n every bill payment!",
@@ -854,7 +862,8 @@
     "VAT": "VAT",
     "FEES": "Fees",
     "ACTIVE_INACTIVE": "Active - Inactive",
-    "INACTIVE_ACTIVE": "Inactive - Active"
+    "INACTIVE_ACTIVE": "Inactive - Active",
+    "AMOUNT_TO_BE_REFUND": "Amount to be refund"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -908,7 +917,7 @@
     "RECIPIENT": "Recipient",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
-    "UNOPENED": "Unopened",
+    "UNOPENED": "UnOpened",
     "GIFT_DETAILS": "Gift Details",
     "SWIPE_TO_FLIP": "Swipe to Flip",
     "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
@@ -1068,7 +1077,8 @@
     "COUNTRY_NAME": "Country Name",
     "CITY_NAME": "City Name",
     "DELIVERY_TYPE": "Delivery Type",
-    "CURRENCY": "Currency"
+    "CURRENCY": "Currency",
+    "INCLUDE_FEES": "Include Fees"
   },
   "BENEFICIARY_OPTIONS": {
     "REVIEW_AND_EDIT": "Review & Edit",
@@ -1126,7 +1136,9 @@
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "EDIT_BILL": "Edit Bill",
-    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully",
+    "DISCARD_CHANGES": "Discard Changes?",
+    "EDIT_YOU_MADE_WILL_LOST": "The edits you made will be lost."
   },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
@@ -1338,7 +1350,7 @@
     "PAY": "Pay",
     "REJECT": "Reject",
     "REJECT_THIS_REQUEST": "Reject this request",
-    "MAKE_NEW_REQUEST": "Make new Request"
+    "SEND_REQUEST_TITLE": "Send Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",

@@ -3,4 +3,10 @@ enum CardKeys {
   CUSTOMER_KNOWLEDGE_FORM = 'customerKnowledgeForm',
 }
 
-export default CardKeys;
+enum UserFieldKeys {
+  NAME = 'name',
+  MOBILE = 'mobile',
+  NATIONAL_ADDRESS = 'nationalAddress',
+}
+
+export { CardKeys, UserFieldKeys };

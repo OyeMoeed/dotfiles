@@ -1,14 +1,14 @@
 import icons from '@app/assets/icons';
 import { Message } from '@app/assets/svgs';
-import { IPayCaption1Text, IPayIcon, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
 import { forwardRef, useImperativeHandle } from 'react';
-import { buttonVariants } from '@app/utilities/enums.util';
 import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
 import otpVerificationStyles from './ipay-otp-verification.style';
@@ -22,11 +22,12 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setOtp,
       setOtpError,
       otpError,
-      isLoading,
       isBottomSheet = true,
       handleOnPressHelp,
       showHelp = true,
       title,
+      hasDisclaimerSection,
+      disclaimerSection,
       timeout = 60,
       containerStyle,
       innerContainerStyle,
@@ -39,9 +40,16 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
   ) => {
     const { colors } = useTheme();
     const localizationText = useLocalization();
-    const styles = otpVerificationStyles();
+    const styles = otpVerificationStyles(colors);
     const { showToast } = useToastContext();
-    const { counter, handleRestart, onChangeText } = useOtpVerification(setOtp, setOtpError, timeout);
+    const { counter, handleRestart, onChangeText, clearTimer, startTimer } = useOtpVerification(
+      setOtp,
+      setOtpError,
+      timeout,
+    );
+
+    const isCounterEnds = counter <= 0;
+
     const renderToast = (toastMsg: string) => {
       showToast({
         title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
@@ -53,11 +61,18 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         containerStyle: toastContainerStyle,
       });
     };
+
     const onSendCodeAgainPress = () => {
       onResendCodePress();
     };
 
     useImperativeHandle(ref, () => ({
+      startTimer: () => {
+        startTimer();
+      },
+      clearTimer: () => {
+        clearTimer();
+      },
       resetInterval: () => {
         handleRestart();
       },
@@ -68,8 +83,6 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
 
     return (
       <IPayView testID={`${testID}-otp-verification`} style={[styles.container, containerStyle]}>
-        {isLoading && <IPaySpinner hasBackgroundColor={false} />}
-
         <IPayView style={styles.messageIconView}>
           <Message />
         </IPayView>
@@ -104,12 +117,14 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
           />
           <IPayButton
             btnType={buttonVariants.PRIMARY}
-            disabled={counter <= 0}
+            disabled={isCounterEnds}
             btnText={localizationText.COMMON.CONFIRM}
             large
             btnIconsDisabled
             onPress={onPressConfirm}
           />
+
+          {hasDisclaimerSection && <>{disclaimerSection}</>}
           {showHelp && (
             <IPayButton
               onPress={handleOnPressHelp}

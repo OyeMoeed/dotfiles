@@ -32,7 +32,7 @@ export interface IPayAlertProps {
   primaryAction?: { text: string; onPress: () => void };
 
   // Configuration for the secondary action button, providing an alternative choice
-  secondaryAction?: { text: string; onPress: () => void };
+  secondaryAction?: { text: string; onPress: () => void; isLoading?: boolean };
 
   // Configuration for the tertiary action button, offering another option
   tertiaryAction?: { text: string; onPress: () => void };

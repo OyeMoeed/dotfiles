@@ -18,16 +18,6 @@ import SummaryType from '@app/enums/summary-type';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { useTypedSelector } from '@app/store/store';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { States, TopupStatus, buttonVariants, PayChannel, spinnerVariant } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   SendRequestedMoneyConfirmReq,
   SendRequestedMoneyConfirmRes,
@@ -37,9 +27,18 @@ import {
   sendRequestedMoneyConfirm,
   sendRequestedMoneyPrepare,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { PayChannel, States, TopupStatus, buttonVariants } from '@app/utilities/enums.util';
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute } from '@react-navigation/native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import moneyRequestStyles from './money-request-summary.styles';
 import { PayData } from './money-request-summary.interface';
+import moneyRequestStyles from './money-request-summary.styles';
 
 const MoneyRequestSummaryScreen: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -80,7 +79,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const [transactionId, setTransactionId] = useState<string | undefined>('');
 
   const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig } = useConstantData();
   const textValue =
     screen === SummaryType.MONEY_REQUEST_SUMMARY
@@ -104,7 +102,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     {
       id: '3',
       label: localizationText.COMMON.REF_NUM,
-      value: apiResponse?.response?.transctionRefNumber,
+      value: apiResponse?.response?.referenceNumber,
       icon: icons.copy,
     },
   ];
@@ -113,16 +111,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     createRequestBottomSheetRef.current?.present();
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    setIsLoading(true);
     const payload: SendRequestedMoneyPrepareReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await sendRequestedMoneyPrepare(walletInfo.walletNumber, transId, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       setOtpRef(apiResponse?.response?.otpRef as string);
       setTransactionId(apiResponse?.authentication?.transactionId);
       if (showOtpSheet) {
@@ -130,8 +123,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
-    hideSpinner();
   };
 
   // Verify OTP for sending requested money
@@ -150,13 +141,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       if (apiResponse?.response) {
-        hideSpinner();
-
         createRequestBottomSheetRef.current?.close();
         navigate(ScreenNames.TOP_UP_SUCCESS, {
           topupChannel: PayChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
-          amount: apiResponse?.response?.totalTansactionAmount,
+          amount: topUpAmount,
           requestPaidSummaryData: requestPaidSummaryData(apiResponse),
         });
       }

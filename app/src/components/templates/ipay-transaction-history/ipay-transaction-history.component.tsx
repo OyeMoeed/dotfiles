@@ -21,8 +21,8 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { isIosOS } from '@app/utilities/constants';
-import React, { useState } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
+import React, { useState } from 'react';
 import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
 
@@ -213,17 +213,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
             <IPayView style={styles.listWrapper}>
               {isBeneficiaryHistory && (
                 <IPayList
-                  adjacentTitle={transaction.bankName || ''}
-                  title={transaction.name || ''}
+                  adjacentTitle={transaction?.bankName || ''}
+                  title={transaction?.name || ''}
                   isShowLeftIcon
                   isShowSubTitle
                   textStyle={styles.beneficiaryTitleStyle}
-                  subTitle={transaction.bank_account_no || ''}
+                  subTitle={transaction?.bank_account_no || ''}
                   leftIcon={
                     <IPayImage
                       resizeMode="contain"
                       style={styles.beneficiaryLeftImage}
-                      image={transaction.bankImage || images.nationalBankLogo}
+                      image={transaction?.bankImage || images.nationalBankLogo}
                     />
                   }
                 />
@@ -754,17 +754,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 </IPayView>
               )}
 
-              {transaction?.transactionRequestType !== TransactionTypes.PAY_WALLET &&
-                transaction?.transactionType === TransactionOperations.DEBIT && (
-                  <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {getDate(transaction?.transactionDateTime)}
-                    </IPaySubHeadlineText>
-                  </IPayView>
-                )}
+              {/* {transaction?.transactionRequestType !== TransactionTypes.PAY_WALLET &&
+                transaction?.transactionType === TransactionOperations.DEBIT && ( */}
+              <IPayView style={styles.cardStyle}>
+                <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+                  {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
+                </IPayFootnoteText>
+                <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  {getDate(transaction?.transactionDateTime)}
+                </IPaySubHeadlineText>
+              </IPayView>
+              {/* )} */}
             </IPayView>
           </IPayView>
         </IPayShareableImageView>

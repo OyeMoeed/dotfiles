@@ -4,7 +4,7 @@ import { IPayButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import { Modal } from 'react-native';
+import { ActivityIndicator, Modal } from 'react-native';
 import IPayOverlay from '../ipay-overlay/ipay-overlay.component';
 import { IPayAlertProps } from './ipay-alert.interface';
 import alertStyles from './ipay-alert.styles';
@@ -18,7 +18,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   secondaryAction,
   tertiaryAction,
   variant = alertVariant.DEFAULT,
-  showIcon = false,
+  // showIcon = false,
   visible = true,
   onClose,
   closeOnTouchOutside = false,
@@ -41,15 +41,12 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
         <IPayView style={styles.centeredView}>
           <IPayView style={styles.modalView}>
             {icon}
-            {!icon && (
-              <>
-                {variant === alertVariant.DEFAULT ? (
-                  <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
-                ) : (
-                  <IPayIcon icon={icons.alertWaring} size={64} color={colors.error.error500} />
-                )}
-              </>
-            )}
+            {!icon &&
+              (variant === alertVariant.DEFAULT ? (
+                <IPayIcon icon={icons.tick_square} size={64} color={colors.primary.primary500} />
+              ) : (
+                <IPayIcon icon={icons.alertWaring} size={64} color={colors.error.error500} />
+              ))}
             <IPayView style={styles.textsView}>
               {title && <IPayBodyText text={title} style={styles.modalTitle} regular={false} />}
               {message && <IPayFootnoteText regular text={message} style={styles.modalMessage} />}
@@ -83,6 +80,13 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
                   ]}
                   btnText={secondaryAction.text}
                   onPress={secondaryAction.onPress}
+                  rightIcon={
+                    secondaryAction.isLoading ? (
+                      <ActivityIndicator size="small" color={colors.natural.natural0} />
+                    ) : (
+                      <IPayView />
+                    )
+                  }
                   buttonTextStyle={type === alertType.SIDE_BY_SIDE ? styles.buttonTextWhite : styles.buttonTextColored}
                   btnType={type === alertType.SIDE_BY_SIDE ? buttonVariants.PRIMARY : buttonVariants.OUTLINED}
                 />

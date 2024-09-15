@@ -1,4 +1,4 @@
-import { BillProps } from '@app/network/services/bills/get-sadad-bills/get-sadad-bills.interface';
+import { PaymentInfoProps } from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
 import { StyleProp, ViewStyle } from 'react-native';
 
 interface BillDetailsProps {
@@ -20,7 +20,7 @@ type SelectedProp = {
   selected?: boolean;
 };
 
-interface BillsProps extends BillProps, SelectedProp {}
+interface BillsProps extends PaymentInfoProps, SelectedProp {}
 
 interface IPaySadadBillProps {
   testID?: string;
@@ -28,7 +28,7 @@ interface IPaySadadBillProps {
   billDetails: BillsProps;
   onSelectBill?: (id: number | string) => void;
   showCheckBox?: boolean;
-  onPressMoreOptions?: (id: number | string) => void;
+  onPressMoreOptions?: (id: string) => void;
   showMoreOption?: boolean;
 }
 
