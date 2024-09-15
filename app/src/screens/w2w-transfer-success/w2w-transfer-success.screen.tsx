@@ -5,11 +5,11 @@ import { useRoute } from '@react-navigation/native';
 
 const W2WTransferSuccessScreen = () => {
   const route = useRoute();
-  const { transferDetails, totalAmount } = route.params as IW2WTransferSuccessProps;
+  const { transferDetails, totalAmount, variant } = route.params as IW2WTransferSuccessProps;
 
   return (
     <IPaySafeAreaView>
-      <IPayW2WTransferSuccess transferDetails={transferDetails} totalAmount={totalAmount} />
+      <IPayW2WTransferSuccess variant={variant} transferDetails={transferDetails} totalAmount={totalAmount} />
     </IPaySafeAreaView>
   );
 };

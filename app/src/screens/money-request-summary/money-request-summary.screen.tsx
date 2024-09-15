@@ -111,12 +111,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     createRequestBottomSheetRef.current?.present();
 
-    setIsLoading(true);
     const payload: SendRequestedMoneyPrepareReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await sendRequestedMoneyPrepare(walletInfo.walletNumber, transId, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       setOtpRef(apiResponse?.response?.otpRef as string);
       setTransactionId(apiResponse?.authentication?.transactionId);
       if (showOtpSheet) {
@@ -124,7 +123,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
   };
 
   // Verify OTP for sending requested money

@@ -5,7 +5,8 @@ interface IPayRequestDetailProps {
   testID?: string;
   transaction: IPayRequestMoneyProps | any;
   onCloseBottomSheet?: () => void;
-  showActionSheet?: () => void;
+  showRejectActionSheet?: () => void;
+  showCancelActionSheet?: () => void;
 }
 interface MappingType {
   [key: string]: string[];

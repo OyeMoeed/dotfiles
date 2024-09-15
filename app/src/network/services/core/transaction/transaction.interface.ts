@@ -119,7 +119,6 @@ interface getCardDetailsProp {
   };
 }
 
-
 interface renewCardProp {
   walletNumber?: string;
   body?: {
@@ -129,7 +128,7 @@ interface renewCardProp {
     cardType?: string;
     physicalCard?: boolean;
     deviceInfo?: any;
-  }
+  };
 }
 
 interface prepareShowDetailsProp {
@@ -143,8 +142,8 @@ interface prepareShowDetailsProp {
 interface prepareRenewCardProp {
   walletNumber?: string;
   body?: {
-    deviceInfo: any,
-  }
+    deviceInfo: any;
+  };
 }
 
 interface changeStatusProp {
@@ -200,5 +199,5 @@ export {
   prepareShowDetailsProp,
   getCardDetailsProp,
   prepareRenewCardProp,
-  renewCardProp
+  renewCardProp,
 };
