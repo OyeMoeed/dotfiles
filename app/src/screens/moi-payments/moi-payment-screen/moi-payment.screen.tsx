@@ -18,12 +18,15 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
+import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { MoiPaymentTypes } from '@app/utilities/enums.util';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
@@ -32,7 +35,8 @@ const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
   const localizationText = useLocalization();
-  const { moiServiceProvider, moiServiceType, moiPaymentDuration, idTypes } = useConstantData();
+  const { moiServiceType, moiPaymentDuration, idTypes } = useConstantData();
+  const [moiServiceProvider, setMoiServiceProvider] = useState<BillersTypes[]>();
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [sheetType, setSheetType] = useState<string>('');
   const [search, setSearch] = useState<string>('');
@@ -129,6 +133,33 @@ const MoiPaymentScreen: React.FC = () => {
         return localizationText.BILL_PAYMENTS.DURATION;
       default:
         return localizationText.BILL_PAYMENTS.SERVICE_PROVIDER;
+    }
+  };
+  useEffect(() => {
+    onGetBillers();
+  }, []);
+
+  const onGetBillers = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const payload = {
+      includeBillerDetails: 'false',
+      deviceInfo,
+      billerStatus: 'E',
+      billerType: '7',
+    };
+    
+    const apiResponse = await getBillersService(payload);
+    console.log('apiResponse', apiResponse.response);
+
+    if (apiResponse.successfulResponse) {
+      setMoiServiceProvider(
+        apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
+          ...billerItem,
+          id: billerItem.billerId,
+          text: billerItem.billerDesc,
+          type: billerItem.billerTypeDesc,
+        })),
+      );
     }
   };
 
@@ -246,30 +277,28 @@ const MoiPaymentScreen: React.FC = () => {
                 <IPayView style={styles.container}>
                   <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
 
-                  <IPayView style={styles.contentContainer}>
-                    <IPayMoiPaymentDetailForm
-                      onServiceProviderAction={() => onOpenSheet(MoiPaymentType.SERVICE_PROVIDER)}
-                      onServiceTypeAction={() => onOpenSheet(MoiPaymentType.SERVICE_TYPE)}
-                      onCheckboxAction={onCheckboxAction}
-                      onBeneficiaryIdAction={clearBeneficiaryFelid}
-                      onIdTypeAction={() => onOpenSheet(MoiPaymentType.ID_TYPE)}
-                      onDurationAction={() => onOpenSheet(MoiPaymentType.DURATION)}
-                      isServiceProviderValue={!!watch(MoiPaymentFormFields.SERVICE_PROVIDER)}
-                      isServiceTypeValue={!!watch(MoiPaymentFormFields.SERVICE_TYPE)}
-                      myIdCheck={myIdChecked}
-                      control={control}
-                      onChangeText={onChangeText}
-                      errorMessage={errorMessage}
-                    />
-                    <IPayButton
-                      btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                      btnType="primary"
-                      onPress={onSubmit}
-                      large
-                      btnIconsDisabled
-                      disabled={isBtnEnabled}
-                    />
-                  </IPayView>
+                  <IPayMoiPaymentDetailForm
+                    onServiceProviderAction={() => onOpenSheet(MoiPaymentType.SERVICE_PROVIDER)}
+                    onServiceTypeAction={() => onOpenSheet(MoiPaymentType.SERVICE_TYPE)}
+                    onCheckboxAction={onCheckboxAction}
+                    onBeneficiaryIdAction={clearBeneficiaryFelid}
+                    onIdTypeAction={() => onOpenSheet(MoiPaymentType.ID_TYPE)}
+                    onDurationAction={() => onOpenSheet(MoiPaymentType.DURATION)}
+                    isServiceProviderValue={!!watch(MoiPaymentFormFields.SERVICE_PROVIDER)}
+                    isServiceTypeValue={!!watch(MoiPaymentFormFields.SERVICE_TYPE)}
+                    myIdCheck={myIdChecked}
+                    control={control}
+                    onChangeText={onChangeText}
+                    errorMessage={errorMessage}
+                  />
+                  <IPayButton
+                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnType="primary"
+                    onPress={onSubmit}
+                    large
+                    btnIconsDisabled
+                    disabled={isBtnEnabled}
+                  />
                 </IPayView>
               </>
             </IPaySafeAreaView>

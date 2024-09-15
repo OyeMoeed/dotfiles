@@ -1,11 +1,12 @@
 import icons from '@app/assets/icons';
-import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption2Text, IPayIcon } from '@app/components/atoms';
 import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
+import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
 import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
@@ -52,7 +53,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   }, [errorMessage, myIdCheck]);
 
   return (
-    <IPayView style={styles.inputWrapper} testID={testID}>
+    <>
       <Controller
         name={MoiPaymentFormFields.SERVICE_PROVIDER}
         control={control}
@@ -96,7 +97,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
       {isServiceTypeValue && (
         <>
           <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-
+          <DynamicFormComponent />
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}
             control={control}
@@ -166,7 +167,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
           />
         </>
       )}
-    </IPayView>
+    </>
   );
 };
 
