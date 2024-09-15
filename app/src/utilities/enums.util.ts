@@ -160,6 +160,7 @@ enum CardStatusNumber {
   ActiveWithOnlinePurchase = '100',
   Stolen = '700',
   Freezed = '850',
+  Expired = '400'
 }
 
 enum CardTypesCodes {
@@ -179,6 +180,7 @@ enum CardActiveStatus {
 enum CardStatusIndication {
   EXPIRY = 'expiry',
   ANNUAL = 'annual',
+  ANNUAL_EXPIRED = 'annual_expired',
 }
 enum CardStatusType {
   WARNING = 'warning',
