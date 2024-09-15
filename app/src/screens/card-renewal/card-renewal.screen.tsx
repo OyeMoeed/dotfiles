@@ -61,7 +61,7 @@ const CardRenewalScreen: React.FC = () => {
     (state) => state.walletInfoReducer.walletInfo,
   );
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const localizationText = useLocalization();
   const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
@@ -85,6 +85,8 @@ const CardRenewalScreen: React.FC = () => {
         isVirtualCardTermsAndConditions: true,
       }),
     );
+  };
+
   const renderErrToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
