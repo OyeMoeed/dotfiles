@@ -18,6 +18,8 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
+import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -35,8 +37,9 @@ const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
   const localizationText = useLocalization();
-  const { moiServiceType, moiPaymentDuration, idTypes } = useConstantData();
+  const { moiPaymentDuration, idTypes } = useConstantData();
   const [moiServiceProvider, setMoiServiceProvider] = useState<BillersTypes[]>();
+  const [moiServiceType, setMoiServiceType] = useState<BillersService[]>();
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [sheetType, setSheetType] = useState<string>('');
   const [search, setSearch] = useState<string>('');
@@ -50,7 +53,7 @@ const MoiPaymentScreen: React.FC = () => {
   const invoiceSheetRef = useRef<any>(null);
   const { myBeneficiaryId } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
-
+  const [selectedBiller, setSelectedBiller] = useState<string>();
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
     getValidationSchemas(localizationText);
 
@@ -147,10 +150,8 @@ const MoiPaymentScreen: React.FC = () => {
       billerStatus: 'E',
       billerType: '7',
     };
-    
-    const apiResponse = await getBillersService(payload);
-    console.log('apiResponse', apiResponse.response);
 
+    const apiResponse = await getBillersService(payload);
     if (apiResponse.successfulResponse) {
       setMoiServiceProvider(
         apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
@@ -162,6 +163,23 @@ const MoiPaymentScreen: React.FC = () => {
       );
     }
   };
+  const onGetBillersServices = async (billerID?: string) => {
+    const apiResponse = await getBillersServiceProvider(billerID);
+    console.log('apiResponse', apiResponse.response);
+
+    if (apiResponse.successfulResponse) {
+      const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+        ...serviceItem,
+        id: serviceItem.serviceId,
+        text: serviceItem.serviceDesc,
+      }));
+      setMoiServiceType(serviceList);
+    }
+  };
+
+  useEffect(() => {
+    onGetBillersServices(selectedBiller);
+  }, [selectedBiller]);
 
   return (
     <IPayFormProvider<MoiFormFormValues>
@@ -187,10 +205,11 @@ const MoiPaymentScreen: React.FC = () => {
           );
         };
 
-        const onSelectValue = (item: { id: number; text: string }) => {
-          const { text } = item;
+        const onSelectValue = (item: { id: string; text: string }) => {
+          const { text, id } = item;
           switch (sheetType) {
             case MoiPaymentType.SERVICE_PROVIDER:
+              setSelectedBiller(id);
               setValue(MoiPaymentFormFields.SERVICE_PROVIDER, text);
               break;
             case MoiPaymentType.SERVICE_TYPE:
