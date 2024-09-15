@@ -8,23 +8,35 @@ import { ANIMATION_DURATION } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardMapping, CardOptions, CardTypes } from '@app/utilities/enums.util';
-import React, { useCallback, useState } from 'react';
+import { buttonVariants, CardOptions, CardTypes } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
-import useVirtualCardData from './use-virtual-card-data';
+import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
+import { useTypedSelector } from '@app/store/store';
+import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
+import {
+  CardType,
+  ICardIssuanceDetails,
+} from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import { IssueCardFeesRes } from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.interface';
+import getAvailableCardsTypes from '@app/network/services/cards-management/issue-card-types/issue-card-types.service';
+import { ImageStyle, StyleProp } from 'react-native';
 import virtualCardStyles from './virtual-card.style';
+import useVirtualCardData from './use-virtual-card-data';
 
 const VirtualCardScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
+  const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
+  const [tabs, setTabs] = useState<string[]>([]);
   const { colors } = useTheme();
   const styles = virtualCardStyles(colors);
-  const [selectedCard, setSelectedCard] = useState<CardTypes>(CardTypes.CLASSIC);
+  const [selectedCard, setSelectedCard] = useState<CardType>();
+  const [selectedCardType, setSelectedCardType] = useState<CardType>();
   const selectedCardData = VIRTUAL_CARD_DATA.find((card) => card.key === selectedCard);
   const { type = '', description = '', backgroundImage = '' } = selectedCardData || {};
-
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [isExpanded, setIsExpanded] = useState(false);
   const translateY = useSharedValue(0);
   const toggleAnimation = () => {
@@ -40,22 +52,92 @@ const VirtualCardScreen: React.FC = () => {
     transform: [{ translateY: translateY.value }],
   }));
 
+  const mapSelectedCardType = (tab: string): CardType | '' => {
+    switch (tab) {
+      case t('VIRTUAL_CARD.CLASSIC'):
+        setSelectedCardType('IPMC');
+        return 'IPMC';
+      case t('VIRTUAL_CARD.PLATINUM'):
+        setSelectedCardType('VPPC');
+        return 'VPPC';
+      case t('VIRTUAL_CARD.SIGNATURE'):
+        setSelectedCardType('VSCC');
+        return 'VSCC';
+      default:
+        return '';
+    }
+  };
+
   const handleTabSelect = useCallback(
     (tab: CardTypes) => {
-      const currentTab = tab.toLowerCase();
-      setSelectedCard(CardMapping[currentTab]);
+      const tabType = mapSelectedCardType(tab);
+      if (tabType) {
+        setSelectedCard(tabType);
+        setSelectedCardType(tabType);
+      }
     },
     [selectedCard],
   );
-  const onPressIsssueCard = () => {
-    navigate(screenNames.CARD_ISSUE_CONFIRMATION);
+
+  const getCardsTypes = async () => {
+    const apiResponse = await getAvailableCardsTypes();
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      const firstCardType = apiResponse?.response?.cards[0]?.cardTypeId;
+      const tabsArr = apiResponse?.response?.cards?.map((el) => {
+        switch (el.cardTypeId) {
+          case 'IPMC':
+            return t('VIRTUAL_CARD.CLASSIC');
+          case 'VPPC':
+            return t('VIRTUAL_CARD.PLATINUM');
+          case 'VSCC':
+            return t('VIRTUAL_CARD.SIGNATURE');
+          default:
+            return '';
+        }
+      });
+      setTabs(tabsArr as string[]);
+      if (firstCardType) {
+        setSelectedCard(firstCardType as CardType);
+        setSelectedCardType(firstCardType as CardType);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getCardsTypes();
+  }, []);
+
+  const onPressIsssueCard = async () => {
+    const apiResponse = await issueCardInquire(walletInfo?.walletNumber, selectedCardType as CardType);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      const feesApiResponse = await getCardIssuanceFees(
+        walletInfo?.walletNumber,
+        selectedCardType as CardType,
+        apiResponse?.response?.transactionType as string,
+      );
+      if (feesApiResponse?.status?.type === 'SUCCESS') {
+        const cardIssuanceDetails: ICardIssuanceDetails = {
+          cardType: selectedCardType as CardType,
+          transactionType: apiResponse?.response?.transactionType as string,
+          fees: feesApiResponse?.response as IssueCardFeesRes,
+          cardIndex: apiResponse?.response?.cardIndex as string,
+          cardManageStatus: apiResponse?.response?.cardManageStatus as string,
+        };
+        navigate(screenNames.CARD_ISSUE_CONFIRMATION, { issuanceDetails: cardIssuanceDetails });
+      }
+    }
   };
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title="VIRTUAL_CARD.HEADER" applyFlex />
-      <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
-      <IPayImage image={backgroundImage} style={styles.background} />
+      <IPayHeader backBtn title={'VIRTUAL_CARD.HEADER'} applyFlex />
+      <IPayTabs
+        preSelectedTab={tabs[0]}
+        tabs={tabs}
+        onSelect={handleTabSelect as (tab: string, tabObj: {}) => void}
+        customStyles={styles.headerGap}
+      />
+      <IPayImage image={backgroundImage} style={styles.background as StyleProp<ImageStyle>} />
       <IPayAnimatedView
         animationStyles={animatedStyles}
         style={[styles.animatedContainer, isExpanded && styles.expandedBorderRadius]}
@@ -64,19 +146,19 @@ const VirtualCardScreen: React.FC = () => {
           <IPayCardDetail
             description={description}
             type={type}
-            cardChipData={CARD_CHIP_DATA[selectedCard]}
+            cardChipData={CARD_CHIP_DATA[selectedCard as CardType]}
             showChips={!isExpanded}
           />
           {isExpanded && (
             <>
-              <IPayCardSegment selectedCardType={selectedCard} cardOption={CardOptions.VIRTUAL} />
+              <IPayCardSegment selectedCardType={selectedCard as CardType} cardOption={CardOptions.VIRTUAL} />
               <IPayView style={[styles.naturalBg, styles.heightedView]} />
             </>
           )}
         </IPayView>
         <IPayButton
           btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           onPress={toggleAnimation}
           btnText={isExpanded ? t('VIRTUAL_CARD.CLOSE_DETAILS') : t('VIRTUAL_CARD.VIEW_DETAILS')}
           btnIconsDisabled
@@ -84,7 +166,7 @@ const VirtualCardScreen: React.FC = () => {
       </IPayAnimatedView>
       <IPayView style={styles.bottomContainer}>
         <IPayButton
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           large
           btnText="VIRTUAL_CARD.ISSUE_CARD"
           btnIconsDisabled
