@@ -7,7 +7,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { LocalizationKeysMapping, TransactionsStatus } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { dateTimeFormat } from '@app/utilities';
@@ -34,7 +33,6 @@ import internationalTrHistoryStyles from './international-transfer-history.style
 const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTrHistoryStyles();
-  const localizationText = useLocalization();
   const { t } = useTranslation();
   const [filteredData, setFilteredData] = useState<InternationalTransferHistoryDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -112,10 +110,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       // Check transaction type match
       const isTransactionTypeMatch =
-        !transactionType ||
-        localizationText.TRANSACTION_HISTORY[
-          LocalizationKeysMapping[item?.transactionType] as keyof typeof localizationText.TRANSACTION_HISTORY
-        ] === deliveryType;
+        !transactionType || t(`TRANSACTION_HISTORY.${LocalizationKeysMapping[item?.transactionType]}`) === deliveryType;
 
       // Check beneficiary name match
       const isNameMatch = !beneficiaryNameList || beneficiaryNameList === item?.receiver;
@@ -123,9 +118,7 @@ const InternationalTransferHistory: React.FC = () => {
       // Check delivery type match
       const isTransactionMediumMatch =
         !deliveryType ||
-        localizationText.TRANSACTION_HISTORY[
-          LocalizationKeysMapping[item?.transactionMedium] as keyof typeof localizationText.TRANSACTION_HISTORY
-        ] === transactionType;
+        t(`TRANSACTION_HISTORY.${LocalizationKeysMapping[item?.transactionMedium]}`) === transactionType;
 
       // Return true if all conditions are met
       return isAmountInRange && isDateInRange && isTransactionTypeMatch && isNameMatch && isTransactionMediumMatch;

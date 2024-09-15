@@ -15,7 +15,6 @@ import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-cont
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -36,7 +35,6 @@ const defaultValue = '0.00';
 
 const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
-  const localizationText = useLocalization();
   const { t } = useTranslation();
   const [topUpAmount, setTopUpAmount] = useState('');
   const [warningStatus] = useState<string>('');
@@ -62,7 +60,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
-    if (tab === localizationText.SEND_GIFT.MANUAL) setTopUpAmount('');
+    if (tab === t('SEND_GIFT.MANUAL')) setTopUpAmount('');
   };
 
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
@@ -85,7 +83,7 @@ const SendGiftAmountScreen = ({ route }) => {
         setChipValue('');
         break;
     }
-  }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, localizationText]);
+  }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit]);
 
   const handleContactAmountChange = (text: string, contactId: string) => {
     const newAmount = removeCommas(text);
@@ -137,7 +135,7 @@ const SendGiftAmountScreen = ({ route }) => {
     const { givenName, recordID, isAlinma } = item;
     let detailText = `${topUpAmount || 0} ${t('COMMON.SAR')}`;
 
-    if (selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0) {
+    if (selectedTab === t('SEND_GIFT.SPLIT') && contacts.length > 0) {
       detailText = `${calculateAmountPerContact()} ${t('COMMON.SAR')}`;
     }
 
@@ -145,7 +143,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
     return (
       <IPayView>
-        {selectedTab === localizationText.SEND_GIFT.MANUAL && contacts.length > 0 ? (
+        {selectedTab === t('SEND_GIFT.MANUAL') && contacts.length > 0 ? (
           <IPayView style={styles.manualList}>
             <IPayView style={styles.listHeader}>
               <IPayView style={styles.iconHeader}>
@@ -255,8 +253,7 @@ const SendGiftAmountScreen = ({ route }) => {
       case t('SEND_GIFT.MANUAL'):
         return (
           <IPayView style={styles.manual}>
-            <IPayFootnoteText style={styles.text} color={colors.primary.primary800}>
-              {localizationText.SEND_GIFT.CUSTOM_AMOUNT1}
+            <IPayFootnoteText style={styles.text} color={colors.primary.primary800} text="SEND_GIFT.CUSTOM_AMOUNT1">
               <IPayFootnoteText text="SEND_GIFT.CUSTOM_AMOUNT2" regular={false} />
             </IPayFootnoteText>
           </IPayView>
@@ -270,11 +267,7 @@ const SendGiftAmountScreen = ({ route }) => {
     const selectedContactsCount = contacts.length;
     return (
       <IPayView
-        style={
-          selectedTab === localizationText.SEND_GIFT.MANUAL
-            ? styles.manualContactInfoContainer
-            : styles.contactInfoContainer
-        }
+        style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualContactInfoContainer : styles.contactInfoContainer}
       >
         <IPayFootnoteText
           regular={false}
@@ -296,10 +289,9 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   // Calculate the amount to be shown above the button
-  const amountToShow = selectedTab === localizationText.SEND_GIFT.MANUAL ? calculateTotalManualAmount() : topUpAmount;
+  const amountToShow = selectedTab === t('SEND_GIFT.MANUAL') ? calculateTotalManualAmount() : topUpAmount;
 
-  const splittedAmount =
-    selectedTab === localizationText.SEND_GIFT.SPLIT && contacts.length > 0 && calculateAmountPerContact();
+  const splittedAmount = selectedTab === t('SEND_GIFT.SPLIT') && contacts.length > 0 && calculateAmountPerContact();
 
   const amountToSend = splittedAmount || amountToShow;
 
@@ -346,7 +338,7 @@ const SendGiftAmountScreen = ({ route }) => {
     parseFloat(amountToShow) <= 0 ||
     Number.isNaN(parseFloat(amountToShow)) ||
     parseFloat(amountToShow) > Number(monthlyRemainingOutgoingAmount) ||
-    (selectedTab === localizationText.SEND_GIFT.MANUAL && !areAllManualAmountsFilled());
+    (selectedTab === t('SEND_GIFT.MANUAL') && !areAllManualAmountsFilled());
 
   // TODO: Fix nested components
   // eslint-disable-next-line react/no-unstable-nested-components
@@ -379,18 +371,14 @@ const SendGiftAmountScreen = ({ route }) => {
               monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
             />
           </IPayView>
-          <IPayView
-            style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualComponent : styles.amountComponent}
-          >
+          <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualComponent : styles.amountComponent}>
             <IPayView style={styles.header}>
               <IPayFootnoteText text="SEND_GIFT.SELECT_METHOD" color={colors.primary.primary600} />
               <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
             </IPayView>
             {renderAmountInput()}
           </IPayView>
-          <IPayView
-            style={selectedTab === localizationText.SEND_GIFT.MANUAL ? styles.manualContactList : styles.contactList}
-          >
+          <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualContactList : styles.contactList}>
             {getContactInfoText()}
             <IPayFlatlist
               scrollEnabled
@@ -405,7 +393,7 @@ const SendGiftAmountScreen = ({ route }) => {
         </IPayView>
       </IPayScrollView>
       <IPayView style={styles.buttonContainer}>
-        {selectedTab === localizationText.SEND_GIFT.MANUAL && (
+        {selectedTab === t('SEND_GIFT.MANUAL') && (
           <IPayList
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
             showDetail

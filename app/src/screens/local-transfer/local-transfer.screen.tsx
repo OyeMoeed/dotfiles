@@ -24,7 +24,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import deleteLocalTransferBeneficiary from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.service';
@@ -56,7 +55,6 @@ const LocalTransferScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = localTransferStyles(colors);
-  const localizationText = useLocalization();
   const beneficiariesToShow = 4;
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
   const [nickName, setNickName] = useState('');
@@ -295,7 +293,7 @@ const LocalTransferScreen: React.FC = () => {
           style={styles.capitalizeTitle}
           color={colors.primary.primary500}
           regular
-          text={viewAll[statusKey] ? t('COMMON.CLOSE') : localizationText.COMMON.VIEW_ALL}
+          text={viewAll[statusKey] ? 'COMMON.CLOSE' : 'COMMON.VIEW_ALL'}
         />
         <IPayIcon
           icon={viewAll[statusKey] ? icons.arrowUp : icons.arrowDown}

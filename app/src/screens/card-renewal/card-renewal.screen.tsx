@@ -4,7 +4,6 @@ import icons from '@app/assets/icons';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayCardBanner from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import { CUSTOM_SNAP_POINT, SNAP_POINT } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
 import {
@@ -61,7 +60,6 @@ const CardRenewalScreen: React.FC = () => {
   const { walletNumber, availableBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
   );
-  const localizationText = useLocalization();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
@@ -165,20 +163,20 @@ const CardRenewalScreen: React.FC = () => {
         setOtpSheetVisible(false);
         navigate(ScreenNames.CARD_RENEWAL_SUCCESS);
       } else {
-        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderErrToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
+        renderErrToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
       renderSpinner(false);
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderErrToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderErrToast(t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       renewCard();
     }

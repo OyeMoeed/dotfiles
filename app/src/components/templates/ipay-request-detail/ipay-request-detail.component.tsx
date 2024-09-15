@@ -19,7 +19,6 @@ import {
 } from '@app/enums/money-request-status.enum';
 import SummaryType from '@app/enums/summary-type';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
@@ -42,7 +41,6 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
 }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
   const applyStatusKeys: (keyof IPayRequestMoneyProps)[] = [LocalizationKeys.STATUS];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [CopiableKeys.REF_NUMBER];
@@ -135,9 +133,12 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
 
     return (
       <IPayView style={styles.cardStyle} key={index}>
-        <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-          {localizationText?.REQUEST_MONEY?.[LocalizationKeysMapping[field]]}
-        </IPayFootnoteText>
+        <IPayFootnoteText
+          regular
+          style={styles.headingStyles}
+          color={colors.natural.natural900}
+          text={`REQUEST_MONEY.${LocalizationKeysMapping[field]}`}
+        />
         <IPayPressable
           style={styles.actionWrapper}
           disabled={!copiableItems.includes(field)}

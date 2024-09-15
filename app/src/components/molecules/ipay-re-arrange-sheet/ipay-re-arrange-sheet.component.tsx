@@ -4,14 +4,14 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { useTypedSelector } from '@store/store';
 import React, { useState } from 'react';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTranslation } from 'react-i18next';
 import { IPayRearrangeSheetProps } from './ipay-re-arrange-sheet.interface';
 import genratedStyles from './ipay-re-arrange-sheet.style';
 
 const IPayRearrangeSheet: React.FC<IPayRearrangeSheetProps> = ({ testID, setTempList }): React.JSX.Element => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = genratedStyles(colors);
-  const localizationText = useLocalization();
   const items = useTypedSelector((state) => state.rearrangement.items);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>(items);
 
@@ -22,7 +22,7 @@ const IPayRearrangeSheet: React.FC<IPayRearrangeSheetProps> = ({ testID, setTemp
       style={[styles.rearrangeContStyle, isActive && styles.activeBg]}
     >
       <>
-        <IPayFootnoteText regular style={styles.footnoteTextStyle} text={localizationText.COMMON[item]} />
+        <IPayFootnoteText regular style={styles.footnoteTextStyle} text={t(`COMMON.${item}`)} />
         <IPayIcon icon={icons.rearrange} size={18} color={colors.primary.primary500} />
       </>
     </IPayPressable>

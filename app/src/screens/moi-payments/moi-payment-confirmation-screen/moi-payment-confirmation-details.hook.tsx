@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -14,10 +13,9 @@ interface MoiPaymentDetail {
   onPress?: () => void;
 }
 
-// TODO wiill be replaced by API
+// TODO will be replaced by API
 const useMoiPaymentConfirmation = () => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -140,7 +138,6 @@ const useMoiPaymentConfirmation = () => {
   };
 
   return {
-    localizationText,
     moiPaymentDetailes,
     moiRefundBillSubList,
     moiPayBillSubList,

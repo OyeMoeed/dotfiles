@@ -80,7 +80,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         )}
         {totalAmount ? (
           <IPayView style={styles.totalAmountView}>
-            <IPayFootnoteText text={totalAmountText || t('LOCAL_TRANSFER.AMOUNT')} color={colors.natural.natural900} />
+            <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText regular text={totalAmountInSAR} color={colors.primary.primary800} />
           </IPayView>
         ) : (

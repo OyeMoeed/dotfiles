@@ -20,7 +20,6 @@ import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organis
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { ValidateWUTransferPayload } from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.interface';
@@ -48,7 +47,6 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = internationalTransferConfirmationStyles();
-  const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -140,7 +138,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   };
 
   const getGeneratedBeneficiaryFees = () => {
-    const checkIncludeFees = (key) => (feesInquiryData[key] ? localizationText.COMMON.YES : localizationText.COMMON.NO);
+    const checkIncludeFees = (key) => (feesInquiryData[key] ? t('COMMON.YES') : t('COMMON.NO'));
     return Object.keys(feesInquiryData)
       ?.map((key) => ({
         label: key,
@@ -180,7 +178,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           otpBottomSheetRef?.current?.present();
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -189,8 +187,8 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -209,7 +207,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -218,8 +216,8 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -267,7 +265,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
                 <IPayView style={styles.listedContent}>
                   <IPaySubHeadlineText
                     regular
-                    text={localizationText.INTERNATIONAL_TRANSFER[LocalizationKeysMapping[label]]}
+                    text={t(`INTERNATIONAL_TRANSFER.${LocalizationKeysMapping[label]}`)}
                     color={colors.natural.natural900}
                   />
                   <IPaySubHeadlineText

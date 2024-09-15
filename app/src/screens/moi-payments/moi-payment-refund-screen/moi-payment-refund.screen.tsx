@@ -4,7 +4,6 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
@@ -21,7 +20,6 @@ const MoiPaymentRefund: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = moiPaymentRefundStyles(colors);
-  const localizationText = useLocalization();
   const { moiPaymentDetailes, moiRefundBillSubList } = useMoiPaymentConfirmation();
   const [refundPaymentDetails, setRefundPaymentDetails] = useState<MOIItemProps[]>([]);
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
@@ -102,7 +100,7 @@ const MoiPaymentRefund: React.FC = () => {
           btnText="COMMON.CONFIRM"
           totalAmount={totalAmount}
           btnRightIcon={<IPayIcon size={20} color={colors.natural.natural0} />}
-          totalAmountText={localizationText.LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND}
+          totalAmountText="LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND"
           backgroundGradient={[colors.transparent, colors.transparent]}
           gradientViewStyle={styles.sadadFooterGradient}
         />

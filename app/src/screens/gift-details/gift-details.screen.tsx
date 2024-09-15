@@ -16,7 +16,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { GiftLocalizationKeys, GiftTransactionKey } from '@app/enums/gift-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
@@ -33,7 +32,6 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const { details, isSend } = route.params;
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -103,7 +101,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       if (date.isValid()) {
         return formatTimeAndDate(value);
       }
-      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
+      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${t('COMMON.SAR')}` : value;
     },
     [details],
   );
@@ -159,11 +157,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   const renderCardDetails = ({ item }: ItemProps) => (
     <IPayView style={styles.dataCardView}>
-      <IPayFootnoteText
-        regular
-        text={localizationText.SEND_GIFT[GiftLocalizationKeys[item]]}
-        color={colors.natural.natural900}
-      />
+      <IPayFootnoteText regular text={t(`SEND_GIFT.${GiftLocalizationKeys[item]}`)} color={colors.natural.natural900} />
       <IPayView style={styles.transactionDetailsView}>
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText

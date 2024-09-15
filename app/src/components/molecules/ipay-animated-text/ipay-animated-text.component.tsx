@@ -5,12 +5,10 @@ import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
 import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
-import { useTranslation } from 'react-i18next';
 import { IPayAnimatedTextProps } from './ipay-animated-text.interface';
 
 const IPayAnimatedText: React.FC<IPayAnimatedTextProps> = ({ type, styles, title, description, testID }) => {
   const translation = useSharedValue(-100);
-  const { t } = useTranslation();
   const duration = constants.ANIMATION_DURATIONS;
 
   useEffect(() => {
@@ -46,8 +44,8 @@ const IPayAnimatedText: React.FC<IPayAnimatedTextProps> = ({ type, styles, title
             style={[styles.title, styles.lowOpacity]}
             text={
               type === OnboardingSteps.SendAndReceiveStep
-                ? t('ONBOARDING.TITLE_ONBOARDING_ONE')
-                : t('ONBOARDING.TITLE_ONBOARDING_TWO')
+                ? 'ONBOARDING.TITLE_ONBOARDING_ONE'
+                : 'ONBOARDING.TITLE_ONBOARDING_TWO'
             }
           />
         </Animated.View>

@@ -24,7 +24,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -53,7 +52,6 @@ const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTransferStyles(colors);
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const [activeTab, setActiveTab] = useState<string>(TransferGatewayType.ALINMA_DIRECT);
   const [search, setSearch] = useState<string>('');
   const beneficiariesToShow = 4;
@@ -310,7 +308,7 @@ const InternationalTransferScreen: React.FC = () => {
           style={styles.capitalizeTitle}
           color={colors.primary.primary500}
           regular
-          text={viewAllState[statusKey] ? t('COMMON.CLOSE') : localizationText.COMMON.VIEW_ALL}
+          text={viewAllState[statusKey] ? 'COMMON.CLOSE' : 'COMMON.VIEW_ALL'}
         />
         <IPayIcon
           icon={viewAllState[statusKey] ? icons.arrowUp : icons.arrowDown}

@@ -22,7 +22,6 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
 import useTransferMethodsData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import WUBeneficiaryDetailsMetaDataProps, {
@@ -50,7 +49,6 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const { transferData } = route.params;
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
-  const localizationText = useLocalization();
   const reasonOfTransferSheet = useRef<any>(null);
   const sectionListRef = useRef<any>(null);
   const beneficiaryDetailsRef = useRef<any>(null);
@@ -71,7 +69,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalBeneficiariesDetails];
-    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
+    const localization = localizationKey ? t(`INTERNATIONAL_TRANSFER.${localizationKey}`) : label;
 
     return (
       <IPayList
@@ -135,7 +133,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           setBeneficiaryDetailsData(apiResponse?.response?.transferReasonList);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -144,8 +142,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -165,7 +163,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           setWUFeesInquiryData(apiResponse?.response);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -174,8 +172,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -194,10 +192,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     setBeneficiaryCurrencyAmount(egpAmount?.toFixed(2));
   };
 
-  const transferFees = localizationText.LOCAL_TRANSFER.FEES;
-  const feeAmount = `${wuFeesInquiryData?.feeAmount ?? ''} ${localizationText.COMMON.SAR}`;
-  const transferVat = localizationText.COMMON.AND_VAT;
-  const vatAmount = `${wuFeesInquiryData?.vatAmount ?? ''} ${localizationText.COMMON.SAR}`;
+  const transferFees = t('LOCAL_TRANSFER.FEES');
+  const feeAmount = `${wuFeesInquiryData?.feeAmount ?? ''} ${t('COMMON.SAR')}`;
+  const transferVat = t('COMMON.AND_VAT');
+  const vatAmount = `${wuFeesInquiryData?.vatAmount ?? ''} ${t('COMMON.SAR')}`;
 
   const onTransferGateway = (methodName: string, index: number) => {
     setTransferGateway({ transferMethod: methodName, index });

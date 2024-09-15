@@ -11,7 +11,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { LocalizationKeysMapping, TransactionsStatus } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { checkDateValidation, formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -41,7 +40,6 @@ const IPayTransactionHistoryDetails = forwardRef(
     const { t } = useTranslation();
     const { colors } = useTheme();
     const styles = transactionDetailsStyles(colors);
-    const localizationText = useLocalization();
     const { showToast } = useToastContext();
     const [transactionDataArray, setTransactionDataArray] = useState<{ key: string; value: any }[]>([]);
     const transactionTypeCheck = transactionData?.totalDebitAmount;
@@ -111,7 +109,9 @@ const IPayTransactionHistoryDetails = forwardRef(
         default:
           break;
       }
-      return `${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[key] as keyof typeof localizationText.TRANSACTION_HISTORY]} ${text}`;
+
+      const mappedKey = LocalizationKeysMapping[key];
+      return `${t(`TRANSACTION_HISTORY${mappedKey}`)} ${text}`;
     };
 
     // This fucntion is used to get localization for transaction data values
@@ -120,8 +120,8 @@ const IPayTransactionHistoryDetails = forwardRef(
       if (date.isValid()) {
         return formatDateAndTime(new Date(value), dateTimeFormat.TimeAndDate); // Format the date
       }
-      const mappedKey = LocalizationKeysMapping[value] as keyof typeof localizationText.TRANSACTION_HISTORY;
-      return localizationText.TRANSACTION_HISTORY[mappedKey] || value;
+      const mappedKey = LocalizationKeysMapping[value];
+      return mappedKey ? t(`TRANSACTION_HISTORY.${mappedKey}`) : value;
     };
 
     const getTransactionStatusValue = (value: string) => {

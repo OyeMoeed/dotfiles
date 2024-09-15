@@ -9,7 +9,6 @@ import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templa
 import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import {
   BeneficiaryTransaction,
   LocalTransferMockProps,
@@ -36,7 +35,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = transactionHistoryStyles(colors);
-  const localizationText = useLocalization();
   const filterRef = useRef<bottomSheetTypes>(null);
   const { transferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
 
@@ -67,8 +65,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const transactionType: TransactionType = {
-    [localizationText.COMMON.SENT]: TransactionTypes.PAY_WALLET,
-    [localizationText.COMMON.RECEIVED]: TransactionTypes.CIN_SARIE_REV,
+    [t('COMMON.SENT')]: TransactionTypes.PAY_WALLET,
+    [t('COMMON.RECEIVED')]: TransactionTypes.CIN_SARIE_REV,
   };
 
   const generatedData = () =>
@@ -247,7 +245,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         <IPayTransactionHistory isBeneficiaryHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
       <IPayPortalBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={() => setShowTransactionSheet(false)}
         customSnapPoint={snapPoint}
         simpleHeader

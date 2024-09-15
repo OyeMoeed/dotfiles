@@ -14,7 +14,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
 import { LabelKey, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -29,7 +28,6 @@ import internationalSuccessStyles from './international-transfer-success.style';
 const InternationalTransferSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalSuccessStyles(colors);
-  const localizationText = useLocalization();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
   const [isVatInvoice, setIsVatInvoice] = useState<boolean>(false);
@@ -63,7 +61,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const renderOption = ({ item, index }: { item: OptionItem; index: number }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalTransferData];
-    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
+    const localization = localizationKey ? t(`INTERNATIONAL_TRANSFER.${localizationKey}`) : label;
 
     const getTitleSuffix = (labelKeys: string) => {
       switch (labelKeys) {

@@ -22,7 +22,6 @@ import { CategoriesItem } from '@app/components/molecules/ipay-all-categories/ip
 import { MerchantItem } from '@app/components/molecules/ipay-merchant-card/ipay-merchant-card.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -32,11 +31,7 @@ import marketplaceStyles from './marketplace.style';
 const MarketPlace: React.FC = () => {
   const { colors } = useTheme();
   const styles = marketplaceStyles(colors);
-  const localizationText = useLocalization();
-  const {
-    SHOP: { READ_MORE, SHOP_BY_MERCHANTS, SHOP_BY_CATEGORIES },
-    COMMON: { HISTORY, SEARCH, VIEW_ALL },
-  } = localizationText;
+
   const showOffer = true;
   const { merchantData, allCategories, shopsOffers, offerDetailData } = useConstantData();
 
@@ -61,7 +56,7 @@ const MarketPlace: React.FC = () => {
         <IPayView style={styles.offerDetail}>
           <IPayBodyText text={title} color={colors.natural.natural900} regular={false} />
           <IPayCaption2Text text={description} />
-          <IPaySubHeadlineText text={READ_MORE} color={colors.primary.primary500} regular />
+          <IPaySubHeadlineText text="SHOP.READ_MORE" color={colors.primary.primary500} regular />
         </IPayView>
 
         <IPayView style={styles.offerImageView}>
@@ -88,7 +83,7 @@ const MarketPlace: React.FC = () => {
         rightComponent={
           <IPayPressable style={styles.history} onPress={orderHistory}>
             <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-            <IPaySubHeadlineText text={HISTORY} regular color={colors.primary.primary500} />
+            <IPaySubHeadlineText text="COMMON.HISTORY" regular color={colors.primary.primary500} />
           </IPayPressable>
         }
       />
@@ -96,7 +91,7 @@ const MarketPlace: React.FC = () => {
         <IPayTextInput
           text={search}
           onChangeText={setSearch}
-          placeholder={SEARCH}
+          placeholder="COMMON.SEARCH"
           rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
           simpleInput
           containerStyle={styles.searchInputStyle}
@@ -115,8 +110,8 @@ const MarketPlace: React.FC = () => {
         )}
 
         <IPaySectionHeader
-          leftText={SHOP_BY_CATEGORIES}
-          rightText={VIEW_ALL}
+          leftText="SHOP.SHOP_BY_CATEGORIES"
+          rightText="COMMON.VIEW_ALL"
           onRightOptionPress={allCategoriesPress}
           rightIcon={icons.arrow_right_square}
           showRightIcon
@@ -124,7 +119,7 @@ const MarketPlace: React.FC = () => {
         <IPayFlatlist
           data={allCategories}
           renderItem={renderCategoryItem}
-          keyExtractor={(item) => `${SHOP_BY_CATEGORIES}-${item.id}`}
+          keyExtractor={(item) => `${'SHOP.SHOP_BY_CATEGORIES'}-${item.id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.categoryListStyle}
@@ -132,8 +127,8 @@ const MarketPlace: React.FC = () => {
         />
 
         <IPaySectionHeader
-          leftText={SHOP_BY_MERCHANTS}
-          rightText={VIEW_ALL}
+          leftText="SHOP.SHOP_BY_MERCHANTS"
+          rightText="COMMON.VIEW_ALL"
           rightIcon={icons.arrow_right_square}
           onRightOptionPress={allMerchantPress}
           showRightIcon
@@ -142,7 +137,7 @@ const MarketPlace: React.FC = () => {
         <IPayFlatlist
           data={merchantData}
           renderItem={renderItem}
-          keyExtractor={(item) => `${SHOP_BY_MERCHANTS}-${item.id}`}
+          keyExtractor={(item) => `${'SHOP_BY_MERCHANTS'}-${item.id}`}
           style={styles.merchantList}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.containerWrapper}

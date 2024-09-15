@@ -13,7 +13,6 @@ import { IPayButton, IPayChip } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { Countires, LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { buttonVariants, States, ToastTypes } from '@app/utilities/enums.util';
@@ -34,7 +33,6 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = transactionDetailsCompStyles(colors);
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [transactionDataArray, setTransactionDataArray] = useState<{ key: string; value: any }[]>([]);
 
@@ -72,7 +70,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
 
   const getValueText = (value: string) => {
     if (value === Countires.PAKISTAN || value === Countires.EGYPT) {
-      return localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[`${value}`]];
+      return t(`TRANSACTION_HISTORY.${[LocalizationKeysMapping[value]]}`);
     }
     return value;
   };
@@ -93,7 +91,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
           renderItem={({ item }) => (
             <IPayView style={styles.refundTransactionCard}>
               <IPayFootnoteText
-                text={`${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[item?.key] as keyof typeof localizationText.TRANSACTION_HISTORY]}`}
+                text={`TRANSACTION_HISTORY.${[LocalizationKeysMapping[item?.key]]}`}
                 color={colors.natural.natural900}
               />
               <IPayView style={styles.refundDetailsView}>

@@ -15,7 +15,6 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import { CUSTOM_SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import SummaryType from '@app/enums/summary-type';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -50,7 +49,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const { heading, screen, receviedRequestSummaryData, transId } =
     (route.params as { heading: string; screen: string; receviedRequestSummaryData: any; transId: string }) || {};
   const styles = moneyRequestStyles(colors);
-  const localizationText = useLocalization();
   const { orderSummaryData } = useConstantData();
   const [chipValue, setChipValue] = useState('');
   const createRequestBottomSheetRef = useRef<bottomSheetTypes>(null);
@@ -72,7 +70,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       return t('REQUEST_SUMMARY.INSUFFICIENT_BALANCE');
     }
     return '';
-  }, [monthlyRemaining, updatedTopUpAmount, localizationText]);
+  }, [monthlyRemaining, updatedTopUpAmount]);
 
   const [otp, setOtp] = useState<string>('');
   const [otpRef, setOtpRef] = useState<string>('');
@@ -199,7 +197,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           containerStyle={styles.chipContainer}
           icon={
             <IPayIcon
-              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
+              icon={chipValue === t('TOP_UP.LIMIT_REACHED') ? icons.warning : icons.shield_cross}
               color={colors.critical.critical800}
               size={16}
             />

@@ -5,7 +5,6 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -20,7 +19,6 @@ const PlayStationScreen: React.FC = () => {
   const { playStationPrices, sortingData, productDetailData } = useConstantData();
   const { colors } = useTheme();
   const styles = playStationStyles(colors);
-  const localizationText = useLocalization();
   const sortRef = useRef<IPayBottomSheet>(null);
 
   const [search, setSearch] = useState<string>('');
@@ -50,7 +48,7 @@ const PlayStationScreen: React.FC = () => {
       }
       setSelectedOption(option); // Update selected option state
     },
-    [playStationPrices, localizationText.SHOP.HIGH_TO_LOW],
+    [playStationPrices],
   );
 
   const renderItem = ({ item }: { item: DataItem }) => {
@@ -76,7 +74,7 @@ const PlayStationScreen: React.FC = () => {
             containerStyle={styles.chip}
             variant={States.SEVERE}
             icon={<IPayIcon icon={icons.CLOSE_SQUARE} color={colors.secondary.secondary500} size={16} />}
-            textValue={selectedOption === localizationText.SHOP.HIGH_TO_LOW ? t('SHOP.HIGH_CHIP') : t('SHOP.LOW_CHIP')}
+            textValue={selectedOption === t('SHOP.HIGH_TO_LOW') ? 'SHOP.HIGH_CHIP' : 'SHOP.LOW_CHIP'}
           />
         </IPayView>
       );
@@ -99,9 +97,7 @@ const PlayStationScreen: React.FC = () => {
           />
 
           <IPayPressable onPress={openRef}>
-            <IPayIcon
-              icon={selectedOption === localizationText.SHOP.HIGH_TO_LOW ? icons.arrow_updown2 : icons.arrow_updown1}
-            />
+            <IPayIcon icon={selectedOption === t('SHOP.HIGH_TO_LOW') ? icons.arrow_updown2 : icons.arrow_updown1} />
           </IPayPressable>
         </IPayView>
         {renderChip()}
