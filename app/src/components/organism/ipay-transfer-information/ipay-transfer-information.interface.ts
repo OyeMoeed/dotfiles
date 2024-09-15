@@ -29,6 +29,7 @@ interface IPayTransferInformationProps {
   subtitle?: string;
   maxLength?: number;
   inputFieldStyle?: ViewStyle;
+  showReason?: boolean;
 }
 
 export { IPayTransferInformationProps, TransferInfoData };

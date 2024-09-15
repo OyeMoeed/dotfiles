@@ -24,11 +24,11 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.interface';
 import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
-import { getDeviceInfo } from '@app/network/utilities';
+import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
-import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
+import copyText from '@app/utilities/clip-board.util';
+import { APIResponseType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
@@ -53,7 +53,6 @@ const TransferConfirmation: React.FC = () => {
 
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState('');
-  const [apiError, setAPIError] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
 
@@ -90,7 +89,21 @@ const TransferConfirmation: React.FC = () => {
       { title: localizationText.COMMON.REF_NUMBER, subTitle: authentication.transactionId, icon: icons.copy },
     ];
     setBeneficiaryData(beneficiaryDataArray);
-  }, []);
+  }, [
+    amount,
+    authentication.transactionId,
+    beneficiaryNickName,
+    instantTransferType,
+    localizationText.COMMON.REF_NUMBER,
+    localizationText.COMMON.SAR,
+    localizationText.INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME,
+    localizationText.TRANSFER_SUMMARY.AMOUNT,
+    localizationText.TRANSFER_SUMMARY.FAST_CONVERSION_BY,
+    localizationText.TRANSFER_SUMMARY.NOTE,
+    localizationText.TRANSFER_SUMMARY.REASON,
+    note,
+    transferPurpose,
+  ]);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -115,16 +128,6 @@ const TransferConfirmation: React.FC = () => {
 
   const onPressTransfer = () => {
     setOtpSheetVisible(true);
-  };
-
-  const renderToastAPI = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
@@ -162,36 +165,26 @@ const TransferConfirmation: React.FC = () => {
 
   const onConfirm = async () => {
     if (walletNumber) {
-      try {
-        const deviceInfo = await getDeviceInfo();
-        const payload: LocalTransferConfirmPayloadTypes = {
-          otp,
-          otpRef,
-          amount,
-          authentication,
-          deviceInfo,
-        };
+      const deviceInfo = await getDeviceInfo();
+      const payload: LocalTransferConfirmPayloadTypes = {
+        otp,
+        otpRef,
+        amount,
+        authentication,
+        deviceInfo,
+      };
 
-        const apiResponse = await localTransferConfirm(walletNumber, payload);
-        if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-          onCloseBottomSheet();
-          navigate(ScreenNames.TRANSFER_SUCCESS, {
-            amount: apiResponse?.response?.amountCredited,
-            beneficiaryNickName: apiResponse?.response?.beneficiaryName,
-            transferPurpose,
-            instantTransferType,
-            note,
-            refNumber: apiResponse?.response?.transactionId,
-            bankDetails,
-          });
-        } else if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        } else {
-          setAPIError(apiResponse?.error);
-        }
-      } catch (error) {
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToastAPI(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      const apiResponse = await localTransferConfirm(walletNumber, payload);
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+        onCloseBottomSheet();
+        navigate(ScreenNames.TRANSFER_SUCCESS, {
+          amount: apiResponse?.response?.amountCredited,
+          beneficiaryNickName: apiResponse?.response?.beneficiaryName,
+          transferPurpose,
+          instantTransferType,
+          note,
+          refNumber: apiResponse?.response?.transactionId,
+        });
       }
     }
   };
@@ -283,7 +276,6 @@ const TransferConfirmation: React.FC = () => {
       >
         <IPayOtpVerification
           setOtpError={setOtpError}
-          otpError={otpError}
           ref={otpBottomSheetRef}
           onPressConfirm={onConfirm}
           mobileNumber={mobileNumber}
@@ -291,6 +283,7 @@ const TransferConfirmation: React.FC = () => {
           showHelp
           handleOnPressHelp={handleOnPressHelp}
           onResendCodePress={() => otpBottomSheetRef.current.resetInterval()}
+          otpError={otpError !== ''}
         />
       </IPayPortalBottomSheet>
 

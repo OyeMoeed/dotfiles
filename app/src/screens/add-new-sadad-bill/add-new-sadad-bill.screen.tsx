@@ -13,16 +13,18 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
 import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
-import getBillersServicesService from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
+import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
@@ -54,6 +56,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const [services, setServices] = useState<BillersService[]>();
   const [selectedService, setSelectedService] = useState<BillersService>();
+  const { showToast } = useToastContext();
 
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -65,6 +68,15 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     accountNumber,
     billName,
   });
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const onGetBillersCategory = async () => {
     const apiResponse = await getBillersCategoriesService();
@@ -86,7 +98,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
           ...billerItem,
           id: billerItem.billerId,
-          image: '', // TODO: There is no image on get billers response will add image here when receive from response
+          image: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerItem.billerId), // TODO: There is no image on get billers response will add image here when receive from response
           text: billerItem.billerDesc,
           type: billerItem.billerTypeDesc,
         })),
@@ -95,20 +107,23 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onGetBillersServices = async (billerID: string) => {
-    const apiResponse = await getBillersServicesService(billerID);
-    if (apiResponse.successfulResponse) {
-      setServices(
-        apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+    try {
+      const apiResponse = await getBillersServiceProvider(billerID);
+      if (apiResponse.successfulResponse) {
+        const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
           ...serviceItem,
           id: serviceItem.serviceId,
           text: serviceItem.serviceDesc,
-        })),
-      );
+        }));
+        setServices(serviceList);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
 
   useEffect(() => {
-    onGetBillersServices(selectedBiller?.billerId);
+    onGetBillersServices(walletNumber);
   }, [selectedBiller]);
 
   useEffect(() => {
