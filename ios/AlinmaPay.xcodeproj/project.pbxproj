@@ -341,6 +341,7 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				BECA917FE49CBEF3B91D11A4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -362,6 +363,7 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				357D19D2B32391F118AD2020 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -382,6 +384,7 @@
 				84267A842BC1AFA20024F0EA /* Resources */,
 				84267A872BC1AFA20024F0EA /* Bundle React Native code and images */,
 				84267A892BC1AFA20024F0EA /* [CP] Copy Pods Resources */,
+				4E19616528458468F2A6443A /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -402,6 +405,7 @@
 				84267A962BC1B5C00024F0EA /* Resources */,
 				84267A992BC1B5C00024F0EA /* Bundle React Native code and images */,
 				84267A9B2BC1B5C00024F0EA /* [CP] Copy Pods Resources */,
+				5BEC88EA67A1114033C71C5B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -422,6 +426,7 @@
 				84267AA82BC1B65E0024F0EA /* Resources */,
 				84267AAB2BC1B65E0024F0EA /* Bundle React Native code and images */,
 				84267AAD2BC1B65E0024F0EA /* [CP] Copy Pods Resources */,
+				35E10855AB55A806CFE76E4B /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -442,6 +447,7 @@
 				84267ABA2BC1B6D20024F0EA /* Resources */,
 				84267ABD2BC1B6D20024F0EA /* Bundle React Native code and images */,
 				84267ABF2BC1B6D20024F0EA /* [CP] Copy Pods Resources */,
+				C38AEA7A8FA4B8120E8F2931 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -608,6 +614,74 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
+		};
+		357D19D2B32391F118AD2020 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay/Pods-AlinmaPay-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		35E10855AB55A806CFE76E4B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayUat/Pods-AlinmaPay-AlinmaPayUat-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4E19616528458468F2A6443A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayDev/Pods-AlinmaPay-AlinmaPayDev-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5BEC88EA67A1114033C71C5B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayPreProd/Pods-AlinmaPay-AlinmaPayPreProd-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		84267A7E2BC1AFA20024F0EA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -849,6 +923,40 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BECA917FE49CBEF3B91D11A4 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPayTests/Pods-AlinmaPay-AlinmaPayTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C38AEA7A8FA4B8120E8F2931 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlinmaPay-AlinmaPaySit/Pods-AlinmaPay-AlinmaPaySit-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
@@ -1182,7 +1290,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
-				USE_HERMES = false;
+				USE_HERMES = true;
 			};
 			name = Debug;
 		};
@@ -1255,7 +1363,7 @@
 				OTHER_LDFLAGS = "$(inherited)";
 				REACT_NATIVE_PATH = "${PODS_ROOT}/../../node_modules/react-native";
 				SDKROOT = iphoneos;
-				USE_HERMES = false;
+				USE_HERMES = true;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
