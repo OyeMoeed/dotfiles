@@ -57,7 +57,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     setSelectedBillsCount(count);
   };
 
-  const multipleBillsSelected = selectedBillsCount > 1;
+  const multipleBillsSelected = selectedBillsCount >= 1;
 
   const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -93,8 +93,12 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   useEffect(() => {
-    setActiveBillsData(sadadBills);
-    getSelectedBillsCount(sadadBills);
+    if (sadadBills) {
+      setActiveBillsData(sadadBills);
+      getSelectedBillsCount(sadadBills);
+    } else {
+      getBills(BillsStatusTypes.ACTIVE_BILLS);
+    }
   }, []);
 
   const renderButtonText = () => {
@@ -103,7 +107,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     return `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`;
   };
 
-  const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
+  const onPressPartialPay = () => navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true });
 
   const renderButtonRightIcon = () =>
     !multipleBillsSelected ? (
@@ -242,8 +246,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
       billNumOrBillingAcct: bill.billNumOrBillingAcct,
       amount: Number(bill.amount),
       dueDateTime: bill.dueDateTime,
-      billIdType: bill.billIdType, // TODO: not receiving this value from response
-      billingCycle: bill.billCycle, // TODO: need to confirm where can I get this value
+      billIdType: bill.billIdType,
+      billingCycle: bill.billCycle,
       billIndex: bill.billId,
       serviceDescription: bill.serviceDescription,
       billerName: bill.billerName,
@@ -350,8 +354,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}
-                partialPay={multipleBillsSelected}
-                onPressPartialPay={onPressPartialPay}
+                // partialPay={multipleBillsSelected}
+                // onPressPartialPay={onPressPartialPay}
               />
             </IPayView>
           )}

@@ -8,6 +8,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { NewSadadBillProps } from './new-sadad-bill.interface';
@@ -17,14 +18,12 @@ const NewSadadBillScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = newsadadBillStyles(colors);
   const localizationText = useLocalization();
-  // TODO will update on basis of API
-  const dummyData = {
-    balance: '5200',
-    availableBalance: '300',
-    totalAmount: '550',
-  };
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const {
+    walletNumber,
+    availableBalance,
+    limitsDetails: { monthlyRemainingOutgoingAmount, monthlyOutgoingLimit },
+  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<
@@ -50,9 +49,9 @@ const NewSadadBillScreen: React.FC = () => {
   const [warningMessage, setWarningMessage] = useState('');
 
   const getAmountWarning = () => {
-    if (Number(dummyData.availableBalance) <= 0) {
+    if (Number(availableBalance) <= 0) {
       setWarningMessage(localizationText.NEW_SADAD_BILLS.NO_REMAINING_AMOUNT);
-    } else if (Number(dummyData.availableBalance) < Number(amount)) {
+    } else if (Number(availableBalance) < Number(amount)) {
       setWarningMessage(localizationText.NEW_SADAD_BILLS.INSUFFICIENT_BALANCE);
     } else {
       setWarningMessage('');
@@ -109,12 +108,13 @@ const NewSadadBillScreen: React.FC = () => {
           currentBalanceTextStyle={styles.darkStyle}
           currencyTextStyle={styles.darkStyle}
           remainingAmountTextStyle={styles.remainingText}
-          gradientWidth="50%"
           currentAvailableTextStyle={styles.currencyTextStyle}
-          balance={dummyData.balance}
-          availableBalance={dummyData.availableBalance}
           showRemainingAmount
           onPressTopup={() => {}}
+          balance={availableBalance}
+          gradientWidth={`${getBalancePercentage(Number(monthlyOutgoingLimit), Number(monthlyRemainingOutgoingAmount))}%`}
+          monthlyIncomingLimit={monthlyRemainingOutgoingAmount}
+          availableBalance={monthlyOutgoingLimit}
         />
         <IPayFlatlist
           showsVerticalScrollIndicator={false}

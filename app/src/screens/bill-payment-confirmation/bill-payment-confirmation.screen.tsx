@@ -1,4 +1,3 @@
-import images from '@app/assets/images';
 import { IPayFlatlist, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
@@ -13,9 +12,10 @@ import multiPaymentPrepareBillService from '@app/network/services/bills-manageme
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { shortString } from '@app/utilities';
+import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -25,11 +25,15 @@ import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
   const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos } = route.params || {};
-  const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const {
+    walletNumber,
+    mobileNumber,
+    availableBalance,
+    limitsDetails: { monthlyRemainingOutgoingAmount, monthlyOutgoingLimit },
+  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     localizationText,
-    balanceData,
     handlePay,
     setOtp,
     otp,
@@ -41,7 +45,6 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     setOtpRefAPI,
   } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos);
 
-  const { availableBalance, balance } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
@@ -75,7 +78,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     {
       id: '1',
       label: localizationText.PAY_BILL.SERVICE_TYPE,
-      value: shortString(item.serviceDescription, 15),
+      value: item.serviceDescription ? shortString(item.serviceDescription, 15) : '-',
     },
     {
       id: '2',
@@ -103,9 +106,11 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
               currentBalanceTextStyle={styles.darkBlueText}
               remainingAmountTextStyle={styles.greyText}
               currentAvailableTextStyle={styles.darkText}
-              availableBalance={availableBalance}
               showRemainingAmount
-              balance={balance}
+              balance={availableBalance}
+              gradientWidth={`${getBalancePercentage(Number(monthlyOutgoingLimit), Number(monthlyRemainingOutgoingAmount))}%`}
+              monthlyIncomingLimit={monthlyRemainingOutgoingAmount}
+              availableBalance={monthlyOutgoingLimit}
             />
           )}
           <IPayFlatlist
@@ -116,7 +121,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
                 headerData={{
                   title: item.billNickname || '-',
                   companyDetails: item.billerName,
-                  companyImage: item.billerIcon || images.electricityBill, // TODO: billerIcon is currently null because not getting from API response
+                  companyImage: item.billerIcon,
                 }}
                 data={getBillInfoArray(item)}
               />
@@ -169,6 +174,9 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
+          onResendCodePress={function (): void {
+            throw new Error('Function not implemented.');
+          }}
         />
       </IPayBottomSheet>
     </>

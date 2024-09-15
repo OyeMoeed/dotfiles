@@ -5,15 +5,15 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import { IPayPageWrapper } from '@app/components/templates';
 import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
+import { navigate, popAndReplace } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { States, buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { shortString } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { shortString } from '@app/utilities';
+import { States, buttonVariants } from '@app/utilities/enums.util';
+import React from 'react';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
 import ipayBillSuccessStyles from './bill-pay-success.style';
@@ -47,7 +47,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     {
       id: '1',
       label: localizationText.PAY_BILL.SERVICE_TYPE,
-      value: shortString(item.serviceDescription, 15),
+      value: item.serviceDescription ? shortString(item.serviceDescription, 15) : '-',
     },
     {
       id: '2',
@@ -159,7 +159,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 btnType={buttonVariants.LINK_BUTTON}
                 leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
                 btnText={localizationText.PAY_BILL.PAY_ANOTHER_BILL}
-                onPress={() => navigate(ScreenNames.SADAD_BILLS)}
+                onPress={() => popAndReplace(ScreenNames.SADAD_BILLS, 3, { sadadBills: null })}
               />
               {isPayOnly && (
                 <IPayButton
