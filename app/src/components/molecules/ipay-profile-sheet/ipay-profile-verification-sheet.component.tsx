@@ -12,11 +12,8 @@ const IPayProfileVerificationSheet: React.FC<IPayProfileVerificationSheetProps> 
   return (
     <IPayView testID={`${testID}-base-view`} style={styles.profileContainer}>
       <IPayImage image={images.userRemoveImage} style={styles.userRemoveImageStyle} />
-      <IPayTitle2Text style={styles.titleTextStyle} text="HOME.COMPLETE_YOUR_PROFILE"></IPayTitle2Text>
-      <IPayCaption1Text
-        style={styles.captionTextStyle}
-        text="HOME.YOU_NEED_TO_COMPLETE_YOUR_PROFILE"
-      ></IPayCaption1Text>
+      <IPayTitle2Text style={styles.titleTextStyle} text="HOME.COMPLETE_YOUR_PROFILE" />
+      <IPayCaption1Text style={styles.captionTextStyle} text="HOME.YOU_NEED_TO_COMPLETE_YOUR_PROFILE" />
       <IPayList
         leftIcon={<IPayImage style={styles.imageNifazStyle} image={images.nifaz} />}
         detailTextStyle={[

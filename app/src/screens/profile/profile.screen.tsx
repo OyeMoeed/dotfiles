@@ -285,11 +285,7 @@ const Profile = () => {
         </IPayView>
         <IPayView>
           <IPayView style={styles.body1}>
-            <IPayFootnoteText
-              regular
-              style={styles.containerHeadings}
-              text="PROFILE.REGISTERATION_COMPLETION"
-            ></IPayFootnoteText>
+            <IPayFootnoteText regular style={styles.containerHeadings} text="PROFILE.REGISTERATION_COMPLETION" />
             <IPayFlatlist
               style={styles.listStyle}
               testID="profile"
@@ -300,7 +296,7 @@ const Profile = () => {
             />
           </IPayView>
           <IPayView style={styles.body2}>
-            <IPayFootnoteText regular style={styles.containerHeadings} text="COMMON.PERSONAL_INFO"></IPayFootnoteText>
+            <IPayFootnoteText regular style={styles.containerHeadings} text="COMMON.PERSONAL_INFO" />
             <IPayFlatlist
               // scrollEnabled={false}
               showsVerticalScrollIndicator={false}

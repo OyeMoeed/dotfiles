@@ -6,9 +6,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { cardDetailsProps, FieldKeyMappingProps } from './ipay-card-details.interface';
 import cardDetailsStyle from './ipay-card-details.style';
-import useLocalization from '@app/localization/hooks/localization.hook';
 
 const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   const localizationText = useLocalization();

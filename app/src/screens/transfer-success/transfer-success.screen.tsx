@@ -135,7 +135,7 @@ const TransferSuccessScreen = () => {
     <IPayPageWrapper>
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPaySuccess
-          headingText={'TOP_UP.TRANSFER_SUCCESSFUL'}
+          headingText="TOP_UP.TRANSFER_SUCCESSFUL"
           subHeadingText={`${amount} ${t('COMMON.SAR')}`}
           style={StyleSheet.flatten(styles.headerView)}
         />

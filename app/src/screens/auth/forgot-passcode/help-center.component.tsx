@@ -16,12 +16,10 @@ import React, { useEffect, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import getFAQ from '@app/network/services/core/faq/faq.service';
 import { buttonVariants } from '@app/utilities';
-import { useTranslation } from 'react-i18next';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
 const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs, hideFAQError = false }) => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
@@ -92,12 +90,8 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
             keyExtractor={(item, index) => index.toString()}
           />
           <IPayView style={styles.contactUsContainer}>
-            <IPaySubHeadlineText regular style={styles.contactUsText} text={'COMMON.ASSISTANCE'}></IPaySubHeadlineText>
-            <IPayCaption1Text
-              regular
-              style={styles.contactUsSubText}
-              text="COMMON.CONTACT_SERVICE_TEAM"
-            ></IPayCaption1Text>
+            <IPaySubHeadlineText regular style={styles.contactUsText} text="COMMON.ASSISTANCE" />
+            <IPayCaption1Text regular style={styles.contactUsSubText} text="COMMON.CONTACT_SERVICE_TEAM" />
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}

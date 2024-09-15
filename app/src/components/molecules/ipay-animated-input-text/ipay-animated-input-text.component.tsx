@@ -5,9 +5,9 @@ import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import inputFieldStyles from './ipay-animated-input-text.styles';
-import { useTranslation } from 'react-i18next';
 
 const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   testID,

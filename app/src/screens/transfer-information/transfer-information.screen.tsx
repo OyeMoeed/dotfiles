@@ -102,14 +102,14 @@ const TransferInformation: React.FC = () => {
           return apiResponse?.response;
         }
         if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           return null;
         }
         setAPIError(apiResponse?.error);
         return null;
       } catch (error) {
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+        setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+        renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
         return null;
       }
     } else {
@@ -147,7 +147,7 @@ const TransferInformation: React.FC = () => {
               amount: transferAmount,
               beneficiaryNickName,
               transferPurpose: selectedReason,
-              instantTransferType: localizationText.TRANSFER_SUMMARY.SARIE,
+              instantTransferType: t('TRANSFER_SUMMARY.SARIE'),
               note: notes,
               otpRef: apiResponse.response.otpRef,
               feesAmount: transferFees.feeAmount,
@@ -156,13 +156,13 @@ const TransferInformation: React.FC = () => {
               authentication: apiResponse?.authentication,
             });
           } else if (apiResponse?.apiResponseNotOk) {
-            setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+            setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           } else {
             setAPIError(apiResponse?.error);
           }
         } catch (error) {
-          setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-          renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+          renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
         }
       }
     }
