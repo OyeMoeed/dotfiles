@@ -1,185 +1,196 @@
-const helpCenterMockData = [
-  {
-    id: 1,
-    title: 'Most Asked',
-    data: [
+const helpCenterMockData = {
+  status: {
+    code: 'I000000',
+    type: 'SUCCESS',
+    desc: 'retail.msg.default.success',
+    sessionReference: 'SSPAYCc0f4f6b62e4c47c8857b641daa70e523',
+    requestReference: '07164344825152995592',
+  },
+  response: {
+    faqs: [
       {
         id: 1,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+        question: 'Most Asked',
+        answer: [
+          {
+            id: 1,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 2,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 3,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 4,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 5,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+        ],
       },
       {
         id: 2,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+        question: 'Account',
+        answer: [
+          {
+            id: 1,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 2,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 3,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 4,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 5,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+        ],
       },
       {
         id: 3,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+        question: 'Top-up',
+        answer: [
+          {
+            id: 1,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 2,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 3,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 4,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 5,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+        ],
       },
       {
         id: 4,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+        question: 'Money Transfer',
+        answer: [
+          {
+            id: 1,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 2,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 3,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 4,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 5,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+        ],
       },
       {
         id: 5,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+        question: 'Others',
+        answer: [
+          {
+            id: 1,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 2,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 3,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 4,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+          {
+            id: 5,
+            question: 'Can I recover my passcode?',
+            answer:
+              'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
+          },
+        ],
       },
     ],
   },
-  {
-    id: 2,
-    title: 'Account',
-    data: [
-      {
-        id: 1,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 2,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 3,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 4,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 5,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: 'Top-up',
-    data: [
-      {
-        id: 1,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 2,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 3,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 4,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 5,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-    ],
-  },
-  {
-    id: 4,
-    title: 'Money Transfer',
-    data: [
-      {
-        id: 1,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 2,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 3,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 4,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 5,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-    ],
-  },
-  {
-    id: 5,
-    title: 'Others',
-    data: [
-      {
-        id: 1,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 2,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 3,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 4,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-      {
-        id: 5,
-        question: 'Can I recover my passcode?',
-        answer:
-          'You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity',
-      },
-    ],
-  },
-];
+};
 
 const helpCenterActualDataResArr = [
   {
@@ -368,4 +379,4 @@ const helpCenterActualDataResArr = [
   },
 ];
 
-export { helpCenterMockData, helpCenterActualDataResArr };
+export { helpCenterActualDataResArr, helpCenterMockData };

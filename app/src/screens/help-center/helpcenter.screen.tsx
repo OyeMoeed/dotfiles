@@ -55,11 +55,6 @@ const HelpCenter: React.FC = () => {
   // Fetch data from the mock API
 
   const fetchFaqItems = async () => {
-    if (constants.MOCK_API_RESPONSE) {
-      setAllFaqItems(helpCenterMockData);
-      setFaqData(helpCenterMockData);
-      return;
-    }
     try {
       const apiResponse: any = await getFAQ();
 
@@ -89,7 +84,7 @@ const HelpCenter: React.FC = () => {
 
   useEffect(() => {
     fetchFaqItems();
-  }, [fetchFaqItems]);
+  }, []);
 
   const toggleExpand = (index: number, sectionID: number) => {
     setCurrentSection(sectionID);
