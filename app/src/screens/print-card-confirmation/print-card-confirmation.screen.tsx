@@ -1,6 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
-import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
+import icons from '@app/assets/icons';
 import {
   IPayCheckbox,
   IPayFootnoteText,
@@ -9,26 +7,23 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import icons from '@app/assets/icons';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
+import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
-import {
-  OTPVerificationRefTypes,
-  TermsAndConditionsRefTypes,
-  RouteParams,
-  AddressInfoRefTypes,
-} from './print-card-confirmation.interface';
+import { AddressInfoRefTypes, OTPVerificationRefTypes, RouteParams } from './print-card-confirmation.interface';
 import printCardConfirmationStyles from './print-card-confirmation.style';
 
 const DUMMY_DATA = {
@@ -43,8 +38,9 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
+  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
+  const [, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -58,7 +54,6 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
-  const termsAndConditionSheetRef = useRef<TermsAndConditionsRefTypes>(null);
   const addressInfoSheetRef = useRef<AddressInfoRefTypes>(null);
 
   const styles = printCardConfirmationStyles(colors);
@@ -91,7 +86,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
   };
 
   const onPressTermsAndConditions = () => {
-    termsAndConditionSheetRef.current?.showTermsAndConditions();
+    setShowTermsAndConditionsSheet(true);
   };
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
@@ -182,7 +177,11 @@ const PrintCardConfirmationScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+      <IPayTermsAndConditions
+        showTermsAndConditions={showTermsAndConditionsSheet}
+        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+        isVirtualCardTermsAndConditions
+      />
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         noGradient
@@ -200,6 +199,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           onPressConfirm={onNavigateToSuccess}
           mobileNumber="0511110302"
           setOtp={setOtp}
+          otp={otp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
         />

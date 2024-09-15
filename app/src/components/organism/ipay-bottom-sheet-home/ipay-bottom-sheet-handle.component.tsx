@@ -34,7 +34,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
 
           <IPayView style={styles.headerTitlesView}>
             <IPayButton
-              btnType={'link-button'}
+              btnType="link-button"
               medium
               btnIconsDisabled
               onPress={onPressCancel}
@@ -46,7 +46,7 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
             </IPaySubHeadlineText>
 
             <IPayButton
-              btnType={'link-button'}
+              btnType="link-button"
               medium
               btnIconsDisabled
               onPress={onPressDone}

@@ -1,8 +1,7 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_12, SCALE_16, SCALE_28, SCALE_4, SCALE_48, spacing } from '@app/styles/spacing.const';
+import { SCALE_12, SCALE_16, SCALE_4, SCALE_48, spacing } from '@app/styles/spacing.const';
 import { FONT_SIZE_13 } from '@app/styles/typography.styles';
-import { moderateScale } from 'react-native-size-matters';
 
 const genratedStyles = (theme: any) =>
   createStyleSheet({

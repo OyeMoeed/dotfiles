@@ -5,7 +5,6 @@ import {
   IPayIcon,
   IPayPressable,
   IPayScrollView,
-  IPaySpinner,
   IPayView,
 } from '@app/components/atoms';
 import {
@@ -20,8 +19,9 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
@@ -38,7 +38,8 @@ const MobileAndIqamaVerification: React.FC = () => {
     onCheckTermsAndConditions,
     checkTermsAndConditions,
     onPressTermsAndConditions,
-    termsAndConditionSheetRef,
+    showTermsAndConditionsSheet,
+    setShowTermsAndConditionsSheet,
     isOtpSheetVisible,
     helpCenterRef,
     onCloseBottomSheet,
@@ -48,10 +49,10 @@ const MobileAndIqamaVerification: React.FC = () => {
     onConfirm,
     otpError,
     setOtpError,
-    isLoading,
     setOtp,
     otpVerificationRef,
     resendOtp,
+    otp,
   } = useMobileAndIqamaVerification();
 
   const { colors } = useTheme();
@@ -59,6 +60,8 @@ const MobileAndIqamaVerification: React.FC = () => {
   const styles = mobileAndIqamaStyles(colors);
   const localizationText = useLocalization();
   const { otpConfig } = useConstantData();
+  const { isKeyboardWillOpen } = useKeyboardStatus();
+
   const { mobileNumberSchema, iqamaIdSchema } = getValidationSchemas(localizationText);
 
   const validationSchema = Yup.object().shape({
@@ -71,7 +74,6 @@ const MobileAndIqamaVerification: React.FC = () => {
       {({ handleSubmit, watch }) => (
         <IPaySafeAreaView>
           <>
-            {isLoading && <IPaySpinner />}
             <IPayHeader languageBtn />
             <IPayView style={styles.container}>
               <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -128,7 +130,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               </IPayScrollView>
             </IPayView>
 
-            {!keyboardVisible && (
+            {(!keyboardVisible || !isKeyboardWillOpen) && (
               <IPayButton
                 onPress={handleOnPressHelp}
                 btnType={buttonVariants.LINK_BUTTON}
@@ -161,9 +163,9 @@ const MobileAndIqamaVerification: React.FC = () => {
                 otpError={otpError}
                 showHelp={false}
                 timeout={otpConfig.login.otpTimeout}
+                otp={otp}
               />
             </IPayPortalBottomSheet>
-            {isLoading && <IPaySpinner />}
             <IPayBottomSheet
               heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
               enablePanDownToClose
@@ -174,7 +176,10 @@ const MobileAndIqamaVerification: React.FC = () => {
             >
               <HelpCenterComponent hideFAQError />
             </IPayBottomSheet>
-            <IPayTermsAndConditions ref={termsAndConditionSheetRef} />
+            <IPayTermsAndConditions
+              showTermsAndConditions={showTermsAndConditionsSheet}
+              setShowTermsAndConditions={setShowTermsAndConditionsSheet}
+            />
           </>
         </IPaySafeAreaView>
       )}

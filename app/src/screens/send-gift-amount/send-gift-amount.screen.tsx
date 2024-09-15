@@ -10,7 +10,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
@@ -22,21 +21,17 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import {
-  alertType,
-  alertVariant,
-  ApiResponseStatusType,
-  buttonVariants,
-  spinnerVariant,
-} from '@app/utilities/enums.util';
+import { alertType, alertVariant, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
+
+const defaultValue = '0.00';
 
 const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
@@ -46,9 +41,6 @@ const SendGiftAmountScreen = ({ route }) => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const defaultValue = '0.00';
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const GIFT_TABS = [
     localizationText.SEND_GIFT.EQUALLY,
@@ -142,6 +134,11 @@ const SendGiftAmountScreen = ({ route }) => {
     });
   };
 
+  const showRemoveAlert = (contact: Contact) => {
+    setContactToRemove(contact);
+    setAlertVisible(true);
+  };
+
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID, isAlinma } = item;
     let detailText = `${topUpAmount || 0} ${localizationText.COMMON.SAR}`;
@@ -150,7 +147,8 @@ const SendGiftAmountScreen = ({ route }) => {
       detailText = `${calculateAmountPerContact()} ${localizationText.COMMON.SAR}`;
     }
 
-    const renderAlinmaIcon = () => (isAlinma ? <Alinma /> : <NonAlinma />);
+    const renderAlinmaIcon = (isAlinmaValid: boolean) => (isAlinmaValid ? <Alinma /> : <NonAlinma />);
+
     return (
       <IPayView>
         {selectedTab === localizationText.SEND_GIFT.MANUAL && contacts.length > 0 ? (
@@ -167,7 +165,7 @@ const SendGiftAmountScreen = ({ route }) => {
                   <IPaySubHeadlineText text={givenName} regular color={colors.natural.natural900} />
                 </IPayView>
               </IPayView>
-              {renderAlinmaIcon()}
+              {renderAlinmaIcon(isAlinma)}
             </IPayView>
             {!isAlinma && (
               <IPayView style={styles.chipContainer}>
@@ -193,7 +191,7 @@ const SendGiftAmountScreen = ({ route }) => {
             </IPayView>
             <IPayView style={styles.remove}>
               <IPayButton
-                btnType="link-button"
+                btnType={buttonVariants.LINK_BUTTON}
                 btnStyle={styles.remove}
                 btnText={localizationText.PROFILE.REMOVE}
                 rightIcon={<IPayIcon icon={icons.trash} size={18} color={colors.primary.primary500} />}
@@ -332,10 +330,6 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   const getW2WActiveFriends = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
     const payload: IW2WCheckActiveReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       mobileNumbers: formInstances.map((item) => item.mobileNumber),
@@ -350,10 +344,7 @@ const SendGiftAmountScreen = ({ route }) => {
             activeFriends: apiResponse?.response?.friends,
           },
         });
-        hideSpinner();
       }
-    } else {
-      hideSpinner();
     }
   };
   const areAllManualAmountsFilled = () => {
@@ -367,7 +358,9 @@ const SendGiftAmountScreen = ({ route }) => {
     parseFloat(amountToShow) > Number(monthlyRemainingOutgoingAmount) ||
     (selectedTab === localizationText.SEND_GIFT.MANUAL && !areAllManualAmountsFilled());
 
-  const renderFooterComponent = () => (
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ListFooterContacts = () => (
     <IPayButton
       small
       btnType="link-button"
@@ -414,7 +407,7 @@ const SendGiftAmountScreen = ({ route }) => {
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
-              ListFooterComponent={renderFooterComponent()}
+              ListFooterComponent={<ListFooterContacts />}
               keyExtractor={(item) => item.recordID}
               showsVerticalScrollIndicator={false}
             />

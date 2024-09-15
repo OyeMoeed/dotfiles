@@ -19,18 +19,18 @@ export interface IPayActionSheetProps {
   /**
    * Title of the action sheet. Can be a string or a JSX element for more customization.
    */
-  title?: string | JSX.Element;
+  title?: string;
 
   /**
    * Additional message or description associated with the action sheet.
    * Can be a string or a JSX element.
    */
-  message?: string | JSX.Element;
+  message?: string;
 
   /**
    * Array of strings representing the options or buttons displayed in the action sheet.
    */
-  options: string[];
+  options?: string[];
 
   /**
    * Index of the cancel button within the `options` array.

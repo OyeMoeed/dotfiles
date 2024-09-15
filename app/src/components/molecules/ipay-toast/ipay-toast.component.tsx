@@ -10,7 +10,7 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { toastTypes } from '@app/utilities/enums.util';
+import { ToastTypes } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import { Portal } from 'react-native-portalize';
@@ -37,12 +37,12 @@ const IPayToast: React.FC<IPayToastProps> = ({
   onPress,
   titleColor,
   containerStyle,
-  borderColor,
   isShowRightIcon,
   rightIcon,
   isBottomSheet,
   toastType,
   titleStyle,
+  borderColor,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(
@@ -55,9 +55,9 @@ const IPayToast: React.FC<IPayToastProps> = ({
 
   const toastTypeStyles = useCallback(() => {
     switch (toastType) {
-      case toastTypes.INFORMATION:
+      case ToastTypes.INFORMATION:
         return dynamicStyles.toastInformation;
-      case toastTypes.SUCCESS:
+      case ToastTypes.SUCCESS:
         return dynamicStyles.toastSuccess;
       default:
         return dynamicStyles.toastError;

@@ -14,53 +14,80 @@ import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/m
 import IPayCardListItem from '@app/components/molecules/ipay-card-list-item/ipay-card-list-item.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
+import { useKeyboardStatus } from '@app/hooks';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { TopUpCardItem, WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
+import { deleteSavedCard, getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import { alertType, alertVariant, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import cardManagementStyles from './card-management.style';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
-import checkUserAccess from '@app/utilities/check-user-access';
-
-const DUMMY_CARDS = [
-  {
-    id: '1',
-    headerText: 'Mada Card',
-    lastFourDigit: '4400',
-    cardIcon: images.madaIcon,
-    name: 'Adam Ahmed',
-  },
-  {
-    id: '2',
-    headerText: 'Master Card',
-    lastFourDigit: '1250',
-    cardIcon: images.masterIcon,
-    name: 'Adam Ahmed',
-  },
-];
 
 const CardManagementScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const localizationText = useLocalization();
-  const [cards, setCards] = useState(DUMMY_CARDS);
+  const [cards, setCards] = useState<any[]>([]);
   const [defaultCardID, setDefaultCardID] = useState('1');
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [currentCardID, setCurrentCardID] = useState('1');
   const actionSheetRef = useRef<any>(null);
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
   const editNickNameSheet = useRef<bottomSheetModal>(null);
-  const [selectedCardName, setSelectedCardName] = useState(cards[selectedCardIndex].name);
+  const [selectedCardName, setSelectedCardName] = useState('');
   const { isKeyboardOpen } = useKeyboardStatus();
-
   const styles = cardManagementStyles(colors);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
+  const getCardImage = (cardType: string): any => {
+    if (cardType.toLowerCase() === 'visa') {
+      return images.visaIcon;
+    }
+    if (cardType.toLowerCase() === 'mada') {
+      return images.madaIcon;
+    }
+    if (cardType.toLowerCase() === 'master') {
+      return images.masterIcon;
+    }
+    if (cardType.toLowerCase() === 'mastercard') {
+      return images.mastercardIcon;
+    }
+    return images.madaIcon;
+  };
+
+  const getTopupCardsData = async () => {
+    const payload: WalletNumberProp = {
+      walletNumber,
+    };
+
+    const apiResponse = await getTopupCards(payload);
+
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse?.response?.cardList && apiResponse?.response?.cardList?.length > 0) {
+        const mappedData = apiResponse?.response?.cardList?.map((item: TopUpCardItem, index: number) => ({
+          id: index,
+          headerText: item.cardBrand,
+          registrationId: item.registrationId,
+          lastFourDigit: item.lastDigits,
+          cardIcon: getCardImage(item.cardBrand),
+          name: '',
+        }));
+        setCards(mappedData);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getTopupCardsData();
+  }, []);
 
   const renderCardListItem = ({ index, item: { id, headerText, lastFourDigit, cardIcon, name } }) => (
     <IPayView>
@@ -101,12 +128,18 @@ const CardManagementScreen: React.FC = () => {
     });
   };
 
-  const onDeleteCard = () => {
-    setSelectedCardIndex(0);
-    const filteredData = cards.filter((el) => el.id !== currentCardID);
-    setCards(filteredData);
+  const onDeleteCard = async () => {
     setShowDeleteAlert(false);
-    renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, icons.trash);
+    const registrationId = cards[selectedCardIndex]?.registrationId;
+
+    const apiResponse = await deleteSavedCard(walletNumber, registrationId);
+    if (apiResponse) {
+      setSelectedCardIndex(0);
+      const filteredData = cards.filter((el) => el.id !== currentCardID);
+      setCards(filteredData);
+      setShowDeleteAlert(false);
+      renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, icons.trash);
+    }
   };
 
   const hideBottomSheet = () => {
@@ -118,14 +151,15 @@ const CardManagementScreen: React.FC = () => {
       setDefaultCardID(cards[selectedCardIndex].id);
       hideBottomSheet();
     } else if (index === 1) {
-      hideBottomSheet();
-      editNickNameSheet.current?.present();
-    } else if (index === 2) {
       setShowDeleteAlert(true);
       hideBottomSheet();
-    } else if (index === 3) {
+    } else if (index === 2) {
       hideBottomSheet();
     }
+    // else if (index === 4) {
+    //   hideBottomSheet();
+    //   editNickNameSheet.current?.present();
+    // }
   };
 
   const renderDeleteAlert = () => (
@@ -144,23 +178,22 @@ const CardManagementScreen: React.FC = () => {
     />
   );
 
-  const onNavigateToAddCard = () => {
-    const hasAccess = checkUserAccess();
-    if (hasAccess) {
-      navigate(ScreenNames.ADD_CARD);
-    }
-  };
-
   const onPressSave = () => {
     editNickNameSheet.current?.close();
     renderToast(localizationText.CARD_MANAGEMENT.THE_CARD_HAS_RENAMED, icons.tick_square);
   };
 
+  const onAddCard = () => {
+    navigate(ScreenNames.TOP_UP, {
+      topupChannel: PayChannel.CARD,
+    });
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_MANAGEMENT.CARD_MANAGEMENT} backBtn applyFlex />
-      {cards.length === 0 ? (
-        <IPayNoCardIndicatorComponenent />
+      {cards?.length === 0 ? (
+        <IPayNoCardIndicatorComponenent addCard={onAddCard} />
       ) : (
         <IPayView style={styles.cardListContainer}>
           <IPayFootnoteText
@@ -174,7 +207,7 @@ const CardManagementScreen: React.FC = () => {
             renderItem={renderCardListItem}
           />
           <IPayButton
-            onPress={onNavigateToAddCard}
+            onPress={onAddCard}
             btnStyle={styles.addCardButton}
             btnType={buttonVariants.PRIMARY}
             large
@@ -191,9 +224,9 @@ const CardManagementScreen: React.FC = () => {
         message={`**** **** **** ${cards[selectedCardIndex]?.lastFourDigit}` || ''}
         options={[
           localizationText.CARD_MANAGEMENT.MAKE_IT_DEFAULT,
-          localizationText.CARD_MANAGEMENT.EDIT_NICK_NAME,
           localizationText.CARD_MANAGEMENT.DELETE_CARD,
           localizationText.COMMON.CANCEL,
+          // localizationText.CARD_MANAGEMENT.EDIT_NICK_NAME,
         ]}
         cancelButtonIndex={3}
         destructiveButtonIndex={2}
@@ -227,9 +260,9 @@ const CardManagementScreen: React.FC = () => {
           <IPayView style={styles.bottomSheetContainer}>
             <IPayCardListItem
               containerStyle={styles.listItemContainer}
-              headerText={cards[selectedCardIndex].headerText}
-              lastFourDigit={cards[selectedCardIndex].lastFourDigit}
-              cardIcon={cards[selectedCardIndex].cardIcon}
+              headerText={cards[selectedCardIndex]?.headerText}
+              lastFourDigit={cards[selectedCardIndex]?.lastFourDigit}
+              cardIcon={cards[selectedCardIndex]?.cardIcon}
               hideMore
             />
             <IPayView style={styles.inputContainer}>

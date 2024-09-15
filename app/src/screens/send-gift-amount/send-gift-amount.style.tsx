@@ -139,7 +139,14 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
 
     input: {
-      paddingVertical: moderateScale(12),
+      ...Platform.select({
+        android: {
+          paddingVertical: moderateScale(-5),
+        },
+        ios: {
+          paddingVertical: moderateScale(12),
+        },
+      }),
       marginVertical: moderateScale(2),
     },
     manualInput: {

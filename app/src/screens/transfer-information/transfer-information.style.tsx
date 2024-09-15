@@ -34,6 +34,9 @@ const transferInformationStyles = () =>
     currency: {
       fontSize: FONT_SIZE_17,
     },
+    input: {
+      paddingBottom: moderateScale(8),
+    },
     inputActiveStyle: {
       ...Platform.select({
         android: {

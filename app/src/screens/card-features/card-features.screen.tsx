@@ -9,13 +9,13 @@ import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-ca
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useRoute } from '@react-navigation/native';
+import { CardOptions } from '@app/utilities/enums.util';
 import useVirtualCardData from '../virtual-card/use-virtual-card-data';
 import cardFeaturesStyles from './card-features.style';
-import { CardOptions } from '@app/utilities/enums.util';
 
 const CardFeaturesScreen: React.FC = () => {
   const route = useRoute();
-  const { currentCard } = route?.params;
+  const { currentCard } = route?.params as { currentCard: { cardType: '' } };
   const CURRENT_CARD_TYPE = currentCard.cardType;
   const localizationText = useLocalization();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();

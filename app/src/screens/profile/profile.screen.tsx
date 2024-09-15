@@ -1,7 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayChip, IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -16,7 +16,6 @@ import {
 } from '@components/atoms';
 
 import images from '@app/assets/images';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
@@ -27,11 +26,11 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { isBasicTierSelector, setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { States, spinnerVariant, toastTypes } from '@app/utilities/enums.util';
+import { States, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
-import { CardKeys } from './profile.interface';
+import { CardKeys, UserFieldKeys } from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -46,17 +45,7 @@ const Profile = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
-  const renderToast = (toastMsg: string, apiError: string = '') => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const formatAddress = (userInfoData: any) => {
     const { street, city, townCountry } = userInfoData;
@@ -70,17 +59,6 @@ const Profile = () => {
       .replace(/,\s*,/g, ',');
   };
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const renderUploadSuccessToast = () => {
     showToast({
       title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
@@ -92,13 +70,11 @@ const Profile = () => {
   const renderSuccessToast = () => {
     showToast({
       title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
-      toastType: toastTypes.INFORMATION,
+      toastType: ToastTypes.INFORMATION,
       leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
     });
   };
   const updateProfileImage = async () => {
-    renderSpinner(true);
-
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
@@ -108,10 +84,8 @@ const Profile = () => {
     );
     if (apiResponse) {
       dispatch(setWalletInfo({ profileImage: `${selectedImage}` }));
-      renderSpinner(false);
       renderUploadSuccessToast();
     }
-    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -168,7 +142,11 @@ const Profile = () => {
       <IPayFootnoteText style={styles.personalInfoCardTitleText} regular>
         {item.text}
       </IPayFootnoteText>
-      <IPaySubHeadlineText regular style={styles.subHeadline} numberOfLines={2}>
+      <IPaySubHeadlineText
+        regular
+        style={styles.subHeadline}
+        numberOfLines={item?.key === UserFieldKeys.NATIONAL_ADDRESS ? 1 : 2}
+      >
         {item.details}
       </IPaySubHeadlineText>
     </IPayView>
@@ -274,13 +252,11 @@ const Profile = () => {
       },
       deviceInfo: appData.deviceInfo as DeviceInfoProps,
     };
-    renderSpinner(true);
     const walletUpdateResponse = await walletUpdate(payload, walletInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
       await getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
       renderSuccessToast();
     }
-    renderSpinner(false);
   };
 
   const onSubmit = (formData: IFormData) => {
@@ -297,10 +273,9 @@ const Profile = () => {
       setKycVisible(false);
     }
   };
-
   return (
     <>
-      <IPaySafeAreaView style={styles.SafeAreaView2}>
+      <IPaySafeAreaView style={styles.safeAreaView2}>
         <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>

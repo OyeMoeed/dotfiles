@@ -1,7 +1,7 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_14, SCALE_28, SCALE_8, SCALE_80, spacing } from '@app/styles/spacing.const';
+import { FONT_WEIGHT_BOLD, FONT_WEIGHT_LIGHT } from '@app/styles/typography.styles';
 import { verticalScale } from 'react-native-size-matters';
 
 const bannerStyles = (theme: any) =>
@@ -39,7 +39,7 @@ const bannerStyles = (theme: any) =>
       marginRight: SCALE_8,
     },
     footnoteTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: scaleFont(12),
       color: theme.natural.natural900,
     },
@@ -47,7 +47,7 @@ const bannerStyles = (theme: any) =>
       flexDirection: 'row',
     },
     captionStyle: {
-      fontWeight: constants.FONT_WEIGHT_LIGHT,
+      fontWeight: FONT_WEIGHT_LIGHT,
       fontSize: scaleFont(10),
       color: theme.natural.natural900,
       marginTop: scaleFont(8),

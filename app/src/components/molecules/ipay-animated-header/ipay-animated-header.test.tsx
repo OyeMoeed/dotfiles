@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react-native';
 import IPayAnimatedHeader from './ipay-animated-header.component';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import { Text } from 'react-native';
 
 // Mock components and utilities

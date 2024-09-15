@@ -7,7 +7,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { shareOptions } from '@app/utilities/shared.util';
 import {
@@ -100,6 +100,11 @@ const WalletScreen = () => {
     return Math.ceil(balancePercentage);
   }
 
+  const QRCodeRef = (ref: any) => {
+    qrRef.current = ref;
+    return null;
+  };
+
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
       <IPayHeader title={localizationText.HOME.WALLET_INFO} backBtn applyFlex />
@@ -171,7 +176,7 @@ const WalletScreen = () => {
           onPressSaveQR={saveQrToDisk}
           icon={
             <QRCode
-              getRef={(ref) => (qrRef.current = ref)}
+              getRef={QRCodeRef}
               value={qrData}
               logo={images.gradientAppIcon}
               size={moderateScale(76)}

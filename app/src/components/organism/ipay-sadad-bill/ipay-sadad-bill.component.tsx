@@ -10,11 +10,13 @@ import {
 } from '@app/components/atoms';
 import { IPayChip } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import useTheme from '@app/styles/hooks/theme.hook';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
+import { getDateFormate } from '@app/utilities/date-helper.util';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import moment from 'moment';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { IPaySadadBillProps } from './ipay-sadad-bill.interface';
 import sadadBillStyles from './ipay-sadad-bill.style';
 
@@ -27,56 +29,59 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   onPressMoreOptions,
   showMoreOption = true,
 }) => {
-  const { id, billTitle, vendor, vendorIcon, billAmount, dueDate, billStatus, selected } = billDetails;
+  const { billId, billerId, billerName, amount, billDesc, dueDateTime, billStatusDesc, selected = false } = billDetails;
+
   const { colors } = useTheme();
   const styles = sadadBillStyles(colors);
   const localizationText = useLocalization();
 
   const statusVariant = useMemo(
-    () => (billStatus === BillStatus.UNPAID ? States.NATURAL : States.SUCCESS),
-    [billStatus],
+    () => (billStatusDesc === BillStatus.UNPAID ? States.NATURAL : States.SUCCESS),
+    [billStatusDesc],
   );
 
   const billingAmountColor = useMemo(
-    () => (Number(billAmount) > 0 ? colors.natural.natural900 : colors.natural.natural300),
-    [billAmount],
+    () => (Number(amount) > 0 ? colors.natural.natural900 : colors.natural.natural300),
+    [amount],
   );
 
   const dueDateColor = useMemo(() => {
     const currentDate = moment();
-    const parsedDueDate = moment(dueDate, dateTimeFormat.DateAndTime);
+    const parsedDueDate = moment(dueDateTime, dateTimeFormat.DateAndTime);
     return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
-  }, [dueDate]);
+  }, [dueDateTime]);
 
-  const billingAmount = `${billAmount} ${localizationText.COMMON.SAR}`;
-  const billingDueDate = `${localizationText.SADAD.DUE} ${dueDate}`;
+  const billingAmount = `${amount || 0} ${localizationText.COMMON.SAR}`;
+  const billingDueDate = `${localizationText.SADAD.DUE} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
 
   const onPressCheckBox = () => {
-    if (onSelectBill) onSelectBill(id);
+    if (onSelectBill) onSelectBill(billId);
   };
 
   const onPressMore = () => {
-    if (onPressMoreOptions) onPressMoreOptions(id);
+    onPressMoreOptions?.(billId);
   };
+
+  const getBillerImage = useCallback(() => BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId), [billerId]);
 
   return (
     <IPayView testID={`${testID}-sadad-bill`} style={[styles.container, style]}>
       {showCheckBox && <IPayCheckbox isCheck={selected} onPress={onPressCheckBox} />}
       <IPayView style={styles.contentView}>
         <IPayView>
-          <IPayImage image={vendorIcon} style={styles.vendorIcon} />
-          <IPaySubHeadlineText text={billTitle} color={colors.natural.natural900} />
-          <IPayCaption2Text text={vendor} color={colors.natural.natural900} style={styles.vendorText} />
+          <IPayImage image={getBillerImage()} style={styles.vendorIcon} />
+          <IPaySubHeadlineText text={billDesc} color={colors.natural.natural900} />
+          <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>
         <IPayView style={styles.contentChildView}>
           <IPayChip
             containerStyle={styles.chipView}
             isShowIcon={false}
-            textValue={billStatus}
+            textValue={billStatusDesc}
             variant={statusVariant}
           />
           <IPaySubHeadlineText text={billingAmount} color={billingAmountColor} />
-          {billStatus === BillStatus.UNPAID && (
+          {billStatusDesc === BillStatus.UNPAID && (
             <IPayCaption2Text text={billingDueDate} style={styles.dueDateText} color={dueDateColor} />
           )}
         </IPayView>

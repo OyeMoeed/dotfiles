@@ -15,8 +15,8 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { Countires, LocalizationKeysMapping } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, States, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, States, ToastTypes } from '@app/utilities/enums.util';
 import getArryFromObject from '@app/utilities/object-to-array.helper';
 import React, { useEffect, useState } from 'react';
 import transactionDetailsCompStyles from './transaction-details-component.style';
@@ -65,7 +65,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const getValueText = (value: string) => {

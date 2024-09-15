@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayText } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import { STANDARD_TEXT_INPUT_MAX_LENGTH } from '@app/constants/app-validations';
-import { KycFormCategories } from '@app/enums/customer-knowledge.enum';
+import { KycFormCategories } from '@app/enums';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
@@ -20,7 +20,7 @@ const IPayCustomerKnowledgeDefault: React.FC<IPayCustomerKnowledgeDefaultProps> 
   const styles = customerKnowledgeStyles(colors);
   const localizationText = useLocalization();
 
-  const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />;
+  const listCheckIcon = <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />;
 
   return (
     <>

@@ -5,7 +5,7 @@ import Svg, { Defs, LinearGradient, Stop, Path } from 'react-native-svg';
 import { moderateScale } from 'react-native-size-matters';
 import Animated, { Easing, useSharedValue, useAnimatedProps, withTiming } from 'react-native-reanimated';
 import { IPayAnimatedCircularProgressProps } from './ipay-animated-circular-progress.interface';
-import { getDynamicStyles } from './ipay-animated-circular-progress.styles';
+import getDynamicStyles from './ipay-animated-circular-progress.styles';
 
 // Animated component for the path
 const AnimatedPath = Animated.createAnimatedComponent(Path);
@@ -14,7 +14,6 @@ const IPayAnimatedCircularProgress: React.FC<IPayAnimatedCircularProgressProps> 
   size = moderateScale(150),
   width = 9,
   fill = 80,
-  rotation = 0,
   arcSweepAngle = 270,
   gradientColors = ['#7DD942', '#7DD942', '#00BAFE'],
   backgroundColor = '#FFFFFF',
@@ -61,7 +60,11 @@ const IPayAnimatedCircularProgress: React.FC<IPayAnimatedCircularProgressProps> 
         <Defs>
           <LinearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">
             {gradientColors.map((color, index) => (
-              <Stop key={index} offset={`${(index / (gradientColors.length - 1)) * 100}%`} stopColor={color} />
+              <Stop
+                key={`${color}-${`${index}Stop`}`}
+                offset={`${(index / (gradientColors.length - 1)) * 100}%`}
+                stopColor={color}
+              />
             ))}
           </LinearGradient>
         </Defs>

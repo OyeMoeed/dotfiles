@@ -12,7 +12,6 @@ import {
   IPayTitle1Text,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { FlipCard, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
@@ -24,19 +23,17 @@ import {
   TransferDetailsRes,
 } from '@app/network/services/transfers/wallet-wallet-transfer-details/transfer-details.interface';
 import getWalletToWalletTransferDetails from '@app/network/services/transfers/wallet-wallet-transfer-details/transfer-details.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
 import {
   ApiResponseStatusType,
   buttonVariants,
   GiftCardDetailsKey,
   GiftCardStatus,
-  spinnerVariant,
-  toastTypes,
+  ToastTypes,
 } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
@@ -52,7 +49,6 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   const styles = giftDetailsStyles(colors);
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [giftDetails, setGiftDetails] = useState<TransferDetailsRes>({} as TransferDetailsRes);
@@ -81,19 +77,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
     );
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getWalletToWalletTransferData = async () => {
-    renderSpinner(true);
     const payload = {
       trxReqType,
       trxId: details?.trxId ?? '',
@@ -108,16 +92,14 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
         case apiResponse?.apiResponseNotOk:
           renderToast({
             title: localizationText.ERROR.API_ERROR_RESPONSE,
-            toastType: toastTypes.WARNING,
+            toastType: ToastTypes.WARNING,
             icon: <IPayIcon icon={icons.warning} size={24} />,
           });
           break;
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -128,7 +110,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const getTitleColor = (subTitle: string) => {
@@ -155,13 +137,16 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
     };
     Share.open(shareOptions);
   };
-  const getDynamicStyles = (titleStyles, itemDetails, item) => [
-    titleStyles.subTitle,
-    itemDetails[item]?.length > 20 && titleStyles.condtionalWidthSubtitle,
-    item === GiftCardDetailsKey.AMOUNT && itemDetails?.status === GiftCardStatus.EXPIRED && titleStyles.textStyle,
+
+  const getDynamicStyles = (stylesValue, dataDetails, item) => [
+    stylesValue.subTitle,
+    dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
+    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftCardStatus.EXPIRED && stylesValue.textStyle,
+    item === GiftCardDetailsKey.AMOUNT && stylesValue.currencyStyle,
   ];
+
   const titleText = useCallback(
-    (value: string, key: string) => {
+    (value: string, item: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
       switch (key) {
         case GiftTransactionKey.TRANSACTION_DATE_TIME:
@@ -174,7 +159,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
         default:
           break;
       }
-      return value;
+      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
     },
     [giftDetails],
   );
@@ -280,8 +265,8 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
-            text={titleText(giftDetails[item], item)}
-            color={getTitleColor(giftDetails[item])}
+            text={titleText(details[item], item)}
+            color={getTitleColor(details[item])}
             numberOfLines={1}
             style={getDynamicStyles(styles, giftDetails, item)}
           />
@@ -310,7 +295,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
-            isExpired={giftDetails?.status === GiftCardStatus.EXPIRED}
+            isExpired={details?.status === GiftCardStatus.EXPIRED && isSend}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton
@@ -330,7 +315,9 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
         {isSend ? (
           <IPayView style={styles.bottomView}>
             <IPayFlatlist
-              data={Object.keys(giftDetails).filter((key) => GiftTransactionKeys.includes(key))}
+              data={Object.keys(details)
+                .filter((key) => GiftTransactionKeys.includes(key))
+                .sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
               keyExtractor={(_, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={renderCardDetails}

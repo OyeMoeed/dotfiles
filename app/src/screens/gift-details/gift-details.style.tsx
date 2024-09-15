@@ -130,6 +130,7 @@ const giftDetailsStyles = (themeColors: typeof colors) =>
     subTitle: {
       alignSelf: 'flex-end',
       textAlign: 'right',
+      textTransform: 'capitalize',
     },
     condtionalWidthSubtitle: {
       width: '50%',
@@ -160,6 +161,9 @@ const giftDetailsStyles = (themeColors: typeof colors) =>
     textStyle: {
       textDecorationLine: 'line-through',
       color: themeColors.natural.natural500,
+    },
+    currencyStyle: {
+      textTransform: 'none',
     },
   });
 
