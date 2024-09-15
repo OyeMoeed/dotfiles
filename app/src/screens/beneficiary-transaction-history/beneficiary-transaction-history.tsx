@@ -166,7 +166,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       const apiResponse: LocalTransferMockProps = await getlocalTransaction(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryHistoryData([...beneficiaryHistoryData, ...apiResponse.response.transactions]);
+          setBeneficiaryHistoryData((prevData) => [...prevData, ...apiResponse.response.transactions]);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -200,6 +200,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     const filterValues = filtersArray.filter((item) => item !== '');
     setAppliedFilters(data);
     setFilters(filterValues);
+    setBeneficiaryHistoryData([]);
     getLocalTransactionsData();
   };
 
