@@ -4,7 +4,6 @@ import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-sectio
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/index';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import getFAQ from '@app/network/services/core/faq/faq.service';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -63,7 +62,7 @@ const HelpCenter: React.FC = () => {
           {
             id: 1,
             title: '',
-            data: apiResponse?.response?.faqs.map((question) => ({
+            data: apiResponse?.response?.faq.map((question) => ({
               id: 1,
               question: question.question,
               answer: question.answer,
