@@ -5,7 +5,6 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { PasscodeTypes } from '@app/screens/settings/settings.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
@@ -16,7 +15,6 @@ const NewPasscode = forwardRef((props) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = newPasscodeStyles();
-  const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
 

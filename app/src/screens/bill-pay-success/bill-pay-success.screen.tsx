@@ -4,7 +4,6 @@ import { IPayButton, IPayChip, IPayList, IPaySuccess } from '@app/components/mol
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
 import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -29,7 +28,6 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   const { isSaveOnly, isPayOnly, isPayPartially, totalAmount, billPaymentInfos } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
-  const localizationText = useLocalization();
   const { goToHome, billSaveDetails } = usePayBillSuccess();
   // TODO will be updated basis of API.
   const billStatus = {
@@ -37,7 +35,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     unpaid: '1 Unpaid Bills',
   };
 
-  const successMessage = isSaveOnly ? t('PAY_BILL.SAVED_SUCCESS') : localizationText.PAY_BILL.PAID_SUCCESS;
+  const successMessage = isSaveOnly ? 'PAY_BILL.SAVED_SUCCESS' : 'PAY_BILL.PAID_SUCCESS';
   const onPressSaveOnlyPay = () => {
     navigate(ScreenNames.ADD_NEW_SADAD_BILLS, {
       selectedBills: [ACTIVE_SADAD_BILLS[0]],

@@ -130,7 +130,7 @@ const VirtualCardScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={'VIRTUAL_CARD.HEADER'} applyFlex />
+      <IPayHeader backBtn title="VIRTUAL_CARD.HEADER" applyFlex />
       <IPayTabs
         preSelectedTab={tabs[0]}
         tabs={tabs}

@@ -5,20 +5,18 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
-import shopCategoriesStyles from './shop-categories.styles';
 import { useTranslation } from 'react-i18next';
+import shopCategoriesStyles from './shop-categories.styles';
 
 const ShopCategoriesScreen: React.FC = () => {
   const { t } = useTranslation();
   const { playstationData } = useConstantData();
   const { colors } = useTheme();
   const styles = shopCategoriesStyles(colors);
-  const localizationText = useLocalization();
   const [search, setSearch] = useState<string>('');
 
   // Tabs and selectedTab state
@@ -73,7 +71,7 @@ const ShopCategoriesScreen: React.FC = () => {
 
       <IPayView style={styles.container}>
         {/* Conditionally render content based on the selected tab */}
-        {selectedTab === localizationText.SHOP.PLAYSTATION ? (
+        {selectedTab === t('SHOP.PLAYSTATION') ? (
           <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={onCardPress} />
         ) : (
           <IPayView style={styles.noResultContainer}>

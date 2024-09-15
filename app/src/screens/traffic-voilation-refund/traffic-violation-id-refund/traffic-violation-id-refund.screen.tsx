@@ -6,9 +6,9 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import useTrafficViolation from './traffic-violation-id-refund.hook';
 import trafficViolationStyles from './traffic-violation-id-refund.style';
-import { useTranslation } from 'react-i18next';
 
 const TrafficVoilationIDRefundScreen: React.FC = () => {
   const { colors } = useTheme();

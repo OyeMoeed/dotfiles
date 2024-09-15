@@ -5,7 +5,6 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import colors from '@app/styles/colors.const';
 import { useNavigation } from '@react-navigation/native';
@@ -18,7 +17,6 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
   const styles = resetPasscodeStyles();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
 
   useEffect(() => {

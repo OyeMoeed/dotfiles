@@ -10,9 +10,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import useTrafficViolationSuccess from './traffic-violation-success.hook';
 import trafficViolationSuccessStyles from './traffic-violation-success.style';
-import { useTranslation } from 'react-i18next';
 
 const TrafficViolationSuccessScreen: React.FC = () => {
   const { colors } = useTheme();

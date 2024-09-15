@@ -9,8 +9,8 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayAppleWallet from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import { isIosOS } from '@app/utilities/constants';
-import issuePhysicalCardSuccessStyles from './issue-physical-card-success.style';
 import { useTranslation } from 'react-i18next';
+import issuePhysicalCardSuccessStyles from './issue-physical-card-success.style';
 
 const IssuePhysicalCardSuccessScreen: React.FC = () => {
   const { colors } = useTheme();

@@ -22,10 +22,12 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType } from '@app/utilities/enums.util';
 import { FC, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
 const MenuScreen: FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = menuStyles(colors);
   const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);

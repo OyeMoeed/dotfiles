@@ -38,12 +38,14 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Flag from 'react-native-round-flags';
+import { useTranslation } from 'react-i18next';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
 import internationalTransferConfirmationStyles from './internationl-transfer-confirmation.style';
 
 const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const { beneficiaryData, feesInquiryData } = route.params;
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = internationalTransferConfirmationStyles();
   const localizationText = useLocalization();

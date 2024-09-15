@@ -4,7 +4,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayPasscode } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode/set-passcode.interface';
@@ -18,13 +17,14 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import passcodeStyles from '../set-passcode/set-passcode.style';
 
 const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const { passcode } = route.params;
   const { colors } = useTheme();
   const styles = passcodeStyles();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [apiError] = useState<string>('');
   const { appData } = useTypedSelector((state) => state.appDataReducer);

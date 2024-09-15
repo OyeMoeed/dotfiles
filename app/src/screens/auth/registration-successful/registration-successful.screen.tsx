@@ -14,7 +14,6 @@ import { IPayButton, IPayGradientTextMasked, IPayHeader } from '@app/components/
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import { IPayLanguageSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
@@ -25,12 +24,13 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { buttonVariants } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import genratedStyles from './registration-successful.style';
 
 const RegistrationSuccessful: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
-  const localizationText = useLocalization();
   const languageSheetRef = useRef(null);
   const [isBottomViewVisible, setBottomViewVisible] = useState(false);
   const bottomViewHeight = useRef(new Animated.Value(0)).current;

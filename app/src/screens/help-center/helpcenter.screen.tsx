@@ -5,7 +5,6 @@ import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/inde
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import getFAQ from '@app/network/services/core/faq/faq.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
@@ -33,7 +32,6 @@ const HelpCenter: React.FC = () => {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [currentSection, setCurrentSection] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
-  const localizationText = useLocalization();
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const insideSaPhone = '(+966)8004339000'; // need to replace with API
   const outsideSaPhone = '(+966)920000670'; // need to replace with API

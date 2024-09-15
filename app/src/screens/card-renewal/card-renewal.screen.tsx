@@ -4,7 +4,6 @@ import icons from '@app/assets/icons';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayCardBanner from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
 import {
@@ -48,7 +47,6 @@ const CardRenewalScreen: React.FC = () => {
     currentCard: { cardType, cardHeaderText, name },
   } = route?.params as unknown as { currentCard: { cardType: CardTypes; cardHeaderText: ''; name: '' } };
 
-  const localizationText = useLocalization();
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);

@@ -1,9 +1,9 @@
 import { IPayCaption2Text, IPayCheckbox, IPayFootnoteText, IPayImage, IPayView } from '@app/components/atoms';
 import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-section-list.component';
 import { TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import transactionDetailsCompStyles from './transaction-details-component.style';
 import { IPayInternationalTransferDeliveryTypeComponentProps } from './transction-details-component.interface';
 
@@ -14,9 +14,9 @@ const IPayInternationalTransferDeliveryTypeComponent: React.FC<IPayInternational
   onPressListItem,
   selectTransactionType,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = transactionDetailsCompStyles(colors);
-  const localizationText = useLocalization();
   const selectedItem = (title: string, type: string) =>
     selectedListItem === title && (selectedListItem !== 'Digital Wallet' ? type === selectTransactionType : true);
 

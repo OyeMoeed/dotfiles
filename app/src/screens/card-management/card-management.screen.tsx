@@ -15,7 +15,6 @@ import IPayCardListItem from '@app/components/molecules/ipay-card-list-item/ipay
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { useKeyboardStatus } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { TopUpCardItem, WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
@@ -36,7 +35,6 @@ const CardManagementScreen: React.FC = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
-  const localizationText = useLocalization();
   const [cards, setCards] = useState<any[]>([]);
   const [defaultCardID, setDefaultCardID] = useState('1');
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);

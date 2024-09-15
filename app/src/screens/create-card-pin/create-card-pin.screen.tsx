@@ -1,20 +1,20 @@
 import icons from '@assets/icons/index';
 import useTheme from '@app/styles/hooks/theme.hook';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayPasscode } from '@app/components/organism';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import { forwardRef, useState } from 'react';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import images from '@app/assets/images';
+import { useTranslation } from 'react-i18next';
 import createCardPinStyles from './create-card-pin.style';
 import { CreateCardPinViewTypes, CreateCardPinProps } from './create-card-pin.interface';
 
 const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = createCardPinStyles();
-  const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
   const [currentView, setCurrentView] = useState<CreateCardPinViewTypes>(CreateCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');

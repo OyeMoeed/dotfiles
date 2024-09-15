@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayButton, IPayHeader, IPayList, IPayPageDescriptionText } from '@app/components/molecules/index';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
@@ -11,13 +10,12 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import React from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
-import topupIbanStyles from './topup-iban.style';
 import { useTranslation } from 'react-i18next';
+import topupIbanStyles from './topup-iban.style';
 
 const TopUpIBAN = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = topupIbanStyles(colors);
   const { showToast } = useToastContext();
   const [toast, setShowToast] = React.useState<number>(0);
@@ -47,7 +45,7 @@ const TopUpIBAN = () => {
   const renderToast = (toastTitleType: number) => {
     showToast({
       toastType: ToastTypes.SUCCESS,
-      title: toastTitleType === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER,
+      title: toastTitleType === 1 ? t('HOME.NAME_COPIED') : t('HOME.IBAN_NUMBER'),
       containerStyle: styles.toastContainer,
       leftIcon: <IPayIcon icon={icons.copy_success} size={moderateScale(18)} color={colors.natural.natural0} />,
     });
@@ -87,7 +85,7 @@ const TopUpIBAN = () => {
           subTitle={username}
           isShowIcon
           isShowDetail
-          detailText={toast === 1 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
+          detailText={toast === 1 ? 'TOP_UP.COPIED' : 'TOP_UP.COPY'}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
           subTextStyle={styles.rightTextStyle}
         />
@@ -99,7 +97,7 @@ const TopUpIBAN = () => {
           subTitle={iban}
           isShowIcon
           isShowDetail
-          detailText={toast === 2 ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
+          detailText={toast === 2 ? 'TOP_UP.COPIED' : 'TOP_UP.COPY'}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
           subTextStyle={styles.rightTextStyle}
         />

@@ -3,7 +3,6 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
@@ -18,7 +17,7 @@ const ConfirmPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ passcod
   const { colors } = useTheme();
   const styles = passcodeStyles();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
+
   const [passcodeError, setPassCodeError] = useState<boolean>(false);
   const { showToast } = useToastContext();
 

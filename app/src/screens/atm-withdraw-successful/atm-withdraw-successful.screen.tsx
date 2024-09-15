@@ -12,7 +12,6 @@ import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -29,7 +28,6 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = atmWithdrawSuccessStyles(colors);
-  const localizationText = useLocalization();
 
   const withdrawSuccessData = [
     {

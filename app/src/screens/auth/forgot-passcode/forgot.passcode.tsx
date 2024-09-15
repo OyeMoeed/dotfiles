@@ -3,22 +3,22 @@ import IPayScrollView from '@app/components/atoms/ipay-scrollview/ipay-scrollvie
 import { IPayAnimatedTextInput, IPayButton, IPayPageDescriptionText } from '@app/components/molecules';
 import IPayToast from '@app/components/molecules/ipay-toast/ipay-toast.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
 const ForgotPasscodeBottomSheet = forwardRef(() => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const [passcode, setPasscode] = useState<string>('');
   const [passcodeErrorMsg, setPasscodeErrorMsg] = useState<string>('');
   const correctPasscode = '1234'; // Replace with your correct passcode
   const styles = ForgotPasscodeStyles(colors);
-  const localizationText = useLocalization();
   const [showToast, setShowToast] = useState(false);
   const navigation = useNavigation();
 

@@ -5,10 +5,12 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedSelector } from '@app/store/store';
 import { EncryptedKey, EncryptedService } from '@app/utilities/enum/encrypted-keys.enum';
 import { deleteData, isDataStored, retrieveData, storeData } from '@app/utilities/keychain.utils';
+import { useTranslation } from 'react-i18next';
 import { Alert } from 'react-native';
 import { useDispatch } from 'react-redux';
 
 const useBiometricService = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { checkBiometrics } = useBiometrics();
   const { passCode, biomatricEnabled } = useTypedSelector((state) => state.appDataReducer.appData);

@@ -67,14 +67,11 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const { showToast } = useToastContext();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const transferFees = `${t('LOCAL_TRANSFER.FEES')} ${beneficiaryDummyData.fee} ${t('COMMON.AND_VAT')} ${beneficiaryDummyData.vat}`;
-
-  const onPressNext = () => navigate(ScreenNames.INTERNATIONAL_TRANSFER_CONFIRMATION);
 
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalBeneficiariesDetails];
-    const localization = t('INTERNATIONAL_TRANSFER[localizationKey] || label');
+    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
 
     return (
       <IPayList

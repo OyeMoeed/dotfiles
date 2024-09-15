@@ -28,9 +28,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FilterType, TransactionDetails, dropDownItem } from './price-calculator.interface';
 import priceCalculatorStyles from './price-calculator.styles';
-import { useTranslation } from 'react-i18next';
 
 const PriceCalculatorScreen: React.FC = () => {
   const { colors } = useTheme();

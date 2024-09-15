@@ -18,12 +18,12 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { BANKS, COUNTRIES, RELATIONSHIPS, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
 import React from 'react';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import useInternationalTransferHook from './international-beneficiary-transfer-form.hook';
 import {
   BeneficiaryFields,
@@ -34,10 +34,10 @@ import beneficiaryTransferStyles from './international-beneficiary-transfer-form
 
 const IBeneficiaryTransferScreen: React.FC = () => {
   const route = useRoute();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const { transferService } = route?.params as { transferService: { transferType: ''; serviceName: '' } };
   const styles = beneficiaryTransferStyles(colors);
-  const localizationText = useLocalization();
   const { onSubmit, cities } = useInternationalTransferHook();
   const transferType = transferService?.transferType;
   const validationSchema = Yup.object().shape({});

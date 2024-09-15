@@ -7,7 +7,6 @@ import { IPayFilterBottomSheet, IPayGiftTransactionList } from '@app/components/
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { GiftStatus } from '@app/enums/gift-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getWalletToWalletTransfers from '@app/network/services/transfers/wallet-to-wallet-transfers/wallet-to-wallet-transfers.service';
@@ -30,7 +29,6 @@ interface Item {
 const SendGiftListScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = sendGiftStyles(colors);
   const GIFT_TABS = [t('SEND_GIFT.SENT'), t('SEND_GIFT.RECEIVED]')];
   const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
@@ -126,7 +124,7 @@ const SendGiftListScreen: React.FC = () => {
 
   const renderItem = ({ item }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount } = item;
-    const isSend = selectedTab === localizationText.SEND_GIFT.SENT;
+    const isSend = selectedTab === t('SEND_GIFT.SENT');
 
     return (
       <IPayView style={styles.listView}>
@@ -144,8 +142,7 @@ const SendGiftListScreen: React.FC = () => {
     );
   };
 
-  const selectedTabData =
-    selectedTab === localizationText.SEND_GIFT.SENT ? walletTransferData?.SENT : walletTransferData.RECEIVED;
+  const selectedTabData = selectedTab === t('SEND_GIFT.SENT') ? walletTransferData?.SENT : walletTransferData.RECEIVED;
 
   return (
     <IPaySafeAreaView>
@@ -212,7 +209,7 @@ const SendGiftListScreen: React.FC = () => {
       ) : (
         <IPayView style={styles.noResult}>
           <IPayNoResult textColor={colors.primary.primary800} message={noResultMessage} showEmptyBox />
-          {selectedTab === localizationText.SEND_GIFT.SENT && (
+          {selectedTab === t('SEND_GIFT.SENT') && (
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               medium

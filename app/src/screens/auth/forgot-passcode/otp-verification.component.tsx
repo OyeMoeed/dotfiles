@@ -2,7 +2,6 @@ import images from '@app/assets/images';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { validateForgetPasscodeOtp } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -13,6 +12,7 @@ import icons from '@assets/icons';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { buttonVariants } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
@@ -32,7 +32,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
     ref,
   ) => {
     const { colors } = useTheme();
-    const localizationText = useLocalization();
+    const { t } = useTranslation();
     const styles = otpStyles();
     const [otp, setOtp] = useState<string>('');
     const [otpError, setOtpError] = useState<boolean>(false);

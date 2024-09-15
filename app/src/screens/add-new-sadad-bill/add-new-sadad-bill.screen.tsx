@@ -118,7 +118,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         setServices(serviceList);
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

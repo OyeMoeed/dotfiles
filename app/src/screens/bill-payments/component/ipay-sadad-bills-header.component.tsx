@@ -4,9 +4,9 @@ import images from '@app/assets/images';
 import { ArrowSquareRightIcon } from '@app/assets/svgs';
 import { IPayCaption2Text, IPayFootnoteText, IPayImage, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import billPaymentsComponentsStyles from './ipay-bill-payment-components.style';
 import { IPaySadadBillsHeaderProps } from './ipay-bills-payment-components.interface';
 
@@ -16,9 +16,9 @@ const IPaySadadBillsHeader: React.FC<IPaySadadBillsHeaderProps> = ({
   unpaidBillsCount,
   onPressViewAll,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
-  const localizationText = useLocalization();
 
   const unpaidBills = `(${unpaidBillsCount} ${t('BILL_PAYMENTS.UNPAID')})`;
 

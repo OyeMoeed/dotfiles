@@ -14,9 +14,9 @@ import { getDeviceInfo, encryptData } from '@app/network/utilities';
 import prepareIssueCard from '@app/network/services/cards-management/issue-card-prepare/issue-card-prepare.service';
 import confirmIssueCard from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.service';
 import { IConfirmIssueCardReq } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
+import { useTranslation } from 'react-i18next';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './issue-card-pin-creation.interface';
 import changeCardPinStyles from './issue-card-pin-creation.style';
-import { useTranslation } from 'react-i18next';
 
 const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDetails }: ChangeCardPinProps) => {
   const { colors } = useTheme();
@@ -168,7 +168,7 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       confirmOtp();
     }
@@ -190,7 +190,7 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
       otp={otp}
       isBottomSheet={false}
       handleOnPressHelp={handleOnPressHelp}
-      timeout={+walletInfo?.otpTimeout}
+      timeout={Number(walletInfo?.otpTimeout)}
       onResendCodePress={onResendCodePress}
     />
   );

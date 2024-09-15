@@ -1,5 +1,4 @@
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import {
@@ -17,11 +16,12 @@ import React, { useEffect, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import getFAQ from '@app/network/services/core/faq/faq.service';
 import { buttonVariants } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
 const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs, hideFAQError = false }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
