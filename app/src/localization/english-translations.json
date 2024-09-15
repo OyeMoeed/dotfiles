@@ -168,6 +168,7 @@
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "INSUFFICIENT_BALANCE_COMMON": "Insufficient balance",
     "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
     "YES": "Yes",
     "NO": "No",
@@ -560,7 +561,9 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2": "500 SAR"
+    "AMOUNT_2": "500 SAR",
+    "FAST_CONVERSION_BY": "Fast conversion by",
+    "SARIE": "Sarie"
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
@@ -1133,7 +1136,9 @@
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "EDIT_BILL": "Edit Bill",
-    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully",
+    "DISCARD_CHANGES": "Discard Changes?",
+    "EDIT_YOU_MADE_WILL_LOST": "The edits you made will be lost."
   },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",

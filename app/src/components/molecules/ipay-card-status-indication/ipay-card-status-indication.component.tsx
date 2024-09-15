@@ -21,7 +21,7 @@ const IPayCardStatusIndication = ({
 
   const styles = cardStatusIndicationStyles(colors);
 
-  const cardStatusIndication = {
+  const cardStatusIndication: any = {
     expiry: {
       warning: {
         title: localizationText.CARDS.EXPIRING_SOON,
@@ -56,7 +56,7 @@ const IPayCardStatusIndication = ({
     annual: {
       warning: {
         title: localizationText.CARDS.ANNUAL_FEE_COLLECTION,
-        subtitle: currentCard?.expiryDate,
+        subtitle: currentCard?.creditCardDetails?.nextAnnualFeesDueDate,
         icon: icons.moneys_warning,
         rightText: (
           <IPaySubHeadlineText style={styles.fee} regular={false}>
@@ -66,10 +66,11 @@ const IPayCardStatusIndication = ({
       },
       alert: {
         title: localizationText.CARDS.ANNUAL_FEE_COLLECTION_FAILED,
-        subtitle: localizationText.CARDS.ANNUAL_FEE_FAILED_MESSAGE,
+        subtitle: `${localizationText.CARDS.ANNUAL_FEE_FAILED_MESSAGE} ${+currentCard?.nextAnnualFeeAmt + +currentCard?.nextAnnualFeeVAT} ${localizationText.COMMON.SAR}`,
         icon: icons.moneys_alert,
         rightText: (
           <IPayButton
+            onPress={onPress}
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={16} icon={icons.add_bold} color={colors.natural.natural0} />}
             small

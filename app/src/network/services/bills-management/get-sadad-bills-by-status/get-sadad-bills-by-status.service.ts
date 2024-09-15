@@ -12,7 +12,7 @@ const getSadadBillsByStatus = async (payload: GetSadadBillByStatusProps): Promis
   }
   try {
     const apiResponse: any = await apiCall({
-      endpoint: BILLS_MANAGEMENT_URLS.GET_BILLS_BY_STATUS(payload?.walletNumber, payload?.walletNumber),
+      endpoint: BILLS_MANAGEMENT_URLS.GET_BILLS_BY_STATUS(payload?.walletNumber, payload?.billStatus),
       method: requestType.GET,
     });
 

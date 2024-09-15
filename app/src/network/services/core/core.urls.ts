@@ -49,9 +49,11 @@ const CORE_URLS = {
   PREPARE_CARD_RESET: (walletNumber?: string, cardIndex?: string) =>
     `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin/prepare`,
   PREPARE_SHOW_DETAILS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/showNumber/prepare`,
+  PREPARE_RENEW_CARD: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/card-annual-fees/prepare`,
   RESET_PINCODE: (walletNumber?: string, cardIndex?: string) =>
     `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin`,
   OTP_GET_CARD_DETAILS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/showNumber/confirm`,
+  OTP_RENEW_CARD: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/card-annual-fees`,
   GET_TRANSACTION_TYPES: 'core-management/v1/transactionRequestTypes',
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,
   deleteTopupCard: (walletNumber?: string, registrationIid?: string) =>
