@@ -154,7 +154,6 @@ const LocalTransferScreen: React.FC = () => {
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.NAME_CHANGED,
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
@@ -186,7 +185,6 @@ const LocalTransferScreen: React.FC = () => {
     showToast({
       title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
@@ -410,6 +408,7 @@ const LocalTransferScreen: React.FC = () => {
         break;
     }
   }, []);
+
   const onDeleteBeneficiary = async () => {
     setDeleteBeneficiary(false);
     try {
