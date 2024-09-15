@@ -166,7 +166,6 @@ const MoiPaymentScreen: React.FC = () => {
   };
   const onGetBillersServices = async (billerID?: string) => {
     const apiResponse = await getBillersServiceProvider(billerID);
-    console.log('apiResponse', apiResponse.response);
 
     if (apiResponse.successfulResponse) {
       const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
