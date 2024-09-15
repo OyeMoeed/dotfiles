@@ -220,7 +220,7 @@ const InternationalTransferScreen: React.FC = () => {
         : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE;
 
     const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
-      setselectedBeneficiary(beneficiary);
+      setSelectedBeneficiary(beneficiary);
       if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
         navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
           transferData: item,

@@ -20,6 +20,8 @@ const IPayCardStatusIndication = ({
   const fee = 100; // TODO will be updated on the basis of api
 
   const styles = cardStatusIndicationStyles(colors);
+  const alertSubTitle = `${localizationText.CARDS.ANNUAL_FEE_FAILED_MESSAGE} 
+    ${Number(currentCard?.nextAnnualFeeAmt) + Number(currentCard?.nextAnnualFeeVAT)} ${localizationText.COMMON.SAR}`;
 
   const cardStatusIndication: any = {
     expiry: {
@@ -66,7 +68,7 @@ const IPayCardStatusIndication = ({
       },
       alert: {
         title: localizationText.CARDS.ANNUAL_FEE_COLLECTION_FAILED,
-        subtitle: `${localizationText.CARDS.ANNUAL_FEE_FAILED_MESSAGE} ${+currentCard?.nextAnnualFeeAmt + +currentCard?.nextAnnualFeeVAT} ${localizationText.COMMON.SAR}`,
+        subtitle: alertSubTitle,
         icon: icons.moneys_alert,
         rightText: (
           <IPayButton

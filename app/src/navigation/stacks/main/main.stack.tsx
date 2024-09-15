@@ -285,7 +285,10 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.ISSUE_PHYSICAL_CARD_SUCCESS} component={IssuePhysicalCardSuccessScreen} />
           <MainStack.Screen name={screenNames.SHOP_DETAILS} component={ShopDetails} />
           <MainStack.Screen name={screenNames.SEND_MONEY_REQUEST} component={SendMoneyRequest} />
-          <MainStack.Screen name={screenNames.CREATE_MONEY_REQUEST_SUMMARY} component={CreateMoneyRequestSummaryScreen} />
+          <MainStack.Screen
+            name={screenNames.CREATE_MONEY_REQUEST_SUMMARY}
+            component={CreateMoneyRequestSummaryScreen}
+          />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
