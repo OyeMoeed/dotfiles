@@ -5,5 +5,5 @@ import { GetWalletResponse } from '@app/network/services/core/get-wallet/get-wal
  */
 export interface WalletInformationProps {
   walletInfo: GetWalletResponse;
-  withdrawingCashFromATMCardList: string[];
+  cashWithdrawalCardsList: string[];
 }
