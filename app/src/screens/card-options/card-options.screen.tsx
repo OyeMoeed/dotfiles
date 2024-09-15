@@ -31,6 +31,8 @@ import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { setWithdrawingCashFromATMCardList } from '@app/store/slices/wallet-info-slice';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -40,8 +42,11 @@ import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const dispatch = useDispatch();
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+
+  const { withdrawingCashFromATMCardList } = useSelector((state) => state.walletInfoReducer);
 
   const {
     currentCard,
@@ -85,6 +90,8 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    const isATMWithDrawEnabled = withdrawingCashFromATMCardList?.includes(currentCard.cardIndex || '');
+    setIsATMWithDraw(isATMWithDrawEnabled);
     initOnlinePurchase();
   }, []);
 
@@ -142,7 +149,17 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   const toggleATMWithdraw = (isOn: boolean) => {
-    setIsATMWithDraw((prev) => !prev);
+    if (isOn) {
+      const newCardList = new Set<string>([...withdrawingCashFromATMCardList, currentCard.cardIndex || '']);
+      dispatch(setWithdrawingCashFromATMCardList([...newCardList]));
+    } else {
+      const newCardList = withdrawingCashFromATMCardList?.filter(
+        (cardIndex: string) => cardIndex !== currentCard.cardIndex,
+      );
+      dispatch(setWithdrawingCashFromATMCardList([...new Set<string>(newCardList)]));
+    }
+
+    setIsATMWithDraw(isOn);
     renderToast(
       isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
       true,
