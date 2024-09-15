@@ -401,7 +401,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
                     {localizationText.TRANSACTION_HISTORY.REASON_OF_TRANSFER}
                   </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2} />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={1}
+                    text={transaction?.transferPurpose}
+                  />
                 </IPayView>
               )}
               {isCountMusaned && isDebit && (
