@@ -10,17 +10,7 @@ const getBillersMockResponse: GetBillersResponseTypes = {
   },
   response: {
     billersList: [
-      {
-        billerId: '090',
-        billerDesc: 'Residents Services',
-        billerTypeDesc: 'Ministry of the Interior (MOI)',
-        typeOfPayment: '0',
-        isrefundAllowed: true,
-        billerType: '7',
-        billerCode: 'AC',
-        billerServices: null,
-        billIdType: null,
-      },
+ 
       {
         billerId: '091',
         billerDesc: 'Driving License',
