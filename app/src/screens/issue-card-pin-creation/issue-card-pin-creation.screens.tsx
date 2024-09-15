@@ -190,7 +190,7 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
       otp={otp}
       isBottomSheet={false}
       handleOnPressHelp={handleOnPressHelp}
-      timeout={+walletInfo?.otpTimeout}
+      timeout={Number(walletInfo?.otpTimeout)}
       onResendCodePress={onResendCodePress}
     />
   );

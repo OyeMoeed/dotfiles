@@ -56,22 +56,31 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const actionSheetRef = useRef<any>(null);
   const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
   const [statusIndication, setStatusIndication] = useState<CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY>();
-  const [cardStatusType, setCardStatusType] = useState<CardStatusType.ALERT | CardStatusType.WARNING>(CardStatusType.WARNING); // TODO will be updated on the basis of api
+  const [cardStatusType, setCardStatusType] = useState<CardStatusType.ALERT | CardStatusType.WARNING>(
+    CardStatusType.WARNING,
+  ); // TODO will be updated on the basis of api
 
   useEffect(() => {
     if (currentCard?.reissueDue && currentCard?.cardStatus !== '450') {
       setStatusIndication(CardStatusIndication.EXPIRY);
-    } else if (currentCard?.annualFeeDue && currentCard?.cardType != CardCategories.CLASSIC  && currentCard?.cardStatus !== CardStatusNumber?.Expired ) {
+    } else if (
+      currentCard?.annualFeeDue &&
+      currentCard?.cardType !== CardCategories.CLASSIC &&
+      currentCard?.cardStatus !== CardStatusNumber?.Expired
+    ) {
       setStatusIndication(CardStatusIndication.ANNUAL);
-      setCardStatusType(CardStatusType.WARNING)
-    } else if (currentCard?.annualFeeDue && currentCard?.cardType != CardCategories.CLASSIC  && currentCard?.cardStatus == CardStatusNumber?.Expired ) {
+      setCardStatusType(CardStatusType.WARNING);
+    } else if (
+      currentCard?.annualFeeDue &&
+      currentCard?.cardType !== CardCategories.CLASSIC &&
+      currentCard?.cardStatus === CardStatusNumber?.Expired
+    ) {
       setStatusIndication(CardStatusIndication.ANNUAL);
-      setCardStatusType(CardStatusType.ALERT)
-    }  else {
+      setCardStatusType(CardStatusType.ALERT);
+    } else {
       setStatusIndication(undefined);
     }
   }, [currentCard]);
-
 
   const [isCardPrinted, setIsCardPrinted] = useState();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
