@@ -3,6 +3,7 @@ import { IPayCaption2Text, IPayIcon } from '@app/components/atoms';
 import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
@@ -40,6 +41,8 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   control,
   onChangeText,
   errorMessage,
+  selectedBiller,
+  selectedServiceType,
 }: IPayMoiPaymentDetailFormProps) => {
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
@@ -51,6 +54,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   return (
     <>
@@ -97,7 +101,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
       {isServiceTypeValue && (
         <>
           <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-          <DynamicFormComponent />
+          <DynamicFormComponent billerId={selectedBiller} serviceId={selectedServiceType} walletNumber={walletNumber} />
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}
             control={control}

@@ -54,6 +54,7 @@ const MoiPaymentScreen: React.FC = () => {
   const { myBeneficiaryId } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
   const [selectedBiller, setSelectedBiller] = useState<string>();
+  const [selectedServiceType, setSelectedServiceType] = useState<string>();
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
     getValidationSchemas(localizationText);
 
@@ -209,11 +210,12 @@ const MoiPaymentScreen: React.FC = () => {
           const { text, id } = item;
           switch (sheetType) {
             case MoiPaymentType.SERVICE_PROVIDER:
-              setSelectedBiller(id);
               setValue(MoiPaymentFormFields.SERVICE_PROVIDER, text);
+              setSelectedBiller(id);
               break;
             case MoiPaymentType.SERVICE_TYPE:
               setValue(MoiPaymentFormFields.SERVICE_TYPE, text);
+              setSelectedServiceType(id);
               break;
             case MoiPaymentType.ID_TYPE:
               setValue(MoiPaymentFormFields.ID_TYPE, text);
@@ -309,6 +311,8 @@ const MoiPaymentScreen: React.FC = () => {
                     control={control}
                     onChangeText={onChangeText}
                     errorMessage={errorMessage}
+                    selectedServiceType={selectedServiceType}
+                    selectedBiller={selectedBiller}
                   />
                   <IPayButton
                     btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
