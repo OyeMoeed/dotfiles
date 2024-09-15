@@ -18,8 +18,8 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   addForm,
   formInstances,
   setNotes,
-  showReason,
   setSelectedItem,
+  showReason = true,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();

@@ -21,11 +21,13 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
+import copyText from '@app/utilities/clip-board.util';
+import { useEffect, useState } from 'react';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
-import { useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { ItemProps } from './transfer-success.interface';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import images from '@app/assets/images';
+import { ItemProps, TransferDetails } from './transfer-success.interface';
 import transferSuccessStyles from './transfer-success.style';
 
 const TransferSuccessScreen = () => {
@@ -35,9 +37,28 @@ const TransferSuccessScreen = () => {
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const gradientColors = [colors.natural.natural50, colors.natural.natural50];
-  const totalTransferedAmount = `3000 ${localizationText.COMMON.SAR}`;
   const bankDetails = constants.BANK_DETAILS;
-  const beneficiaryDetails = constants.SUCCESS_BENEFICIARY_DETAILS;
+  const [beneficiaryDetails, setBeneficiaryDetails] = useState([]);
+
+  type RouteProps = RouteProp<{ params: TransferDetails }, 'params'>;
+  const route = useRoute<RouteProps>();
+  const { amount, beneficiaryNickName, transferPurpose, instantTransferType, note, refNumber } = route.params;
+
+  useEffect(() => {
+    const beneficiaryDetailsArray = [
+      { title: localizationText.TRANSFER_SUMMARY.AMOUNT, subTitle: `${amount} ${localizationText.COMMON.SAR}` },
+      { title: localizationText.INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME, subTitle: beneficiaryNickName, icon: '' },
+      { title: localizationText.TRANSFER_SUMMARY.REASON, subTitle: transferPurpose, icon: '' },
+      {
+        title: localizationText.TRANSFER_SUMMARY.FAST_CONVERSION_BY,
+        subTitle: instantTransferType,
+        icon: images.sarie,
+      },
+      { title: localizationText.TRANSFER_SUMMARY.NOTE, subTitle: note, icon: '' },
+      { title: localizationText.COMMON.REF_NUMBER, subTitle: refNumber, icon: icons.copy },
+    ];
+    setBeneficiaryDetails(beneficiaryDetailsArray);
+  }, []);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -115,7 +136,7 @@ const TransferSuccessScreen = () => {
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPaySuccess
           headingText={localizationText.TOP_UP.TRANSFER_SUCCESSFUL}
-          subHeadingText={totalTransferedAmount}
+          subHeadingText={`${amount} ${localizationText.COMMON.SAR}`}
           style={StyleSheet.flatten(styles.headerView)}
         />
 

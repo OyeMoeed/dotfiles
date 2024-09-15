@@ -69,7 +69,7 @@ const InternationalTransferScreen: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const [, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
   const editBeneficiaryRef = useRef<any>(null);
   const [apiError, setAPIError] = useState<string>('');
   const [aeBeneficiaryData, setAEBeneficiaryData] = useState([]);
@@ -172,7 +172,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
     setNickName(item?.name ?? '');
-    setselectedBeneficiary(item);
+    setSelectedBeneficiary(item);
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
@@ -220,7 +220,7 @@ const InternationalTransferScreen: React.FC = () => {
         : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE;
 
     const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
-      setselectedBeneficiary(beneficiary);
+      setSelectedBeneficiary(beneficiary);
       if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
         navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
           transferData: item,
