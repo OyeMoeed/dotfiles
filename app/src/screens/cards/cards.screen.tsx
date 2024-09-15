@@ -32,7 +32,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { buttonVariants, CardOptions, CardStatusNumber, CardTypes, CarouselModes } from '@app/utilities/enums.util';
+import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
@@ -61,6 +61,7 @@ const CardsScreen: React.FC = () => {
   const [, setAPIError] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [otpError, setOtpError] = useState<boolean>(false);
+  const [isCardsSheetVisible, setIsCardSheetVisible] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
@@ -88,14 +89,14 @@ const CardsScreen: React.FC = () => {
   const openCardSheet = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
-      cardSheetRef.current.present();
+      setIsCardSheetVisible(true);
     }
   };
   const closeCardSheet = () => {
-    cardSheetRef.current.close();
+    setIsCardSheetVisible(false);
   };
   const handleNext = () => {
-    cardSheetRef.current.close();
+    setIsCardSheetVisible(false);
     if (selectedCard === CardOptions.VIRTUAL) {
       navigate(screenNames.VIRTUAL_CARD);
     } else {
@@ -384,15 +385,15 @@ const CardsScreen: React.FC = () => {
       >
         <IPayCardDetails cardDetails={cardDetails} />
       </IPayBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
         onCloseBottomSheet={closeCardSheet}
-        customSnapPoint={SNAP_POINTS.MID_MEDUIM}
-        ref={cardSheetRef}
+        customSnapPoint={SNAP_POINT.MID_SMALL}
         enablePanDownToClose
         simpleHeader
         simpleBar
         bold
+        isVisible={isCardsSheetVisible}
         cancelBnt
       >
         <IPayCardIssueBottomSheet
@@ -400,7 +401,7 @@ const CardsScreen: React.FC = () => {
           selectedCard={selectedCard}
           onNextPress={handleNext}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };
