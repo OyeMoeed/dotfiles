@@ -1,8 +1,8 @@
 import React from 'react';
 
-import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import { ArrowSquareRightIcon } from '@app/assets/svgs';
+import { IPayCaption2Text, IPayFootnoteText, IPayImage, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -41,7 +41,7 @@ const IPaySadadBillsHeader: React.FC<IPaySadadBillsHeaderProps> = ({
         btnType={buttonVariants.LINK_BUTTON}
         btnText={localizationText.COMMON.VIEW_ALL}
         textColor={colors.primary.primary600}
-        rightIcon={<IPayIcon icon={icons.arrow_right_square} size={14} color={colors.primary.primary600} />}
+        rightIcon={<ArrowSquareRightIcon style={styles.viewAllIcon} color={colors.primary.primary600} />}
       />
     </IPayView>
   );

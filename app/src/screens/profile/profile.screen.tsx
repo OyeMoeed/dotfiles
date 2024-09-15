@@ -30,7 +30,7 @@ import { States, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
-import CardKeys from './profile.interface';
+import { CardKeys, UserFieldKeys } from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
@@ -142,7 +142,11 @@ const Profile = () => {
       <IPayFootnoteText style={styles.personalInfoCardTitleText} regular>
         {item.text}
       </IPayFootnoteText>
-      <IPaySubHeadlineText regular style={styles.subHeadline} numberOfLines={2}>
+      <IPaySubHeadlineText
+        regular
+        style={styles.subHeadline}
+        numberOfLines={item?.key === UserFieldKeys.NATIONAL_ADDRESS ? 1 : 2}
+      >
         {item.details}
       </IPaySubHeadlineText>
     </IPayView>
@@ -269,7 +273,6 @@ const Profile = () => {
       setKycVisible(false);
     }
   };
-
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView2}>

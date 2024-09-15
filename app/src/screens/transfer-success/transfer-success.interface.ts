@@ -12,3 +12,12 @@ interface ItemProps {
 }
 
 export { ItemProps, SuccessItem };
+
+export interface TransferDetails {
+  amount: string;
+  beneficiaryNickName: string;
+  transferPurpose: string;
+  instantTransferType: string;
+  note: string;
+  refNumber: string;
+}

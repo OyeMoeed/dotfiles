@@ -14,5 +14,10 @@ export interface RouteParams {
     cardType: CardTypes;
     cardHeaderText: string;
     name: string;
+    nextAnnualFeeAmt: any;
+    nextAnnualFeeVAT: any;
+    maskedCardNumber: string;
+    cardIndex: string;
   };
+  statusIndication: string;
 }

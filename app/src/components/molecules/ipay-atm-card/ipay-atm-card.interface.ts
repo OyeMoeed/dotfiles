@@ -64,6 +64,9 @@ export interface CardInterface {
    * card type description
    */
   cardTypeDesc?: string;
+  annualFeeDue?: any;
+  nextAnnualFeeAmt?: any;
+  nextAnnualFeeVAT?: any;
 }
 
 export interface IPayATMCardProps {

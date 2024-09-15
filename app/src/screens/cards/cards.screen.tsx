@@ -173,7 +173,7 @@ const CardsScreen: React.FC = () => {
       expired: card?.reissueDue,
       frozen: card.cardStatus === CardStatusNumber.Freezed,
       suspended: false,
-      maskedCardNumber: `**** **** **** **${card.lastDigits}`,
+      maskedCardNumber: card?.maskedCardNumber,
       cardNumber: card.lastDigits,
       creditCardDetails: {
         availableBalance: '5200.40',

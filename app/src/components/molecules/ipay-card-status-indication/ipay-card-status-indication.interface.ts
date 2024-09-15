@@ -9,7 +9,7 @@ export interface IPayCardStatusIndicationProps {
   /**
    * Indication of card status
    */
-  statusIndication: CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY;
+  statusIndication: CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY | CardStatusIndication.ANNUAL_EXPIRED;
   /**
    * to check the status of card
    */
