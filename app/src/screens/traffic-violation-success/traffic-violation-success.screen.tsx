@@ -5,7 +5,6 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import IPayDeclinedCard from '@app/components/molecules/ipay-declined-card/ipay-declined-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
 import { TOTAL_AMOUNT } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -13,11 +12,12 @@ import { useRoute } from '@react-navigation/native';
 import React from 'react';
 import useTrafficViolationSuccess from './traffic-violation-success.hook';
 import trafficViolationSuccessStyles from './traffic-violation-success.style';
+import { useTranslation } from 'react-i18next';
 
 const TrafficViolationSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationSuccessStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { goToHome, billPayDetailes, declinedBillPayDetails, paidBilled, paymentDeclined, payOtherViolation } =
     useTrafficViolationSuccess();
   const route = useRoute();

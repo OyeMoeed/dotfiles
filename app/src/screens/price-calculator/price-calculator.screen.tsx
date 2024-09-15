@@ -22,7 +22,6 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { COUNTRIES_DATA, CURRENCIES_DATA, SNAP_POINTS, TRANSFER_METHOD_DATA } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -31,11 +30,12 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { FilterType, TransactionDetails, dropDownItem } from './price-calculator.interface';
 import priceCalculatorStyles from './price-calculator.styles';
+import { useTranslation } from 'react-i18next';
 
 const PriceCalculatorScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = priceCalculatorStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [amount, setAmount] = useState<number | string>('');
   const [selectedService, setSelectedService] = useState<string>('');
   const { transferTypesData } = useConstantData();

@@ -12,8 +12,10 @@ import React from 'react';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
 import topupIbanStyles from './topup-iban.style';
+import { useTranslation } from 'react-i18next';
 
 const TopUpIBAN = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const localizationText = useLocalization();
   const styles = topupIbanStyles(colors);

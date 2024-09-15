@@ -1,7 +1,6 @@
 import { IPayCaption1Text, IPayCaption2Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import icons from '@app/assets/icons';
@@ -11,11 +10,12 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayAppleWallet from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import { isIosOS } from '@app/utilities/constants';
 import issuePhysicalCardSuccessStyles from './issue-physical-card-success.style';
+import { useTranslation } from 'react-i18next';
 
 const IssuePhysicalCardSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = issuePhysicalCardSuccessStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
   const [isAdded, setIsAdded] = useState(false); // TODO: will be handle on the basis of api
 

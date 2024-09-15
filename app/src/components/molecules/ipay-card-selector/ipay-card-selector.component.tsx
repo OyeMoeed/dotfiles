@@ -14,11 +14,11 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
 import IPayCardItemProps from './ipay-card.interface';
-import { useTranslation } from 'react-i18next';
 
 const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   testID,

@@ -779,7 +779,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   style={styles.headingStyles}
                   color={colors.natural.natural900}
                   text="TRANSACTION_HISTORY.DATE_AND_TIME"
-                ></IPayFootnoteText>
+                />
                 <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
                   {getDate(transaction?.transactionDateTime)}
                 </IPaySubHeadlineText>

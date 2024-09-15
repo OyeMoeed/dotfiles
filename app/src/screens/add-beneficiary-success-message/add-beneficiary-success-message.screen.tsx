@@ -11,7 +11,6 @@ import {
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -29,7 +28,6 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const { showToast } = useToastContext();
   const route = useRoute();
   const styles = beneficiarySuccessStyles(colors);
-  const localizationText = useLocalization();
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);

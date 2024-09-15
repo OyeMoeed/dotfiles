@@ -3,7 +3,6 @@ import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayAccountBalance, IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import { IPaySadadBillDetailsBox } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { RouteProp, useRoute } from '@react-navigation/native';
@@ -18,7 +17,6 @@ const NewSadadBillScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = newsadadBillStyles(colors);
-  const localizationText = useLocalization();
   // TODO will update on basis of API
   const dummyData = {
     balance: '5200',

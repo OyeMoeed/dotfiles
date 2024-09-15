@@ -63,7 +63,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const renderOption = ({ item, index }: { item: OptionItem; index: number }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalTransferData];
-    const localization = t('INTERNATIONAL_TRANSFER[localizationKey] || label');
+    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
 
     const getTitleSuffix = (labelKeys: string) => {
       switch (labelKeys) {

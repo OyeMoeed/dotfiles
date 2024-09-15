@@ -28,8 +28,9 @@ import nearestAtmStyles from './nearest-atm.style';
 const NearestAtmScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = nearestAtmStyles(colors);
+  // const { t } = useTranslation();
   const localizationText = useLocalization();
-  const { NEAREST_ATM, LIST, MAP, SELECT_CITY, ATM_FILTERS } = t('ATM_WITHDRAWAL');
+  const { NEAREST_ATM, LIST, MAP, SELECT_CITY, ATM_FILTERS } = localizationText.ATM_WITHDRAWAL;
   const { ALL_TYPES } = ATM_FILTERS;
   const nearestAtmTabs = [LIST, MAP];
   // const cities = constants.CITIES;

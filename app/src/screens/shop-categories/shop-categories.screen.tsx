@@ -11,8 +11,10 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import shopCategoriesStyles from './shop-categories.styles';
+import { useTranslation } from 'react-i18next';
 
 const ShopCategoriesScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { playstationData } = useConstantData();
   const { colors } = useTheme();
   const styles = shopCategoriesStyles(colors);

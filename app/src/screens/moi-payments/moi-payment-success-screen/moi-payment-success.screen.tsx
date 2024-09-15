@@ -14,7 +14,6 @@ import { IPayButton, IPayShareableImageView, IPaySuccess } from '@app/components
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -31,7 +30,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { moiPaymentDetailes, successMessage, refund, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const [paymentDtails, setPaymentDetails] = useState<ItemProps[]>([]);

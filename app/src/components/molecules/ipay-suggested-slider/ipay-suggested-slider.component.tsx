@@ -12,6 +12,7 @@ import {
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { JSX } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPaySuggestedSliderProps } from './ipay-suggested-slider.interface';
 import genratedStyles from './ipay-suggested-slider.style';
 
@@ -21,6 +22,7 @@ import genratedStyles from './ipay-suggested-slider.style';
  * @returns {JSX.Element} - The rendered component.
  */
 const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPaySuggestedSliderProps): JSX.Element => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
 

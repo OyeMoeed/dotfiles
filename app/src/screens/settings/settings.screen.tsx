@@ -7,7 +7,6 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-biomatric-status/update-biomatric-status.interface';
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
@@ -30,7 +29,6 @@ import useSettings from './use-settings.hook';
 
 const Settings: React.FC = () => {
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);

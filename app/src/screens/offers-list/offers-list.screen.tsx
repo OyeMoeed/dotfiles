@@ -12,7 +12,6 @@ import {
 import icons from '@app/assets/icons';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import useTheme from '@app/styles/hooks/theme.hook';

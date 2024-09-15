@@ -4,18 +4,18 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
 import { useState } from 'react';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './issue-card-pin-creation.interface';
 import changeCardPinStyles from './issue-card-pin-creation.style';
+import { useTranslation } from 'react-i18next';
 
 const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp }: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [passcodeError, setPasscodeError] = useState(false);
   const [currentView, setCurrentView] = useState<ChangeCardPinViewTypes>(ChangeCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');

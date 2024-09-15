@@ -4,7 +4,6 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayActionSheetProps } from '@app/components/organism/ipay-actionsheet/ipay-actionsheet-interface';
 import IPayActionSheet from '@app/components/organism/ipay-actionsheet/ipay-actionsheet.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant } from '@app/utilities/enums.util';
@@ -26,13 +25,12 @@ interface UseChangeImageReturn {
 
 const useChangeImage = (): UseChangeImageReturn => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
+  const styles = profileStyles(colors);
 
   const actionSheetRef = useRef<any>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
-  const localizationText = useLocalization();
-  const { colors } = useTheme();
-  const styles = profileStyles(colors);
   const [, setIsLoading] = useState<boolean>(false);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const dispatch = useTypedDispatch();

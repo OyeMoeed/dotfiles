@@ -28,6 +28,7 @@ import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.c
 import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
+import { useTranslation } from 'react-i18next';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh',
@@ -38,6 +39,7 @@ const DUMMY_DATA = {
 };
 
 const ReplaceCardConfirmDetailsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
 
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
@@ -49,8 +51,6 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const {
     currentCard: { cardHeaderText, name },
   } = route.params;
-
-  const localizationText = useLocalization();
 
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);

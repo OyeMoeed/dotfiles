@@ -3,17 +3,17 @@ import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayView } from '@app/compone
 import { IPayButton, IPayHeader, IPayNoResult, SadadFooterComponent } from '@app/components/molecules';
 import IPayTrafficViolationCard from '@app/components/organism/ipay-traffic-violation-card/ipay-traffic-violation-card.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import useTrafficViolation from './traffic-violation.hook';
 import trafficViolationStyles from './traffic-violation.style';
+import { useTranslation } from 'react-i18next';
 
 const TrafficViolationScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationStyles();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const {
     billsData,
     selectedBillsCount,

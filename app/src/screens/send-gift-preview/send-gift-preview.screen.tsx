@@ -15,7 +15,6 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
@@ -34,7 +33,6 @@ const SendGiftPreview: FC = ({ route }) => {
   const { occasion = '', selectedCard } = { ...route?.params };
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const styles = sendGiftPreviewStyles(colors);
   const MAX_LENGTH = 1000;
   const AMOUNT = '100';

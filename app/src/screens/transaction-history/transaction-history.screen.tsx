@@ -31,7 +31,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const { t } = useTranslation();
-  const localizationText = useLocalization();
   const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
 
   const [filters, setFilters] = useState<Array<string>>([]);

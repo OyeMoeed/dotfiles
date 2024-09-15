@@ -261,7 +261,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                   <IPayCaption2Text style={styles.totalAmount}>
                     {`${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyRemainingIncomingAmount)}`}{' '}
                   </IPayCaption2Text>
-                  {`${t('HOME.OF')}` + ` ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyIncomingLimit)}`}
+                  {`${t('HOME.OF')} ${formatNumberWithCommas(+walletInfo.limitsDetails.monthlyIncomingLimit)}`}
                 </IPayCaption2Text>
               </IPayView>
             </>

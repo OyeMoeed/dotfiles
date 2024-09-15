@@ -11,7 +11,6 @@ import {
 import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
@@ -30,7 +29,6 @@ const MenuScreen: FC = () => {
   const { colors } = useTheme();
   const styles = menuStyles(colors);
   const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const localizationText = useLocalization();
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
 

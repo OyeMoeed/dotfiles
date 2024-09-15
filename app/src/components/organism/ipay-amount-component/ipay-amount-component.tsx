@@ -20,10 +20,10 @@ import { getErrorMessage } from '@rnw-community/shared';
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
-import { useTranslation } from 'react-i18next';
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
