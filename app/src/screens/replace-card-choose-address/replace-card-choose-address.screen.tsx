@@ -12,16 +12,18 @@ import {
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
 import { RouteParams } from './replace-card-choose-address.interface';
 import replaceCardStyles from './replace-card-choose-address.style';
@@ -46,15 +48,20 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
   const styles = replaceCardStyles(colors);
   const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
 
   const [selectedCity, setSelectedCity] = useState(CITIES[0]);
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    setCheckTermsAndConditions(true);
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
   };
 
   const onCloseBottomSheet = () => {
@@ -139,11 +146,6 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           />
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions
-        showTermsAndConditions={showTermsAndConditionsSheet}
-        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
-        isVirtualCardTermsAndConditions
-      />
       <IPayBottomSheet
         noGradient
         heading={localizationText.REPLACE_CARD.SELECT_CITY}
