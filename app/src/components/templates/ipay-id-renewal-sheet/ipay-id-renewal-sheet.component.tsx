@@ -1,4 +1,5 @@
-import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import icons from '@app/assets/icons';
+import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification } from '@app/components/templates';
@@ -156,13 +157,30 @@ const IPayIdRenewalSheet: React.FC = () => {
   };
   const formattedSubtitle = isAboutToExpire && !idExpired ? t('ID_RENEWAL.ID_UPDATION_DES', extraParams) : subtitle;
 
+  const DisclaimerSection = () => {
+    return (
+      <IPayView style={styles.verifyView}>
+        <IPayView style={styles.verifyViewRow}>
+          <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
+          <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
+            {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+          </IPayFootnoteText>
+        </IPayView>
+
+        <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+          {localizationText.ID_RENEWAL.WHY_VERIFY}
+        </IPayCaption1Text>
+      </IPayView>
+    );
+  };
+
   return (
     <>
       <IPayPortalBottomSheet
         heading={localizationText.ID_RENEWAL.TITLE}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={customSnapPoints}
-        isVisible={isIdRenewalSheetVisible}
+        isVisible={true}
         simpleHeader
         simpleBar
         bold
@@ -180,6 +198,8 @@ const IPayIdRenewalSheet: React.FC = () => {
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}
+            hasDisclaimerSection={true}
+            disclaimerSection={<DisclaimerSection />}
           />
         ) : (
           <IPayView style={styles.profileContainer}>
