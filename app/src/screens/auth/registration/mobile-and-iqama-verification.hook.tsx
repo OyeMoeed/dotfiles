@@ -68,7 +68,6 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const handleOnPressHelp = () => {
-    // helpCenterRef?.current?.present();
     setHelpSheetVisible(true);
   };
 

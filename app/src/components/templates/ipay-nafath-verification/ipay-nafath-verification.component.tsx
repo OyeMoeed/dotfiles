@@ -90,7 +90,6 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
         ? atob(apiResponse.response.token)
         : apiResponse.response.token;
 
-      // setNafathRequestId(apiResponse.response.nafathRequestId);
       setNafathNumber(nafathToken);
       setCounter(apiResponse.response.waitingTimeSeconds);
       setDuration(apiResponse.response.waitingTimeSeconds * 10);
@@ -230,11 +229,6 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     const remainingSeconds = seconds % 60;
     return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
-
-  // const onResend = () => {
-  //   onComplete();
-  //   navigate(screenNames.IDENTITY_SUCCESSFUL);
-  // };
 
   const onTimerCompete = () => {
     setIsExpired(true);

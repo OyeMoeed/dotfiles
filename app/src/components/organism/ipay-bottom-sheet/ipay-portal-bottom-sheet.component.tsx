@@ -104,7 +104,6 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
     return (
       <Portal>
         <BottomSheet
-          // index={-1}
           keyboardBehavior="fillParent"
           backdropComponent={renderBackdrop}
           ref={bottomSheetModalRef}
