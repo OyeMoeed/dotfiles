@@ -180,7 +180,7 @@ const IPayIdRenewalSheet: React.FC = () => {
         heading={localizationText.ID_RENEWAL.TITLE}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={customSnapPoints}
-        isVisible={true}
+        isVisible={isIdRenewalSheetVisible}
         simpleHeader
         simpleBar
         bold
