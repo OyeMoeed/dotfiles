@@ -47,4 +47,7 @@ export interface IPayAlertProps {
   showIcon?: boolean;
 
   leftIcon?: React.JSX.Element;
+
+  // Determines whether to display a transparent overlay behind the alert
+  transparentOverlay?: boolean;
 }
