@@ -71,6 +71,8 @@ const TransferInformation: React.FC = () => {
     accountNumber: beneficiaryAccountNumber ?? '',
   };
 
+  const transferNetwork = 'IPS'; // TODO need to replace.
+
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
     const monthlyTotalRemainingLimit = parseFloat(monthlyOutgoingLimit);
@@ -161,7 +163,13 @@ const TransferInformation: React.FC = () => {
             amount: transferAmount,
             note: notes,
             bankCode,
-            deviceInfo,
+            transferNetwork,
+            deviceInfo: {
+              platform: deviceInfo?.platform,
+              platformVersion: deviceInfo?.platformVersion,
+              deviceName: deviceInfo?.deviceName,
+              deviceId: deviceInfo?.deviceId,
+            },
           };
           const apiResponse = await localTransferPrepare(walletNumber, payload);
           if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
