@@ -22,6 +22,7 @@ import { BillersService } from '@app/network/services/bills-management/get-bille
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
@@ -275,14 +276,47 @@ const MoiPaymentScreen: React.FC = () => {
           setErrorMessage('');
         };
 
+        const validateBills = async () => {
+          const payLoad = {
+            dynamicFields: [
+              {
+                label: 'Iqama ID',
+                index: 'BeneficiaryId.OfficialId',
+                value: '1092103737',
+                description: '1092103737',
+                isFormValid: 'false',
+              },
+              {
+                label: 'ID Type',
+                index: 'BeneficiaryId.OfficialIdType',
+                value: 'IQA',
+                description: 'Iqama ID',
+                isFormValid: 'false',
+              },
+              {
+                label: 'Fees Duration End Date (Hijri)',
+                index: 'PayAllAssociateFees.FeeDurationEndDate',
+                value: '',
+                description: '',
+                isFormValid: 'false',
+              },
+            ],
+            walletNumber: '10587981',
+            refund: false,
+          };
+
+          const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
+          if (apiResponse?.successfulResponse) {
+            if (selectedTab === MoiPaymentTypes.REFUND) {
+              navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: apiResponse.response });
+            } else {
+              navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { billData: apiResponse.response });
+            }
+          }
+        };
         const onSubmit = (data: any) => {
           console.log('data: any', data);
-
-          if (selectedTab === MoiPaymentTypes.REFUND) {
-            navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: data });
-          } else {
-            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { billData: data });
-          }
+          validateBills();
         };
 
         return (
