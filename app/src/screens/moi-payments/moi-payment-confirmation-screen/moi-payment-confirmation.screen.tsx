@@ -21,7 +21,6 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const { mobileNumber } = userContactInfo;
   const route = useRoute();
   const { billData } = route?.params || {};
-  console.log('get bill dsta', billData);
 
   const { moiPaymentDetailes, handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef } =
     useMoiPaymentConfirmation();
