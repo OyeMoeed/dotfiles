@@ -27,6 +27,7 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   };
 
   const dummyCardDetails: FieldKeyMappingProps = {
+    [CardDetailsKeys.CARD_TYPE]: cardDetails?.cardType,
     [CardDetailsKeys.CARD_NUMBER]: cardDetails?.cardNumber,
     [CardDetailsKeys.CARD_HOLDER_NAME]: cardDetails?.cardHolderName,
     [CardDetailsKeys.CVV]: cardDetails?.cvv,
@@ -34,6 +35,7 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   };
 
   const fieldKeyMapping: FieldKeyMappingProps = {
+    [CardDetailsKeys.CARD_TYPE]: localizationText.CARDS[CardDetailsKeys.CARD_TYPE],
     [CardDetailsKeys.CARD_NUMBER]: localizationText.CARDS[CardDetailsKeys.CARD_NUMBER],
     [CardDetailsKeys.CARD_HOLDER_NAME]: localizationText.CARDS[CardDetailsKeys.CARD_HOLDER_NAME],
     [CardDetailsKeys.CVV]: localizationText.CARDS[CardDetailsKeys.CVV],

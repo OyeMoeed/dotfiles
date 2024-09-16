@@ -218,9 +218,10 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={styles.walletBackground}>
         <IPayFlatlist
           style={styles.detailesFlex}
-          scrollEnabled={false}
+          scrollEnabled
           data={topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : topupChannel === PayChannel.CARD ? cardPayDetails : getDetails()}
           renderItem={renderNonAlinmaPayItem}
+          showsVerticalScrollIndicator={false}
         />
       </IPayView>
     );
@@ -284,7 +285,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const renderCard = () =>
     topupChannel === PayChannel.CARD && (
-      <IPayView style={[styles.cardButton, styles.margins]}>
+      <IPayView style={[styles.cardButton, styles.actionButton]}>
         <IPayButton
           onPress={goBack}
           btnType={buttonVariants.LINK_BUTTON}

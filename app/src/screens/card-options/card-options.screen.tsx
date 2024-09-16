@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
@@ -26,11 +26,13 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
+import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -40,13 +42,18 @@ import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const dispatch = useDispatch();
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+
+  const { cashWithdrawalCardsList } = useSelector((state) => state.walletInfoReducer);
 
   const {
     currentCard,
     currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
   } = route.params;
+
+  const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -85,6 +92,8 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    const isATMWithDrawEnabled = cashWithdrawalCardsList?.includes(currentCard.cardIndex || '');
+    setIsATMWithDraw(isATMWithDrawEnabled);
     initOnlinePurchase();
   }, []);
 
@@ -142,7 +151,15 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   const toggleATMWithdraw = (isOn: boolean) => {
-    setIsATMWithDraw((prev) => !prev);
+    if (isOn) {
+      const newCardList = new Set<string>([...cashWithdrawalCardsList, currentCard.cardIndex || '']);
+      dispatch(setCashWithdrawalCardsList([...newCardList]));
+    } else {
+      const newCardList = cashWithdrawalCardsList?.filter((cardIndex: string) => cardIndex !== currentCard.cardIndex);
+      dispatch(setCashWithdrawalCardsList([...new Set<string>(newCardList)]));
+    }
+
+    setIsATMWithDraw(isOn);
     renderToast(
       isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
       true,
@@ -311,7 +328,7 @@ const CardOptionsScreen: React.FC = () => {
             cardType={cardType}
             cardTypeName={cardHeaderText}
             carHolderName={name}
-            cardLastFourDigit={maskedCardNumber || ''}
+            cardLastFourDigit={cardLastFourDigit || ''}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
@@ -326,7 +343,6 @@ const CardOptionsScreen: React.FC = () => {
               openBottomSheet.current?.present();
             }}
           />
-
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}

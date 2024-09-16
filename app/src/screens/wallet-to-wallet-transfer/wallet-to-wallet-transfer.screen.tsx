@@ -25,14 +25,19 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
-import { PermissionsStatus, PermissionTypes } from '@app/enums';
+import { PermissionTypes, PermissionsStatus } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import usePermissions from '@app/hooks/permissions.hook';
 import { useKeyboardStatus } from '@app/hooks';
+import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
@@ -40,11 +45,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
-import { getDeviceInfo } from '@app/network/utilities';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
-import { useTypedSelector } from '@app/store/store';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -71,31 +71,15 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const getW2WActiveFriends = async () => {
-    const payload: IW2WCheckActiveReq = {
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
-    };
-    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
-      if (apiResponse.response?.friends) {
-        navigate(ScreenNames.SEND_MONEY_FORM, {
-          activeFriends: apiResponse.response?.friends,
-          selectedContacts,
-          heading: localizationText.HOME.SEND_MONEY,
-          showReason: true,
-          showHistory: true,
-        });
-      }
-    }
-  };
 
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        getW2WActiveFriends();
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          selectedContacts,
+          heading: localizationText.HOME.SEND_MONEY,
+          showReason: true,
+        });
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
@@ -108,7 +92,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         break;
 
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(ScreenNames.SEND_MONEY_FORM, {
+        navigate(ScreenNames.SEND_MONEY_REQUEST, {
           selectedContacts,
           heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
           from: TRANSFERTYPE.REQUEST_MONEY,
@@ -163,6 +147,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   }, [permissionStatus]);
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
+  const clearIcon = <IPayIcon icon={icons.CLOSE_SQUARE} size={20} color={colors.primary.primary500} />;
 
   const renderToast = () => {
     showToast({
@@ -174,29 +159,25 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const handleSelect = (contact: Contact) => {
-    if (selectedContacts.length < 5) {
-      // Corrected 'lenght' to 'length'
-      setSelectedContacts((prevSelectedContacts) => {
-        const isAlreadySelected = prevSelectedContacts.some(
-          (selectedContact) => selectedContact.recordID === contact.recordID,
-        );
+    // Corrected 'lenght' to 'length'
+    setSelectedContacts((prevSelectedContacts) => {
+      const isAlreadySelected = prevSelectedContacts.some(
+        (selectedContact) => selectedContact.recordID === contact.recordID,
+      );
 
-        if (isAlreadySelected) {
-          // Remove the contact if it's already selected
-          return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
-        }
+      if (isAlreadySelected) {
+        // Remove the contact if it's already selected
+        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      }
 
-        // Add the contact if the limit is not exceeded
-        if (prevSelectedContacts.length >= MAX_CONTACTS) {
-          return prevSelectedContacts;
-        }
+      // Add the contact if the limit is not exceeded
+      if (prevSelectedContacts.length >= MAX_CONTACTS) {
+        renderToast();
+        return prevSelectedContacts;
+      }
 
-        return [...prevSelectedContacts, contact];
-      });
-    } else {
-      // Call the function to render a toast or display a message
-      renderToast();
-    }
+      return [...prevSelectedContacts, contact];
+    });
   };
 
   const showUnsavedBottomSheet = () => {
@@ -227,7 +208,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       });
     }
   };
-
   const handleContentSizeChange = (contentSizeWidth: number) => {
     setContentWidth(contentSizeWidth);
   };
@@ -298,7 +278,11 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const getSearchedContacts = () =>
-    contacts.filter((item) => item?.phoneNumbers[0]?.number?.includes(search) || item?.givenName?.includes(search));
+    contacts.filter(
+      (item) =>
+        item?.phoneNumbers[0]?.number?.includes(search) ||
+        item?.givenName.toUpperCase()?.includes(search.toUpperCase()),
+    );
 
   const qrCodeCallBack = (mobileNumber: string) => {
     if (mobileNumber) {
@@ -325,6 +309,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const renderFooterItem = () => <IPayView style={styles.emptyItemStyle} />;
+
+  const onClearSearchBox = () => {
+    setSearch('');
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -354,9 +342,12 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           label={localizationText.COMMON.SEARCH}
           placeholder={localizationText.COMMON.SEARCH}
           rightIcon={searchIcon}
+          showLeftIcon={!!search}
+          leftIcon={clearIcon}
+          onClearInput={onClearSearchBox}
           simpleInput
           containerStyle={styles.searchInputStyle}
-          style={[styles.inputStyle, isIosOS && styles.topMargin]}
+          style={[styles.inputStyle, isIosOS && styles.topMargin, styles.textInputContainerStyle]}
         />
         <IPayView style={styles.unsavedAndQr}>
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>
@@ -473,7 +464,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                 btnStyle={styles.unsavedButton}
                 btnText={localizationText.COMMON.DONE}
                 onPress={handleSubmit(addUnsavedNumber)}
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
               />
             </IPayView>
           )}
