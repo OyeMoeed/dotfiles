@@ -364,14 +364,16 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const renderLoadingWithNoResult = () => (isLoading ? <IPaySpinner hasBackgroundColor={false} /> : renderNoResult());
 
+  const headerTitle = currentCard
+    ? localizationText.CARDS.CARD_TRANSACTIONS_HISTORY
+    : localizationText.COMMON.TRANSACTIONS_HISTORY;
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={
-          currentCard ? localizationText.CARDS.CARD_TRANSACTIONS_HISTORY : localizationText.COMMON.TRANSACTIONS_HISTORY
-        }
+        title={headerTitle}
         titleStyle={styles.cardTransactionsTitle}
         applyFlex
         rightComponent={

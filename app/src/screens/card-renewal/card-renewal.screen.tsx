@@ -73,6 +73,8 @@ const CardRenewalScreen: React.FC = () => {
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
 
+  const lastFourDigit = maskedCardNumber?.slice(-4);
+
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
 
@@ -214,7 +216,7 @@ const CardRenewalScreen: React.FC = () => {
               cardType={cardType}
               cardTypeName={cardHeaderText}
               carHolderName={name}
-              cardLastFourDigit={maskedCardNumber}
+              cardLastFourDigit={lastFourDigit}
             />
             <IPayView style={styles.ipayListGap}>
               <IPayList
