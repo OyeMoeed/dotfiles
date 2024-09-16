@@ -329,7 +329,7 @@ const MoiPaymentScreen: React.FC = () => {
                 <IPayView style={styles.container}>
                   <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
 
-                  <IPayView style={styles.contentContainer}>
+                  <>
                     <IPayMoiPaymentDetailForm
                       onServiceProviderAction={() => onOpenSheet(MoiPaymentType.SERVICE_PROVIDER)}
                       onServiceTypeAction={() => onOpenSheet(MoiPaymentType.SERVICE_TYPE)}
@@ -353,7 +353,7 @@ const MoiPaymentScreen: React.FC = () => {
                       btnIconsDisabled
                       disabled={isBtnEnabled}
                     />
-                  </IPayView>
+                  </>
                 </IPayView>
               </>
             </IPaySafeAreaView>
