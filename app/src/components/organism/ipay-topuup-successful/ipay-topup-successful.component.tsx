@@ -20,12 +20,13 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
-import React from 'react';
+import React, { useState } from 'react';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 import useData from './use-data';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
 
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   completionStatus,
@@ -52,6 +53,25 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       containerStyle: topupChannel === PayChannel.ORDER ? styles.orderToast : styles.toastContainer,
     });
   };
+  const [cardPayDetails, setCardPayDetails] = useState<any>([
+    {
+      id: '1',
+      label: localizationText.TOP_UP.TOPUP_TYPE,
+      value: localizationText.TOP_UP.CARDS,
+      icon: icons.cards,
+      color: colors.primary.primary800,
+    },
+    {
+      id: '3',
+      label: localizationText.TOP_UP.REF_NUMBER,
+      value: summaryData?.response?.transactionId,
+      detailsText: summaryData?.response?.transactionId,
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime), icon: null },
+  ]);
+
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
@@ -199,7 +219,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         <IPayFlatlist
           style={styles.detailesFlex}
           scrollEnabled={false}
-          data={topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : getDetails()}
+          data={topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : topupChannel === PayChannel.CARD ? cardPayDetails : getDetails()}
           renderItem={renderNonAlinmaPayItem}
         />
       </IPayView>
