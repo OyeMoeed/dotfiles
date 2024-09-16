@@ -2,6 +2,7 @@
  * i18n is a library for internationalization (i18n) in JavaScript applications.
  */
 import { translations } from '@app/localization/translations.localization';
+import { LanguageCode } from '@app/utilities';
 import i18n from 'i18next';
 import ChainedBackend from 'i18next-chained-backend';
 import HttpBackend from 'i18next-http-backend';
@@ -11,9 +12,9 @@ import { initReactI18next } from 'react-i18next';
 const languageUrl = 'https://uat.alinmapay.com.sa/v2/alinmapay/localization/channels/PAYC/labels/i18n?locale={{lng}}';
 class CustomBackend extends HttpBackend {
   // Override the fetch method to clean and parse the response
-  read(language, namespace, callback) {
+  read(language: string, namespace: string, callback: (error: any, data: any) => void) {
     const loadPath = this.options.loadPath || languageUrl;
-    const url = loadPath?.replace('{{lng}}', language);
+    const url = (loadPath as string)?.replace('{{lng}}', language);
 
     fetch(url)
       .then((response) => response.text()) // Get the response as text
@@ -22,7 +23,7 @@ class CustomBackend extends HttpBackend {
           const parsedData = JSON.parse(data)?.[language]; // Parse the cleaned JSON
           callback(null, parsedData); // Pass parsed data to i18next
         } catch (error) {
-          callback({}, false); // Handle JSON parsing errors
+          callback(error, false); // Handle JSON parsing errors
         }
       })
       .catch((error) => callback(error, false)); // Handle fetch errors
@@ -50,7 +51,7 @@ i18n
         CustomBackend,
         i18nextResourcesToBackend((lng, ns, callback) => {
           // Load local translations (from local file)
-          const resource = translations[lng];
+          const resource = translations[lng as keyof typeof LanguageCode];
           callback(null, resource);
         }),
       ],
