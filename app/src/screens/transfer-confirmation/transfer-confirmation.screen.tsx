@@ -48,7 +48,6 @@ const TransferConfirmation: React.FC = () => {
   const { mobileNumber } = userContactInfo;
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const [beneficiaryData, setBeneficiaryData] = useState();
-  // const transferInfoData = constants.BANK_DETAILS;
   const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
 
   const [otp, setOtp] = useState('');

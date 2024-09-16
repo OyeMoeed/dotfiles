@@ -191,7 +191,7 @@ const TransferInformation: React.FC = () => {
     }
   };
 
-  const getTransferreasonLovs = async () => {
+  const getTransferReasons = async () => {
     const payload: IGetCoreLovPayload = {
       lovType: '184',
       lovCode2: 'W',
@@ -210,7 +210,7 @@ const TransferInformation: React.FC = () => {
   };
 
   useEffect(() => {
-    getTransferreasonLovs();
+    getTransferReasons();
   }, []);
 
   const onPressTopup = () => navigate(ScreenNames.WALLET);
