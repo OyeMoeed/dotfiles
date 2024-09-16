@@ -61,6 +61,7 @@ const IPayList: React.FC<IPayListProps> = ({
   titleLines,
   subTitleLines,
   regularTitle = true,
+  shouldDetailsTranslate = true,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(colors);
@@ -143,7 +144,12 @@ const IPayList: React.FC<IPayListProps> = ({
             )}
             {rightText && rightText}
             {showDetail && (
-              <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
+              <IPaySubHeadlineText
+                shouldTranslate={shouldDetailsTranslate}
+                regular
+                style={[dynamicStyles.copyText, detailTextStyle]}
+                text={detailText}
+              />
             )}
           </IPayView>
           <IPayView>
@@ -159,23 +165,17 @@ const IPayList: React.FC<IPayListProps> = ({
             )}
           </IPayView>
           <IPayView>
-            {isShowTime ? (
+            {isShowTime && (
               <IPayButton
                 onPress={() => onTimePress?.()}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}
               />
-            ) : (
-              <IPayView />
             )}
           </IPayView>
           <IPayView>
-            {isShowIPayToggleButton ? (
-              <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
-            ) : (
-              <IPayView />
-            )}
+            {isShowIPayToggleButton && <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />}
           </IPayView>
           <IPayView>
             {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <IPayView />}

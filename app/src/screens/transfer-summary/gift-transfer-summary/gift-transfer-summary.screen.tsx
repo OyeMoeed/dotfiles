@@ -325,6 +325,7 @@ const TransferSummaryScreen: React.FC = () => {
             showDetail
             detailTextStyle={styles.listTextStyle}
             detailText={`${totalAmount} ${t('COMMON.SAR')}`}
+            shouldDetailsTranslate={false}
           />
           <IPayButton
             btnType={buttonVariants.PRIMARY}

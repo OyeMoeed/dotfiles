@@ -184,4 +184,8 @@ export interface IPayListProps {
    * to make title bold
    * */
   regularTitle?: boolean;
+  /**
+   * Need translate the text.
+   */
+  shouldDetailsTranslate?: boolean;
 }

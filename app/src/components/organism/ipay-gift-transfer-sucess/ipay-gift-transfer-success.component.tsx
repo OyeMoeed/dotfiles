@@ -123,7 +123,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     );
   };
 
-  const renderText = () => t('TOP_UP.GIFT_SUCCESSFUL');
+  const renderText = 'TOP_UP.GIFT_SUCCESSFUL';
 
   const renderActionLabel = () => (
     <IPayView style={styles.giftText}>
@@ -187,7 +187,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={renderText()}
+                text={renderText}
                 gradientColors={gradientColors}
                 style={styles.gradientTextSvg}
                 fontSize={styles.linearGradientText.fontSize}

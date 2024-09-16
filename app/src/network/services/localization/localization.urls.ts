@@ -1,7 +1,9 @@
 import { BASE_URL } from 'react-native-config';
 
+const baseUrl = BASE_URL || 'https://uat.alinmapay.com.sa/v2/alinmapay';
+
 const LOCALIZATION_URLS = {
-  getLocalizationChannelsUrl: `${BASE_URL}/localization/channels/PAYC/labels/i18n?locale={{lng}}`,
+  getLocalizationChannelsUrl: `${baseUrl}/localization/channels/PAYC/labels/i18n?locale={{lng}}`,
 };
 
 export default LOCALIZATION_URLS;

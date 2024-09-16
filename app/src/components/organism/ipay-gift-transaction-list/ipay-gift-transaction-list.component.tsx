@@ -106,7 +106,12 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
         {isReceivedCardExpired || isNewCard ? (
           <IPayView />
         ) : (
-          <IPayFootnoteText regular={false} text={`${amount} ${t('COMMON.SAR')}`} color={colors.warning.warning800} />
+          <IPayFootnoteText
+            regular={false}
+            text={`${amount} ${t('COMMON.SAR')}`}
+            color={colors.warning.warning800}
+            shouldTranslate={false}
+          />
         )}
         {isNewCard && (
           <IPayView style={styles.newIconStyle}>

@@ -24,6 +24,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   isAmount,
   varient = 'primary',
   fontWeight,
+  shouldTranslate = true,
 }: IPayTextProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -34,7 +35,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   const mainText = children ? String(children) : text || '';
   const formattedText = isAmount ? formatNumberWithCommas(mainText || '') : mainText;
   const isNeedTranslate = !isNumber(formattedText) && isUpperCase(formattedText) && formattedText?.length > 1;
-  const showText = isNeedTranslate ? t(formattedText) : formattedText;
+  const showText = isNeedTranslate && shouldTranslate ? t(formattedText) : formattedText;
 
   return (
     <Text

@@ -199,12 +199,20 @@ const TransferConfirmation: React.FC = () => {
           <IPayView style={styles.taxView}>
             <IPayView style={styles.smallerTabView}>
               <IPayFootnoteText text={vatTax} color={colors.natural.natural900} />
-              <IPayFootnoteText text={`${vatAmount} ${t('COMMON.SAR')}`} color={colors.primary.primary800} />
+              <IPayFootnoteText
+                text={`${vatAmount} ${t('COMMON.SAR')}`}
+                color={colors.primary.primary800}
+                shouldTranslate={false}
+              />
             </IPayView>
 
             <IPayView style={[styles.smallerTabView, styles.feesView]}>
               <IPayFootnoteText text="LOCAL_TRANSFER.FEES" color={colors.natural.natural900} />
-              <IPayFootnoteText text={`${feesAmount} ${t('COMMON.SAR')}`} color={colors.primary.primary800} />
+              <IPayFootnoteText
+                text={`${feesAmount} ${t('COMMON.SAR')}`}
+                color={colors.primary.primary800}
+                shouldTranslate={false}
+              />
             </IPayView>
           </IPayView>
         </IPayLinearGradientView>
@@ -223,7 +231,11 @@ const TransferConfirmation: React.FC = () => {
             <IPayView style={styles.totalAmountView}>
               <IPayView style={styles.smallerTabView}>
                 <IPayFootnoteText text="LOCAL_TRANSFER.TOTAL_AMOUNT" color={colors.natural.natural900} />
-                <IPayFootnoteText text={`${totalAmount} ${t('COMMON.SAR')}`} color={colors.primary.primary800} />
+                <IPayFootnoteText
+                  text={`${totalAmount} ${t('COMMON.SAR')}`}
+                  color={colors.primary.primary800}
+                  shouldTranslate={false}
+                />
               </IPayView>
             </IPayView>
             <IPayButton

@@ -35,6 +35,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
         detailTextStyle={styles.detailsText}
         showDetail
         isShowSubTitle
+        shouldDetailsTranslate={false}
       />
     );
   };
