@@ -13,7 +13,6 @@ import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
@@ -40,8 +39,10 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const {
     currentCard,
-    currentCard: { cardType, cardHeaderText, name },
+    currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
   } = route.params;
+
+  const cardLastFourDigit = maskedCardNumber.slice(-4);
 
   const { showToast } = useToastContext();
 
@@ -95,7 +96,7 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
           cardType={cardType}
           cardTypeName={cardHeaderText}
           carHolderName={name}
-          cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
+          cardLastFourDigit={cardLastFourDigit}
         />
         <IPayFootnoteText text="REPLACE_CARD.CHOOSE_SHIPPING_ADDRESS" style={styles.chooseAddressText} />
         <IPayList

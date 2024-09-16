@@ -2,16 +2,14 @@ import React from 'react';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-
-import { goBack } from '@app/navigation/navigation-service.navigation';
-import { IPayPageWrapper } from '@app/components/templates';
-import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayView } from '@app/components/atoms';
-import constants from '@app/constants/constants';
 import { useRoute, RouteProp } from '@react-navigation/native';
 import { buttonVariants } from '@app/utilities';
-import changePinSuccessStyles from './change-pin-success.style';
+import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import { IPayPageWrapper } from '@app/components/templates';
+import { goBack } from '@app/navigation/navigation-service.navigation';
 import { RouteParams } from './change-pin-success.interface';
+import changePinSuccessStyles from './change-pin-success.style';
 
 const ChangePinSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -20,8 +18,10 @@ const ChangePinSuccessScreen: React.FC = () => {
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const {
-    currentCard: { cardType, cardHeaderText, name },
+    currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
   } = route.params;
+
+  const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
   return (
     <IPayPageWrapper>
@@ -30,7 +30,7 @@ const ChangePinSuccessScreen: React.FC = () => {
         cardType={cardType}
         cardTypeName={cardHeaderText}
         carHolderName={name}
-        cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
+        cardLastFourDigit={cardLastFourDigit || ''}
       />
       <IPayView style={styles.childContainer}>
         <IPaySuccess
