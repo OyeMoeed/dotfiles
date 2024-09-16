@@ -54,7 +54,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
         rightIcon={companyLeftImage}
         customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
         onClearInput={onCompanyAction}
-        selection={{start:0}}
+        selection={{ start: 0 }}
       />
       <IPayAnimatedTextInput
         testID="service-input"

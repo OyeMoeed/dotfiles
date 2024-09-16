@@ -10,13 +10,13 @@ import {
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { copyText } from '@app/utilities/clip-board.util';
+import { toastTypes } from '@app/utilities/enums.util';
 import IPayList from '../ipay-list/ipay-list.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
 import { IPayBillDetailsOptionProps, OptionItem } from './ipay-bill-details-option.interface';
 import sadadFooterComponentStyles from './ipay-bill-details-option.style';
-import { copyText } from '@app/utilities/clip-board.util';
-import { toastTypes } from '@app/utilities/enums.util';
 
 const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   testID,

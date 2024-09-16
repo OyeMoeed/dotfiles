@@ -63,6 +63,6 @@ const moneyRequestStyles = (theme: typeof colors) =>
       height: moderateScale(50, 0.3),
       justifyContent: 'center',
       alignItems: 'center',
-    }
+    },
   });
 export default moneyRequestStyles;

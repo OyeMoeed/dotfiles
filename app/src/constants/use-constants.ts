@@ -1087,7 +1087,7 @@ const useConstantData = () => {
     {
       id: '5',
       label: localizationText.ORDER_SCREEN.PURCHASE_DATE,
-      value: `14/03/2024 - 15:30`,
+      value: '14/03/2024 - 15:30',
     },
   ];
   const allOrders = [
