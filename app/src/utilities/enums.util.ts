@@ -13,6 +13,10 @@ enum States {
   PRIMARY = 'primary',
   ERROR = 'error',
 }
+enum PaymentType {
+  MOI = 'moi',
+  REFUND = 'moi-refund',
+}
 
 enum TabBase {
   Natural = 'Natural',
@@ -359,6 +363,7 @@ export {
   LanguageCode,
   MoiPaymentTypes,
   PayChannel,
+  PaymentType,
   PickerVariant,
   States,
   TabBase,
@@ -371,5 +376,6 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant,
+  spinnerVariant
 };
+

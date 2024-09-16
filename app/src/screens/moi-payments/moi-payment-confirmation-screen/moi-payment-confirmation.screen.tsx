@@ -6,8 +6,11 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-bill/prepare-moi-bill.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
+import { PaymentType } from '@app/utilities';
 import { useRoute } from '@react-navigation/core';
 import React, { useRef } from 'react';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
@@ -18,6 +21,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
   const route = useRoute();
   const { billData } = route?.params || {};
@@ -39,9 +43,17 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
     helpCenterRef?.current?.present();
   };
 
-  const onPressCompletePayment = () => {
-    
-    otpBottomSheetRef?.current?.present();
+  const onPressCompletePayment = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const payLoad = {
+      deviceInfo: deviceInfo,
+      walletNumber: walletNumber,
+    };
+
+    const apiResponse = await prepareMoiBill(PaymentType.MOI, payLoad);
+    if (apiResponse?.successfulResponse) {
+      otpBottomSheetRef?.current?.present();
+    }
   };
 
   return (
