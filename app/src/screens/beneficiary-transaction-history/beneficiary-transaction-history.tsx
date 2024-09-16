@@ -24,6 +24,7 @@ import {
 import getlocalTransaction from '@app/network/services/local-transfer/transfer-history-api/transfer-history.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dateTimeFormat } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -56,11 +57,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const [appliedFilters, setAppliedFilters] = useState<BeneficiaryData>({});
   const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [bankList, setBankList] = useState<LocalBank[]>([]);
-  const transactionRequestTypes = [
-    TransactionTypes.COUT_ALINMA,
-    TransactionTypes.COUT_SARIE,
-    TransactionTypes.COUT_IPS,
-  ];
 
   const { showToast } = useToastContext();
 
@@ -83,10 +79,14 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     [localizationText.COMMON.RECEIVED]: TransactionTypes.CR,
   };
 
-  const generatedData = () =>
-    beneficiaryHistoryData?.filter(
-      (item) => item?.transactionType === transactionType[activeTab as keyof TransactionType],
-    );
+  const generatedData = () => {
+    if (beneficiaryHistoryData?.length) {
+      return beneficiaryHistoryData?.filter(
+        (item) => item?.transactionType === transactionType[activeTab as keyof TransactionType],
+      );
+    }
+    return [];
+  };
 
   const handleFiltersShow = () => {
     filterRef.current?.showFilters();
@@ -152,13 +152,21 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     },
   ];
 
+  const formatDate = (date: string) => {
+    const { DateMonthYearWithoutSpace, ShortDateWithDash } = dateTimeFormat;
+    if (date) {
+      return moment(date, DateMonthYearWithoutSpace).format(ShortDateWithDash);
+    }
+    return '';
+  };
+
   const getBeneficiariesHistory = async (trxReqType: string) => {
     const payload: LocalTransferReqParams = {
       walletNumber,
       trxReqType,
       beneficiaryName: appliedFilters?.beneficiaryName,
-      toDate: appliedFilters?.dateTo,
-      fromDate: appliedFilters?.dateFrom,
+      toDate: formatDate(appliedFilters?.dateTo),
+      fromDate: formatDate(appliedFilters?.dateFrom),
       fromAmount: appliedFilters?.amountFrom,
       toAmount: appliedFilters?.amountTo,
     };
@@ -183,7 +191,13 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     }
   };
 
-  const getLocalTransactionsData = () => transactionRequestTypes?.map((item) => getBeneficiariesHistory(item));
+  const getLocalTransactionsData = async () => {
+    await Promise.all([
+      getBeneficiariesHistory(TransactionTypes.COUT_ALINMA),
+      getBeneficiariesHistory(TransactionTypes.COUT_SARIE),
+      getBeneficiariesHistory(TransactionTypes.COUT_IPS),
+    ]);
+  };
 
   useEffect(() => {
     getLocalTransactionsData();
@@ -236,6 +250,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     setFilters(deletedFilter);
     if (deletedFilter.length > 0) {
       removeFilter(text, appliedFilters);
+      setBeneficiaryHistoryData([]);
+      getLocalTransactionsData();
     }
   };
 
