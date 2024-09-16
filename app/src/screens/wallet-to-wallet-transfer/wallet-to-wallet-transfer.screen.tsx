@@ -25,10 +25,10 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
-import { PermissionsStatus, PermissionTypes } from '@app/enums';
+import { PermissionTypes, PermissionsStatus } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import usePermissions from '@app/hooks/permissions.hook';
 import { useKeyboardStatus } from '@app/hooks';
+import usePermissions from '@app/hooks/permissions.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services';
@@ -154,26 +154,25 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const handleSelect = (contact: Contact) => {
-    if (selectedContacts.length < 5) {
-      // Corrected 'lenght' to 'length'
-      setSelectedContacts((prevSelectedContacts) => {
-        const isAlreadySelected = prevSelectedContacts.some(
-          (selectedContact) => selectedContact.recordID === contact.recordID,
-        );
+    // Corrected 'lenght' to 'length'
+    setSelectedContacts((prevSelectedContacts) => {
+      const isAlreadySelected = prevSelectedContacts.some(
+        (selectedContact) => selectedContact.recordID === contact.recordID,
+      );
 
-        if (isAlreadySelected) {
-          // Remove the contact if it's already selected
-          return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
-        }
+      if (isAlreadySelected) {
+        // Remove the contact if it's already selected
+        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      }
 
-        // Add the contact if the limit is not exceeded
-        if (prevSelectedContacts.length >= MAX_CONTACTS) {
-          return prevSelectedContacts;
-        }
+      // Add the contact if the limit is not exceeded
+      if (prevSelectedContacts.length >= MAX_CONTACTS) {
+        renderToast();
+        return prevSelectedContacts;
+      }
 
-        return [...prevSelectedContacts, contact];
-      });
-    }
+      return [...prevSelectedContacts, contact];
+    });
   };
 
   const showUnsavedBottomSheet = () => {

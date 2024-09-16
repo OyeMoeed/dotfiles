@@ -27,9 +27,9 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText="TRAFFIC_VIOLATION.REFUND_SUCCESS"
+          headingText={'TRAFFIC_VIOLATION.REFUND_SUCCESS'}
           descriptionText={`${TOTAL_AMOUNT} ${t('COMMON.SAR')}`}
-          descriptionStyle={styles.boldStyles}
+          descriptionStyle={styles.descriptionText}
         />
         <IPayChip
           icon={<IPayIcon color={colors.secondary.secondary500} icon={icons.timer_1} />}

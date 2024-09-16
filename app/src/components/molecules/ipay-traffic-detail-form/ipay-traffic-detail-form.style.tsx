@@ -14,6 +14,10 @@ const trafficDetailStyles = (themeColors: typeof colors) =>
       paddingLeft: moderateScale(20),
       paddingRight: moderateScale(40),
       backgroundColor: themeColors.natural.natural0,
+      borderColor: themeColors.primary.primary100,
+    },
+    inputStyle: {
+      paddingLeft: moderateScale(0),
     },
     segmentStyles: {
       borderWidth: 1,
@@ -29,6 +33,9 @@ const trafficDetailStyles = (themeColors: typeof colors) =>
     },
     errorStyle: {
       borderColor: themeColors.error.error500,
+    },
+    checkBoxStyle: {
+      marginRight: moderateScale(-2, 0.3),
     },
   });
 

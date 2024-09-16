@@ -17,14 +17,18 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
       fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_15,
     },
+    descriptionText: {
+      marginTop: moderateScale(10, 0.3),
+    },
     minFlex: {
       flex: 0,
     },
     conatinerStyles: {
       borderRadius: moderateScale(22),
-      paddingHorizontal: moderateScale(20),
+      paddingHorizontal: moderateScale(12),
       paddingVertical: moderateScale(15),
       backgroundColor: themeColors.natural.natural0,
+      marginTop: moderateScale(10),
     },
     optionsStyle: { backgroundColor: themeColors.primary.primary10 },
     marginStyles: { marginBottom: moderateScale(16) },
@@ -37,6 +41,7 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
       paddingHorizontal: 0,
       backgroundColor: themeColors.natural.natural0,
       paddingBottom: moderateScale(0),
+      paddingTop: moderateScale(0),
     },
     listContainer: {
       backgroundColor: themeColors.error.error25,

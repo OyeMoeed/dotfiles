@@ -20,7 +20,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
-import { TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel, TopupStatus } from '@app/utilities/enums.util';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
@@ -194,9 +194,10 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={styles.walletBackground}>
         <IPayFlatlist
           style={styles.detailesFlex}
-          scrollEnabled={false}
+          scrollEnabled
           data={topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : getDetails()}
           renderItem={renderNonAlinmaPayItem}
+          showsVerticalScrollIndicator={false}
         />
       </IPayView>
     );
@@ -256,7 +257,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const renderCard = () =>
     topupChannel === PayChannel.CARD && (
-      <IPayView style={[styles.cardButton, styles.margins]}>
+      <IPayView style={[styles.cardButton, styles.actionButton]}>
         <IPayButton
           onPress={goBack}
           btnType={buttonVariants.LINK_BUTTON}

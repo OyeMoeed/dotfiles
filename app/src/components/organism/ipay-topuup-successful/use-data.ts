@@ -16,7 +16,7 @@ const useData = () => {
     giftPayDetailes,
   } = useConstantData();
   const route = useRoute();
-  const { topupChannel } = route.params;
+  const { topupChannel, details } = route.params;
 
   const getDetails = () => {
     switch (topupChannel) {
@@ -31,7 +31,7 @@ const useData = () => {
       case PayChannel.REQUEST_ACCEPT:
         return requestAccepted;
       case PayChannel.CARD:
-        return cardPayDetails;
+        return details;
       case PayChannel.WALLET:
         return walletPayDetailes;
       case PayChannel.REQUEST:

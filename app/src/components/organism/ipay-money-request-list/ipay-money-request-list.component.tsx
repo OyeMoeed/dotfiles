@@ -82,7 +82,11 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
         <IPayView style={[styles.statusView, { backgroundColor }]}>
           <IPaySubHeadlineText regular text={text} color={color} style={styles.text} />
         </IPayView>
-        <IPayFootnoteText regular={false} text={`${amount} ${t('COMMON.SAR')}`} color={colors.natural.natural900} />
+        <IPayFootnoteText
+          regular={false}
+          text={`${status === MoneyRequestStatus.PAID ? '+' : ''}${amount} ${t('COMMON.SAR')}`}
+          color={colors.natural.natural900}
+        />
       </IPayView>
     </IPayPressable>
   );

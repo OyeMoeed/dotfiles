@@ -265,6 +265,7 @@ const MoiPaymentScreen: React.FC = () => {
                       btnText="NEW_SADAD_BILLS.INQUIRY"
                       btnType="primary"
                       onPress={onSubmit}
+                      btnStyle={styles.inquiryBtn}
                       large
                       btnIconsDisabled
                       disabled={isBtnEnabled}
@@ -306,6 +307,7 @@ const MoiPaymentScreen: React.FC = () => {
                       onPressListItem={onSelectValue}
                       selectedListItem={getSelectedValue()}
                       isCompleteItem
+                      listStyles={styles.listStyles}
                     />
                   ) : (
                     <IPayView style={styles.noRecordContainer}>

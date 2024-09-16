@@ -27,6 +27,7 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   };
 
   const dummyCardDetails: FieldKeyMappingProps = {
+    [CardDetailsKeys.CARD_TYPE]: cardDetails?.cardType,
     [CardDetailsKeys.CARD_NUMBER]: cardDetails?.cardNumber,
     [CardDetailsKeys.CARD_HOLDER_NAME]: cardDetails?.cardHolderName,
     [CardDetailsKeys.CVV]: cardDetails?.cvv,
@@ -34,10 +35,11 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   };
 
   const fieldKeyMapping: FieldKeyMappingProps = {
-    [CardDetailsKeys.CARD_NUMBER]: t(`CARDS.${CardDetailsKeys.CARD_NUMBER}`),
-    [CardDetailsKeys.CARD_HOLDER_NAME]: t(`CARDS.${CardDetailsKeys.CARD_HOLDER_NAME}`),
-    [CardDetailsKeys.CVV]: t(`CARDS.${CardDetailsKeys.CVV}`),
-    [CardDetailsKeys.EXPIRY_DATE]: t(`CARDS.${CardDetailsKeys.EXPIRY_DATE}`),
+    [CardDetailsKeys.CARD_TYPE]: t(`CARDS.${[CardDetailsKeys.CARD_TYPE]}`),
+    [CardDetailsKeys.CARD_NUMBER]: t(`CARDS.${[CardDetailsKeys.CARD_NUMBER]}`),
+    [CardDetailsKeys.CARD_HOLDER_NAME]: t(`CARDS.${[CardDetailsKeys.CARD_HOLDER_NAME]}`),
+    [CardDetailsKeys.CVV]: t(`CARDS.${[CardDetailsKeys.CVV]}`),
+    [CardDetailsKeys.EXPIRY_DATE]: t(`CARDS.${[CardDetailsKeys.EXPIRY_DATE]}`),
   };
 
   const copyRefNo = (value: string) => {

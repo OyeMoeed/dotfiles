@@ -268,7 +268,7 @@ const transactionMock: TransactionsMockProps = {
         amount: '905.12',
         salaryMonth: null,
         transactionDateTime: '2008-04-08T17:25:00',
-        transactionRequestType: 'COUT_EXPRESS',
+        transactionRequestType: 'BKF_TRANSFER',
         cardType: null,
         toMonth: null,
         transactionRefNumber: 'EPY080992X9C3',

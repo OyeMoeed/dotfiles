@@ -428,6 +428,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel
+        buttonStyle={styles.rejectThisRequestBtn}
+        cancelButtonStyle={styles.rejectThisRequestCancelBtn}
         onPress={onPressRejectActionSheet}
       />
       <IPayActionSheet

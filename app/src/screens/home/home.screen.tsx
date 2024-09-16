@@ -6,7 +6,7 @@ import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
-import { SNAP_POINT } from '@app/constants/constants';
+import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
@@ -57,7 +57,9 @@ const Home: React.FC = () => {
   };
 
   useEffect(() => {
-    checkUserAccess();
+    setTimeout(() => {
+      checkUserAccess();
+    }, DURATIONS.MEDIUM);
   }, []);
 
   const renderToast = (toastMsg: string) => {

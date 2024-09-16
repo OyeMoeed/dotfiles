@@ -1,6 +1,8 @@
 import IPayPdfViewer from '@app/components/atoms/ipay-pdf-viewer/ipay-pdf-viewer.component';
 import { SNAP_POINT, TERMS_AND_CONDITIONS_URLS } from '@app/constants/constants';
 import { LanguageState } from '@app/store/slices/language-slice.interface';
+import { setNafathSheetVisibility, setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { useTypedDispatch } from '@app/store/store';
 import { LanguageCode } from '@app/utilities/enums.util';
 import React from 'react';
 import { useSelector } from 'react-redux';
@@ -9,13 +11,34 @@ import { IPayTermsAndConditionsProps } from './ipay-terms-and-conditions.interfa
 
 const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({
   showTermsAndConditions,
-  setShowTermsAndConditions,
   termsAndConditionsURL,
+  isNafathTerms,
   isVirtualCardTermsAndConditions = false,
 }) => {
   const selectedLanguage =
     useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
     LanguageCode.EN;
+
+  const dispatch = useTypedDispatch();
+
+  const closeTermsAndConditionModal = () => {
+    if (isNafathTerms) {
+      dispatch(
+        setTermsConditionsVisibility({
+          isVisible: false,
+          isNafathTerms: false,
+        }),
+      );
+      dispatch(setNafathSheetVisibility(true));
+    } else {
+      dispatch(
+        setTermsConditionsVisibility({
+          isVisible: false,
+          isNafathTerms: false,
+        }),
+      );
+    }
+  };
 
   const getTermsAndConditionsURL = () => {
     if (termsAndConditionsURL) {
@@ -41,13 +64,10 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({
     <IPayPortalBottomSheet
       noGradient
       heading="COMMON.TERMS_AND_CONDITIONS"
-      enablePanDownToClose
       simpleBar
       cancelBnt
       customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
-      onCloseBottomSheet={() => {
-        setShowTermsAndConditions(false);
-      }}
+      onCloseBottomSheet={closeTermsAndConditionModal}
       isVisible={showTermsAndConditions}
     >
       <IPayPdfViewer sourceURL={getTermsAndConditionsURL()} />

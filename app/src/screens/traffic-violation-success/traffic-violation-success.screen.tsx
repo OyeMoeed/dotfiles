@@ -34,7 +34,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
           style={styles.minFlex}
           headingText={headingText}
           descriptionText={`${TOTAL_AMOUNT} ${t('COMMON.SAR')}`}
-          descriptionStyle={styles.boldStyles}
+          descriptionStyle={[styles.boldStyles, styles.descriptionText]}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>

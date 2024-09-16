@@ -12,11 +12,12 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules';
-import { IPayLoadFailed, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayLoadFailed } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import SummaryType from '@app/enums/summary-type';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -24,6 +25,7 @@ import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import React, { useState } from 'react';
 import { Animated } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { RenderItemProps } from '../send-gift-card/send-gift-card.interface';
 import shopDetailStyles from './shop-details.style';
 
@@ -33,7 +35,6 @@ const ShopDetails: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = shopDetailStyles(colors);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const animatedHeight = useState(new Animated.Value(100))[0];
   const discountDetail = '20% Discount on Yearly subscribe on Spotify'; // TODO: Replace with API
   const amount = '470.00'; // TODO: Replace with API
@@ -56,8 +57,13 @@ const ShopDetails: React.FC = ({ route }) => {
     }).start();
   };
 
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    setShowTermsAndConditionsSheet(true);
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
 
   const renderCarouselItem = ({ item }: RenderItemProps) => (
@@ -72,7 +78,11 @@ const ShopDetails: React.FC = ({ route }) => {
     </IPayView>
   );
 
-  const onPay = () => navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.ORDER_SUMMARY });
+  const onPay = () =>
+    navigate(ScreenNames.REQUEST_SUMMARY, {
+      screen: SummaryType.ORDER_SUMMARY,
+      heading: localizationText.SHOP.PAY_PRODUCT,
+    });
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader testID="shop-details-ipay-header" backBtn title={heading || 'SHOP.OFFER_DETAILS'} applyFlex />
@@ -137,11 +147,6 @@ const ShopDetails: React.FC = ({ route }) => {
       ) : (
         <IPayLoadFailed />
       )}
-
-      <IPayTermsAndConditions
-        showTermsAndConditions={showTermsAndConditionsSheet}
-        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
-      />
     </IPaySafeAreaView>
   );
 };

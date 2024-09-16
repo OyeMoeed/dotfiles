@@ -125,9 +125,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         };
         const onChangeText = (text: string) => {
           if (text.length > 0) {
-            setBtnEnabled(false);
-          } else {
             setBtnEnabled(true);
+          } else {
+            setBtnEnabled(false);
           }
           setErrorMessage('');
         };
@@ -169,7 +169,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     onPress={onSubmit}
                     large
                     btnIconsDisabled
-                    disabled={isBtnEnabled}
+                    disabled={!isBtnEnabled}
                   />
                 </IPayView>
               </IPayView>

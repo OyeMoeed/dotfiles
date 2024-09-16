@@ -142,7 +142,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
               text={amount?.toString()}
               keyboardType="numeric"
               onChangeText={onChangeInput}
-              maxLength={10}
+              maxLength={5}
             />
             <IPayBodyText style={styles.darkBlueColor} text={currency} />
           </IPayView>

@@ -5,9 +5,9 @@ import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/comp
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatTime } from '@app/utilities/date-helper.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { hideContactNumber } from '@app/utilities/shared.util';
 import { forwardRef, useImperativeHandle } from 'react';
-import { buttonVariants } from '@app/utilities/enums.util';
 import { useTranslation } from 'react-i18next';
 import useOtpVerification from './ipay-otp-verification.hook';
 import IPayOtpVerificationProps from './ipay-otp-verification.interface';
@@ -26,6 +26,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       handleOnPressHelp,
       showHelp = true,
       title,
+      hasDisclaimerSection,
+      disclaimerSection,
       timeout = 60,
       containerStyle,
       innerContainerStyle,
@@ -121,6 +123,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
             btnIconsDisabled
             onPress={onPressConfirm}
           />
+
+          {hasDisclaimerSection ? disclaimerSection : <IPayView />}
           {showHelp && (
             <IPayButton
               onPress={handleOnPressHelp}

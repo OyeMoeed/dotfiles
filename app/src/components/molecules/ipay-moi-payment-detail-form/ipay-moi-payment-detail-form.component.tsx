@@ -61,10 +61,11 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
             testID="service-provider-input"
             name={MoiPaymentFormFields.SERVICE_PROVIDER}
             label="BILL_PAYMENTS.SERVICE_PROVIDER"
+            inputStyle={styles.inputStyle}
             editable={false}
             containerStyle={styles.inputContainerStyle}
             showRightIcon
-            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
             onClearInput={onServiceProviderAction}
           />
         )}
@@ -80,10 +81,11 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
             editable={false}
             showRightIcon
             containerStyle={[styles.inputContainerStyle, !isServiceProviderValue && styles.greyInputStyle]}
+            inputStyle={styles.inputStyle}
             customIcon={
               <IPayIcon
                 icon={icons.arrow_circle_down}
-                size={18}
+                size={24}
                 color={isServiceProviderValue ? colors.primary.primary500 : colors.natural.natural500}
               />
             }
@@ -117,8 +119,9 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayRHFAnimatedTextInput
                 testID="beneficiary-id-input"
                 name={MoiPaymentFormFields.MY_ID}
-                label={myIdCheck ? t('BILL_PAYMENTS.MY_ID') : t('BILL_PAYMENTS.BENEFICIARY_ID')}
-                labelColor={myIdCheck ? colors.natural.natural500 : colors.primary.primary500}
+                label={myIdCheck ? 'BILL_PAYMENTS.MY_ID' : 'BILL_PAYMENTS.BENEFICIARY_ID'}
+                labelColor={myIdCheck ? { color: colors.natural.natural500 } : colors.primary.primary500}
+                inputStyle={styles.inputStyle}
                 showRightIcon={!myIdCheck}
                 editable={!myIdCheck}
                 containerStyle={getInputStyles()}
@@ -141,8 +144,9 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
                 label="BILL_PAYMENTS.ID_TYPE"
                 editable={false}
                 showRightIcon
+                inputStyle={styles.inputStyle}
                 containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}
-                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
                 onClearInput={onIdTypeAction}
               />
             )}
@@ -157,9 +161,10 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
                 name={MoiPaymentFormFields.DURATION}
                 label="BILL_PAYMENTS.DURATION"
                 editable={false}
+                inputStyle={styles.inputStyle}
                 showRightIcon
                 containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}
-                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
                 onClearInput={onDurationAction}
               />
             )}

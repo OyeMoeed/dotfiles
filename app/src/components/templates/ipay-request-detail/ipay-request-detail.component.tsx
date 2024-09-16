@@ -127,8 +127,8 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     let value = transaction[field];
     if (field.includes('date')) {
       const dateType = transaction?.cancellation_date || transaction?.send_date || transaction?.request_date;
+      value = formatDateAndTime(dateType, dateTimeFormat.DateAndTime);
       // transaction?.payment_date || transaction?.rejection_date;
-      value = formatDateAndTime(dateType, dateTimeFormat.TimeAndDate);
     }
 
     return (
@@ -149,7 +149,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
               <IPaySubHeadlineText regular text={text} color={color} style={styles.text} />
             </IPayView>
           ) : (
-            <IPaySubHeadlineText regular color={colors.primary.primary800}>
+            <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={1}>
               {value}
             </IPaySubHeadlineText>
           )}
