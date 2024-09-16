@@ -181,8 +181,10 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     dispatch(
       setTermsConditionsVisibility({
         isVisible: true,
+        isNafathTerms: true,
       }),
     );
+    onCloseNafathVerificationSheet();
   };
 
   const nafathInquiry = async () => {

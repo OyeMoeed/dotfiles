@@ -14,7 +14,7 @@ const CORE_URLS = {
   GET_CORE_MANAGEMENT_LOV: 'core-management/common/lov/inquiry',
   SET_PASSCODE: 'core-management/v1/user/register',
   FAQ: 'core-management/v1/faq',
-  GET_TRAFIC_VIOLATION: 'core/v1/moi/traffic-violations',
+  GET_TRAFIC_VIOLATION: 'bills-management/v1/moi/traffic-violations',
   GET_OFFERS: (walletNumber: string) => `core/v1/${walletNumber}/offers`,
   GET_TOP_UP_CARDS: (walletNumber: string) => `core/v1/${walletNumber}/topup-cards`,
   GET_TRANSACTIONS: (walletNumber: string) => `core/v1/${walletNumber}/transaction`,

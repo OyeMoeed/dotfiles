@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
@@ -26,13 +26,13 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
+import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -52,6 +52,8 @@ const CardOptionsScreen: React.FC = () => {
     currentCard,
     currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
   } = route.params;
+
+  const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -95,7 +97,7 @@ const CardOptionsScreen: React.FC = () => {
     initOnlinePurchase();
   }, []);
 
-  const getToastSubTitle = () => `${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
+  const getToastSubTitle = () => `${cardHeaderText}  - **** ${cardLastFourDigit}`;
 
   const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
@@ -326,7 +328,7 @@ const CardOptionsScreen: React.FC = () => {
             cardType={cardType}
             cardTypeName={cardHeaderText}
             carHolderName={name}
-            cardLastFourDigit={maskedCardNumber || ''}
+            cardLastFourDigit={cardLastFourDigit || ''}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
@@ -341,7 +343,6 @@ const CardOptionsScreen: React.FC = () => {
               openBottomSheet.current?.present();
             }}
           />
-
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}

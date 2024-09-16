@@ -1,10 +1,11 @@
 // ipay-card-flatlist.interface.ts
 
-import { CardDetailsSegment, CardOptions, CardTypes } from '@app/utilities/enums.util';
+import { CardType } from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import { CardDetailsSegment, CardOptions } from '@app/utilities/enums.util';
 
 export interface IPayCardFlatListProps {
   testID?: string;
-  selectedCardType: CardTypes;
+  selectedCardType: CardType;
   segmentType: CardDetailsSegment | string;
   cardOption: CardOptions;
 }

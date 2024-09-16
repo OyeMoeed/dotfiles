@@ -106,6 +106,7 @@
     "ENTER_INFORMATION": "Enter your information",
     "SETTINGS": "Settings",
     "CONTACT_US": "Contact us",
+    "NEED_ASSISTANCE": "Need Assistance",
     "SAR": "SAR",
     "HOME": "Home",
     "TOP_UP": "Top up",
@@ -581,6 +582,7 @@
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
     "CONTACT_NAME": "Contact Name",
+    "NO_RESULTS_FOUND": "No Results Found",
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
     "CONTACT_LIMIT": "Contacts limit reached"
   },
@@ -718,8 +720,8 @@
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
-    "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
-    "DEBIT_CARD": "Card - *** 1111",
+    "CARD_UNFREEZE_MESSAGE": "The card has been unfrozen",
+    "CARD": "Card",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
@@ -838,7 +840,8 @@
     "INVALID_QRCODE": "Invalid QR Code!",
     "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
     "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
-    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
+    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful"
   },
   "LOCAL_TRANSFER": {
     "AMOUNT": "Amount",
@@ -1130,13 +1133,14 @@
     "ADD_NEW_BILL": "Add new Bill",
     "PAY_PARTIALLY": "Pay Partially",
     "DELETE_NEW_BILL": "Delete the Bill",
-    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
+    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again\nunless you add it again through 'Add New Bills'",
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "EDIT_BILL": "Edit Bill",
     "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully",
+    "PAY": "Pay",
     "DISCARD_CHANGES": "Discard Changes?",
     "EDIT_YOU_MADE_WILL_LOST": "The edits you made will be lost."
   },
@@ -1154,6 +1158,7 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
     "INQUIRY": "Inquiry",
+    "INQUIRE": "Inquire",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "SADAD_BILLS": "SADAD Bills",
@@ -1175,7 +1180,8 @@
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
     "VIEW_SADAD_BILLS": "View SADAD Bills",
-    "PAY_ANOTHER_BILL": "Pay Another Bill"
+    "PAY_ANOTHER_BILL": "Pay Another Bill",
+    "AMOUNT": "Amount"
   },
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
@@ -1261,12 +1267,13 @@
     "ID_TYPE": "ID Type",
     "FOUND_VIOLATION": "Found violation",
     "REFUND_VIOLATION": "Refund violation",
-    "VIOLATION": "Violation"
+    "VIOLATION": "Violation",
+    "REF_NUMBER": "Ref. Number"
   },
   "SHOP": {
     "ALL_MERCHANTS": "All Merchants",
     "TITLE": "All Categories",
-    "PLAYSTATION": "PlayStation",
+    "PLAYSTATION": "Playstation",
     "ENTERTAINMENT": "Entertainment",
     "FOOD": "Food and beverages",
     "SHOPPING": "Shopping",
@@ -1277,10 +1284,10 @@
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
     "ITUNES": "iTunes",
-    "OFFER_DETAILS": "Offers details",
+    "OFFER_DETAILS": "Offer details",
     "PRODUCT_DETAILS": "Product Details",
     "HIDE_DETAILS": "Hide Details",
-    "VIEW_ALL_DETAILS": "View All Details",
+    "VIEW_ALL_DETAILS": "View all Details",
     "PRODUCT_DISCRIPTION": "Product Description",
     "PAY": "Pay",
     "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
@@ -1299,7 +1306,8 @@
     "VAT_INVOICE": "VAT Invoice",
     "VIEW_PRODUCT": "View Product",
     "PURCHASE_AGAIN": "Purchase again",
-    "NO_ORDER": "You have no order history"
+    "NO_ORDER": "You have no order history",
+    "PAY_PRODUCT": "Pay Product"
   },
 
   "REQUEST_SUMMARY": {
@@ -1312,6 +1320,8 @@
     "NOTE": "Note",
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PAY_PRODUCT": "Pay Product",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount "
   },
@@ -1326,6 +1336,7 @@
     "REQUEST_PAID": "Money Request paid\nSuccessfully",
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
+    "MONEY_REQUEST": "Money Request",
     "PENDING": "Pending",
     "CANCEL": "Cancel",
     "CANCELLED": "Cancelled",
@@ -1336,9 +1347,9 @@
     "STATUS": "Status",
     "SEND_DATE": "Sent date",
     "REQUEST_DATE": "Request date",
-    "CANCELLATION_DATE": "Cancellation date",
-    "PAYMENT_DATE": "Payment date",
-    "REJECTION_DATE": "Rejection date",
+    "CANCELLATION_DATE": "Cancellation Date",
+    "PAYMENT_DATE": "Payment Date",
+    "REJECTION_DATE": "Rejection Date",
     "REF_NUMBER": "Ref. Number",
     "SENDER": "Sender",
     "NOTE": "Note",
@@ -1370,7 +1381,7 @@
     "AMOUNT": "Amount",
     "DISCOUNT": "Discount",
     "FEES": "Fees",
-    "VAT": "VAT(15%)"
+    "VAT": "VAT (15%)"
   },
 
   "ORDER_SCREEN": {
@@ -1380,11 +1391,13 @@
     "AMOUNT": "Amount",
     "DISCOUNT": "Discount",
     "FEES": "Fees",
-    "VAT": "VAT(15%)",
+    "VAT": "VAT (15%)",
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PURCHASE_DATE": "Purchase date"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",
