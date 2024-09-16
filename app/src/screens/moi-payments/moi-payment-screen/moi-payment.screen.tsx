@@ -334,31 +334,31 @@ const MoiPaymentScreen: React.FC = () => {
                 <IPayView style={styles.container}>
                   <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
 
-                  <IPayMoiPaymentDetailForm
-                    onServiceProviderAction={() => onOpenSheet(MoiPaymentType.SERVICE_PROVIDER)}
-                    onServiceTypeAction={() => onOpenSheet(MoiPaymentType.SERVICE_TYPE)}
-                    onCheckboxAction={onCheckboxAction}
-                    onBeneficiaryIdAction={clearBeneficiaryFelid}
-                    onIdTypeAction={() => onOpenSheet(MoiPaymentType.ID_TYPE)}
-                    onDurationAction={() => onOpenSheet(MoiPaymentType.DURATION)}
-                    isServiceProviderValue={!!watch(MoiPaymentFormFields.SERVICE_PROVIDER)}
-                    isServiceTypeValue={!!watch(MoiPaymentFormFields.SERVICE_TYPE)}
-                    myIdCheck={myIdChecked}
-                    control={control}
-                    onChangeText={onChangeText}
-                    errorMessage={errorMessage}
-                    selectedServiceType={selectedServiceType}
-                    selectedBiller={selectedBiller}
-                    onPress={onSubmit}
-                  />
-                  <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                    btnType="primary"
-                    onPress={onSubmit}
-                    large
-                    btnIconsDisabled
-                    disabled={isBtnEnabled}
-                  />
+                  <IPayView style={styles.contentContainer}>
+                    <IPayMoiPaymentDetailForm
+                      onServiceProviderAction={() => onOpenSheet(MoiPaymentType.SERVICE_PROVIDER)}
+                      onServiceTypeAction={() => onOpenSheet(MoiPaymentType.SERVICE_TYPE)}
+                      onCheckboxAction={onCheckboxAction}
+                      onBeneficiaryIdAction={clearBeneficiaryFelid}
+                      onIdTypeAction={() => onOpenSheet(MoiPaymentType.ID_TYPE)}
+                      onDurationAction={() => onOpenSheet(MoiPaymentType.DURATION)}
+                      isServiceProviderValue={!!watch(MoiPaymentFormFields.SERVICE_PROVIDER)}
+                      isServiceTypeValue={!!watch(MoiPaymentFormFields.SERVICE_TYPE)}
+                      myIdCheck={myIdChecked}
+                      control={control}
+                      onChangeText={onChangeText}
+                      errorMessage={errorMessage}
+                    />
+                    <IPayButton
+                      btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                      btnType="primary"
+                      onPress={onSubmit}
+                      btnStyle={styles.inquiryBtn}
+                      large
+                      btnIconsDisabled
+                      disabled={isBtnEnabled}
+                    />
+                  </IPayView>
                 </IPayView>
               </>
             </IPaySafeAreaView>
@@ -395,6 +395,7 @@ const MoiPaymentScreen: React.FC = () => {
                       onPressListItem={onSelectValue}
                       selectedListItem={getSelectedValue()}
                       isCompleteItem
+                      listStyles={styles.listStyles}
                     />
                   ) : (
                     <IPayView style={styles.noRecordContainer}>

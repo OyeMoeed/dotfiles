@@ -40,7 +40,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
   ) => {
     const { colors } = useTheme();
     const localizationText = useLocalization();
-    const styles = otpVerificationStyles(colors);
+    const styles = otpVerificationStyles();
     const { showToast } = useToastContext();
     const { counter, handleRestart, onChangeText, clearTimer, startTimer } = useOtpVerification(
       setOtp,
@@ -124,7 +124,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
             onPress={onPressConfirm}
           />
 
-          {hasDisclaimerSection && <>{disclaimerSection}</>}
+          {hasDisclaimerSection ? disclaimerSection : <IPayView />}
           {showHelp && (
             <IPayButton
               onPress={handleOnPressHelp}

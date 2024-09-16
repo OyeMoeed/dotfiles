@@ -25,10 +25,6 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
   const [searchText, setSearchText] = useState<string>('');
   const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
 
-  const onSearchChangeText = (text: string) => {
-    setSearchText(text);
-  };
-
   const filterListItems = () => {
     if (!searchText.trim()) {
       setFilteredListItems(data || []);
@@ -76,7 +72,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
           <IPayView style={styles.searchBarView}>
             <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />
             <IPayInput
-              onChangeText={onSearchChangeText}
+              onChangeText={setSearchText}
               text={searchText}
               placeholder={localizationText.COMMON.SEARCH}
               style={styles.searchInputText}

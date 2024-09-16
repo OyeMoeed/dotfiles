@@ -3,9 +3,10 @@ import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPaySpinner, IPa
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayFilterBottomSheet, IPayShortHandAtmCard } from '@app/components/organism';
+import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -34,6 +35,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     localizationText.TRANSACTION_HISTORY.SEND_MONEY,
     localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY,
   ];
+
+  const cardLastFourDigit = currentCard.maskedCardNumber.slice(-4);
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
@@ -361,12 +364,17 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const renderLoadingWithNoResult = () => (isLoading ? <IPaySpinner hasBackgroundColor={false} /> : renderNoResult());
 
+  const headerTitle = currentCard
+    ? localizationText.CARDS.CARD_TRANSACTIONS_HISTORY
+    : localizationText.COMMON.TRANSACTIONS_HISTORY;
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title={headerTitle}
+        titleStyle={styles.cardTransactionsTitle}
         applyFlex
         rightComponent={
           <IPayPressable onPress={() => handleFiltersShow()}>
@@ -379,17 +387,16 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {/* {currentCard && (
+      {currentCard && (
         <IPayView style={styles.cardContainerStyleParent}>
           <IPayCardDetailsBannerComponent
             cardType={currentCard.cardType}
             cardTypeName={currentCard.cardHeaderText}
             carHolderName={currentCard.name}
-            cardLastFourDigit={currentCard.cardNumber}
+            cardLastFourDigit={cardLastFourDigit}
           />
         </IPayView>
-      )} */}
-      {selectedCard && <IPayShortHandAtmCard cardData={selectedCard} />}
+      )}
 
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
@@ -449,6 +456,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={noFilterResult}
         closeOnTouchOutside
+        transparentOverlay={false}
         animationType="fade"
         showIcon={false}
         title={localizationText.TRANSACTION_HISTORY.NO_RESULTS}

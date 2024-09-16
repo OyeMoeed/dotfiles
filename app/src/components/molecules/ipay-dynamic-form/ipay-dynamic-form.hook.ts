@@ -1,126 +1,101 @@
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
-import {
-  DynamicField,
-  GetDynamicFieldsPayloadTypes,
-} from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
-import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
-import { useEffect, useState } from 'react';
+import useLocalization from '@app/localization/hooks/localization.hook';
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import { useMemo } from 'react';
 import * as Yup from 'yup';
 
-const useDynamicForm = (billerId: string, serviceId: string, walletNumber: string) => {
-  const [fields, setFields] = useState<DynamicField[]>([]);
-  const [defaultValues, setDefaultValues] = useState<Record<string, string>>({});
-  const [isLoading, setisLoading] = useState<undefined | boolean>(undefined);
+const useDynamicForm = (fetchedFields: DynamicField[]) => {
+  const localization = useLocalization(); // Get localized strings
 
-  const createDefaultValues = (dynamicFields: DynamicField[]) => {
+  // Memoized function to create default values
+  const defaultValues = useMemo(() => {
     const defaultVals: Record<string, string> = {};
-
-    dynamicFields.forEach((field) => {
+    fetchedFields.forEach((field) => {
       const { integrationTagName, value } = field;
-      // converts BeneficiaryId.OfficialId to BeneficiaryId_OfficialId to avoid nesting
       const flatKey = integrationTagName.replace(/\./g, '_');
-
       defaultVals[flatKey] = value ?? '';
     });
-
     return defaultVals;
-  };
+  }, [fetchedFields]);
 
-  useEffect(() => {
-    const fetchFields = async () => {
-      const payload: GetDynamicFieldsPayloadTypes = { walletNumber };
-      setisLoading(true);
-      const response = await getDynamicFieldsService(billerId, serviceId, walletNumber, payload);
-      if (response) {
-        const fetchedFields = response.response.dynamicFields;
-
-        setFields(fetchedFields);
-
-        setDefaultValues(createDefaultValues(fetchedFields));
-        setisLoading(false);
-      }
-    };
-
-    fetchFields();
-  }, [billerId, serviceId, walletNumber]);
-
-  function revertFlatKeys(obj: Record<string, any>, separator: string = '_'): Record<string, any> {
+  // Function to revert the flat keys to their original structure
+  const revertFlatKeys = (obj: Record<string, any>, separator: string = '_'): Record<string, any> => {
     const result: Record<string, any> = {};
-
     Object.keys(obj).forEach((flatKey) => {
       const originalKey = flatKey.replace(new RegExp(separator, 'g'), '.');
       result[originalKey] = obj[flatKey];
     });
-
     return result;
-  }
+  };
 
-  const generateYupSchema = (dynamicFields: DynamicField[]) => {
+  // Memoized function to generate validation schema
+  const validationSchema = useMemo(() => {
     const shape: Record<string, Yup.Schema<any>> = {};
-
-    dynamicFields.forEach((field) => {
+    fetchedFields.forEach((field) => {
       const { type, required, minWidth, maxWidth, label, integrationTagName } = field;
-
-      // Flatten the path by replacing "." with "_"
       const flatKey = integrationTagName.replace(/\./g, '_');
-
-      let schema = Yup.string(); // Default schema is string
+      let schema = Yup.string();
 
       switch (type) {
         case DYNAMIC_FIELDS_TYPES.NUMBER:
-          schema = Yup.string().typeError(`${label} must be a valid number`);
+          schema = Yup.string().typeError(localization.VALIDATION.MUST_BE_NUMBER.replace('{label}', label));
           if (minWidth != null) {
-            schema = schema.min(minWidth, `${label} must be at least ${minWidth}`);
+            schema = schema.min(
+              minWidth,
+              localization.VALIDATION.MIN_WIDTH.replace('{label}', label).replace('{min}', String(minWidth)),
+            );
           }
           if (maxWidth != null) {
-            schema = schema.max(maxWidth, `${label} must be no more than ${maxWidth}`);
+            schema = schema.max(
+              maxWidth,
+              localization.VALIDATION.MAX_WIDTH.replace('{label}', label).replace('{max}', String(maxWidth)),
+            );
           }
           if (required) {
-            schema = schema.required(`${label} is required`);
+            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
           }
           break;
 
         case DYNAMIC_FIELDS_TYPES.TEXT:
-          schema = Yup.string().typeError(`${label} must be valid text`);
+          schema = Yup.string().typeError(localization.VALIDATION.MUST_BE_TEXT.replace('{label}', label));
           if (minWidth != null) {
-            schema = schema.min(minWidth, `${label} must be at least ${minWidth}`);
+            schema = schema.min(
+              minWidth,
+              localization.VALIDATION.MIN_WIDTH.replace('{label}', label).replace('{min}', String(minWidth)),
+            );
           }
           if (maxWidth != null) {
-            schema = schema.max(maxWidth, `${label} must be no more than ${maxWidth}`);
+            schema = schema.max(
+              maxWidth,
+              localization.VALIDATION.MAX_WIDTH.replace('{label}', label).replace('{max}', String(maxWidth)),
+            );
           }
           if (required) {
-            schema = schema.required(`${label} is required`);
+            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
           }
           break;
 
         case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE:
-          schema = Yup.string().typeError(`${label} must be selected`);
+          schema = Yup.string().typeError(localization.VALIDATION.MUST_BE_SELECTED.replace('{label}', label));
           if (required) {
-            schema = schema.required(`${label} is required`);
+            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
           }
           break;
 
         default:
           if (required) {
-            schema = schema.required(`${label} is required`);
+            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
           }
           break;
       }
-
-      // Use the flat key for the schema
       shape[flatKey] = schema;
     });
-
     return Yup.object().shape(shape);
-  };
-
-  const validationSchema = generateYupSchema(fields);
+  }, [fetchedFields, localization]);
 
   return {
-    fields,
     defaultValues,
     validationSchema,
-    isLoading,
     revertFlatKeys,
   };
 };

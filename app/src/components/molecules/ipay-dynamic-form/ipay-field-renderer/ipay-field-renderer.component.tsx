@@ -10,6 +10,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
   const renderField = () => {
     // Replace "." with "_" to flatten the name
     const flatKey = field.index.replace(/\./g, '_');
+    let errorMessage;
     switch (field.type) {
       case DYNAMIC_FIELDS_TYPES.TEXT:
       case DYNAMIC_FIELDS_TYPES.NUMBER:
@@ -19,7 +20,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             control={control}
             defaultValue={field.value}
             render={({ field: { onChange, value }, formState: { errors } }) => {
-              const errorMessage = get(errors, `${flatKey}.message`, '');
+              errorMessage = get(errors, `${flatKey}.message`, '');
               return (
                 <IPayAnimatedTextInput
                   label={field.label}
@@ -44,40 +45,13 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             control={control}
             defaultValue={field.value}
             render={({ field: { value, onChange }, formState: { errors } }) => {
-              const errorMessage = get(errors, `${flatKey}.message`, '');
+              errorMessage = get(errors, `${flatKey}.message`, '');
               return (
                 <IPayDropdownSelect
                   data={field.lovList}
                   selectedValue={value}
                   label={field.label}
                   onSelectListItem={(selectedItem: string) => onChange(selectedItem)}
-                  isSearchable={false}
-                  testID={`${flatKey}-dropdown`}
-                  labelKey="desc"
-                  valueKey="code"
-                  errorMessage={errorMessage as string}
-                />
-              );
-            }}
-          />
-        );
-
-      case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE_WITH_OTHER_OPTION:
-        const Lov = [...field.lovList, { code: 'Other', desc: 'Other' }];
-        return (
-          <Controller
-            name={flatKey}
-            control={control}
-            render={({ field: { value, onChange }, formState: { errors } }) => {
-              const errorMessage = get(errors, `${flatKey}.message`, '');
-              return (
-                <IPayDropdownSelect
-                  data={Lov}
-                  selectedValue={value}
-                  label={field.label}
-                  onSelectListItem={(selectedItem: string) => {
-                    onChange(selectedItem);
-                  }}
                   isSearchable={false}
                   testID={`${flatKey}-dropdown`}
                   labelKey="desc"

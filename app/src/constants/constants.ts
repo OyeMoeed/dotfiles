@@ -6,7 +6,7 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FeatureSections } from '@app/enums';
-import { BillStatus, CardTypes } from '@app/utilities/enums.util';
+import { BillStatus } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
@@ -233,12 +233,6 @@ const constants = {
   ],
 
   MOCK_CVV: '123',
-  DUMMY_USER_CARD_DETAILS: {
-    CARD_TYPE: CardTypes.SIGNATURE,
-    CARD_LAST_FOUR_DIGIT: '1111',
-    CARD_TYPE_NAME: 'Classic Debit Card',
-    CARD_HOLDER_NAME: 'Adam Ahmed',
-  },
   TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   GIFT_CARD_DETAILS: [
     { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
