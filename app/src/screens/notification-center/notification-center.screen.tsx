@@ -190,7 +190,7 @@ const NotificationCenterScreen: React.FC = () => {
   ): Promise<{ data: Notification[]; hasMore: boolean }> => {
     const payload = {
       walletNumber: walletInfo.walletNumber,
-      currentPage: page,
+      pageNumber: page,
       pageSize,
     };
     try {
@@ -233,11 +233,6 @@ const NotificationCenterScreen: React.FC = () => {
 
     return { data: [], hasMore: false };
   };
-
-  // Fetch notifications on component mount with page 1 and page size 10
-  useEffect(() => {
-    getNotifications(1, 10);
-  }, []);
 
   return (
     <IPaySafeAreaView style={styles.safeArea}>
