@@ -16,13 +16,13 @@ import { buttonVariants } from '@app/utilities';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useRef, useState } from 'react';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { useDispatch } from 'react-redux';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 import { IPayListItemProps } from './Card-issuance-confirmation-details.interface';
 
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
-import { useDispatch } from 'react-redux';
 import cardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
 
 const CardIssuanceConfirmationScreen = () => {

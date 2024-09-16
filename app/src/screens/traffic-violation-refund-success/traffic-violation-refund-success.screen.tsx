@@ -29,7 +29,7 @@ const TrafficViolationRefundSuccessScreen: React.FC = () => {
           style={styles.minFlex}
           headingText={localizationText.TRAFFIC_VIOLATION.REFUND_SUCCESS}
           descriptionText={`${TOTAL_AMOUNT} ${localizationText.COMMON.SAR}`}
-          descriptionStyle={styles.boldStyles}
+          descriptionStyle={styles.descriptionText}
         />
         <IPayChip
           icon={<IPayIcon color={colors.secondary.secondary500} icon={icons.timer_1} />}
