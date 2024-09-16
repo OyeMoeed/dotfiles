@@ -234,6 +234,11 @@ const NotificationCenterScreen: React.FC = () => {
     return { data: [], hasMore: false };
   };
 
+  // Fetch notifications on component mount with page 1 and page size 10
+  useEffect(() => {
+    getNotifications(1, 20);
+  }, []);
+
   return (
     <IPaySafeAreaView style={styles.safeArea}>
       <IPayHeader title={localization.COMMON.NOTIFICATIONS} backBtn applyFlex />
