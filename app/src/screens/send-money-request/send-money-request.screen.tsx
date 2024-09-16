@@ -213,7 +213,7 @@ const SendMoneyRequest: React.FC = () => {
                 medium
                 btnType="primary"
                 onPress={onConfirm}
-                btnText={t('REQUEST_MONEY.SEND_REQUEST_TITLE')}
+                btnText="REQUEST_MONEY.SEND_REQUEST_TITLE"
               />
             </IPayLinearGradientView>
           )}

@@ -119,9 +119,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {t('TRANSACTION_HISTORY.SEND_MONEY')}
-        </IPayCaption1Text>
+          text="TRANSACTION_HISTORY.SEND_MONEY"
+        />
       );
     }
     if (
@@ -133,9 +132,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {t('TRANSACTION_HISTORY.RECEIVED_MONEY')}
-        </IPayCaption1Text>
+          text="TRANSACTION_HISTORY.RECEIVED_MONEY"
+        />
       );
     }
     if (
@@ -203,11 +201,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {`${t('TRANSACTION_HISTORY.GIFT_TO')} ${
+          text={`${t('TRANSACTION_HISTORY.GIFT_TO')} ${
             transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
           }`}
-        </IPayCaption1Text>
+        />
       );
     }
     if (
@@ -245,20 +242,20 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             numberOfLines={CAPTION_LINES}
             style={styles.trasnactionTypeText}
             color={colors.natural.natural900}
-          >
-            {`${t('TRANSACTION_HISTORY.GIFT_FROM')} ${
+            text={`${t('TRANSACTION_HISTORY.GIFT_FROM')} ${
               transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
             }`}
+          >
+            {}
           </IPayCaption1Text>
           <IPayCaption1Text
             numberOfLines={CAPTION_LINES}
             style={styles.trasnactionTypeText}
             color={colors.natural.natural900}
-          >
-            {`${t('TRANSACTION_HISTORY.PAY_FROM')} ${
+            text={`${t('TRANSACTION_HISTORY.PAY_FROM')} ${
               transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
             }`}
-          </IPayCaption1Text>
+          />
         </>
       );
     }
@@ -271,11 +268,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {`${t('TRANSACTION_HISTORY.PAY_TO')} ${
+          text={`${t('TRANSACTION_HISTORY.PAY_TO')} ${
             transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
           }`}
-        </IPayCaption1Text>
+        />
       );
     }
     if (

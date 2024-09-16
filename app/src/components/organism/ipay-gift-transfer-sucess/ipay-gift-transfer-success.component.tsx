@@ -148,7 +148,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={t('TRANSFER_SUMMARY.CHIP_TITLE')}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
               headingStyles={styles.chipColors}
             />
           </IPayView>
@@ -157,7 +157,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
           otherView={
             <IPayButton
               btnType={buttonVariants.LINK_BUTTON}
-              btnText={t('TOP_UP.SHARE')}
+              btnText="TOP_UP.SHARE"
               leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
             />
           }

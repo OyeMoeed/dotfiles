@@ -112,7 +112,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           <IPayCaption2Text style={styles.iconTextStyle} text={item?.text} />
           {item?.isNew && (
             <IPayView style={styles.tagViewContainer}>
-              <IPayText style={styles.tagViewText}>{t('COMMON.NEW')}</IPayText>
+              <IPayText style={styles.tagViewText} text="COMMON.NEW" />
             </IPayView>
           )}
         </IPayView>

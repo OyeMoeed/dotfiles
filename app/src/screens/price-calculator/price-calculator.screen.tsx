@@ -181,7 +181,7 @@ const PriceCalculatorScreen: React.FC = () => {
         </IPayView>
         <IPayView style={styles.cardStyle}>
           <IPayView style={styles.cardText}>
-            <IPayCaption1Text style={styles.textColor}>{t('PRICE_CALCULATOR.INCLUDES_FEES')}</IPayCaption1Text>
+            <IPayCaption1Text style={styles.textColor} text="PRICE_CALCULATOR.INCLUDES_FEES" />
           </IPayView>
           <IPayToggleButton toggleState />
         </IPayView>

@@ -167,7 +167,7 @@ const CardIssuanceConfirmationScreen = () => {
               <IPayButton
                 large
                 btnType={buttonVariants.PRIMARY}
-                btnText={t('COMMON.CONFIRM')}
+                btnText="COMMON.CONFIRM"
                 btnIconsDisabled
                 onPress={handleConfirm}
               />

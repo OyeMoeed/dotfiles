@@ -146,7 +146,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={t('TRANSFER_SUMMARY.CHIP_TITLE')}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
               headingStyles={styles.chipColors}
             />
           </IPayView>

@@ -6,12 +6,10 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { onGoToSetting } from '@app/utilities/shared.util';
 import { FC } from 'react';
 import { Modal } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { IPayPermissionAlertProps } from './ipay-permission-alert.interface';
 import alertStyles from './ipay-permission-alert.styles';
 
 const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, testID }) => {
-  const { t } = useTranslation();
   const { title, description } = useTypedSelector((state) => state.permissionAlertReducer);
 
   // Function to navigate to settings
@@ -36,12 +34,10 @@ const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, t
           <IPayFootnoteText style={styles.message}>{description}</IPayFootnoteText>
           <IPayView style={styles.rowStyles}>
             <IPayPressable style={styles.cancelBtn} onPress={onClose}>
-              <IPaySubHeadlineText style={styles.textColor}>{t('COMMON.CANCEL')}</IPaySubHeadlineText>
+              <IPaySubHeadlineText style={styles.textColor} text="COMMON.CANCEL" />
             </IPayPressable>
             <IPayPressable style={styles.settignsBtn} onPress={onGoToSettings}>
-              <IPaySubHeadlineText regular style={styles.textColor}>
-                {t('LOCATION.GO_TO_SETTINGS')}
-              </IPaySubHeadlineText>
+              <IPaySubHeadlineText regular style={styles.textColor} text="LOCATION.GO_TO_SETTINGS" />
             </IPayPressable>
           </IPayView>
         </IPayView>

@@ -43,10 +43,8 @@ const CardRenewalSuccessScreen: React.FC = () => {
           {isAdded ? (
             <IPayPressable onPress={togleIsAdded} style={styles.addedAppleWalletWrapper}>
               <IPayView style={styles.appleWalletTextWrapper}>
-                <IPayCaption2Text style={styles.addedText} regular>
-                  {t('CARDS.ADDED_TO')}
-                </IPayCaption2Text>
-                <IPayCaption2Text regular={false}>{t('CARDS.APPLE_WALLET')}</IPayCaption2Text>
+                <IPayCaption2Text style={styles.addedText} regular text="CARDS.ADDED_TO" />
+                <IPayCaption2Text regular={false} text="CARDS.APPLE_WALLET" />
               </IPayView>
               <IPayView style={styles.applePay}>
                 <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />

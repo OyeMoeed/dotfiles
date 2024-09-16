@@ -251,7 +251,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayPressable onPress={openTermsAndConditionModal} style={styles.disclaimer}>
-            <IPayFootnoteText color={colors.natural.natural900} text={'SETTINGS.NAFATH_TERMS_AND_CONDITION'} />
+            <IPayFootnoteText color={colors.natural.natural900} text="SETTINGS.NAFATH_TERMS_AND_CONDITION" />
             <IPayIcon icon={icons.infoIcon} size={20} />
           </IPayPressable>
           <IPayButton
@@ -313,9 +313,10 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
                 showExpired={isExpired}
                 intervalTime={duration}
               />
-              <IPayText style={[styles.expireText, isExpired && styles.expireTextColor]}>
-                {isExpired ? t('COMMON.CODE_HAS_EXPIRED') : `${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
-              </IPayText>
+              <IPayText
+                style={[styles.expireText, isExpired && styles.expireTextColor]}
+                text={isExpired ? t('COMMON.CODE_HAS_EXPIRED') : `${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
+              />
             </IPayView>
           </IPayView>
           <IPayPressable style={styles.stepper}>

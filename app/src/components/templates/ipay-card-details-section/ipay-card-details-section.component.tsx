@@ -256,7 +256,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       )}
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
-          <IPayCaption2Text style={styles.accountBalanceText}>{t('CARDS.ACCOUNT_BALANCE')}</IPayCaption2Text>
+          <IPayCaption2Text style={styles.accountBalanceText} text="CARDS.ACCOUNT_BALANCE" />
           <IPaySubHeadlineText style={styles.accountBalanceText}>
             {walletInfo.availableBalance}
             <IPaySubHeadlineText regular>{` ${t('COMMON.SAR')}`}</IPaySubHeadlineText>
@@ -274,7 +274,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
-            {currentCard.totalCashbackAmt} <IPayFootnoteText>{t('COMMON.SAR')}</IPayFootnoteText>
+            {currentCard.totalCashbackAmt} <IPayFootnoteText text="COMMON.SAR" />
           </IPaySubHeadlineText>
         }
       />
@@ -308,7 +308,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       </IPayView>
       <IPayView style={styles.headingsContainer}>
         <IPayView style={styles.commonContainerStyle}>
-          <IPayFootnoteText style={styles.footnoteTextStyle}>{t('CARDS.CARD_TRANSACTIONS_HISTORY')}</IPayFootnoteText>
+          <IPayFootnoteText style={styles.footnoteTextStyle} text="CARDS.CARD_TRANSACTIONS_HISTORY" />
         </IPayView>
         <IPayButton
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
@@ -316,7 +316,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           hasRightIcon
           rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
           medium
-          btnText={t('COMMON.VIEW_ALL')}
+          btnText="COMMON.VIEW_ALL"
         />
       </IPayView>
       <IPayFlatlist

@@ -161,14 +161,20 @@ const IPayIdRenewalSheet: React.FC = () => {
     <IPayView style={styles.verifyView}>
       <IPayView style={styles.verifyViewRow}>
         <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
-        <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
-          {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
-        </IPayFootnoteText>
+        <IPayFootnoteText
+          regular
+          style={styles.verifyText}
+          color={colors.primary.primary800}
+          text="ID_RENEWAL.WHY_VERIFY_TITLE"
+        />
       </IPayView>
 
-      <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-        {localizationText.ID_RENEWAL.WHY_VERIFY}
-      </IPayCaption1Text>
+      <IPayCaption1Text
+        regular
+        style={styles.verifyText}
+        color={colors.natural.natural700}
+        text="ID_RENEWAL.WHY_VERIFY"
+      />
     </IPayView>
   );
 

@@ -12,7 +12,6 @@ import {
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { JSX } from 'react';
-import { useTranslation } from 'react-i18next';
 import { IPaySuggestedSliderProps } from './ipay-suggested-slider.interface';
 import genratedStyles from './ipay-suggested-slider.style';
 
@@ -22,7 +21,6 @@ import genratedStyles from './ipay-suggested-slider.style';
  * @returns {JSX.Element} - The rendered component.
  */
 const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPaySuggestedSliderProps): JSX.Element => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
 
@@ -42,9 +40,10 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPa
               <IPayIcon icon={icons.receipt_item} size={18} color={colors.orange.orange500} />
               <IPayFootnoteText style={styles.footnoteTextStyle} text="HOME.BILL_PAYMENTS" />
             </IPayView>
-            <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>
-              {t('CARDS.WALLET_WITH_EVERY_BILL')}
-            </IPayCaption2Text>
+            <IPayCaption2Text
+              style={[styles.footnoteTextStyle, styles.captionTextStyle]}
+              text="CARDS.WALLET_WITH_EVERY_BILL"
+            />
           </IPayView>
           {/* Right side Text */}
           <IPayView>

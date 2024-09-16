@@ -121,9 +121,11 @@ const WalletScreen = () => {
             lineCap="round"
           >
             <IPayView style={styles.progressContainer}>
-              <IPayFootnoteText color={colors.primary.primary800} style={styles.limitTextStyle}>
-                {t('HOME.SPENDING_LIMIT')}
-              </IPayFootnoteText>
+              <IPayFootnoteText
+                color={colors.primary.primary800}
+                style={styles.limitTextStyle}
+                text="HOME.SPENDING_LIMIT"
+              />
               <IPayGradientTextMasked colors={headingTextGradientColors}>
                 <IPayTitle1Text regular={false}>{formatNumberWithCommas(remainingSpendingLimit)} </IPayTitle1Text>
               </IPayGradientTextMasked>

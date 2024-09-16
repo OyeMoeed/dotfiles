@@ -343,7 +343,7 @@ const CardsScreen: React.FC = () => {
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
       <IPayView style={styles.topDetails}>
-        <IPayTitle2Text regular={false}>{t('CARDS.CARDS')}</IPayTitle2Text>
+        <IPayTitle2Text regular={false} text="CARDS.CARDS" />
         <IPayButton
           small
           btnType={buttonVariants.LINK_BUTTON}
@@ -380,7 +380,7 @@ const CardsScreen: React.FC = () => {
 
       <IPayPortalBottomSheet
         ref={cardDetailsSheetRef}
-        heading={'CARDS.CARD_DETAILS'}
+        heading="CARDS.CARD_DETAILS"
         customSnapPoint={['50%', '60%']}
         onCloseBottomSheet={onCloseCardSheet}
         simpleBar

@@ -9,13 +9,11 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayAppleWallet from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import { isIosOS } from '@app/utilities/constants';
-import { useTranslation } from 'react-i18next';
 import issuePhysicalCardSuccessStyles from './issue-physical-card-success.style';
 
 const IssuePhysicalCardSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = issuePhysicalCardSuccessStyles(colors);
-  const { t } = useTranslation();
 
   const [isAdded, setIsAdded] = useState(false); // TODO: will be handle on the basis of api
 
@@ -39,10 +37,8 @@ const IssuePhysicalCardSuccessScreen: React.FC = () => {
             {isAdded ? (
               <IPayPressable onPress={onToggleIsAdded} style={styles.addedAppleWalletWrapper}>
                 <IPayView style={styles.appleWalletTextWrapper}>
-                  <IPayCaption2Text style={styles.addedText} regular>
-                    {t('CARDS.ADDED_TO')}
-                  </IPayCaption2Text>
-                  <IPayCaption2Text regular={false}>{t('CARDS.APPLE_WALLET')}</IPayCaption2Text>
+                  <IPayCaption2Text style={styles.addedText} regular text="CARDS.ADDED_TO" />
+                  <IPayCaption2Text regular={false} text="CARDS.APPLE_WALLET" />
                 </IPayView>
                 <IPayView style={styles.applePay}>
                   <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />

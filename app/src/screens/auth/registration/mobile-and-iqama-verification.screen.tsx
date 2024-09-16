@@ -160,7 +160,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               />
             </IPayPortalBottomSheet>
             <IPayPortalBottomSheet
-              heading={'FORGOT_PASSCODE.HELP_CENTER'}
+              heading="FORGOT_PASSCODE.HELP_CENTER"
               enablePanDownToClose
               simpleBar
               backBtn

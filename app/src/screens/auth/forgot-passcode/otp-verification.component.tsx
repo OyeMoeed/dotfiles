@@ -167,9 +167,12 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
                   </IPayCaption1Text>
                 </IPayView>
 
-                <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-                  {t('ID_RENEWAL.WHY_VERIFY')}
-                </IPayCaption1Text>
+                <IPayCaption1Text
+                  regular
+                  style={styles.verifyText}
+                  color={colors.natural.natural700}
+                  text="ID_RENEWAL.WHY_VERIFY"
+                />
               </IPayView>
             )}
             <IPayButton

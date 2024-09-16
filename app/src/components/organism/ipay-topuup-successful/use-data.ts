@@ -7,7 +7,6 @@ const useData = () => {
   const { t } = useTranslation();
   const {
     applePayDetails,
-    cardPayDetails,
     walletPayDetailes,
     orderDetails,
     sendMoneyDetails,

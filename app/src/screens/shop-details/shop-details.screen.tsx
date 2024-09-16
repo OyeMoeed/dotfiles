@@ -81,7 +81,7 @@ const ShopDetails: React.FC = ({ route }) => {
   const onPay = () =>
     navigate(ScreenNames.REQUEST_SUMMARY, {
       screen: SummaryType.ORDER_SUMMARY,
-      heading: localizationText.SHOP.PAY_PRODUCT,
+      heading: t('SHOP.PAY_PRODUCT'),
     });
   return (
     <IPaySafeAreaView style={styles.container}>

@@ -21,9 +21,9 @@ class CustomBackend extends HttpBackend {
       .then((data) => {
         let parsedData;
         try {
-          parsedData = JSON.parse(data); // Parse the cleaned JSON
+          parsedData = JSON.parse(data)?.[language]; // Parse the cleaned JSON
         } catch (error) {
-          return callback(error, false); // Handle JSON parsing errors
+          callback(error, false); // Handle JSON parsing errors
         }
 
         callback(null, parsedData); // Pass parsed data to i18next
@@ -53,7 +53,7 @@ i18n
         CustomBackend,
         i18nextResourcesToBackend((lng, ns, callback) => {
           // Load local translations (from local file)
-          const resource = lng === 'en' ? { en: resources.en.translation } : {};
+          const resource = resources[lng].translation;
           callback(null, resource);
         }),
       ],

@@ -492,7 +492,7 @@ const useConstantData = () => {
     },
     {
       id: '5',
-      label: localizationText.TRAFFIC_VIOLATION.REF_NUMBER,
+      label: t('TRAFFIC_VIOLATION.REF_NUMBER'),
       value: 'FTA35346',
       icon: icons.copy,
     },
@@ -1081,12 +1081,12 @@ const useConstantData = () => {
     },
     {
       id: '4',
-      label: localizationText.ORDER_SCREEN.TOTAL_AMOUNT,
-      value: `250.00 SAR ${localizationText.COMMON.SAR}`,
+      label: t('ORDER_SCREEN.TOTAL_AMOUNT'),
+      value: `250.00 SAR ${t('COMMON.SAR')}`,
     },
     {
       id: '5',
-      label: localizationText.ORDER_SCREEN.PURCHASE_DATE,
+      label: t('ORDER_SCREEN.PURCHASE_DATE'),
       value: '14/03/2024 - 15:30',
     },
   ];

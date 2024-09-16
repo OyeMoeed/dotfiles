@@ -115,9 +115,7 @@ const TransferSummaryScreen: React.FC = () => {
     <IPayView style={styles.faqItemContainer}>
       <IPayPressable onPress={toggleExpandMessage} style={styles.faqItemHeader}>
         <IPayView style={styles.listView}>
-          <IPayFootnoteText regular style={styles.faqItemText}>
-            {t('COMMON.MESSAGE')}
-          </IPayFootnoteText>
+          <IPayFootnoteText regular style={styles.faqItemText} text="COMMON.MESSAGE" />
           <IPayIcon
             icon={expandMsg ? icons.arrowUp : icons.ARROW_DOWN}
             size={18}

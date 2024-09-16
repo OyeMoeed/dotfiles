@@ -56,7 +56,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
-          btnText={'SADAD.PAY'}
+          btnText="SADAD.PAY"
           totalAmount={totalAmount}
           backgroundGradient={['transparent', 'transparent']}
           gradientViewStyle={styles.sadadFooterGradient}

@@ -5,7 +5,6 @@ import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
 import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
@@ -40,7 +39,6 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   onChangeText,
   errorMessage,
 }: IPayMoiPaymentDetailFormProps) => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
 

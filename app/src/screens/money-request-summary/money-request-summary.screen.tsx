@@ -205,7 +205,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       ) : (
         <IPayList
-          title={'REQUEST_SUMMARY.TOTAL_AMOUNT'}
+          title="REQUEST_SUMMARY.TOTAL_AMOUNT"
           rightText={
             <IPaySubHeadlineText color={colors.primary.primary800} regular text={`${topUpAmount} ${t('COMMON.SAR')}`} />
           }
@@ -280,7 +280,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       </IPayView>
 
       <IPayBottomSheet
-        heading={'REQUEST_SUMMARY.PAY_PRODUCT'}
+        heading="REQUEST_SUMMARY.PAY_PRODUCT"
         enablePanDownToClose
         simpleBar
         testID="request-money-otp-verification"
