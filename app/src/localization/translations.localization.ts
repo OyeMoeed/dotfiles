@@ -22,7 +22,4 @@ export const translations = {
 
 export const appText = translations;
 
-type TranslationType = (typeof translations)[LanguageCode.EN];
-
 export type LocalizationKeys = keyof typeof translations;
-export type LocalizationText = TranslationType;

@@ -2,6 +2,9 @@
  * i18n is a library for internationalization (i18n) in JavaScript applications.
  */
 import { translations } from '@app/localization/translations.localization';
+import { CallbackProps } from '@app/network/services/localization/localization-channels/localization-channels.interface';
+import getLocalizationChannels from '@app/network/services/localization/localization-channels/localization-channels.service';
+import LOCALIZATION_URLS from '@app/network/services/localization/localization.urls';
 import { LanguageCode } from '@app/utilities';
 import i18n from 'i18next';
 import ChainedBackend from 'i18next-chained-backend';
@@ -9,24 +12,20 @@ import HttpBackend from 'i18next-http-backend';
 import i18nextResourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next';
 
-const languageUrl = 'https://uat.alinmapay.com.sa/v2/alinmapay/localization/channels/PAYC/labels/i18n?locale={{lng}}';
+const languageUrl = LOCALIZATION_URLS.getLocalizationChannelsUrl;
+
 class CustomBackend extends HttpBackend {
   // Override the fetch method to clean and parse the response
-  read(language: string, namespace: string, callback: (error: any, data: any) => void) {
-    const loadPath = this.options.loadPath || languageUrl;
+  read(language: string, namespace: string, callback: CallbackProps) {
+    const loadPath = this?.options?.loadPath || languageUrl;
     const url = (loadPath as string)?.replace('{{lng}}', language);
 
-    fetch(url)
-      .then((response) => response.text()) // Get the response as text
-      .then((data) => {
-        try {
-          const parsedData = JSON.parse(data)?.[language]; // Parse the cleaned JSON
-          callback(null, parsedData); // Pass parsed data to i18next
-        } catch (error) {
-          callback(error, false); // Handle JSON parsing errors
-        }
-      })
-      .catch((error) => callback(error, false)); // Handle fetch errors
+    getLocalizationChannels({
+      url,
+      language,
+      callback,
+      namespace,
+    });
   }
 }
 
@@ -49,9 +48,10 @@ i18n
     backend: {
       backends: [
         CustomBackend,
-        i18nextResourcesToBackend((lng, ns, callback) => {
+        i18nextResourcesToBackend((lng: string, ns: string, callback: CallbackProps) => {
           // Load local translations (from local file)
-          const resource = translations[lng as keyof typeof LanguageCode];
+          const language = lng as keyof typeof LanguageCode;
+          const resource = translations[language];
           callback(null, resource);
         }),
       ],
