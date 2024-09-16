@@ -78,6 +78,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
             isCheck={myIdCheck || false}
             heading={localizationText.BILL_PAYMENTS.USE_MY_ID}
             onPress={onCheckboxAction}
+            checkBoxStyle={styles.checkBoxStyle}
           />
         )}
       />
@@ -93,11 +94,13 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
             showRightIcon={!myIdCheck}
             editable={!myIdCheck}
             containerStyle={getInputStyles()}
+            inputStyle={styles.inputStyle}
             customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
             onClearInput={onBeneficiaryIdAction}
             onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
             assistiveText={errorMessage}
             isError
+            maxLength={10}
           />
         )}
       />
@@ -113,7 +116,8 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
             editable={false}
             showRightIcon
             containerStyle={[styles.inputContainerStyle]}
-            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+            inputStyle={styles.inputStyle}
+            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
             onClearInput={onIdTypeAction}
           />
         )}
@@ -129,12 +133,14 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
               label={localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL}
               labelColor={colors.primary.primary500}
               containerStyle={[styles.inputContainerStyle]}
+              inputStyle={styles.inputStyle}
               customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
               onClearInput={clearVoilationNumber}
               onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
               assistiveText={errorMessage}
               showRightIcon
               isError
+              maxLength={10}
             />
           )}
         />

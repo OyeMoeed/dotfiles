@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
+
 interface NafathVerificationState {
   isProfileSheetVisible: boolean;
   isNafathSheetVisible: boolean;

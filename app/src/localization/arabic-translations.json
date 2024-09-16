@@ -164,6 +164,7 @@
     "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
     "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
     "CONTACT_NAME": "اسم جهة الاتصال",
+    "NO_RESULTS_FOUND": "لا توجد نتائج",
     "CONTACT_LIMIT": "تم الوصول إلى حد جهات الاتصال"
   },
   "ONBOARDING": {
@@ -762,7 +763,8 @@
     "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
     "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
     "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرور",
-    "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح"
+    "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح",
+    "SCAN_UNSUCCESSFUL": "المسح غير ناجح"
   },
   "LOCAL_TRANSFER": {
     "INVESTMENT": "استثمار",
@@ -982,6 +984,7 @@
     "ACCOUNT_NUMBER": "رقم الحساب",
     "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
     "INQUIRY": "استفسار",
+    "INQUIRE": "استفسر",
     "SAVE_ONLY": "حفظ فقط",
     "BILL_NICK_NAME": "بيل نيك نايم",
     "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
@@ -1016,6 +1019,7 @@
     "PAY_PARTIALLY": "ادفع جزئيًا",
     "EDIT_BILL": "تعديل الفاتورة",
     "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح",
+    "PAY": "دفع",
     "DISCARD_CHANGES": "هل تريد تجاهل التغييرات؟",
     "EDIT_YOU_MADE_WILL_LOST": "سيتم فقدان التعديلات التي أجريتها."
   },
@@ -1033,7 +1037,8 @@
     "VIEW_SADAD_BILLS": "عرض فواتير سداد",
     "PAID_SUCCESS": "تم دفع فاتورتك بنجاح",
     "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح",
-    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى"
+    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى",
+    "AMOUNT": "المبلغ"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",
@@ -1089,7 +1094,8 @@
     "PRODUCT_DISCRIPTION": "وصف المنتج",
     "PAY": "ادفع",
     "TERMS_AND_CONDITIONS": "بالنقر على الدفع، أنت توافق على الشروط والأحكام الخاصة بنا",
-    "NO_RESULT": "لا توجد منتجات في هذه الفئة"
+    "NO_RESULT": "لا توجد منتجات في هذه الفئة",
+    "PAY_PRODUCT": "دفع المنتج"
   },
   "ORDER_SCREEN": {
     "COUPON_CODE": "رمز القسيمة",
@@ -1101,16 +1107,20 @@
     "VAT": "ضريبة القيمة المضافة (15%)",
     "BACK": "الرجوع إلى المتجر",
     "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
-    "COPY": "تم نسخ رمز القسيمة!"
+    "COPY": "تم نسخ رمز القسيمة!",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "PURCHASE_DATE": "تاريخ الشراء"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
     "PAY_TO": "الدفع إلى",
     "MOBILE_NUMBER": "رقم الجوال",
     "AMOUNT": "المبلغ",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "PAY_PRODUCT": "دفع المنتج"
   },
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "دفع وزارة الداخلية",
@@ -1178,6 +1188,7 @@
     "CREATE_REQUEST": "إنشاء طلب",
     "YOU_HAVE_NO": "ليس لديك أي",
     "MONEY_REQUESTS": "طلبات مالية",
+    "MONEY_REQUEST": "طلب المال",
     "PENDING": "قيد الانتظار",
     "CANCEL": "إلغاء",
     "PAID": "مدفوع",
@@ -1200,7 +1211,8 @@
     "CANCEL_REQUEST": "إلغاء الطلب",
     "PAY": "دفع",
     "REJECT": "رفض",
-    "REJECT_THIS_REQUEST": "رفض هذا الطلب"
+    "REJECT_THIS_REQUEST": "رفض هذا الطلب",
+    "MAKE_NEW_REQUEST": "تقديم طلب جديد"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "المخالفات المرورية",
@@ -1233,7 +1245,8 @@
     "RECEIVED_REQUESTS": "الطلبات المستلمة",
     "CREATE_REQUEST": "إنشاء طلب",
     "YOU_HAVE_NO": "ليس لديك",
-    "MONEY_REQUESTS": "طلبات مالية"
+    "MONEY_REQUESTS": "طلبات مالية",
+    "REF_NUMBER": "رقم المرجع"
   },
   "ORDER_SUMMARY": {
     "TITLE": "دفع المنتج",

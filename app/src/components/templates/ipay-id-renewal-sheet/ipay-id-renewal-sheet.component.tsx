@@ -157,22 +157,22 @@ const IPayIdRenewalSheet: React.FC = () => {
   };
   const formattedSubtitle = isAboutToExpire && !idExpired ? t('ID_RENEWAL.ID_UPDATION_DES', extraParams) : subtitle;
 
-  const DisclaimerSection = () => {
-    return (
-      <IPayView style={styles.verifyView}>
-        <IPayView style={styles.verifyViewRow}>
-          <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
-          <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
-            {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
-          </IPayFootnoteText>
-        </IPayView>
-
-        <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-          {localizationText.ID_RENEWAL.WHY_VERIFY}
-        </IPayCaption1Text>
+  // TODO: fix nested-components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const DisclaimerSection = () => (
+    <IPayView style={styles.verifyView}>
+      <IPayView style={styles.verifyViewRow}>
+        <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
+        <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
+          {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+        </IPayFootnoteText>
       </IPayView>
-    );
-  };
+
+      <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+        {localizationText.ID_RENEWAL.WHY_VERIFY}
+      </IPayCaption1Text>
+    </IPayView>
+  );
 
   return (
     <>
@@ -198,7 +198,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}
-            hasDisclaimerSection={true}
+            hasDisclaimerSection
             disclaimerSection={<DisclaimerSection />}
           />
         ) : (
