@@ -102,7 +102,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     {
       id: '3',
       label: localizationText.COMMON.REF_NUM,
-      value: apiResponse?.response?.transctionRefNumber,
+      value: apiResponse?.response?.referenceNumber,
       icon: icons.copy,
     },
   ];
@@ -145,7 +145,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         navigate(ScreenNames.TOP_UP_SUCCESS, {
           topupChannel: PayChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
-          amount: apiResponse?.response?.totalTansactionAmount,
+          amount: topUpAmount,
           requestPaidSummaryData: requestPaidSummaryData(apiResponse),
         });
       }
@@ -205,7 +205,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       ) : (
         <IPayList
-          title={localizationText.REQUEST_SUMMARY.AMOUNT}
+          title={localizationText.REQUEST_SUMMARY.TOTAL_AMOUNT}
           rightText={
             <IPaySubHeadlineText
               color={colors.primary.primary800}
@@ -218,32 +218,30 @@ const MoneyRequestSummaryScreen: React.FC = () => {
     [chipValue, localizationText, topUpAmount, colors, icons],
   );
 
-  const renderPayItem = useMemo(
-    () =>
-      // TODO: Fix nested components
-      // eslint-disable-next-line react/no-unstable-nested-components
-      ({ item }: { item: PayData }) => {
-        const { detailsText, leftIcon, label } = item;
-        return (
-          <IPayView style={styles.listContainer}>
-            <IPayView style={styles.listView}>
-              <IPayView style={styles.iconLabel}>
-                {leftIcon && (
-                  <IPayView style={styles.leftIcon}>
-                    <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
-                  </IPayView>
-                )}
-                <IPayFootnoteText color={colors.natural.natural900} text={label} />
+  const renderPayItem = ({ item }: { item: PayData }) => {
+    const { detailsText, leftIcon, label } = item;
+    return (
+      <IPayView style={styles.listContainer}>
+        <IPayView style={styles.listView}>
+          <IPayView style={styles.iconLabel}>
+            {leftIcon && (
+              <IPayView style={styles.leftIcon}>
+                <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
               </IPayView>
-              <IPayView style={styles.listDetails}>
-                <IPayFootnoteText text={detailsText} style={styles.detailsText} />
-              </IPayView>
-            </IPayView>
+            )}
+            <IPayFootnoteText color={colors.natural.natural900} text={label} />
           </IPayView>
-        );
-      },
-    [topUpAmount, localizationText, colors, images],
-  );
+          <IPayView style={styles.listDetails}>
+            {detailsText ? (
+              <IPayFootnoteText text={detailsText} style={styles.detailsText} />
+            ) : (
+              <IPayFootnoteText text={`${topUpAmount} ${localizationText.COMMON.SAR}`} style={styles.detailsText} />
+            )}
+          </IPayView>
+        </IPayView>
+      </IPayView>
+    );
+  };
 
   return (
     <IPaySafeAreaView>
@@ -280,12 +278,13 @@ const MoneyRequestSummaryScreen: React.FC = () => {
             btnText={localizationText.COMMON.CONFIRM}
             btnIconsDisabled
             disabled={monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining}
+            btnStyle={styles.confirmButton}
           />
         </IPayLinearGradientView>
       </IPayView>
 
       <IPayBottomSheet
-        heading={localizationText.REQUEST_SUMMARY.TITLE}
+        heading={localizationText.REQUEST_SUMMARY.PAY_PRODUCT}
         enablePanDownToClose
         simpleBar
         testID="request-money-otp-verification"

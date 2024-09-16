@@ -7,6 +7,7 @@ import { AppDispatch, RootState, useTypedSelector } from '@store/store';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import IPayTermsAndConditions from '../ipay-terms-and-conditions/ipay-terms-and-conditions.component';
 import IPayBottomSheetProviderProps from './ipay-bottomsheet-provider.interface';
 
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
@@ -16,6 +17,9 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
     (state: RootState) => state.nafathVerificationReducer.isProfileSheetVisible,
   );
   const isNafathSheetVisible = useTypedSelector((state) => state.nafathVerificationReducer.isNafathSheetVisible);
+
+  const { isTermsConditionsVisible, termsAndConditionsURL, isVirtualCardTermsAndConditions, isNafathTerms } =
+    useTypedSelector((state: RootState) => state.nafathVerificationReducer);
 
   const onCloseProfileSheet = () => {
     dispatch(setProfileSheetVisibility(false));
@@ -57,6 +61,13 @@ const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ child
       >
         <IPayNafathVerification onComplete={onCloseNafathSheet} />
       </IPayPortalBottomSheet>
+
+      <IPayTermsAndConditions
+        isVirtualCardTermsAndConditions={isVirtualCardTermsAndConditions}
+        termsAndConditionsURL={termsAndConditionsURL}
+        showTermsAndConditions={isTermsConditionsVisible}
+        isNafathTerms={isNafathTerms}
+      />
 
       <IPayIdRenewalSheet />
     </>

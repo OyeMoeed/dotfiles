@@ -25,14 +25,19 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { REGEX } from '@app/constants/app-validations';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
-import { PermissionsStatus, PermissionTypes } from '@app/enums';
+import { PermissionTypes, PermissionsStatus } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import usePermissions from '@app/hooks/permissions.hook';
 import { useKeyboardStatus } from '@app/hooks';
+import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
@@ -154,26 +159,25 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   };
 
   const handleSelect = (contact: Contact) => {
-    if (selectedContacts.length < 5) {
-      // Corrected 'lenght' to 'length'
-      setSelectedContacts((prevSelectedContacts) => {
-        const isAlreadySelected = prevSelectedContacts.some(
-          (selectedContact) => selectedContact.recordID === contact.recordID,
-        );
+    // Corrected 'lenght' to 'length'
+    setSelectedContacts((prevSelectedContacts) => {
+      const isAlreadySelected = prevSelectedContacts.some(
+        (selectedContact) => selectedContact.recordID === contact.recordID,
+      );
 
-        if (isAlreadySelected) {
-          // Remove the contact if it's already selected
-          return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
-        }
+      if (isAlreadySelected) {
+        // Remove the contact if it's already selected
+        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+      }
 
-        // Add the contact if the limit is not exceeded
-        if (prevSelectedContacts.length >= MAX_CONTACTS) {
-          return prevSelectedContacts;
-        }
+      // Add the contact if the limit is not exceeded
+      if (prevSelectedContacts.length >= MAX_CONTACTS) {
+        renderToast();
+        return prevSelectedContacts;
+      }
 
-        return [...prevSelectedContacts, contact];
-      });
-    }
+      return [...prevSelectedContacts, contact];
+    });
   };
 
   const showUnsavedBottomSheet = () => {
