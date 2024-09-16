@@ -73,16 +73,16 @@ const CardIssuanceConfirmationScreen = () => {
 
   const getCardTypeLabel = (): string => {
     const { cardType } = issuanceDetails;
-    if (cardType === 'IPMC') {
-      return t('VIRTUAL_CARD.CLASSIC');
+    switch (cardType) {
+      case 'IPMC':
+        return 'VIRTUAL_CARD.CLASSIC';
+      case 'VPPC':
+        return 'VIRTUAL_CARD.PLATINUM';
+      case 'VSCC':
+        return 'VIRTUAL_CARD.SIGNATURE';
+      default:
+        return '';
     }
-    if (cardType === 'VPPC') {
-      return t('VIRTUAL_CARD.PLATINUM');
-    }
-    if (cardType === 'VSCC') {
-      return t('VIRTUAL_CARD.SIGNATURE');
-    }
-    return '';
   };
 
   const listData = [

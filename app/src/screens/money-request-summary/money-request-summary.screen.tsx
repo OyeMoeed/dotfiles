@@ -64,10 +64,10 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
   const determineChipValue = useCallback(() => {
     if (monthlyRemaining === 0) {
-      return t('REQUEST_SUMMARY.NO_REMAINING_AMOUNT');
+      return 'REQUEST_SUMMARY.NO_REMAINING_AMOUNT';
     }
     if (updatedTopUpAmount > monthlyRemaining) {
-      return t('REQUEST_SUMMARY.INSUFFICIENT_BALANCE');
+      return 'REQUEST_SUMMARY.INSUFFICIENT_BALANCE';
     }
     return '';
   }, [monthlyRemaining, updatedTopUpAmount]);
@@ -197,7 +197,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           containerStyle={styles.chipContainer}
           icon={
             <IPayIcon
-              icon={chipValue === t('TOP_UP.LIMIT_REACHED') ? icons.warning : icons.shield_cross}
+              icon={chipValue === 'TOP_UP.LIMIT_REACHED' ? icons.warning : icons.shield_cross}
               color={colors.critical.critical800}
               size={16}
             />

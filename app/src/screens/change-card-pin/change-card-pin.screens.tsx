@@ -8,12 +8,10 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import { forwardRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './change-card-pin.interface';
 import changeCardPinStyles from './change-card-pin.style';
 
 const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
   const [passcodeError, setPasscodeError] = useState(false);
@@ -25,11 +23,11 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getTitle = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return t('CHANGE_PIN.CURRENT_PIN_CODE');
+        return 'CHANGE_PIN.CURRENT_PIN_CODE';
       case ChangeCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.NEW_PIN_CODE');
+        return 'CHANGE_PIN.NEW_PIN_CODE';
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.CONFIRM_NEW_PIN');
+        return 'CHANGE_PIN.CONFIRM_NEW_PIN';
       default:
         return '';
     }
@@ -38,11 +36,11 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getDescription = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return t('CHANGE_PIN.ENTER_CURRENT_PASS');
+        return 'CHANGE_PIN.ENTER_CURRENT_PASS';
       case ChangeCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.YOU_WILL_NEED_TO');
+        return 'CHANGE_PIN.YOU_WILL_NEED_TO';
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.ENTER_PASS_AGAIN');
+        return 'CHANGE_PIN.ENTER_PASS_AGAIN';
       default:
         return '';
     }
@@ -51,11 +49,11 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
   const getErrorDescription = () => {
     switch (currentView) {
       case ChangeCardPinViewTypes.CurrentPin:
-        return t('CHANGE_PIN.PLEASE_ENSURE_PASSCODE');
+        return 'CHANGE_PIN.PLEASE_ENSURE_PASSCODE';
       case ChangeCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.OLD_PIN');
+        return 'CHANGE_PIN.OLD_PIN';
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.ENSURE_YOU_WRITE');
+        return 'CHANGE_PIN.ENSURE_YOU_WRITE';
       default:
         return '';
     }

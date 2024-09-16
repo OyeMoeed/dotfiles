@@ -7,12 +7,10 @@ import { IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import { forwardRef, useState } from 'react';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import images from '@app/assets/images';
-import { useTranslation } from 'react-i18next';
 import createCardPinStyles from './create-card-pin.style';
 import { CreateCardPinViewTypes, CreateCardPinProps } from './create-card-pin.interface';
 
 const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = createCardPinStyles();
   const [passcodeError, setPasscodeError] = useState(false);
@@ -23,9 +21,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getTitle = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return t('VIRTUAL_CARD.CREATE_CARD_PIN_PIN');
+        return 'VIRTUAL_CARD.CREATE_CARD_PIN_PIN';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.CONFIRM_NEW_PIN');
+        return 'CHANGE_PIN.CONFIRM_NEW_PIN';
       default:
         return '';
     }
@@ -34,9 +32,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getDescription = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.YOU_WILL_NEED_TO');
+        return 'CHANGE_PIN.YOU_WILL_NEED_TO';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.ENTER_PASS_AGAIN');
+        return 'CHANGE_PIN.ENTER_PASS_AGAIN';
       default:
         return '';
     }
@@ -45,9 +43,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getErrorTitle = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.INVALID_PIN');
+        return 'CHANGE_PIN.INVALID_PIN';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.PIN_NOT_MATCHING');
+        return 'CHANGE_PIN.PIN_NOT_MATCHING';
       default:
         return '';
     }
@@ -56,9 +54,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getErrorDescription = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.OLD_PIN');
+        return 'CHANGE_PIN.OLD_PIN';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.ENSURE_YOU_WRITE');
+        return 'CHANGE_PIN.ENSURE_YOU_WRITE';
       default:
         return '';
     }

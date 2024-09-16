@@ -86,11 +86,11 @@ const VirtualCardScreen: React.FC = () => {
       const tabsArr = apiResponse?.response?.cards?.map((el) => {
         switch (el.cardTypeId) {
           case 'IPMC':
-            return t('VIRTUAL_CARD.CLASSIC');
+            return 'VIRTUAL_CARD.CLASSIC';
           case 'VPPC':
-            return t('VIRTUAL_CARD.PLATINUM');
+            return 'VIRTUAL_CARD.PLATINUM';
           case 'VSCC':
-            return t('VIRTUAL_CARD.SIGNATURE');
+            return 'VIRTUAL_CARD.SIGNATURE';
           default:
             return '';
         }

@@ -1,10 +1,8 @@
 import useConstantData from '@app/constants/use-constants';
 import { PayChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
 
 const useData = () => {
-  const { t } = useTranslation();
   const {
     applePayDetails,
     walletPayDetailes,
@@ -43,22 +41,22 @@ const useData = () => {
   const renderText = () => {
     switch (topupChannel) {
       case PayChannel.GIFT:
-        return t('TOP_UP.GIFT_SUCCESSFUL');
+        return 'TOP_UP.GIFT_SUCCESSFUL';
 
       case PayChannel.WALLET:
-        return t('TOP_UP.TRANSFER_SUCCESSFUL');
+        return 'TOP_UP.TRANSFER_SUCCESSFUL';
 
       case PayChannel.MONEY:
-        return t('TOP_UP.TRANSFER_SUCCESSFUL');
+        return 'TOP_UP.TRANSFER_SUCCESSFUL';
 
       case PayChannel.REQUEST:
-        return t('REQUEST_SUMMARY.REQUEST_SENT');
+        return 'REQUEST_SUMMARY.REQUEST_SENT';
       case PayChannel.REQUEST_ACCEPT:
-        return t('REQUEST_MONEY.REQUEST_PAID');
+        return 'REQUEST_MONEY.REQUEST_PAID';
       case PayChannel.ORDER:
-        return t('ORDER_SCREEN.TITLE');
+        return 'ORDER_SCREEN.TITLE';
       default:
-        return t('TOP_UP.TOPUP_SUCCESS');
+        return 'TOP_UP.TOPUP_SUCCESS';
     }
   };
   return {

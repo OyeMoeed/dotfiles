@@ -111,7 +111,7 @@ const IPayTransactionHistoryDetails = forwardRef(
       }
 
       const mappedKey = LocalizationKeysMapping[key];
-      return `${t(`TRANSACTION_HISTORY${mappedKey}`)} ${text}`;
+      return `${t(`TRANSACTION_HISTORY.${mappedKey}`)} ${text}`;
     };
 
     // This fucntion is used to get localization for transaction data values

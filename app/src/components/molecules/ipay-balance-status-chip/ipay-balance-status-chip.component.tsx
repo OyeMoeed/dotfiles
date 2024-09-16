@@ -52,11 +52,11 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
 
   const balanceStatusVariants: BalanceStatusVariants = {
     [AccountBalanceStatus.INSUFFICIENT_BALANCE]: {
-      text: t('COMMON.INSUFFICIENT_BALANCE'),
+      text: 'COMMON.INSUFFICIENT_BALANCE',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.NO_REMAINING_AMOUNT]: {
-      text: t('COMMON.NO_REMAINING_AMOUNT'),
+      text: 'COMMON.NO_REMAINING_AMOUNT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_OUTGOING_LIMIT]: {
@@ -64,31 +64,31 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_INCOMING_LIMIT]: {
-      text: t('COMMON.MONTHLY_INCOMING_LIMIT'),
+      text: 'COMMON.MONTHLY_INCOMING_LIMIT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_OUTGOING_LIMIT]: {
-      text: t('COMMON.MONTHLY_OUTGOING_LIMIT'),
+      text: 'COMMON.MONTHLY_OUTGOING_LIMIT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_INCOMING_LIMIT]: {
-      text: t('COMMON.DAILY_INCOMING_LIMIT'),
+      text: 'COMMON.DAILY_INCOMING_LIMIT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_REMAINING_INCOMING_AMOUNT]: {
-      text: t('COMMON.MONTHLY_REMAINING_INCOMING_AMOUNT'),
+      text: 'COMMON.MONTHLY_REMAINING_INCOMING_AMOUNT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.MONTHLY_REMAINING_OUTGOING_AMOUNT]: {
-      text: t('COMMON.MONTHLY_REMAINING_OUTGOING_AMOUNT'),
+      text: 'COMMON.MONTHLY_REMAINING_OUTGOING_AMOUNT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_REMAINING_INCOMING_AMOUNT]: {
-      text: t('COMMON.DAILY_REMAINING_INCOMING_AMOUNT'),
+      text: 'COMMON.DAILY_REMAINING_INCOMING_AMOUNT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.DAILY_REMAINING_OUTGOING_AMOUNT]: {
-      text: t('COMMON.DAILY_REMAINING_OUTGOING_AMOUNT'),
+      text: 'COMMON.DAILY_REMAINING_OUTGOING_AMOUNT',
       variant: States.WARNING,
     },
     [AccountBalanceStatus.SPENDING_LIMIT_EXCEED]: {

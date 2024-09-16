@@ -6,7 +6,6 @@ import { buttonVariants, CardCategories } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React from 'react';
 import { ImageBackground, LayoutChangeEvent } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { CardInterface, IPayATMCardProps } from './ipay-atm-card.interface';
 import cardStyles from './ipay-atm-card.style';
 
@@ -20,17 +19,16 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({
   const { colors } = useTheme();
   const styles = cardStyles(colors);
   const { cardHeaderText, cardType, name, maskedCardNumber } = card;
-  const { t } = useTranslation();
 
   const getDetailByStatus = (item: CardInterface) => {
     if (item.expired) {
-      return { text: t('CARDS.CARD_EXPIRED'), icon: icons.alertWaring };
+      return { text: 'CARDS.CARD_EXPIRED', icon: icons.alertWaring };
     }
     if (card.frozen) {
-      return { text: t('CARDS.CARD_FROZEN'), icon: icons.freeze_icon };
+      return { text: 'CARDS.CARD_FROZEN', icon: icons.freeze_icon };
     }
     if (card.suspended) {
-      return { text: t('CARDS.TEMPORARILY_SUSPENDED'), icon: icons.alertWaring };
+      return { text: 'CARDS.TEMPORARILY_SUSPENDED', icon: icons.alertWaring };
     }
     return { text: '', icon: '' };
   };

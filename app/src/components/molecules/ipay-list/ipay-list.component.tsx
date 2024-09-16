@@ -83,9 +83,8 @@ const IPayList: React.FC<IPayListProps> = ({
                 numberOfLines={titleLines}
                 style={[dynamicStyles.font, textStyle]}
                 regular={regularTitle}
-              >
-                {title}
-              </IPayFootnoteText>
+                text={String(title)}
+              />
               {adjacentTitle && (
                 <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentTitleStyle} regular>
                   {` | ${adjacentTitle}`}

@@ -122,13 +122,13 @@ const MoiPaymentScreen: React.FC = () => {
   const getBottomSheetHeading = () => {
     switch (sheetType) {
       case MoiPaymentType.SERVICE_TYPE:
-        return t('BILL_PAYMENTS.SERVICE_TYPE');
+        return 'BILL_PAYMENTS.SERVICE_TYPE';
       case MoiPaymentType.ID_TYPE:
-        return t('BILL_PAYMENTS.ID_TYPE');
+        return 'BILL_PAYMENTS.ID_TYPE';
       case MoiPaymentType.DURATION:
-        return t('BILL_PAYMENTS.DURATION');
+        return 'BILL_PAYMENTS.DURATION';
       default:
-        return t('BILL_PAYMENTS.SERVICE_PROVIDER');
+        return 'BILL_PAYMENTS.SERVICE_PROVIDER';
     }
   };
 

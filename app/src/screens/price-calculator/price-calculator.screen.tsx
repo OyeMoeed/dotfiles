@@ -28,14 +28,12 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { FilterType, TransactionDetails, dropDownItem } from './price-calculator.interface';
 import priceCalculatorStyles from './price-calculator.styles';
 
 const PriceCalculatorScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = priceCalculatorStyles(colors);
-  const { t } = useTranslation();
   const [amount, setAmount] = useState<number | string>('');
   const [selectedService, setSelectedService] = useState<string>('');
   const { transferTypesData } = useConstantData();
@@ -100,11 +98,11 @@ const PriceCalculatorScreen: React.FC = () => {
   const getDropdownListLabel = useCallback(() => {
     switch (selectedFilterType) {
       case FilterType.Country:
-        return t('REPLACE_CARD.COUNTRY');
+        return 'REPLACE_CARD.COUNTRY';
       case FilterType.TransferMethod:
-        return t('COMMON.DELIVERY_TYPE');
+        return 'COMMON.DELIVERY_TYPE';
       case FilterType.Currency:
-        return t('COMMON.CURRENCY');
+        return 'COMMON.CURRENCY';
       default:
         return '';
     }

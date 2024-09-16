@@ -39,9 +39,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
   const getTitle = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return t('VIRTUAL_CARD.CREATE_CARD_PIN_PIN');
+        return 'VIRTUAL_CARD.CREATE_CARD_PIN_PIN';
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return t('VIRTUAL_CARD.CONFIRM_CARD_PIN');
+        return 'VIRTUAL_CARD.CONFIRM_CARD_PIN';
       default:
         return '';
     }
@@ -50,9 +50,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
   const getDescription = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return t('VIRTUAL_CARD.FIRST_TIME_CODE');
+        return 'VIRTUAL_CARD.FIRST_TIME_CODE';
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return t('VIRTUAL_CARD.ENTER_PASSCODE_AGAIN');
+        return 'VIRTUAL_CARD.ENTER_PASSCODE_AGAIN';
       default:
         return '';
     }
@@ -61,9 +61,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
   const getErrorTitle = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.INVALID_PIN');
+        return 'CHANGE_PIN.INVALID_PIN';
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.PIN_NOT_MATCHING');
+        return 'CHANGE_PIN.PIN_NOT_MATCHING';
       default:
         return '';
     }
@@ -72,9 +72,9 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
   const getErrorDescription = (selectedView: string) => {
     switch (selectedView) {
       case ChangeCardPinViewTypes.NewPin:
-        return t('CHANGE_PIN.OLD_PIN');
+        return 'CHANGE_PIN.OLD_PIN';
       case ChangeCardPinViewTypes.ConfirmNewPin:
-        return t('CHANGE_PIN.ENSURE_YOU_WRITE');
+        return 'CHANGE_PIN.ENSURE_YOU_WRITE';
       default:
         return '';
     }
