@@ -10,6 +10,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
+import { useRoute } from '@react-navigation/core';
 import React, { useRef } from 'react';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
@@ -20,6 +21,10 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
+  const route = useRoute();
+  const { billData } = route?.params || {};
+  console.log('get bill dsta', billData);
+
   const { moiPaymentDetailes, handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef } =
     useMoiPaymentConfirmation();
   const { otpConfig } = useConstantData();
@@ -38,6 +43,7 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   };
 
   const onPressCompletePayment = () => {
+    
     otpBottomSheetRef?.current?.present();
   };
 

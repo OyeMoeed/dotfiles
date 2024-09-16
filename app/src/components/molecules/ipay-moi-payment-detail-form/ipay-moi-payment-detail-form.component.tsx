@@ -43,6 +43,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   errorMessage,
   selectedBiller,
   selectedServiceType,
+  onPress,
 }: IPayMoiPaymentDetailFormProps) => {
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
@@ -101,7 +102,12 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
       {isServiceTypeValue && (
         <>
           <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-          <DynamicFormComponent billerId={selectedBiller} serviceId={selectedServiceType} walletNumber={walletNumber} />
+          <DynamicFormComponent
+            billerId={selectedBiller}
+            serviceId={selectedServiceType}
+            walletNumber={walletNumber}
+            onPress={onPress}
+          />
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}
             control={control}

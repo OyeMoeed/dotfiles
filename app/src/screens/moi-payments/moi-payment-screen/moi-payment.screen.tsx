@@ -275,11 +275,13 @@ const MoiPaymentScreen: React.FC = () => {
           setErrorMessage('');
         };
 
-        const onSubmit = () => {
+        const onSubmit = (data: any) => {
+          console.log('data: any', data);
+
           if (selectedTab === MoiPaymentTypes.REFUND) {
-            navigate(ScreenNames.MOI_PAYMENT_REFUND);
+            navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: data });
           } else {
-            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION);
+            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { billData: data });
           }
         };
 
@@ -312,6 +314,7 @@ const MoiPaymentScreen: React.FC = () => {
                     errorMessage={errorMessage}
                     selectedServiceType={selectedServiceType}
                     selectedBiller={selectedBiller}
+                    onPress={onSubmit}
                   />
                   <IPayButton
                     btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}

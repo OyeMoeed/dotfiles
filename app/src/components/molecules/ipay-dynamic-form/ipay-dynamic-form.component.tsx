@@ -9,7 +9,7 @@ import DynamicFormComponentProps from './ipay-dynamic-form.interface';
 import dynamicFormoStyles from './ipay-dynamic-form.styles';
 import DynamicFieldRenderer from './ipay-field-renderer/ipay-field-renderer.component';
 
-const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, serviceId, walletNumber }) => {
+const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, serviceId, walletNumber, onPress }) => {
   const { fields, defaultValues, validationSchema, isLoading, revertFlatKeys } = useDynamicForm(
     billerId,
     serviceId,
@@ -19,10 +19,10 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, s
   const styles = dynamicFormoStyles();
 
   const onSubmit = (data: any) => {
-    // Api Returns nested object , which we first convert to flat object and handles everything
+  // Api Returns nested object , which we first convert to flat object and handles everything
     // then revert it back to origional state
     const originalData = revertFlatKeys(data);
-    console.log({ originalData }); //log to check data
+    onPress(originalData);
     return originalData;
   };
 
