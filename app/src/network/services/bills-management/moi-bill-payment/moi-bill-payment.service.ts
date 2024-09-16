@@ -6,7 +6,7 @@ import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
 import { MoiBillMockPayload, MoiBillResponse } from './moi-bill-payment.interface';
 import MoiBillMockResponse from './moi-bill-payment.mock';
 
-const MoiBillPayment = async (payload: MoiBillMockPayload): Promise<MoiBillResponse | undefined> => {
+const moiBillPayment = async (payload: MoiBillMockPayload): Promise<MoiBillResponse | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return MoiBillMockResponse;
   }
@@ -20,4 +20,4 @@ const MoiBillPayment = async (payload: MoiBillMockPayload): Promise<MoiBillRespo
   return apiResponse;
 };
 
-export default MoiBillPayment;
+export default moiBillPayment;

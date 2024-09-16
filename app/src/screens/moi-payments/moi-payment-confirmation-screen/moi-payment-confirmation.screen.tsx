@@ -26,10 +26,19 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const route = useRoute();
   const { billData } = route?.params || {};
 
-  const { moiPaymentDetailes, handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef } =
-    useMoiPaymentConfirmation();
+  const {
+    otpBottomSheetRef,
+    moiPaymentDetailes,
+    handlePay,
+    setOtp,
+    otp,
+    isLoading,
+    otpError,
+    setOtpError,
+    otpVerificationRef,
+  } = useMoiPaymentConfirmation();
   const { otpConfig } = useConstantData();
-  const otpBottomSheetRef = useRef<any>(null);
+
   const helpCenterRef = useRef<any>(null);
   // temporary TODO
   const totalAmount = '500';

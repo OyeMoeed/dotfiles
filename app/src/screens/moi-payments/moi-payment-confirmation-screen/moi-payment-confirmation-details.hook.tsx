@@ -2,6 +2,9 @@ import icons from '@app/assets/icons';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
+import { getDeviceInfo } from '@app/network/utilities';
+import { useTypedSelector } from '@app/store/store';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
 
@@ -20,9 +23,10 @@ const useMoiPaymentConfirmation = () => {
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [apiError] = useState<string>('');
+  const otpBottomSheetRef = useRef<any>(null);
   const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const moiPaymentDetailes: MoiPaymentDetail[] = [
     {
       id: '1',
@@ -119,13 +123,31 @@ const useMoiPaymentConfirmation = () => {
     },
   ];
 
-  const onConfirm = () => {
-    otpRef?.current?.close();
-    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-      moiPaymentDetailes,
-      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
-      subDetails: moiPayBillSubList,
-    });
+  const onConfirm = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const payLoad = {
+      deviceInfo: deviceInfo,
+      walletNumber: walletNumber,
+      moiBillPaymentType: 'PAYMENT',
+      otp: otp,
+      otpRef: 'OTP2335924H0K',
+      billerId: '002',
+      billNumOrBillingAcct: '002245820000',
+      dueDateTime: '24-11-2014',
+      billIdType: '0',
+      billingCycle: '002_2019',
+      serviceDescription: 'ELCT',
+    };
+
+    const apiResponse = await moiBillPayment(payLoad);
+    if (apiResponse?.successfulResponse) {
+      otpBottomSheetRef?.current?.close();
+      navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
+        moiPaymentDetailes,
+        successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
+        subDetails: moiPayBillSubList,
+      });
+    }
   };
 
   const handlePay = () => {
@@ -138,6 +160,7 @@ const useMoiPaymentConfirmation = () => {
   };
 
   return {
+    otpBottomSheetRef,
     localizationText,
     moiPaymentDetailes,
     moiRefundBillSubList,
