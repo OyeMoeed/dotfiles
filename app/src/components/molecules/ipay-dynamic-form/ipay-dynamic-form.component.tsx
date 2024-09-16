@@ -59,6 +59,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, s
                 onPress={handleSubmit(onSubmit)}
                 medium
                 btnText={localization.COMMON.DONE}
+                btnIconsDisabled
               />
             </>
           </IPayScrollView>

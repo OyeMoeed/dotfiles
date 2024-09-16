@@ -343,6 +343,7 @@ const MoiPaymentScreen: React.FC = () => {
                       control={control}
                       onChangeText={onChangeText}
                       errorMessage={errorMessage}
+                      onPress={validateBills}
                     />
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
