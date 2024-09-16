@@ -1,10 +1,13 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+
 import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayProgressBar, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import React from 'react';
+
 import { IPayAccountBalanceProps } from './ipay-account-balance.interface';
 import ipayAccountBalanceStyles from './ipay-account-balance.style';
 
@@ -27,6 +30,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   gradientBgStyle,
   topUpBtnStyle = {},
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = ipayAccountBalanceStyles(colors);
 
@@ -92,7 +96,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               <IPayCaption2Text
                 style={totalAvailableTextStyle}
                 color={colors.natural.natural500}
-                text={` ${'HOME.OF'} `}
+                text={` ${t('HOME.OF')} `}
               />
               <IPayCaption2Text text={totalAvailableBalance} color={colors.natural.natural500} />
             </IPayView>
