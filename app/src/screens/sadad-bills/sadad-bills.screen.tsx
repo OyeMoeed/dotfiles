@@ -135,17 +135,29 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
     const apiResponse: any = await deleteBill(prepareLoginPayload);
     if (apiResponse.status.type === APIResponseType.SUCCESS) {
-      setActiveBillsData((prevBillsData) => {
-        const billToDelete = prevBillsData.find((bill) => bill.billId === selectedBillsId);
-        const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
+      const billToDelete = activeBillsData.find((bill) => bill.billId === selectedBillsId);
+      // setActiveBillsData((prevBillsData) => {
+      //   const billToDelete = prevBillsData.find((bill) => bill.billId === selectedBillsId);
+      //   console.debug('billToDelete:: ', JSON.stringify(billToDelete, null, 2));
 
+      //   const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
+
+      //   renderToast({
+      //     title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+      //     subTitle: billToDelete?.billDesc,
+      //     toastType: ToastTypes.SUCCESS,
+      //   });
+
+      //   console.debug('updatedBillsData:: ', JSON.stringify(updatedBillsData, null, 2));
+
+      //   return updatedBillsData;
+      // });
+      getBills(selectedTab).then(() => {
         renderToast({
           title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
           subTitle: billToDelete?.billDesc,
           toastType: ToastTypes.SUCCESS,
         });
-
-        return updatedBillsData;
       });
     }
   };

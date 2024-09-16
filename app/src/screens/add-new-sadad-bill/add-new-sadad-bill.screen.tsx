@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import {
   IPayFlatlist,
   IPayFootnoteText,
@@ -160,11 +159,11 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
         billerName: values.companyName,
-        billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
+        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: '2024-07-21T12:00:00Z', // TODO: No Due Date is coming from api response once receive from response will update it
-        totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
+        dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
+        totalAmount: '0',
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,
@@ -216,6 +215,56 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       default:
         return caategory.desc;
     }
+  };
+
+  const onPressSaveOnly = (values: FormValues) => {
+    const headerAttributes = {
+      billNickname: values.billName,
+      billerName: values.companyName,
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+    };
+    const billPaymentInfos = {
+      billerId: selectedBiller?.billerId,
+      billNumOrBillingAcct: values.accountNumber,
+      serviceType: values.serviceType,
+      totalAmount: '0',
+      dueDate: null,
+      billIdType: selectedBiller?.billIdType,
+      serviceDescription: selectedService?.serviceDesc,
+      billerName: values.companyName,
+      billNickname: values.billName,
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+    };
+    const billPaymentData = [
+      {
+        id: '1',
+        label: localizationText.PAY_BILL.SERVICE_TYPE,
+        value: values.serviceType,
+      },
+      {
+        id: '2',
+        label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+        value: values.accountNumber,
+      },
+      {
+        id: '3',
+        label: localizationText.COMMON.AMOUNT,
+        value: `0 ${localizationText.COMMON.SAR}`,
+      },
+      {
+        id: '4',
+        label: localizationText.COMMON.DUE_DATE,
+        value: null,
+      },
+    ];
+
+    navigate(ScreenNames.PAY_BILL_SUCCESS, {
+      isSaveOnly: true,
+      billPaymentData,
+      billPaymentInfos,
+      headerAttributes,
+      totalAmount: '0',
+    });
   };
 
   return (
@@ -307,7 +356,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
                       btnType={buttonVariants.OUTLINED}
-                      onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
+                      onPress={handleSubmit(onPressSaveOnly)}
                       large
                       disabled={!watch(FormFields.BILL_NAME)}
                       btnIconsDisabled

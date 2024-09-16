@@ -63,25 +63,26 @@ const NewSadadBillScreen: React.FC = () => {
   }, [amount]);
 
   const onNavigateToConfirm = () => {
+    const billPaymentInfos = [
+      {
+        billerId,
+        billNumOrBillingAcct,
+        amount: Number(amount),
+        dueDateTime: dueDate,
+        billIdType,
+        billingCycle: '', // TODO: need to confirm where can I get this value
+        billIndex: '0',
+        serviceDescription,
+        billerName,
+        walletNumber,
+        billNickname,
+        billerIcon,
+      },
+    ];
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: false,
-      billPaymentInfos: [
-        {
-          billerId,
-          billNumOrBillingAcct,
-          amount: Number(amount),
-          dueDateTime: dueDate,
-          billIdType,
-          billingCycle: '', // TODO: need to confirm where can I get this value
-          billIndex: '0',
-          serviceDescription,
-          billerName,
-          walletNumber,
-          billNickname,
-          billerIcon,
-        },
-      ],
+      billPaymentInfos,
     });
   };
 

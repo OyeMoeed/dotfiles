@@ -10,6 +10,7 @@ import {
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import React from 'react';
 import { IPayListProps } from './ipay-list.interface';
 import styles from './ipay-list.style';
@@ -110,7 +111,7 @@ const IPayList: React.FC<IPayListProps> = ({
             <IPayButton
               btnStyle={dynamicStyles.buttonStyle}
               onPress={onPressSaveQR}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText={localizationText.COMMON.SAVE}
               textColor={colors.secondary.secondary800}
               rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
@@ -124,11 +125,16 @@ const IPayList: React.FC<IPayListProps> = ({
             hasRightComponent() && dynamicStyles.rightIconContainerMargin,
           ]}
         >
-          <IPayView style={dynamicStyles.rightIconWrapper}>
+          <IPayView
+            style={[
+              dynamicStyles.rightIconWrapper,
+              detailText && detailText.length > 30 ? dynamicStyles.detailTextConditionalStyle : {},
+            ]}
+          >
             {isShowIcon ? (
               (icon && (
                 <IPayButton
-                  btnType="link-button"
+                  btnType={buttonVariants.LINK_BUTTON}
                   btnText={detailText}
                   onPress={onPressIcon}
                   rightIcon={icon}
@@ -145,7 +151,12 @@ const IPayList: React.FC<IPayListProps> = ({
             )}
             {rightText && rightText}
             {showDetail && (
-              <IPaySubHeadlineText regular style={[dynamicStyles.copyText, detailTextStyle]} text={detailText} />
+              <IPaySubHeadlineText
+                regular
+                style={[dynamicStyles.copyText, detailTextStyle]}
+                text={detailText}
+                numberOfLines={detailText && detailText.length > 30 ? 1 : 2}
+              />
             )}
           </IPayView>
           <IPayView>

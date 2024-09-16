@@ -20,6 +20,8 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   optionsStyles,
   listStyles,
   showHeader = true,
+  isShowIcon = true,
+  showDetail,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -33,7 +35,8 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
         title={label}
         detailText={value}
         detailTextStyle={styles.detailsText}
-        isShowIcon
+        isShowIcon={isShowIcon}
+        showDetail={showDetail}
         icon={<IPayIcon icon={icon} color={colors.primary.primary500} />}
         onPressIcon={onPressIcon}
       />

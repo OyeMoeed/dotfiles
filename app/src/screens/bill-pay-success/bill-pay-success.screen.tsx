@@ -3,7 +3,6 @@ import { IPayFlatlist, IPayIcon, IPayScrollView, IPayView } from '@app/component
 import { IPayButton, IPayChip, IPayList, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
-import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, popAndReplace } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -24,11 +23,12 @@ interface BillPaymentItemProps {
 }
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
-  const { isSaveOnly, isPayOnly, isPayPartially, totalAmount, billPaymentInfos } = route.params;
+  const { isSaveOnly, isPayOnly, isPayPartially, totalAmount, billPaymentInfos, billPaymentData, headerAttributes } =
+    route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
   const localizationText = useLocalization();
-  const { goToHome, billSaveDetails } = usePayBillSuccess();
+  const { goToHome } = usePayBillSuccess();
   // TODO will be updated basis of API.
   const billStatus = {
     paid: '1 Paid Bills',
@@ -36,9 +36,10 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   };
 
   const successMessage = isSaveOnly ? localizationText.PAY_BILL.SAVED_SUCCESS : localizationText.PAY_BILL.PAID_SUCCESS;
+
   const onPressSaveOnlyPay = () => {
-    navigate(ScreenNames.ADD_NEW_SADAD_BILLS, {
-      selectedBills: [ACTIVE_SADAD_BILLS[0]],
+    navigate(ScreenNames.NEW_SADAD_BILL, {
+      ...billPaymentInfos,
       isSaveOnly,
     });
   };
@@ -84,52 +85,62 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
           </IPayView>
         )}
         <IPayScrollView showsVerticalScrollIndicator={false}>
-          <IPayView style={styles.conatinerStyles}>
-            {isPayPartially && (
-              <IPayList
-                isShowLeftIcon
-                containerStyle={styles.listContainer}
-                leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
-                title={localizationText.PAY_BILL.DECLINED_TRANSACTION}
-                isShowSubTitle
-                subTitle={localizationText.PAY_BILL.DOES_NOT_ACCEPT_PARTIALLY_PAYMENT}
-                subTextStyle={{ color: colors.error.error500 }}
-                textStyle={{ color: colors.error.error500 }}
-                regularTitle={false}
-              />
-            )}
-
-            <IPayFlatlist
-              data={billPaymentInfos}
-              renderItem={({ item }: BillPaymentItemProps) => (
-                <IPayBillDetailsOption
-                  headerData={{
-                    title: item.billNickname,
-                    companyDetails: item.billerName,
-                    companyImage: item.billerIcon,
-                  }}
-                  data={getBillInfoArray(item)}
-                  style={styles.billContainer}
-                  optionsStyles={styles.optionsStyle}
+          {!isSaveOnly && (
+            <IPayView style={styles.conatinerStyles}>
+              {isPayPartially && (
+                <IPayList
+                  isShowLeftIcon
+                  containerStyle={styles.listContainer}
+                  leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
+                  title={localizationText.PAY_BILL.DECLINED_TRANSACTION}
+                  isShowSubTitle
+                  subTitle={localizationText.PAY_BILL.DOES_NOT_ACCEPT_PARTIALLY_PAYMENT}
+                  subTextStyle={{ color: colors.error.error500 }}
+                  textStyle={{ color: colors.error.error500 }}
+                  regularTitle={false}
                 />
               )}
-            />
-            {isPayPartially && (
-              <IPayButton
-                medium
-                btnType={buttonVariants.LINK_BUTTON}
-                leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                btnText={localizationText.COMMON.SHARE}
-                btnStyle={styles.btnStyle}
+
+              <IPayFlatlist
+                data={billPaymentInfos}
+                renderItem={({ item }: BillPaymentItemProps) => (
+                  <IPayBillDetailsOption
+                    headerData={{
+                      title: item.billNickname,
+                      companyDetails: item.billerName,
+                      companyImage: item.billerIcon,
+                    }}
+                    data={getBillInfoArray(item)}
+                    style={styles.billContainer}
+                    optionsStyles={styles.optionsStyle}
+                  />
+                )}
               />
-            )}
-          </IPayView>
+            </IPayView>
+          )}
+          {isSaveOnly && (
+            <IPayView style={[styles.conatinerStyles, isSaveOnly && styles.saveContainer]}>
+              <IPayBillDetailsOption
+                headerData={{
+                  title: headerAttributes.billNickname,
+                  companyDetails: headerAttributes.billerName,
+                  companyImage: headerAttributes.billerIcon,
+                }}
+                showHeader
+                showDetail
+                isShowIcon={false}
+                style={styles.billContainer}
+                data={billPaymentData.slice(0, 2)}
+                optionsStyles={styles.optionsStyle}
+              />
+            </IPayView>
+          )}
           {isSaveOnly && (
             <IPayView style={[styles.conatinerStyles, isSaveOnly && styles.saveContainer]}>
               <IPayBillDetailsOption
                 showHeader={false}
                 style={styles.billContainer}
-                data={billSaveDetails}
+                data={billPaymentData.slice(2, 4)}
                 optionsStyles={styles.optionsStyle}
               />
               <IPayButton
@@ -150,7 +161,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
               leftIcon={<IPayIcon icon={icons.ARROW_LEFT} color={colors.primary.primary500} size={16} />}
               btnText={localizationText.PAY_BILL.VIEW_SADAD_BILLS}
               btnStyle={styles.btnStyle}
-              onPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
+              onPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN, { sadadBills: null })}
             />
           ) : (
             <IPayView style={isPayOnly && styles.btnWrapper}>
@@ -161,15 +172,12 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 btnText={localizationText.PAY_BILL.PAY_ANOTHER_BILL}
                 onPress={() => popAndReplace(ScreenNames.SADAD_BILLS, 3, { sadadBills: null })}
               />
-              {isPayOnly && (
-                <IPayButton
-                  medium
-                  btnType={buttonVariants.LINK_BUTTON}
-                  leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                  btnText={localizationText.COMMON.SHARE}
-                  btnStyle={styles.btnStyle}
-                />
-              )}
+              <IPayButton
+                medium
+                btnType={buttonVariants.LINK_BUTTON}
+                leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
+                btnText={localizationText.COMMON.SHARE}
+              />
             </IPayView>
           )}
           <IPayButton

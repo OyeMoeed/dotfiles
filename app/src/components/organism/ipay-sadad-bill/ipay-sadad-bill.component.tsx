@@ -70,7 +70,10 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
       <IPayView style={styles.contentView}>
         <IPayView>
           <IPayImage image={getBillerImage()} style={styles.vendorIcon} />
-          <IPaySubHeadlineText text={billDesc} color={colors.natural.natural900} />
+          <IPaySubHeadlineText
+            text={billDesc}
+            style={[styles.billSubHeading, billDesc.length > 30 && styles.condtionalWidthSubtitle]}
+          />
           <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>
         <IPayView style={styles.contentChildView}>
