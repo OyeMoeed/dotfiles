@@ -16,13 +16,12 @@ import {
   IPayActionSheet,
   IPayActivateBeneficiary,
   IPayActivationCall,
-  IPayBottomSheet,
   IPayReceiveCall,
 } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
-import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -34,12 +33,12 @@ import LocalTransferBeneficiariesMockProps from '@app/network/services/local-tra
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
-  alertType,
-  alertVariant,
   ApiResponseStatusType,
   BeneficiaryTypes,
-  buttonVariants,
   ToastTypes,
+  alertType,
+  alertVariant,
+  buttonVariants,
 } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -59,7 +58,7 @@ const LocalTransferScreen: React.FC = () => {
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
   const [nickName, setNickName] = useState('');
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
-  const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
+  const [activateHeight, setActivateHeight] = useState(SNAP_POINT.SMALL);
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
   const { showToast } = useToastContext();
@@ -80,6 +79,7 @@ const LocalTransferScreen: React.FC = () => {
   const [sortBy, setSortBy] = useState<string>(BeneficiaryTypes.ACTIVE);
   const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
   const [showEditSheet, setShowEditSheet] = useState<boolean>(false);
+  const [showActivationSheet, setShowActivationSheet] = useState<boolean>(false);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -193,20 +193,6 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const activateBeneficiary = useRef<bottomSheetTypes>(null);
-
-  const handleActivateBeneficiary = useCallback(() => {
-    activateBeneficiary?.current?.present();
-    setActivateHeight(SNAP_POINTS.SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-    else handleActivateBeneficiary();
-  };
-
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
     const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
@@ -225,6 +211,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 onPressBtn(item);
               }}
               btnText={
@@ -319,17 +306,17 @@ const LocalTransferScreen: React.FC = () => {
 
   const showActionSheet = (phoneNumber: string) => {
     setSelectedNumber(phoneNumber);
-    activateBeneficiary?.current?.close();
+    setShowActivationSheet(false);
     setTimeout(() => {
       actionSheetRef.current.show();
     }, 500);
   };
   const closeActivateBeneficiary = useCallback(() => {
-    activateBeneficiary?.current?.close();
+    setShowActivationSheet(false);
   }, []);
 
   const handleCallAlinma = useCallback(() => {
-    setActivateHeight(SNAP_POINTS.LARGE);
+    setActivateHeight(SNAP_POINT.MEDIUM_LARGE);
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
 
@@ -361,16 +348,34 @@ const LocalTransferScreen: React.FC = () => {
   const handleReceiveCall = useCallback(async () => {
     const repsonse = await onPressActivateBeneficiary();
     if (repsonse === ApiResponseStatusType.SUCCESS) {
-      setActivateHeight(SNAP_POINTS.LARGE);
+      setActivateHeight(SNAP_POINT.MEDIUM_LARGE);
       setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
     }
   }, []);
+
+  const handleActivateBeneficiary = useCallback(() => {
+    setShowActivationSheet(true);
+    setActivateHeight(SNAP_POINT.X_SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
+    else handleActivateBeneficiary();
+  };
+
+  const makeTransfer = () => {
+    setShowActivationSheet(false);
+    getBeneficiariesData();
+  };
 
   const renderCurrentOption = useMemo(() => {
     switch (currentOption) {
       case ActivateViewTypes.RECEIVE_CALL:
         return (
           <IPayReceiveCall
+            hanldePageNavigation={makeTransfer}
             activateInternationalBeneficiary={onPressActivateBeneficiary}
             guideToReceiveCall={guideToReceiveCall}
           />
@@ -608,18 +613,19 @@ const LocalTransferScreen: React.FC = () => {
           />
         </IPayView>
       </IPayPortalBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={currentOptionText}
         onCloseBottomSheet={closeActivateBeneficiary}
         customSnapPoint={activateHeight}
-        ref={activateBeneficiary}
         simpleHeader
         simpleBar
         bold
         cancelBnt
+        isVisible={showActivationSheet}
+        enablePanDownToClose
       >
         <IPayView style={styles.sheetContainerStyles}>{renderCurrentOption}</IPayView>
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBeneficiariesSortSheet sortSheetRef={sortSheetRef} setSortByActive={setSortBy} sortByActive={sortBy} />
       <IPayActionSheet
         ref={actionSheetRef}

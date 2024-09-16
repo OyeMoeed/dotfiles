@@ -6,16 +6,17 @@ import { IPaySafeAreaView } from '@app/components/templates';
 
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
+import { CardType } from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useRoute } from '@react-navigation/native';
 import { CardOptions } from '@app/utilities/enums.util';
+import { useRoute } from '@react-navigation/native';
 import useVirtualCardData from '../virtual-card/use-virtual-card-data';
 import cardFeaturesStyles from './card-features.style';
 
 const CardFeaturesScreen: React.FC = () => {
   const route = useRoute();
-  const { currentCard } = route?.params as { currentCard: { cardType: '' } };
-  const CURRENT_CARD_TYPE = currentCard.cardType;
+  const { currentCard } = route?.params as { currentCard: { cardType: 'VPPC' } };
+  const CURRENT_CARD_TYPE: CardType = currentCard.cardType;
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
   const styles = cardFeaturesStyles(colors);
@@ -25,9 +26,9 @@ const CardFeaturesScreen: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title="CARD_OPTIONS.CARD_FEATURES" applyFlex />
-      <IPayScrollView showsVerticalScrollIndicator={false}>
+      <IPayImage image={backgroundImage} style={styles.background} />
+      <IPayScrollView showsVerticalScrollIndicator={false} style={styles.backgroundColor}>
         <IPayView>
-          <IPayImage image={backgroundImage} style={styles.background} />
           <IPayView style={styles.animatedContainer}>
             <IPayView>
               <IPayCardDetail
