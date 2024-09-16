@@ -17,6 +17,7 @@ export { default as shortString } from './string-functions.utils';
 export { default as getBankIconByCode } from './bank-logo';
 
 export * from './enums.util';
+export * from './string-helper';
 
 export {
   clearAsyncStorage,

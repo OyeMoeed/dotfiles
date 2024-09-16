@@ -5,12 +5,9 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React, { JSX } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { isNumber, isUpperCase } from '@app/utilities';
 import { IPayTextProps } from './ipay-text.interface';
 import styles from './ipay-text.style';
-
-function isNumber(n) {
-  return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
-}
 
 /**
  * A component to display localized text.
@@ -34,11 +31,10 @@ const IPayText: React.FC<IPayTextProps> = ({
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
   const baseTextStyles = styles(getFontFamily as string, colors);
 
-  const texted = children ? String(children) : text;
-  const propText = isAmount ? formatNumberWithCommas(texted || '') : texted;
-  const isPropTextString = !isNumber(propText);
-  const propsTextHasOneChar = propText?.toString().split(' ').length === 1;
-  const showText = isPropTextString && propsTextHasOneChar ? t(String(propText)) : propText;
+  const mainText = children ? String(children) : text || '';
+  const formattedText = isAmount ? formatNumberWithCommas(mainText || '') : mainText;
+  const isNeedTranslate = !isNumber(formattedText) && isUpperCase(formattedText) && formattedText?.length > 1;
+  const showText = isNeedTranslate ? t(formattedText) : formattedText;
 
   return (
     <Text

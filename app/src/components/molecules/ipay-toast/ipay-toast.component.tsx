@@ -97,9 +97,10 @@ const IPayToast: React.FC<IPayToastProps> = ({
           </IPayView>
         ) : (
           <IPayView style={dynamicStyles.commonContainer}>
-            <IPayText style={[dynamicStyles.rightIconContainerText, dynamicStyles.viewText, viewTextStyle]}>
-              {viewText}
-            </IPayText>
+            <IPayText
+              style={[dynamicStyles.rightIconContainerText, dynamicStyles.viewText, viewTextStyle]}
+              text={viewText}
+            />
           </IPayView>
         )}
       </IPayPressable>

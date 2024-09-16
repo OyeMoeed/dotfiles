@@ -8,7 +8,6 @@ import HttpBackend from 'i18next-http-backend';
 import i18nextResourcesToBackend from 'i18next-resources-to-backend';
 import { initReactI18next } from 'react-i18next';
 
-const resources = translations;
 const languageUrl = 'https://uat.alinmapay.com.sa/v2/alinmapay/localization/channels/PAYC/labels/i18n?locale={{lng}}';
 class CustomBackend extends HttpBackend {
   // Override the fetch method to clean and parse the response
@@ -53,7 +52,7 @@ i18n
         CustomBackend,
         i18nextResourcesToBackend((lng, ns, callback) => {
           // Load local translations (from local file)
-          const resource = resources[lng].translation;
+          const resource = { translation: translations[lng] };
           callback(null, resource);
         }),
       ],

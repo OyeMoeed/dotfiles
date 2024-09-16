@@ -54,9 +54,8 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
         testID={testID}
         color={textColor || colors.primary.primary800}
         style={[styles.messageStyle, textStyle]}
-      >
-        {message || 'COMMON.NO_RESULTS_AVAILABLE'}
-      </IPayCaption1Text>
+        text={message || 'COMMON.NO_RESULTS_AVAILABLE'}
+      />
     </IPayView>
   );
 };
