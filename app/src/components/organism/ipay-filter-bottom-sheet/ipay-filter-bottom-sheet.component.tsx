@@ -146,6 +146,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       defaultValues,
     });
 
+    const showFilters = () => {
+      filterSheetRef?.current?.present();
+    };
+    const closeFilter = () => {
+      filterSheetRef?.current?.dismiss();
+    };
+
     const onSubmitEvent = (data: SubmitEvent) => {
       if (moment(moment(getValues('dateTo'), FORMAT_1)).isBefore(moment(getValues('dateFrom'), FORMAT_1))) {
         setDateError(t('ERROR.DATE_ERROR'));
@@ -157,18 +164,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         return;
       }
       filterSheetRef.current?.close();
+      filterSheetRef.current?.dismiss();
       if (onSubmit) onSubmit(data);
       setDateError('');
       setAmountError('');
       setShowFromDatePicker(false);
       setShowToDatePicker(false);
-      reset();
-    };
-    const showFilters = () => {
-      filterSheetRef?.current?.present();
-    };
-    const closeFilter = () => {
-      filterSheetRef?.current?.dismiss();
+      // reset();
     };
 
     const filterItems = [...filters, ...bottomFilters];
