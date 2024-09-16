@@ -29,6 +29,7 @@ const getWalletInfoMock: any = {
     },
     dormant: false,
     idExpired: false,
+    aboutToExpire: false,
     passwordMigrated: true,
     nationalAddressComplete: true,
     basicTier: false,
