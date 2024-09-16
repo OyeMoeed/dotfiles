@@ -198,9 +198,10 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={styles.walletBackground}>
         <IPayFlatlist
           style={styles.detailesFlex}
-          scrollEnabled={false}
+          scrollEnabled
           data={topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : getDetails()}
           renderItem={renderNonAlinmaPayItem}
+          showsVerticalScrollIndicator={false}
         />
       </IPayView>
     );

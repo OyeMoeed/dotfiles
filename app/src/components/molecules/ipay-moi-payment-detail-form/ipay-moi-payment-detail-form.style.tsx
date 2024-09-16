@@ -15,9 +15,15 @@ const moiPaymentDetialStyles = (themeColors: typeof colors) =>
       paddingLeft: scaleFont(20),
       paddingRight: scaleFont(40),
       backgroundColor: themeColors.natural.natural0,
+      borderColor: themeColors.primary.primary100,
+    },
+    inputStyle: {
+      marginTop: 0,
+      height: moderateScale(40, 0.3),
     },
     greyInputStyle: {
       backgroundColor: themeColors.natural.natural200,
+      borderWidth: 0,
     },
     checkBoxView: {
       alignItems: 'center',

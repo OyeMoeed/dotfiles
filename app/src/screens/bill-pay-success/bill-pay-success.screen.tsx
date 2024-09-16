@@ -74,7 +74,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
           style={styles.minFlex}
           headingText={successMessage}
           descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
-          descriptionStyle={styles.boldStyles}
+          descriptionStyle={[styles.boldStyles, styles.descriptionText]}
           headingStyle={styles.headingStyle}
         />
         {isPayPartially && (

@@ -158,9 +158,9 @@ const TransferInformation: React.FC = () => {
             vatAmount: transferFees.vatAmount,
             bankFeesAmount: transferFees.bankFeeAmount,
             bankVatAmount: transferFees.bankVatAmount,
-            amountCurrency: 'SAR',
             amount: transferAmount,
-            deductFeesFromAmount: false,
+            note: notes,
+            bankCode,
             deviceInfo,
           };
           const apiResponse = await localTransferPrepare(walletNumber, payload);

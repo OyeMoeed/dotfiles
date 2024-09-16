@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import constants, { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
@@ -95,7 +95,7 @@ const CardOptionsScreen: React.FC = () => {
     initOnlinePurchase();
   }, []);
 
-  const getToastSubTitle = () => `${cardHeaderText}  - *** ${constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}`;
+  const getToastSubTitle = () => `${cardHeaderText} - ${maskedCardNumber}`;
 
   const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
@@ -317,6 +317,8 @@ const CardOptionsScreen: React.FC = () => {
     }
   }, [isOtpSheetVisible]);
 
+  const cardLastFourDigit = maskedCardNumber?.slice(-4);
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
@@ -326,7 +328,7 @@ const CardOptionsScreen: React.FC = () => {
             cardType={cardType}
             cardTypeName={cardHeaderText}
             carHolderName={name}
-            cardLastFourDigit={maskedCardNumber || ''}
+            cardLastFourDigit={cardLastFourDigit || ''}
           />
 
           <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
@@ -341,7 +343,6 @@ const CardOptionsScreen: React.FC = () => {
               openBottomSheet.current?.present();
             }}
           />
-
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}
