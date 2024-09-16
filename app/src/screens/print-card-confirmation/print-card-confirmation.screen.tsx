@@ -10,7 +10,7 @@ import {
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -21,6 +21,9 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
 import { AddressInfoRefTypes, OTPVerificationRefTypes, RouteParams } from './print-card-confirmation.interface';
@@ -38,9 +41,8 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const [otp, setOtp] = useState('');
-  const [, setOtpError] = useState<boolean>(false);
+  const [otpError, setOtpError] = useState<boolean>(false);
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -85,8 +87,14 @@ const PrintCardConfirmationScreen: React.FC = () => {
     }
   };
 
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    setShowTermsAndConditionsSheet(true);
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
   };
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
@@ -95,6 +103,8 @@ const PrintCardConfirmationScreen: React.FC = () => {
     onCloseBottomSheet();
     navigate(ScreenNames.PRINT_CARD_SUCCESS);
   };
+
+  const onResendCodePress = () => {};
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -177,11 +187,6 @@ const PrintCardConfirmationScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions
-        showTermsAndConditions={showTermsAndConditionsSheet}
-        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
-        isVirtualCardTermsAndConditions
-      />
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         noGradient
@@ -194,6 +199,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
         ref={veriyOTPSheetRef}
       >
         <IPayOtpVerification
+          otpError={otpError}
           setOtpError={setOtpError}
           ref={otpVerificationRef}
           onPressConfirm={onNavigateToSuccess}
@@ -202,6 +208,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
           otp={otp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
+          onResendCodePress={onResendCodePress}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

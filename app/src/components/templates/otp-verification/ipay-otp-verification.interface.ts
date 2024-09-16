@@ -20,5 +20,7 @@ interface IPayOtpVerificationProps {
   containerStyle?: StyleProp<ViewStyle>;
   innerContainerStyle?: StyleProp<ViewStyle>;
   otp: string;
+  hasDisclaimerSection?: boolean;
+  disclaimerSection?: React.FC;
 }
 export default IPayOtpVerificationProps;

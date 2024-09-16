@@ -64,6 +64,20 @@ const styles = StyleSheet.create({
   topStyles: {
     marginVertical: scaleSize(30),
   },
+  verifyViewRow: {
+    flexDirection: 'row',
+    gap: moderateScale(10),
+  },
+  verifyView: {
+    marginTop: moderateScale(40),
+    paddingHorizontal: moderateScale(16, 0.3),
+    paddingVertical: moderateScale(12),
+    borderRadius: moderateScale(16),
+    backgroundColor: colors.natural.natural0,
+  },
+  verifyText: {
+    marginBottom: moderateScale(16),
+  },
 });
 
 export default styles;

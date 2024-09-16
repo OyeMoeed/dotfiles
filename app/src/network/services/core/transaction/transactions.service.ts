@@ -9,7 +9,9 @@ import {
   TransactionsProp,
   changeStatusProp,
   getCardDetailsProp,
+  prepareRenewCardProp,
   prepareShowDetailsProp,
+  renewCardProp,
   resetPinCodeProp,
 } from './transaction.interface';
 import cardsListMock from './cards-list.mock';
@@ -141,6 +143,38 @@ const otpGetCardDetails = async (payload: getCardDetailsProp): Promise<any> => {
   }
 };
 
+const otpRenewCard = async (payload: renewCardProp): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.OTP_RENEW_CARD(payload?.walletNumber),
+      method: requestType.POST,
+      payload: payload?.body,
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+const prepareRenewCard = async (payload: prepareRenewCardProp): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.PREPARE_RENEW_CARD(payload?.walletNumber),
+      method: requestType.POST,
+      payload: payload?.body,
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
 export {
   getCards,
   getTransactionTypes,
@@ -150,4 +184,6 @@ export {
   prepareResetCardPinCode,
   prepareShowCardDetails,
   otpGetCardDetails,
+  prepareRenewCard,
+  otpRenewCard,
 };
