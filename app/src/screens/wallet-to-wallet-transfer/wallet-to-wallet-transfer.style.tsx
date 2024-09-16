@@ -108,6 +108,9 @@ const walletTransferStyles = (themeColors: typeof colors, selectedContact: boole
       top: verticalScale(4),
     },
     emptyItemStyle: { height: moderateVerticalScale(20) },
+    textInputContainerStyle: {
+      marginVertical: verticalScale(-12),
+    },
     toastContainer: { width: innerWidth, marginLeft: moderateScale(5) },
   });
 

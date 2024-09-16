@@ -30,7 +30,7 @@ export interface IPayActionSheetProps {
   /**
    * Array of strings representing the options or buttons displayed in the action sheet.
    */
-  options: string[];
+  options?: string[];
 
   /**
    * Index of the cancel button within the `options` array.

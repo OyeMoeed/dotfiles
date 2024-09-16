@@ -14,15 +14,17 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
@@ -41,7 +43,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
 
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
+
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
@@ -68,10 +70,15 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const handleOnPressHelp = () => {
     helpCenterRef?.current?.present();
   };
-
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    setShowTermsAndConditionsSheet(true);
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
+
   const onPressConfirm = () => {
     veriyOTPSheetRef.current?.present();
   };
@@ -210,10 +217,6 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         <HelpCenterComponent />
       </IPayBottomSheet>
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
-      <IPayTermsAndConditions
-        showTermsAndConditions={showTermsAndConditionsSheet}
-        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
-      />
     </IPaySafeAreaView>
   );
 };

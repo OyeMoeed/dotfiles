@@ -17,6 +17,7 @@ import {
   LocalizationKeysMapping,
   MoneyRequestStatus,
 } from '@app/enums/money-request-status.enum';
+import SummaryType from '@app/enums/summary-type';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -27,7 +28,6 @@ import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import SummaryType from '@app/enums/summary-type';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
 import { getTypeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
@@ -36,7 +36,8 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   testID,
   transaction,
   onCloseBottomSheet,
-  showActionSheet,
+  showRejectActionSheet,
+  showCancelActionSheet,
 }) => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
@@ -112,10 +113,6 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     renderToast(value);
   };
 
-  const onPressCancel = () => {
-    if (onCloseBottomSheet) onCloseBottomSheet();
-  };
-
   const onPressPay = () => {
     if (onCloseBottomSheet) onCloseBottomSheet();
     navigate(ScreenNames.REQUEST_SUMMARY, {
@@ -178,7 +175,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.amount} SAR`}
+                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} SAR`}
               </IPayTitle3Text>
             </IPayView>
             {transaction &&
@@ -190,7 +187,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
             {isTransactionCredit && (
               <IPayButton
                 btnType={buttonVariants.OUTLINED}
-                onPress={onPressCancel}
+                onPress={showCancelActionSheet}
                 btnText={localizationText.REQUEST_MONEY.CANCEL_REQUEST}
                 medium
                 btnStyle={[styles.button]}
@@ -209,7 +206,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 />
                 <IPayButton
                   btnType={buttonVariants.OUTLINED}
-                  onPress={showActionSheet}
+                  onPress={showRejectActionSheet}
                   btnText={localizationText.REQUEST_MONEY.REJECT}
                   large
                   btnIconsDisabled

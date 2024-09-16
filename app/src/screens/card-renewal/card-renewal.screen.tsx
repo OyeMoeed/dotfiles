@@ -1,9 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayCardBanner from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
-import constants from '@app/constants/constants';
+import { CUSTOM_SNAP_POINT, SNAP_POINT } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
@@ -17,17 +17,27 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayBottomSheet, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayBottomSheet } from '@app/components/organism';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { buttonVariants, CardTypes } from '@app/utilities/enums.util';
+import { CardStatusIndication, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { OTPVerificationRefTypes, RouteParams } from './card-renewal.screen.interface';
 
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import useConstantData from '@app/constants/use-constants';
+import { prepareRenewCardProp, renewCardProp } from '@app/network/services/core/transaction/transaction.interface';
+import { otpRenewCard, prepareRenewCard } from '@app/network/services/core/transaction/transactions.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { hideSpinner, showSpinner } from '@app/store/slices/spinner.slice';
+import { useTypedSelector } from '@app/store/store';
+import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import { RouteParams } from './card-renewal.screen.interface';
 import cardRenewalStyles from './card-renewal.style';
 
 const DUMMY_DATA = {
@@ -43,27 +53,48 @@ const CardRenewalScreen: React.FC = () => {
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const {
-    currentCard: { cardType, cardHeaderText, name },
-  } = route?.params as unknown as { currentCard: { cardType: CardTypes; cardHeaderText: ''; name: '' } };
+    currentCard: { cardType, cardHeaderText, name, nextAnnualFeeAmt, nextAnnualFeeVAT, maskedCardNumber, cardIndex },
+    statusIndication,
+  } = route?.params || {};
 
+  const { walletNumber, availableBalance, limitsDetails } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
+
+  const dispatch = useDispatch();
   const localizationText = useLocalization();
-  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
-  const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
+  const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
+  const [otpError, setOtpError] = useState<boolean>(false);
+  const [otp, setOtp] = useState<string>('');
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { otpConfig } = useConstantData();
+  const [otpRef, setOtpRef] = useState<string>('');
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [apiError, setAPIError] = useState<string>('');
 
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
   const onPressTermsAndConditions = () => {
-    setShowTermsAndConditionsSheet(true);
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isVirtualCardTermsAndConditions: true,
+      }),
+    );
   };
 
-  const onCloseBottomSheet = () => {
-    otpVerificationRef?.current?.resetInterval();
-    veriyOTPSheetRef.current?.close();
+  const renderErrToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
   };
 
   const handleOnPressHelp = () => {
@@ -80,12 +111,88 @@ const CardRenewalScreen: React.FC = () => {
     });
   };
 
+  const renderSpinner = useCallback((isVisbile: boolean) => {
+    if (isVisbile) {
+      showSpinner();
+    } else {
+      hideSpinner();
+    }
+  }, []);
+
+  const prepareOtpRenewCard = async (showOtpSheet: boolean) => {
+    renderSpinner(true);
+    const payload: prepareRenewCardProp = {
+      walletNumber,
+      body: {
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      },
+    };
+    const apiResponse: any = await prepareRenewCard(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      setOtpRef(apiResponse?.response?.otpRef as string);
+      if (showOtpSheet) {
+        setOtpSheetVisible(true);
+        otpVerificationRef?.current?.present();
+      }
+    }
+    otpVerificationRef?.current?.resetInterval();
+    renderSpinner(false);
+  };
+
+  const onResendCodePress = () => {
+    prepareOtpRenewCard(false);
+  };
+
   const onPressConfirm = () => {
     if (checkTermsAndConditions) {
-      veriyOTPSheetRef.current?.present();
+      prepareOtpRenewCard(true);
     } else {
       renderToast();
     }
+  };
+
+  const renewCard = async () => {
+    try {
+      renderSpinner(true);
+      const payload: renewCardProp = {
+        walletNumber,
+        body: {
+          cardIndex,
+          otp,
+          otpRef,
+          cardType,
+          physicalCard: false,
+          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        },
+      };
+      const apiResponse: any = await otpRenewCard(payload);
+      if (apiResponse.status.type === 'SUCCESS') {
+        otpVerificationRef?.current?.resetInterval();
+        setOtpSheetVisible(false);
+        navigate(ScreenNames.CARD_RENEWAL_SUCCESS);
+      } else {
+        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderErrToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      }
+      renderSpinner(false);
+    } catch (error: any) {
+      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderErrToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const onConfirmOtp = () => {
+    if (otp === '' || otp.length < 4) {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+    } else {
+      renewCard();
+    }
+  };
+
+  const onOtpCloseBottomSheet = () => {
+    otpVerificationRef?.current?.resetInterval();
+    setOtpSheetVisible(false);
   };
 
   return (
@@ -93,9 +200,11 @@ const CardRenewalScreen: React.FC = () => {
       <IPayHeader title={localizationText.CARD_RENEWAL.CARD_RENEWAL} backBtn applyFlex />
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance
-          balance={DUMMY_DATA.balance}
+          balance={availableBalance}
+          monthlyIncomingLimit={limitsDetails?.monthlyRemainingOutgoingAmount}
           showRemainingAmount
-          availableBalance={DUMMY_DATA.totalBalance}
+          gradientWidth={`${(Number(limitsDetails?.monthlyRemainingOutgoingAmount) / Number(limitsDetails?.monthlyOutgoingLimit)) * 100}%`}
+          availableBalance={limitsDetails?.monthlyOutgoingLimit}
           onPressTopup={() => {}}
         />
         <IPayView style={styles.contentContainer}>
@@ -105,7 +214,7 @@ const CardRenewalScreen: React.FC = () => {
               cardType={cardType}
               cardTypeName={cardHeaderText}
               carHolderName={name}
-              cardLastFourDigit={constants.DUMMY_USER_CARD_DETAILS.CARD_LAST_FOUR_DIGIT}
+              cardLastFourDigit={maskedCardNumber}
             />
             <IPayView style={styles.ipayListGap}>
               <IPayList
@@ -129,7 +238,11 @@ const CardRenewalScreen: React.FC = () => {
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
                   regular
-                  text={`${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`}
+                  text={
+                    statusIndication === CardStatusIndication.ANNUAL
+                      ? `${+nextAnnualFeeAmt + +nextAnnualFeeVAT}`
+                      : `${DUMMY_DATA.cardRenewalFee} ${localizationText.COMMON.SAR}`
+                  }
                 />
               }
             />
@@ -153,35 +266,36 @@ const CardRenewalScreen: React.FC = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayTermsAndConditions
-        showTermsAndConditions={showTermsAndConditionsSheet}
-        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
-        isVirtualCardTermsAndConditions
-      />
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.CARD_RENEWAL.CARD_RENEWAL}
         enablePanDownToClose
         simpleBar
+        bold
         cancelBnt
-        customSnapPoint={['1%', '99%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={veriyOTPSheetRef}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={onOtpCloseBottomSheet}
+        isVisible={isOtpSheetVisible}
       >
         <OtpVerificationComponent
-          onConfirmPress={() => {
-            onCloseBottomSheet();
-            navigate(ScreenNames.CARD_RENEWAL_SUCCESS);
-          }}
           ref={otpVerificationRef}
-          onPressHelp={handleOnPressHelp}
+          onPressConfirm={onConfirmOtp}
+          mobileNumber={walletInfo?.mobileNumber}
+          setOtp={setOtp}
+          setOtpError={setOtpError}
+          otpError={otpError}
+          otp={otp}
+          isBottomSheet={false}
+          handleOnPressHelp={handleOnPressHelp}
+          timeout={otpConfig.transaction.otpTimeout}
+          onResendCodePress={onResendCodePress}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={CUSTOM_SNAP_POINT.FULL}
         ref={helpCenterRef}
       >
         <HelpCenterComponent />

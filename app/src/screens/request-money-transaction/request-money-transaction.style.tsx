@@ -57,6 +57,9 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
     rejectThisRequestCancelBtn: {
       height: moderateScale(56, 0.3),
     },
+    contentContainerStyle: {
+      flex: 1,
+    },
   });
 
 export default requestMoneyStyles;
