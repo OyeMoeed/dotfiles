@@ -81,9 +81,9 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
 
   const generatedData = () => {
     if (beneficiaryHistoryData?.length) {
-      return beneficiaryHistoryData?.filter(
-        (item) => item?.transactionType === transactionType[activeTab as keyof TransactionType],
-      );
+      return beneficiaryHistoryData
+        ?.filter((item) => item?.transactionType === transactionType[activeTab as keyof TransactionType])
+        ?.sort((a, b) => new Date(b?.transactionDateTime) - new Date(a?.transactionDateTime));
     }
     return [];
   };
@@ -160,21 +160,25 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     return '';
   };
 
-  const getBeneficiariesHistory = async (trxReqType: string) => {
+  const getBeneficiariesHistory = async (trxReqType: string, transferFilters: BeneficiaryData) => {
     const payload: LocalTransferReqParams = {
       walletNumber,
       trxReqType,
-      beneficiaryName: appliedFilters?.beneficiaryName,
-      toDate: formatDate(appliedFilters?.dateTo),
-      fromDate: formatDate(appliedFilters?.dateFrom),
-      fromAmount: appliedFilters?.amountFrom,
-      toAmount: appliedFilters?.amountTo,
+      beneficiaryName: transferFilters?.beneficiaryName ?? '',
+      toDate: formatDate(transferFilters?.dateTo) ?? '',
+      fromDate: formatDate(transferFilters?.dateFrom) ?? '',
+      fromAmount: transferFilters?.amountFrom ?? '',
+      toAmount: transferFilters?.amountTo ?? '',
     };
     try {
       const apiResponse: LocalTransferMockProps = await getlocalTransaction(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryHistoryData((prevData) => [...prevData, ...apiResponse.response.transactions]);
+          if (apiResponse.response?.transactions?.length) {
+            setBeneficiaryHistoryData((prevData) => [...prevData, ...apiResponse.response.transactions]);
+          } else {
+            setBeneficiaryHistoryData([]);
+          }
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
@@ -191,16 +195,16 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     }
   };
 
-  const getLocalTransactionsData = async () => {
+  const getLocalTransactionsData = async (beneficiaryFilters: BeneficiaryData) => {
     await Promise.all([
-      getBeneficiariesHistory(TransactionTypes.COUT_ALINMA),
-      getBeneficiariesHistory(TransactionTypes.COUT_SARIE),
-      getBeneficiariesHistory(TransactionTypes.COUT_IPS),
+      getBeneficiariesHistory(TransactionTypes.COUT_ALINMA, beneficiaryFilters),
+      getBeneficiariesHistory(TransactionTypes.COUT_SARIE, beneficiaryFilters),
+      getBeneficiariesHistory(TransactionTypes.COUT_IPS, beneficiaryFilters),
     ]);
   };
 
   useEffect(() => {
-    getLocalTransactionsData();
+    getLocalTransactionsData({});
     getBeneficiariesData();
     getBankList();
   }, []);
@@ -215,44 +219,53 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     setAppliedFilters(data);
     setFilters(filterValues);
     setBeneficiaryHistoryData([]);
-    getLocalTransactionsData();
+    getLocalTransactionsData(data);
   };
 
   const removeFilter = (filter: string, allFilters: any) => {
     let updatedFilters = { ...allFilters };
 
-    const isDateRange = filter.includes('-') && !filter.includes('SAR');
+    const [filterFrom, filterTo] = filter.split(' - ').map((s) => s.trim());
 
-    if (isDateRange) {
-      const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
-
-      if (
-        moment(allFilters.dateFrom, 'DD/MM/YYYY').isSame(dateFrom, 'day') &&
-        moment(allFilters.dateTo, 'DD/MM/YYYY').isSame(dateTo, 'day')
-      ) {
-        updatedFilters = {
-          ...updatedFilters,
-          dateFrom: '',
-          dateTo: '',
-        };
-      }
-    } else if (allFilters.transaction_type === filter) {
+    if (allFilters.amountFrom === filterFrom && allFilters.amountTo === filterTo) {
       updatedFilters = {
         ...updatedFilters,
-        transaction_type: '',
+        amountFrom: '',
+        amountTo: '',
       };
     }
+
+    if (allFilters.dateFrom === filterFrom && allFilters.dateTo === filterTo) {
+      updatedFilters = {
+        ...updatedFilters,
+        dateFrom: '',
+        dateTo: '',
+      };
+    }
+
+    if (updatedFilters?.beneficiaryBankName === filter) {
+      updatedFilters = {
+        ...updatedFilters,
+        beneficiaryBankName: '',
+      };
+    }
+
+    if (updatedFilters?.beneficiaryName === filter) {
+      updatedFilters = {
+        ...updatedFilters,
+        beneficiaryName: '',
+      };
+    }
+
     setAppliedFilters(updatedFilters);
+    setBeneficiaryHistoryData([]);
+    getLocalTransactionsData(updatedFilters);
   };
 
   const onPressClose = (text: string) => {
     const deletedFilter = filters.filter((value) => value !== text);
     setFilters(deletedFilter);
-    if (deletedFilter.length > 0) {
-      removeFilter(text, appliedFilters);
-      setBeneficiaryHistoryData([]);
-      getLocalTransactionsData();
-    }
+    removeFilter(text, appliedFilters);
   };
 
   return (
