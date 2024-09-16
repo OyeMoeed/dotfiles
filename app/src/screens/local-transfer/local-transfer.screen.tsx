@@ -49,9 +49,11 @@ import { Keyboard, ViewStyle } from 'react-native';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
+import { useKeyboardStatus } from '@app/hooks';
 
 const LocalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const styles = localTransferStyles(colors);
   const localizationText = useLocalization();
   const beneficiariesToShow = 4;
@@ -593,7 +595,7 @@ const LocalTransferScreen: React.FC = () => {
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={SNAP_POINT.MEDIUM}
+        customSnapPoint={isKeyboardOpen ? SNAP_POINT.SMALL : SNAP_POINT.XX_SMALL}
         ref={editNickNameSheetRef}
         isVisible={showEditSheet}
       >
