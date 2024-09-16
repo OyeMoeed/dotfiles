@@ -8,6 +8,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { isArabic } from '@app/utilities/constants';
 import sendGiftStyles from './send-gift.style';
 
 const SendGiftScreen: React.FC = () => {
@@ -33,7 +34,9 @@ const SendGiftScreen: React.FC = () => {
           hasRightIcon
           onPress={sendGiftNow}
           btnStyle={styles.sendButton}
-          rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}
+          rightIcon={
+            <IPayIcon icon={isArabic ? icons.HEADER_BACK : icons.rightArrow} color={colors.natural.natural0} />
+          }
         />
       </IPayView>
     </IPaySafeAreaView>
