@@ -114,7 +114,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                   </IPayPressable>
                   <IPayButton
                     onPress={handleSubmit(onSubmit)}
-                    btnType="primary"
+                    btnType={buttonVariants.PRIMARY}
                     btnText="COMMON.NEXT"
                     large
                     rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}

@@ -233,7 +233,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         </IPayView>
         <IPayView>
           <IPayButton
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             btnText="TOP_UP.START_OVER"
             large
             onPress={goBack}
@@ -243,7 +243,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           />
 
           <IPayButton
-            btnType="outline"
+            btnType={buttonVariants.OUTLINED}
             btnText="COMMON.HOME"
             textStyle={styles.text}
             hasLeftIcon

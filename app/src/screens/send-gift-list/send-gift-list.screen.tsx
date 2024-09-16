@@ -198,7 +198,7 @@ const SendGiftListScreen: React.FC = () => {
           <IPayView>
             <IPayButton
               leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText="SEND_GIFT.SEND_NEW_GIFT"
               large
               onPress={sendGiftNow}

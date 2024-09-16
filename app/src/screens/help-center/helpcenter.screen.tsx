@@ -21,6 +21,7 @@ import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
@@ -300,7 +301,7 @@ const HelpCenter: React.FC = () => {
               <IPaySubHeadlineText regular style={styles.contactUsText} text="COMMON.ASSISTANCE" />
               <IPayCaption1Text regular style={styles.contactUsSubText} text="COMMON.CONTACT_SERVICE_TEAM" />
               <IPayButton
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
                 btnText="COMMON.NEED_ASSISTANCE"
                 textColor={colors.secondary.secondary800}

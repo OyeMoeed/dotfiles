@@ -10,7 +10,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { IdRenewalState } from '@app/utilities/enums.util';
+import { buttonVariants, IdRenewalState } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -216,7 +216,7 @@ const IPayIdRenewalSheet: React.FC = () => {
               large
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText={isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
               textColor={colors.natural.natural0}
               rightIcon={
@@ -230,7 +230,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             <IPayButton
               onPress={closeBottomSheet}
               btnStyle={styles.topStyles}
-              btnType="link-button"
+              btnType={buttonVariants.LINK_BUTTON}
               btnText={secondaryButtonText}
               textStyle={styles.skipTextStyle}
               btnIconsDisabled

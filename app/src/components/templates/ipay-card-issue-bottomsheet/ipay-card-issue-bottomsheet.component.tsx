@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardOptions } from '@app/utilities/enums.util';
+import { buttonVariants, CardOptions } from '@app/utilities/enums.util';
 import React from 'react';
 import { IPayCardIssueProps } from './ipay-card-issue-bottomsheet.interface';
 import cardIssueStyle from './ipay-card-issue-bottomsheet.styles';
@@ -44,7 +44,7 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
       </IPayView>
       <IPayView style={styles.buttonContainer}>
         <IPayButton
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           large
           hasRightIcon
           rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} />}

@@ -21,6 +21,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import getTotalAmount from '@app/utilities/total-amount-utils';
 import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities';
 import sendMoneyFormStyles from './send-money-request.styles';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-request.interface';
 
@@ -211,7 +212,7 @@ const SendMoneyRequest: React.FC = () => {
                 disabled={isTransferButtonDisabled() || !getTotalAmount(formInstances) || !!warningStatus}
                 btnIconsDisabled
                 medium
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 onPress={onConfirm}
                 btnText="REQUEST_MONEY.SEND_REQUEST_TITLE"
               />

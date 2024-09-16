@@ -17,7 +17,7 @@ import { getValidationSchemas } from '@app/services';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType } from '@app/utilities/enums.util';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -151,7 +151,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
           <IPayButton
             onPress={handleSubmit(onSubmit)}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             btnText="COMMON.NEXT"
             large
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
@@ -159,7 +159,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
           <IPayButton
             onPress={handleOnPressHelp}
-            btnType="link-button"
+            btnType={buttonVariants.LINK_BUTTON}
             btnText="COMMON.NEED_HELP"
             large
             btnStyle={styles.needHelpBtn}

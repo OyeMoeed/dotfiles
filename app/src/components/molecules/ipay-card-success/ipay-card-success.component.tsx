@@ -18,6 +18,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { CardInfo } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { buttonVariants } from '@app/utilities';
 import IPayPrintCard from '../ipay-print-card/ipay-print-card.component';
 import { IPayCardSuccessProps } from './ipay-card-success.interface';
 import topUpSuccessStyles from './ipay-card-success.style';
@@ -76,7 +77,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
               <IPayButton
                 onPress={handleGoToCard}
                 medium
-                btnType="outline"
+                btnType={buttonVariants.OUTLINED}
                 rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
                 btnText="CARD_OPTIONS.GO_TO_CARD"
                 btnStyle={styles.flexStyle}
@@ -84,7 +85,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
               <IPayButton
                 medium
                 onPress={handleHomePress}
-                btnType="outline"
+                btnType={buttonVariants.OUTLINED}
                 leftIcon={<IPayIcon icon={icons.HOME_2} color={colors.primary.primary500} />}
                 btnText="COMMON.HOME"
                 btnStyle={styles.flexStyle}

@@ -9,6 +9,7 @@ import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { IPayView } from '@app/components/atoms';
 import constants from '@app/constants/constants';
 import { useRoute, RouteProp } from '@react-navigation/native';
+import { buttonVariants } from '@app/utilities';
 import changePinSuccessStyles from './change-pin-success.style';
 import { RouteParams } from './change-pin-success.interface';
 
@@ -38,7 +39,7 @@ const ChangePinSuccessScreen: React.FC = () => {
           descriptionText="CHANGE_PIN_SUCCESS.YOU_CAN_USE_PURCHASE"
         />
         <IPayView style={styles.bottomButtonContainer}>
-          <IPayButton btnType="primary" btnText="COMMON.DONE" large btnIconsDisabled onPress={goBack} />
+          <IPayButton btnType={buttonVariants.PRIMARY} btnText="COMMON.DONE" large btnIconsDisabled onPress={goBack} />
         </IPayView>
       </IPayView>
     </IPayPageWrapper>

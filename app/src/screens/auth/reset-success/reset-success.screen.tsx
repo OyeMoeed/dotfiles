@@ -4,7 +4,7 @@ import { IPayPageWrapper } from '@app/components/templates';
 import logOut from '@app/network/services/core/logout/logout.service';
 import clearSession from '@app/network/utilities/network-session-helper';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType } from '@app/utilities/enums.util';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import genratedStyles from './reset-success.style';
 
@@ -31,7 +31,13 @@ const ResetSuccessful: React.FC = () => {
             descriptionText="SETTINGS.SAVE_FOR_LATER"
           />
           <IPayView style={styles.buttonContainer}>
-            <IPayButton btnType="primary" btnText="COMMON.DONE" large btnIconsDisabled onPress={logoutConfirm} />
+            <IPayButton
+              btnType={buttonVariants.PRIMARY}
+              btnText="COMMON.DONE"
+              large
+              btnIconsDisabled
+              onPress={logoutConfirm}
+            />
           </IPayView>
         </IPayView>
       </IPayView>

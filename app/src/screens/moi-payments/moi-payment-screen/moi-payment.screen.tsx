@@ -21,7 +21,7 @@ import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { MoiPaymentTypes } from '@app/utilities/enums.util';
+import { buttonVariants, MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -263,7 +263,7 @@ const MoiPaymentScreen: React.FC = () => {
                     />
                     <IPayButton
                       btnText="NEW_SADAD_BILLS.INQUIRY"
-                      btnType="primary"
+                      btnType={buttonVariants.PRIMARY}
                       onPress={onSubmit}
                       btnStyle={styles.inquiryBtn}
                       large

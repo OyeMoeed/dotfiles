@@ -10,6 +10,7 @@ import {
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { buttonVariants } from '@app/utilities';
 import { IPayListProps } from './ipay-list.interface';
 import styles from './ipay-list.style';
 
@@ -108,7 +109,7 @@ const IPayList: React.FC<IPayListProps> = ({
             <IPayButton
               btnStyle={dynamicStyles.buttonStyle}
               onPress={onPressSaveQR}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText="COMMON.SAVE"
               textColor={colors.secondary.secondary800}
               rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
@@ -126,7 +127,7 @@ const IPayList: React.FC<IPayListProps> = ({
             {isShowIcon ? (
               (icon && (
                 <IPayButton
-                  btnType="link-button"
+                  btnType={buttonVariants.LINK_BUTTON}
                   btnText={detailText}
                   onPress={onPressIcon}
                   rightIcon={icon}

@@ -6,6 +6,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { buttonVariants } from '@app/utilities';
 import beneficiaryAcivationStyles from './activate-beneficiary-success.style';
 
 const ActivateBeneficiarySuccessScreen: React.FC = () => {
@@ -29,9 +30,14 @@ const ActivateBeneficiarySuccessScreen: React.FC = () => {
               descriptionText="ACTIVATE_BENEFICIARY.NOW_YOU_CAN_TRANSFER"
             />
             <IPayView style={styles.buttonWrapper}>
-              <IPayButton btnType="primary" btnText="ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER" medium btnIconsDisabled />
               <IPayButton
-                btnType="outline"
+                btnType={buttonVariants.PRIMARY}
+                btnText="ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER"
+                medium
+                btnIconsDisabled
+              />
+              <IPayButton
+                btnType={buttonVariants.OUTLINED}
                 btnText="NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE"
                 medium
                 btnIconsDisabled

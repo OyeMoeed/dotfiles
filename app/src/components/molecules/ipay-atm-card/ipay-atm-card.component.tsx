@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardCategories } from '@app/utilities/enums.util';
+import { buttonVariants, CardCategories } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React from 'react';
 import { ImageBackground, LayoutChangeEvent } from 'react-native';
@@ -94,7 +94,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({
             ]}
           >
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnColor={colors.natural.natural0}
               textColor={colors.primary.primary900}
               btnStyle={styles.btnStyle}

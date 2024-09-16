@@ -36,6 +36,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
@@ -278,7 +279,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   )}
                   <IPayButton
                     btnText="NEW_SADAD_BILLS.INQUIRE"
-                    btnType="primary"
+                    btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onInquireBill)}
                     large
                     btnIconsDisabled
@@ -287,7 +288,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   {watch(FormFields.SAVE_BILL) && (
                     <IPayButton
                       btnText="NEW_SADAD_BILLS.SAVE_ONLY"
-                      btnType="outline"
+                      btnType={buttonVariants.OUTLINED}
                       onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
                       large
                       disabled={!watch(FormFields.BILL_NAME)}
@@ -328,7 +329,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                         btnText="COMMON.CANCEL"
                         btnIconsDisabled
                         small
-                        btnType="link-button"
+                        btnType={buttonVariants.LINK_BUTTON}
                         onPress={() => setSearch('')}
                       />
                     )}

@@ -28,7 +28,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
-import { States } from '@app/utilities/enums.util';
+import { buttonVariants, States } from '@app/utilities/enums.util';
 import { useEffect, useState, JSX } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -268,7 +268,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
           </IPayView>
           <IPayButton
             onPress={onRedeem}
-            btnType="primary"
+            btnType={buttonVariants.PRIMARY}
             disabled={disabled}
             btnText="TOP_UP.REDEEM"
             textColor={colors.natural.natural0}

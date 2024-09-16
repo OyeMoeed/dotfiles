@@ -10,6 +10,7 @@ import icons from '@assets/icons';
 import { useNavigation } from '@react-navigation/native';
 import { forwardRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
 const ForgotPasscodeBottomSheet = forwardRef(() => {
@@ -84,7 +85,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
 
             <IPayButton
               onPress={onPressConfirm}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText="COMMON.NEXT"
               large
               rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
@@ -92,7 +93,7 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
 
             <IPayButton
               onPress={() => navigate(screenNames.REGISTRATION_SUCCESSFUL)}
-              btnType="link-button"
+              btnType={buttonVariants.LINK_BUTTON}
               btnText="COMMON.NEED_HELP"
               large
               btnStyle={styles.needHelpBtn}

@@ -4,6 +4,7 @@ import { IPayPageWrapper } from '@app/components/templates';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { buttonVariants } from '@app/utilities';
 import genratedStyles from '../registration-successful/registration-successful.style';
 
 const PasscodeRecreatedSuccessfuly: React.FC = () => {
@@ -25,7 +26,13 @@ const PasscodeRecreatedSuccessfuly: React.FC = () => {
             descriptionText="FORGOT_PASSCODE.NOW_LOGIN_VIA_PASSCODE"
           />
           <IPayView style={styles.buttonContainer}>
-            <IPayButton btnType="primary" btnText="COMMON.DONE" large btnIconsDisabled onPress={handleDonePress} />
+            <IPayButton
+              btnType={buttonVariants.PRIMARY}
+              btnText="COMMON.DONE"
+              large
+              btnIconsDisabled
+              onPress={handleDonePress}
+            />
           </IPayView>
         </IPayView>
       </IPayView>

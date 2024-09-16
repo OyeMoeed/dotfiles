@@ -6,6 +6,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities';
 import { IPayBalanceBoxProps } from './ipay-topup-box.interface';
 import topUpBoxStyles from './ipay-topup-box.styles';
 
@@ -49,7 +50,7 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
             <IPayButton
               btnStyle={styles.topUpButtonStyle}
               onPress={onTopUpPress}
-              btnType="outline"
+              btnType={buttonVariants.OUTLINED}
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
               btnText="TOPUP_CONFIRMATION.TOP_UP"
             />

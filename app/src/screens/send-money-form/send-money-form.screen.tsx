@@ -37,7 +37,7 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { PayChannel, TopupStatus } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel, TopupStatus } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
@@ -368,7 +368,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 disabled={isTransferButtonDisabled() || !totalAmount || !!warningStatus}
                 btnIconsDisabled
                 medium
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 onPress={onConfirm}
                 btnText={btnText}
               />

@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { buttonVariants } from '@app/utilities';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayPrintCardProps from './ipay-print-card.interface';
 import printCardStyles from './ipay-print-card.styles';
@@ -18,7 +19,7 @@ const IPayPrintCard: React.FC<IPayPrintCardProps> = ({ testID, handlePrintCard, 
         medium
         btnText="CARDS.PRINT_CARD"
         onPress={handlePrintCard}
-        btnType="primary"
+        btnType={buttonVariants.PRIMARY}
         leftIcon={<IPayIcon icon={icons.card} color={colors.natural.natural0} size={18} />}
       />
     </IPayView>

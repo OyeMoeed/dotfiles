@@ -17,6 +17,7 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { setAuth } from '@store/slices/auth-slice';
 import { useTypedDispatch } from '@store/store';
+import { buttonVariants } from '@app/utilities';
 import genratedStyles from './delink-success.style';
 
 const DelinkSuccess: React.FC = ({ route }: any) => {
@@ -58,7 +59,7 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
             </IPayView>
             <IPayFootnoteText regular color={colors.primary.primary800} text="COMMON.DELINK_ALERT.NEED_LOGIN" />
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText="COMMON.DONE"
               large
               btnStyle={styles.btnStyle}

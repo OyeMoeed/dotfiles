@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { debounce } from 'lodash';
+import { buttonVariants } from '@app/utilities';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
@@ -279,7 +280,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             />
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 btnText="COMMON.SAVE"
                 large
                 btnIconsDisabled

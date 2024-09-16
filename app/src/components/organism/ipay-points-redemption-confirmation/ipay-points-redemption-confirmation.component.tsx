@@ -16,7 +16,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopupStatus } from '@app/utilities/enums.util';
+import { buttonVariants, TopupStatus } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -179,7 +179,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         </IPayView>
         <IPayButton
           onPress={onConfirm}
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           btnText="COMMON.CONFIRM"
           btnIconsDisabled
           textColor={colors.natural.natural0}

@@ -345,7 +345,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const ListFooterContacts = () => (
     <IPayButton
       small
-      btnType="link-button"
+      btnType={buttonVariants.LINK_BUTTON}
       btnStyle={styles.recipientsContainer}
       textColor={colors.secondary.secondary800}
       btnText="SEND_MONEY_FORM.ADD_MORE_RECIPIENTS"

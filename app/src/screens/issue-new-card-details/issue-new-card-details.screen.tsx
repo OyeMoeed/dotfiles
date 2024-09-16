@@ -9,7 +9,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useVirtualCardData from '@app/screens/virtual-card/use-virtual-card-data';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardMapping, CardOptions, CardTypes } from '@app/utilities/enums.util';
+import { buttonVariants, CardMapping, CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
@@ -81,7 +81,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
         </IPayView>
         <IPayButton
           btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           onPress={toggleAnimation}
           btnText={isExpanded ? 'VIRTUAL_CARD.CLOSE_DETAILS' : 'VIRTUAL_CARD.VIEW_DETAILS'}
           btnIconsDisabled
@@ -89,7 +89,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
       </IPayAnimatedView>
       <IPayView style={styles.bottomContainer}>
         <IPayButton
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           large
           btnText="VIRTUAL_CARD.ISSUE_CARD"
           btnIconsDisabled

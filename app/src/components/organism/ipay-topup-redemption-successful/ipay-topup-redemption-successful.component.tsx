@@ -24,7 +24,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import { TopupStatus } from '@app/utilities/enums.util';
+import { buttonVariants, TopupStatus } from '@app/utilities/enums.util';
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -133,18 +133,18 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                   <IPayView style={styles.bottomActions}>
                     <IPayButton
                       onPress={navigateTOAktharPoints}
-                      btnType="link-button"
+                      btnType={buttonVariants.LINK_BUTTON}
                       btnText="TOP_UP.NEW_TOP_UP"
                       leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
                     />
                     <IPayButton
-                      btnType="link-button"
+                      btnType={buttonVariants.LINK_BUTTON}
                       btnText="TOP_UP.SHARE"
                       leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
                     />
                   </IPayView>
                   <IPayButton
-                    btnType="primary"
+                    btnType={buttonVariants.PRIMARY}
                     leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.natural.natural0} />}
                     btnText="COMMON.HOME"
                     onPress={goBackToHome}
@@ -199,7 +199,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
           {variants === TopupStatus.FAILED && (
             <IPayView>
               <IPayButton
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 btnText="TOP_UP.START_OVER"
                 leftIcon={<IPayIcon icon={icons.ARROW_LEFT} size={scaleSize(20)} color={colors.natural.natural0} />}
                 large
@@ -208,7 +208,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
               />
 
               <IPayButton
-                btnType="outline"
+                btnType={buttonVariants.OUTLINED}
                 leftIcon={<IPayIcon icon={icons.HOME} size={scaleSize(20)} color={colors.primary.primary500} />}
                 btnText="COMMON.HOME"
                 hasLeftIcon
