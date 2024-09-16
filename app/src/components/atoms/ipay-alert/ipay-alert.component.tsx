@@ -25,6 +25,7 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   type = alertType.DEFAULT,
   animationType = 'fade',
   leftIcon,
+  transparentOverlay = true,
 }) => {
   const { colors } = useTheme();
   const styles = alertStyles(colors);
@@ -35,7 +36,13 @@ const IPayAlert: React.FC<IPayAlertProps> = ({
   };
 
   return (
-    <Modal testID={testID} animationType={animationType} transparent visible={visible} onRequestClose={onClose}>
+    <Modal
+      testID={testID}
+      animationType={animationType}
+      transparent={transparentOverlay}
+      visible={visible}
+      onRequestClose={onClose}
+    >
       <IPayView style={styles.flexStyles}>
         <IPayOverlay onPress={closeOnTouchOutside ? onClose : undefined} />
         <IPayView style={styles.centeredView}>
