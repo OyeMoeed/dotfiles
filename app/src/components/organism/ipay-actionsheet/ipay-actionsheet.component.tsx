@@ -134,7 +134,7 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
           large
           textStyle={cancelButtonIndex === index && sheetStyles.bold}
           btnIconsDisabled
-          btnStyle={[btnStyle, buttonStyle, cancelButtonIndex == index && cancelButtonStyle]}
+          btnStyle={[btnStyle, buttonStyle, cancelButtonIndex === index && cancelButtonStyle]}
           textColor={btnTextColor}
           btnColor={btnBackground}
         />
