@@ -14,6 +14,10 @@ const getWalletInfo = async (payload: WalletNumberProp): Promise<unknown> => {
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.GET_WALLET(payload?.walletNumber),
     method: requestType.GET,
+    headers: {
+      hide_error_response: payload.hideError ?? false,
+      hide_spinner_loading: payload.hideSpinner ?? false,
+    },
   });
   return apiResponse;
 };

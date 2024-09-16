@@ -5,5 +5,6 @@ export interface RouteParams {
     cardType: CardTypes;
     cardHeaderText: string;
     name: string;
+    maskedCardNumber: string;
   };
 }

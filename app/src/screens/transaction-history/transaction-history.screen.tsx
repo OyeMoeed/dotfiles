@@ -454,6 +454,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={noFilterResult}
         closeOnTouchOutside
+        transparentOverlay={false}
         animationType="fade"
         showIcon={false}
         title={localizationText.TRANSACTION_HISTORY.NO_RESULTS}
