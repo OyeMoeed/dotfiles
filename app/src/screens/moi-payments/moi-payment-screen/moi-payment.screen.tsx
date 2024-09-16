@@ -276,7 +276,7 @@ const MoiPaymentScreen: React.FC = () => {
           setErrorMessage('');
         };
 
-        const validateBills = async () => {
+        const validateBills = async (data: any) => {
           const payLoad = {
             dynamicFields: [
               {
@@ -314,11 +314,6 @@ const MoiPaymentScreen: React.FC = () => {
             }
           }
         };
-        const onSubmit = (data: any) => {
-          console.log('data: any', data);
-          validateBills();
-        };
-        
 
         return (
           <>
@@ -352,7 +347,7 @@ const MoiPaymentScreen: React.FC = () => {
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
                       btnType="primary"
-                      onPress={onSubmit}
+                      onPress={validateBills}
                       btnStyle={styles.inquiryBtn}
                       large
                       btnIconsDisabled
