@@ -19,7 +19,6 @@ const getDynamicFieldsService = async (
     const apiResponse = await apiCall({
       endpoint: BILLS_MANAGEMENT_URLS.get_dynamic_fields(billerId, serviceId, walletNumber),
       method: requestType.GET,
-      payload,
     });
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
