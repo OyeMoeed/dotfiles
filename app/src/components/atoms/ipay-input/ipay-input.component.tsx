@@ -56,7 +56,7 @@ const IPayInput: React.FC<IPayInputProps> = ({
   return (
     <TextInput
       testID={`${testID}-input`}
-      value={`${t(text)}`}
+      value={text}
       numberOfLines={numberOfLines}
       style={[styles.textInputStyle, commonStyles.subHeadlineText, style]}
       placeholder={`${t(placeholder)}`}
