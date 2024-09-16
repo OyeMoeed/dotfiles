@@ -18,6 +18,8 @@ const BILLS_MANAGEMENT_URLS = {
   DELETE_BILL: 'bills-management/v1/alinma-pay/bill',
   validate_bill: (billerId: string, serviceId: string) =>
     `bills-management/v1/moi/billers/${billerId}/services/${serviceId}/payment/validate`,
+  prepare_bill: (paymentType: string) => `bills-management/v1/alinmaPay/${paymentType}/prepare/bill`,
+  pay_moi_bill: () => 'bills-management/v1/alinmaPay/moi/payment',
 };
 
 export default BILLS_MANAGEMENT_URLS;
