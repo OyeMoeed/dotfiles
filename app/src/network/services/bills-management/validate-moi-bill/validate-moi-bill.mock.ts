@@ -1,6 +1,6 @@
 import { ValidateBillResponse } from './validate-moi-bill.interface';
 
-const getDynamicFieldsMockResponse: ValidateBillResponse = {
+const ValidateBillMockResponse: ValidateBillResponse = {
   response: {
     beneficiaryName: 'amr',
     previousUnusedBalance: '1000',
@@ -17,4 +17,4 @@ const getDynamicFieldsMockResponse: ValidateBillResponse = {
   },
 };
 
-export default getDynamicFieldsMockResponse;
+export default ValidateBillMockResponse;

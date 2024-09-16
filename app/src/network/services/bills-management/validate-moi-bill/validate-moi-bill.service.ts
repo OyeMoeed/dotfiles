@@ -3,7 +3,7 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
 import { ValidateBillResponse, ValidateBillResponsesPayload } from './validate-moi-bill.interface';
-import getDynamicFieldsMockResponse from './validate-moi-bill.mock';
+import ValidateBillMockResponse from './validate-moi-bill.mock';
 
 const validateBill = async (
   billerId: string,
@@ -11,7 +11,7 @@ const validateBill = async (
   payload: ValidateBillResponsesPayload,
 ): Promise<ValidateBillResponse | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
-    return getDynamicFieldsMockResponse;
+    return ValidateBillMockResponse;
   }
   try {
     const apiResponse = await apiCall({
