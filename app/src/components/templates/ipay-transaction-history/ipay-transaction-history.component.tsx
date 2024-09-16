@@ -182,7 +182,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
   return (
     <IPayView testID={testID} style={styles.container}>
-      <IPayScrollView>
+      <IPayScrollView style={styles.scroll}>
         <IPayShareableImageView
           isShareable={isShareable}
           otherView={

@@ -30,6 +30,7 @@ import {
   TransactionType,
 } from './beneficiary-transaction-history.interface';
 import transactionHistoryStyles from './beneficiary-transaction-history.style';
+import { SNAP_POINT } from '@app/constants/constants';
 
 const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -41,7 +42,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
   const transactionRef = React.createRef<any>();
   const [transaction, setTransaction] = useState<BeneficiaryTransactionItemProps | null>(null);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(['95%', isAndroidOS ? '95%' : '100%']);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['100%', isAndroidOS ? '95%' : '100%']);
   const [beneficiaryHistoryData, setBeneficiaryHistoryData] = useState<BeneficiaryTransaction[] | undefined>([]);
   const [apiError, setAPIError] = useState<string>('');
   const [showTransactionSheet, setShowTransactionSheet] = useState<boolean>(false);
@@ -247,7 +248,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       <IPayPortalBottomSheet
         heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
         onCloseBottomSheet={() => setShowTransactionSheet(false)}
-        customSnapPoint={snapPoint}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         simpleHeader
         simpleBar
         cancelBnt

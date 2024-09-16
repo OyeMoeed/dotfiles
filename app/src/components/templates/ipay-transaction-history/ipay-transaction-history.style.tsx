@@ -2,7 +2,6 @@ import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { CUSTOME_SCALE } from '@app/styles/spacing.const';
 import { FONT_SIZE_13, FONT_SIZE_20, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
-import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const transactionHistoryStyle = (colors: any) =>
@@ -73,7 +72,7 @@ const transactionHistoryStyle = (colors: any) =>
       marginBottom: moderateScale(10),
     },
     containerToastStyle: {
-      bottom: verticalScale(60),
+      bottom: moderateScale(30),
     },
     beneficiaryLeftImage: {
       height: verticalScale(24),
@@ -87,7 +86,7 @@ const transactionHistoryStyle = (colors: any) =>
     },
     containerToastIosStyle: {
       position: 'absolute',
-      bottom: verticalScale(120),
+      bottom: verticalScale(20),
     },
     fullFlex: {
       flex: 1,
