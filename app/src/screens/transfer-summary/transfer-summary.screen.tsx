@@ -228,7 +228,7 @@ const TransferSummaryScreen: React.FC = () => {
         navigate(ScreenNames.W2W_TRANSFER_SUCCESS, {
           transferDetails: {
             formData: transfersDetails.formInstances,
-            apiData: apiResponse?.response.transferRequestsResult,
+            apiData: apiResponse?.response?.transferRequestsResult,
           },
           totalAmount,
         });
