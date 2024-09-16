@@ -9,7 +9,6 @@ const transactionHistoryStyle = (colors: any) =>
     container: {
       width: '100%',
       flex: 1,
-      marginBottom: isIosOS ? moderateScale(100) : 0,
     },
     amountSection: {
       justifyContent: 'center',
