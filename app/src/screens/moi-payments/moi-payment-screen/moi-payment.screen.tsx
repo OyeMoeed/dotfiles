@@ -58,7 +58,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [selectedServiceType, setSelectedServiceType] = useState<string>();
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
     getValidationSchemas(localizationText);
-
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const validationSchema = Yup.object().shape({
     serviceProvider,
     serviceType,
@@ -301,7 +301,7 @@ const MoiPaymentScreen: React.FC = () => {
                 isFormValid: 'false',
               },
             ],
-            walletNumber: '10587981',
+            walletNumber: walletNumber,
             refund: false,
           };
 
@@ -318,6 +318,7 @@ const MoiPaymentScreen: React.FC = () => {
           console.log('data: any', data);
           validateBills();
         };
+        
 
         return (
           <>
