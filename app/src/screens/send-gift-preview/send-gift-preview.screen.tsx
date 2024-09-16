@@ -104,7 +104,7 @@ const SendGiftPreview: FC = ({ route }) => {
         </IPayView>
       </IPayKeyboardAwareScrollView>
       <IPayBottomSheet
-        heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
+        heading={localizationText.SEND_GIFT.PREVIEW_GIFT_2}
         ref={previewBottomSheetRef}
         customSnapPoint={['1%', '75%']}
         cancelBnt
