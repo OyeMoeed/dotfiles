@@ -4,7 +4,6 @@ import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-sectio
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/index';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import getFAQ from '@app/network/services/core/faq/faq.service';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -55,10 +54,6 @@ const HelpCenter: React.FC = () => {
   // Fetch data from the mock API
 
   const fetchFaqItems = async () => {
-    if (constants.MOCK_API_RESPONSE) {
-      setAllFaqItems(helpCenterMockData);
-      setFaqData(helpCenterMockData);
-    }
     try {
       const apiResponse: any = await getFAQ();
 
@@ -67,7 +62,7 @@ const HelpCenter: React.FC = () => {
           {
             id: 1,
             title: '',
-            data: apiResponse?.response?.faqs.map((question) => ({
+            data: apiResponse?.response?.faq.map((question) => ({
               id: 1,
               question: question.question,
               answer: question.answer,
@@ -216,6 +211,7 @@ const HelpCenter: React.FC = () => {
           <IPayIcon
             icon={isOpen(index, section.id) ? icons.arrowUp : icons.ARROW_DOWN}
             size={18}
+            color={isOpen(index, section.id) ? colors.primary.primary500 : colors.primary.primary900}
             style={isOpen(index, section.id) ? styles.faqItemIconExpanded : styles.faqItemIcon}
           />
         </IPayView>
