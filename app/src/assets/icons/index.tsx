@@ -255,6 +255,7 @@ const icons = {
   call_incoming: IncomingCall,
   call_outgoing: Outgoing,
   nonALinma: NonAlinma,
+  addSquare2: 'add-square2',
 };
 
 export default icons;

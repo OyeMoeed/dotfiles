@@ -350,7 +350,7 @@ const CardsScreen: React.FC = () => {
           btnType={buttonVariants.LINK_BUTTON}
           btnText={localizationText.CARDS.NEW_CARD}
           onPress={openCardSheet}
-          rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
+          rightIcon={<IPayIcon icon={icons.addSquare2} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
       {renderCardsCurrentState()}
@@ -393,7 +393,7 @@ const CardsScreen: React.FC = () => {
       >
         <IPayCardDetails cardDetails={cardDetails} />
       </IPayPortalBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
         onCloseBottomSheet={closeCardSheet}
         customSnapPoint={SNAP_POINT.MID_SMALL}
