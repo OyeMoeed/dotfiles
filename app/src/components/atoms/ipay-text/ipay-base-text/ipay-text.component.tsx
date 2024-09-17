@@ -32,6 +32,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
   const baseTextStyles = styles(getFontFamily as string, colors);
 
+  const isChildrenString = typeof children === 'string' || typeof text === 'string';
   const mainText = children ? String(children) : text || '';
   const formattedText = isAmount ? formatNumberWithCommas(mainText || '') : mainText;
   const isNeedTranslate = !isNumber(formattedText) && isUpperCase(formattedText) && formattedText?.length > 1;
@@ -43,7 +44,7 @@ const IPayText: React.FC<IPayTextProps> = ({
       numberOfLines={numberOfLines}
       style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, { fontWeight }, style]}
     >
-      {showText}
+      {isChildrenString ? showText : children}
     </Text>
   );
 };

@@ -379,6 +379,7 @@ const LoginViaPasscode: React.FC = () => {
           {firstName && (
             <IPayGradientText
               text={`${firstName} ${fatherName || ''}`}
+              shouldTranslate={false}
               gradientColors={gradientColors}
               yScale={12}
               fontSize={styles.linearGradientText.fontSize}

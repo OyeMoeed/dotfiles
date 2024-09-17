@@ -257,9 +257,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
           <IPayCaption2Text style={styles.accountBalanceText} text="CARDS.ACCOUNT_BALANCE" />
-          <IPaySubHeadlineText style={styles.accountBalanceText}>
+          <IPaySubHeadlineText style={styles.accountBalanceText} shouldTranslate={false}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular>{` ${t('COMMON.SAR')}`}</IPaySubHeadlineText>
+            <IPaySubHeadlineText regular text={` ${t('COMMON.SAR')}`} />
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />
@@ -273,7 +273,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         textStyle={styles.listText}
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
-          <IPaySubHeadlineText style={styles.listText} regular={false}>
+          <IPaySubHeadlineText shouldTranslate={false} style={styles.listText} regular={false}>
             {currentCard.totalCashbackAmt} <IPayFootnoteText text="COMMON.SAR" />
           </IPaySubHeadlineText>
         }

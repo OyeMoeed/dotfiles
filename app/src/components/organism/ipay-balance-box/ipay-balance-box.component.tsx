@@ -166,7 +166,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
 
         <IPayView style={[styles.commonContainer, styles.gap]}>
           <IPayView style={styles.balanceContainer}>
-            <IPayTitle2Text style={styles.balanceTextStyle} text={balanceValue} />
+            <IPayTitle2Text style={styles.balanceTextStyle} text={balanceValue} shouldTranslate={false} />
             <IPayFootnoteText style={styles.currencyStyle} text="COMMON.SAR" />
           </IPayView>
           <IPayButton
@@ -192,6 +192,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
             <IPayCaption2Text
               style={styles.textRegular}
               text={` ${t('HOME.OF')} ${formatNumberWithCommas(monthlySpendingLimit)}`}
+              shouldTranslate={false}
             />
           </IPayView>
         </IPayView>

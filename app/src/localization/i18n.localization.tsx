@@ -50,7 +50,7 @@ i18n
         CustomBackend,
         i18nextResourcesToBackend((lng: string, ns: string, callback: CallbackProps) => {
           // Load local translations (from local file)
-          const language = lng as keyof typeof LanguageCode;
+          const language = LanguageCode[lng as keyof typeof LanguageCode];
           const resource = translations[language];
           callback(null, resource);
         }),

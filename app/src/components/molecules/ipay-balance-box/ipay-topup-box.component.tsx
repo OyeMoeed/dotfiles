@@ -36,7 +36,8 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
               <IPaySubHeadlineText
                 color={colors.primary.primary900}
                 style={styles.balanceTextStyle}
-                text={availableBalance}
+                text={`${availableBalance}`}
+                shouldTranslate={false}
               />
               <IPaySubHeadlineText
                 color={colors.primary.primary900}

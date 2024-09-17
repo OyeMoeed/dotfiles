@@ -82,7 +82,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title="HOME.ATM_WITHDRAWALS} titleStyle={styles.titleStyle" applyFlex />
+      <IPayHeader backBtn title="HOME.ATM_WITHDRAWALS" titleStyle={styles.titleStyle} applyFlex />
 
       <IPayView style={styles.container}>
         <IPayView style={styles.accountBalanceView}>
@@ -98,6 +98,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
                 <IPayTitle2Text
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
+                  shouldTranslate={false}
                 />
                 <IPayFootnoteText style={styles.currencyStyle} text="COMMON.SAR" />
               </IPayView>

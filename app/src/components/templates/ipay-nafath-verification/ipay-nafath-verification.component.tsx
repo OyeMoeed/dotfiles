@@ -296,6 +296,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
                 <IPayPressable style={styles.codeWrapper}>
                   <IPayGradientText
                     text={`${nafathNumber}`}
+                    shouldTranslate={false}
                     yScale={28}
                     gradientColors={colors.gradient1}
                     fontSize={styles.linearGradientText.fontSize}
@@ -316,6 +317,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
               <IPayText
                 style={[styles.expireText, isExpired && styles.expireTextColor]}
                 text={isExpired ? t('COMMON.CODE_HAS_EXPIRED') : `${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
+                shouldTranslate={false}
               />
             </IPayView>
           </IPayView>
