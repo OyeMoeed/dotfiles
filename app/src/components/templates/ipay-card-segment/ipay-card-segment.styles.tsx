@@ -23,7 +23,6 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
       paddingLeft: 0,
     },
     cardContainer: {
-      maxHeight: moderateScale(48, 0.3),
       marginBottom: moderateScale(3, 0.3),
     },
     flatListContainer: {
