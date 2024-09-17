@@ -437,7 +437,8 @@
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
     "AKHTAR_POINT": "Akthar Point",
-    "CARD": "Card"
+    "CARD": "Card",
+    "CARDS": "Cards"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
