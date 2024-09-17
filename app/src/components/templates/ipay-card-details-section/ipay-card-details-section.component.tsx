@@ -1,18 +1,12 @@
 import icons from '@app/assets/icons';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayActionSheet } from '@app/components/organism';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
-import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
-import { getDeviceInfo } from '@app/network/utilities';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
@@ -24,7 +18,6 @@ import {
   CardStatusIndication,
   CardStatusNumber,
   CardStatusType,
-  ToastTypes,
 } from '@app/utilities/enums.util';
 import {
   IPayCaption2Text,
@@ -35,13 +28,9 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import {
-  IPayCardDetailsSectionProps,
-  Option,
-  SheetVariants,
-  ToastVariants,
-} from './ipay-card-details-section.interface';
+import React, { useEffect, useRef, useState } from 'react';
+import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
+import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
@@ -53,7 +42,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
-  const { showToast } = useToastContext();
   const styles = cardBalanceSectionStyles(colors);
   const actionSheetRef = useRef<any>(null);
   const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
@@ -92,10 +80,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     actionSheetRef.current.show();
   };
 
-  const hideActionSheet = () => {
-    actionSheetRef.current.hide();
-  };
-
   const cardOptions: Option[] = [
     // TODO will be handle on the basis of api
     {
@@ -120,103 +104,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       onPress: onOpenOTPSheet,
     },
   ];
-
-  const sheetVariant: SheetVariants = {
-    freeze: {
-      title: localizationText.CARDS.FREEZE_CARD,
-      subtitle: localizationText.CARDS.CARD_FREEZE_INDICATION_MESSAGE,
-      option: localizationText.CARDS.FREEZE,
-      icon: icons.cardSlash1,
-    },
-    unfreeze: {
-      title: localizationText.CARDS.UNFREEZE_CARD,
-      subtitle: localizationText.CARDS.CARD_UNFREEZE_INDICATION_MESSAGE,
-      option: localizationText.CARDS.UNFREEZE,
-      icon: icons.card_tick11,
-    },
-  };
-
-  const renderToast = (toastMsg: string, type: string) => {
-    const toastVariant: ToastVariants = {
-      freeze: {
-        title: localizationText.CARDS.CARD_FREEZE_MESSAGE,
-        toastType: ToastTypes.SUCCESS,
-        icon: icons.snow_flake1,
-      },
-      unfreeze: {
-        title: localizationText.CARDS.CARD_UNFREEZE_MESSAGE,
-        toastType: ToastTypes.SUCCESS,
-        icon: icons.snow_flake1,
-      },
-    };
-    showToast({
-      title: toastVariant[type as keyof ToastVariants].title,
-      subTitle: toastMsg,
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: (
-        <IPayIcon icon={toastVariant[type as keyof ToastVariants].icon} size={24} color={colors.natural.natural0} />
-      ),
-      toastType: toastVariant[type as keyof ToastVariants].toastType,
-    });
-  };
-
-  const onFreezeCard = (type: string) => {
-    if (CardActiveStatus.FREEZE === type) {
-      actionTypeRef.current = CardActiveStatus.UNFREEZE;
-    } else {
-      actionTypeRef.current = CardActiveStatus.FREEZE;
-    }
-  };
-
-  const onFreeze = async (type: string) => {
-    const cardStatusPayload: CardStatusReq = {
-      status:
-        type.toLowerCase() === CardActiveStatus.UNFREEZE
-          ? CardStatusNumber.ActiveWithOnlinePurchase
-          : CardStatusNumber.Freezed,
-      cardIndex: currentCard?.cardIndex,
-      deviceInfo: await getDeviceInfo(),
-    };
-
-    const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      actionSheetRef.current.hide();
-      onFreezeCard(type.toLowerCase());
-      const newCards = cards.map((card: CardInterface) => {
-        if (card.cardIndex === currentCard.cardIndex) {
-          return { ...currentCard, frozen: apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed };
-        }
-        return card;
-      });
-
-      setCards(newCards);
-
-      actionTypeRef.current =
-        apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed
-          ? CardActiveStatus.UNFREEZE
-          : CardActiveStatus.FREEZE;
-      setTimeout(() => {
-        renderToast(`${currentCard.cardHeaderText} - ${currentCard.maskedCardNumber}`, type.toLowerCase());
-      }, 500);
-      return;
-    }
-
-    actionSheetRef.current.hide();
-  };
-
-  const handleFinalAction = useCallback((index: number, type: string) => {
-    switch (index) {
-      case 0:
-        onFreeze(type);
-        break;
-      case 1:
-        hideActionSheet();
-        break;
-      default:
-        break;
-    }
-  }, []);
 
   const getTransactionsData = async () => {
     const payload: TransactionsProp = {
@@ -338,20 +225,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
       />
-      <IPayActionSheet
-        ref={actionSheetRef}
-        bodyStyle={styles.actionSheetStyle}
-        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, localizationText.COMMON.CANCEL]}
-        cancelButtonIndex={1}
-        onPress={(index) => handleFinalAction(index, sheetVariant[actionTypeRef.current as keyof SheetVariants].option)}
-        showCancel
-        testID="action-sheet"
-        showIcon
-        customImage={<IPayIcon size={48} icon={sheetVariant[actionTypeRef.current as keyof SheetVariants].icon} />}
-        title={sheetVariant[actionTypeRef.current as keyof SheetVariants].title}
-        message={sheetVariant[actionTypeRef.current as keyof SheetVariants].subtitle}
-      />
+      <IPayFreezeConfirmationSheet currentCard={currentCard} cards={cards} setCards={setCards} ref={actionSheetRef} />
     </IPayView>
   );
 };
+
 export default IPayCardDetailsSection;
