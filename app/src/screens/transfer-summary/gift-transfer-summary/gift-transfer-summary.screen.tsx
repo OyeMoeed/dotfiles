@@ -95,7 +95,7 @@ const TransferSummaryScreen: React.FC = () => {
     const transferDetails = [
       {
         id: '1',
-        label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
+        label: 'TRANSFER_SUMMARY.TRANSFER_TO',
         value: item?.name,
         leftIcon: isAlinma ? images.alinmaP : icons.user_square,
         color: isAlinma ? undefined : colors.primary.primary900,
@@ -103,7 +103,7 @@ const TransferSummaryScreen: React.FC = () => {
       },
       {
         id: '2',
-        label: t('TRANSFER_SUMMARY.AMOUNT'),
+        label: 'TRANSFER_SUMMARY.AMOUNT',
         value: `${item.amount} ${t('COMMON.SAR')}`,
       },
     ];
@@ -159,7 +159,7 @@ const TransferSummaryScreen: React.FC = () => {
             <IPayFootnoteText text={item?.label} style={styles.label} />
           </IPayView>
           <IPayView style={styles.listDetails}>
-            <IPayFootnoteText text={item?.value} style={styles.detailsText} />
+            <IPayFootnoteText text={item?.value} style={styles.detailsText} shouldTranslate={false} />
             {item?.icon && (
               <IPayPressable style={styles.appleIcon} onPress={item?.onPress}>
                 <IPayIcon icon={item?.icon} style={styles.appleIcon} color={item?.color} size={scaleSize(18)} />
