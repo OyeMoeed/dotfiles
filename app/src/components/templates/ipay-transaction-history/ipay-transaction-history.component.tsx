@@ -13,14 +13,14 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayList, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionsStatus, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { isIosOS } from '@app/utilities/constants';
 import { formatSlashDateTime } from '@app/utilities/date-helper.util';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
@@ -125,22 +125,23 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const styles = transactionHistoryStyle(colors);
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const { showToast } = useToastContext();
+  const transactionRequestType = transaction?.transactionRequestType;
 
-  const initiatedWallet = transaction?.walletTransactionStatus?.toLowerCase() === 'initiated';
-  const isCountMusaned = transaction?.transactionRequestType === TransactionTypes.COUT_MUSANED ?? false;
+  const initiatedWallet = transaction?.walletTransactionStatus?.toLowerCase() === TransactionsStatus.INITIATED;
+  const isCountMusaned = transactionRequestType === TransactionTypes.COUT_MUSANED ?? false;
   const isCredit = transaction?.transactionType === TransactionOperations.CREDIT ?? false;
   const isDebit = transaction?.transactionType === TransactionOperations.DEBIT ?? false;
-  const isCountAtm = transaction?.transactionRequestType === TransactionTypes.COUT_ATM ?? false;
-  const isCountGift = transaction?.transactionRequestType === TransactionTypes.COUT_GIFT ?? false;
-  const isCardIssue = transaction?.transactionRequestType === TransactionTypes.CARD_ISSUE ?? false;
-  const isPayOneCard = transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD ?? false;
-  const isCountWu = transaction?.transactionRequestType === TransactionTypes.COUT_WU;
-  const isCountExpress = transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS ?? false;
-  const isBKFTransfer = transaction?.transactionRequestType === TransactionTypes.BKF_TRANSFER ?? false;
-  const isPayBill = transaction?.transactionRequestType === TransactionTypes.PAY_BILL ?? false;
+  const isCountAtm = transactionRequestType === TransactionTypes.COUT_ATM ?? false;
+  const isCountGift = transactionRequestType === TransactionTypes.COUT_GIFT ?? false;
+  const isCardIssue = transactionRequestType === TransactionTypes.CARD_ISSUE ?? false;
+  const isPayOneCard = transactionRequestType === TransactionTypes.PAY_ONECARD ?? false;
+  const isCountWu = transactionRequestType === TransactionTypes.COUT_WU;
+  const isCountExpress = transactionRequestType === TransactionTypes.COUT_EXPRESS ?? false;
+  const isBKFTransfer = transactionRequestType === TransactionTypes.BKF_TRANSFER ?? false;
+  const isPayBill = transactionRequestType === TransactionTypes.PAY_BILL ?? false;
 
   const showSplitButton = isPayBill || isCountExpress;
-  const isNotPayVCardVisa = transaction?.transactionRequestType !== TransactionTypes.PAY_VCARD_ECOM_VISA ?? false;
+  const isNotPayVCardVisa = transactionRequestType !== TransactionTypes.PAY_VCARD_ECOM_VISA ?? false;
 
   const transactionJustification =
     transaction?.transactionDescription &&
@@ -153,7 +154,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
       subTitle: value,
       containerStyle: isIosOS ? styles.containerToastIosStyle : styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
-      toastType: 'success',
+      toastType: ToastTypes.SUCCESS,
     });
   };
 
@@ -175,6 +176,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     setIsShareable(true);
     if (onCloseBottomSheet) onCloseBottomSheet();
   };
+
+  const renderSubHeadline = (isStatic = false, text = '') => (
+    <IPaySubHeadlineText
+      style={isStatic ? {} : styles.fullFlex}
+      regular
+      color={colors.primary.primary800}
+      numberOfLines={2}
+    >
+      {isStatic ? text : transaction?.transactionRequestTypeDesc}
+    </IPaySubHeadlineText>
+  );
 
   return (
     <IPayView testID={testID} style={styles.container}>
@@ -228,111 +240,22 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       {localizationText.TRANSACTION_HISTORY.AUTHORIZED}
                     </IPaySubHeadlineText>
                   )}
-                  {!isCardIssue && !isPayOneCard && !isCountMusaned && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {isCardIssue && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {transaction?.transactionRequestType === TransactionTypes.CARD_VCB_REPLACE && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK && isCredit && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {transaction?.transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK_REV && isDebit && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {transaction?.transactionRequestType === TransactionTypes.CIN_CASH_BACK && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND && isCredit && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {transaction?.transactionRequestType === TransactionTypes.CARD_VCB_ISSUE && isDebit && (
-                    <IPaySubHeadlineText
-                      style={styles.fullFlex}
-                      regular
-                      color={colors.primary.primary800}
-                      numberOfLines={2}
-                    >
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
-                  {isCountMusaned && isCredit && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {localizationText.TRANSACTION_HISTORY.ONGOING_SALARY_TRANSFER}
-                    </IPaySubHeadlineText>
-                  )}
-                  {isCountMusaned && isDebit && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {localizationText.TRANSACTION_HISTORY.OUTGOING_SALARY_TRANSFER}
-                    </IPaySubHeadlineText>
-                  )}
-                  {isPayOneCard && isDebit && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {transaction?.transactionRequestTypeDesc}
-                    </IPaySubHeadlineText>
-                  )}
+                  {!isCardIssue && !isPayOneCard && !isCountMusaned && renderSubHeadline()}
+                  {isCardIssue && renderSubHeadline()}
+                  {transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV && renderSubHeadline()}
+                  {transactionRequestType === TransactionTypes.CARD_VCB_REPLACE && renderSubHeadline()}
+                  {transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK && isCredit && renderSubHeadline()}
+                  {transactionRequestType === TransactionTypes.CIN_VISA_CASHBACK_REV && isDebit && renderSubHeadline()}
+                  {transactionRequestType === TransactionTypes.CIN_CASH_BACK && renderSubHeadline()}
+                  {transactionRequestType === TransactionTypes.PAY_VCARD_REFUND && isCredit && renderSubHeadline()}
+                  {transactionRequestType === TransactionTypes.CARD_VCB_ISSUE && isDebit && renderSubHeadline()}
+                  {isCountMusaned &&
+                    isCredit &&
+                    renderSubHeadline(true, localizationText.TRANSACTION_HISTORY.ONGOING_SALARY_TRANSFER)}
+                  {isCountMusaned &&
+                    isDebit &&
+                    renderSubHeadline(true, localizationText.TRANSACTION_HISTORY.OUTGOING_SALARY_TRANSFER)}
+                  {isPayOneCard && isDebit && renderSubHeadline(true, transaction?.transactionRequestTypeDesc)}
                 </IPayView>
               )}
 
