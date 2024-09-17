@@ -437,7 +437,8 @@
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
     "AKHTAR_POINT": "Akthar Point",
-    "CARD": "Card"
+    "CARD": "Card",
+    "CARDS": "Cards"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
@@ -582,7 +583,7 @@
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
     "CONTACT_NAME": "Contact Name",
-    "NO_RESULTS_FOUND":"No Results Found",
+    "NO_RESULTS_FOUND": "No Results Found",
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
     "CONTACT_LIMIT": "Contacts limit reached"
   },
@@ -720,8 +721,8 @@
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
-    "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
-    "DEBIT_CARD": "Card - *** 1111",
+    "CARD_UNFREEZE_MESSAGE": "The card has been unfrozen",
+    "CARD": "Card",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
@@ -841,7 +842,7 @@
     "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
     "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number",
-    "SCAN_UNSUCCESSFUL":"Scan Unsuccessful"
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful"
   },
   "LOCAL_TRANSFER": {
     "AMOUNT": "Amount",

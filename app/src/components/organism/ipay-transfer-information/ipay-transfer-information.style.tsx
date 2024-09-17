@@ -39,6 +39,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       fontSize: FONT_SIZE_20,
       lineHeight: moderateScale(30),
       minWidth: moderateScale(45),
+      textAlign: 'right',
     },
     inputContainer: {
       alignItems: 'center',

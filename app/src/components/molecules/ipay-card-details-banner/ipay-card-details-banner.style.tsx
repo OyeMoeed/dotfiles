@@ -49,6 +49,7 @@ const styles = createStyleSheet({
     flex: 1,
     flexDirection: 'row',
     gap: scaleSize(8),
+    alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: scaleSize(16),
     paddingHorizontal: moderateScale(24),

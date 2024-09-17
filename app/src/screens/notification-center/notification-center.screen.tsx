@@ -190,7 +190,7 @@ const NotificationCenterScreen: React.FC = () => {
   ): Promise<{ data: Notification[]; hasMore: boolean }> => {
     const payload = {
       walletNumber: walletInfo.walletNumber,
-      currentPage: page,
+      pageNumber: page,
       pageSize,
     };
     try {
@@ -236,7 +236,7 @@ const NotificationCenterScreen: React.FC = () => {
 
   // Fetch notifications on component mount with page 1 and page size 10
   useEffect(() => {
-    getNotifications(1, 10);
+    getNotifications(1, 20);
   }, []);
 
   return (
