@@ -26,7 +26,7 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
     });
   };
 
-  const dummyCardDetails: FieldKeyMappingProps = {
+  const cardDetailsFields: FieldKeyMappingProps = {
     [CardDetailsKeys.CARD_TYPE]: cardDetails?.cardType,
     [CardDetailsKeys.CARD_NUMBER]: cardDetails?.cardNumber,
     [CardDetailsKeys.CARD_HOLDER_NAME]: cardDetails?.cardHolderName,
@@ -47,17 +47,17 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
     renderToast(value);
   };
 
-  const renderItem = (field: string) => (
-    <IPayView style={styles.cardStyle}>
+  const renderItem = (field: string, index: number) => (
+    <IPayView style={styles.cardStyle} key={index}>
       <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
         {fieldKeyMapping[field]}
       </IPayFootnoteText>
       <IPayView style={styles.actionWrapper}>
         <IPaySubHeadlineText regular color={colors.primary.primary800}>
-          {dummyCardDetails[field]}
+          {cardDetailsFields[field]}
         </IPaySubHeadlineText>
         {(field === CardDetailsKeys.CARD_NUMBER || field === CardDetailsKeys.CARD_HOLDER_NAME) && (
-          <IPayPressable onPress={() => copyRefNo(dummyCardDetails[field])}>
+          <IPayPressable onPress={() => copyRefNo(cardDetailsFields[field])}>
             <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
           </IPayPressable>
         )}
@@ -65,7 +65,11 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
     </IPayView>
   );
 
-  return <IPayView testID="copy-button">{Object.keys(dummyCardDetails).map(renderItem)}</IPayView>;
+  return (
+    <IPayView testID="copy-button">
+      {Object.keys(cardDetailsFields).map((field, index) => renderItem(field, index))}
+    </IPayView>
+  );
 };
 
 export default IPayCardDetails;
