@@ -185,7 +185,7 @@ const useConstantData = () => {
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
       send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
-      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      cancellation_date: new Date('2024-07-01T12:00:00+05:00').toString(),
     },
     {
       id: '2',
@@ -209,7 +209,7 @@ const useConstantData = () => {
       amount: '250',
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
-      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
       ref_number: 'FTA35346',
     },
     {
@@ -326,23 +326,23 @@ const useConstantData = () => {
       title: 'Ahmed Mohamed',
       status: MoneyRequestStatus.CANCEL,
       type: TransactionOperations.DEBIT,
-      receiver_mobile_number: '0503340494',
+      sender_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
-      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
       request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      cancellation_date: new Date('2024-07-01T12:00:00+05:00').toString(),
     },
     {
       id: '2',
       title: 'mahmoud Abdullah',
       status: MoneyRequestStatus.PAID,
       type: TransactionOperations.DEBIT,
-      receiver_mobile_number: '0503340494',
+      sender_mobile_number: '0503340494',
       amount: '460',
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
-      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
       payment_date: new Date('2024-07-01T12:00:00+05:00').toString(),
       ref_number: 'FTA35346',
     },
@@ -351,25 +351,23 @@ const useConstantData = () => {
       title: 'Esraa Ahmed',
       status: MoneyRequestStatus.PENDING,
       type: TransactionOperations.DEBIT,
-      receiver_mobile_number: '0503340494',
+      sender_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
       request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
-      ref_number: 'FTA35346',
     },
     {
       id: '4',
       title: 'Mohamed Ali',
       status: MoneyRequestStatus.REJECTED,
       type: TransactionOperations.DEBIT,
-      receiver_mobile_number: '0503340494',
+      sender_mobile_number: '0503340494',
       amount: '250',
       dates: formattedDate,
       note: 'Hey Dear, I would like to send this amazing request',
-      send_date: new Date('2024-07-01T12:00:00+05:00').toString(),
+      request_date: new Date('2024-07-01T12:00:00+05:00').toString(),
       rejection_date: new Date('2024-07-01T12:00:00+05:00').toString(),
-      ref_number: 'FTA35346',
     },
   ];
 
@@ -491,6 +489,12 @@ const useConstantData = () => {
       id: '4',
       label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
       value: '14/03/2024 - 15:30',
+    },
+    {
+      id: '5',
+      label: localizationText.TRAFFIC_VIOLATION.REF_NUMBER,
+      value: 'FTA35346',
+      icon: icons.copy,
     },
   ];
 
@@ -1051,7 +1055,13 @@ const useConstantData = () => {
   ];
 
   const orderDetails = [
-    { id: '1', label: localizationText.ORDER_SCREEN.COUPON_CODE, value: 'FTA35346', icon: icons.copy },
+    {
+      id: '1',
+      label: localizationText.ORDER_SCREEN.COUPON_CODE,
+      value: 'FTA35346',
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
     { id: '2', label: localizationText.ORDER_SCREEN.PRODUCT_NAME, value: 'Subscribe on Spotify' },
     {
       id: '3',
@@ -1068,6 +1078,16 @@ const useConstantData = () => {
       id: '3',
       label: localizationText.ORDER_SCREEN.VAT,
       value: `00.2 ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '4',
+      label: localizationText.ORDER_SCREEN.TOTAL_AMOUNT,
+      value: `250.00 SAR ${localizationText.COMMON.SAR}`,
+    },
+    {
+      id: '5',
+      label: localizationText.ORDER_SCREEN.PURCHASE_DATE,
+      value: '14/03/2024 - 15:30',
     },
   ];
   const allOrders = [
@@ -1186,7 +1206,7 @@ const useConstantData = () => {
     },
     {
       id: '4',
-      label: localizationText.COMMON.DUE_DATE,
+      label: localizationText.COMMON.DATE,
       value: '14/03/2024',
     },
     {

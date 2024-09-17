@@ -148,6 +148,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0 && selectedTab === BillsStatusTypes.INACTIVE_BILLS) {
+      sadadActionSheetRef?.current?.hide();
       navigate(ScreenNames.BILL_ACTIVATION);
       return;
     }

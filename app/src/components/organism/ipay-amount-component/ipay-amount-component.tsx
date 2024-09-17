@@ -188,7 +188,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingIncomingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingIncomingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
-
+   
     if (monthlyRemaining === 0) {
       setIsTopUpNextEnable(false);
       setChipValue(localizationText.TOP_UP.LIMIT_REACHED);

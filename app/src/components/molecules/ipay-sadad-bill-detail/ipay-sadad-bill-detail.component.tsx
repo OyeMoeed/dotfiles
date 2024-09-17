@@ -52,8 +52,9 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
         containerStyle={styles.inputContainerStyle}
         showRightIcon
         rightIcon={companyLeftImage}
-        customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+        customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
         onClearInput={onCompanyAction}
+        selection={{ start: 0 }}
       />
       <IPayAnimatedTextInput
         testID="service-input"
@@ -65,7 +66,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
         customIcon={
           <IPayIcon
             icon={icons.arrow_circle_down}
-            size={18}
+            size={24}
             color={isCompanyValue ? colors.primary.primary500 : colors.natural.natural500}
           />
         }

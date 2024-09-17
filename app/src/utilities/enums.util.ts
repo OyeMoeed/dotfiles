@@ -165,7 +165,7 @@ enum CardStatusNumber {
   ActiveWithOnlinePurchase = '100',
   Stolen = '700',
   Freezed = '850',
-  Expired = '400'
+  Expired = '400',
 }
 
 enum CardTypesCodes {
@@ -337,6 +337,7 @@ export {
   CardActiveStatus,
   CardCategories,
   CardDetailsSegment,
+  CardMapping,
   CardOptions,
   CardStatusIndication,
   CardStatusNumber,
@@ -371,5 +372,4 @@ export {
   alertVariant,
   buttonVariants,
   spinnerVariant,
-  CardMapping,
 };

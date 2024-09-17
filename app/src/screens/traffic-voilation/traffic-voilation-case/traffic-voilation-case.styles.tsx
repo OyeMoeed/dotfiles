@@ -15,7 +15,7 @@ const trafficPaymentStyles = (themeColors: typeof colors) =>
     },
     contentContainer: {
       marginTop: verticalScale(18),
-      gap: moderateScale(16),
+      gap: moderateScale(32),
     },
     searchInputStyle: {
       backgroundColor: themeColors.natural.natural0,

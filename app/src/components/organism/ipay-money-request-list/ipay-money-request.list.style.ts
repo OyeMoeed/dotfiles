@@ -9,7 +9,7 @@ const moneyRequestListStyles = (theme: typeof colors) =>
       padding: moderateScale(20),
       flexDirection: 'row',
       justifyContent: 'space-between',
-      borderRadius: moderateScale(20),
+      borderRadius: moderateScale(28),
     },
 
     iconBackground: {
