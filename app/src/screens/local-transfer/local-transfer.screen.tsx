@@ -383,6 +383,7 @@ const LocalTransferScreen: React.FC = () => {
             hanldePageNavigation={makeTransfer}
             activateInternationalBeneficiary={onPressActivateBeneficiary}
             guideToReceiveCall={guideToReceiveCall}
+            makeTransfer={false}
           />
         );
       case ActivateViewTypes.CALL_ALINMA:
