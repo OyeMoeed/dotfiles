@@ -19,7 +19,7 @@ import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
-import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
+import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { ItemProps } from './moi-payment-success.interface';
@@ -63,10 +63,10 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
 
   const getDataToRender = () => {
     // Step 1: Remove the object with id "1"
-    const updatedDetails = moiPaymentDetailes.filter((item: { id: string }) => item.id !== '1');
+    const updatedDetails = moiPaymentDetailes?.filter((item: { id: string }) => item.id !== '1');
 
     // Step 2: Update ids to maintain sequential order
-    const reorderedDetails = updatedDetails.map((item: ItemProps, index: number) => ({
+    const reorderedDetails = updatedDetails?.map((item: ItemProps, index: number) => ({
       ...item,
       id: (index + 1).toString(),
     }));

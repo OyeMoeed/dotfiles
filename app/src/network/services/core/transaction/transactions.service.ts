@@ -112,35 +112,23 @@ const prepareResetCardPinCode = async (payload: resetPinCodeProp): Promise<any> 
 };
 
 const prepareShowCardDetails = async (payload: prepareShowDetailsProp): Promise<any> => {
-  try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.PREPARE_SHOW_DETAILS(payload?.walletNumber),
-      method: requestType.POST,
-      payload: payload?.body,
-    });
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: CORE_URLS.PREPARE_SHOW_DETAILS(payload?.walletNumber),
+    method: requestType.POST,
+    payload: payload?.body,
+  });
+
+  return apiResponse;
 };
 
 const otpGetCardDetails = async (payload: getCardDetailsProp): Promise<any> => {
-  try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.OTP_GET_CARD_DETAILS(payload?.walletNumber),
-      method: requestType.POST,
-      payload: payload?.body,
-    });
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: CORE_URLS.OTP_GET_CARD_DETAILS(payload?.walletNumber),
+    method: requestType.POST,
+    payload: payload?.body,
+  });
+
+  return apiResponse;
 };
 
 const otpRenewCard = async (payload: renewCardProp): Promise<any> => {

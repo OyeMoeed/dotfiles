@@ -23,9 +23,9 @@ const useIdRenewal = (state: IdRenewalState, colors: any) => {
       case IdRenewalState.ABOUT_TO_EXPIRE:
         return {
           title: localizationText.ID_RENEWAL.ID_ABOUT_EXPIRE,
+          secondaryButtonText: localizationText.ID_RENEWAL.DONT_SHOW,
           subtitle: localizationText.ID_RENEWAL.ID_UPDATION_DES,
           primaryButtonText: localizationText.ID_RENEWAL.REMIND_ME_LATER,
-          secondaryButtonText: localizationText.ID_RENEWAL.DONT_SHOW,
           icon: <IPayIcon icon={icons.danger_light} size={64} />,
           buttonIcon: icons.clock_1,
         };

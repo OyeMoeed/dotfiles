@@ -1,7 +1,8 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -11,19 +12,19 @@ import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import { PaymentType } from '@app/utilities';
-import { useRoute } from '@react-navigation/core';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
-const MoiPaymentConfirmationScreen: React.FC = () => {
+const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
+  const { moiBillData } = route.params;
   const styles = moiPaymentConfirmationStyls();
   const localizationText = useLocalization();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const { showToast } = useToastContext();
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
-  const route = useRoute();
   const { billData } = route?.params || {};
 
   const {
@@ -40,8 +41,19 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
   const { otpConfig } = useConstantData();
 
   const helpCenterRef = useRef<any>(null);
+  const [otpRef, setOtpRef] = useState<string>('');
+
   // temporary TODO
-  const totalAmount = '500';
+  // const totalAmount = '500';
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const onCloseBottomSheet = () => {
     otpBottomSheetRef?.current?.close();
@@ -64,6 +76,13 @@ const MoiPaymentConfirmationScreen: React.FC = () => {
       otpBottomSheetRef?.current?.present();
     }
   };
+
+  const totalAmount = useMemo(
+    () =>
+      moiBillData?.find((item: { label: string }) => item.label === localizationText.BILL_PAYMENTS.DUE_AMOUNT)
+        ?.value.split(' ')[0] || null,
+    [moiBillData],
+  );
 
   return (
     <IPaySafeAreaView>

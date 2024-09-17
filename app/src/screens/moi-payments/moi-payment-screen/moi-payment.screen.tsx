@@ -50,9 +50,10 @@ const MoiPaymentScreen: React.FC = () => {
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [beneficiaryID, setBeneficiaryID] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const { myBeneficiaryId } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
   const [selectedBiller, setSelectedBiller] = useState<string>();
   const [selectedServiceType, setSelectedServiceType] = useState<string>();
@@ -201,7 +202,7 @@ const MoiPaymentScreen: React.FC = () => {
         const checkBtnDisabled = () => {
           setBtnEnabled(() =>
             Object.keys(MoiPaymentFormFields)
-              .filter((key) => key !== 'MY_ID_CHECK')
+              .filter((key) => key !== 'MY_ID_CHECK' && key !== 'BENEFICIARY_ID')
               .some((key) => !getValues(MoiPaymentFormFields[key])),
           );
         };
@@ -268,6 +269,7 @@ const MoiPaymentScreen: React.FC = () => {
         };
 
         const onChangeText = (text: string) => {
+          setBeneficiaryID(text);
           if (text.length > 0) {
             setBtnEnabled(false);
           } else {
