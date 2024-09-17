@@ -1,5 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isAndroidOS } from '@app/utilities/constants';
+import { Platform } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const otpVerificationStyles = () =>
@@ -52,7 +53,10 @@ const otpVerificationStyles = () =>
       bottom: verticalScale(24),
     },
     needHelpBtn: {
-      marginTop: verticalScale(14),
+      ...Platform.select({
+        android: { marginTop: moderateScale(24) },
+        ios: { marginTop: moderateScale(24) },
+      }),
     },
   });
 

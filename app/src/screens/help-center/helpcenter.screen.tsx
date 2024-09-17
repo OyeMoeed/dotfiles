@@ -62,7 +62,7 @@ const HelpCenter: React.FC = () => {
           {
             id: 1,
             title: '',
-            data: apiResponse?.response?.faqs.map((question) => ({
+            data: apiResponse?.response?.faq.map((question) => ({
               id: 1,
               question: question.question,
               answer: question.answer,
