@@ -35,6 +35,8 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
   inputStyles,
   defaultValue = '0',
   balanceType = 'Outgoing',
+  channel,
+  onSelectCard,
 }) => {
   const { colors } = useTheme();
   const styles = ipayRemainingAccountBalanceStyles(colors);
@@ -111,8 +113,10 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
             />
           )}
           <IPayQuickActions
+            channel={channel}
             payChannelType={payChannelType}
             setTopUpAmount={setTopUpAmount}
+            onSelectCard={onSelectCard}
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
           />
         </>

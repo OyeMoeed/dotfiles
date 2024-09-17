@@ -398,6 +398,8 @@
     "TOPUP_SUCCESS": "Top-up Successful",
     "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
+    "CARDS_TOPUP_TRX_TYPE": "Transaction type",
+    "CARDS_TOPUP_TRX_TYPE_VALUE": "Adding balance from card",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
     "REF_NUMBER": "Ref. Number",
@@ -437,7 +439,8 @@
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
     "AKHTAR_POINT": "Akthar Point",
-    "CARD": "Card"
+    "CARD": "Card",
+    "CARDS": "Cards"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
