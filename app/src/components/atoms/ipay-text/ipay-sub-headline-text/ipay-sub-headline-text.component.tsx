@@ -17,7 +17,7 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   numberOfLines,
   children,
   color,
-  shouldTranslate,
+  shouldTranslate = true,
 }: IPaySubHeadlineTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (

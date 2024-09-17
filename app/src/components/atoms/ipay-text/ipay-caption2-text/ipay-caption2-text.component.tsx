@@ -17,7 +17,7 @@ const IPayCaption2Text: React.FC<IPayCaption2TextProps> = ({
   numberOfLines,
   children,
   color,
-  shouldTranslate,
+  shouldTranslate = true,
 }: IPayCaption2TextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (

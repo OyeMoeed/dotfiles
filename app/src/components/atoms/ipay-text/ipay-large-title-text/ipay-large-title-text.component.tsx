@@ -16,12 +16,14 @@ const IPayLargeTitleText: React.FC<IPayLargeTitleTextProps> = ({
   style,
   numberOfLines,
   children,
+  shouldTranslate = true,
 }: IPayLargeTitleTextProps): JSX.Element => (
   <IPayText
     testID={`${testID}-large-text`}
     fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
     numberOfLines={numberOfLines}
     style={[styles.textStyle, style]}
+    shouldTranslate={shouldTranslate}
   >
     {text || children}
   </IPayText>

@@ -17,7 +17,7 @@ const IPayTitle2Text: React.FC<IPayTitle2TextProps> = ({
   numberOfLines,
   children,
   color,
-  shouldTranslate,
+  shouldTranslate = true,
 }: IPayTitle2TextProps) => {
   const textColor = { color };
   return (
