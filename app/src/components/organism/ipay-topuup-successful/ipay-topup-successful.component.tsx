@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { successIconAnimation } from '@app/assets/lottie';
+import { penddingSuccessIconAnimation, successIconAnimation } from '@app/assets/lottie';
 import { MasterCard } from '@app/assets/svgs';
 import {
   IPayFlatlist,
@@ -19,10 +19,10 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
-import { buttonVariants, PayChannel, TopupStatus } from '@app/utilities/enums.util';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { copyText, dateTimeFormat, formatDateAndTime } from '@app/utilities';
+import { TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
+import React, { useState } from 'react';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 import useData from './use-data';
@@ -42,7 +42,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const { showToast } = useToastContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
-
+  const penddingGradientColors = [colors.critical.critical500, colors.backgrounds.yellowish];
   const renderToast = () => {
     showToast({
       title: topupChannel === PayChannel.ORDER ? t('ORDER_SCREEN.COPY') : t('TOP_UP.COPIED'),
@@ -52,6 +52,29 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       containerStyle: topupChannel === PayChannel.ORDER ? styles.orderToast : styles.toastContainer,
     });
   };
+  const [cardPayDetails] = useState<any>([
+    {
+      id: '1',
+      label: t('TOP_UP.TOPUP_TYPE'),
+      value: t('TOP_UP.CARDS'),
+      icon: icons.cards,
+      color: colors.primary.primary800,
+    },
+    {
+      id: '3',
+      label: t('TOP_UP.REF_NUMBER'),
+      value: summaryData?.response?.transactionId,
+      detailsText: summaryData?.response?.transactionId,
+      icon: icons.copy,
+      color: colors.primary.primary500,
+    },
+    {
+      id: '4',
+      label: t('TOP_UP.TOPUP_DATE'),
+      value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime),
+      icon: null,
+    },
+  ]);
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
@@ -93,7 +116,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const renderWallerPayItem = ({ item }: { item: PayData }) => {
-    const { isAlinma, icon, detailsText, leftIcon, label, value, color } = item;
+    const { isAlinma, icon, leftIcon, label, value, color } = item;
     const renderLeftIcon = () => {
       if (!leftIcon) {
         return null;
@@ -126,7 +149,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                 style={styles.copyIcon}
                 onPress={() => {
                   if (icon === icons.copy) {
-                    handleClickOnCopy(3, detailsText);
+                    handleClickOnCopy(3, value);
                   }
                 }}
               >
@@ -180,6 +203,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const renderDetails = () => {
     const isWalletOrRequestAccept = topupChannel === PayChannel.WALLET || topupChannel === PayChannel.APPLE;
+    const isCard = topupChannel === PayChannel.CARD ? cardPayDetails : getDetails();
+    const data = topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : isCard;
 
     return isWalletOrRequestAccept ? (
       <IPayView>
@@ -195,7 +220,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         <IPayFlatlist
           style={styles.detailesFlex}
           scrollEnabled
-          data={topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : getDetails()}
+          data={data}
           renderItem={renderNonAlinmaPayItem}
           showsVerticalScrollIndicator={false}
         />
@@ -314,11 +339,16 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           >
             {completionStatus === TopupStatus.SUCCESS && (
               <IPayView>
-                <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+                <IPayLottieAnimation
+                  source={
+                    summaryData?.response.pmtResultCd === 'P' ? penddingSuccessIconAnimation : successIconAnimation
+                  }
+                  style={styles.successIcon}
+                />
                 <IPayView style={styles.linearGradientTextView}>
                   <IPayGradientText
                     text={summaryData?.response.pmtResultCd === 'P' ? 'TOP_UP.PENDING_PAYMENT' : renderText()}
-                    gradientColors={gradientColors}
+                    gradientColors={summaryData?.response.pmtResultCd === 'P' ? penddingGradientColors : gradientColors}
                     style={styles.gradientTextSvg}
                     fontSize={styles.linearGradientText.fontSize}
                     fontFamily={styles.linearGradientText.fontFamily}

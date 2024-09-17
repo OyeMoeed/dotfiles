@@ -1,16 +1,14 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayCarousel, IPayNoResult, useToastContext } from '@app/components/molecules';
+import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
-import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
-import { IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
-import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -44,7 +42,6 @@ const SCREEN_WIDTH = Dimensions.get('screen').width;
 const CardsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { showToast } = useToastContext();
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
@@ -58,8 +55,9 @@ const CardsScreen: React.FC = () => {
 
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
-  const [, setAPIError] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
+  const [isCardIssueSheetVisible, setIsCardIssueSheetVisible] = useState(false);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -71,23 +69,10 @@ const CardsScreen: React.FC = () => {
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
-  const renderToast = ({ title = '', subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
-    showToast(
-      {
-        title,
-        subTitle,
-        toastType,
-        isShowRightIcon: false,
-        containerStyle: styles.toastStyle,
-        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
-      },
-      displayTime,
-    );
-  };
-
   const openCardSheet = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
+      setIsCardIssueSheetVisible(true);
       cardSheetRef.current.present();
     }
   };
@@ -126,7 +111,7 @@ const CardsScreen: React.FC = () => {
       },
     };
     const apiResponse: any = await prepareShowCardDetails(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       setOtpRef(apiResponse?.response?.otpRef as string);
       if (showOtpSheet) {
         setOtpSheetVisible(true);
@@ -232,29 +217,22 @@ const CardsScreen: React.FC = () => {
   };
 
   const getCardDetails = async () => {
-    try {
-      const payload: getCardDetailsProp = {
-        walletNumber,
-        body: {
-          cardIndex: currentCard?.cardIndex,
-          otp,
-          otpRef,
-          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-        },
-      };
-      const apiResponse: any = await otpGetCardDetails(payload);
-      if (apiResponse.status.type === 'SUCCESS') {
-        otpVerificationRef?.current?.resetInterval();
-        setOtpSheetVisible(false);
-        prepareCardInfoData(apiResponse?.response);
-        cardDetailsSheetRef?.current?.present();
-      } else {
-        setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
-        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
+    const payload: getCardDetailsProp = {
+      walletNumber,
+      body: {
+        cardIndex: currentCard?.cardIndex,
+        otp,
+        otpRef,
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      },
+    };
+    const apiResponse: any = await otpGetCardDetails(payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      otpVerificationRef?.current?.resetInterval();
+      setOtpSheetVisible(false);
+      prepareCardInfoData(apiResponse?.response);
+      setIsCardDetailsSheetVisible(true);
+      cardDetailsSheetRef?.current?.present();
     }
   };
 
@@ -263,7 +241,6 @@ const CardsScreen: React.FC = () => {
       setOtpError(true);
       otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
-      // resetPassCode();
       getCardDetails();
     }
   };
@@ -379,6 +356,7 @@ const CardsScreen: React.FC = () => {
       </IPayPortalBottomSheet>
 
       <IPayPortalBottomSheet
+        isVisible={isCardDetailsSheetVisible}
         ref={cardDetailsSheetRef}
         heading="CARDS.CARD_DETAILS"
         customSnapPoint={['50%', '60%']}
@@ -392,10 +370,11 @@ const CardsScreen: React.FC = () => {
       >
         <IPayCardDetails cardDetails={cardDetails} />
       </IPayPortalBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
+        isVisible={isCardIssueSheetVisible}
         heading="CARD_ISSUE.ISSUE_NEW_CARD"
         onCloseBottomSheet={closeCardSheet}
-        customSnapPoint={SNAP_POINTS.MID_MEDUIM}
+        customSnapPoint={['55%', '60%']}
         ref={cardSheetRef}
         enablePanDownToClose
         simpleHeader
@@ -408,7 +387,7 @@ const CardsScreen: React.FC = () => {
           selectedCard={selectedCard}
           onNextPress={handleNext}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

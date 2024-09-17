@@ -26,13 +26,13 @@ import {
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { useTranslation } from 'react-i18next';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
+import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -52,6 +52,8 @@ const CardOptionsScreen: React.FC = () => {
     currentCard,
     currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
   } = route.params;
+
+  const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
@@ -95,7 +97,7 @@ const CardOptionsScreen: React.FC = () => {
     initOnlinePurchase();
   }, []);
 
-  const getToastSubTitle = () => `${cardHeaderText} - ${maskedCardNumber}`;
+  const getToastSubTitle = () => `${cardHeaderText}  - ${maskedCardNumber}`;
 
   const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
@@ -314,8 +316,6 @@ const CardOptionsScreen: React.FC = () => {
       setOtp('');
     }
   }, [isOtpSheetVisible]);
-
-  const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
   return (
     <IPaySafeAreaView style={styles.container}>

@@ -102,7 +102,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
         </IPayView>
       </IPayView>
       <IPayView style={styles.leftContainer}>
-        <IPayFootnoteText style={isNewCard && styles.newText} text={text} color={color} />
+        <IPayFootnoteText style={[isNewCard && styles.newText, styles.statusText]} text={text} color={color} />
         {isReceivedCardExpired || isNewCard ? (
           <IPayView />
         ) : (

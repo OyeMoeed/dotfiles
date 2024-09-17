@@ -1,3 +1,5 @@
+import { TransferInfoData } from '@app/components/organism/ipay-transfer-information/ipay-transfer-information.interface';
+
 interface SuccessItem {
   id: number;
   title: string;
@@ -20,4 +22,5 @@ export interface TransferDetails {
   instantTransferType: string;
   note: string;
   refNumber: string;
+  bankDetails?: TransferInfoData;
 }

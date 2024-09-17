@@ -188,6 +188,7 @@ const IPayIdRenewalSheet: React.FC = () => {
         simpleHeader
         simpleBar
         bold
+        onCancel={closeOTPSheet}
         cancelBnt={renewId}
       >
         {renewId ? (
@@ -231,7 +232,7 @@ const IPayIdRenewalSheet: React.FC = () => {
               onPress={closeBottomSheet}
               btnStyle={styles.topStyles}
               btnType={buttonVariants.LINK_BUTTON}
-              btnText={secondaryButtonText}
+              btnText={isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.secondaryButtonText : secondaryButtonText}
               textStyle={styles.skipTextStyle}
               btnIconsDisabled
             />

@@ -243,23 +243,16 @@ const TransferSummaryScreen: React.FC = () => {
         },
       };
       const apiResponse = await walletToWalletTransferConfirm(walletInfo.walletNumber, payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setOtpSheetVisible(false);
-          navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
-            transferDetails: {
-              formData: transfersDetails.formInstances,
-              apiData: apiResponse?.response?.transferRequestsResult,
-              selectedCard: giftDetails?.selectedCard,
-            },
-            totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
-          });
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        default:
-          break;
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        setOtpSheetVisible(false);
+        navigate(ScreenNames.GIFT_TRANSFER_SUCCESS_SCREEN, {
+          transferDetails: {
+            formData: transfersDetails.formInstances,
+            apiData: apiResponse?.response?.transferRequestsResult,
+            selectedCard: giftDetails?.selectedCard,
+          },
+          totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
+        });
       }
       setIsLoading(false);
     } catch (error) {

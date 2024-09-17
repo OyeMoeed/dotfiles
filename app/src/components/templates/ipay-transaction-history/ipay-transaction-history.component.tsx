@@ -131,7 +131,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const isPayOneCard = transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD;
   const isCountWu = transaction?.transactionRequestType === TransactionTypes.COUT_WU;
   const isCountExpress = transaction?.transactionRequestType === TransactionTypes.COUT_EXPRESS;
-  const isBKFTransfer = transaction.transactionRequestType === TransactionTypes.BKF_TRANSFER;
+  const isBKFTransfer = transaction?.transactionRequestType === TransactionTypes.BKF_TRANSFER;
   const isPayBill = transaction?.transactionRequestType === TransactionTypes.PAY_BILL;
 
   const showSplitButton = isPayBill || isCountExpress;

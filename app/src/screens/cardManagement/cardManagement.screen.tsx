@@ -3,12 +3,20 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import colors from '@app/styles/colors.const';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { PayChannel, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import cardManagementStyles from './cardManagement.style';
 
 const CardManagementScreen: React.FC = () => {
   const styles = cardManagementStyles();
+
+  const onAddCard = () => {
+    navigate(ScreenNames.TOP_UP, {
+      topupChannel: PayChannel.CARD,
+    });
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -29,7 +37,7 @@ const CardManagementScreen: React.FC = () => {
           medium
           btnText="MENU.ADD_CARD"
           hasRightIcon
-          onPress={() => {}}
+          onPress={onAddCard}
           btnStyle={styles.sendButton}
           leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
         />

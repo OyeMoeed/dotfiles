@@ -46,7 +46,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
     });
   };
 
-  const handleClickOnCopy = (step: number, textToCopy: string) => {
+  const handleClickOnCopy = (textToCopy: string) => {
     copyText(textToCopy);
     renderToast();
   };
@@ -107,7 +107,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
   });
 
   const renderWallerPayItem = ({ item, index }: { item: PayData; index: number }) => {
-    const { isAlinma, icon, detailsText, leftIcon, label, value, color } = item;
+    const { isAlinma, icon, leftIcon, label, value, color } = item;
     const renderLeftIcon = () => {
       if (!leftIcon) {
         return null;
@@ -159,7 +159,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
                   style={styles.copyIcon}
                   onPress={() => {
                     if (icon === icons.copy) {
-                      handleClickOnCopy(3, detailsText);
+                      handleClickOnCopy(modifyValue);
                     }
                   }}
                 >
