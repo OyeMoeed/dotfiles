@@ -5,7 +5,7 @@ interface LocationProps {
 
 interface AtmDetailsProps {
   type: string;
-  city: string;
+  city?: string;
   title: string;
   address: string;
   distance: string;
