@@ -65,7 +65,8 @@ const CORE_URLS = {
   GET_NAFATH_INQUIRY: (channelId?: string, requestId?: string) =>
     `api/nafath-authentication/v1/iam/${channelId}/requests/${requestId}`,
   UPDATE_WALLET_TIER: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/upgrade`,
-  GET_NOTIFICATIONS: (walletNumber?: string) => `core-management/v1/${walletNumber}/retainedMessages`,
+  GET_NOTIFICATIONS: (walletNumber?: string, pageNumber?: number, pageSize?: number) =>
+    `core-management/v1/${walletNumber}/retainedMessages?offset=${pageNumber}&max-records=${pageSize}`,
   MARK_SINGLE_NOTIFICATION_AS_READ: (walletNumber?: string) =>
     `core-management/v1/${walletNumber}/retainedMessages/read`,
   DELETE_SINGLE_NOTIFICATION: (walletNumber: string, messageId: string) =>
