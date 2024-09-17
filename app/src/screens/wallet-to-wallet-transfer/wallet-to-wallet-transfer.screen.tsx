@@ -62,19 +62,34 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
 
-  const handleSubmitTransfer = () => {
-    switch (from) {
-      case TRANSFERTYPE.SEND_MONEY:
+  const getW2WActiveFriends = async () => {
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
+    };
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
         navigate(ScreenNames.SEND_MONEY_FORM, {
+          activeFriends: apiResponse.response?.friends,
           selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
           showReason: true,
         });
+      }
+    }
+  };
+
+  const handleSubmitTransfer = () => {
+    switch (from) {
+      case TRANSFERTYPE.SEND_MONEY:
+        getW2WActiveFriends();
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
