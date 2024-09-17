@@ -42,9 +42,10 @@ const MoiPaymentScreen: React.FC = () => {
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
+  const [beneficiaryID, setBeneficiaryID] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const { myBeneficiaryId } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
@@ -151,7 +152,7 @@ const MoiPaymentScreen: React.FC = () => {
         const checkBtnDisabled = () => {
           setBtnEnabled(() =>
             Object.keys(MoiPaymentFormFields)
-              .filter((key) => key !== 'MY_ID_CHECK')
+              .filter((key) => key !== 'MY_ID_CHECK' && key !== 'BENEFICIARY_ID')
               .some((key) => !getValues(MoiPaymentFormFields[key])),
           );
         };
@@ -216,6 +217,7 @@ const MoiPaymentScreen: React.FC = () => {
         };
 
         const onChangeText = (text: string) => {
+          setBeneficiaryID(text);
           if (text.length > 0) {
             setBtnEnabled(false);
           } else {
@@ -224,11 +226,53 @@ const MoiPaymentScreen: React.FC = () => {
           setErrorMessage('');
         };
 
+        const getMoiBillData = () => {
+          const currentCheck = getValues(MoiPaymentFormFields.MY_ID_CHECK);
+          const amount = 500;
+          const data = [
+            {
+              id: '1',
+              label: 'BILL_PAYMENTS.DUE_AMOUNT',
+              value: `${amount} ${t('COMMON.SAR')}`,
+            },
+            {
+              id: '2',
+              label: 'BILL_PAYMENTS.SERVICE_PROVIDER',
+              value: getValues(MoiPaymentFormFields.SERVICE_PROVIDER),
+            },
+            {
+              id: '3',
+              label: 'BILL_PAYMENTS.SERVICE_TYPE',
+              value: getValues(MoiPaymentFormFields.SERVICE_TYPE),
+            },
+            {
+              id: '4',
+              label: 'BILL_PAYMENTS.BENEFICIARY_ID',
+              value: currentCheck ? `${myBeneficiaryId}` : `${beneficiaryID}`,
+            },
+            {
+              id: '5',
+              label: 'BILL_PAYMENTS.LICENSE_TYPE',
+              value: getValues(MoiPaymentFormFields.ID_TYPE),
+            },
+            {
+              id: '6',
+              label: 'BILL_PAYMENTS.DURATION',
+              value: getValues(MoiPaymentFormFields.DURATION),
+            },
+          ];
+
+          return data;
+        };
+
         const onSubmit = () => {
+          const moiBillData = getMoiBillData();
           if (selectedTab === MoiPaymentTypes.REFUND) {
-            navigate(ScreenNames.MOI_PAYMENT_REFUND);
+            navigate(ScreenNames.MOI_PAYMENT_REFUND, {
+              moiBillData,
+            });
           } else {
-            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION);
+            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { moiBillData });
           }
         };
 
