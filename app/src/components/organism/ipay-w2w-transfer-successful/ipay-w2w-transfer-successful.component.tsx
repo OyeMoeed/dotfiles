@@ -59,7 +59,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
   const formattedTransfersDetails = transferDetails.formData.map((item, index) => {
     const summeryArray = [];
     const titleObject = () => {
-      if (item?.walletNumber) {
+      if (!item?.hasWallet) {
         return {
           id: '2',
           label: infoLabel,
