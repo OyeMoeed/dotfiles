@@ -54,7 +54,7 @@ const otpVerificationStyles = () =>
     },
     needHelpBtn: {
       ...Platform.select({
-        android: { marginTop: moderateScale(24) },
+        android: { marginTop: moderateScale(14) },
         ios: { marginTop: moderateScale(24) },
       }),
     },
