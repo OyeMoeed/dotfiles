@@ -25,6 +25,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
       simpleBar,
       gradientBar,
       cancelBnt,
+      onCancel,
       doneBtn,
       backBtn,
       doneText,
@@ -72,7 +73,11 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
     );
 
     const closeBottomSheet = () => {
-      bottomSheetModalRef.current?.close();
+      if (onCancel) {
+        onCancel();
+      } else {
+        bottomSheetModalRef.current?.close();
+      }
     };
 
     const handleComponent = () => (

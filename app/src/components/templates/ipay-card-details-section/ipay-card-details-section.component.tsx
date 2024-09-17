@@ -192,7 +192,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           ? CardActiveStatus.UNFREEZE
           : CardActiveStatus.FREEZE;
       setTimeout(() => {
-        renderToast(`${localizationText.CARDS.DEBIT_CARD} ${currentCard.maskedCardNumber}`, type.toLowerCase());
+        renderToast(`${currentCard.cardHeaderText} - ${currentCard.maskedCardNumber}`, type.toLowerCase());
       }, 500);
       return;
     }
@@ -295,7 +295,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         {!isCardPrinted && (
           <IPayButton
             onPress={() => {
-              setIsCardPrinted((prevState) => ({
+              setIsCardPrinted((prevState: any) => ({
                 ...prevState,
                 [currentCard.id]: true,
               }));

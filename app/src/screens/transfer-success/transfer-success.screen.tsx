@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { ExportIcon, Send2Icon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
@@ -16,17 +17,15 @@ import { IPayButton, IPayShareableImageView, IPaySuccess } from '@app/components
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
-import constants from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import copyText from '@app/utilities/clip-board.util';
-import { useEffect, useState } from 'react';
+import { copyText } from '@app/utilities';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
+import { RouteProp, useRoute } from '@react-navigation/core';
+import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import images from '@app/assets/images';
 import { ItemProps, TransferDetails } from './transfer-success.interface';
 import transferSuccessStyles from './transfer-success.style';
 
@@ -37,12 +36,12 @@ const TransferSuccessScreen = () => {
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const gradientColors = [colors.natural.natural50, colors.natural.natural50];
-  const bankDetails = constants.BANK_DETAILS;
   const [beneficiaryDetails, setBeneficiaryDetails] = useState([]);
 
   type RouteProps = RouteProp<{ params: TransferDetails }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { amount, beneficiaryNickName, transferPurpose, instantTransferType, note, refNumber } = route.params;
+  const { amount, beneficiaryNickName, transferPurpose, instantTransferType, note, refNumber, bankDetails } =
+    route.params;
 
   useEffect(() => {
     const beneficiaryDetailsArray = [
@@ -95,7 +94,7 @@ const TransferSuccessScreen = () => {
       <IPayView>
         {index === 0 && (
           <IPayView style={styles.beneficiaryBankDetailsView}>
-            <IPayImage image={bankDetails?.icon} style={styles.bankLogo} />
+            <IPayIcon icon={bankDetails?.icon} size={30} />
             <IPayView style={styles.bankDetailsView}>
               <IPayView style={styles.bankTitleView}>
                 <IPayFootnoteText regular={false} text={bankDetails?.title} color={colors.natural.natural900} />

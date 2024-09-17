@@ -77,7 +77,7 @@ import BillActivationScreen from '@app/screens/bill-activation/bill-activation.s
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
 import CardManagementScreen from '@app/screens/card-management/card-management.screen';
-
+import CategoryScreen from '@app/screens/category-screen/category.screen';
 import ChooseBeneficiaryScreen from '@app/screens/choose-beneficiary/choose-beneficiary.screen';
 import EditIBeneficiaryTransferScreen from '@app/screens/edit-international-beneficiary-transfer/edit-international-beneficiary-transfer.screen';
 import InternationalTransferConfirmation from '@app/screens/internation-transfer/internationl-transfer-confirmation/internationl-transfer-confirmation.screen';
@@ -260,6 +260,8 @@ const MainStackNavigator = () => {
           />
           <MainStack.Screen name={screenNames.MERCHANTS} component={MerchantScreen} />
           <MainStack.Screen name={screenNames.SHOP_CATEGORIES} component={ShopCategoriesScreen} />
+          <MainStack.Screen name={screenNames.CATEGORY_SCREEN} component={CategoryScreen} />
+          <MainStack.Screen name={screenNames.ALL_CATEGORIES_SCREEN} component={AllCategoriesScreen} />
           <MainStack.Screen name={screenNames.SHOP_ALL_CATEGORIES} component={AllCategoriesScreen} />
           <MainStack.Screen name={screenNames.ALL_ORDERS} component={AllOrdersScreen} />
           <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />

@@ -32,12 +32,7 @@ import usePermissions from '@app/hooks/permissions.hook';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
-import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
-import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
-import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
@@ -67,19 +62,34 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
 
-  const handleSubmitTransfer = () => {
-    switch (from) {
-      case TRANSFERTYPE.SEND_MONEY:
+  const getW2WActiveFriends = async () => {
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
+    };
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
         navigate(ScreenNames.SEND_MONEY_FORM, {
+          activeFriends: apiResponse.response?.friends,
           selectedContacts,
           heading: localizationText.HOME.SEND_MONEY,
           showReason: true,
         });
+      }
+    }
+  };
+
+  const handleSubmitTransfer = () => {
+    switch (from) {
+      case TRANSFERTYPE.SEND_MONEY:
+        getW2WActiveFriends();
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
