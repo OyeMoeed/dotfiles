@@ -1,3 +1,5 @@
+import { TransferInfoData } from '@app/components/organism/ipay-transfer-information/ipay-transfer-information.interface';
+
 interface BeneficiaryDetails {
   title: string;
   subTitle: string;
@@ -22,4 +24,5 @@ export interface TransactionDetails {
   authentication: {
     transactionId: string;
   };
+  bankDetails?: TransferInfoData;
 }

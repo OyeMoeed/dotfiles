@@ -18,7 +18,7 @@ const getAllRetainedMessages = async (payload: WalletNumberProp): Promise<unknow
   }
 
   const apiResponse: any = await apiCall({
-    endpoint: CORE_URLS.GET_NOTIFICATIONS(payload?.walletNumber),
+    endpoint: CORE_URLS.GET_NOTIFICATIONS(payload?.walletNumber, payload?.pageNumber, 20),
     method: requestType.GET,
   });
 
