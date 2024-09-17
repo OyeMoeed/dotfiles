@@ -12,7 +12,7 @@ import {
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -30,6 +30,7 @@ import { scaleSize } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
 import transferSummaryStyles from './transfer-summary.styles';
@@ -55,7 +56,9 @@ const TransferSummaryScreen: React.FC = () => {
   const styles = transferSummaryStyles(colors);
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
-  const helpCenterRef = useRef(null);
+  const helpCenterRef = useRef<any>(null);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
 
   const isItemHasWallet = (item: IW2WResRequest): boolean => {
     const walletNumber = transfersDetails.activeFriends?.filter(
@@ -174,16 +177,18 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const handleOnPressHelp = () => {
-    helpCenterRef?.current?.present();
+    setHelpCenterVisible(true);
   };
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
+    setOtpSheetVisible(false);
   };
 
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     try {
-      sendMoneyBottomSheetRef.current?.present();
+
+      setOtpSheetVisible(true);
 
       setIsLoading(true);
       const payload: IW2WTransferPrepareReq = {
@@ -200,7 +205,7 @@ const TransferSummaryScreen: React.FC = () => {
         setOtpRef(apiResponse?.response?.otpRef as string);
         setTransactionId(apiResponse?.authentication?.transactionId);
         if (showOtpSheet) {
-          sendMoneyBottomSheetRef.current?.present();
+          setOtpSheetVisible(true);
         }
       }
       otpVerificationRef?.current?.resetInterval();
@@ -224,11 +229,11 @@ const TransferSummaryScreen: React.FC = () => {
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       if (apiResponse?.response) {
-        sendMoneyBottomSheetRef.current?.close();
+        setOtpSheetVisible(false);
         navigate(ScreenNames.W2W_TRANSFER_SUCCESS, {
           transferDetails: {
             formData: transfersDetails.formInstances,
-            apiData: apiResponse?.response.transferRequestsResult,
+            apiData: apiResponse?.response?.transferRequestsResult,
           },
           totalAmount,
         });
@@ -255,6 +260,10 @@ const TransferSummaryScreen: React.FC = () => {
 
   const onResendCodePress = () => {
     prepareOtp(false);
+  };
+
+  const onCloseHelpBottomSheet = () => {
+    helpCenterRef?.current?.close();
   };
 
   const TransactionList = () =>
@@ -309,7 +318,7 @@ const TransferSummaryScreen: React.FC = () => {
           />
         </IPayView>
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={
           transactionType === TransactionTypes.SEND_GIFT
             ? localizationText.HOME.SEND_GIFT
@@ -319,9 +328,10 @@ const TransferSummaryScreen: React.FC = () => {
         simpleBar
         bold
         cancelBnt
-        customSnapPoint={['1%', '99%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={sendMoneyBottomSheetRef}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
@@ -337,8 +347,8 @@ const TransferSummaryScreen: React.FC = () => {
           timeout={Number(walletInfo?.otpTimeout)}
           onResendCodePress={onResendCodePress}
         />
-      </IPayBottomSheet>
-      <IPayBottomSheet
+      </IPayPortalBottomSheet>
+      <IPayPortalBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
@@ -346,9 +356,11 @@ const TransferSummaryScreen: React.FC = () => {
         customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         ref={helpCenterRef}
         testID="transfer-details-help-center"
+        onCloseBottomSheet={()=> setHelpCenterVisible(false)}
+        isVisible={isHelpCenterVisible}
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };
