@@ -194,7 +194,12 @@ const SendGiftListScreen: React.FC = () => {
       {selectedTabData?.length ? (
         <IPayView style={styles.view}>
           <IPayView style={styles.listWrapper}>
-            <IPayFlatlist data={selectedTabData} renderItem={renderItem} style={styles.flexStyle} />
+            <IPayFlatlist
+              data={selectedTabData}
+              renderItem={renderItem}
+              showsVerticalScrollIndicator={false}
+              style={styles.flexStyle}
+            />
           </IPayView>
           <IPayView>
             <IPayButton

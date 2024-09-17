@@ -10,6 +10,8 @@ import {
 import { GiftStatus } from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dateTimeFormat } from '@app/utilities';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import React from 'react';
 import giftListStyles from './ipay-gift-transaction-list.styles';
 import { IPayGiftTransactionListProps } from './ipay-gift-transaction.interface';
@@ -79,6 +81,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
   };
 
   const { color, text, leftIconColor, leftIconBg } = getGiftStatusStyles();
+  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
 
   return (
     <IPayPressable testID={`${testID}-gift-transaction-list`} style={styles.container} onPress={onPress}>
@@ -88,7 +91,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
             <IPayIcon icon={isNewCard ? icons.giftNew : icons.gift} size={18} color={leftIconColor} />
           </IPayView>
           <IPayView style={styles.textContainer}>
-            <IPayCaption2Text text={date} styles={headingStyle} color={colors.natural.natural500} />
+            <IPayCaption2Text text={formattedDate} styles={headingStyle} color={colors.natural.natural500} />
             <IPayView style={titleWrapper}>
               <IPaySubHeadlineText
                 regular={false}
@@ -96,8 +99,8 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
                 styles={titleStyle}
                 color={colors.primary.primary900}
               />
+              <IPayFootnoteText regular text={footText} style={footTextStyle} color={colors.natural.natural900} />
             </IPayView>
-            <IPayFootnoteText regular text={footText} style={footTextStyle} color={colors.natural.natural900} />
           </IPayView>
         </IPayView>
       </IPayView>

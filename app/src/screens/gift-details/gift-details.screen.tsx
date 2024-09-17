@@ -16,25 +16,19 @@ import { FlipCard, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { GiftLocalizationKeys, GiftTransactionKey } from '@app/enums/gift-status.enum';
+import { GiftLocalizationKeys, GiftStatus, GiftTransactionKey } from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import {
-  TransferDetailsMockProps,
-  TransferDetailsRes,
-} from '@app/network/services/transfers/wallet-wallet-transfer-details/transfer-details.interface';
-import getWalletToWalletTransferDetails from '@app/network/services/transfers/wallet-wallet-transfer-details/transfer-details.service';
+  ExecuteGiftMockProps,
+  ExecuteGiftRes,
+} from '@app/network/services/transfers/execute-gift/execute-gift.interface';
+import executeGift from '@app/network/services/transfers/execute-gift/execute-gift.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import {
-  ApiResponseStatusType,
-  buttonVariants,
-  GiftCardDetailsKey,
-  GiftCardStatus,
-  ToastTypes,
-} from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants, GiftCardDetailsKey, ToastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import Share from 'react-native-share';
@@ -51,7 +45,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   const { showToast } = useToastContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [giftDetails, setGiftDetails] = useState<TransferDetailsRes>({} as TransferDetailsRes);
+  const [giftDetails, setGiftDetails] = useState<ExecuteGiftRes>({} as ExecuteGiftRes);
 
   const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
   const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
@@ -77,14 +71,14 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
     );
   };
 
-  const getWalletToWalletTransferData = async () => {
+  const executeReceivedGift = async () => {
     const payload = {
       trxReqType,
-      trxId: details?.trxId ?? '',
+      trxId: details?.requestID ?? '',
       deviceInfo: await getDeviceInfo(),
     };
     try {
-      const apiResponse: TransferDetailsMockProps = await getWalletToWalletTransferDetails(walletNumber, payload);
+      const apiResponse: ExecuteGiftMockProps = await executeGift(walletNumber, payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           setGiftDetails(apiResponse?.response);
@@ -105,20 +99,28 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   };
 
   useEffect(() => {
-    getWalletToWalletTransferData();
-  }, []);
+    if (!isSend && details?.status === GiftStatus.INITIATED) executeReceivedGift();
+  }, [details]);
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
     renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
+  const statusMapping = {
+    [GiftStatus.INITIATED]: localizationText.SEND_GIFT.UNOPENED,
+    [GiftStatus.EXECUTED]: localizationText.SEND_GIFT.OPENED,
+    [GiftStatus.FAILED]: localizationText.SEND_GIFT.EXPIRED,
+  };
+
   const getTitleColor = (subTitle: string) => {
     switch (subTitle) {
-      case GiftCardStatus.UNOPENED:
+      case GiftStatus.INITIATED:
         return colors.warning.warning500;
-      case GiftCardStatus.EXPIRED:
+      case GiftStatus.FAILED:
         return colors.error.error500;
+      case GiftStatus.EXECUTED:
+        return colors.success.success500;
       default:
         return colors.primary.primary800;
     }
@@ -141,13 +143,14 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   const getDynamicStyles = (stylesValue, dataDetails, item) => [
     stylesValue.subTitle,
     dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
-    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftCardStatus.EXPIRED && stylesValue.textStyle,
+    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftStatus.FAILED && stylesValue.textStyle,
     item === GiftCardDetailsKey.AMOUNT && stylesValue.currencyStyle,
   ];
 
   const titleText = useCallback(
-    (value: string, item: string) => {
+    (value: string, key: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
+
       switch (key) {
         case GiftTransactionKey.TRANSACTION_DATE_TIME:
           if (date.isValid()) {
@@ -156,17 +159,19 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
           break;
         case GiftTransactionKey.AMOUNT:
           return `${value} ${localizationText.COMMON.SAR}`;
+        case GiftTransactionKey.STATUS:
+          return statusMapping[value as keyof typeof statusMapping];
         default:
           break;
       }
-      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
+      return key === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
     },
-    [giftDetails],
+    [details],
   );
 
   const getGiftCardAnimation = () => {
-    if (giftDetails) {
-      const cardId = giftDetails?.giftCategory;
+    if (details) {
+      const cardId = details?.giftCategory;
       const category = cardId?.split('_')[0].toLowerCase();
 
       const getCardsList = giftsCardData[category as keyof GiftsCardDataProps];
@@ -228,7 +233,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
       <IPayView style={styles.amount}>
         <IPayTitle1Text
           style={styles.receiveAmountStyle}
-          text={giftDetails?.amount}
+          text={details?.amount}
           regular={false}
           color={colors.warning.warning600}
         />
@@ -242,14 +247,14 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
       <IPayView style={styles.messagePreview}>
         <IPayFootnoteText
           style={[styles.messagePreviewText, !isSend && styles.receiveMessageText]}
-          text={giftDetails?.userNotes}
+          text={details?.userNotes}
           color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
         />
       </IPayView>
       <IPayFootnoteText
         color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
         style={[styles.messagePreviewText, !isSend && styles.receiveNameText]}
-        text={`${localizationText.SEND_GIFT.FROM}: ${giftDetails?.senderName}`}
+        text={`${localizationText.SEND_GIFT.FROM}: ${details?.senderName}`}
       />
     </IPayView>
   );
@@ -265,13 +270,13 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
-            text={titleText(details[item], item)}
-            color={getTitleColor(details[item])}
+            text={titleText(details?.[item], item)}
+            color={getTitleColor(details?.[item])}
             numberOfLines={1}
-            style={getDynamicStyles(styles, giftDetails, item)}
+            style={getDynamicStyles(styles, details, item)}
           />
           {item === GiftCardDetailsKey.REF_NUMBER && (
-            <IPayPressable style={styles.icon} onPress={() => onPressCopy(giftDetails[item])}>
+            <IPayPressable style={styles.icon} onPress={() => onPressCopy(details[item])}>
               <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
             </IPayPressable>
           )}
@@ -295,7 +300,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
-            isExpired={details?.status === GiftCardStatus.EXPIRED && isSend}
+            isExpired={details?.status === GiftStatus.FAILED && isSend}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton
@@ -316,8 +321,8 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
           <IPayView style={styles.bottomView}>
             <IPayFlatlist
               data={Object.keys(details)
-                .filter((key) => GiftTransactionKeys.includes(key))
-                .sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
+                ?.filter((key) => GiftTransactionKeys?.includes(key))
+                ?.sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
               keyExtractor={(_, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={renderCardDetails}

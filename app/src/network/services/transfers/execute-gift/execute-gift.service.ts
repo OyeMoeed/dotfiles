@@ -3,25 +3,22 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import TRANSFERS_URLS from '../transfer.urls';
-import { TransferDetailsMockProps, TransferDetailsPayload } from './transfer-details.interface';
-import transferDetailsMock from './transfer-details.mock';
+import { ExecuteGiftMockProps, ExecuteGiftPayload } from './execute-gift.interface';
+import executeGiftMock from './execute-gift.mock';
 
-const getWalletToWalletTransferDetails = async (
-  walletNumber: string,
-  payload: TransferDetailsPayload,
-): Promise<TransferDetailsMockProps> => {
+const executeGift = async (walletNumber: string, payload: ExecuteGiftPayload): Promise<ExecuteGiftMockProps> => {
   if (constants.MOCK_API_RESPONSE) {
-    return transferDetailsMock;
+    return executeGiftMock;
   }
   try {
-    const apiResponse: ApiResponse<TransferDetailsMockProps> = await apiCall({
+    const apiResponse: ApiResponse<ExecuteGiftMockProps> = await apiCall({
       endpoint: TRANSFERS_URLS.get_wallet_to_wallet_transfer(walletNumber),
       method: requestType.POST,
       payload,
     });
 
     if (apiResponse?.status) {
-      return apiResponse?.response;
+      return apiResponse;
     }
     return { apiResponseNotOk: true };
   } catch (error) {
@@ -29,4 +26,4 @@ const getWalletToWalletTransferDetails = async (
   }
 };
 
-export default getWalletToWalletTransferDetails;
+export default executeGift;

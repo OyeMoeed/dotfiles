@@ -2,8 +2,8 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import TRANSFERS_URLS from '../transfer.urls';
-import transferDetailsMock from './transfer-details.mock';
-import getWalletToWalletTransferDetails from './transfer-details.service';
+import executeGiftMock from './execute-gift.mock';
+import executeGift from './execute-gift.service';
 
 jest.mock('@network/services/api-call.service');
 jest.mock('@app/constants/constants', () => ({
@@ -12,9 +12,9 @@ jest.mock('@app/constants/constants', () => ({
 jest.mock('../transfer.urls', () => ({
   get_wallet_to_wallet_transfer: jest.fn(),
 }));
-jest.mock('./transfer-details.mock');
+jest.mock('./execute-gift.mock', () => executeGiftMock);
 
-describe('getWalletToWalletTransferDetails', () => {
+describe('executeGift', () => {
   const mockWalletNumber = '123456';
   const mockPayload = {
     trxReqType: 'COUT_GIFT',
@@ -26,7 +26,20 @@ describe('getWalletToWalletTransferDetails', () => {
       platform: 'ANDROID',
     },
   };
-  const mockApiResponse = { ok: true, response: transferDetailsMock };
+
+  const mockApiResponse = {
+    status: {
+      code: 'I000000',
+      type: 'SUCCESS',
+      desc: 'retail.msg.default.success',
+      sessionReference: 'SSPAYC0a088beff71b4b0ab1adfcb20bd1c5fa',
+      requestReference: '03196435797915013355',
+    },
+    response: {},
+    successfulResponse: true,
+    ok: true,
+  };
+
   const mockErrorResponse = { message: 'Network error' };
 
   beforeEach(() => {
@@ -35,8 +48,8 @@ describe('getWalletToWalletTransferDetails', () => {
 
   it('should return mock data when MOCK_API_RESPONSE is true', async () => {
     (constants.MOCK_API_RESPONSE as boolean) = true;
-    const result = await getWalletToWalletTransferDetails(mockWalletNumber, mockPayload);
-    expect(result).toEqual(transferDetailsMock);
+    const result = await executeGift(mockWalletNumber, mockPayload);
+    expect(result).toEqual(executeGiftMock);
   });
 
   it('should call apiCall with correct parameters when MOCK_API_RESPONSE is false', async () => {
@@ -44,14 +57,14 @@ describe('getWalletToWalletTransferDetails', () => {
     (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockWalletNumber}`);
     (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
-    const result = await getWalletToWalletTransferDetails(mockWalletNumber, mockPayload);
+    const result = await executeGift(mockWalletNumber, mockPayload);
 
     expect(apiCall).toHaveBeenCalledWith({
       endpoint: `url/${mockWalletNumber}`,
       method: requestType.POST,
       payload: mockPayload,
     });
-    expect(result).toEqual(mockApiResponse.response);
+    expect(result).toEqual(mockApiResponse);
   });
 
   it('should return { apiResponseNotOk: true } when api response is not ok', async () => {
@@ -59,7 +72,7 @@ describe('getWalletToWalletTransferDetails', () => {
     (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockWalletNumber}`);
     (apiCall as jest.Mock).mockResolvedValue({ ok: false });
 
-    const result = await getWalletToWalletTransferDetails(mockWalletNumber, mockPayload);
+    const result = await executeGift(mockWalletNumber, mockPayload);
 
     expect(result).toEqual({ apiResponseNotOk: true });
   });
@@ -69,7 +82,7 @@ describe('getWalletToWalletTransferDetails', () => {
     (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockWalletNumber}`);
     (apiCall as jest.Mock).mockRejectedValue(mockErrorResponse);
 
-    const result = await getWalletToWalletTransferDetails(mockWalletNumber, mockPayload);
+    const result = await executeGift(mockWalletNumber, mockPayload);
 
     expect(result).toEqual({ error: mockErrorResponse.message });
   });
@@ -79,7 +92,7 @@ describe('getWalletToWalletTransferDetails', () => {
     (TRANSFERS_URLS.get_wallet_to_wallet_transfer as jest.Mock).mockReturnValue(`url/${mockWalletNumber}`);
     (apiCall as jest.Mock).mockRejectedValue({});
 
-    const result = await getWalletToWalletTransferDetails(mockWalletNumber, mockPayload);
+    const result = await executeGift(mockWalletNumber, mockPayload);
 
     expect(result).toEqual({ error: 'Unknown error' });
   });
