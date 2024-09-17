@@ -398,6 +398,8 @@
     "TOPUP_SUCCESS": "Top-up Successful",
     "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
+    "CARDS_TOPUP_TRX_TYPE": "Transaction type",
+    "CARDS_TOPUP_TRX_TYPE_VALUE": "Adding balance from card",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
     "REF_NUMBER": "Ref. Number",
@@ -437,7 +439,8 @@
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
     "AKHTAR_POINT": "Akthar Point",
-    "CARD": "Card"
+    "CARD": "Card",
+    "CARDS": "Cards"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
@@ -720,8 +723,8 @@
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
-    "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
-    "DEBIT_CARD": "Card - *** 1111",
+    "CARD_UNFREEZE_MESSAGE": "The card has been unfrozen",
+    "CARD": "Card",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",

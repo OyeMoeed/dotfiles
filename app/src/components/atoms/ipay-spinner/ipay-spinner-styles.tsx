@@ -16,7 +16,7 @@ const spinnerStyles = (themeColors: typeof colors, hasBackgroundColor: boolean) 
       right: 0,
       top: 0,
       bottom: 0,
-      zIndex: 1,
+      zIndex: 2001,
     },
     text: {
       marginLeft: SCALE_2,

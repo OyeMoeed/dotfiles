@@ -15,7 +15,7 @@ import { FlipCard, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { GiftLocalizationKeys, GiftTransactionKey } from '@app/enums/gift-status.enum';
+import { GiftLocalizationKeys, GiftStatus, GiftTransactionKey } from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
@@ -64,9 +64,9 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   const getTitleColor = (subTitle: string) => {
     switch (subTitle) {
-      case GiftCardStatus.UNOPENED:
+      case GiftStatus.INITIATED:
         return colors.warning.warning500;
-      case GiftCardStatus.EXPIRED:
+      case GiftStatus.FAILED:
         return colors.error.error500;
       default:
         return colors.primary.primary800;
@@ -90,7 +90,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const getDynamicStyles = (stylesValue, dataDetails, item) => [
     stylesValue.subTitle,
     dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
-    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftCardStatus.EXPIRED && stylesValue.textStyle,
+    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftStatus.FAILED && stylesValue.textStyle,
     item === GiftCardDetailsKey.AMOUNT && stylesValue.currencyStyle,
   ];
 
@@ -99,6 +99,19 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
       if (date.isValid()) {
         return formatTimeAndDate(value);
+      }
+
+      if (item === GiftCardDetailsKey.STATUS) {
+        switch (value) {
+          case GiftStatus.INITIATED:
+            return GiftCardStatus.UNOPENED;
+          case GiftStatus.FAILED:
+            return GiftCardStatus.EXPIRED;
+          case GiftStatus.EXECUTED:
+            return GiftCardStatus.OPENED;
+          default:
+            return GiftCardStatus.UNOPENED;
+        }
       }
       return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
     },
@@ -195,7 +208,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
-            isExpired={details?.status === GiftCardStatus.EXPIRED && isSend}
+            isExpired={details?.status === GiftStatus.FAILED && isSend}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton

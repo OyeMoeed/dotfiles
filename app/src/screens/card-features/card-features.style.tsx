@@ -12,12 +12,15 @@ const cardFeaturesStyles = (colors: typeof themeColors) =>
       justifyContent: 'flex-start',
     },
     animatedContainer: {
-      backgroundColor: colors.natural.natural10,
+      backgroundColor: colors.natural.natural100,
       flex: 1,
     },
     heightedView: {
       height: moderateScale(50),
       backgroundColor: colors.natural.natural100,
+    },
+    backgroundColor: {
+      backgroundColor: colors.natural.natural10,
     },
   });
 
