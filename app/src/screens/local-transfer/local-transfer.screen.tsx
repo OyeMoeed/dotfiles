@@ -224,6 +224,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 onPressBtn(item);
               }}
               btnText={

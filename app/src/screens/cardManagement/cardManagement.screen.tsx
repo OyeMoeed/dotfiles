@@ -6,9 +6,9 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.const';
 import { PayChannel, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import cardManagementStyles from './cardManagement.style';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import cardManagementStyles from './cardManagement.style';
 
 const CardManagementScreen: React.FC = () => {
   const styles = cardManagementStyles();
@@ -19,7 +19,7 @@ const CardManagementScreen: React.FC = () => {
       topupChannel: PayChannel.CARD,
     });
   };
-  
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
