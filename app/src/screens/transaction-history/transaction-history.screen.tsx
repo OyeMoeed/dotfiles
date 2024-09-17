@@ -33,7 +33,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { t } = useTranslation();
   const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
 
-  const cardLastFourDigit = currentCard.maskedCardNumber.slice(-4);
+  const cardLastFourDigit = currentCard?.maskedCardNumber?.slice(-4);
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
@@ -281,7 +281,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       const cardsFilterMap = cards.map((card: CardInterface) => ({
         id: card.cardIndex,
         key: card.cardIndex,
-        value: card?.maskedCardNumber,
+        value: card?.maskedCardNumber || '',
       }));
       filtersTransaction.push({
         id: '2',
