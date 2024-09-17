@@ -10,7 +10,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
-import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
@@ -188,7 +187,6 @@ const TransferSummaryScreen: React.FC = () => {
 
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     try {
-
       setOtpSheetVisible(true);
 
       setIsLoading(true);
@@ -261,10 +259,6 @@ const TransferSummaryScreen: React.FC = () => {
 
   const onResendCodePress = () => {
     prepareOtp(false);
-  };
-
-  const onCloseHelpBottomSheet = () => {
-    helpCenterRef?.current?.close();
   };
 
   const TransactionList = () =>
@@ -357,7 +351,7 @@ const TransferSummaryScreen: React.FC = () => {
         customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         ref={helpCenterRef}
         testID="transfer-details-help-center"
-        onCloseBottomSheet={()=> setHelpCenterVisible(false)}
+        onCloseBottomSheet={() => setHelpCenterVisible(false)}
         isVisible={isHelpCenterVisible}
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />

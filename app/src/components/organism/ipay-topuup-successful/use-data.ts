@@ -20,7 +20,7 @@ const useData = () => {
   } = useConstantData();
 
   const route = useRoute();
-  const { topupChannel, details } = route.params;
+  const { topupChannel } = route.params;
 
   const cardTopUpDetails = route?.params?.summaryData?.response;
   const cardPayDetails = [
