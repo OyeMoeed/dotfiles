@@ -4,11 +4,9 @@ import { hideSessionTimeoutAlert } from '@app/store/slices/alert-slice';
 import { store } from '@app/store/store';
 import { alertVariant } from '@app/utilities/enums.util';
 import { FC } from 'react';
-import { useTranslation } from 'react-i18next';
 import { IPaySessionTimeoutAlertProps } from './ipay-session-timeout-alert.interface';
 
 const IPaySessionTimeoutAlert: FC<IPaySessionTimeoutAlertProps> = ({ visible, testID }) => {
-  const { t } = useTranslation();
   const onClose = async () => {
     const { auth } = store.getState();
     if (auth?.isAuthorized) {
@@ -26,7 +24,7 @@ const IPaySessionTimeoutAlert: FC<IPaySessionTimeoutAlertProps> = ({ visible, te
       closeOnTouchOutside
       variant={alertVariant.DESTRUCTIVE}
       primaryAction={{
-        text: t('COMMON.OK'),
+        text: 'COMMON.OK',
         onPress: onClose,
       }}
     />
