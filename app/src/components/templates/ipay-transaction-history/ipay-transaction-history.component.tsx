@@ -199,6 +199,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     </IPayView>
   );
 
+  const renderFootnote = (text: string) => (
+    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+      {text}
+    </IPayFootnoteText>
+  );
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
@@ -289,23 +295,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
-              {(transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA ||
-                (isBeneficiaryHistory && !isCredit)) && (
+              {(transactionRequestType === TransactionTypes.COUT_ALINMA || (isBeneficiaryHistory && !isCredit)) && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.BENEFICIARY_NICK_NAME}
-                  </IPayFootnoteText>
+                  {renderFootnote(localizationText.TRANSACTION_HISTORY.BENEFICIARY_NICK_NAME)}
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.nickname}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
-              {(transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA ||
-                (isBeneficiaryHistory && isCredit)) && (
+              {(transactionRequestType === TransactionTypes.COUT_ALINMA || (isBeneficiaryHistory && isCredit)) && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.SENDER_NICK_NAME}
-                  </IPayFootnoteText>
+                  {renderFootnote(localizationText.TRANSACTION_HISTORY.SENDER_NICK_NAME)}
                   <IPaySubHeadlineText regular color={colors.primary.primary800}>
                     {transaction?.senderName?.length >= 18
                       ? `${transaction?.senderName?.slice(0, 18)}...`
@@ -313,19 +313,15 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
-              {(transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (
+              {(transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.TRANSFER_BY}
-                  </IPayFootnoteText>
+                  {renderFootnote(localizationText.TRANSACTION_HISTORY.TRANSFER_BY)}
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2} />
                 </IPayView>
               )}
-              {(transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (
+              {(transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.REASON_OF_TRANSFER}
-                  </IPayFootnoteText>
+                  {renderFootnote(localizationText.TRANSACTION_HISTORY.REASON_OF_TRANSFER)}
                   <IPaySubHeadlineText
                     regular
                     color={colors.primary.primary800}
