@@ -51,7 +51,7 @@ const TransferConfirmation: React.FC = () => {
   const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
 
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState('');
+  const [otpError, setOtpError] = useState<boolean>(false);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
 
@@ -278,11 +278,12 @@ const TransferConfirmation: React.FC = () => {
           ref={otpBottomSheetRef}
           onPressConfirm={onConfirm}
           mobileNumber={mobileNumber}
+          otp={otp}
           setOtp={setOtp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
           onResendCodePress={() => otpBottomSheetRef.current.resetInterval()}
-          otpError={otpError !== ''}
+          otpError={otpError}
         />
       </IPayPortalBottomSheet>
 

@@ -50,6 +50,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [, setAPIError] = useState<string>('');
   const [, setRedirectUrl] = useState<string>('');
+  const [selectedCardTypeId, setSelectedCardTypeId] = useState<string>('');
 
   const methodData: PaymentMethodData[] = [
     {
@@ -139,7 +140,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     if (selectedCardObj?.cardBrand) {
       body.cardBrand = selectedCardObj?.cardBrand?.toLocaleLowerCase();
     } else {
-      body.cardBrand = 'mada';
+      body.cardBrand = selectedCardTypeId;
     }
 
     const payload: CheckOutProp = {
@@ -188,7 +189,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingIncomingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingIncomingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
-   
+
     if (monthlyRemaining === 0) {
       setIsTopUpNextEnable(false);
       setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
@@ -228,6 +229,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const handleCardObjSelect = (card: any) => {
     setSelectedCardObj(card);
   };
+  const onSelectCard = (selectedCardType: string) => {
+    setSelectedCardTypeId(selectedCardType);
+  };
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState !== TopUpStates.NEW_CARD ? (
@@ -247,8 +251,11 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             isEditable={currentState === TopUpStates.INITAL_STATE}
             onPressIcon={handleIconPress}
             balanceType="Incoming"
+            channel={channel}
+            onSelectCard={onSelectCard}
           />
 
+          <IPayView style={styles.nextButton} />
           {channel === PayChannel.APPLE ? (
             <IPayButton
               large

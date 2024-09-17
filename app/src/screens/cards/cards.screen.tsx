@@ -8,6 +8,7 @@ import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-cus
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
+import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
@@ -44,6 +45,7 @@ const CardsScreen: React.FC = () => {
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
+  const actionSheetRef = useRef<any>(null);
   const localizationText = useLocalization();
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
@@ -253,6 +255,10 @@ const CardsScreen: React.FC = () => {
     prepareOtpCardDetails(false);
   };
 
+  const onATMLongPress = () => {
+    actionSheetRef.current.show();
+  };
+
   useEffect(() => {
     getCardsData();
   }, []);
@@ -295,7 +301,7 @@ const CardsScreen: React.FC = () => {
                 (item as { newCard?: boolean }).newCard ? (
                   newCard
                 ) : (
-                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} />
+                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} onLongPress={onATMLongPress} />
                 )
               }
             />
@@ -304,7 +310,7 @@ const CardsScreen: React.FC = () => {
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
               <IPayCardSection
                 currentCard={currentCard}
-                setCurrentCard={setCurrentCard}
+                setCards={setCardsData}
                 onOpenOTPSheet={onPinCodeSheet}
                 cards={cardsData}
               />
@@ -388,6 +394,12 @@ const CardsScreen: React.FC = () => {
           onNextPress={handleNext}
         />
       </IPayPortalBottomSheet>
+      <IPayFreezeConfirmationSheet
+        currentCard={currentCard}
+        cards={cardsData}
+        setCards={setCardsData}
+        ref={actionSheetRef}
+      />
     </IPaySafeAreaView>
   );
 };
