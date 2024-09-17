@@ -16,7 +16,6 @@ import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
   const {
-    localizationText,
     billPayDetailes,
     extraDetails,
     balanceData,
@@ -46,7 +45,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.TRAFFIC_VIOLATION.TITLE} backBtn applyFlex />
+      <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayAccountBalance
           availableBalance={availableBalance ?? 0}
@@ -65,13 +64,13 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         onPressBtn={handleOTPVerify}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
-        btnText={localizationText.COMMON.PAY}
+        btnText="COMMON.PAY"
         disableBtnIcons
         btnStyle={styles.payBtn}
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet
-        heading={localizationText.PAY_BILL.HEADER}
+        heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         backBtn
@@ -97,7 +96,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

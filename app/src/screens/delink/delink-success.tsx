@@ -11,20 +11,19 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigateAndReset } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { setAuth } from '@store/slices/auth-slice';
 import { useTypedDispatch } from '@store/store';
+import { buttonVariants } from '@app/utilities';
 import genratedStyles from './delink-success.style';
 
 const DelinkSuccess: React.FC = ({ route }: any) => {
   const paramsData = route.params;
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
-  const localizationText = useLocalization();
   const dispatch = useTypedDispatch();
 
   const handleDonePress = () => {
@@ -51,21 +50,17 @@ const DelinkSuccess: React.FC = ({ route }: any) => {
             <IPayLottieAnimation source={delinkAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={localizationText.COMMON.DELINK_ALERT.SUCCESSFULLY_DELINK}
+                text="COMMON.DELINK_ALERT.SUCCESSFULLY_DELINK"
                 gradientColors={colors.gradientPrimary}
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
                 style={styles.gradientTextSvg}
               />
             </IPayView>
-            <IPayFootnoteText
-              regular
-              color={colors.primary.primary800}
-              text={localizationText.COMMON.DELINK_ALERT.NEED_LOGIN}
-            />
+            <IPayFootnoteText regular color={colors.primary.primary800} text="COMMON.DELINK_ALERT.NEED_LOGIN" />
             <IPayButton
-              btnType="primary"
-              btnText={localizationText.COMMON.DONE}
+              btnType={buttonVariants.PRIMARY}
+              btnText="COMMON.DONE"
               large
               btnStyle={styles.btnStyle}
               btnIconsDisabled

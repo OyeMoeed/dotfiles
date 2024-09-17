@@ -11,23 +11,23 @@ import {
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { openPhoneNumber } from '@app/utilities';
+import { buttonVariants, openPhoneNumber } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import ActivateViewTypes from './add-beneficiary-success-message.enum';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
 const AddBeneficiarySuccessScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const route = useRoute();
   const styles = beneficiarySuccessStyles(colors);
-  const localizationText = useLocalization();
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
@@ -78,7 +78,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   }, [currentOption]);
 
   const onPressCall = (value: string) => {
-    openPhoneNumber(value, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber: value, colors, showToast, translate: t });
   };
 
   const hideContactUs = () => {
@@ -110,7 +110,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
-      {showBackground && (
+      {showBackground ? (
         <>
           <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles} />} />
           <IPayView style={styles.container}>
@@ -125,30 +125,30 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                   descriptionStyle={styles.descriptionStyle}
                   headingText={
                     type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
-                      ? localizationText.NEW_BENEFICIARY.BENEFECIARY_UPDATED
-                      : localizationText.NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY
+                      ? 'NEW_BENEFICIARY.BENEFECIARY_UPDATED'
+                      : 'NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY'
                   }
                   descriptionText={
                     type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
-                      ? localizationText.NEW_BENEFICIARY.NOW_MAKE_TRANSFER
-                      : localizationText.NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY
+                      ? 'NEW_BENEFICIARY.NOW_MAKE_TRANSFER'
+                      : 'NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY'
                   }
                 />
                 <IPayView style={styles.buttonWrapper}>
                   <IPayButton
-                    btnType="primary"
-                    btnText={localizationText.NEW_BENEFICIARY.ACTIVATE_BENEFICIARY}
+                    btnType={buttonVariants.PRIMARY}
+                    btnText="NEW_BENEFICIARY.ACTIVATE_BENEFICIARY"
                     medium
                     btnIconsDisabled
                     onPress={handleActivateBeneficiary}
                   />
                   <IPayButton
-                    btnType="outline"
+                    btnType={buttonVariants.OUTLINED}
                     btnText={
                       type === ScreenNames.INTERNATIONAL_TRANSFER ||
                       type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
-                        ? localizationText.NEW_BENEFICIARY.INTERNATIONAL_TRANSFER_PAGE
-                        : localizationText.NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE
+                        ? 'NEW_BENEFICIARY.INTERNATIONAL_TRANSFER_PAGE'
+                        : 'NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE'
                     }
                     medium
                     btnIconsDisabled
@@ -159,12 +159,14 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
             </IPayView>
           </IPayView>
         </>
+      ) : (
+        <IPayView />
       )}
       <IPayBottomSheet
         heading={
           currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-            ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
-            : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE
+            ? 'ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS'
+            : 'ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE'
         }
         onCloseBottomSheet={closeActivateBeneficiary}
         customSnapPoint={activateHeight}
@@ -178,7 +180,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+        options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}
         cancelButtonIndex={1}
         showCancel
         onPress={(index) => handleFinalAction(index, selectedNumber)}

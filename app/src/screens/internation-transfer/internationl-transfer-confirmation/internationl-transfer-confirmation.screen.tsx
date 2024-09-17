@@ -20,7 +20,6 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { ValidateWUTransferPayload } from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.interface';
@@ -39,6 +38,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import Flag from 'react-native-round-flags';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
@@ -46,9 +46,9 @@ import internationalTransferConfirmationStyles from './internationl-transfer-con
 
 const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const { beneficiaryData, feesInquiryData } = route.params;
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = internationalTransferConfirmationStyles();
-  const localizationText = useLocalization();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -110,7 +110,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       });
     } else {
       setIsError(true);
-      setErrorMessage(localizationText.INTERNATIONAL_TRANSFER.PROMO_CODE_DOES_NOT_EXIST);
+      setErrorMessage(t('INTERNATIONAL_TRANSFER.PROMO_CODE_DOES_NOT_EXIST'));
     }
   };
 
@@ -119,13 +119,13 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   };
 
   const discountFees = useMemo((): string => {
-    const tansferDiscount = localizationText.INTERNATIONAL_TRANSFER.TRANSFER_FEE_DISCOUNT;
-    return `${tansferDiscount}: ${discountAmount} ${localizationText.COMMON.SAR}`;
+    const tansferDiscount = t('INTERNATIONAL_TRANSFER.TRANSFER_FEE_DISCOUNT');
+    return `${tansferDiscount}: ${discountAmount} ${t('COMMON.SAR')}`;
   }, [promoMatchSuccessfuly]);
 
   const totalAmount = () => {
     const amount = getDataByKey(InternationalTransferDataLabels.total_amount)?.value;
-    return `${amount} ${localizationText.COMMON.SAR}`;
+    return `${amount} ${t('COMMON.SAR')}`;
   };
 
   const getWidth = (): string[] => {
@@ -144,7 +144,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   };
 
   const getGeneratedBeneficiaryFees = () => {
-    const checkIncludeFees = (key) => (feesInquiryData[key] ? localizationText.COMMON.YES : localizationText.COMMON.NO);
+    const checkIncludeFees = (key) => (feesInquiryData[key] ? t('COMMON.YES') : t('COMMON.NO'));
     return Object.keys(feesInquiryData)
       ?.map((key) => ({
         label: key,
@@ -184,7 +184,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           otpBottomSheetRef?.current?.present();
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -193,8 +193,8 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -213,7 +213,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -222,35 +222,46 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.INTERNATIONAL_TRANSFER.TRANSFER_CONFIRMATION} />
+      <IPayHeader backBtn applyFlex title="INTERNATIONAL_TRANSFER.TRANSFER_CONFIRMATION" />
       <IPayView style={styles.container}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayLinearGradientView style={styles.gradientView} gradientColors={contentViewBg}>
             <IPayView style={styles.transferMsgView}>
               <IPayIcon icon={icons.clock3} size={24} />
-              <IPayFootnoteText
-                text={localizationText.INTERNATIONAL_TRANSFER.AMOUNT_TRANSFER_MESSAGE}
-                style={styles.transferMsgText}
-              />
+              <IPayFootnoteText text="INTERNATIONAL_TRANSFER.AMOUNT_TRANSFER_MESSAGE" style={styles.transferMsgText} />
             </IPayView>
 
             <IPayView style={styles.receiverInfoContainer}>
               <Flag code={beneficiaryData?.countryCode} style={styles.countryFlagImg} />
               <IPayView style={styles.receiverInfoView}>
-                <IPayFootnoteText regular={false} text={beneficiaryData?.fullName} color={colors.natural.natural900} />
+                <IPayFootnoteText
+                  regular={false}
+                  text={beneficiaryData?.fullName}
+                  color={colors.natural.natural900}
+                  shouldTranslate={false}
+                />
                 <IPayCaption1Text
                   text={`${beneficiaryData?.countryDesc} - ${beneficiaryData?.remittanceTypeDesc}: ${beneficiaryData?.transferGateway ?? ''}`}
                   style={styles.receiverInfoText}
+                  shouldTranslate={false}
                 />
-                <IPayCaption1Text text={beneficiaryData?.beneficiaryAccountNumber} style={styles.receiverInfoText} />
-                <IPayCaption1Text text={beneficiaryData?.bankName} style={styles.receiverInfoText} />
+                <IPayCaption1Text
+                  text={beneficiaryData?.beneficiaryAccountNumber}
+                  style={styles.receiverInfoText}
+                  shouldTranslate={false}
+                />
+                <IPayCaption1Text
+                  text={beneficiaryData?.bankName}
+                  style={styles.receiverInfoText}
+                  shouldTranslate={false}
+                />
               </IPayView>
             </IPayView>
 
@@ -274,7 +285,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
                 <IPayView style={styles.listedContent}>
                   <IPaySubHeadlineText
                     regular
-                    text={localizationText.INTERNATIONAL_TRANSFER[LocalizationKeysMapping[label]]}
+                    text={t(`INTERNATIONAL_TRANSFER.${LocalizationKeysMapping[label]}`)}
                     color={colors.natural.natural900}
                   />
                   <IPaySubHeadlineText
@@ -300,7 +311,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
                 style={[styles.promocodeContainer, promoMatchSuccessfuly && styles.promocodeContainerContitional]}
               >
                 <IPayView>
-                  <IPayFootnoteText text={localizationText.INTERNATIONAL_TRANSFER.PROMO_CODE} />
+                  <IPayFootnoteText text="INTERNATIONAL_TRANSFER.PROMO_CODE" />
                   {promoMatchSuccessfuly && <IPayCaption2Text text={discountFees} color={colors.natural.natural500} />}
                 </IPayView>
                 <IPayPressable
@@ -308,7 +319,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
                   onPress={onPressEnterPromo}
                 >
                   <IPaySubHeadlineText
-                    text={promoMatchSuccessfuly ? promoCodeText : localizationText.INTERNATIONAL_TRANSFER.ENTER_CODE}
+                    text={promoMatchSuccessfuly ? promoCodeText : t('INTERNATIONAL_TRANSFER.ENTER_CODE')}
                     color={promoMatchSuccessfuly ? colors.success.success800 : colors.primary.primary500}
                     style={styles.enterPromoText}
                   />
@@ -318,7 +329,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
             </IPayImageBackground>
 
             <IPayView style={styles.totalAmountView}>
-              <IPayFootnoteText text={localizationText.LOCAL_TRANSFER.TOTAL_AMOUNT} color={colors.natural.natural900} />
+              <IPayFootnoteText text="LOCAL_TRANSFER.TOTAL_AMOUNT" color={colors.natural.natural900} />
               <IPayView style={styles.amountView}>
                 <IPaySubHeadlineText regular text={promoAmount} style={styles.strikethroughText} />
                 <IPaySubHeadlineText regular text={totalAmount()} color={colors.primary.primary800} />
@@ -328,17 +339,14 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
               <IPayView style={styles.termsAndConditionsView}>
                 <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText
-                  style={styles.termAndConditionsText}
-                  text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
-                />
+                <IPayFootnoteText style={styles.termAndConditionsText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.INTERNATIONAL_TRANSFER.TRANSFER}
+              btnText="INTERNATIONAL_TRANSFER.TRANSFER"
               btnIconsDisabled
               disabled={!checkTermsAndConditions}
               onPress={validateWUBeneficiary}
@@ -349,7 +357,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
 
       <IPayBottomSheet
         testID="promo-code-bottom-sheet"
-        heading={localizationText.INTERNATIONAL_TRANSFER.PROMO_CODE}
+        heading="INTERNATIONAL_TRANSFER.PROMO_CODE"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -366,7 +374,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
                 testID="promo_code-input"
-                label={localizationText.INTERNATIONAL_TRANSFER.PROMO_CODE}
+                label="INTERNATIONAL_TRANSFER.PROMO_CODE"
                 containerStyle={styles.inputContainerStyle}
                 inputStyle={styles.inputStyle}
                 showRightIcon
@@ -389,7 +397,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           <IPayButton
             large
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.COMMON.SAVE}
+            btnText="COMMON.SAVE"
             btnIconsDisabled
             btnStyle={styles.saveBtnStyle}
             onPress={onPressSavePromo}
@@ -398,7 +406,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       </IPayBottomSheet>
       <IPayBottomSheet
         testID="otp-bottom-sheet"
-        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        heading="LOCAL_TRANSFER.TRANSFER"
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '99%']}
@@ -424,7 +432,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
 
       <IPayBottomSheet
         testID="help-center-bottom-sheet"
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

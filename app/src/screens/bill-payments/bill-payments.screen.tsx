@@ -3,7 +3,6 @@ import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPaySadadBill } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -30,7 +29,6 @@ import IPaySadadBillsHeader from './component/ipay-sadad-bills-header.component'
 const BillPaymentsScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = billPaymentsStyles();
-  const localizationText = useLocalization();
   const [billsData, setBillsData] = useState<PaymentInfoProps[]>([]);
   const [sadadBills, setSadadBillsData] = useState<PaymentInfoProps[]>([]);
   const [unpaidBillsCount, setUnpaidBillsCount] = useState<number>(0);
@@ -87,7 +85,7 @@ const BillPaymentsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.BILL_PAYMENTS.BILL_PAYMENTS} applyFlex />
+      <IPayHeader backBtn title="BILL_PAYMENTS.BILL_PAYMENTS" applyFlex />
       <IPayView style={styles.container}>
         {sadadBills.length > 0 ? (
           <IPayView style={styles.contentContainer}>
@@ -115,7 +113,7 @@ const BillPaymentsScreen: React.FC = () => {
               onPress={onPressAddNewBill}
               btnStyle={styles.addNewBillBtn}
               btnType={buttonVariants.OUTLINED}
-              btnText={localizationText.SADAD.ADD_NEW_BILL}
+              btnText="SADAD.ADD_NEW_BILL"
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
             />
           </IPayView>

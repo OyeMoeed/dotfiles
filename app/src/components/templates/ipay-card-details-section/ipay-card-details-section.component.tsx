@@ -4,7 +4,6 @@ import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-w
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
@@ -35,13 +34,14 @@ import {
   IPayView,
 } from '@components/atoms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import cardBalanceSectionStyles from './ipay-card-details-section.style';
 import {
   IPayCardDetailsSectionProps,
   Option,
   SheetVariants,
   ToastVariants,
 } from './ipay-card-details-section.interface';
-import cardBalanceSectionStyles from './ipay-card-details-section.style';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   testID,
@@ -49,7 +49,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   currentCard,
   cards,
 }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const styles = cardBalanceSectionStyles(colors);
@@ -100,22 +100,19 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     // TODO will be handle on the basis of api
     {
       icon: icons.freeze_icon,
-      text:
-        actionTypeRef.current === CardActiveStatus.FREEZE
-          ? localizationText.CARDS.FREEZE_CARD
-          : localizationText.CARDS.UNFREEZE_CARD,
+      text: actionTypeRef.current === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
       key: '1',
       onPress: showActionSheet,
     },
     {
       icon: icons.setting_21,
-      text: localizationText.CARDS.CARD_OPTIONS,
+      text: t('CARDS.CARD_OPTIONS'),
       key: '2',
       onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard }),
     },
     {
       icon: icons.info_circle1,
-      text: localizationText.CARDS.CARD_DETAILS,
+      text: t('CARDS.CARD_DETAILS'),
       key: '3',
       onPress: onOpenOTPSheet,
     },
@@ -123,15 +120,15 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 
   const sheetVariant: SheetVariants = {
     freeze: {
-      title: localizationText.CARDS.FREEZE_CARD,
-      subtitle: localizationText.CARDS.CARD_FREEZE_INDICATION_MESSAGE,
-      option: localizationText.CARDS.FREEZE,
+      title: t('CARDS.FREEZE_CARD'),
+      subtitle: t('CARDS.CARD_FREEZE_INDICATION_MESSAGE'),
+      option: t('CARDS.FREEZE'),
       icon: icons.cardSlash1,
     },
     unfreeze: {
-      title: localizationText.CARDS.UNFREEZE_CARD,
-      subtitle: localizationText.CARDS.CARD_UNFREEZE_INDICATION_MESSAGE,
-      option: localizationText.CARDS.UNFREEZE,
+      title: t('CARDS.UNFREEZE_CARD'),
+      subtitle: t('CARDS.CARD_UNFREEZE_INDICATION_MESSAGE'),
+      option: t('CARDS.UNFREEZE'),
       icon: icons.card_tick11,
     },
   };
@@ -139,12 +136,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const renderToast = (toastMsg: string, type: string) => {
     const toastVariant: ToastVariants = {
       freeze: {
-        title: localizationText.CARDS.CARD_FREEZE_MESSAGE,
+        title: t('CARDS.CARD_FREEZE_MESSAGE'),
         toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },
       unfreeze: {
-        title: localizationText.CARDS.CARD_UNFREEZE_MESSAGE,
+        title: t('CARDS.CARD_UNFREEZE_MESSAGE'),
         toastType: ToastTypes.SUCCESS,
         icon: icons.snow_flake1,
       },
@@ -259,12 +256,10 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       )}
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
-          <IPayCaption2Text style={styles.accountBalanceText}>
-            {localizationText.CARDS.ACCOUNT_BALANCE}
-          </IPayCaption2Text>
-          <IPaySubHeadlineText style={styles.accountBalanceText}>
+          <IPayCaption2Text style={styles.accountBalanceText} text="CARDS.ACCOUNT_BALANCE" />
+          <IPaySubHeadlineText style={styles.accountBalanceText} shouldTranslate={false}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular>{` ${localizationText.COMMON.SAR}`}</IPaySubHeadlineText>
+            <IPaySubHeadlineText regular text={` ${t('COMMON.SAR')}`} shouldTranslate={false} />
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />
@@ -274,12 +269,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         containerStyle={styles.cashbackContainer}
         leftIcon={<IPayIcon color={colors.secondary.secondary500} size={16} icon={icons.discount_shape3} />}
         isShowLeftIcon
-        title={localizationText.CARDS.TOTAL_CASHBACK}
+        title="CARDS.TOTAL_CASHBACK"
         textStyle={styles.listText}
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
-          <IPaySubHeadlineText style={styles.listText} regular={false}>
-            {currentCard.totalCashbackAmt} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
+          <IPaySubHeadlineText shouldTranslate={false} style={styles.listText} regular={false}>
+            {currentCard.totalCashbackAmt} <IPayFootnoteText text="COMMON.SAR" />
           </IPaySubHeadlineText>
         }
       />
@@ -306,16 +301,14 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
             medium
-            btnText={localizationText.CARDS.PRINT_CARD}
+            btnText="CARDS.PRINT_CARD"
             btnStyle={styles.printBtn}
           />
         )}
       </IPayView>
       <IPayView style={styles.headingsContainer}>
         <IPayView style={styles.commonContainerStyle}>
-          <IPayFootnoteText style={styles.footnoteTextStyle}>
-            {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
-          </IPayFootnoteText>
+          <IPayFootnoteText style={styles.footnoteTextStyle} text="CARDS.CARD_TRANSACTIONS_HISTORY" />
         </IPayView>
         <IPayButton
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
@@ -323,7 +316,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           hasRightIcon
           rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
           medium
-          btnText={localizationText.COMMON.VIEW_ALL}
+          btnText="COMMON.VIEW_ALL"
         />
       </IPayView>
       <IPayFlatlist
@@ -336,7 +329,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       <IPayActionSheet
         ref={actionSheetRef}
         bodyStyle={styles.actionSheetStyle}
-        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, localizationText.COMMON.CANCEL]}
+        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, t('COMMON.CANCEL')]}
         cancelButtonIndex={1}
         onPress={(index) => handleFinalAction(index, sheetVariant[actionTypeRef.current as keyof SheetVariants].option)}
         showCancel

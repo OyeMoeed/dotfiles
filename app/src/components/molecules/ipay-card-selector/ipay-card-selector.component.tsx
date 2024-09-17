@@ -8,13 +8,13 @@ import {
   IPayView,
 } from '@app/components/atoms';
 
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
@@ -26,7 +26,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   openPressExpired,
   onCardSelect,
 }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
   const [selectedCard, setSelectedCard] = useState<number | null>(1);
@@ -57,7 +57,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
     cards?.map((card: any, index: number) => ({
       key: index,
       cardType: card?.cardBrand,
-      text: `${localizationText.TOP_UP.CARD} ${card?.cardBrand}`,
+      text: `${t('TOP_UP.CARD')} ${card?.cardBrand}`,
       cardNumber: `${card?.lastDigits} ****`,
       subtitle: `${card?.lastDigits} ****`,
       expired: isExpired(card),
@@ -117,14 +117,12 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   return (
     <IPayView testID={`${testID}-card-selector`} style={styles.containerStyle}>
       <IPayView style={styles.header}>
-        {topupCards?.length > 0 && (
-          <IPayFootnoteText text={localizationText.TOP_UP.CHOOSE_CARD} style={styles.headerText} />
-        )}
+        {topupCards?.length > 0 && <IPayFootnoteText text="TOP_UP.CHOOSE_CARD" style={styles.headerText} />}
 
         <IPayButton
           btnType={buttonVariants.OUTLINED}
           leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.primary.primary850} />}
-          btnText={localizationText.TOP_UP.ADD_CARD}
+          btnText="TOP_UP.ADD_CARD"
           onPress={onPressAddCard}
         />
       </IPayView>

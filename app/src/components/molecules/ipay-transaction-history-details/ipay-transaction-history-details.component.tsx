@@ -11,7 +11,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { LocalizationKeysMapping, TransactionsStatus } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { checkDateValidation, formatDateAndTime } from '@app/utilities/date-helper.util';
@@ -19,6 +18,7 @@ import { States, ToastTypes } from '@app/utilities/enums.util';
 import getArryFromObject from '@app/utilities/object-to-array.helper';
 import { forwardRef, useEffect, useImperativeHandle, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
@@ -37,9 +37,9 @@ const IPayTransactionHistoryDetails = forwardRef(
     }: IPayTransactionHistoryDetailsProps,
     ref,
   ) => {
+    const { t } = useTranslation();
     const { colors } = useTheme();
     const styles = transactionDetailsStyles(colors);
-    const localizationText = useLocalization();
     const { showToast } = useToastContext();
     const [transactionDataArray, setTransactionDataArray] = useState<{ key: string; value: any }[]>([]);
     const transactionTypeCheck = transactionData?.totalDebitAmount;
@@ -64,8 +64,8 @@ const IPayTransactionHistoryDetails = forwardRef(
       triggerSuccessToast() {
         renderToast({
           icon: <IPayImage image={images.money_tick} style={styles.moneyTimeImg} />,
-          title: localizationText.TOP_UP.REF_NUMBER_COPIED,
-          subTitle: `${transactionData?.amount} ${localizationText.COMMON.SAR}`,
+          title: 'TOP_UP.REF_NUMBER_COPIED',
+          subTitle: `${transactionData?.amount} ${t('COMMON.SAR')}`,
           toastType: ToastTypes.SUCCESS,
           displayTime: 2000,
         });
@@ -87,7 +87,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     // when on press copy icon this method will trigger, it will copy the number and render taost message
     const onPressCopyIcon = (refNo: string) => {
       copyText(refNo);
-      renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+      renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
     };
 
     // To get the tile text for list view data of a trnasaction
@@ -109,7 +109,9 @@ const IPayTransactionHistoryDetails = forwardRef(
         default:
           break;
       }
-      return `${localizationText.TRANSACTION_HISTORY[LocalizationKeysMapping[key] as keyof typeof localizationText.TRANSACTION_HISTORY]} ${text}`;
+
+      const mappedKey = LocalizationKeysMapping[key];
+      return `${t(`TRANSACTION_HISTORY.${mappedKey}`)} ${text}`;
     };
 
     // This fucntion is used to get localization for transaction data values
@@ -118,8 +120,8 @@ const IPayTransactionHistoryDetails = forwardRef(
       if (date.isValid()) {
         return formatDateAndTime(new Date(value), dateTimeFormat.TimeAndDate); // Format the date
       }
-      const mappedKey = LocalizationKeysMapping[value] as keyof typeof localizationText.TRANSACTION_HISTORY;
-      return localizationText.TRANSACTION_HISTORY[mappedKey] || value;
+      const mappedKey = LocalizationKeysMapping[value];
+      return mappedKey ? t(`TRANSACTION_HISTORY.${mappedKey}`) : value;
     };
 
     const getTransactionStatusValue = (value: string) => {
@@ -169,7 +171,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     return (
       <IPayView testID={`${testID}-transaction-detail`} style={[styles.container, style]}>
         <IPayView style={styles.headerView}>
-          <IPayFootnoteText text={localizationText.TRANSACTION_HISTORY.AMOUNT} />
+          <IPayFootnoteText text="TRANSACTION_HISTORY.AMOUNT" />
           <IPayTitle3Text
             regular={false}
             text={transactionAmount}

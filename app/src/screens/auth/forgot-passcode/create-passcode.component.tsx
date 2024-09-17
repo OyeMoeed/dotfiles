@@ -2,7 +2,6 @@ import { IPayView } from '@app/components/atoms';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import icons from '@assets/icons';
 import React from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
@@ -11,7 +10,6 @@ import { SetPasscodeComponentProps } from './forget-passcode.interface';
 
 const SetPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback }) => {
   const styles = passcodeStyles();
-  const localizationText = useLocalization();
 
   const onCodeFilled = (newCode: string) => {
     if (onCallback)
@@ -29,8 +27,8 @@ const SetPasscodeComponent: React.FC<SetPasscodeComponentProps> = ({ onCallback 
       </IPayView>
       <IPayView style={styles.forgetPasscodeheadingView}>
         <IPayPageDescriptionText
-          heading={localizationText.CHANGE_PIN.CREATE_NEW_PASSCODE}
-          text={localizationText.COMMON.ENTER_CODE_TO_ACCESS_APPLICATION}
+          heading="CHANGE_PIN.CREATE_NEW_PASSCODE"
+          text="COMMON.ENTER_CODE_TO_ACCESS_APPLICATION"
         />
       </IPayView>
       <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

@@ -93,7 +93,6 @@ import MoiPaymentSuccess from '@app/screens/moi-payments/moi-payment-success-scr
 import NotificationCenterScreen from '@app/screens/notification-center/notification-center.screen';
 import AllOrdersScreen from '@app/screens/order-history/order-history.screen';
 import PhysicalCardMainScreen from '@app/screens/physical-card-main/physical-card-main.screen';
-import PlayStationScreen from '@app/screens/playstation-store/playstation-store.screen';
 import PrintCardConfirmationScreen from '@app/screens/print-card-confirmation/print-card-confirmation.screen';
 import PrintCardSuccessScreen from '@app/screens/print-card-success/print-card-success.screen';
 import RequestListScreen from '@app/screens/request-list/request-list.screen';
@@ -264,7 +263,6 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.ALL_CATEGORIES_SCREEN} component={AllCategoriesScreen} />
           <MainStack.Screen name={screenNames.SHOP_ALL_CATEGORIES} component={AllCategoriesScreen} />
           <MainStack.Screen name={screenNames.ALL_ORDERS} component={AllOrdersScreen} />
-          <MainStack.Screen name={screenNames.PLAYSTATION} component={PlayStationScreen} />
           <MainStack.Screen
             name={screenNames.TRAFFIC_VOILATION_PAYMENT_REFUND}
             component={TrafficViolationPaymentRefundScreen}

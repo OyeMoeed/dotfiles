@@ -31,4 +31,8 @@ export interface IPaySubHeadlineTextProps {
    */
   children?: React.ReactNode;
   color?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

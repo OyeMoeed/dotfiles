@@ -2,10 +2,10 @@ import icons from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayTransactionHistoryDetails } from '@app/components/molecules';
 import { TransactionsStatus } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, States } from '@app/utilities/enums.util';
 import { forwardRef, useCallback, useImperativeHandle, useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import transactionDetailsCompStyles from './transaction-details-component.style';
 import { transactionMockData } from './transaction-details-data.mock';
 import TransactionDetailsFooterButtons from './transaction-details-footer-buttons.component';
@@ -27,7 +27,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
   ) => {
     const { colors } = useTheme();
     const styles = transactionDetailsCompStyles(colors);
-    const localizationText = useLocalization();
+    const { t } = useTranslation();
     const transactionHistoryDetailsRef = useRef<any>(null);
     const transactionStatus = transaction?.status !== TransactionsStatus.REJECTED;
     const trigerTransactionHistoryToast = () => {
@@ -69,8 +69,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
     };
 
     const getEditMessage = useCallback(() => {
-      const messageCheck =
-        editBeneficiaryMessage === localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE;
+      const messageCheck = editBeneficiaryMessage === t('INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE');
       const chipIcon = messageCheck ? icons.clock_1 : icons.tick_square;
       const iconColor = messageCheck ? colors.critical.critical800 : colors.success.success500;
       const chipVariant = messageCheck ? States.WARNING : States.SUCCESS;
@@ -93,8 +92,8 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
           <IPayTransactionHistoryDetails
             ref={transactionHistoryDetailsRef}
             transactionData={getTransactionData()}
-            senderCurrency={localizationText.COMMON.SAR}
-            receiverCurrency={localizationText.COMMON.PKR}
+            senderCurrency="COMMON.SAR"
+            receiverCurrency="COMMON.PKR"
             vatPercentage={getVatPercentage}
           />
         </IPayView>
@@ -106,7 +105,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
                 {beneficiaryName && (
                   <IPayView style={styles.beneficaryNameView}>
                     <IPayFootnoteText
-                      text={localizationText.INTERNATIONAL_TRANSFER.NEW_BENEFICIARY_NAME}
+                      text="INTERNATIONAL_TRANSFER.NEW_BENEFICIARY_NAME"
                       color={colors.natural.natural900}
                     />
                     <IPayFootnoteText text={beneficiaryName} color={colors.natural.natural500} />
@@ -125,7 +124,7 @@ const TransactionDetails = forwardRef<{}, TransactionDetailsProps>(
               btnType={buttonVariants.PRIMARY}
               large
               rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.primary.primary500} />}
-              btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+              btnText="TRANSACTION_HISTORY.VAT_INVOICE"
               btnStyle={styles.vatBtn}
             />
           </IPayView>

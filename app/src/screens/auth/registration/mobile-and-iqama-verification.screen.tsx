@@ -19,7 +19,6 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { useKeyboardStatus } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -27,6 +26,7 @@ import icons from '@assets/icons/index';
 import React, { useRef } from 'react';
 import { TextInput } from 'react-native';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook';
 import { FormValues } from './mobile-and-iqama-verification.interface';
@@ -53,14 +53,15 @@ const MobileAndIqamaVerification: React.FC = () => {
     onCloseHelpSheet,
   } = useMobileAndIqamaVerification();
 
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const iqamaIdRef = useRef<TextInput>(null);
   const styles = mobileAndIqamaStyles(colors);
-  const localizationText = useLocalization();
+
   const { otpConfig } = useConstantData();
   const { isKeyboardWillOpen } = useKeyboardStatus();
 
-  const { mobileNumberSchema, iqamaIdSchema } = getValidationSchemas(localizationText);
+  const { mobileNumberSchema, iqamaIdSchema } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,
@@ -80,15 +81,12 @@ const MobileAndIqamaVerification: React.FC = () => {
                     <Login />
                   </IPayView>
                   <IPayView style={styles.headingView}>
-                    <IPayPageDescriptionText
-                      heading={localizationText.COMMON.ENTER_INFORMATION}
-                      text={localizationText.COMMON.ENTER_VALID_ID_OR_IQAMA}
-                    />
+                    <IPayPageDescriptionText heading="COMMON.ENTER_INFORMATION" text="COMMON.ENTER_VALID_ID_OR_IQAMA" />
                   </IPayView>
                   <IPayView style={styles.inputFieldsContainer}>
                     <IPayAnimatedTextInput
                       name="mobileNumber"
-                      label={localizationText.PROFILE.MOBILE_NUMBER}
+                      label="PROFILE.MOBILE_NUMBER"
                       editable
                       keyboardType="phone-pad"
                       maxLength={constants.MOBILE_NUMBER_LENGTH}
@@ -100,7 +98,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                       <IPayAnimatedTextInput
                         ref={iqamaIdRef}
                         name="iqamaId"
-                        label={localizationText.COMMON.ID_IQAMA}
+                        label="COMMON.ID_IQAMA"
                         editable
                         keyboardType="number-pad"
                         maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
@@ -110,17 +108,14 @@ const MobileAndIqamaVerification: React.FC = () => {
                   <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsAndConditionsParentView}>
                     <IPayView style={styles.termsAndConditionsView}>
                       <IPayCheckbox onPress={onCheckTermsAndConditions} isCheck={checkTermsAndConditions} />
-                      <IPayFootnoteText
-                        style={styles.termAndConditionsText}
-                        text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT}
-                      />
+                      <IPayFootnoteText style={styles.termAndConditionsText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                       <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
                     </IPayView>
                   </IPayPressable>
                   <IPayButton
                     onPress={handleSubmit(onSubmit)}
-                    btnType="primary"
-                    btnText={localizationText.COMMON.NEXT}
+                    btnType={buttonVariants.PRIMARY}
+                    btnText="COMMON.NEXT"
                     large
                     rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
                   />
@@ -132,7 +127,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               <IPayButton
                 onPress={handleOnPressHelp}
                 btnType={buttonVariants.LINK_BUTTON}
-                btnText={localizationText.COMMON.NEED_HELP}
+                btnText="COMMON.NEED_HELP"
                 large
                 btnStyle={styles.needHelpBtn}
                 rightIcon={<IPayIcon icon={icons.message_question_help} size={20} color={colors.primary.primary500} />}
@@ -140,7 +135,7 @@ const MobileAndIqamaVerification: React.FC = () => {
             )}
             <IPayPortalBottomSheet
               noGradient
-              heading={localizationText.COMMON.LOGIN}
+              heading="COMMON.LOGIN"
               enablePanDownToClose
               simpleBar
               customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
@@ -165,7 +160,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               />
             </IPayPortalBottomSheet>
             <IPayPortalBottomSheet
-              heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+              heading="FORGOT_PASSCODE.HELP_CENTER"
               enablePanDownToClose
               simpleBar
               backBtn

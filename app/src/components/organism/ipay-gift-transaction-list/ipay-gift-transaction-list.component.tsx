@@ -8,9 +8,9 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { GiftStatus } from '@app/enums/gift-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import giftListStyles from './ipay-gift-transaction-list.styles';
 import { IPayGiftTransactionListProps } from './ipay-gift-transaction.interface';
 
@@ -29,19 +29,19 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
   tab,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = giftListStyles(colors);
-  const isReceivedCardExpired = status === GiftStatus.FAILED && tab === localizationText.SEND_GIFT.RECEIVED;
-  const isNewCard = status === GiftStatus.INITIATED && tab === localizationText.SEND_GIFT.RECEIVED;
+  const isReceivedCardExpired = status === GiftStatus.FAILED && tab === t('SEND_GIFT.RECEIVED');
+  const isNewCard = status === GiftStatus.INITIATED && tab === t('SEND_GIFT.RECEIVED');
 
   // this function should change the color of the status of the gift
   const getGiftStatusStyles = () => {
     switch (status) {
       case GiftStatus.INITIATED:
-        if (tab === localizationText.SEND_GIFT.RECEIVED) {
+        if (tab === t('SEND_GIFT.RECEIVED')) {
           return {
             color: colors.secondary.secondary500,
-            text: localizationText.SEND_GIFT.NEW,
+            text: t('SEND_GIFT.NEW'),
             leftIconColor: colors.secondary.secondary800,
             leftIconBg: styles.newStyle,
           };
@@ -49,7 +49,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
         return {
           color: colors.warning.warning500,
           textColor: colors.warning.warning800,
-          text: localizationText.SEND_GIFT.UNOPENED,
+          text: t('SEND_GIFT.UNOPENED'),
           leftIconColor: colors.warning.warning500,
           leftIconBg: styles.iconBackground,
         };
@@ -57,21 +57,21 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
         return {
           color: colors.success.success500,
           textColor: colors.success.success800,
-          text: localizationText.SEND_GIFT.OPENED,
+          text: t('SEND_GIFT.OPENED'),
           leftIconColor: colors.primary.primary900,
         };
       case GiftStatus.FAILED:
         return {
           color: colors.error.error500,
           textColor: colors.error.error800,
-          text: localizationText.SEND_GIFT.EXPIRED,
+          text: t('SEND_GIFT.EXPIRED'),
           leftIconColor: colors.primary.primary900,
         };
       default:
         return {
           color: colors.warning.warning500,
           textColor: colors.warning.warning800,
-          text: localizationText.SEND_GIFT.UNOPENED,
+          text: t('SEND_GIFT.UNOPENED'),
           leftIconColor: colors.warning.warning500,
           leftIconBg: styles.iconBackground,
         };
@@ -108,8 +108,9 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
         ) : (
           <IPayFootnoteText
             regular={false}
-            text={`${amount} ${localizationText.COMMON.SAR}`}
+            text={`${amount} ${t('COMMON.SAR')}`}
             color={colors.warning.warning800}
+            shouldTranslate={false}
           />
         )}
         {isNewCard && (

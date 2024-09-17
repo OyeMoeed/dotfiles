@@ -1,9 +1,8 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardCategories } from '@app/utilities/enums.util';
+import { buttonVariants, CardCategories } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React from 'react';
 import { ImageBackground, LayoutChangeEvent } from 'react-native';
@@ -20,17 +19,16 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({
   const { colors } = useTheme();
   const styles = cardStyles(colors);
   const { cardHeaderText, cardType, name, maskedCardNumber } = card;
-  const localizationText = useLocalization();
 
   const getDetailByStatus = (item: CardInterface) => {
     if (item.expired) {
-      return { text: localizationText.CARDS.CARD_EXPIRED, icon: icons.alertWaring };
+      return { text: 'CARDS.CARD_EXPIRED', icon: icons.alertWaring };
     }
     if (card.frozen) {
-      return { text: localizationText.CARDS.CARD_FROZEN, icon: icons.freeze_icon };
+      return { text: 'CARDS.CARD_FROZEN', icon: icons.freeze_icon };
     }
     if (card.suspended) {
-      return { text: localizationText.CARDS.TEMPORARILY_SUSPENDED, icon: icons.alertWaring };
+      return { text: 'CARDS.TEMPORARILY_SUSPENDED', icon: icons.alertWaring };
     }
     return { text: '', icon: '' };
   };
@@ -94,7 +92,7 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({
             ]}
           >
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnColor={colors.natural.natural0}
               textColor={colors.primary.primary900}
               btnStyle={styles.btnStyle}
@@ -138,9 +136,8 @@ const IPayATMCard: React.FC<IPayATMCardProps> = ({
                     card.cardType === CardCategories.PLATINUM ? colors.primary.primary900 : colors.primary.primary50
                   }
                   style={styles.cashbackText}
-                >
-                  {localizationText.CARDS.CASHBACK}
-                </IPayCaption2Text>
+                  text="CARDS.CASHBACK"
+                />
               )}
               <IPayImage
                 testID={`${testID}-bottom-right-image`}

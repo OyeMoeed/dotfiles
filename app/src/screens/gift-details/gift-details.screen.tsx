@@ -16,7 +16,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { GiftLocalizationKeys, GiftStatus, GiftTransactionKey } from '@app/enums/gift-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
@@ -24,18 +23,20 @@ import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, ToastTypes } from '
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
+import { useTranslation } from 'react-i18next';
 import { ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
 
 const GiftDetailsScreen: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const { details, isSend } = route.params;
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
-  const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
+
+  const message = t('SEND_GIFT.GIFT_CARD_MESSAGE');
+  const senderName = t('SEND_GIFT.GIFT_CARD_NAME');
   const GiftTransactionKeys = [
     GiftTransactionKey.STATUS,
     GiftTransactionKey.RECEIVER_NAME,
@@ -47,7 +48,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.passcode_error,
+        title: title || t('ERROR.PASSCODE_NOT_SET'),
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -59,7 +60,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const getTitleColor = (subTitle: string) => {
@@ -76,7 +77,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   /// TODO:  It's temporary formate
   const onPressShare = () => {
     const shareOptions = {
-      subject: localizationText.SEND_GIFT.GIFT_DETAILS,
+      subject: t('SEND_GIFT.GIFT_DETAILS'),
       title: senderName,
       message,
       url: 'AlinmaPay',
@@ -113,7 +114,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             return GiftCardStatus.UNOPENED;
         }
       }
-      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
+      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${t('COMMON.SAR')}` : value;
     },
     [details],
   );
@@ -123,7 +124,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       btnType={buttonVariants.LINK_BUTTON}
       small
       onPress={onPressShare}
-      btnText={localizationText.TOP_UP.SHARE}
+      btnText="TOP_UP.SHARE"
       leftIcon={<IPayIcon icon={icons.share} size={20} color={colors.primary.primary500} />}
     />
   );
@@ -149,7 +150,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         />
         <IPayCaption1Text
           style={styles.receiveCurrencyStyle}
-          text={localizationText.COMMON.SAR}
+          text="COMMON.SAR"
           color={colors.warning.warning600}
           regular={false}
         />
@@ -162,18 +163,14 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       </IPayView>
       <IPayFootnoteText
         style={[styles.messagePreviewText, !isSend && styles.receiveNameText]}
-        text={`${localizationText.SEND_GIFT.FROM}: ${details?.senderName}`}
+        text={`${t('SEND_GIFT.FROM')}: ${details?.senderName}`}
       />
     </IPayView>
   );
 
   const renderCardDetails = ({ item }: ItemProps) => (
     <IPayView style={styles.dataCardView}>
-      <IPayFootnoteText
-        regular
-        text={localizationText.SEND_GIFT[GiftLocalizationKeys[item]]}
-        color={colors.natural.natural900}
-      />
+      <IPayFootnoteText regular text={t(`SEND_GIFT.${GiftLocalizationKeys[item]}`)} color={colors.natural.natural900} />
       <IPayView style={styles.transactionDetailsView}>
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
@@ -195,12 +192,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader
-        backBtn
-        applyFlex
-        title={localizationText.SEND_GIFT.GIFT_DETAILS}
-        customRightComponent={customRightComponent()}
-      />
+      <IPayHeader backBtn applyFlex title="SEND_GIFT.GIFT_DETAILS" customRightComponent={customRightComponent()} />
       <IPayView style={[styles.container, !isSend && styles.receiveContainer]}>
         <IPayView style={styles.giftCardView}>
           <FlipCard
@@ -214,7 +206,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             <IPayButton
               btnType={buttonVariants.LINK_BUTTON}
               small
-              btnText={localizationText.SEND_GIFT.SWIPE_TO_FLIP}
+              btnText="SEND_GIFT.SWIPE_TO_FLIP"
               textColor={colors.natural.natural500}
               rightIcon={<IPayIcon icon={icons.repeat} size={14} color={colors.natural.natural500} />}
             />
@@ -242,7 +234,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
             large
-            btnText={localizationText.SEND_GIFT.SAY_THANKS}
+            btnText="SEND_GIFT.SAY_THANKS"
             textColor={colors.natural.natural0}
           />
         )}

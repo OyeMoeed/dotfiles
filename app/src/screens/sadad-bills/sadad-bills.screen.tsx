@@ -8,7 +8,6 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPaySadadBill } from '@app/components/organism';
 import { BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
@@ -30,6 +29,7 @@ import {
   ToastTypes,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import SadadBillsActionSheet from './component/sadad-bills-action-sheet.component';
 import { ActionSheetProps } from './component/sadad-bills-action-sheet.interface';
 import { SadadBillsScreenProps } from './sadad-bills.interface';
@@ -39,7 +39,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const { sadadBills } = route.params;
   const { colors } = useTheme();
   const styles = sadadBillsStyles();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [selectedTab, setSelectedTab] = useState<string>(BillsStatusTypes.ACTIVE_BILLS);
   const [activeBillsData, setActiveBillsData] = useState<BillsProps[]>([]);
   const [inactiveBillsData, setInactiveBillsData] = useState<BillsProps[]>([]);
@@ -50,7 +50,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
-  const tabs = [localizationText.SADAD.ACTIVE_BILLS, localizationText.SADAD.INACTIVE_BILLS];
+  const tabs = [t('SADAD.ACTIVE_BILLS'), t('SADAD.INACTIVE_BILLS')];
 
   const getSelectedBillsCount = (billsData: BillsProps[]) => {
     const count = billsData.filter((bill) => bill.selected).length;
@@ -100,7 +100,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const renderButtonText = () => {
     const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount), 0);
 
-    return `${localizationText.NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT} (${selectedBillAmount})`;
+    return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
   };
 
   const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
@@ -136,7 +136,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
         const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
 
         renderToast({
-          title: localizationText.SADAD.BILL_HAS_BEEN_DELETED,
+          title: t('SADAD.BILL_HAS_BEEN_DELETED'),
           subTitle: billToDelete?.billDesc,
           toastType: ToastTypes.SUCCESS,
         });
@@ -160,7 +160,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
   const setEditBillSuccessToast = (billSubTitle: string) => {
     renderToast({
-      title: localizationText.SADAD.INVOICE_UPDATED_SUCCESSFULLY,
+      title: t('SADAD.INVOICE_UPDATED_SUCCESSFULLY'),
       subTitle: billSubTitle,
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
@@ -184,11 +184,11 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const deleteBillOptions = {
-    title: localizationText.SADAD.DELETE_NEW_BILL,
+    title: t('SADAD.DELETE_NEW_BILL'),
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
-    message: localizationText.SADAD.DELETE_BILL_WARNING_TEXT,
-    options: [localizationText.COMMON.DELETE, localizationText.COMMON.CANCEL],
+    message: t('SADAD.DELETE_BILL_WARNING_TEXT'),
+    options: [t('COMMON.DELETE'), t('COMMON.CANCEL')],
     cancelButtonIndex: 1,
     showCancel: true,
     destructiveButtonIndex: 0,
@@ -197,7 +197,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const editOrDeletedBillOptions = {
-    options: [localizationText.PROFILE.EDIT, localizationText.COMMON.DELETE, localizationText.COMMON.CANCEL],
+    options: [t('PROFILE.EDIT'), t('COMMON.DELETE'), t('COMMON.CANCEL')],
     cancelButtonIndex: 2,
     showCancel: true,
     destructiveButtonIndex: 1,
@@ -207,11 +207,11 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const activeBillOptions = {
-    title: localizationText.SADAD.ACTIVATE_BILL,
+    title: t('SADAD.ACTIVATE_BILL'),
     showIcon: true,
     customImage: <IPayIcon icon={icons.receipt_add} size={48} color={colors.primary.primary500} />,
-    message: localizationText.SADAD.ACTIVATE_BILL_MESSAGE,
-    options: [localizationText.SADAD.ACTIVATE, localizationText.COMMON.CANCEL],
+    message: t('SADAD.ACTIVATE_BILL_MESSAGE'),
+    options: [t('SADAD.ACTIVATE'), t('COMMON.CANCEL')],
     cancelButtonIndex: 1,
     showCancel: true,
     onPress: handleActionSheetPress,
@@ -303,14 +303,14 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
       <IPayHeader
         backBtn
         applyFlex
-        title={localizationText.SADAD.SADAD_BILLS}
+        title="SADAD.SADAD_BILLS"
         titleStyle={styles.screenTitle}
         rightComponent={
           <IPayButton
             small
             onPress={onPressAddNewBill}
             btnType={buttonVariants.LINK_BUTTON}
-            btnText={localizationText.COMMON.NEW}
+            btnText="COMMON.NEW"
             rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
           />
         }
@@ -365,12 +365,12 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
             iconColor={colors.primary.primary800}
             iconSize={40}
             iconViewStyles={styles.noResultIconView}
-            message={localizationText.SADAD.NO_ACTIVE_BILLS}
+            message="SADAD.NO_ACTIVE_BILLS"
           />
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.SADAD.ADD_NEW_BILL}
+            btnText="SADAD.ADD_NEW_BILL"
             btnStyle={styles.addNewBillBtn}
             onPress={() => navigate(ScreenNames.ADD_NEW_SADAD_BILLS)}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}

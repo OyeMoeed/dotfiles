@@ -9,13 +9,13 @@ import {
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatAmount } from '@app/utilities/currency-helper.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { dateTimeFormat } from '@app/utilities';
 import getTransationIcon from '@app/utilities/transation-types-helper.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayTransactionProps } from './ipay-transaction.interface';
 import transactionItemStyles from './ipay-transaction.style';
 
@@ -34,8 +34,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = transactionItemStyles(colors);
-  const localizationText = useLocalization();
-  const trnasactionLocalization = localizationText.TRANSACTION_HISTORY;
+  const { t } = useTranslation();
+  const trnasactionLocalization = 'TRANSACTION_HISTORY.';
   const CAPTION_LINES = 1;
 
   const renderLeftIcon = () => {
@@ -57,7 +57,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const renderTrxsItemTitle = () => {
     if (transaction?.transactionRequestType === TransactionTypes.PAY_WALLET) {
       return (
-        <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1}>
+        <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
           {transaction?.nickname || transaction?.mobileNumber}
         </IPayFootnoteText>
       );
@@ -71,6 +71,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestType}
         </IPayCaption1Text>
@@ -78,7 +79,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     }
 
     return (
-      <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1}>
+      <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
         {transaction?.transactionRequestTypeDesc}
       </IPayFootnoteText>
     );
@@ -91,6 +92,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -105,6 +107,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -119,9 +122,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {localizationText.TRANSACTION_HISTORY.SEND_MONEY}
-        </IPayCaption1Text>
+          text="TRANSACTION_HISTORY.SEND_MONEY"
+        />
       );
     }
     if (
@@ -133,9 +135,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY}
-        </IPayCaption1Text>
+          text="TRANSACTION_HISTORY.RECEIVED_MONEY"
+        />
       );
     }
     if (
@@ -147,6 +148,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -161,6 +163,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -175,6 +178,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -189,6 +193,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -203,11 +208,11 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {`${localizationText.TRANSACTION_HISTORY.GIFT_TO} ${
+          text={`${t('TRANSACTION_HISTORY.GIFT_TO')} ${
             transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
           }`}
-        </IPayCaption1Text>
+          shouldTranslate={false}
+        />
       );
     }
     if (
@@ -219,6 +224,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -230,6 +236,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.transactionRequestTypeDesc}
         </IPayCaption1Text>
@@ -245,20 +252,22 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
             numberOfLines={CAPTION_LINES}
             style={styles.trasnactionTypeText}
             color={colors.natural.natural900}
-          >
-            {`${localizationText.TRANSACTION_HISTORY.GIFT_FROM} ${
+            text={`${t('TRANSACTION_HISTORY.GIFT_FROM')} ${
               transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
             }`}
+            shouldTranslate={false}
+          >
+            {}
           </IPayCaption1Text>
           <IPayCaption1Text
             numberOfLines={CAPTION_LINES}
             style={styles.trasnactionTypeText}
             color={colors.natural.natural900}
-          >
-            {`${localizationText.TRANSACTION_HISTORY.PAY_FROM} ${
+            text={`${t('TRANSACTION_HISTORY.PAY_FROM')} ${
               transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
             }`}
-          </IPayCaption1Text>
+            shouldTranslate={false}
+          />
         </>
       );
     }
@@ -271,11 +280,11 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
-        >
-          {`${localizationText.TRANSACTION_HISTORY.PAY_TO} ${
+          text={`${t('TRANSACTION_HISTORY.PAY_TO')} ${
             transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
           }`}
-        </IPayCaption1Text>
+          shouldTranslate={false}
+        />
       );
     }
     if (
@@ -288,6 +297,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           numberOfLines={CAPTION_LINES}
           style={styles.trasnactionTypeText}
           color={colors.natural.natural900}
+          shouldTranslate={false}
         >
           {transaction?.beneficiaryName}
         </IPayCaption1Text>
@@ -310,7 +320,12 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return (
         <>
           {transaction?.beneficiaryName && (
-            <IPayFootnoteText style={styles.benficiaryInternationalTransfer} numberOfLines={1} regular={false}>
+            <IPayFootnoteText
+              style={styles.benficiaryInternationalTransfer}
+              numberOfLines={1}
+              regular={false}
+              shouldTranslate={false}
+            >
               {transaction?.beneficiaryName}
             </IPayFootnoteText>
           )}
@@ -393,6 +408,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         )}
 
         <IPayFootnoteText
+          shouldTranslate={false}
           style={[
             styles.footnoteBoldTextStyle,
             transaction?.type === TransactionOperations.DEBIT ||
@@ -403,9 +419,9 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         >
           {`${
             transaction?.transactionType === TransactionOperations.DEBIT ? '-' : '+'
-          }${formatAmount(transaction?.amount)} ${localizationText.COMMON.SAR}`}
+          }${formatAmount(transaction?.amount)} ${t('COMMON.SAR')}`}
         </IPayFootnoteText>
-        <IPayCaption2Text style={styles.dateStyle}>
+        <IPayCaption2Text style={styles.dateStyle} shouldTranslate={false}>
           {formatDateAndTime(new Date(transaction?.transactionDateTime), dateTimeFormat.DateAndTime)}
         </IPayCaption2Text>
       </IPayView>

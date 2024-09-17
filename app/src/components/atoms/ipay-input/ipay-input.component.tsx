@@ -29,10 +29,10 @@ import inputStyles from './ipay-input.style';
  */
 const IPayInput: React.FC<IPayInputProps> = ({
   testID,
-  text,
+  text = '',
   style,
   numberOfLines,
-  placeholder,
+  placeholder = '',
   autoCapitalize,
   autoFocus,
   maxLength,
@@ -56,10 +56,10 @@ const IPayInput: React.FC<IPayInputProps> = ({
   return (
     <TextInput
       testID={`${testID}-input`}
-      value={t(`${text}`)}
+      value={text}
       numberOfLines={numberOfLines}
       style={[styles.textInputStyle, commonStyles.subHeadlineText, style]}
-      placeholder={placeholder}
+      placeholder={`${t(placeholder)}`}
       placeholderTextColor={placeholderTextColor || colors.natural.natural500}
       autoCapitalize={autoCapitalize}
       autoFocus={autoFocus}

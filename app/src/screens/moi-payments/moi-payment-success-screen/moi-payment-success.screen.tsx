@@ -14,7 +14,6 @@ import { IPayButton, IPayShareableImageView, IPaySuccess } from '@app/components
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -22,19 +21,20 @@ import { copyText } from '@app/utilities';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const { moiPaymentDetailes, successMessage, refund, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const [paymentDtails, setPaymentDetails] = useState<ItemProps[]>([]);
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
-  const totalTransferedAmount = `500 ${localizationText.COMMON.SAR}`;
+  const totalTransferedAmount = `500 ${t('COMMON.SAR')}`;
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -50,7 +50,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
   const onPressShare = () => {
@@ -138,14 +138,14 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                   small
                   onPress={onPressPayOtherBill}
                   leftIcon={<Refresh2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={localizationText.BILL_PAYMENTS.PAY_ANOTHER_BILL}
+                  btnText="BILL_PAYMENTS.PAY_ANOTHER_BILL"
                 />
                 <IPayButton
                   onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText={localizationText.TOP_UP.SHARE}
+                  btnText="TOP_UP.SHARE"
                 />
               </IPayView>
               <IPayButton
@@ -153,7 +153,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 btnType={buttonVariants.PRIMARY}
                 large
                 leftIcon={<Home2 style={styles.homeIcon} color={colors.natural.natural0} />}
-                btnText={localizationText.COMMON.HOME}
+                btnText="COMMON.HOME"
               />
             </IPayView>
           }

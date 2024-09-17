@@ -18,7 +18,6 @@ import {
 import { IPayButton, IPayChip, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
@@ -27,13 +26,14 @@ import { typography } from '@app/styles/typography.styles';
 import { buttonVariants, copyText } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import { GiftDetails, IGiftTransferSuccessProps, WalletPaymentDetails } from './ipay-gift-transfer-success.interface';
 import { GiftTransferSuccessStyles } from './ipay-gift-transfer-success.styles';
 
 const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = GiftTransferSuccessStyles(colors);
   const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
 
@@ -43,8 +43,8 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
 
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: t('TOP_UP.COPIED'),
+      subTitle: t('TOP_UP.REF_NUMBER_COPIED'),
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
@@ -69,7 +69,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     const commonDetails = [
       {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
         value: item?.name,
         leftIcon: item?.walletNumber ? images.alinmaP : icons.user_square,
         isAlinma: !!item?.walletNumber,
@@ -77,12 +77,12 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
       },
       {
         id: '2',
-        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
-        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        label: t('TRANSFER_SUMMARY.AMOUNT'),
+        value: `${item.amount} ${t('COMMON.SAR')}`,
       },
       {
         id: '3',
-        label: localizationText.TOP_UP.OCCASION,
+        label: t('TOP_UP.OCCASION'),
         value: item.transferPurpose,
       },
     ];
@@ -123,17 +123,17 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     );
   };
 
-  const renderText = () => localizationText.TOP_UP.GIFT_SUCCESSFUL;
+  const renderText = 'TOP_UP.GIFT_SUCCESSFUL';
 
   const renderActionLabel = () => (
     <IPayView style={styles.giftText}>
       <IPayPressable style={styles.newTopup} onPress={onSendAnotherGift}>
         <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={localizationText.SEND_GIFT.SEND_ANOTHER} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text="SEND_GIFT.SEND_ANOTHER" style={styles.newTopupText} regular />
       </IPayPressable>
       <IPayPressable style={styles.newTopup} onPress={onPreview}>
         <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={localizationText.SEND_GIFT.PREVIEW} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text="SEND_GIFT.PREVIEW" style={styles.newTopupText} regular />
       </IPayPressable>
     </IPayView>
   );
@@ -148,7 +148,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
               headingStyles={styles.chipColors}
             />
           </IPayView>
@@ -157,7 +157,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
           otherView={
             <IPayButton
               btnType={buttonVariants.LINK_BUTTON}
-              btnText={localizationText.TOP_UP.SHARE}
+              btnText="TOP_UP.SHARE"
               leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
             />
           }
@@ -187,7 +187,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
             <IPayView style={styles.linearGradientTextView}>
               <IPayGradientText
-                text={renderText()}
+                text={renderText}
                 gradientColors={gradientColors}
                 style={styles.gradientTextSvg}
                 fontSize={styles.linearGradientText.fontSize}
@@ -195,8 +195,9 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
               />
               <IPaySubHeadlineText
                 regular={false}
-                text={`${totalAmount} ${localizationText.COMMON.SAR}`}
+                text={`${totalAmount} ${t('COMMON.SAR')}`}
                 style={styles.headlineText}
+                shouldTranslate={false}
               />
             </IPayView>
             <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
@@ -209,7 +210,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.HOME}
+              btnText="COMMON.HOME"
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
               onPress={onHome}
@@ -219,7 +220,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
         </IPayLinearGradientView>
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
+        heading="SEND_GIFT.PREVIEW_GIFT"
         ref={previewBottomSheetRef}
         customSnapPoint={SNAP_POINTS.MID_LARGE}
         enablePanDownToClose
@@ -232,7 +233,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayLottieAnimation source={transferDetails?.selectedCard?.path ?? ''} style={styles.image} loop />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
-              <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
+              <IPayCaption1Text text="COMMON.SAR" color={colors.backgrounds.orange} regular={false} />
             </IPayView>
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
               <IPayFootnoteText color={themeTextColor} style={styles.messagePreviewText} text={notes} />
@@ -240,7 +241,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayFootnoteText
               color={themeTextColor}
               style={styles.messagePreviewText}
-              text={`${localizationText.SEND_GIFT.FROM}: ${name}`}
+              text={`${t('SEND_GIFT.FROM')}: ${name}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
             />
           </IPayView>

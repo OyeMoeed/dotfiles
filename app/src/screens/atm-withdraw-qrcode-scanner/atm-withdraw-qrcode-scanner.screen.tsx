@@ -6,7 +6,6 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayQRCodeScannerComponent from '@app/components/organism/ipay-qrcode-scanner/ipay-qrcode-scanner.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import atmWithdrawalConfirm from '@app/network/services/cards-management/atm-cash-withdrawal/atm-cash-withdrawal-confirm/atm-cash-withdrawal-confirm.service';
@@ -17,12 +16,13 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertVariant } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
+import { useTranslation } from 'react-i18next';
 import { ATMWithdrawQRCodeScannerScreenProps } from './atm-withdraw-qrcode-scanner.interface';
 import qrCodeScannerStyles from './atm-withdraw-qrcode-scanner.style';
 import { Crc } from './crc.util';
 
 const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenProps> = ({ route }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
@@ -34,7 +34,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
 
   const onReadQrCodeFaild = () => {
     showToast({
-      title: localizationText.ATM.SCAN_UNSUCCESSFUL,
+      title: t('ATM.SCAN_UNSUCCESSFUL'),
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
@@ -80,7 +80,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
   return (
     <IPaySafeAreaView style={styles.fill}>
       <IPayHeader
-        title={localizationText.PERMISSIONS.SCAN_QR_CODE}
+        title="PERMISSIONS.SCAN_QR_CODE"
         backBtn
         applyFlex
         rightComponent={
@@ -94,12 +94,12 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
       ) : (
         <IPayAlert
           secondaryAction={{
-            text: localizationText.COMMON.GO_BACK,
+            text: t('COMMON.GO_BACK'),
             onPress: goBackQr,
           }}
-          primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
+          primaryAction={{ text: t('COMMON.SCAN_AGAIN'), onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DEFAULT}
-          title={localizationText.ATM.CODE_SCANNED_SUCCESSFULLY}
+          title="ATM.CODE_SCANNED_SUCCESSFULLY"
           message={scannedCode}
         />
       )}

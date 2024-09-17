@@ -10,7 +10,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayGradientTextMasked, IPayList } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { ContactItem, GuideStep, IPayActivationCallProps } from './ipay-activation-call.interface';
@@ -19,7 +18,6 @@ import activationCallStyles from './ipay-activation-call.styles';
 const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contactList, guideStepsToCall, close }) => {
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
-  const localizationText = useLocalization();
 
   // TODO: Fix nested components
   // eslint-disable-next-line react/no-unstable-nested-components
@@ -85,8 +83,8 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
   return (
     <IPayView testID={`${testID}-activation-call`} style={styles.container}>
       <CallOutgoing />
-      <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE} />
-      <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.ACTIVATION_STEPS} />
+      <IPayTitle2Text text="ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE" />
+      <IPayCaption1Text style={styles.desStyle} text="ACTIVATE_BENEFICIARY.ACTIVATION_STEPS" />
       <IPayFlatlist
         data={guideStepsToCall}
         keyExtractor={(_, index) => index.toString()}

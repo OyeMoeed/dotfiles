@@ -1,6 +1,5 @@
 import { IPayFootnoteText, IPayView } from '@app/components/atoms';
 import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { Controller } from 'react-hook-form';
@@ -27,14 +26,11 @@ const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
 }): React.JSX.Element => {
   const { colors } = useTheme();
   const styles = sadadSaveBillStyles(colors);
-  const localizationText = useLocalization();
 
   return (
     <IPayView style={[styles.saveBillContainer, style]}>
       <IPayView style={styles.saveBillStyle}>
-        <IPayFootnoteText color={colors.natural.natural900}>
-          {localizationText.NEW_SADAD_BILLS.SAVE_BILL_FUTURE}
-        </IPayFootnoteText>
+        <IPayFootnoteText color={colors.natural.natural900} text="NEW_SADAD_BILLS.SAVE_BILL_FUTURE" />
         <Controller
           name={toggleInputName}
           control={toggleControl}
@@ -45,7 +41,7 @@ const IPaySadadSaveBill: React.FC<SadadSaveBillProps> = ({
       </IPayView>
       {saveBillToggle && (
         <IPayAnimatedTextInput
-          label={localizationText.NEW_SADAD_BILLS.BILL_NICK_NAME}
+          label="NEW_SADAD_BILLS.BILL_NICK_NAME"
           editable
           name={billInputName}
           containerStyle={styles.inputContainerStyle}

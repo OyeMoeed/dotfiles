@@ -2,14 +2,15 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayList, IPayTextInput } from '@app/components/molecules';
 import { KycFormCategories } from '@app/enums';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.interface';
 import getLov from '@app/network/services/core/lov/get-lov.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { debounce } from 'lodash';
+import { buttonVariants } from '@app/utilities';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
 import customerKnowledgeStyles from './ipay-customer-knowledge.style';
@@ -30,7 +31,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   onSubmit,
 }: IPayCustomerKnowledgeProps) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = customerKnowledgeStyles(colors);
   const [search, setSearch] = useState<string>('');
   const [occupationsLov, setOccupationLov] = useState<LovInfo[]>([]);
@@ -46,18 +47,18 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
   } = useForm();
 
   const incomeSourceKeys: Array<{ code: string; desc: string }> = [
-    { code: 'Payroll', desc: localizationText.KYC.SALARIES },
-    { code: 'Stock', desc: localizationText.KYC.STOCKS },
-    { code: 'Trading', desc: localizationText.KYC.TRADE },
-    { code: 'Other', desc: localizationText.KYC.OTHER },
+    { code: 'Payroll', desc: t('KYC.SALARIES ') },
+    { code: 'Stock', desc: t('KYC.STOCKS ') },
+    { code: 'Trading', desc: t('KYC.TRADE ') },
+    { code: 'Other', desc: t('KYC.OTHER ') },
   ];
 
   const monthlyIncomeKeys: Array<{ code: string; desc: string }> = [
-    { code: '1', desc: `0 ${localizationText.COMMON.TO} 4999` },
-    { code: '2', desc: `5000 ${localizationText.COMMON.TO} 8999` },
-    { code: '3', desc: `9000 ${localizationText.COMMON.TO} 13999` },
-    { code: '4', desc: `14000 ${localizationText.COMMON.TO} 19999` },
-    { code: '5', desc: `${localizationText.COMMON.MORE_THAN} 19999` },
+    { code: '1', desc: `0 ${t('COMMON.TO')} 4999` },
+    { code: '2', desc: `5000 ${t('COMMON.TO')} 8999` },
+    { code: '3', desc: `9000 ${t('COMMON.TO')} 13999` },
+    { code: '4', desc: `14000 ${t('COMMON.TO')} 19999` },
+    { code: '5', desc: `${t('COMMON.MORE_THAN')} 19999` },
   ];
 
   const setDefaultValues = () => {
@@ -130,7 +131,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder="COMMON.SEARCH"
               rightIcon={searchIcon}
               simpleInput
               containerStyle={styles.searchInputStyle}
@@ -145,9 +146,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 );
 
                 if (!filteredData.length) {
-                  return (
-                    <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
-                  );
+                  return <IPayList title="REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH" style={styles.listStyle} />;
                 }
                 return (
                   <>
@@ -230,7 +229,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayTextInput
               text={search}
               onChangeText={setSearch}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder="COMMON.SEARCH"
               rightIcon={searchIcon}
               simpleInput
               containerStyle={[styles.searchInputStyle]}
@@ -245,9 +244,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
                 );
 
                 if (!filteredData.length) {
-                  return (
-                    <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
-                  );
+                  return <IPayList title="REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle" />;
                 }
                 return (
                   <>
@@ -283,8 +280,8 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             />
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
-                btnType="primary"
-                btnText={localizationText.COMMON.SAVE}
+                btnType={buttonVariants.PRIMARY}
+                btnText="COMMON.SAVE"
                 large
                 btnIconsDisabled
                 disabled={!isDirty}

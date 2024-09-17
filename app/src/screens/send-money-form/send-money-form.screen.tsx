@@ -22,7 +22,6 @@ import constants from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WFeesReq } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
@@ -38,26 +37,26 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { PayChannel, TopupStatus } from '@app/utilities/enums.util';
+import { buttonVariants, PayChannel, TopupStatus } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-form.interface';
 import sendMoneyFormStyles from './send-money-form.styles';
 
 const SendMoneyFormScreen: React.FC = () => {
   const { colors } = useTheme();
   const { isKeyboardWillOpen, isKeyboardOpen } = useKeyboardStatus();
-  const localizationText = useLocalization();
+  const styles = sendMoneyFormStyles(colors);
+  const { t } = useTranslation();
 
   const route = useRoute();
   const { selectedContacts, from, heading, showHistory, activeFriends } = route.params as any;
 
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
-
-  const styles = sendMoneyFormStyles(colors);
 
   const [selectedItem, setSelectedItem] = useState<string>('');
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
@@ -202,11 +201,11 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
   const removeFormOptions = {
-    title: localizationText.SEND_MONEY_FORM.REMOVE,
+    title: t('SEND_MONEY_FORM.REMOVE'),
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
-    message: localizationText.SEND_MONEY_FORM.REMOVE_DETAIL,
-    options: [localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL],
+    message: t('SEND_MONEY_FORM.REMOVE_DETAIL'),
+    options: [t('PROFILE.REMOVE'), t('COMMON.CANCEL')],
     cancelButtonIndex: 1,
     showCancel: true,
     destructiveButtonIndex: 0,
@@ -268,13 +267,13 @@ const SendMoneyFormScreen: React.FC = () => {
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
           regular={false}
-          text={`${selectedContactsCount} ${localizationText.HOME.OF}`}
+          text={`${selectedContactsCount} ${t('HOME.OF')}`}
           color={colors.natural.natural900}
         />
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACT} ${t('WALLET_TO_WALLET.CONTACTS')}`}
         />
       </IPayView>
     );
@@ -287,11 +286,7 @@ const SendMoneyFormScreen: React.FC = () => {
       contacts: selectedContacts,
     });
   };
-
-  const btnText =
-    from === TRANSFERTYPE.REQUEST_MONEY
-      ? localizationText.REQUEST_MONEY.SENT_REQUEST
-      : localizationText.COMMON.TRANSFER;
+  const btnText = from === TRANSFERTYPE.REQUEST_MONEY ? t('REQUEST_MONEY.SENT_REQUEST') : t('COMMON.TRANSFER');
   return (
     <IPaySafeAreaView style={styles.container}>
       <>
@@ -302,11 +297,7 @@ const SendMoneyFormScreen: React.FC = () => {
             showHistory ? (
               <IPayPressable style={styles.history} onPress={history}>
                 <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-                <IPaySubHeadlineText
-                  text={localizationText.WALLET_TO_WALLET.HISTORY}
-                  regular
-                  color={colors.primary.primary500}
-                />
+                <IPaySubHeadlineText text="WALLET_TO_WALLET.HISTORY" regular color={colors.primary.primary500} />
               </IPayPressable>
             ) : (
               <IPayView />
@@ -357,12 +348,12 @@ const SendMoneyFormScreen: React.FC = () => {
           {!isKeyboardWillOpen && !isKeyboardOpen && (
             <IPayLinearGradientView style={styles.buttonBackground}>
               <IPayList
-                title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
+                title="SEND_MONEY_FORM.TOTAL_AMOUNT"
                 rightText={
                   <IPaySubHeadlineText
                     regular
                     color={colors.primary.primary800}
-                    text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${localizationText.COMMON.SAR}`}
+                    text={`${totalAmount ? formatNumberWithCommas(totalAmount) : 0} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -377,7 +368,7 @@ const SendMoneyFormScreen: React.FC = () => {
                 disabled={isTransferButtonDisabled() || !totalAmount || !!warningStatus}
                 btnIconsDisabled
                 medium
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 onPress={onConfirm}
                 btnText={btnText}
               />
@@ -400,7 +391,7 @@ const SendMoneyFormScreen: React.FC = () => {
         />
         <IPayBottomSheet
           noGradient
-          heading={localizationText.SEND_MONEY_FORM.REASON_FOR_TRANSFER}
+          heading="SEND_MONEY_FORM.REASON_FOR_TRANSFER"
           onCloseBottomSheet={closeReason}
           customSnapPoint={['20%', '75%']}
           ref={reasonBottomRef}
