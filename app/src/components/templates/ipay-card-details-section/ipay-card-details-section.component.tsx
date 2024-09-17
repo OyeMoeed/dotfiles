@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
@@ -48,6 +49,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   onOpenOTPSheet,
   currentCard,
   cards,
+  setCards,
 }) => {
   const localizationText = useLocalization();
   const { colors } = useTheme();
@@ -91,9 +93,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   };
 
   const hideActionSheet = () => {
-    setTimeout(() => {
-      actionSheetRef.current.hide();
-    }, 500); // Delay for closing sheet
+    actionSheetRef.current.hide();
   };
 
   const cardOptions: Option[] = [
@@ -183,9 +183,14 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     if (apiResponse?.status?.type === 'SUCCESS') {
       actionSheetRef.current.hide();
       onFreezeCard(type.toLowerCase());
-      // TODO: Fix props reassign
-      // eslint-disable-next-line no-param-reassign
-      currentCard.frozen = apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed;
+      const newCards = cards.map((card: CardInterface) => {
+        if (card.cardIndex === currentCard.cardIndex) {
+          return { ...currentCard, frozen: apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed };
+        }
+        return card;
+      });
+
+      setCards(newCards);
 
       actionTypeRef.current =
         apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed

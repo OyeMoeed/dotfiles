@@ -304,7 +304,7 @@ const CardsScreen: React.FC = () => {
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
               <IPayCardSection
                 currentCard={currentCard}
-                setCurrentCard={setCurrentCard}
+                setCards={setCardsData}
                 onOpenOTPSheet={onPinCodeSheet}
                 cards={cardsData}
               />
