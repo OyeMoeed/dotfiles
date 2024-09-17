@@ -7,7 +7,7 @@ interface IPayCardDetailsSectionProps {
   onOpenOTPSheet?: () => void;
   currentCard: CardInterface;
   cards: CardInterface[];
-  setCurrentCard: Dispatch<SetStateAction<CardInterface | undefined>>;
+  setCards: Dispatch<SetStateAction<CardInterface[]>>;
 }
 
 interface Option {
