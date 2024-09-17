@@ -10,6 +10,7 @@ const moiPaymentDetialStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.natural.natural0,
       padding: scaleFont(24),
       borderRadius: scaleFont(28),
+      flex:1
     },
     inputContainerStyle: {
       paddingLeft: scaleFont(20),

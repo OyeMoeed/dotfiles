@@ -16,6 +16,7 @@ const moiPaymentStyles = (themeColors: typeof colors) =>
     contentContainer: {
       marginTop: scaleFont(16),
       gap: scaleFont(16),
+      flex:1
     },
     searchInputWrapper: {
       flexDirection: 'row',

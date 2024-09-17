@@ -103,12 +103,6 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
       {isServiceTypeValue && (
         <>
           <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-          <DynamicFormComponent
-            billerId={selectedBiller}
-            serviceId={selectedServiceType}
-            walletNumber={walletNumber}
-            onPress={handleDynamicForm}
-          />
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}
             control={control}
@@ -122,62 +116,11 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
             )}
           />
 
-          <Controller
-            name={MoiPaymentFormFields.MY_ID}
-            control={control}
-            render={() => (
-              <IPayRHFAnimatedTextInput
-                testID="beneficiary-id-input"
-                name={MoiPaymentFormFields.MY_ID}
-                label={myIdCheck ? localizationText.BILL_PAYMENTS.MY_ID : localizationText.BILL_PAYMENTS.BENEFICIARY_ID}
-                labelColor={myIdCheck ? { color: colors.natural.natural500 } : colors.primary.primary500}
-                inputStyle={styles.inputStyle}
-                showRightIcon={!myIdCheck}
-                editable={!myIdCheck}
-                containerStyle={getInputStyles()}
-                customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
-                onClearInput={onBeneficiaryIdAction}
-                onChange={(event) => onChangeText?.(event.nativeEvent.text)}
-                assistiveText={errorMessage}
-                isError
-              />
-            )}
-          />
-
-          <Controller
-            name={MoiPaymentFormFields.ID_TYPE}
-            control={control}
-            render={() => (
-              <IPayRHFAnimatedTextInput
-                testID="id-type-input"
-                name={MoiPaymentFormFields.ID_TYPE}
-                label={localizationText.BILL_PAYMENTS.ID_TYPE}
-                editable={false}
-                showRightIcon
-                inputStyle={styles.inputStyle}
-                containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}
-                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
-                onClearInput={onIdTypeAction}
-              />
-            )}
-          />
-
-          <Controller
-            name={MoiPaymentFormFields.DURATION}
-            control={control}
-            render={() => (
-              <IPayRHFAnimatedTextInput
-                testID="duration-input"
-                name={MoiPaymentFormFields.DURATION}
-                label={localizationText.BILL_PAYMENTS.DURATION}
-                editable={false}
-                inputStyle={styles.inputStyle}
-                showRightIcon
-                containerStyle={[styles.inputContainerStyle, !isServiceTypeValue && styles.greyInputStyle]}
-                customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
-                onClearInput={onDurationAction}
-              />
-            )}
+          <DynamicFormComponent
+            billerId={selectedBiller}
+            serviceId={selectedServiceType}
+            walletNumber={walletNumber}
+            onPress={handleDynamicForm}
           />
         </>
       )}
