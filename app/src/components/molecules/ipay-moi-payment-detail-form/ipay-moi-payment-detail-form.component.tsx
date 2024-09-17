@@ -6,7 +6,6 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
-import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
 import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
@@ -114,13 +113,6 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
                 onPress={onCheckboxAction}
               />
             )}
-          />
-
-          <DynamicFormComponent
-            billerId={selectedBiller}
-            serviceId={selectedServiceType}
-            walletNumber={walletNumber}
-            onPress={handleDynamicForm}
           />
         </>
       )}
