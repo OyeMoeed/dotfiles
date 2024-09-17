@@ -17,21 +17,13 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { GiftLocalizationKeys, GiftStatus, GiftTransactionKey } from '@app/enums/gift-status.enum';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import {
-  ExecuteGiftMockProps,
-  ExecuteGiftRes,
-} from '@app/network/services/transfers/execute-gift/execute-gift.interface';
-import executeGift from '@app/network/services/transfers/execute-gift/execute-gift.service';
-import { getDeviceInfo } from '@app/network/utilities';
-import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import { ApiResponseStatusType, buttonVariants, GiftCardDetailsKey, ToastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, GiftCardDetailsKey, ToastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
 import { darkCards, giftsCardData } from '../send-gift-card/send-gift-card.constants';
 import { GiftDetails, GiftsCardDataProps } from '../send-gift-card/send-gift-card.interface';
@@ -40,13 +32,12 @@ import giftDetailsStyles from './gift-details.style';
 
 const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   const { isSend, details, giftCategory } = route.params;
+  const giftNote = details?.userNotes?.split('#')[0] ?? '';
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
   const localizationText = useLocalization();
   const { showToast } = useToastContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [giftDetails, setGiftDetails] = useState<ExecuteGiftRes>({} as ExecuteGiftRes);
 
   const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
   const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
@@ -70,37 +61,6 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
       displayTime,
     );
   };
-
-  const executeReceivedGift = async () => {
-    const payload = {
-      trxReqType: TransactionTypes.COUT_GIFT,
-      trxId: details?.requestID ?? '',
-      deviceInfo: await getDeviceInfo(),
-    };
-    try {
-      const apiResponse: ExecuteGiftMockProps = await executeGift(walletNumber, payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setGiftDetails(apiResponse?.response);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
-            toastType: ToastTypes.WARNING,
-            icon: <IPayIcon icon={icons.warning} size={24} />,
-          });
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  useEffect(() => {
-    if (!isSend && details?.status === GiftStatus.INITIATED) executeReceivedGift();
-  }, [details]);
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
@@ -247,7 +207,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
       <IPayView style={styles.messagePreview}>
         <IPayFootnoteText
           style={[styles.messagePreviewText, !isSend && styles.receiveMessageText]}
-          text={details?.userNotes}
+          text={giftNote}
           color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
         />
       </IPayView>

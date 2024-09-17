@@ -81,7 +81,7 @@ const IPayGiftTransactionList: React.FC<IPayGiftTransactionListProps> = ({
   };
 
   const { color, text, leftIconColor, leftIconBg } = getGiftStatusStyles();
-  const formattedDate = formatDateAndTime(date, dateTimeFormat.DateAndTime);
+  const formattedDate = date ? formatDateAndTime(date, dateTimeFormat.DateAndTime) : '';
 
   return (
     <IPayPressable testID={`${testID}-gift-transaction-list`} style={styles.container} onPress={onPress}>
