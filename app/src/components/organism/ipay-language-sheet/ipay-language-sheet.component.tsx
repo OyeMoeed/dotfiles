@@ -70,7 +70,11 @@ const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageShe
                 <IPayView style={sheetStyles.row}>
                   <IPayView style={sheetStyles.rowInner}>
                     <IpayFlagIcon country={item.code} />
-                    <IPayFootnoteText style={sheetStyles.languageTextStyle} text={item.language} />
+                    <IPayFootnoteText
+                      style={sheetStyles.languageTextStyle}
+                      text={item.language}
+                      shouldTranslate={false}
+                    />
                   </IPayView>
                   {(selectedLanguage === item.code && <IPayIcon icon={icon.tick_check_mark_default} />) as JSX.Element}
                 </IPayView>

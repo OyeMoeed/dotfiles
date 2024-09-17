@@ -119,7 +119,7 @@ const MarketPlace: React.FC = () => {
         <IPayFlatlist
           data={allCategories}
           renderItem={renderCategoryItem}
-          keyExtractor={(item) => `${'SHOP.SHOP_BY_CATEGORIES'}-${item.id}`}
+          keyExtractor={(item) => `${'SHOP.SHOP_BY_CATEGORIES'}-${item?.title}-${item.id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.categoryListStyle}

@@ -146,6 +146,7 @@ const Profile = () => {
         regular
         style={styles.subHeadline}
         numberOfLines={item?.key === UserFieldKeys.NATIONAL_ADDRESS ? 1 : 2}
+        shouldTranslate={false}
       >
         {item.details}
       </IPaySubHeadlineText>

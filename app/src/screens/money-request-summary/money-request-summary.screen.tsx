@@ -229,9 +229,13 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           </IPayView>
           <IPayView style={styles.listDetails}>
             {detailsText ? (
-              <IPayFootnoteText text={detailsText} style={styles.detailsText} />
+              <IPayFootnoteText shouldTranslate={false} text={detailsText} style={styles.detailsText} />
             ) : (
-              <IPayFootnoteText text={`${topUpAmount} ${t('COMMON.SAR')}`} style={styles.detailsText} />
+              <IPayFootnoteText
+                shouldTranslate={false}
+                text={`${topUpAmount} ${t('COMMON.SAR')}`}
+                style={styles.detailsText}
+              />
             )}
           </IPayView>
         </IPayView>

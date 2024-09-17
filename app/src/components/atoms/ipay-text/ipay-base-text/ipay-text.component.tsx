@@ -35,7 +35,8 @@ const IPayText: React.FC<IPayTextProps> = ({
   const isChildrenString = typeof children === 'string' || typeof text === 'string';
   const mainText = children ? String(children) : text || '';
   const formattedText = isAmount ? formatNumberWithCommas(mainText || '') : mainText;
-  const isNeedTranslate = !isNumber(formattedText) && isUpperCase(formattedText) && formattedText?.length > 1;
+  const isNeedTranslate =
+    !isNumber(formattedText) && isUpperCase(formattedText) && formattedText?.length !== 0 && formattedText?.length > 1;
   const showText = isNeedTranslate && shouldTranslate ? t(formattedText) : formattedText;
 
   return (
