@@ -52,7 +52,7 @@ const otpVerificationStyles = () =>
       bottom: verticalScale(24),
     },
     needHelpBtn: {
-      marginTop: verticalScale(24),
+      marginTop: verticalScale(14),
     },
   });
 

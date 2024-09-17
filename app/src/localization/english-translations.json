@@ -261,7 +261,7 @@
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
     "ID_UPDATION_DES": "Your ID’s expiration date is within {{DAYS}} days on {{DATE}}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
-    "REMIND_ME_LATER": "Remind me later",
+    "REMIND_ME_LATER": "Remind me again",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
     "ID_EXPIRED_DISCRIPTION": "Please make sure to renew it so you can still use AlinmaPay application.",
@@ -582,7 +582,7 @@
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
     "CONTACT_NAME": "Contact Name",
-    "NO_RESULTS_FOUND":"No Results Found",
+    "NO_RESULTS_FOUND": "No Results Found",
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
     "CONTACT_LIMIT": "Contacts limit reached"
   },
@@ -841,7 +841,7 @@
     "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
     "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number",
-    "SCAN_UNSUCCESSFUL":"Scan Unsuccessful"
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful"
   },
   "LOCAL_TRANSFER": {
     "AMOUNT": "Amount",
