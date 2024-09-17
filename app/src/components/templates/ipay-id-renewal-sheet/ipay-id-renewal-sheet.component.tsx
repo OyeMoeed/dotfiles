@@ -11,7 +11,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
-import { IdRenewalState } from '@app/utilities/enums.util';
+import { buttonVariants, IdRenewalState } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -157,22 +157,22 @@ const IPayIdRenewalSheet: React.FC = () => {
   };
   const formattedSubtitle = isAboutToExpire && !idExpired ? t('ID_RENEWAL.ID_UPDATION_DES', extraParams) : subtitle;
 
-  const DisclaimerSection = () => {
-    return (
-      <IPayView style={styles.verifyView}>
-        <IPayView style={styles.verifyViewRow}>
-          <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
-          <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
-            {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
-          </IPayFootnoteText>
-        </IPayView>
-
-        <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-          {localizationText.ID_RENEWAL.WHY_VERIFY}
-        </IPayCaption1Text>
+  // TODO: fix nested-components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const DisclaimerSection = () => (
+    <IPayView style={styles.verifyView}>
+      <IPayView style={styles.verifyViewRow}>
+        <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
+        <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
+          {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+        </IPayFootnoteText>
       </IPayView>
-    );
-  };
+
+      <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
+        {localizationText.ID_RENEWAL.WHY_VERIFY}
+      </IPayCaption1Text>
+    </IPayView>
+  );
 
   return (
     <>
@@ -180,10 +180,11 @@ const IPayIdRenewalSheet: React.FC = () => {
         heading={localizationText.ID_RENEWAL.TITLE}
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={customSnapPoints}
-        isVisible={true}
+        isVisible={isIdRenewalSheetVisible}
         simpleHeader
         simpleBar
         bold
+        onCancel={closeOTPSheet}
         cancelBnt={renewId}
       >
         {renewId ? (
@@ -198,7 +199,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             isBottomSheet={false}
             handleOnPressHelp={handleOnPressHelp}
             onResendCodePress={handleRenewalIdResendOtp}
-            hasDisclaimerSection={true}
+            hasDisclaimerSection
             disclaimerSection={<DisclaimerSection />}
           />
         ) : (
@@ -212,7 +213,7 @@ const IPayIdRenewalSheet: React.FC = () => {
               large
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnText={isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
               textColor={colors.natural.natural0}
               rightIcon={
@@ -226,8 +227,8 @@ const IPayIdRenewalSheet: React.FC = () => {
             <IPayButton
               onPress={closeBottomSheet}
               btnStyle={styles.topStyles}
-              btnType="link-button"
-              btnText={secondaryButtonText}
+              btnType={buttonVariants.LINK_BUTTON}
+              btnText={isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.secondaryButtonText : secondaryButtonText}
               textStyle={styles.skipTextStyle}
               btnIconsDisabled
             />

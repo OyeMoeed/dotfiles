@@ -48,6 +48,7 @@ const helpCenterStyles = (colors: any) =>
       width: '100%',
     },
     faqItemText: {
+      width: '90%',
       color: colors.primary.primary800,
     },
     faqItemIcon: {

@@ -74,7 +74,7 @@ const SendMoneyQRScannerScreen: React.FC = () => {
           }}
           primaryAction={{ text: localizationText.COMMON.SCAN_AGAIN, onPress: () => setRenderQRCodeScanner(true) }}
           variant={alertVariant.DESTRUCTIVE}
-          title={localizationText.ERROR.INVALID_QRCODE}
+          title={localizationText.ERROR.SCAN_UNSUCCESSFUL}
         />
       )}
     </IPaySafeAreaView>

@@ -13,11 +13,19 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
       paddingHorizontal: moderateScale(15),
       paddingVertical: verticalScale(24),
     },
-    boldStyles: { fontWeight: 'bold' },
+    descriptionText: {
+      fontWeight: 'bold',
+      marginTop: moderateScale(12, 0.3),
+    },
     minFlex: {
       flex: 0,
     },
-    chipStyles: { alignSelf: 'center', margin: verticalScale(8) },
+    chipStyles: {
+      alignSelf: 'center',
+      margin: verticalScale(8),
+      marginTop: 0,
+      marginBottom: moderateScale(24, 0.3),
+    },
 
     bottomView: {
       paddingVertical: verticalScale(8),

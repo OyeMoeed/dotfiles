@@ -61,6 +61,10 @@ export interface IPayActionSheetProps {
    */
   bodyStyle?: StyleProp<ViewStyle>;
   buttonStyle?: StyleProp<ViewStyle>;
+  /**
+   * Custom style for cancel button
+   */
+  cancelButtonStyle?: StyleProp<ViewStyle>;
 
   messageStyle?: StyleProp<TextStyle>;
 }

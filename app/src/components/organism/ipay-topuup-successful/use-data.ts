@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.const';
-import { formatDate, formatDateAndTime } from '@app/utilities/date-helper.util';
+import { formatDate } from '@app/utilities/date-helper.util';
 import { PayChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 
@@ -20,7 +20,8 @@ const useData = () => {
   } = useConstantData();
 
   const route = useRoute();
-  const { topupChannel } = route.params;
+  const { topupChannel, details } = route.params;
+
   const cardTopUpDetails = route?.params?.summaryData?.response;
   const cardPayDetails = [
     {
@@ -44,6 +45,7 @@ const useData = () => {
       icon: null,
     },
   ];
+
   const getDetails = () => {
     switch (topupChannel) {
       case PayChannel.GIFT:

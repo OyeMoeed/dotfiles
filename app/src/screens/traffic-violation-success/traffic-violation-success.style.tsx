@@ -14,6 +14,10 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
       paddingVertical: verticalScale(24),
     },
     boldStyles: { fontWeight: 'bold' },
+    descriptionText: {
+      marginTop: moderateScale(10, 0.3),
+      marginBottom: moderateScale(10, 0.3),
+    },
     minFlex: {
       flex: 0,
     },
@@ -23,6 +27,7 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
     rowStyles: {
       flexDirection: 'row',
       paddingBottom: verticalScale(4),
+      justifyContent: 'space-between',
     },
     conatinerStyles: { backgroundColor: colors.natural.natural0 },
     optionsStyle: { backgroundColor: colors.primary.primary10 },

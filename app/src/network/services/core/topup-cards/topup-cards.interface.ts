@@ -74,4 +74,4 @@ export interface TopUpCardItem {
   token: string;
 }
 
-export { TopupCardsMockProps, WalletNumberProp, CheckOutProp, CheckStatusProp };
+export { CheckOutProp, CheckStatusProp, TopupCardsMockProps, TopupCardsResponseDetails, WalletNumberProp };

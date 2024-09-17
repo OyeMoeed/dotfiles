@@ -56,6 +56,7 @@ export interface IPayPortalBottomSheetProps extends CommonPros {
   simpleHeader?: boolean;
   onCloseBottomSheet: () => void;
   onDone?: () => void;
+  onCancel?: () => void;
   bold?: boolean;
   animate?: boolean;
   /**
