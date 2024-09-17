@@ -1403,8 +1403,8 @@ const useConstantData = () => {
     // TODO: Replaced with api
     {
       id: '1',
-      image: images.playStatuon,
       title: t('SHOP.PLAYSTATION'),
+      image: images.playStation,
     },
     {
       id: '2',

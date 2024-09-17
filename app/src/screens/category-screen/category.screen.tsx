@@ -1,29 +1,44 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayChip, IPayDescriptiveCard, IPayHeader, IPayList, IPayTextInput } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
+import { PayloadMerchantsCategoryProps } from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.interface';
+import getProductsByCategoryId from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States } from '@app/utilities/enums.util';
-import React, { useCallback, useRef, useState } from 'react';
+import { APIResponseType, LanguageCode, States } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import DataItem from './playstation-store.interface';
-import playStationStyles from './playstation-store.styles';
+import DataItem from './category-screen.interface';
+import CategoryStyles from './category-screen.styles';
 
-const PlayStationScreen: React.FC = () => {
+const CategoryScreen: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { playStationPrices, sortingData, productDetailData } = useConstantData();
+  const { category } = route.params;
+  const { playStationPrices, sortingData } = useConstantData();
   const { colors } = useTheme();
-  const styles = playStationStyles(colors);
-  const sortRef = useRef<IPayBottomSheet>(null);
+  const styles = CategoryStyles(colors);
+  const sortRef = useRef<typeof IPayBottomSheet>(null);
 
   const [search, setSearch] = useState<string>('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null); // State for selected option
-  const [sortedData, setSortedData] = useState(playStationPrices);
+  const [, setCategoryProductsData] = useState([]);
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const { selectedLanguage } = useTypedSelector((state) => state.languageReducer);
+  const { showToast } = useToastContext();
+
+  const renderToast = (apiError?: string) => {
+    showToast({
+      title: 'ERROR.API_ERROR_RESPONSE',
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const openRef = () => {
     if (sortRef.current) {
@@ -31,18 +46,45 @@ const PlayStationScreen: React.FC = () => {
     }
   };
 
-  const onPricePress = () =>
-    navigate(ScreenNames.SHOP_DETAILS, {
-      details: productDetailData,
-      heading: t('SHOP.PRODUCT_DETAILS'),
-    });
+  const getProducts = async (categoryId: string) => {
+    try {
+      const payload: PayloadMerchantsCategoryProps = {
+        categoryId,
+      };
+
+      const apiResponse: any = await getProductsByCategoryId(payload);
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+        setCategoryProductsData(apiResponse?.response?.merchants);
+        setCategoryProducts(apiResponse?.response?.merchants);
+      } else if (apiResponse?.apiResponseNotOk) {
+        renderToast();
+      } else {
+        renderToast(apiResponse?.error);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+    }
+  };
+
+  useEffect(() => {
+    if (category) getProducts(category?.code);
+  }, []);
+
+  const getHeadingText = useMemo(() => {
+    switch (selectedLanguage) {
+      case LanguageCode.AR:
+        return category?.addtionalAttribute1;
+      default:
+        return category?.desc;
+    }
+  }, [category]);
 
   const handleSort = useCallback(
     (option: string) => {
       const sorted = [...playStationPrices].sort((a, b) =>
         option === t('SHOP.HIGH_TO_LOW') ? b.price - a.price : a.price - b.price,
       );
-      setSortedData(sorted);
+      setCategoryProducts(sorted);
       if (sortRef.current) {
         sortRef.current.close();
       }
@@ -84,7 +126,7 @@ const PlayStationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title="SHOP.PLAYSTATION" applyFlex />
+      <IPayHeader backBtn title={getHeadingText} applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.searchRow}>
           <IPayTextInput
@@ -101,7 +143,7 @@ const PlayStationScreen: React.FC = () => {
           </IPayPressable>
         </IPayView>
         {renderChip()}
-        <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={sortedData} onPricePress={onPricePress} />
+        <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={categoryProducts} />
       </IPayView>
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
@@ -117,4 +159,4 @@ const PlayStationScreen: React.FC = () => {
   );
 };
 
-export default PlayStationScreen;
+export default CategoryScreen;
