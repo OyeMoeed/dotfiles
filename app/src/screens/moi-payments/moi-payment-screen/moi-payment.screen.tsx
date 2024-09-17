@@ -46,7 +46,7 @@ const MoiPaymentScreen: React.FC = () => {
   const invoiceSheetRef = useRef<any>(null);
   const { myBeneficiaryId } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
-
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
     getValidationSchemas(localizationText);
 
@@ -260,6 +260,7 @@ const MoiPaymentScreen: React.FC = () => {
                       control={control}
                       onChangeText={onChangeText}
                       errorMessage={errorMessage}
+                      walletNumber={walletNumber}
                     />
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
