@@ -4,7 +4,6 @@ import icons from '@app/assets/icons';
 import { IPayActionSheet } from '@app/components/organism';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDate } from '@app/utilities/date-helper.util';
-import { useTranslation } from 'react-i18next';
 import { IPayNotificationCardProps } from './ipay-notification-card.interface';
 import getNotificationCardStyles from './ipay-notification-card.styles';
 
@@ -21,7 +20,6 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
 }) => {
   const formattedDate = formatDate(date);
   const actionSheetRef = useRef<any>(null);
-  const { t } = useTranslation;
   const { colors } = useTheme();
   const styles = getNotificationCardStyles(colors);
 
@@ -62,11 +60,7 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
       </IPayView>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[
-          t('NOTIFICATION_CENTER.MARK_AS_READ'),
-          t('NOTIFICATION_CENTER.DELETE_NOTIFICATION'),
-          t('COMMON.CANCEL'),
-        ]}
+        options={['NOTIFICATION_CENTER.MARK_AS_READ', 'NOTIFICATION_CENTER.DELETE_NOTIFICATION', 'COMMON.CANCEL']}
         cancelButtonIndex={2}
         destructiveButtonIndex={1}
         onPress={handleActionSheetPress}

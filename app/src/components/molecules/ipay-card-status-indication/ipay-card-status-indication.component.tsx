@@ -26,7 +26,7 @@ const IPayCardStatusIndication = ({
   const cardStatusIndication: any = {
     expiry: {
       warning: {
-        title: t('CARDS.EXPIRING_SOON'),
+        title: 'CARDS.EXPIRING_SOON',
         subtitle: `${t('COMMON.ON')} ${currentCard?.expiryDate}`,
         icon: icons.timer,
         rightText: (
@@ -40,7 +40,7 @@ const IPayCardStatusIndication = ({
         ),
       },
       alert: {
-        title: t('CARDS.CARD_EXPIRED'),
+        title: 'CARDS.CARD_EXPIRED',
         subtitle: t('CARDS.PLEASE_RENEW_CARD'),
         icon: icons.warning2,
         rightText: (
@@ -57,17 +57,17 @@ const IPayCardStatusIndication = ({
     },
     annual: {
       warning: {
-        title: t('CARDS.ANNUAL_FEE_COLLECTION'),
+        title: 'CARDS.ANNUAL_FEE_COLLECTION',
         subtitle: currentCard?.creditCardDetails?.nextAnnualFeesDueDate,
         icon: icons.moneys_warning,
         rightText: (
-          <IPaySubHeadlineText style={styles.fee} regular={false}>
+          <IPaySubHeadlineText style={styles.fee} regular={false} shouldTranslate={false}>
             {fee} <IPaySubHeadlineText regular text="COMMON.SAR" />
           </IPaySubHeadlineText>
         ),
       },
       alert: {
-        title: t('CARDS.ANNUAL_FEE_COLLECTION_FAILED'),
+        title: 'CARDS.ANNUAL_FEE_COLLECTION_FAILED',
         subtitle: alertSubTitle,
         icon: icons.moneys_alert,
         rightText: (
@@ -107,6 +107,7 @@ const IPayCardStatusIndication = ({
       title={cardStatusIndication[statusIndication][cardStatusType].title}
       textStyle={[styles.cardTitle, cardStatusType === CardStatusType.ALERT && styles.alertTextColor]}
       rightText={cardStatusIndication[statusIndication][cardStatusType].rightText}
+      shouldTranslateSubTitle={false}
     />
   ) : (
     <IPayView />

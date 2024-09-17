@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayProgressBar, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
@@ -30,7 +29,6 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   gradientBgStyle,
   topUpBtnStyle = {},
 }) => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = ipayAccountBalanceStyles(colors);
 
@@ -96,17 +94,12 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               <IPayCaption2Text
                 regular={false}
                 style={currentAvailableTextStyle}
-                text={monthlyAvailableBalance}
+                text={`${monthlyAvailableBalance} `}
                 shouldTranslate={false}
               />
+              <IPayCaption2Text style={totalAvailableTextStyle} color={colors.natural.natural500} text="HOME.OF" />
               <IPayCaption2Text
-                style={totalAvailableTextStyle}
-                color={colors.natural.natural500}
-                text={` ${t('HOME.OF')} `}
-                shouldTranslate={false}
-              />
-              <IPayCaption2Text
-                text={totalAvailableBalance}
+                text={` ${totalAvailableBalance}`}
                 color={colors.natural.natural500}
                 shouldTranslate={false}
               />

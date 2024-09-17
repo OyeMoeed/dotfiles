@@ -70,7 +70,10 @@ const IPayTopUpBox: React.FC<IPayBalanceBoxProps> = ({
             <IPayCaption2Text text="TOPUP_CONFIRMATION.REMAINING_AMOUNT" />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text regular={false} text={formatNumberWithCommas(remainingTopupLimit)} />
-              <IPayCaption2Text text={` ${t('HOME.OF')} ${formatNumberWithCommas(monthlyTopupLimit)}`} />
+              <IPayCaption2Text
+                text={` ${t('HOME.OF')} ${formatNumberWithCommas(monthlyTopupLimit)}`}
+                shouldTranslate={false}
+              />
             </IPayView>
           </IPayView>
         )}

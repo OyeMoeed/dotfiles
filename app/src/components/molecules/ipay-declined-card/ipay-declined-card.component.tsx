@@ -36,6 +36,7 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
         showDetail
         isShowSubTitle
         shouldDetailsTranslate={false}
+        shouldTranslateSubTitle={false}
       />
     );
   };
@@ -43,11 +44,13 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
     <IPayView testID={`${testID}-declined-card`}>
       <IPayView style={[styles.rowStyles, styles.centerAlign]}>
         <IPayChip
+          shouldTranslatedText={false}
           textValue={`${paidViolation} ${t('TRAFFIC_VIOLATION.PAID_VIOLATION')}`}
           variant={States.SUCCESS}
           isShowIcon={false}
         />
         <IPayChip
+          shouldTranslatedText={false}
           textValue={`${declinedTrasactionData?.length} ${t('TRAFFIC_VIOLATION.UNPAID_VIOLATION')}`}
           variant={States.ERROR}
           isShowIcon={false}

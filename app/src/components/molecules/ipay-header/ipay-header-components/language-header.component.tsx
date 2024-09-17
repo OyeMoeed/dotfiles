@@ -11,7 +11,7 @@ const LanguageHeader = () => {
   return (
     <IPayPressable onPress={() => {}} style={styles.rightStyles}>
       <IPayIcon icon={icons.GLOBAL} size={14} />
-      <IPaySubHeadlineText text="language" regular style={styles.back} />
+      <IPaySubHeadlineText text="COMMON.LANGUAGE" regular style={styles.back} />
     </IPayPressable>
   );
 };

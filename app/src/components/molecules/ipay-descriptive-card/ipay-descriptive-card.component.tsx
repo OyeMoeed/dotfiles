@@ -75,6 +75,7 @@ const IPayDescriptiveCard: React.FC<IPayDescriptiveCardProps> = ({
                     regular
                     text={`${discount} ${t('SHOP.DISCOUNT')} `}
                     color={colors.primary.primary500}
+                    shouldTranslate={false}
                   />
                 </IPayView>
               )}
