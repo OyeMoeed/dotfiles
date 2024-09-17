@@ -188,6 +188,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     </IPaySubHeadlineText>
   );
 
+  const renderHistory = (text = '', subText = '') => (
+    <IPayView style={styles.cardStyle}>
+      <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
+        {text}
+      </IPayFootnoteText>
+      <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+        {subText}
+      </IPaySubHeadlineText>
+    </IPayView>
+  );
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
@@ -607,16 +618,8 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
 
               {transactionJustification ||
-                (isBeneficiaryHistory && (
-                  <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.NOTES}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {transaction?.transactionDescription}
-                    </IPaySubHeadlineText>
-                  </IPayView>
-                ))}
+                (isBeneficiaryHistory &&
+                  renderHistory(localizationText.TRANSACTION_HISTORY.NOTES, transaction?.transactionDescription))}
 
               {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA && !isPayOneCard && !isCredit && (
                 <IPayView style={styles.cardStyle}>
@@ -716,26 +719,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPayPressable>
                 </IPayView>
               )}
-              {isBeneficiaryHistory && !isCredit && (
-                <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.amount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
-                  </IPaySubHeadlineText>
-                </IPayView>
-              )}
-              {!isBeneficiaryHistory && (
-                <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.DATE_AND_TIME}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {getDate(transaction?.transactionDateTime || '')}
-                  </IPaySubHeadlineText>
-                </IPayView>
-              )}
+              {isBeneficiaryHistory &&
+                !isCredit &&
+                renderHistory(
+                  localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT,
+                  `${transaction?.amount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`,
+                )}
+              {!isBeneficiaryHistory &&
+                renderHistory(
+                  localizationText.TRANSACTION_HISTORY.DATE_AND_TIME,
+                  getDate(transaction?.transactionDateTime || ''),
+                )}
             </IPayView>
           </IPayView>
         </IPayShareableImageView>
