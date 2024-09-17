@@ -22,11 +22,11 @@ const CategoryScreen: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = CategoryStyles(colors);
   const localizationText = useLocalization();
-  const sortRef = useRef<IPayBottomSheet>(null);
+  const sortRef = useRef<typeof IPayBottomSheet>(null);
 
   const [search, setSearch] = useState<string>('');
   const [selectedOption, setSelectedOption] = useState<string | null>(null); // State for selected option
-  const [categoryProductsData, setCategoryProductsData] = useState([]);
+  const [, setCategoryProductsData] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState([]);
   const { selectedLanguage } = useTypedSelector((state) => state.languageReducer);
   const { showToast } = useToastContext();
