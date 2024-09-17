@@ -72,8 +72,8 @@ const SendGiftListScreen: React.FC = () => {
     navigate(ScreenNames.SEND_GIFT_CARD);
   };
 
-  const sendGiftDetail = (item: Item, isSend: boolean) => {
-    navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: item, isSend });
+  const sendGiftDetail = (item: Item, isSend: boolean, giftCategory: string) => {
+    navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: item, isSend, giftCategory });
   };
 
   let noResultMessage;
@@ -122,19 +122,29 @@ const SendGiftListScreen: React.FC = () => {
     getWalletToWalletTransferData();
   }, []);
 
+  const giftTypeMapping = {
+    eid: localizationText.SEND_GIFT.EIYDIAH,
+    birthday: localizationText.SEND_GIFT.BIRTHDAY,
+    congrat: localizationText.SEND_GIFT.CONGRATULATIONS,
+  };
+
   const renderItem = ({ item }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount } = item;
     const isSend = selectedTab === localizationText.SEND_GIFT.SENT;
+
+    const giftCategory = userNotes.split('#')[1];
+    const giftType = giftCategory?.split('_')[0]?.toLowerCase();
+    const occasion = giftTypeMapping[giftType as keyof typeof giftTypeMapping];
 
     return (
       <IPayView style={styles.listView}>
         <IPayGiftTransactionList
           date={trnsDateTime}
           titleText={isSend ? receiverName : senderName}
-          footText={userNotes}
+          footText={occasion}
           status={status}
           amount={amount}
-          onPress={() => sendGiftDetail(item, isSend)}
+          onPress={() => sendGiftDetail(item, isSend, giftCategory)}
           titleWrapper={styles.titleWrapper}
           tab={selectedTab}
         />

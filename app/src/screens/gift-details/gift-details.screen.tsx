@@ -17,6 +17,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { GiftLocalizationKeys, GiftStatus, GiftTransactionKey } from '@app/enums/gift-status.enum';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import {
   ExecuteGiftMockProps,
@@ -38,7 +39,7 @@ import { GiftDetailsProps, ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
 
 const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
-  const { isSend, details } = route.params;
+  const { isSend, details, giftCategory } = route.params;
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
   const localizationText = useLocalization();
@@ -49,7 +50,6 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
   const message = localizationText.SEND_GIFT.GIFT_CARD_MESSAGE;
   const senderName = localizationText.SEND_GIFT.GIFT_CARD_NAME;
-  const trxReqType = 'COUT_GIFT';
   const GiftTransactionKeys = [
     GiftTransactionKey.STATUS,
     GiftTransactionKey.RECEIVER_NAME,
@@ -73,7 +73,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
   const executeReceivedGift = async () => {
     const payload = {
-      trxReqType,
+      trxReqType: TransactionTypes.COUT_GIFT,
       trxId: details?.requestID ?? '',
       deviceInfo: await getDeviceInfo(),
     };
@@ -171,7 +171,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
   const getGiftCardAnimation = () => {
     if (details) {
-      const cardId = details?.giftCategory;
+      const cardId = giftCategory;
       const category = cardId?.split('_')[0].toLowerCase();
 
       const getCardsList = giftsCardData[category as keyof GiftsCardDataProps];
@@ -179,9 +179,9 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
       const allCards = getCardsList(colors);
 
-      const matchedGiftCard = allCards.find((card) => card.id === cardId);
+      const matchedGiftCard = allCards.find((card) => card.id === cardId) ?? allCards[1];
 
-      return matchedGiftCard || ({} as GiftDetails);
+      return matchedGiftCard;
     }
     return {} as GiftDetails;
   };

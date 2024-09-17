@@ -11,6 +11,7 @@ interface GiftDetailsParams {
   params: {
     isSend?: boolean;
     details: TransferItem;
+    giftCategory: string;
   };
 }
 

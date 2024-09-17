@@ -22,7 +22,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'eid 6#Eid_6',
             status: 'failed',
-            giftCategory: 'Eid_2',
           },
           {
             amount: '10.00',
@@ -41,7 +40,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'eid 5#Eid_5',
             status: 'failed',
-            giftCategory: 'Eid_2',
           },
           {
             amount: '7.00',
@@ -60,7 +58,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'Happy eid#Eid_1',
             status: 'executed',
-            giftCategory: 'Eid_2',
           },
           {
             amount: '15.00',
@@ -79,7 +76,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'Congratulations#Congrat_1',
             status: 'failed',
-            giftCategory: 'Eid_2',
           },
         ],
         SENT: [
@@ -100,7 +96,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'Happy eidd#Eid_5',
             status: 'initiated',
-            giftCategory: 'Eid_2',
           },
           {
             amount: '10.00',
@@ -119,7 +114,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'Happy eid#Eid_1',
             status: 'failed',
-            giftCategory: 'Eid_2',
           },
           {
             amount: '32.00',
@@ -138,7 +132,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'Ø¹ÙŠØ¯ Ø³Ø¹ÙŠØ¯#Eid_1',
             status: 'executed',
-            giftCategory: 'Eid_2',
           },
           {
             amount: '100.00',
@@ -157,7 +150,6 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             bankVATAmt: null,
             userNotes: 'Happy eid#Eid_1',
             status: 'failed',
-            giftCategory: 'Eid_2',
           },
         ],
       },
