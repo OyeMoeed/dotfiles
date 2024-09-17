@@ -6,6 +6,7 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
+import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
 import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
@@ -39,6 +40,10 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   control,
   onChangeText,
   errorMessage,
+  handleDynamicForm,
+  selectedServiceType,
+  selectedBiller,
+  walletNumber,
 }: IPayMoiPaymentDetailFormProps) => {
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
@@ -98,7 +103,12 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
       {isServiceTypeValue && (
         <>
           <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-
+          <DynamicFormComponent
+            billerId={selectedBiller}
+            serviceId={selectedServiceType}
+            walletNumber={walletNumber}
+            onPress={handleDynamicForm}
+          />
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}
             control={control}

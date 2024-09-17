@@ -79,4 +79,8 @@ export interface IPayMoiPaymentDetailFormProps {
   control?: any;
   onChangeText?: (text: string) => void;
   errorMessage?: string;
+  handleDynamicForm: () => void;
+  selectedServiceType: string;
+  selectedBiller: string;
+  walletNumber: string;
 }

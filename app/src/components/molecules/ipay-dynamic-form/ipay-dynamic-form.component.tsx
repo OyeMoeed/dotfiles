@@ -11,16 +11,14 @@ import DynamicFormComponentProps from './ipay-dynamic-form.interface';
 import dynamicFormoStyles from './ipay-dynamic-form.styles';
 import DynamicFieldRenderer from './ipay-field-renderer/ipay-field-renderer.component';
 
-const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, serviceId, walletNumber }) => {
+const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ billerId, serviceId, walletNumber, onPress }) => {
   const [fields, setFields] = useState<DynamicField[]>([]);
   const localization = useLocalization();
   const styles = dynamicFormoStyles();
 
   useEffect(() => {
     const fetchFields = async () => {
-      const payload = { walletNumber };
-
-      const response = await getDynamicFieldsService(billerId, serviceId, walletNumber, payload);
+      const response = await getDynamicFieldsService(billerId, serviceId, walletNumber);
       if (response) {
         const fetchedFields = response.response.dynamicFields;
         setFields(fetchedFields);
