@@ -61,8 +61,9 @@ export interface CardInterface {
    */
   isCardPrinted?: boolean;
   /**
-   * card printing status
+   * card type description
    */
+  cardTypeDesc?: string;
   annualFeeDue?: any;
   nextAnnualFeeAmt?: any;
   nextAnnualFeeVAT?: any;

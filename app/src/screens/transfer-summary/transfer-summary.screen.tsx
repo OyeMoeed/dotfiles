@@ -57,6 +57,8 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>(null);
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef<any>(null);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
 
   const isItemHasWallet = (item: IW2WResRequest): boolean => {
     const walletNumber = transfersDetails.activeFriends?.filter(
@@ -175,16 +177,18 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const handleOnPressHelp = () => {
-    helpCenterRef?.current?.present();
+    setHelpCenterVisible(true);
   };
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
+    setOtpSheetVisible(false);
   };
 
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     try {
-      sendMoneyBottomSheetRef.current?.present();
+
+      setOtpSheetVisible(true);
 
       setIsLoading(true);
       const payload: IW2WTransferPrepareReq = {
@@ -201,7 +205,7 @@ const TransferSummaryScreen: React.FC = () => {
         setOtpRef(apiResponse?.response?.otpRef as string);
         setTransactionId(apiResponse?.authentication?.transactionId);
         if (showOtpSheet) {
-          sendMoneyBottomSheetRef.current?.present();
+          setOtpSheetVisible(true);
         }
       }
       otpVerificationRef?.current?.resetInterval();
@@ -225,7 +229,7 @@ const TransferSummaryScreen: React.FC = () => {
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       if (apiResponse?.response) {
-        sendMoneyBottomSheetRef.current?.close();
+        setOtpSheetVisible(false);
         navigate(ScreenNames.W2W_TRANSFER_SUCCESS, {
           transferDetails: {
             formData: transfersDetails.formInstances,
@@ -242,7 +246,6 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const onConfirmOtp = () => {
-    console.log("Refat Here ")
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
       otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
@@ -328,6 +331,7 @@ const TransferSummaryScreen: React.FC = () => {
         customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={sendMoneyBottomSheetRef}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
@@ -352,7 +356,8 @@ const TransferSummaryScreen: React.FC = () => {
         customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         ref={helpCenterRef}
         testID="transfer-details-help-center"
-        onCloseBottomSheet={onCloseHelpBottomSheet}
+        onCloseBottomSheet={()=> setHelpCenterVisible(false)}
+        isVisible={isHelpCenterVisible}
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />
       </IPayPortalBottomSheet>

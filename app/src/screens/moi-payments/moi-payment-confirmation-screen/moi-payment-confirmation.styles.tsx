@@ -27,6 +27,17 @@ const moiPaymentConfirmationStyls = () =>
       paddingVertical: moderateScale(12, 0.3),
       marginTop: moderateScale(1),
     },
+    sadadFooterGradient: {
+      backgroundColor: 'transparent',
+    },
+    sadadBtn: {
+      height: moderateScale(50, 0.3),
+      paddingVertical: moderateScale(14, 0.3),
+    },
+    topUpButton: {
+      height: moderateScale(34, 0.3),
+      borderRadius: moderateScale(12, 0.3),
+    },
   });
 
 export default moiPaymentConfirmationStyls;
