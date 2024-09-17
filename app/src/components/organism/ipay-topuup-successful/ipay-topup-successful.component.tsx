@@ -23,10 +23,10 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 import useData from './use-data';
-import { formatDateAndTime } from '@app/utilities/date-helper.util';
 
 const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   completionStatus,
@@ -53,7 +53,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       containerStyle: topupChannel === PayChannel.ORDER ? styles.orderToast : styles.toastContainer,
     });
   };
-  const [cardPayDetails, setCardPayDetails] = useState<any>([
+  const [cardPayDetails] = useState<any>([
     {
       id: '1',
       label: localizationText.TOP_UP.TOPUP_TYPE,
@@ -69,9 +69,13 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       icon: icons.copy,
       color: colors.primary.primary500,
     },
-    { id: '4', label: localizationText.TOP_UP.TOPUP_DATE, value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime), icon: null },
+    {
+      id: '4',
+      label: localizationText.TOP_UP.TOPUP_DATE,
+      value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime),
+      icon: null,
+    },
   ]);
-
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
@@ -219,7 +223,13 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         <IPayFlatlist
           style={styles.detailesFlex}
           scrollEnabled
-          data={topupChannel === PayChannel.REQUEST_ACCEPT ? requestPaidSummaryData : topupChannel === PayChannel.CARD ? cardPayDetails : getDetails()}
+          data={
+            topupChannel === PayChannel.REQUEST_ACCEPT
+              ? requestPaidSummaryData
+              : topupChannel === PayChannel.CARD
+                ? cardPayDetails
+                : getDetails()
+          }
           renderItem={renderNonAlinmaPayItem}
           showsVerticalScrollIndicator={false}
         />

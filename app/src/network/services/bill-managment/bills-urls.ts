@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 // Import the MoiDynamicFieldsPayloadProps interface
 import { MoiDynamicFieldsPayloadProps } from './moi/get-dynamic-feilds/get-dynamic-fields.interface';
 

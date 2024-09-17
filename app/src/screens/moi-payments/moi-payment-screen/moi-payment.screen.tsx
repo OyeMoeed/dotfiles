@@ -11,7 +11,6 @@ import {
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -19,16 +18,11 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import {
-  InlinePaymentValidationProps,
-  PaymentValidationPayloadProps,
-} from '@app/network/services/bill-managment/moi/payment-validation/payment-validation.interface';
-import paymentValidation from '@app/network/services/bill-managment/moi/payment-validation/payment-validation.service';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, MoiPaymentTypes } from '@app/utilities/enums.util';
+import { MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import MoiFormFormValues from './moi-payment.interface';
@@ -51,7 +45,6 @@ const MoiPaymentScreen: React.FC = () => {
   const [beneficiaryID, setBeneficiaryID] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const { showToast } = useToastContext();
   const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
 
@@ -68,15 +61,6 @@ const MoiPaymentScreen: React.FC = () => {
     myIdInput,
     myId,
   });
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const setFormSheetData = (data: { id: number; text: string }[], snpaPoints: string[]) => {
     setBottomSheetData(data);
@@ -97,47 +81,6 @@ const MoiPaymentScreen: React.FC = () => {
     },
     [selectedTab],
   );
-
-  const validateMoiBillPayment = async () => {
-    try {
-      const payload: PaymentValidationPayloadProps = {
-        accountNumber: '12312312',
-        walletNumber: '123123123',
-        amount: '500',
-        amountCurrency: 'SAR',
-        dynamicFields: [
-          {
-            index: 'BEN.FRST.NAME',
-            value: 'habibspecial',
-          },
-          {
-            index: 'BEN.LAST.NAME',
-            value: 'pakspecial',
-          },
-        ],
-      };
-      const inlineParams: InlinePaymentValidationProps = {
-        serviceId: '1231231',
-        billerId: '123123',
-      };
-      const apiResponse: any = await paymentValidation(payload, inlineParams);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS: {
-          break;
-        }
-        case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderToast(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
 
   const setDataForBottomSheet = (type: string) => {
     switch (type) {

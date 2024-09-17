@@ -7,7 +7,6 @@ const useData = () => {
   const localizationText = useLocalization();
   const {
     applePayDetails,
-    cardPayDetails,
     walletPayDetailes,
     orderDetails,
     sendMoneyDetails,

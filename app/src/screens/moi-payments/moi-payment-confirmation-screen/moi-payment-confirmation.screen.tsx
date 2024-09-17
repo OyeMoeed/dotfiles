@@ -1,4 +1,4 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
@@ -7,18 +7,17 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.interface';
 import moiBillPayment from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.service';
 import { PrepareBillPayloadProps } from '@app/network/services/bill-managment/moi/prepare-bill/prepare-bill.interface';
 import prepareBill from '@app/network/services/bill-managment/moi/prepare-bill/prepare-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import React, { useMemo, useRef, useState } from 'react';
+import icons from '@app/assets/icons';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
@@ -30,19 +29,8 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { showToast } = useToastContext();
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
-  const {
-    moiPaymentDetailes,
-    handlePay,
-    otp,
-    setOtp,
-    isLoading,
-    otpError,
-    setOtpError,
-    apiError,
-    setAPIError,
-    otpVerificationRef,
-    moiRefundBillSubList,
-  } = useMoiPaymentConfirmation();
+  const { moiPaymentDetailes, otp, setOtp, isLoading, otpError, setOtpError, setAPIError, otpVerificationRef } =
+    useMoiPaymentConfirmation();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
   const otpBottomSheetRef = useRef<any>(null);
@@ -103,15 +91,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     }
   };
 
-  const redirectToSuccess = () => {
-    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-      moiPaymentDetailes: moiBillData,
-      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
-      subDetails: moiRefundBillSubList,
-      refund: false,
-    });
-  };
-
   const verifyOtp = async () => {
     try {
       const deviceInfo = await getDeviceInfo();
@@ -131,7 +110,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       };
 
       const apiResponse: any = await moiBillPayment(payload);
-      console.debug('apiResponse: ', JSON.stringify(apiResponse, null, 2));
       if (apiResponse?.status?.type === 'SUCCESS') {
         if (apiResponse?.response) {
           onCloseBottomSheet();

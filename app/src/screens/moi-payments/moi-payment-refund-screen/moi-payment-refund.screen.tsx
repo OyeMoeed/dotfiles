@@ -13,7 +13,7 @@ import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment
 import moiBillPayment from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.service';
 import { PrepareBillPayloadProps } from '@app/network/services/bill-managment/moi/prepare-bill/prepare-bill.interface';
 import prepareBill from '@app/network/services/bill-managment/moi/prepare-bill/prepare-bill.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -34,17 +34,8 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
   const otpBottomSheetRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
   const { showToast } = useToastContext();
-  const {
-    otp,
-    setOtp,
-    isLoading,
-    otpError,
-    setOtpError,
-    apiError,
-    setAPIError,
-    otpVerificationRef,
-    moiRefundBillSubList,
-  } = useMoiPaymentConfirmation();
+  const { otp, setOtp, isLoading, otpError, setOtpError, setAPIError, otpVerificationRef, moiRefundBillSubList } =
+    useMoiPaymentConfirmation();
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.walletNumber);
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
 

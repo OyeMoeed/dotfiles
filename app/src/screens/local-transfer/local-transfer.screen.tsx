@@ -193,8 +193,6 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const activateBeneficiary = useRef<bottomSheetTypes>(null);
-
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
     const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
@@ -213,6 +211,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 onPressBtn(item);
               }}
               btnText={
