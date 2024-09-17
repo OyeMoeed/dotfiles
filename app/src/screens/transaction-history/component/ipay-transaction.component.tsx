@@ -123,11 +123,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         </IPayCaption1Text>
       );
     }
-    if (
-      (transaction?.transactionType === TransactionOperations.CREDIT ||
-        transaction?.transactionType === TransactionOperations.DEBIT) &&
-      isBeneficiaryHistory
-    ) {
+    if (isBeneficiaryHistory) {
       return (
         <IPayCaption1Text
           numberOfLines={CAPTION_LINES}

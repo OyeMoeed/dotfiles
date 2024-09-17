@@ -19,6 +19,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { isIosOS } from '@app/utilities/constants';
+import { formatSlashDateTime } from '@app/utilities/date-helper.util';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
@@ -156,19 +157,9 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     });
   };
 
-  const formatTimeAMPM = (tisoDate?: any): string => {
-    const date = new Date(tisoDate);
-    const hours = date?.getHours();
-    const minutes = date?.getMinutes();
-    let strMin: string | number = '';
-    strMin = minutes < 10 ? `0${minutes}` : minutes;
-    const strTime = `${hours}:${strMin}`;
-    return strTime;
-  };
-
   const getDate = (tisoDate?: any) => {
     const date = new Date(tisoDate)?.toISOString()?.replace(/T.*/, '')?.split('-').reverse().join('/');
-    return `${formatTimeAMPM(tisoDate)} - ${date}` || '';
+    return `${formatSlashDateTime(tisoDate)} - ${date}` || '';
   };
 
   const copyRefNo = (value: string) => {
@@ -812,9 +803,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
-
-              {/* {transaction?.transactionRequestType !== TransactionTypes.PAY_WALLET &&
-                transaction?.transactionType === TransactionOperations.DEBIT && ( */}
               {!isBeneficiaryHistory && (
                 <IPayView style={styles.cardStyle}>
                   <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
@@ -825,7 +813,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
-              {/* )} */}
             </IPayView>
           </IPayView>
         </IPayShareableImageView>
