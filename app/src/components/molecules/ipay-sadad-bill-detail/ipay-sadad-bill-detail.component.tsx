@@ -4,7 +4,6 @@ import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/componen
 import { STANDARD_MAX_LENGTH } from '@app/constants/app-validations';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { SadadBillDetailFormProps } from './ipay-sadad-bill-detail.interface';
 import sadadBillDetailStyles from './ipay-sadad-bill-detail.style';
 
@@ -38,9 +37,8 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
 }: SadadBillDetailFormProps) => {
   const { colors } = useTheme();
   const styles = sadadBillDetailStyles(colors);
-  const { t } = useTranslation();
 
-  const AccountTextInputLabel = accountInputLabel || t('NEW_SADAD_BILLS.ACCOUNT_NUMBER');
+  const AccountTextInputLabel = accountInputLabel || 'NEW_SADAD_BILLS.ACCOUNT_NUMBER';
 
   return (
     <IPayView style={styles.inputWrapper} testID={testID}>

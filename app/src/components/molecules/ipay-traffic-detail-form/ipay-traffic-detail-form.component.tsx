@@ -7,7 +7,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficVoilationTypes } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
@@ -43,7 +42,6 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   handleFormTabSelect,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
-  const { t } = useTranslation();
   const styles = trafficDetailStyles(colors);
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
@@ -51,7 +49,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
-  const tabs = [t('TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER'), t('TRAFFIC_VIOLATION.BY_VIOLATION_ID')];
+  const tabs = ['TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER', 'TRAFFIC_VIOLATION.BY_VIOLATION_ID'];
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
@@ -82,7 +80,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
         render={() => (
           <IPayRHFAnimatedTextInput
             name={TrafficPaymentFormFields.MY_ID}
-            label={myIdCheck ? t('BILL_PAYMENTS.MY_ID') : t('TRAFFIC_VIOLATION.VIOLATOR_ID')}
+            label={myIdCheck ? 'BILL_PAYMENTS.MY_ID' : 'TRAFFIC_VIOLATION.VIOLATOR_ID'}
             labelColor={myIdCheck ? colors.natural.natural500 : colors.primary.primary500}
             showRightIcon={!myIdCheck}
             editable={!myIdCheck}

@@ -64,7 +64,7 @@ const IPayTransactionHistoryDetails = forwardRef(
       triggerSuccessToast() {
         renderToast({
           icon: <IPayImage image={images.money_tick} style={styles.moneyTimeImg} />,
-          title: t('TOP_UP.REF_NUMBER_COPIED'),
+          title: 'TOP_UP.REF_NUMBER_COPIED',
           subTitle: `${transactionData?.amount} ${t('COMMON.SAR')}`,
           toastType: ToastTypes.SUCCESS,
           displayTime: 2000,
