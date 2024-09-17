@@ -193,7 +193,18 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
-  const activateBeneficiary = useRef<bottomSheetTypes>(null);
+  const handleActivateBeneficiary = useCallback(() => {
+    setShowActivationSheet(true);
+    setActivateHeight(SNAP_POINT.X_SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE)
+      navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
+    else handleActivateBeneficiary();
+  };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
     const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
@@ -213,6 +224,7 @@ const LocalTransferScreen: React.FC = () => {
           <IPayView style={styles.moreButton}>
             <IPayButton
               onPress={() => {
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
                 onPressBtn(item);
               }}
               btnText={
@@ -357,18 +369,6 @@ const LocalTransferScreen: React.FC = () => {
       setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
     }
   }, []);
-
-  const handleActivateBeneficiary = useCallback(() => {
-    setShowActivationSheet(true);
-    setActivateHeight(SNAP_POINT.X_SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-    else handleActivateBeneficiary();
-  };
 
   const makeTransfer = () => {
     setShowActivationSheet(false);
