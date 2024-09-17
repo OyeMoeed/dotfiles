@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { successIconAnimation } from '@app/assets/lottie';
+import { penddingSuccessIconAnimation, successIconAnimation } from '@app/assets/lottie';
 import { MasterCard } from '@app/assets/svgs';
 import {
   IPayFlatlist,
@@ -42,7 +42,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const { showToast } = useToastContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
-
+  const penddingGradientColors = [colors.critical.critical500, colors.backgrounds.yellowish];
   const renderToast = () => {
     showToast({
       title: topupChannel === PayChannel.ORDER ? localizationText.ORDER_SCREEN.COPY : localizationText.TOP_UP.COPIED,
@@ -126,7 +126,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                 style={styles.copyIcon}
                 onPress={() => {
                   if (icon === icons.copy) {
-                    handleClickOnCopy(3, detailsText);
+                    handleClickOnCopy(3, value);
                   }
                 }}
               >
@@ -321,13 +321,18 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           >
             {completionStatus === TopupStatus.SUCCESS && (
               <IPayView>
-                <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+                <IPayLottieAnimation
+                  source={
+                    summaryData?.response.pmtResultCd === 'P' ? penddingSuccessIconAnimation : successIconAnimation
+                  }
+                  style={styles.successIcon}
+                />
                 <IPayView style={styles.linearGradientTextView}>
                   <IPayGradientText
                     text={
                       summaryData?.response.pmtResultCd === 'P' ? localizationText.TOP_UP.PENDING_PAYMENT : renderText()
                     }
-                    gradientColors={gradientColors}
+                    gradientColors={summaryData?.response.pmtResultCd === 'P' ? penddingGradientColors : gradientColors}
                     style={styles.gradientTextSvg}
                     fontSize={styles.linearGradientText.fontSize}
                     fontFamily={styles.linearGradientText.fontFamily}

@@ -7,5 +7,7 @@ interface IPayQuickActionsProps {
   payChannelType?: PayChannel;
   monthlyRemainingOutgoingAmount: string;
   setTopUpAmount?: (text: string) => void;
+  onSelectCard?: (selectedCardId: string) => void;
+  channel?: string;
 }
 export default IPayQuickActionsProps;
