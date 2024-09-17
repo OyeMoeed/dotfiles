@@ -259,7 +259,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           <IPayCaption2Text style={styles.accountBalanceText} text="CARDS.ACCOUNT_BALANCE" />
           <IPaySubHeadlineText style={styles.accountBalanceText} shouldTranslate={false}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular text={` ${t('COMMON.SAR')}`} />
+            <IPaySubHeadlineText regular text={` ${t('COMMON.SAR')}`} shouldTranslate={false} />
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />

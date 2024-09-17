@@ -316,6 +316,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           status={transactionState}
           amount={targetAmount}
           onPress={() => openBottomSheet(item)}
+          shouldTranslateTitle={false}
         />
       </IPayView>
     );

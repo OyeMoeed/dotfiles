@@ -197,6 +197,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
                 regular={false}
                 text={`${totalAmount} ${t('COMMON.SAR')}`}
                 style={styles.headlineText}
+                shouldTranslate={false}
               />
             </IPayView>
             <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>

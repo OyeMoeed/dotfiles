@@ -25,8 +25,9 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const variant = route?.params?.variant;
   const headingText =
     variant === ScreenNames.TRAFFIC_VOILATION_NUM_REFUND
-      ? t('TRAFFIC_VIOLATION.VIOLATION_SUCCESS')
-      : t('TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS');
+      ? 'TRAFFIC_VIOLATION.VIOLATION_SUCCESS'
+      : 'TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS';
+
   return (
     <IPayPageWrapper>
       <IPayView style={styles.childContainer}>

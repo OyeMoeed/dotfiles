@@ -74,6 +74,7 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
                 btnText={`${t('TRAFFIC_VIOLATION.REFUND')} (${selectedBillsAmount} ${t('COMMON.SAR')})`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
+                shouldTranslateBtnText={false}
               />
             </IPayView>
           )}

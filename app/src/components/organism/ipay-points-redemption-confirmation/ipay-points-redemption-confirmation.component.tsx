@@ -156,6 +156,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
                     color={colors.primary.primary800}
                     text={`${params?.redeemAmount} ${t('COMMON.SAR')}`}
                     style={styles.detailText}
+                    shouldTranslate={false}
                   />
                 </IPayView>
               </IPayView>

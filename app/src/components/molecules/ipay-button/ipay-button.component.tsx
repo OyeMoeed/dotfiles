@@ -27,6 +27,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   width,
   textColor,
   textStyle,
+  shouldTranslateBtnText,
 }: IPayButtonProps): JSX.Element => {
   const renderComponent = () => {
     const buttonTypes = constants.BUTTON_TYPES;
@@ -49,6 +50,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             large={large}
             width={width}
             textColor={textColor}
+            shouldTranslateBtnText={shouldTranslateBtnText}
           />
         );
       case buttonTypes.OUTLINE:
@@ -69,6 +71,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             large={large}
             width={width}
             textColor={textColor}
+            shouldTranslateBtnText={shouldTranslateBtnText}
           />
         );
       case buttonTypes.LINK_BUTTON:
@@ -89,6 +92,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             large={large}
             width={width}
             textColor={textColor}
+            shouldTranslateBtnText={shouldTranslateBtnText}
           />
         );
       default:

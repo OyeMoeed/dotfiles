@@ -103,9 +103,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
           </IPayView>
           {suffix && value && (
             <IPayView style={styles.suffix}>
-              <IPaySubHeadlineText color={colors.natural.natural900} regular>
-                {suffix}
-              </IPaySubHeadlineText>
+              <IPaySubHeadlineText color={colors.natural.natural900} regular text={suffix} />
             </IPayView>
           )}
         </IPayView>

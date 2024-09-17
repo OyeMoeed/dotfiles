@@ -221,6 +221,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
             />
             <IPayView>
               <IPayList
+                shouldTranslateTitle={false}
                 regularTitle={false}
                 title={transferData?.fullName}
                 subTitle={transferData?.countryDesc}

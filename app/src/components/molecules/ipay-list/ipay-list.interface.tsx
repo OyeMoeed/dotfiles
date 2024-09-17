@@ -185,7 +185,15 @@ export interface IPayListProps {
    * */
   regularTitle?: boolean;
   /**
-   * Need translate the text.
+   * Need translate the details
    */
   shouldDetailsTranslate?: boolean;
+  /**
+   * Need translate the Title
+   */
+  shouldTranslateTitle?: boolean;
+  /**
+   * Need translate the subTitle
+   */
+  shouldTranslateSubTitle?: boolean;
 }

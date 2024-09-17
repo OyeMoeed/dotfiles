@@ -90,6 +90,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
             color={colors.natural.natural900}
             regular={false}
             text={`: ${overPaidAmount} ${currency}`}
+            shouldTranslate={false}
           />
         </IPayView>
       )}

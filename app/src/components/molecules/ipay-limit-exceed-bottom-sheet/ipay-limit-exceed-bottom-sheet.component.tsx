@@ -68,7 +68,12 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
           <IPayView style={styles.detail}>
             <IPayIcon icon={icons.send_money_error} size={64} color={colors.error.error500} />
             <IPayTitle2Text regular={false} style={styles.fontBold} text="PROFILE.NO_REMAINING_SPENDINDS" />
-            <IPayCaption1Text text={textCaption1} style={styles.description} color={colors.primary.primary800} />
+            <IPayCaption1Text
+              text={textCaption1}
+              style={styles.description}
+              color={colors.primary.primary800}
+              shouldTranslate={false}
+            />
           </IPayView>
           <IPayView style={styles.actionButtons}>
             <IPayButton

@@ -148,7 +148,12 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
               <IPayFootnoteText text={label} numberOfLines={2} />
             </IPayView>
             <IPayView style={styles.listDetails}>
-              <IPayFootnoteText text={modifyValue} style={styles.detailsText} numberOfLines={2} />
+              <IPayFootnoteText
+                text={modifyValue}
+                style={styles.detailsText}
+                numberOfLines={2}
+                shouldTranslate={false}
+              />
               {icon && (
                 <IPayPressable
                   style={styles.copyIcon}
@@ -240,6 +245,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
                   regular={false}
                   text={`${totalAmount} ${t('COMMON.SAR')}`}
                   style={styles.headlineText}
+                  shouldTranslate={false}
                 />
               )}
             </IPayView>

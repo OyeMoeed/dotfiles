@@ -62,6 +62,8 @@ const IPayList: React.FC<IPayListProps> = ({
   subTitleLines,
   regularTitle = true,
   shouldDetailsTranslate = true,
+  shouldTranslateTitle = true,
+  shouldTranslateSubTitle = true,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(colors);
@@ -85,6 +87,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 style={[dynamicStyles.font, textStyle]}
                 regular={regularTitle}
                 text={String(title)}
+                shouldTranslate={shouldTranslateTitle}
               />
               {adjacentTitle && (
                 <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentTitleStyle} regular>
@@ -95,7 +98,11 @@ const IPayList: React.FC<IPayListProps> = ({
           )}
           {isShowSubTitle && (
             <IPayView style={dynamicStyles.flexRow}>
-              <IPayCaption1Text numberOfLines={subTitleLines} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
+              <IPayCaption1Text
+                numberOfLines={subTitleLines}
+                style={[dynamicStyles.subTitleStyle, subTextStyle]}
+                shouldTranslate={shouldTranslateSubTitle}
+              >
                 {subTitle}
               </IPayCaption1Text>
               {adjacentSubTitle && (

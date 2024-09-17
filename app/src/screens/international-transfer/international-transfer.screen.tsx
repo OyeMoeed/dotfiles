@@ -233,6 +233,7 @@ const InternationalTransferScreen: React.FC = () => {
 
     return (
       <IPayList
+        shouldTranslateTitle={false}
         key={fullName?.toString()}
         style={styles.listItem}
         title={fullName}

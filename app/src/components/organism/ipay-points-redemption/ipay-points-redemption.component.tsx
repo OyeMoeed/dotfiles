@@ -197,9 +197,11 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     onChangeText={handleAmountInputChange}
                     keyboardType="numeric"
                   />
-                  <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {` ${t('COMMON.SAR')}`}
-                  </IPayLargeTitleText>
+                  <IPayLargeTitleText
+                    style={[styles.currencyText, dynamicStyles.currencyText]}
+                    text={` ${t('COMMON.SAR')}`}
+                    shouldTranslate={false}
+                  />
                 </IPayView>
               </IPayView>
               <IPayView>

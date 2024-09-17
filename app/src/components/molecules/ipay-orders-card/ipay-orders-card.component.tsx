@@ -49,7 +49,11 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
               <IPayView style={styles.cardRow}>
                 <IPayImage image={image} style={styles.image} resizeMode="contain" />
                 <IPayView style={styles.textView}>
-                  <IPaySubHeadlineText color={colors.primary.primary900} text={`${t('COMMON.SAR')} ${amount}`} />
+                  <IPaySubHeadlineText
+                    color={colors.primary.primary900}
+                    text={`${t('COMMON.SAR')} ${amount}`}
+                    shouldTranslate={false}
+                  />
                   <IPayFootnoteText regular={false} text={title} color={colors.natural.natural900} />
                   <IPayView style={styles.couponRow}>
                     <IPayCaption2Text text={coupon} color={colors.natural.natural700} />

@@ -170,6 +170,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                   <IPaySubHeadlineText
                     text={`${params?.redeemAmount} ${t('COMMON.SAR')}`}
                     style={styles.headlineText}
+                    shouldTranslate={false}
                   />
                 </IPayView>
 

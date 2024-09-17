@@ -74,6 +74,7 @@ const TrafficViolationIDScreen: React.FC = () => {
                 btnText={`${t('COMMON.PAY')} : ${selectedBillsAmount} ${t('COMMON.SAR')}`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
+                shouldTranslateBtnText={false}
               />
             </IPayView>
           )}

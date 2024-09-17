@@ -138,6 +138,7 @@ const TransferSuccessScreen = () => {
           headingText="TOP_UP.TRANSFER_SUCCESSFUL"
           subHeadingText={`${amount} ${t('COMMON.SAR')}`}
           style={StyleSheet.flatten(styles.headerView)}
+          shouldTranslateSubHeadingText={false}
         />
 
         <IPayShareableImageView

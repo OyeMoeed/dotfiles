@@ -122,6 +122,7 @@ const MenuScreen: FC = () => {
                     text={fullName}
                     color={colors.primary.primary900}
                     style={styles.profileNameText}
+                    shouldTranslate={false}
                   />
                   <IPayCaption1Text text="MENU.SHOW_PROFILE" color={colors.natural.natural900} />
                 </IPayView>

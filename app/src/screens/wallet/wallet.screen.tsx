@@ -127,7 +127,9 @@ const WalletScreen = () => {
                 text="HOME.SPENDING_LIMIT"
               />
               <IPayGradientTextMasked colors={headingTextGradientColors}>
-                <IPayTitle1Text regular={false}>{formatNumberWithCommas(remainingSpendingLimit)} </IPayTitle1Text>
+                <IPayTitle1Text regular={false} shouldTranslate={false}>
+                  {formatNumberWithCommas(remainingSpendingLimit)}{' '}
+                </IPayTitle1Text>
               </IPayGradientTextMasked>
 
               <IPayLinearGradientView
@@ -135,10 +137,8 @@ const WalletScreen = () => {
                 style={styles.gradientBarStyle}
               />
               <IPayView style={styles.progressBarContainer}>
-                <IPayFootnoteText style={styles.amountStyle} text="HOME.OF">
-                  {' '}
-                </IPayFootnoteText>
-                <IPayFootnoteText regular={false} style={styles.amountStyle}>
+                <IPayFootnoteText style={styles.amountStyle} text={`${t('HOME.OF')} `} />
+                <IPayFootnoteText regular={false} style={styles.amountStyle} shouldTranslate={false}>
                   {formatNumberWithCommas(monthlySpendingLimit)}
                 </IPayFootnoteText>
               </IPayView>
@@ -155,8 +155,9 @@ const WalletScreen = () => {
           isShowDetail
           textStyle={styles.titleStyle}
           subTextStyle={styles.listTextStyle}
-          detailText={isNameCopied ? t('TOP_UP.COPIED') : t('TOP_UP.COPY')}
+          detailText={isNameCopied ? 'TOP_UP.COPIED' : 'TOP_UP.COPY'}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          shouldTranslateSubTitle={false}
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2, walletInfo?.viban)}
@@ -167,8 +168,9 @@ const WalletScreen = () => {
           isShowDetail
           textStyle={styles.titleStyle}
           subTextStyle={styles.listTextStyle}
-          detailText={isIbanCopied ? t('TOP_UP.COPIED') : t('TOP_UP.COPY')}
+          detailText={isIbanCopied ? 'TOP_UP.COPIED' : 'TOP_UP.COPY'}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          shouldTranslateSubTitle={false}
         />
         <IPayList
           title="HOME.QR_CODE"

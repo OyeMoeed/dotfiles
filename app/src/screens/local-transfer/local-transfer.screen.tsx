@@ -197,6 +197,7 @@ const LocalTransferScreen: React.FC = () => {
     const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
       <IPayList
+        shouldTranslateTitle={false}
         containerStyle={styles.listContainer}
         textStyle={styles.textStyle}
         title={fullName}

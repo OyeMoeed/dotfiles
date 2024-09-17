@@ -26,6 +26,7 @@ const IPayQuickActions: React.FC<IPayQuickActionsProps> = ({
     <IPayView style={styles.buttonContainer}>
       {quickAmounts.map((amountItem, index) => (
         <IPayButton
+          shouldTranslateBtnText={false}
           key={`${`${index}IPayButton`}`}
           btnText={`${amountItem.text} ${t('COMMON.SAR')}`}
           btnType={buttonVariants.PRIMARY}

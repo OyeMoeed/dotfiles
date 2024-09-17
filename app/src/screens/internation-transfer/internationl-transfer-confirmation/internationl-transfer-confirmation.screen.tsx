@@ -241,13 +241,27 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
             <IPayView style={styles.receiverInfoContainer}>
               <Flag code={beneficiaryData?.countryCode} style={styles.countryFlagImg} />
               <IPayView style={styles.receiverInfoView}>
-                <IPayFootnoteText regular={false} text={beneficiaryData?.fullName} color={colors.natural.natural900} />
+                <IPayFootnoteText
+                  regular={false}
+                  text={beneficiaryData?.fullName}
+                  color={colors.natural.natural900}
+                  shouldTranslate={false}
+                />
                 <IPayCaption1Text
                   text={`${beneficiaryData?.countryDesc} - ${beneficiaryData?.remittanceTypeDesc}: ${beneficiaryData?.transferGateway ?? ''}`}
                   style={styles.receiverInfoText}
+                  shouldTranslate={false}
                 />
-                <IPayCaption1Text text={beneficiaryData?.beneficiaryAccountNumber} style={styles.receiverInfoText} />
-                <IPayCaption1Text text={beneficiaryData?.bankName} style={styles.receiverInfoText} />
+                <IPayCaption1Text
+                  text={beneficiaryData?.beneficiaryAccountNumber}
+                  style={styles.receiverInfoText}
+                  shouldTranslate={false}
+                />
+                <IPayCaption1Text
+                  text={beneficiaryData?.bankName}
+                  style={styles.receiverInfoText}
+                  shouldTranslate={false}
+                />
               </IPayView>
             </IPayView>
 

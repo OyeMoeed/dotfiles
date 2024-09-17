@@ -64,6 +64,7 @@ const IPayDescriptiveCard: React.FC<IPayDescriptiveCardProps> = ({
                     regular={false}
                     text={`${t('COMMON.SAR')} ${price}`}
                     color={colors.primary.primary800}
+                    shouldTranslate={false}
                   />
                   <IPayIcon icon={icons.right_greater_icon} size={16} color={colors.primary.primary500} />
                 </IPayPressable>

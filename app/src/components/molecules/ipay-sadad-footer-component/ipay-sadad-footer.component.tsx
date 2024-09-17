@@ -35,6 +35,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   textColor,
   totalAmountText,
   gradientViewStyle,
+  shouldTranslateBtnText,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -60,6 +61,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         rightIcon={btnRightIcon}
         btnIconsDisabled={disableBtnIcons}
         onPress={onPressBtn}
+        shouldTranslateBtnText={shouldTranslateBtnText}
       />
     );
   }
@@ -81,7 +83,12 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         {totalAmount ? (
           <IPayView style={styles.totalAmountView}>
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
-            <IPaySubHeadlineText regular text={totalAmountInSAR} color={colors.primary.primary800} />
+            <IPaySubHeadlineText
+              regular
+              text={totalAmountInSAR}
+              color={colors.primary.primary800}
+              shouldTranslate={false}
+            />
           </IPayView>
         ) : (
           <IPayView />
@@ -106,6 +113,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
           btnIconsDisabled={disableBtnIcons}
           onPress={onPressBtn}
           btnStyle={btnStyle}
+          shouldTranslateBtnText={shouldTranslateBtnText}
         />
         {partialPay ? (
           <IPayButton

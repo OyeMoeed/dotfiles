@@ -23,6 +23,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
   amount,
   testID,
   onPress,
+  shouldTranslateTitle,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -73,6 +74,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
               text={titleText.substring(0, 15)}
               styles={titleStyle}
               color={colors.primary.primary900}
+              shouldTranslate={shouldTranslateTitle}
             />
             <IPayCaption2Text text={date} styles={headingStyle} color={colors.natural.natural500} />
           </IPayView>
@@ -85,6 +87,7 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
         <IPayFootnoteText
           regular={false}
           text={`${status === MoneyRequestStatus.PAID ? '+' : ''}${amount} ${t('COMMON.SAR')}`}
+          shouldTranslate={false}
           color={colors.natural.natural900}
         />
       </IPayView>

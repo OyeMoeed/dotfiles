@@ -327,6 +327,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                     regular={false}
                     text={`${amount || summaryData?.response?.totalTransactionAmount} ${t('COMMON.SAR')}`}
                     style={styles.headlineText}
+                    shouldTranslate={false}
                   />
                 </IPayView>
                 {renderDetails()}

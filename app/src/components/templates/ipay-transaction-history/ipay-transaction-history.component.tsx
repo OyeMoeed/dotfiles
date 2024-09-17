@@ -50,7 +50,7 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({ transaction, isDe
         color={colors.natural.natural900}
         text="TRANSACTION_HISTORY.SENDER_NAME"
       />
-      <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+      <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2} shouldTranslate={false}>
         {fullName}
       </IPaySubHeadlineText>
     </IPayView>
@@ -205,6 +205,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   isCredit ? styles.footnoteGreenTextStyle : styles.footnoteRedTextStyle,
                 ]}
                 regular={false}
+                shouldTranslate={false}
               >
                 {`${isCredit ? '+' : '-'}${transaction?.amount} SAR`}
               </IPayTitle3Text>
@@ -248,6 +249,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -258,6 +260,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -268,6 +271,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -278,6 +282,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -288,6 +293,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -298,6 +304,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -308,6 +315,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -318,6 +326,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -328,6 +337,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -349,7 +359,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   />
                 )}
                 {isPayOneCard && isDebit && (
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 )}
@@ -371,7 +386,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.BENEFICIARY_NAME"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.beneficiaryName}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -385,7 +405,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.PAID_TO"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.beneficiaryName || transaction?.mobileNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -399,7 +424,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.SENDER_NAME"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.nickname}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -413,7 +443,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.SENDER_NAME"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.senderName}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -431,7 +466,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     style={styles.actionWrapper}
                     onPress={() => copyRefNo(transaction?.remittanceRefNumber)}
                   >
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.remittanceRefNumber}
                     </IPaySubHeadlineText>
 
@@ -448,7 +488,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.REFERENCE_NUMBER"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionRefNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -475,7 +520,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       text="TRANSACTION_HISTORY.PAY_TO"
                     />
                   )}
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -499,7 +549,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       text="TRANSACTION_HISTORY.RECIVED_FROM"
                     />
                   )}
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.nickname}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -513,7 +568,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.BANK_NAME"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.bankName}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -527,7 +587,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.IBAN"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.iban}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -552,6 +617,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -566,7 +632,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.ATM_ID"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.terminalId}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -580,7 +651,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.ACCOUNT"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.iban}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -594,7 +670,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.ATM_DESCRIPTION"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -608,7 +689,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.TOTAL_AMOUNT"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -622,7 +708,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.BONUS_AMOUNT"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.bonusAmount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -636,7 +727,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.TRANSFER_TYPE"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionJustfication}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -650,7 +746,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.MONTHLY_SALARY"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.salaryMonth}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -664,7 +765,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.AMOUNT"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -680,7 +786,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       color={colors.natural.natural900}
                       text="TRANSACTION_HISTORY.NOTES"
                     />
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.transactionDescription}
                     </IPaySubHeadlineText>
                   </IPayView>
@@ -695,7 +806,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       color={colors.natural.natural900}
                       text="TRANSACTION_HISTORY.FEES"
                     />
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {`${transaction?.feesAmount || '0.00'}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                     </IPaySubHeadlineText>
                   </IPayView>
@@ -710,7 +826,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       color={colors.natural.natural900}
                       text="TRANSACTION_HISTORY.VAT"
                     />
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {`${transaction?.vatAmount || '0.00'}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                     </IPaySubHeadlineText>
                   </IPayView>
@@ -724,7 +845,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.AMOUNT"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -738,7 +864,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.NOTES"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionDescription}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -752,7 +883,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.FEES"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.feesAmount || ''}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -766,7 +902,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.VAT"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.vatAmount || ''}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -780,7 +921,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.ITEM_PRICE"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.oneCardPriceBeforeVat}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -794,7 +940,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.VAT"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.oneCardVat}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -808,7 +959,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.TOTAL"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {`${transaction?.oneCardPriceAfterVat}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -823,7 +979,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     text="TRANSACTION_HISTORY.MTCN"
                   />
                   <IPayPressable style={styles.actionWrapper} onPress={() => copyRefNo(transaction?.mtcn)}>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.mtcn}
                     </IPaySubHeadlineText>
 
@@ -840,7 +1001,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     color={colors.natural.natural900}
                     text="TRANSACTION_HISTORY.REFERENCE_NUMBER"
                   />
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionRefNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -858,7 +1024,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                     style={styles.actionWrapper}
                     onPress={() => copyRefNo(transaction?.transactionRefNumber)}
                   >
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.transactionRefNumber}
                     </IPaySubHeadlineText>
 
@@ -876,7 +1047,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   color={colors.natural.natural900}
                   text="TRANSACTION_HISTORY.DATE_AND_TIME"
                 />
-                <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                <IPaySubHeadlineText
+                  regular
+                  color={colors.primary.primary800}
+                  numberOfLines={2}
+                  shouldTranslate={false}
+                >
                   {getDate(transaction?.transactionDateTime)}
                 </IPaySubHeadlineText>
               </IPayView>
