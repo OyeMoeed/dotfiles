@@ -100,10 +100,18 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       if (date.isValid()) {
         return formatTimeAndDate(value);
       }
+
       if (item === GiftCardDetailsKey.STATUS) {
-        if (value === GiftStatus.INITIATED) return GiftCardStatus.UNOPENED;
-        if (value === GiftStatus.FAILED) return GiftCardStatus.EXPIRED;
-        if (value === GiftStatus.EXECUTED) return GiftCardStatus.OPENED;
+        switch (value) {
+          case GiftStatus.INITIATED:
+            return GiftCardStatus.UNOPENED;
+          case GiftStatus.FAILED:
+            return GiftCardStatus.EXPIRED;
+          case GiftStatus.EXECUTED:
+            return GiftCardStatus.OPENED;
+          default:
+            return GiftCardStatus.UNOPENED;
+        }
       }
       return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
     },
