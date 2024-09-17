@@ -113,8 +113,6 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
     setSearch(newText);
   };
 
-  const onPressCategoryCard = (code: string) => {};
-
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={localizationText.SHOP.TITLE_SHOP} applyFlex />
@@ -142,11 +140,7 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
         {/* Conditionally render content based on the selected tab */}
         {categoryProducts.length > 0 ? (
           <IPayView>
-            <IPayDescriptiveCard
-              cardType={CardDetails.NORMAL}
-              data={categoryProducts}
-              onCardPress={onPressCategoryCard}
-            />
+            <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={categoryProducts} onCardPress={() => {}} />
           </IPayView>
         ) : (
           <IPayView style={styles.noResultContainer}>

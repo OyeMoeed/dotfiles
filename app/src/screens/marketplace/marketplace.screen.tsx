@@ -27,6 +27,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getApVoucherCategories from '@app/network/services/market/ap-vouchers-categories/ap-vouchers-categories.service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { APIResponseType } from '@app/utilities';
 import React, { useEffect, useState } from 'react';
 import { mapCategoriesByCode } from './marketplace.constant';
 import { MarketPlaceCategoriesProps } from './marketplace.interface';
@@ -41,7 +42,7 @@ const MarketPlace: React.FC = () => {
     COMMON: { HISTORY, SEARCH, VIEW_ALL },
   } = localizationText;
   const showOffer = true;
-  const { merchantData, allCategories, shopsOffers } = useConstantData();
+  const { merchantData, shopsOffers, offerDetailData } = useConstantData();
   const { showToast } = useToastContext();
 
   const [search, setSearch] = useState<string>('');
@@ -59,7 +60,7 @@ const MarketPlace: React.FC = () => {
   const getCategories = async () => {
     try {
       const apiResponse: any = await getApVoucherCategories();
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         const data = mapCategoriesByCode(apiResponse?.response?.categories);
         setCategories(data);
       } else if (apiResponse?.apiResponseNotOk) {
@@ -87,8 +88,6 @@ const MarketPlace: React.FC = () => {
   const onPressViewAllMerchants = () => {
     navigate(ScreenNames.MERCHANTS);
   };
-
-  const categoryPress = () => navigate(ScreenNames.SHOP_CATEGORIES);
 
   const allCategoriesPress = () => navigate(ScreenNames.SHOP_ALL_CATEGORIES);
 

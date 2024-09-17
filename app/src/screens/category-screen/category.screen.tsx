@@ -11,16 +11,16 @@ import { PayloadMerchantsCategoryProps } from '@app/network/services/market/get-
 import getProductsByCategoryId from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { LanguageCode, States } from '@app/utilities/enums.util';
+import { APIResponseType, LanguageCode, States } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import DataItem from './category-screen.interface';
-import categoryScreenStyles from './category-screen.styles';
+import CategoryStyles from './category-screen.styles';
 
 const CategoryScreen: React.FC = ({ route }) => {
   const { category } = route.params;
   const { playStationPrices, sortingData } = useConstantData();
   const { colors } = useTheme();
-  const styles = categoryScreenStyles(colors);
+  const styles = CategoryStyles(colors);
   const localizationText = useLocalization();
   const sortRef = useRef<IPayBottomSheet>(null);
 
@@ -53,7 +53,7 @@ const CategoryScreen: React.FC = ({ route }) => {
       };
 
       const apiResponse: any = await getProductsByCategoryId(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         setCategoryProductsData(apiResponse?.response?.merchants);
         setCategoryProducts(apiResponse?.response?.merchants);
       } else if (apiResponse?.apiResponseNotOk) {
@@ -64,20 +64,6 @@ const CategoryScreen: React.FC = ({ route }) => {
     } catch (error: any) {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
-  };
-
-  // Search function
-  const searchByDesc = (keyword: string) =>
-    categoryProductsData.filter((item: { desc: string }) => item.desc.toLowerCase().includes(keyword.toLowerCase()));
-
-  const handleSearch = (newText: string) => {
-    if (newText.length > 0) {
-      const searchResult = searchByDesc(newText);
-      setCategoryProducts(searchResult);
-    } else {
-      setCategoryProducts(categoryProductsData);
-    }
-    setSearch(newText);
   };
 
   useEffect(() => {

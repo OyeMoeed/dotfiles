@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 const MARKET_URLS = {
   CHECK_AP_VOUCHER_ISACTIVE: 'market/v1/ap-vouchers/is-active',
   GET_AP_VOUCHER_IMAGES: 'market/v1/ap-vouchers/images',
