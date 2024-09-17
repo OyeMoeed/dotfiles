@@ -1,7 +1,15 @@
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import {
+  MultiPaymentBillPayloadTypes,
+  BillPaymentInfosTypes,
+  MultiPaymentBillResponseTypes,
+} from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import multiPaymentBillService from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.service';
+import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
 
@@ -19,8 +27,12 @@ interface HeaderData {
   companyImage: string;
 }
 
-//TODO wiill be replaced by API
-const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolean) => {
+// TODO wiill be replaced by API
+const useBillPaymentConfirmation = (
+  isPayPartially?: boolean,
+  isPayOnly?: boolean,
+  billPaymentInfos?: BillPaymentInfosTypes[],
+) => {
   const localizationText = useLocalization();
   const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
@@ -28,7 +40,8 @@ const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolea
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-
+  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
+  const [otpRefAPI, setOtpRefAPI] = useState<string>('');
   const billPayDetailes: billPayDetail[] = [
     {
       id: '2',
@@ -48,7 +61,7 @@ const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolea
   ];
 
   const headerData: HeaderData = {
-    //TODO wiill be replaced by API
+    // TODO wiill be replaced by API
     title: 'My Electricity Bill',
     companyDetails: '123 - Saudi electricity co.',
     companyImage: images.electricityBill,
@@ -60,9 +73,61 @@ const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolea
     calculatedBill: '300',
   };
 
-  const onConfirm = () => {
-    otpRef?.current?.close();
-    navigate(ScreenNames.PAY_BILL_SUCCESS, { isPayOnly, isPayPartially });
+  const getTransactionIds = (apiResponse: MultiPaymentBillResponseTypes, index: number) =>
+    apiResponse.response.billPaymentResponses[index].transactionId;
+
+  const getTotalAmount = () => (billPaymentInfos ? billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) : 0);
+
+  const onConfirm = async () => {
+    const payload: MultiPaymentBillPayloadTypes = {
+      otpRef: otpRefAPI,
+      otp,
+      billPaymentInfos,
+    };
+    setIsLoading(true);
+    const apiResponse = await multiPaymentBillService(payload);
+    const billPayDetailsArr = [
+      {
+        id: '1',
+        label: localizationText.PAY_BILL.SERVICE_TYPE,
+        value: shortString(billPaymentInfos?.[0].serviceDescription || ''),
+      },
+      {
+        id: '2',
+        label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+        value: billPaymentInfos?.[0].billNumOrBillingAcct,
+      },
+      {
+        id: '3',
+        label: localizationText.COMMON.DUE_DATE,
+        value: billPaymentInfos?.[0].dueDateTime,
+      },
+      {
+        id: '4',
+        label: localizationText.COMMON.REF_NUM,
+        value: apiResponse.response.billPaymentResponses[0].transactionId,
+        icon: icons.copy,
+      },
+    ];
+
+    setIsLoading(false);
+    if (apiResponse.successfulResponse) {
+      veriyOTPSheetRef.current?.close();
+      otpRef?.current?.close();
+      navigate(ScreenNames.PAY_BILL_SUCCESS, {
+        isPayOnly,
+        isPayPartially,
+        billPayDetailes: billPayDetailsArr,
+        totalAmount: billPaymentInfos?.[0].amount,
+        billPaymentInfos: billPaymentInfos?.map((el, index) => ({
+          ...el,
+          transactionId: getTransactionIds(apiResponse, index),
+        })),
+        totalAmount: getTotalAmount,
+      });
+    } else {
+      setAPIError(apiResponse?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const handlePay = () => {
@@ -81,11 +146,14 @@ const useBillPaymentConfirmation = (isPayPartially?: boolean, isPayOnly?: boolea
     balanceData,
     handlePay,
     setOtp,
+    otp,
     isLoading,
     otpError,
     setOtpError,
     apiError,
     otpVerificationRef,
+    veriyOTPSheetRef,
+    setOtpRefAPI,
   };
 };
 

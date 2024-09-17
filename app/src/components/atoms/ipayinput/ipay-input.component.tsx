@@ -1,6 +1,6 @@
+import React, { JSX } from 'react';
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput } from 'react-native';
 import { IPayInputProps } from '../ipay-input/ipay-input.interface';
@@ -43,7 +43,7 @@ const IPayInput: React.FC<IPayInputProps> = ({
   handleFocus,
   handleBlur,
   editable = true,
-  blurOnSubmit
+  blurOnSubmit,
 }: IPayInputProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();

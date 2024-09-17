@@ -1,10 +1,12 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_17 } from '@app/styles/typography.styles';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, moderateVerticalScale, verticalScale } from 'react-native-size-matters';
 
-const walletTransferStyles = (themeColors: typeof colors) =>
+const innerWidth = SCREEN_WIDTH - scaleSize(60);
+
+const walletTransferStyles = (themeColors: typeof colors, selectedContact: boolean) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -15,6 +17,7 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(24),
       backgroundColor: themeColors.natural.natural0,
       borderRadius: moderateScale(12),
+      borderWidth: 0,
     },
     phoneInputStyle: {
       height: verticalScale(54),
@@ -36,18 +39,16 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24),
       flex: 1,
     },
+    contactList: { flex: 0, height: moderateScale(selectedContact ? 200 : 235, 10) },
     submitContact: {
       marginBottom: scaleSize(24),
-      bottom: 0,
-      left: 0,
-      right: 0,
-      position: 'absolute',
-      backgroundColor: colors.transparent,
       overflow: 'hidden',
-      padding: scaleSize(20),
+      paddingHorizontal: scaleSize(16),
+      backgroundColor: colors.appGradient.buttonBackground,
+      paddingVertical: moderateScale(16),
       justifyContent: 'center',
-      flex: 0.2,
-      borderRadius: scaleSize(16),
+      flex: selectedContact ? 0.2 : 0,
+      borderRadius: scaleSize(28),
       marginHorizontal: scaleSize(24),
       alignSelf: 'stretch',
     },
@@ -62,7 +63,13 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       width: '100%',
       marginBottom: moderateScale(8),
     },
+    itemInfo: {
+      justifyContent: 'center',
+    },
 
+    text: {
+      color: colors.natural.natural900,
+    },
     submitSection: {
       width: scaleSize(270),
       height: verticalScale(270),
@@ -81,19 +88,30 @@ const walletTransferStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(8),
     },
     selectedContactList: { gap: scaleSize(4) },
-    contactChip: { flexDirection: 'row', alignItems: 'center', flex: 0.2, marginBottom: scaleSize(16) },
+    contactChip: { flexDirection: 'row', alignItems: 'center', flex: 0, marginBottom: scaleSize(16) },
     unsavedBottomSheet: { width: '86%' },
     unsavedButton: {
       borderRadius: moderateScale(16),
       justifyContent: 'center',
       marginTop: moderateScale(12),
     },
+    arrow: {},
     inputStyle: {
       fontSize: FONT_SIZE_17,
+      paddingBottom: 0,
+    },
+    inputStyleAndroid: {
+      paddingBottom: moderateScale(5),
+      height: verticalScale(40),
     },
     topMargin: {
       top: verticalScale(4),
     },
+    emptyItemStyle: { height: moderateVerticalScale(20) },
+    textInputContainerStyle: {
+      marginVertical: verticalScale(-12),
+    },
+    toastContainer: { width: innerWidth, marginLeft: moderateScale(15) },
   });
 
 export default walletTransferStyles;

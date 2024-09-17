@@ -8,11 +8,15 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
     container: {
       flex: 1,
     },
+    title: {
+      lineHeight: verticalScale(20),
+    },
     gradientView: {
       padding: moderateScale(16, 0.3),
       borderRadius: moderateScale(28),
       backgroundColor: colors.natural.natural50,
-      gap: moderateScale(8),
+      gap: moderateScale(16),
+      flex: 1,
     },
     detailsFlex: {
       flex: 0,

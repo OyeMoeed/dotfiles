@@ -30,7 +30,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { fonts } from '@app/styles/typography.styles';
 import { States } from '@app/utilities/enums.util';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, JSX } from 'react';
 import { useDispatch } from 'react-redux';
 import pointRedemption from './ipay-points-redemption.style';
 
@@ -45,6 +45,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const [points, setPoints] = useState('');
   const [reversible, setReversible] = useState<'input1' | 'input2'>('input2'); // Track input state
   const [isChecked, setIsChecked] = useState(false);
+
   const amountStr = amount || '';
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -61,7 +62,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       setIsChecked(false);
       dispatch(setPointsRedemptionReset(false));
     }
-  }, [shouldReset]);
+  }, [shouldReset, dispatch]);
 
   const remainingProgress =
     (+walletInfo.limitsDetails.monthlyRemainingOutgoingAmount / +walletInfo.limitsDetails.monthlyOutgoingLimit) * 100;
@@ -139,18 +140,16 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   };
 
   const handleCheck = () => {
-    setIsChecked(!isChecked);
-  };
-
-  useEffect(() => {
-    if (isChecked) {
+    const newCheckedState = !isChecked;
+    setIsChecked(newCheckedState);
+    if (newCheckedState) {
       setAmount(aktharPointsInfo?.amount as string);
       setPoints(aktharPointsInfo?.mazayaPoints as string);
     } else {
       setAmount('');
       setPoints('');
     }
-  }, [isChecked]);
+  };
 
   const onRedeem = () => {
     navigate(screenNames.POINTS_REDEMPTIONS_CONFIRMATION, {
@@ -162,7 +161,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
   const handleToggleInputs = () => {
     setReversible(reversible === amountInput ? pointsInput : amountInput);
   };
-  const disabled = !amountStr.length || errorMessage || amountStr === '0' || points === '0';
+  const disabled = !amountStr.length || !!errorMessage || amountStr === '0' || points === '0'; // should be convert in boolean
 
   const renderContent = (): JSX.Element => {
     if (isEligible === true) {
@@ -200,6 +199,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     text={amountStr}
                     placeholder="0"
                     maxLength={5}
+                    autoFocus={reversible === amountInput}
                     editable={reversible === amountInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, dynamicStyles.textInput]}
@@ -207,7 +207,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     keyboardType="numeric"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {' ' + localizationText.COMMON.SAR}
+                    {` ${localizationText.COMMON.SAR}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -231,13 +231,14 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
                     placeholder="0"
                     maxLength={5}
                     editable={reversible === pointsInput}
+                    autoFocus={reversible === pointsInput}
                     placeholderTextColor={colors.natural.natural300}
                     style={[styles.textAmount, styles.textPoint, dynamicStyles.textInput]} // Combine styles
                     onChangeText={handlePointInputChange}
                     keyboardType="number-pad"
                   />
                   <IPayLargeTitleText style={[styles.currencyText, dynamicStyles.currencyText]}>
-                    {' ' + localizationText.COMMON.POINT}
+                    {` ${localizationText.COMMON.POINT}`}
                   </IPayLargeTitleText>
                 </IPayView>
               </IPayView>
@@ -246,7 +247,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
               <IPayChip
                 textValue={errorMessage}
                 variant={States.WARNING}
-                isShowIcon={true}
+                isShowIcon
                 containerStyle={styles.chipContainer}
                 icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={scaleSize(16)} />}
               />
@@ -294,7 +295,8 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
           />
         </IPayView>
       );
-    } else if (isEligible === false) {
+    }
+    if (isEligible === false) {
       return (
         <IPayView style={styles.notEnrolled}>
           <IPayView style={styles.iconContainer}>
@@ -308,9 +310,8 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
           <IPayImage style={styles.image} image={images.blackLogo3x} />
         </IPayView>
       );
-    } else {
-      return <></>;
     }
+    return <IPayView />;
   };
 
   return (
@@ -319,6 +320,7 @@ const IPayPointsRedemption = ({ routeParams }: { routeParams: IPointsRedemptions
       <IPayKeyboardAwareScrollView
         contentContainerStyle={styles.scrollViewContainer}
         showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="always"
       >
         {renderContent()}
       </IPayKeyboardAwareScrollView>

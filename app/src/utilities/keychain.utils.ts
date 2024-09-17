@@ -14,7 +14,10 @@ export const storeData = async (serviceName: string, key: string, value: string)
       service: serviceName,
       ...options,
     });
-  } catch (error) {}
+    return null;
+  } catch (error) {
+    return null;
+  }
 };
 
 // Retrieve sensitive data securely
@@ -45,7 +48,10 @@ export const deleteData = async (serviceName: string) => {
       service: serviceName,
       ...options,
     });
-  } catch (error) {}
+    return null;
+  } catch (error) {
+    return null;
+  }
 };
 
 // Check if sensitive data is stored

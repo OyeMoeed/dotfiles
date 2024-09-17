@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 /**
@@ -38,4 +39,6 @@ export interface IPayTextProps {
    */
 
   isAmount?: boolean;
+
+  fontWeight?: string;
 }

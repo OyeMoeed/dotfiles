@@ -1,64 +1,243 @@
-import React, { useMemo, useState } from 'react';
-import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayHeader, IPayNoResult } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import IPayNotificationList from '@app/components/organism/ipay-notification-list/ipay-notification-list.component';
-import { notifications } from './notification-center.mock';
 import icons from '@app/assets/icons';
+import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayHeader, IPayNoResult, useToastContext } from '@app/components/molecules';
+import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
+import IPaySectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
+import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
+import IPayNotificationList from '@app/components/organism/ipay-notification-list/ipay-notification-list.component';
+import { IPaySafeAreaView } from '@app/components/templates';
+import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import IPaySectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
-import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
-import { Alert } from 'react-native';
+import {
+  deleteSingleNotification,
+  getAllRetainedMessages,
+  readNotification,
+} from '@app/network/services/core/notifications/notifications.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import React, { useEffect, useState } from 'react';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
-import useTheme from '@app/styles/hooks/theme.hook';
 
+/**
+ * NoRequestComponent displays a message when there are no pending requests.
+ * @param {Object} props - Component props.
+ * @param {Object} props.localization - Localization object.
+ * @param {Object} props.colors - Colors object.
+ * @param {Object} props.styles - Styles object.
+ */
+const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any }> = ({
+  localization,
+  colors,
+  styles,
+}) => (
+  <IPayView style={styles.noRequestContainer}>
+    <IPayIcon size={24} icon={icons.empty_box_icon} />
+    <IPayCaption1Text
+      style={styles.noRequestText}
+      regular={false}
+      text={localization.NOTIFICATION_CENTER.ALL_CAUGHT_UP}
+    />
+    <IPayCaption1Text style={styles.noPendingRequestText} text={localization.NOTIFICATION_CENTER.NO_PENDING_REQUESTS} />
+    <IPayPressable onPress={() => navigate(ScreenNames.REQUEST_LISTING_SCREEN)}>
+      <IPaySubHeadlineText
+        color={colors.primary.primary500}
+        regular
+        text={localization.NOTIFICATION_CENTER.SHOW_REQUESTS}
+      />
+    </IPayPressable>
+  </IPayView>
+);
+
+/**
+ * NotificationCenterScreen
+ */
 const NotificationCenterScreen: React.FC = () => {
+  // hooks
   const localization = useLocalization();
-  const hasNotifications = notifications.length > 0;
+  const { colors } = useTheme();
+  const { showToast } = useToastContext();
+
+  // states
+  const [notifications, setNotifications] = useState<Notification[]>([] as Notification[]);
   const [pendingNotifications] = useState<Notification[]>([]);
+
+  // selectors
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { appData } = useTypedSelector((state) => state.appDataReducer);
+
+  // variables
   const pendingNotificationsCount = pendingNotifications.length;
   const hasPendingRequest = pendingNotificationsCount > 0;
-  const unreadNotificationCount = 1;
-  const { colors } = useTheme();
+  const hasNotifications = notifications.length > 0;
+  const unreadNotificationCount = notifications.filter((notification) => !notification.read).length;
+  const notificationSubText =
+    unreadNotificationCount > 0 ? `${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}` : undefined;
+
   const styles = getNotificationCenterStyles(colors);
 
-  const handleDeleteNotification = (id: string) => {
-    Alert.alert(`Delete notification with id: ${id}`);
-    // Call your delete API here
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
   };
 
-  const handleMarkAsRead = (id: string) => {
-    Alert.alert(`Mark notification as read with id: ${id}`);
-    // Call your mark as read API here
+  /**
+   * Handle delete notification
+   * @param id - Notification ID
+   */ const handleDeleteNotification = async (id: string) => {
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      messageId: id,
+    };
+
+    try {
+      const apiResponse = await deleteSingleNotification(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        // remove the deleted notification from the list
+        setNotifications((prevNotifications) =>
+          prevNotifications?.filter((notification) => notification.messageId !== id),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
+      return { error: error.message || 'Unknown error' };
+    }
   };
 
-  const NoRequestComponent = useMemo(() => {
-  return () => (
-    <IPayView style={styles.noRequestContainer}>
-      <IPayIcon size={24} icon={icons.empty_box_icon}></IPayIcon>
-      <IPayCaption1Text
-        style={styles.noRequestText}
-        regular={false}
-        text={localization.NOTIFICATION_CENTER.ALL_CAUGHT_UP}
-      />
-      <IPayCaption1Text
-        style={styles.noPendingRequestText}
-        text={localization.NOTIFICATION_CENTER.NO_PENDING_REQUESTS}
-      />
-      <IPayPressable onPress={() => navigate(ScreenNames.REQUEST_LISTING_SCREEN)}>
-        <IPaySubHeadlineText
-          color={colors.primary.primary500}
-          regular
-          text={localization.NOTIFICATION_CENTER.SHOW_REQUESTS}
-        />
-      </IPayPressable>
-    </IPayView>
-  );
-}, [localization, colors]);
+  /**
+   * Handle mark all as read
+   * @param id - Notification ID
+   */
+  const handleAllMarkAsRead = async () => {
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      apiPayload: {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        messageIds: [],
+      },
+    };
+
+    try {
+      const apiResponse = await readNotification(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        // mark the notification as read
+        setNotifications((prevNotifications) =>
+          prevNotifications?.map((notification) => ({ ...notification, read: true })),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
+      return { error: error.message || 'Unknown error' };
+    }
+  };
+
+  /**
+   * Handle mark as read
+   * @param id - Notification ID
+   */
+  const handleMarkAsRead = async (id: string) => {
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      apiPayload: {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        messageIds: [id],
+      },
+    };
+
+    try {
+      const apiResponse = await readNotification(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        // mark the notification as read
+        setNotifications((prevNotifications) =>
+          prevNotifications?.map((notification) =>
+            notification.messageId === id ? { ...notification, read: true } : notification,
+          ),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
+      return { error: error.message || 'Unknown error' };
+    }
+  };
+
+  /**
+   * Get notifications
+   * @param page - Page number
+   * @param pageSize - Page size
+   * @returns Promise with notifications data and hasMore flag
+   */
+  const getNotifications = async (
+    page: number,
+    pageSize: number,
+  ): Promise<{ data: Notification[]; hasMore: boolean }> => {
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      pageNumber: page,
+      pageSize,
+    };
+    try {
+      const apiResponse = await getAllRetainedMessages(payload);
+
+      switch (apiResponse?.status?.type) {
+        case 'SUCCESS': {
+          const newNotifications = apiResponse?.response?.retainedMessages || [];
+          const start = (page - 1) * pageSize;
+          const end = page * pageSize;
+          const paginatedData = newNotifications.slice(start, end);
+          const hasMore = newNotifications.length > end;
+
+          if (page === 1) {
+            setNotifications(paginatedData);
+          } else {
+            setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
+          }
+
+          return { data: paginatedData, hasMore };
+        }
+
+        case 'apiResponseNotOk':
+          renderToast({
+            title: localization.ERROR.API_ERROR_RESPONSE,
+            toastType: 'WARNING',
+          });
+          break;
+
+        case 'FAILURE':
+          renderToast(apiResponse?.error);
+          break;
+
+        default:
+          break;
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localization.ERROR.SOMETHING_WENT_WRONG);
+    }
+
+    return { data: [], hasMore: false };
+  };
+
+  // Fetch notifications on component mount with page 1 and page size 10
+  useEffect(() => {
+    getNotifications(1, 20);
+  }, []);
 
   return (
     <IPaySafeAreaView style={styles.safeArea}>
@@ -71,14 +250,14 @@ const NotificationCenterScreen: React.FC = () => {
               leftText={localization.NOTIFICATION_CENTER.REQUESTS}
               rightText={localization.NOTIFICATION_CENTER.VIEW_ALL}
               rightIcon={icons.arrow_right_square}
-              showRightIcon={true}
+              showRightIcon
             />
             <IPayBannerAnimation onVerify={() => {}} />
           </>
         ) : (
           <>
             <IPaySectionHeader leftText={localization.NOTIFICATION_CENTER.REQUESTS} />
-            <NoRequestComponent />
+            <NoRequestComponent localization={localization} colors={colors} styles={styles} />
           </>
         )}
       </IPayView>
@@ -86,11 +265,13 @@ const NotificationCenterScreen: React.FC = () => {
         <IPayView style={styles.headerContainer}>
           <IPaySectionHeader
             subTextColor={colors.primary.primary500}
-            showDotBeforeSubtext={true}
+            showDotBeforeSubtext
             leftText={localization.NOTIFICATION_CENTER.NOTIFICATIONS}
-            subText={`${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}`}
+            subText={notificationSubText}
             rightText={localization.NOTIFICATION_CENTER.READ_ALL}
+            onRightOptionPress={handleAllMarkAsRead}
           />
+
           <IPayTabs
             scrollEnabled
             scrollable
@@ -108,8 +289,9 @@ const NotificationCenterScreen: React.FC = () => {
           <IPayView style={styles.notificationListContainer}>
             <IPayNotificationList
               notifications={notifications}
-              onDeleteNotification={handleDeleteNotification}
-              onMarkAsRead={handleMarkAsRead}
+              onDeleteNotification={(id) => handleDeleteNotification(id)}
+              onMarkAsRead={(id) => handleMarkAsRead(id)}
+              fetchData={getNotifications}
             />
           </IPayView>
         ) : (

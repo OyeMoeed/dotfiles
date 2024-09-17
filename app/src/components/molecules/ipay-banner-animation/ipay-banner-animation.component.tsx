@@ -1,9 +1,9 @@
+import React, { JSX } from 'react';
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayBannerAnimationProps } from './ipay-banner-animation.interface';
 import bannerAnimationStyles from './ipay-banner-animation.style';
@@ -33,7 +33,9 @@ const IPayBannerAnimation: React.FC<IPayBannerAnimationProps> = ({
               </IPayFootnoteText>
             </IPayView>
             <IPayView>
-              <IPayCaption2Text style={styles.captionStyle}>{localizationText.HOME.DENTITY_DISCRIPTION}</IPayCaption2Text>
+              <IPayCaption2Text style={styles.captionStyle}>
+                {localizationText.HOME.DENTITY_DISCRIPTION}
+              </IPayCaption2Text>
             </IPayView>
           </IPayView>
           <IPayButton

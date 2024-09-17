@@ -1,24 +1,31 @@
+// TODO : solve cyclic reference
+// eslint-disable-next-line import/no-cycle
 import { IPayBodyText, IPayView } from '@app/components/atoms';
 import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React from 'react';
 import { Platform } from 'react-native';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 import { IPayOtpInputTextProps } from './ipay-otp-input-text.interface';
 import genratedStyles from './ipay-otp-input-text.style';
 
-const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({ testID, isError, onChangeText }) => {
+const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({
+  testID,
+  isError,
+  onChangeText,
+  value,
+  setValue = () => {},
+}) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
-  const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({ value, cellCount: constants.OTP_CELL_COUNT });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
-    setValue
+    setValue,
   });
 
   const onChange = (text: string) => {
-    setValue(text);
+    setValue?.(text);
     if (onChangeText) onChangeText(text);
   };
 
@@ -41,7 +48,7 @@ const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({ testID, isError, on
           style={[
             styles.underlineStyleBase,
             isError && { borderColor: colors.error.error500 },
-            isFocused && styles.underlineStyleHighLighted
+            isFocused && styles.underlineStyleHighLighted,
           ]}
         >
           <IPayBodyText color={symbol ? colors.natural.natural900 : colors.natural.natural300}>

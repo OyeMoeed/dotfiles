@@ -1,6 +1,6 @@
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput } from 'react-native';
 import { IPayInputProps } from './ipay-input.interface';
@@ -45,6 +45,9 @@ const IPayInput: React.FC<IPayInputProps> = ({
   caretHidden,
   editable = true,
   blurOnSubmit,
+  selectionColor,
+  returnKeyLabel = 'done',
+
   placeholderTextColor,
 }: IPayInputProps): JSX.Element => {
   const { t } = useTranslation();
@@ -70,7 +73,8 @@ const IPayInput: React.FC<IPayInputProps> = ({
       onSubmitEditing={() => onSubmitEditing && onSubmitEditing(text)}
       editable={editable}
       blurOnSubmit={blurOnSubmit}
-      returnKeyType="done"
+      returnKeyType={returnKeyLabel}
+      selectionColor={selectionColor}
     />
   );
 };

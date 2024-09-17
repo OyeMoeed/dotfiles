@@ -23,6 +23,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { COUNTRIES_DATA, CURRENCIES_DATA, SNAP_POINTS, TRANSFER_METHOD_DATA } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -39,15 +41,13 @@ const PriceCalculatorScreen: React.FC = () => {
   const { transferTypesData } = useConstantData();
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>(FilterType.Country);
 
-  const renderTransferType = (type: { type: TransactionDetails }) => {
-    return (
-      <IPayTransactionService
-        transaction={type}
-        selectedService={selectedService}
-        setSelectedService={setSelectedService}
-      />
-    );
-  };
+  const renderTransferType = (type: { type: TransactionDetails }) => (
+    <IPayTransactionService
+      transaction={type}
+      selectedService={selectedService}
+      setSelectedService={setSelectedService}
+    />
+  );
 
   const dropdownRef = useRef<bottomSheetTypes>(null);
 
@@ -89,6 +89,8 @@ const PriceCalculatorScreen: React.FC = () => {
         case FilterType.Currency:
           setSelectedCurrency(text);
           break;
+        default:
+          break;
       }
       closeDropdownBottomSheet();
     },
@@ -124,6 +126,9 @@ const PriceCalculatorScreen: React.FC = () => {
     openFilterBottomSheet(FilterType.Currency);
   };
 
+  const handleTransfer = () => {
+    navigate(ScreenNames.CHOOSE_BENEFICIARY);
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader backBtn title={localizationText.PRICE_CALCULATOR.TITLE} applyFlex />
@@ -166,10 +171,10 @@ const PriceCalculatorScreen: React.FC = () => {
               currencyStyle={styles.currencyStyle}
               amount={amount}
               onAmountChange={setAmount}
-              isEditable={true}
+              isEditable
             />
             <IPayPressable onPress={handleCurrencyFilter} style={styles.pressableStyles}>
-              <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular={true} />
+              <IPaySubHeadlineText text={localizationText.COMMON.SAR} regular />
               <IPayIcon icon={icons.arrow_down} size={18} color={colors.natural.natural1000} />
             </IPayPressable>
           </IPayView>
@@ -180,7 +185,7 @@ const PriceCalculatorScreen: React.FC = () => {
               {localizationText.PRICE_CALCULATOR.INCLUDES_FEES}
             </IPayCaption1Text>
           </IPayView>
-          <IPayToggleButton toggleState={true} />
+          <IPayToggleButton toggleState />
         </IPayView>
         <IPayFlatlist
           data={transferTypesData}
@@ -196,6 +201,7 @@ const PriceCalculatorScreen: React.FC = () => {
           btnType={buttonVariants.PRIMARY}
           btnText={localizationText.PRICE_CALCULATOR.TRANSFER_NOW}
           btnStyle={styles.buttonStyles}
+          onPress={handleTransfer}
         />
       </IPayView>
       <IPayBottomSheet

@@ -55,11 +55,6 @@ jest.mock('./useLanguageChange', () => ({
 
 describe('IPayLanguageSheet', () => {
   const renderComponent = (language = 'en', props = {}) => {
-    return render(
-      <IPayLanguageSheet
-        testID="ipay-language"
-        {...props}
-      />
-    );
+    return render(<IPayLanguageSheet testID="ipay-language" {...props} />);
   };
 });

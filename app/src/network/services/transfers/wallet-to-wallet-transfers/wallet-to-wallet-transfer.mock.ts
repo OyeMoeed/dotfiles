@@ -1,7 +1,7 @@
 import { WalletToWalletTransferMockProps } from './wallet-to-wallet-transfer.interface';
 
 const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
-  data: {
+  response: {
     transferRequestsResult: {
       groupedCategories: {
         RECEIVED: [
@@ -21,7 +21,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'eid 6#Eid_6',
-            status: 'executed',
+            status: 'failed',
           },
           {
             amount: '10.00',
@@ -39,7 +39,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'eid 5#Eid_5',
-            status: 'executed',
+            status: 'expired',
           },
           {
             amount: '7.00',
@@ -75,7 +75,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'Congratulations#Congrat_1',
-            status: 'initiated',
+            status: 'expired',
           },
         ],
         SENT: [
@@ -113,7 +113,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'Happy eid#Eid_1',
-            status: 'initiated',
+            status: 'expired',
           },
           {
             amount: '32.00',
@@ -131,7 +131,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'Ø¹ÙŠØ¯ Ø³Ø¹ÙŠØ¯#Eid_1',
-            status: 'initiated',
+            status: 'executed',
           },
           {
             amount: '100.00',
@@ -149,7 +149,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'Happy eid#Eid_1',
-            status: 'initiated',
+            status: 'expired',
           },
         ],
       },

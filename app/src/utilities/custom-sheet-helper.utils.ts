@@ -4,7 +4,7 @@ import { isIosOS, isTablet } from './constants';
 /**
  * return calculated gutter for sheet according to platform
  */
-export const getCustomSheetThreshold = () => {
+const getCustomSheetThreshold = () => {
   if (isIosOS) {
     return verticalScale(120);
   }
@@ -13,3 +13,5 @@ export const getCustomSheetThreshold = () => {
   }
   return verticalScale(75);
 };
+
+export default getCustomSheetThreshold;

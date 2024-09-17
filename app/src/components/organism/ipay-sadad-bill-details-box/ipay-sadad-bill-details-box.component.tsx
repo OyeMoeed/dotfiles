@@ -42,6 +42,8 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
   showAmountToPay = true,
   item,
   style,
+  handleAmountInputFromOutSide = false,
+  onChangeAmountOutside,
 }) => {
   const { colors } = useTheme();
   const styles = sadadBillDetailBoxStyles(colors);
@@ -63,6 +65,9 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
   const [overPayingValue, setOverPayingValue] = useState<number>(overPaidAmount);
 
   const onChangeInput = (value: string) => {
+    if (handleAmountInputFromOutSide === true && onChangeAmountOutside) {
+      onChangeAmountOutside?.(value);
+    }
     const billValue = Number(value);
     const overPaid = billValue - billAmount;
     setAmount(billValue);
@@ -140,7 +145,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
               text={amount?.toString()}
               keyboardType="numeric"
               onChangeText={onChangeInput}
-              maxLength={10}
+              maxLength={5}
             />
             <IPayBodyText style={styles.darkBlueColor} text={currency} />
           </IPayView>

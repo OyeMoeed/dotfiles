@@ -4,7 +4,7 @@ import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayLinkButtonProps } from './ipay-link-button.interface';
-import genratedStyles from './ipay-link-button.style';
+import generatedStyles from './ipay-link-button.style';
 
 const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   disabled,
@@ -21,10 +21,10 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
   leftIcon,
   rightIcon,
   textColor,
-  textStyle
+  textStyle,
 }) => {
   const { colors } = useTheme();
-  const styles = genratedStyles(colors);
+  const styles = generatedStyles();
 
   const btnStyle = useMemo(() => {
     const baseStyle = { width };
@@ -36,7 +36,7 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
 
   const arrowColor = useMemo(
     () => (disabled ? colors.natural.natural300 : arrowIconColor || colors.primary.primary500),
-    [disabled, arrowIconColor, colors]
+    [disabled, arrowIconColor, colors],
   );
 
   const ButtonText = useMemo(() => {
@@ -51,12 +51,12 @@ const IPayLinkButton: React.FC<IPayLinkButtonProps> = ({
 
   const justifyContent: ViewStyle['justifyContent'] = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? 'center' : 'space-between'),
-    [btnIconsDisabled, leftIcon, rightIcon]
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
 
   const alignItemsStyle = useMemo(
     () => (btnIconsDisabled || (leftIcon && !rightIcon) || (!leftIcon && rightIcon) ? { alignItems: 'center' } : {}),
-    [btnIconsDisabled, leftIcon, rightIcon]
+    [btnIconsDisabled, leftIcon, rightIcon],
   );
 
   return (

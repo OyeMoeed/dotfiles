@@ -3,7 +3,7 @@ import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-export const topUpSuccessRedemptionStyles = (colors: any) =>
+const topUpSuccessRedemptionStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -11,6 +11,9 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       marginHorizontal: moderateScale(24, 0.3),
       alignItems: 'center',
       marginBottom: verticalScale(20),
+    },
+    shareView: {
+      justifyContent: 'space-between',
     },
     logoStyles: {
       marginLeft: moderateScale(16),
@@ -21,13 +24,12 @@ export const topUpSuccessRedemptionStyles = (colors: any) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingHorizontal:moderateScale(37)
+      paddingHorizontal: moderateScale(37),
     },
     failedText: {
       marginVertical: scaleSize(8),
       color: colors.error.error500,
       fontWeight: FONT_WEIGHT_BOLD,
-   
     },
     failedSubtitle: {
       alignItems: 'center',

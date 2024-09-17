@@ -21,9 +21,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       onCloseBottomSheet,
       simpleHeaderBar,
       containerStyle,
-      simpleTitleStyle
+      simpleTitleStyle,
     },
-    ref
+    ref,
   ) => {
     const [overlayVisible, setOverlayVisible] = useState<boolean>(false);
     const { colors } = useTheme();
@@ -55,7 +55,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
       expand: () => bottomSheetModalRef.current?.expand(),
       collapse: () => bottomSheetModalRef.current?.collapse(),
-      forceClose: () => bottomSheetModalRef.current?.forceClose() // Add forceClose method
+      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
     }));
 
     const onAnimate = (fromIndex: number, toIndex: number) => {
@@ -64,6 +64,17 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         if (onCloseBottomSheet) onCloseBottomSheet();
       }
     };
+
+    const handleComponent = () => (
+      <IPayBottomSheetHandle
+        heading={heading}
+        simpleHeader={simpleHeader}
+        onPressCancel={onPressClose}
+        onPressDone={onPressClose}
+        simpleHeaderBar={simpleHeaderBar}
+        simpleTitleStyle={simpleTitleStyle}
+      />
+    );
 
     return (
       <IPayView style={[styles.bottomSheetContainerStyle, containerStyle]}>
@@ -82,16 +93,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
             enableDynamicSizing={enableDynamicSizing}
             enablePanDownToClose={enablePanDownToClose}
             containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
-            handleComponent={() => (
-              <IPayBottomSheetHandle
-                heading={heading}
-                simpleHeader={simpleHeader}
-                onPressCancel={onPressClose}
-                onPressDone={onPressClose}
-                simpleHeaderBar={simpleHeaderBar}
-                simpleTitleStyle={simpleTitleStyle}
-              />
-            )}
+            handleComponent={handleComponent}
           >
             <IPayLinearGradientView gradientColors={colors.bottomsheetGradient}>
               <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
@@ -100,7 +102,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
         </BottomSheetModalProvider>
       </IPayView>
     );
-  }
+  },
 );
 
 export default IPayBottomSheet;

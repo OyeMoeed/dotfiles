@@ -34,10 +34,13 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
   companyInputName,
   serviceInputName,
   accountInputName,
+  accountInputLabel,
 }: SadadBillDetailFormProps) => {
   const { colors } = useTheme();
   const styles = sadadBillDetailStyles(colors);
   const localizationText = useLocalization();
+
+  const AccountTextInputLabel = accountInputLabel || localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER;
 
   return (
     <IPayView style={styles.inputWrapper} testID={testID}>
@@ -49,8 +52,9 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
         containerStyle={styles.inputContainerStyle}
         showRightIcon
         rightIcon={companyLeftImage}
-        customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+        customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
         onClearInput={onCompanyAction}
+        selection={{ start: 0 }}
       />
       <IPayAnimatedTextInput
         testID="service-input"
@@ -62,7 +66,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
         customIcon={
           <IPayIcon
             icon={icons.arrow_circle_down}
-            size={18}
+            size={24}
             color={isCompanyValue ? colors.primary.primary500 : colors.natural.natural500}
           />
         }
@@ -70,7 +74,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
       />
       {isServiceValue && (
         <IPayAnimatedTextInput
-          label={localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
+          label={AccountTextInputLabel}
           editable
           name={accountInputName}
           containerStyle={[styles.inputContainerStyle]}

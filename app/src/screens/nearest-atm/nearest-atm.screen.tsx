@@ -1,5 +1,6 @@
 import { IPayView } from '@app/components/atoms';
 import { IPayDropdownComponent, IPayHeader } from '@app/components/molecules';
+import { ListItem } from '@app/components/molecules/ipay-dropdown/ipay-dropdown.interface';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import {
   IPayAtmDetails,
@@ -9,24 +10,20 @@ import {
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
+import { IGetCoreManagementLovPayload } from '@app/network/services/core/lov/get-lov.interface';
+import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
-import { spinnerVariant, TabBase } from '@app/utilities/enums.util';
+import { TabBase } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { IGetCoreManagementLovPayload } from '@app/network/services/core/lov/get-lov.interface';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { geCoreManagementLov } from '@app/network/services/core/lov/get-lov.service';
 import Geolocation from 'react-native-geolocation-service';
-import useLocation from '@app/hooks/location.hook';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import { ListItem } from '@app/components/molecules/ipay-dropdown/ipay-dropdown.interface';
+import NearestAtmListComponent from './nearest-atm-list-component';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
-import NearestAtmListComponent from './nearest-atm-list-component';
 
 const NearestAtmScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -39,7 +36,6 @@ const NearestAtmScreen: React.FC = () => {
   const citiesFilterSheetRef = useRef<bottomSheetTypes>(null);
   const selectCitySheetRef = useRef<any>(null);
   const atmDetailsSheetRef = useRef<any>(null);
-  const { permissionStatus } = useLocation();
 
   const [nearestAtms, setNearestAtms] = useState<AtmDetailsProps[]>([]);
   const [cities, setCities] = useState<ListItem[]>([]);
@@ -52,7 +48,6 @@ const NearestAtmScreen: React.FC = () => {
   const [atmDetails, setAtmDetials] = useState<AtmDetailsProps | null>(null);
   // const [currentLocation, setCurrentLocation] = useState<{ latitude: number; longitude: number }>();
   const [searchText, setSearchText] = useState<string>('');
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const toRadians = (degree: number) => {
     // degrees to radians
@@ -100,12 +95,12 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
           type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
           city: item.attribute2,
-          title: item.recDesc,
+          title: `${item.recDesc} ${item.recTypeCode}`,
           address: item.recDesc,
           distance: getDistance(+item.attribute4, +item.attribute3, currentLocation).toString(),
           location: { latitude: +item.attribute4, longitude: +item.attribute3 },
@@ -122,7 +117,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status.type === 'SUCCESS') {
       if (apiResponse?.response?.lovInfo) {
         const mappedFilterKeys = apiResponse?.response?.lovInfo.map((item) => ({
           id: item.recTypeCode,
@@ -143,7 +138,7 @@ const NearestAtmScreen: React.FC = () => {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse) {
       if (apiResponse?.response?.lovInfo) {
         setCities(
           apiResponse?.response?.lovInfo.map((item) => ({
@@ -156,26 +151,17 @@ const NearestAtmScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    if (permissionStatus === permissionsStatus.GRANTED) {
-      Geolocation.getCurrentPosition(
-        async (position) => {
-          showSpinner({
-            variant: spinnerVariant.DEFAULT,
-            hasBackgroundColor: true,
-          });
-
-          await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-          await getCities();
-
-          hideSpinner();
-        },
-        (error) => {
-          // eslint-disable-next-line no-console
-          console.log(error);
-        },
-        { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-      );
-    }
+    Geolocation.getCurrentPosition(
+      async (position) => {
+        await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        await getCities();
+      },
+      (error) => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
+    );
   }, []);
 
   useEffect(() => {
@@ -213,20 +199,24 @@ const NearestAtmScreen: React.FC = () => {
 
   const onSelectCity = (city: ListItem) => {
     if (selectedTab === ALL_TYPES) {
-      const data = nearestAtms?.filter((item) => item?.city === city?.id);
+      const data = nearestAtms?.filter((item) => (city?.id ? item?.city === city?.id : true));
       setFilteredData(data);
     } else {
-      const data = nearestAtms?.filter((item) => item.type === selectedTab && item?.city === city?.id);
+      const data = nearestAtms?.filter(
+        (item) => item.type === selectedTab && (city?.id ? item?.city === city?.id : true),
+      );
       setFilteredData(data);
     }
     setSelectedCity(city);
   };
 
   const onPressDropDown = () => {
+    setSearchText('');
     citiesFilterSheetRef?.current?.present();
   };
 
   const onPressReset = () => {
+    setSearchText('');
     selectCitySheetRef?.current?.resetSelectedListItem();
   };
 

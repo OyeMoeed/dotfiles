@@ -2,6 +2,7 @@ import { CardCategories } from '@app/utilities/enums.util';
 import { StyleProp, ViewStyle } from 'react-native';
 
 export interface CardInterface {
+  totalCashbackAmt: string;
   /**
    * name of the card holder
    */
@@ -46,10 +47,26 @@ export interface CardInterface {
    * expiration date
    */
   expiryDate?: string;
+  reissueDue?: boolean;
+  cardStatus?: string;
+  cardTypeId?: string;
+  linkedName?: {
+    title?: string;
+    embossingName?: string;
+    firstName?: string;
+    lastName?: string;
+  };
   /**
    * card printing status
    */
   isCardPrinted?: boolean;
+  /**
+   * card type description
+   */
+  cardTypeDesc?: string;
+  annualFeeDue?: any;
+  nextAnnualFeeAmt?: any;
+  nextAnnualFeeVAT?: any;
 }
 
 export interface IPayATMCardProps {

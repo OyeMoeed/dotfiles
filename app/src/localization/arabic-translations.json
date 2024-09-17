@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "KYC_CHANGE": "تم تحديث نموذج معرفة العميل!",
     "BENEFECIARY_COUNTRY": "بلد المستفيد",
     "RELATIONSHIP": "العلاقة",
     "CITY": "المدينة",
@@ -62,6 +63,7 @@
     "PLEASE_ENSURE_PASSCODE": "يرجى التأكد من إدخال الرمز الصحيح",
     "PASSCODE_IS_INCORRECT": "رمز الدخول غير صحيح",
     "PASSCODE_DOES_NOT_MATCH": "رمز المرور غير متطابق",
+    "PLEASE_ENTER_AGAIN": "الرجاء الدخول مرة أخرى",
     "TRY_NEW_PASSCODE": "جرب رمز التعريف الشخصي الجديد المختلف",
     "SAVE": "حفظ",
     "VERIFIED": "تم التحقق",
@@ -93,6 +95,7 @@
     "ENTER_INFORMATION": "أدخل معلوماتك",
     "SETTINGS": "الإعدادات",
     "CONTACT_US": "اتصل بنا",
+    "NEED_ASSISTANCE": "أحتاج مساعدة",
     "SAR": "ريال سعودي",
     "PKR": "روبية باكستانية",
     "HOME": "الصفحة الرئيسية",
@@ -149,7 +152,9 @@
     "SPENDING_LIMIT_EXCEED": "تم تجاوز حد الإنفاق بنسبة",
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
     "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
-    "SORT_BY": "فرز حسب"
+    "SORT_BY": "فرز حسب",
+    "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح",
+    "YES": "نعم"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -158,7 +163,9 @@
     "UNSAVED_NUMBER": "رقم غير محفوظ",
     "TYPE_MOBILE_NUMBER": "اكتب رقم الهاتف المحمول",
     "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
-    "CONTACT_NAME": "اسم جهة الاتصال"
+    "CONTACT_NAME": "اسم جهة الاتصال",
+    "NO_RESULTS_FOUND": "لا توجد نتائج",
+    "CONTACT_LIMIT": "تم الوصول إلى حد جهات الاتصال"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -242,7 +249,7 @@
   "ID_RENEWAL": {
     "TITLE": "تجديد الهوية",
     "ID_ABOUT_EXPIRE": "هويتك على وشك الانتهاء!",
-    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون ${DAYS} يومًا في ${DATE}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
+    "ID_UPDATION_DES": "تاريخ انتهاء صلاحية هويتك هو في غضون {{DAYS}} يومًا في {{DATE}}.\nيرجى التأكد من تجديدها حتى تتمكن من الاستمرار في استخدام تطبيق AlinmaPay.",
     "REMIND_ME_LATER": "ذكرني لاحقًا",
     "DONT_SHOW": "لا تظهر هذا مرة أخرى",
     "ID_EXPIRED": "انتهت صلاحية هويتك!",
@@ -253,7 +260,8 @@
     "WHY_VERIFY_TITLE": "لماذا نحتاج هذا؟",
     "WHY_VERIFY": "للتحقق من حالة تجديد هويتك لمواصلة استخدام AlinmaPay",
     "THANK_YOU": "شكرًا!",
-    "ID_UPDATED": "تم تحديث هويتك بنجاح"
+    "ID_UPDATED": "تم تحديث هويتك بنجاح",
+    "STATUS_UNKOWN": ""
   },
   "PROFILE": {
     "NAFATH_VALIDATION": "التحقق من نفاذ",
@@ -368,12 +376,14 @@
     "POINTS_REDEMPTION": "استبدال النقاط",
     "ADD_MONEY_USING": "إضافة المال باستخدام",
     "ENTER_AMOUNT": "أدخل المبلغ",
+    "ENTER_AMOUNT2": "أدخل المبلغ",
     "REMAINING": "الحد الأعلى الشهري المتبقي",
     "LIMIT_REACHED": "تم الوصول إلى الحد الأقصى، لا يوجد زيادة",
     "AMOUNT_EXCEEDS_CURRENT": "المبلغ يتجاوز الحد الشهري",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "تم تجاوز الحد اليومي:",
     "TOPUP_SUCCESS": "تم الشحن بنجاح",
-    "PENDING_PAYMENT":"سيتم مراجعة طلب اضافة رصيد بمبلغ",
+    "PENDING_PAYMENT": "سيتم مراجعة طلب اضافة رصيد بمبلغ",
     "TOPUP_TYPE": "نوع الشحن",
     "TOPUP_DATE": "تاريخ الشحن",
     "NEW_TOP_UP": "شحن جديد",
@@ -440,6 +450,7 @@
     "RECEIVERS_IBAN": "IBAN المستلم",
     "VAT_INVOICE": "فاتورة الضريبة المضافة",
     "CLEAR_FILTERS": "إزالة الفلاتر",
+    "CLEAR_FILTER": "إزالة الفلاتر",
     "FILTERS": "فلاتر",
     "BY_AMOUNT": "حسب المبلغ",
     "FROM": "من",
@@ -506,7 +517,9 @@
     "NOTE": "ملاحظة",
     "NOTE_DETAIL": "مرحبا عزيزي",
     "ERSA_ALTURK": "إسراء الترك",
-    "AMOUNT_2": "500 ريال سعودي"
+    "AMOUNT_2": "500 ريال سعودي",
+    "FAST_CONVERSION_BY": "تحويل سريع بواسطة",
+    "SARIE": "ساري"
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "لم يتم العثور على العنوان",
@@ -617,6 +630,7 @@
     "VERIFY_CODE_ACCURACY": "يرجى التحقق من دقة الرمز.",
     "ENTER_CARD_PIN_CODE": "أدخل رمز PIN الخاص بالبطاقة",
     "CARD_TYPE": "نوع البطاقة",
+    "CVV": "cvv",
     "CARD_NUMBER": "رقم البطاقة",
     "CARD_HOLDER_NAME": "اسم حامل البطاقة",
     "EXPIRY_DATE": "تاريخ الانتهاء",
@@ -693,7 +707,6 @@
     "ADD_MORE_RECIPIENTS": "إضافة مستلمين آخرين",
     "MONEY_TRANSFER": "تحويل الأموال"
   },
-
   "REPLACE_CARD": {
     "REPLACE_PHYSICAL_CARD": "استبدال البطاقة الفعلية",
     "SELECT_CITY": "اختر المدينة",
@@ -730,6 +743,7 @@
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "دليل الفيديو خطوة بخطوة",
     "CODE_SCANNED_SUCCESSFULLY": "تم مسح الرمز بنجاح",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful",
     "MULTIPLE_OF_HUNDERED": "يجب أن يكون المبلغ مضاعفاً للمائة",
     "CHECK_NEAREST_ATM": "تحقق من أقرب صراف آلي",
     "NEAREST_ATM": "أقرب صراف آلي",
@@ -737,6 +751,7 @@
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات السحب من الصراف الآلي الآن!"
   },
   "ERROR": {
+    "SPECIAL_CHARACTERS": "لا يمكن استخدام الأحرف الخاصة",
     "API_ERROR_RESPONSE": "الاستجابة من API غير صحيحة!",
     "SOMETHING_WENT_WRONG": "حدث خطأ ما!",
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
@@ -748,9 +763,17 @@
     "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
     "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
     "PASSCODE_NOT_SET": "لا يمكن تعيين رمز المرور",
-    "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح"
+    "INCORRECT_ACCOUNT_NUMBER": "رقم الحساب غير صحيح",
+    "SCAN_UNSUCCESSFUL": "المسح غير ناجح"
   },
   "LOCAL_TRANSFER": {
+    "INVESTMENT": "استثمار",
+    "TUITION": "مصاريف التعليم",
+    "TRAVEL": "مصاريف السفر",
+    "TREATMENT": "علاج",
+    "PURCHASES": "مشتريات",
+    "FIRENDS_AND_FAMILY": "مصاريف الأصدقاء والعائلة",
+    "DONATION": "تبرع",
     "NO_BENEFICIARIES": "لم تتم إضافة أي مستفيدين لديك",
     "ADD_NEW_BENEFICIARY": "إضافة مستفيد جديد",
     "SEARCH_FOR_NAME": "البحث عن الاسم",
@@ -764,7 +787,8 @@
     "VAT": "ضريبة القيمة المضافة",
     "FEES": "الرسوم",
     "ACTIVE_INACTIVE": "نشط - غير نشط",
-    "INACTIVE_ACTIVE": "غير نشط - نشط"
+    "INACTIVE_ACTIVE": "غير نشط - نشط",
+    "AMOUNT_TO_BE_REFUND": "المبلغ المراد استرداده"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "أقرب صراف آلي",
@@ -784,23 +808,26 @@
     "CHECK_NEAREST_ATM": "التحقق من أقرب صراف آلي",
     "ALINMA_BRANCHES_AND_ATMS_LOCATIONS": "مواقع فروع وصرافات الإنماء",
     "LEARN_ATM_WITHDRAWAL_STEPS": "تعلم خطوات سحب النقود من الصراف الآلي الآن!",
-    "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة"
+    "STEP_BY_STEP_VIDEO_GUIDE": "دليل فيديو تعليمي خطوة بخطوة",
+    "SUCCESS_SCREEN": {
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
+    }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "تم تجديد البطاقة"
   },
-
   "REPLACE_CARD_SUCCESS": {
     "REPLACEMENT_REQUEST": "تم إرسال طلب الاستبدال",
     "YOU_WILL_BE_CONTACTED": "سيتم الاتصال بك قريبًا لترتيب الاستلام."
   },
-
   "SEND_GIFT_SUMMARY": {
     "OCCASION": "المناسبة",
     "EIYDIAH": "عيدية"
   },
   "SEND_GIFT": {
-    "SENT": "تم الإرسال",
     "TITLE": "إرسال هدية",
     "SELECT_METHOD": "اختر طريقة التوزيع",
     "SENT_ANY_GIFT": "لم ترسل أي هدية بعد!",
@@ -815,6 +842,7 @@
     "FROM": "من",
     "GIFTS": "هدايا",
     "SEND": "إرسال",
+    "SENT": "مرسل",
     "CUSTOM_AMOUNT1": "أدخل مبلغًا مخصصًا",
     "CUSTOM_AMOUNT2": "\nلكل شخص",
     "RECIPIENT": "المستلم",
@@ -829,7 +857,9 @@
     "SAY_THANKS": "قل شكرًا",
     "RECEIVER_MOBILE": "رقم جهاز الاستقبال",
     "AMOUNT": "المبلغ",
-    "TRANSACTION_DATE_TIME": "تاريخ النقل"
+    "TRANSACTION_DATE_TIME": "تاريخ النقل",
+    "TRANSFER": "تحويل",
+    "NEW_TRANSFER": "تحويل جديد"
   },
   "NEW_BENEFICIARY": {
     "SECOND_NAME": "الاسم الثاني",
@@ -865,6 +895,8 @@
     "ACTIVATE": "تفعيل",
     "PRICE_CALCULATOR": "حاسبة الأسعار",
     "CALCULATE_AND_DELIVERY": "حساب وعرض أنواع التسليم لدينا",
+    "DELIVERY_TYPE": "نوع التوصيل",
+    "SEARCH_FOR_BENEFICIARY": "ابحث عن المستفيد",
     "TRANSACTION_ONLY_UPDATE_MESSAGE": "هذا التحديث لهذه المعاملة فقط.",
     "EDIT_BENEFICIARY_MESSAGE": "يرجى تحديث تفاصيل المستفيد من صفحة المستفيدين للمرة القادمة.",
     "EDIT_BENEFICIARY_PENDING_MESSAGE": "تعديل اسم المستفيد قيد الانتظار لدى WU",
@@ -946,13 +978,13 @@
     "MAKE_A_TRANSFER": "إجراء تحويل",
     "BENEFECIARY_ACTIVATED": "تم تفعيل المستفيد بنجاح"
   },
-
   "NEW_SADAD_BILLS": {
     "COMPANY_NAME": "اسم الشركة",
     "SERVICE_TYPE": "نوع الخدمة",
     "ACCOUNT_NUMBER": "رقم الحساب",
     "SAVE_BILL_FUTURE": "حفظ الفاتورة للمستقبل",
     "INQUIRY": "استفسار",
+    "INQUIRE": "استفسر",
     "SAVE_ONLY": "حفظ فقط",
     "BILL_NICK_NAME": "بيل نيك نايم",
     "INVALID_ACCOUNT_NUMBER": "رقم حساب غير صالح",
@@ -969,7 +1001,6 @@
     "PAY_TOTAL_AMOUNT": "دفع المبلغ الإجمالي",
     "PAY_SADAD_BILLS": "دفع فواتير سداد"
   },
-
   "SADAD": {
     "SADAD_BILLS": "فواتير سداد",
     "ACTIVE_BILLS": "الفواتير النشطة",
@@ -987,9 +1018,11 @@
     "BILL_HAS_BEEN_DELETED": "تم حذف الفاتورة",
     "PAY_PARTIALLY": "ادفع جزئيًا",
     "EDIT_BILL": "تعديل الفاتورة",
-    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح"
+    "INVOICE_UPDATED_SUCCESSFULLY": "تم تحديث الفاتورة بنجاح",
+    "PAY": "دفع",
+    "DISCARD_CHANGES": "هل تريد تجاهل التغييرات؟",
+    "EDIT_YOU_MADE_WILL_LOST": "سيتم فقدان التعديلات التي أجريتها."
   },
-
   "PAY_BILL": {
     "HEADER": "دفع الفاتورة",
     "SERVICE_TYPE": "نوع الخدمة",
@@ -1004,7 +1037,8 @@
     "VIEW_SADAD_BILLS": "عرض فواتير سداد",
     "PAID_SUCCESS": "تم دفع فاتورتك بنجاح",
     "SAVED_SUCCESS": "تم حفظ فاتورتك بنجاح",
-    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى"
+    "PAY_ANOTHER_BILL": "دفع فاتورة أخرى",
+    "AMOUNT": "المبلغ"
   },
   "OFFERS": {
     "OFFERS_TITLE": "عروض",
@@ -1020,7 +1054,8 @@
     "AVAILABILITY": "التوفر",
     "ONLINE": "متصل",
     "OFFLINE": "غير متصل على الانترنت",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)"
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "الاسم المستعار للمستفيد (اختياري)",
+    "CLOTHES": "الملابس"
   },
   "SHOP": {
     "ALL_MERCHANTS": "كل التجار",
@@ -1059,7 +1094,8 @@
     "PRODUCT_DISCRIPTION": "وصف المنتج",
     "PAY": "ادفع",
     "TERMS_AND_CONDITIONS": "بالنقر على الدفع، أنت توافق على الشروط والأحكام الخاصة بنا",
-    "NO_RESULT": "لا توجد منتجات في هذه الفئة"
+    "NO_RESULT": "لا توجد منتجات في هذه الفئة",
+    "PAY_PRODUCT": "دفع المنتج"
   },
   "ORDER_SCREEN": {
     "COUPON_CODE": "رمز القسيمة",
@@ -1071,18 +1107,21 @@
     "VAT": "ضريبة القيمة المضافة (15%)",
     "BACK": "الرجوع إلى المتجر",
     "VAT_INVOICE": "فاتورة ضريبة القيمة المضافة",
-    "COPY": "تم نسخ رمز القسيمة!"
+    "COPY": "تم نسخ رمز القسيمة!",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
+    "PURCHASE_DATE": "تاريخ الشراء"
   },
   "REQUEST_SUMMARY": {
     "TITLE": "طلب الأموال",
     "PAY_TO": "الدفع إلى",
     "MOBILE_NUMBER": "رقم الجوال",
     "AMOUNT": "المبلغ",
+    "TOTAL_AMOUNT": "المبلغ الإجمالي",
     "INSUFFICIENT_BALANCE": "رصيد غير كافٍ",
     "NO_REMAINING_AMOUNT": "لا يوجد مبلغ متبقي",
-    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة"
+    "GIFT_DESCRIPTION": "يمكنك الآن إرسال واستلام الهدايا من جميع أصدقائك. تتوفر العديد من بطاقات التهنئة",
+    "PAY_PRODUCT": "دفع المنتج"
   },
-
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "دفع وزارة الداخلية",
     "NEW_MOI_BILL": "مشروع قانون وزارة الداخلية الجديد",
@@ -1140,14 +1179,16 @@
     "BILL_TYPE": "نوع الفاتورة",
     "TRAFFIC_NUMBER": "رقم المرور"
   },
-
   "REQUEST_MONEY": {
+    "MAKE_NEW_REQUEST": "قم بعمل طلب جديد",
     "REQUEST_MONEY": "طلب مال",
+    "CANCELLED": "ملغى",
     "SEND_REQUESTS": "طلبات مرسلة",
     "RECEIVED_REQUESTS": "طلبات مستلمة",
     "CREATE_REQUEST": "إنشاء طلب",
     "YOU_HAVE_NO": "ليس لديك أي",
     "MONEY_REQUESTS": "طلبات مالية",
+    "MONEY_REQUEST": "طلب المال",
     "PENDING": "قيد الانتظار",
     "CANCEL": "إلغاء",
     "PAID": "مدفوع",
@@ -1170,7 +1211,8 @@
     "CANCEL_REQUEST": "إلغاء الطلب",
     "PAY": "دفع",
     "REJECT": "رفض",
-    "REJECT_THIS_REQUEST": "رفض هذا الطلب"
+    "REJECT_THIS_REQUEST": "رفض هذا الطلب",
+    "MAKE_NEW_REQUEST": "تقديم طلب جديد"
   },
   "TRAFFIC_VIOLATION": {
     "TITLE": "المخالفات المرورية",
@@ -1203,7 +1245,8 @@
     "RECEIVED_REQUESTS": "الطلبات المستلمة",
     "CREATE_REQUEST": "إنشاء طلب",
     "YOU_HAVE_NO": "ليس لديك",
-    "MONEY_REQUESTS": "طلبات مالية"
+    "MONEY_REQUESTS": "طلبات مالية",
+    "REF_NUMBER": "رقم المرجع"
   },
   "ORDER_SUMMARY": {
     "TITLE": "دفع المنتج",
@@ -1214,11 +1257,9 @@
     "VAT": "ضريبة القيمة المضافة (15%)",
     "VIOLATION": "مخالفة"
   },
-
   "PHYSICAL_CARD": {
     "CUORIER_COMPANY_WILL": "ستتواصل معك شركة البريد السريع للتحقق من العنوان الدقيق."
   },
-
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "إدارة البطاقة",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "لم تتم إضافة أية بطاقات لديك \n يمكنك إضافة بطاقات جديدة الآن.",

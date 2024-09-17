@@ -10,6 +10,8 @@ import {
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { copyText } from '@app/utilities/clip-board.util';
+import { toastTypes } from '@app/utilities/enums.util';
 import IPayList from '../ipay-list/ipay-list.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
@@ -43,8 +45,17 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
     );
   };
 
+  const onPressDefault = (item: OptionItem) => {
+    copyText(item.value);
+    renderToast({
+      title: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      icon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
+      toastType: toastTypes.INFORMATION,
+    });
+  };
+
   const renderOption = ({ item }: { item: OptionItem }) => {
-    const { label, value, icon, onPressIcon } = item;
+    const { label, value, icon, onPressIcon = onPressDefault } = item;
 
     return (
       <IPayList
@@ -65,7 +76,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
         <IPayView style={styles.rowStyles}>
           <IPayImage image={headerData?.companyImage} style={styles.listLeftImg} />
           <IPayView>
-            <IPaySubHeadlineText color={colors.natural.natural900} text={headerData?.title} />
+            <IPaySubHeadlineText style={styles.title} color={colors.natural.natural900} text={headerData?.title} />
             <IPayCaption2Text
               color={colors.natural.natural900}
               text={headerData?.companyDetails}

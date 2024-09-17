@@ -1,6 +1,5 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_12, FONT_SIZE_13, typography } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const helpCenterStyles = (colors: any) =>
@@ -49,6 +48,7 @@ const helpCenterStyles = (colors: any) =>
       width: '100%',
     },
     faqItemText: {
+      width: '90%',
       color: colors.primary.primary800,
     },
     faqItemIcon: {
@@ -60,9 +60,18 @@ const helpCenterStyles = (colors: any) =>
       transform: [{ rotate: '180deg' }],
     },
     faqItemAnswer: {
-      paddingVertical: scaleSize(12),
+      // paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(16),
       color: colors.natural.natural700,
+    },
+    faqItemAnswerFirstItem: {
+      paddingTop: scaleSize(12),
+    },
+    faqItemAnswerLastItem: {
+      paddingBottom: scaleSize(20),
+    },
+    faqItemAnswerListItem: {
+      paddingVertical: scaleSize(3),
     },
     contactUsContainer: {
       marginTop: scaleSize(32),
@@ -142,7 +151,7 @@ const helpCenterStyles = (colors: any) =>
       borderRadius: 15,
     },
     bodyStyle: {
-      bottom: 0,
+      bottom: verticalScale(16),
     },
   });
 

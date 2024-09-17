@@ -6,7 +6,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
-import { buttonVariants, CAROUSEL_MODES } from '@app/utilities/enums.util';
+import { buttonVariants, CarouselModes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import useCardsData from '@app/screens/cards/use-cards-data';
@@ -14,7 +14,6 @@ import icons from '@app/assets/icons';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import physicalCardMainStyles from './physical-card-main-style';
-
 
 const PhysicalCardMainScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -76,7 +75,7 @@ const PhysicalCardMainScreen: React.FC = () => {
         <IPayCarousel
           data={CARD_DATA.slice(0, 3)}
           modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-          mode={CAROUSEL_MODES.PARALLAX}
+          mode={CarouselModes.PARALLAX}
           width={SCREEN_WIDTH}
           loop={false}
           height={verticalScale(CARD_CONTAINER_HEIGHT)}

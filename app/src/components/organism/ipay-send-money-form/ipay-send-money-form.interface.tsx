@@ -2,6 +2,7 @@ import { SendMoneyFormType } from '@app/screens/send-money-form/send-money-form.
 
 interface IPaySendMoneyFormProps {
   subtitle: string;
+  showReason?: boolean;
   testID?: string;
   setAmount: (id: number, text: string | number) => {};
   openReason?: (id: string | number) => {};
@@ -10,6 +11,7 @@ interface IPaySendMoneyFormProps {
   formInstances?: SendMoneyFormType[];
   setNotes: (id: number, text: string) => void;
   setSelectedItem: (text: string) => void;
+  showReason?: boolean;
 }
 interface FormInstanceType {
   amount: string;
@@ -18,6 +20,7 @@ interface FormInstanceType {
   subtitle: string;
   selectedItem?: { id: string | number; text: string };
   notes?: string;
+  hasWallet?: boolean;
 }
 
 export { FormInstanceType, IPaySendMoneyFormProps };

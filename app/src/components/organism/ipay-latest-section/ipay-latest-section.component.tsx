@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
+import { ArrangeSquare2 } from '@app/assets/svgs';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -18,9 +19,10 @@ import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import FeatureSections from '@app/utilities/enum/feature-sections.enum';
+import { FeatureSections } from '@app/enums';
 import React from 'react';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
@@ -36,12 +38,18 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const styles = sectionStyles(colors);
   const localizationText = useLocalization();
   const sampleData = constants.SAMPLE_DATA;
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-
+  const isBasicTier = useTypedSelector(isBasicTierSelector);
   // Get the current arrangement from the Redux store
   const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
   const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
+
+  const moveToTransactionHistory = () =>
+    navigate(ScreenNames.TRANSACTIONS_HISTORY, {
+      transactionsData,
+      isShowCard: false,
+      isShowAmount: true,
+    });
 
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {
@@ -49,7 +57,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
       case FeatureSections.ACTION_SECTIONS:
         return (
           <React.Fragment key={section}>
-            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+            {isBasicTier && (
               <IPayView style={styles.headingsContainer}>
                 <IPayView style={styles.commonContainerStyle}>
                   <IPayFootnoteText style={styles.footnoteTextStyle}>
@@ -65,9 +73,9 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 </IPayPressable>
               </IPayView>
             )}
-            {userInfo?.walletTier == 'B' && userInfo?.basicTier && (
+            {isBasicTier && (
               <IPayView style={styles.bannerActionContainer}>
-                <IPayBannerAnimation onVerify={() => openProfileBottomSheet?.()} />
+                <IPayBannerAnimation onVerify={() => openProfileBottomSheet && openProfileBottomSheet()} />
               </IPayView>
             )}
           </React.Fragment>
@@ -106,10 +114,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   {localizationText.COMMON.TRANSACTION_HISTORY}
                 </IPayFootnoteText>
               </IPayView>
-              <IPayPressable
-                onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { transactionsData, isShowCard: false, isShowAmount: false })}
-                style={styles.commonContainerStyle}
-              >
+              <IPayPressable onPress={moveToTransactionHistory} style={styles.commonContainerStyle}>
                 <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.VIEW_ALL}</IPayText>
                 <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>
@@ -121,7 +126,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   scrollEnabled={false}
                   keyExtractor={(_, index) => index.toString()}
                   renderItem={({ item, index }) => (
-                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item ? item : []} />
+                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} />
                   )}
                 />
               </IPayView>
@@ -161,7 +166,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ item, index }) => (
                 <IPayLatestOfferCard
-                  onPress={() => navigate(ScreenNames.OFFER_DETAILS)}
+                  onPress={() =>
+                    navigate(ScreenNames.OFFER_DETAILS, {
+                      id: item.id,
+                    })
+                  }
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
                   isLastItem={isLastItem(offersData?.length as number, index)}
@@ -177,14 +186,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
     }
   };
 
-
   return (
     <IPayView testID={testID} style={styles.container}>
       {arrangement?.map((section) => renderSection(section))}
       <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
         <IPayText style={styles.subheadingTextStyle}>{localizationText.COMMON.RE_ARRANGE_SECTIONS}</IPayText>
         <IPayPressable onPress={openBottomSheet}>
-          <IPayIcon icon={icons.arrange_square_2} color={colors.primary.primary600} size={18} />
+          <ArrangeSquare2 color={colors.primary.primary600} style={styles.rearrangeIcon} />
         </IPayPressable>
       </IPayView>
     </IPayView>

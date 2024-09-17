@@ -18,10 +18,9 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { GiftLocalizationKeys, GiftTransactionKey } from '@app/enums/gift-status.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
-import { GiftCardStatus, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, ToastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
@@ -60,7 +59,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
   };
 
   const getTitleColor = (subTitle: string) => {
@@ -88,13 +87,20 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     Share.open(shareOptions);
   };
 
+  const getDynamicStyles = (stylesValue, dataDetails, item) => [
+    stylesValue.subTitle,
+    dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
+    item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftCardStatus.EXPIRED && stylesValue.textStyle,
+    item === GiftCardDetailsKey.AMOUNT && stylesValue.currencyStyle,
+  ];
+
   const titleText = useCallback(
-    (value: string) => {
+    (value: string, item: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
       if (date.isValid()) {
         return formatTimeAndDate(value);
       }
-      return value;
+      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
     },
     [details],
   );
@@ -159,12 +165,12 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
-            text={titleText(details[item])}
+            text={titleText(details[item], item)}
             color={getTitleColor(details[item])}
             numberOfLines={1}
-            style={[styles.subTitle, details[item]?.length > 20 && styles.condtionalWidthSubtitle]}
+            style={getDynamicStyles(styles, details, item)}
           />
-          {item === 'refNumber' && (
+          {item === GiftCardDetailsKey.REF_NUMBER && (
             <IPayPressable style={styles.icon} onPress={() => onPressCopy(details[item])}>
               <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
             </IPayPressable>
@@ -189,6 +195,7 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
             frontViewComponent={giftCardFront()}
             backViewComponent={giftCardBack()}
             returnFilpedIndex={setSelectedIndex}
+            isExpired={details?.status === GiftCardStatus.EXPIRED && isSend}
           />
           <IPayView style={styles.swipeBtnView}>
             <IPayButton
@@ -208,7 +215,9 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         {isSend ? (
           <IPayView style={styles.bottomView}>
             <IPayFlatlist
-              data={Object.keys(details).filter((key) => GiftTransactionKeys.includes(key))}
+              data={Object.keys(details)
+                .filter((key) => GiftTransactionKeys.includes(key))
+                .sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
               keyExtractor={(_, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={renderCardDetails}

@@ -9,6 +9,8 @@ interface TransferInfoData {
 
 export interface IPayTransferInformationProps {
   testID?: string;
+  showReason?: boolean;
+  currencyStyle?: ViewStyle;
   style?: ViewStyle;
   amount: string | number;
   setAmount: (text: string | number) => void;
@@ -23,4 +25,9 @@ export interface IPayTransferInformationProps {
   transferInfo?: boolean;
   chipValue?: string;
   transferInfoData?: TransferInfoData;
+  hasWallet?: boolean;
+  subtitle?: string;
+  maxLength?: number;
+  inputFieldStyle?: ViewStyle;
+  showReason?: boolean;
 }

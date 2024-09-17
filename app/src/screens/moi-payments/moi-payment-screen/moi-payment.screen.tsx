@@ -31,7 +31,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
-import { MoiFormFormValues } from './moi-payment.interface';
+import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
@@ -46,14 +46,13 @@ const MoiPaymentScreen: React.FC = () => {
   const [filteredData, setFilteredData] = useState<{ id: number; text: string }[]>(moiServiceProvider);
   const [customSnapPoint, setCustomSnapPoints] = useState<string[]>(['1%', '92%']);
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
-  const [isRefund, setIsRefund] = useState<boolean>(false);
+  const [, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [beneficiaryID, setBeneficiaryID] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const { userInfo } = useTypedSelector((state) => state.userInfoReducer);
   const { showToast } = useToastContext();
-  const { myBeneficiaryId = '123123123' } = userInfo;
+  const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
@@ -367,6 +366,7 @@ const MoiPaymentScreen: React.FC = () => {
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
                       btnType="primary"
                       onPress={onSubmit}
+                      btnStyle={styles.inquiryBtn}
                       large
                       btnIconsDisabled
                       disabled={isBtnEnabled}
@@ -408,6 +408,7 @@ const MoiPaymentScreen: React.FC = () => {
                       onPressListItem={onSelectValue}
                       selectedListItem={getSelectedValue()}
                       isCompleteItem
+                      listStyles={styles.listStyles}
                     />
                   ) : (
                     <IPayView style={styles.noRecordContainer}>

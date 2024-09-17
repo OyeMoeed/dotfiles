@@ -4,14 +4,22 @@ import { IPayButton, IPayHeader, IPayNoResult } from '@app/components/molecules'
 import { IPaySafeAreaView } from '@app/components/templates';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import colors from '@app/styles/colors.const';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { PayChannel, buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
 import cardManagementStyles from './cardManagement.style';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 
 const CardManagementScreen: React.FC = () => {
-  const styles = cardManagementStyles(colors);
+  const styles = cardManagementStyles();
   const localizationText = useLocalization();
 
+  const onAddCard = () => {
+    navigate(ScreenNames.TOP_UP, {
+      topupChannel: PayChannel.CARD,
+    });
+  };
+  
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -36,7 +44,7 @@ const CardManagementScreen: React.FC = () => {
           medium
           btnText={localizationText.MENU.ADD_CARD}
           hasRightIcon
-          onPress={() => {}}
+          onPress={onAddCard}
           btnStyle={styles.sendButton}
           leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
         />

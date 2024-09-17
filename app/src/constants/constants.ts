@@ -1,13 +1,16 @@
+// TODO: fix max-len
+/* eslint-disable max-len */
 /**
  * Defines a set of constants.
  */
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { BillStatus, CardTypes } from '@app/utilities/enums.util';
+import { FeatureSections } from '@app/enums';
+import { BillStatus } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
 
 const constants = {
-  MOCK_API_RESPONSE: true,
+  MOCK_API_RESPONSE: false,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,
@@ -45,33 +48,6 @@ const constants = {
     CREATE_PASSCODE: 'Create Passcode',
     CONFIRM_PASSCODE: 'Confirm Passcode',
   },
-  TERMS_AND_CODITIONS_DUMMY_TEXT: `“Terms and Conditions” is the document governing the contractual relationship between the provider of a service and its user. On the web, this document is often also called “Terms of Service” (ToS), “Terms of Use”, EULA (“End-User License Agreement”), “General Conditions” or “Legal Notes”.
-  
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-The Terms and Conditions are nothing other than a contract in which the owner clarifies the conditions of use of its service. Some quick examples are the use of the content (copyright) , the rules that users must follow while interacting with one another on the website / app and, finally, rules related to the cancellation or suspension of a user’s account etc.
-  
-Particular emphasis should be given to the limitation of liability clauses (and disclaimers) , for example the case of malfunctions of the app or website.
-  
-  
-The Terms and Conditions therefore, represent the document that helps in dealing with problems or preventing them in the first place. Because of that, the Terms and Conditions are fundamental in many cases in order to mount an adequate and proper defense represent the document that helps in  `,
-
   FAQ_ITEMS: [
     {
       question: 'Can I recover my passcode?',
@@ -133,6 +109,7 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   ],
   HELP_CENTER_TABS: ['All FAQ', 'Account', 'Top-up', 'Money Transfer', 'Others'],
   MOBILE_NUMBER_LENGTH: 10,
+  UNSAVED_NUMBER_LENGTH: 16,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
@@ -256,12 +233,6 @@ The Terms and Conditions therefore, represent the document that helps in dealing
   ],
 
   MOCK_CVV: '123',
-  DUMMY_USER_CARD_DETAILS: {
-    CARD_TYPE: CardTypes.SIGNATURE,
-    CARD_LAST_FOUR_DIGIT: '1111',
-    CARD_TYPE_NAME: 'Classic Debit Card',
-    CARD_HOLDER_NAME: 'Adam Ahmed',
-  },
   TRANSACTION_FILTERS: ['All', 'Paid', 'Refund', 'Rejected', 'Pending'],
   GIFT_CARD_DETAILS: [
     { id: 1, title: 'Status', subTitle: 'Unopened', icon: '' },
@@ -278,13 +249,25 @@ The Terms and Conditions therefore, represent the document that helps in dealing
     accountNumber: 'SA380019000500000000263180002',
     icon: images.snb,
   },
+  SUCCESS_BENEFICIARY_DETAILS: [
+    // { title: 'Amount', subTitle: 3000, currency: 'SAR' },
+    { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
+    { title: 'Transfer By', subTitle: '', icon: images.sarie },
+    { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
+    // { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
+    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    { title: 'Fees', subTitle: 10, currency: 'SAR', icon: '' },
+    { title: 'VAT (15%)', subTitle: 40, currency: 'SAR', icon: '' },
+    { title: 'Total Amount', subTitle: 3050, currency: 'SAR', icon: '' },
+  ],
   BENEFICIARY_DETAILS: [
-    { title: 'Amount', subTitle: 3000 },
+    { title: 'Amount', subTitle: 3000, currency: 'SAR' },
     { title: 'Beneficiary Nick Name ', subTitle: 'Miles', icon: '' },
     { title: 'Reason of Transfer', subTitle: 'Family and friends', icon: '' },
     { title: 'Fast conversion by', subTitle: 'Sarie', icon: images.sarie },
-    { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
-    { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
+    // { title: 'Note', subTitle: 'Hello My Dear friend hope you are doing well', icon: '' },
+    // { title: 'Ref. Number', subTitle: 'FTA35346', icon: icons.copy },
   ],
   OTHER_BILL_TYPES: [
     { id: 1, title: 'Government Payments (MOI)', icon: images.moiLogo },
@@ -322,7 +305,7 @@ const CARDS_MOCK_DATA = [
 export { CARDS_MOCK_DATA, SUPPORTED_CARD };
 
 const CARD_DATA = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
@@ -336,7 +319,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -352,7 +335,7 @@ const CARD_DATA = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Instant Cashback 1.6% with no Cap.',
@@ -444,6 +427,7 @@ const SNAP_POINTS = {
   X_SMALL: ['1%', '35%'],
   SMALL: ['1%', '45%'],
   MEDIUM: ['1%', '50%'],
+  MID_MEDUIM: ['1%', '63%'],
   MID_LARGE: ['1%', '70%'],
   MEDIUM_LARGE: ['1%', '95%'],
   LARGE: ['1%', '100%'],
@@ -557,7 +541,7 @@ const ACTIVE_SADAD_BILLS = [
 ];
 
 const TRAFFIC_VIOLATIONS = [
-  //TODO will be replaced by API data, for now its dummy data
+  // TODO will be replaced by API data, for now its dummy data
   {
     id: 1,
     billTitle: 'Traffic violation',
@@ -615,7 +599,7 @@ const VOILATOR_ID = '22321313';
 
 const ALINMA_REFERENCE_NUM = '#IPAY789';
 
-//TODO will be replace from api
+// TODO will be replace from api
 const RELATIONSHIPS = [
   { id: 1, title: 'Father' },
   { id: 2, title: 'Mother' },
@@ -682,10 +666,41 @@ const SNAP_POINT = {
   MEDIUM_LARGE: ['95%', '95%'],
   LARGE: ['100%', '100%'],
 };
+const ALINMA_BANK_CODE = '999999';
 const NO_INVOICE_ACCOUNT_NUMBER = '1234567890';
-const TOTAL_AMOUNT='3000';
+const TOTAL_AMOUNT = '3000';
+const MAX_CONTACTS = 5;
+const DASHBOARD_ITEMS = [
+  FeatureSections.ACTION_SECTIONS,
+  FeatureSections.SUGGESTED_FOR_YOU,
+  FeatureSections.TRANSACTION_HISTORY,
+  FeatureSections.LATEST_OFFERS,
+];
+
+const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
+  ALINMAPAY_REG_TERMS_AR_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/RegistrationTerms_ar.pdf?alt=media&token=3b50f05b-3f96-4d33-9065-b4a5951230f8',
+  ALINMAPAY_REG_TERMS_EN_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/RegistrationTerms_en.pdf?alt=media&token=4e8c5316-bf29-4d71-b611-788f479ca7b7',
+  VC_TERMS_AR_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/TermsandconditionsforAlinmaPayVirtualCards(Arabic).pdf?alt=media&token=509d1cad-ce8a-43fe-86a7-517838d988b3',
+  VC_TERMS_EN_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/TermsandconditionsforAlinmaPayVirtualCards(English).pdf?alt=media&token=84d91999-446d-4b5a-87cc-23d208006b57',
+};
+
+const TERMS_AND_CONDITIONS_URLS_PROD = {
+  ALINMAPAY_REG_TERMS_AR_URL: 'https://www.alinma.com/ADS/channels/retail/assets/docs/RegistrationTerms_ar.pdf',
+  ALINMAPAY_REG_TERMS_EN_URL: 'https://civicus.org/documents/toolkits/Public%20Information.pdf',
+  VC_TERMS_AR_URL: 'https://www.alinma.com/ADS/TermsandconditionsforAlinmaPayVirtualCards(Arabic).pdf',
+  VC_TERMS_EN_URL: 'https://www.alinma.com/ADS/TermsandconditionsforAlinmaPayVirtualCards(English).pdf',
+};
+
+const IS_PRODUCTION = process.env.NODE_ENV === 'production';
+const TERMS_AND_CONDITIONS_URLS = IS_PRODUCTION ? TERMS_AND_CONDITIONS_URLS_PROD : TERMS_AND_CONDITIONS_URLS_NON_PROD;
+
 export {
   ACTIVE_SADAD_BILLS,
+  ALINMA_BANK_CODE,
   ALINMA_REFERENCE_NUM,
   ALINMA_TRANSFER_TYPES,
   ANIMATION_DURATION,
@@ -697,19 +712,22 @@ export {
   COUNTRIES_DATA,
   CURRENCIES,
   CUSTOM_SNAP_POINT,
+  DASHBOARD_ITEMS,
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
+  MAX_CONTACTS,
   NO_INVOICE_ACCOUNT_NUMBER,
   PROGRESS_INCREMENT_FACTOR,
   RELATIONSHIPS,
   SNAP_POINT,
   SNAP_POINTS,
+  TERMS_AND_CONDITIONS_URLS,
   TOTAL_AMOUNT,
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES
+  WU_TRANSFER_TYPES,
 };
 
 export default constants;

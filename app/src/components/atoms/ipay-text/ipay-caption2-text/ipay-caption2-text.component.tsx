@@ -1,6 +1,6 @@
+import React, { JSX } from 'react';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IPayText } from '@components/atoms/index';
-import React from 'react';
 import { IPayCaption2TextProps } from './ipay-caption2-text.interface';
 import styles from './ipay-caption2-text.styles';
 
@@ -18,7 +18,7 @@ const IPayCaption2Text: React.FC<IPayCaption2TextProps> = ({
   children,
   color,
 }: IPayCaption2TextProps): JSX.Element => {
-  const textColor = color ? { color } : {}; 
+  const textColor = color ? { color } : {};
   return (
     <IPayText
       testID={`${testID}-caption2-text`}

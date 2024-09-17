@@ -1,7 +1,7 @@
-import apiCall from '@network/services/api-call.service';
 import requestType from '@app/network/request-types.network';
-import { ActivateBeneficiaryPayload } from './local-transfer-activate-beneficiary.interface';
+import apiCall from '@network/services/api-call.service';
 import LOCAL_TRANSFERS_URLS from '../local-transfer.urls';
+import { ActivateBeneficiaryPayload } from './local-transfer-activate-beneficiary.interface';
 import activateBeneficiary from './local-transfer-activate-beneficiary.service';
 
 jest.mock('@network/services/api-call.service');
@@ -27,7 +27,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });
@@ -45,7 +45,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });
@@ -60,7 +60,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });
@@ -73,7 +73,7 @@ describe('activateBeneficiary', () => {
     const result = await activateBeneficiary(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
-      endpoint: LOCAL_TRANSFERS_URLS.ACTIVATE_BENEFICIARY(),
+      endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
       method: requestType.PUT,
       payload,
     });

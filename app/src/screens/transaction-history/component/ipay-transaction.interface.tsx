@@ -1,4 +1,9 @@
-import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
+import {
+  TransactionMedium,
+  TransactionOperations,
+  TransactionsStatus,
+  TransactionTypes,
+} from '@app/enums/transaction-types.enum';
 import { BeneficiaryTransactionItemProps } from '@app/screens/beneficiary-transaction-history/beneficiary-transaction-history.interface';
 import { StyleProp, ViewStyle } from 'react-native';
 
@@ -127,6 +132,7 @@ interface IPayTransactionProps {
    * Transactions Types List
    */
   transactionRequestTypes?: any[];
+  internationalTransfer?: boolean;
 }
 type CombinedTransactionItemProps = IPayTransactionItemProps | IPayTransactionItem;
 export { CombinedTransactionItemProps, IPayTransactionItem, IPayTransactionProps };

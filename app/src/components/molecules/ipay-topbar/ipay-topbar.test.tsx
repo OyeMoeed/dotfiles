@@ -10,7 +10,7 @@ describe('IPayTopbar', () => {
     const userProfile = images.profile;
     // Act
     const { getByTestId } = render(
-      <IPayTopbar testID="IPayTopbarId" captionText={testTitle} userName={userName} userProfile={userProfile} />
+      <IPayTopbar testID="IPayTopbarId" captionText={testTitle} userName={userName} userProfile={userProfile} />,
     );
 
     const IPayTopbarId = getByTestId('IPayTopbarId-base-view');

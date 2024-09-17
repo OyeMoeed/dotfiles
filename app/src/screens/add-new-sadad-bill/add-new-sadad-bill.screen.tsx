@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
@@ -12,15 +13,25 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
-import { NO_INVOICE_ACCOUNT_NUMBER } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
+import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
+import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
+import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
+import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
+import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
+import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
+import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
+import { getDeviceInfo } from '@app/network/utilities';
+import { getValidationSchemas } from '@app/services';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FC, useEffect, useRef, useState } from 'react';
@@ -29,7 +40,7 @@ import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bi
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
-const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
+  const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
   const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
@@ -39,10 +50,15 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
   const [sheetType, setSheetType] = useState<string>('');
   const [search, setSearch] = useState<string>('');
   const [filterData, setFilterData] = useState<Array<object>>([]);
+  const [tabOption, setTabOption] = useState<BillersCategoryType[]>();
+  const [billers, setBillers] = useState<BillersTypes[]>();
+  const [selectedBiller, setSelectedBiller] = useState<BillersTypes>();
 
-  const tabOption = ['All', 'Communications', 'Banks', 'Global Services'];
+  const [services, setServices] = useState<BillersService[]>();
+  const [selectedService, setSelectedService] = useState<BillersService>();
+  const { showToast } = useToastContext();
 
-  const { sadadBillsCompanyData, sadadServiceTypeData } = useConstantData();
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
 
@@ -53,19 +69,104 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
     billName,
   });
 
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const onGetBillersCategory = async () => {
+    const apiResponse = await getBillersCategoriesService();
+    if (apiResponse.successfulResponse) {
+      setTabOption(apiResponse.response.billerCategoryList.map((el) => ({ ...el, text: el.desc })));
+    }
+  };
+
+  const onGetBillers = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const payload = {
+      includeBillerDetails: 'false',
+      deviceInfo,
+      billerStatus: 'E',
+    };
+    const apiResponse = await getBillersService(payload);
+    if (apiResponse.successfulResponse) {
+      setBillers(
+        apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
+          ...billerItem,
+          id: billerItem.billerId,
+          image: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerItem.billerId), // TODO: There is no image on get billers response will add image here when receive from response
+          text: billerItem.billerDesc,
+          type: billerItem.billerTypeDesc,
+        })),
+      );
+    }
+  };
+
+  const onGetBillersServices = async (billerID: string) => {
+    try {
+      const apiResponse = await getBillersServiceProvider(billerID);
+      if (apiResponse.successfulResponse) {
+        const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+          ...serviceItem,
+          id: serviceItem.serviceId,
+          text: serviceItem.serviceDesc,
+        }));
+        setServices(serviceList);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  useEffect(() => {
+    onGetBillersServices(walletNumber);
+  }, [selectedBiller]);
+
+  useEffect(() => {
+    onGetBillersCategory();
+    onGetBillers();
+  }, []);
+
   useEffect(() => {
     if (sheetType === NewSadadBillType.COMPANY_NAME) {
-      setFilterData(sadadBillsCompanyData);
+      setFilterData(billers);
     } else {
-      setFilterData(sadadServiceTypeData);
+      setFilterData(services);
     }
   }, [sheetType]);
 
-  const onSubmit = (values: FormValues) => {
-    if (values.accountNumber === NO_INVOICE_ACCOUNT_NUMBER) {
-      invoiceSheetRef.current.present();
+  const onInquireBill = async (values: FormValues) => {
+    const deviceInfo = await getDeviceInfo();
+    const payload: InquireBillPayloadTypes = {
+      billerId: selectedBiller?.billerId,
+      billNumOrBillingAcct: values.accountNumber,
+      billIdType: selectedBiller?.billIdType,
+      billerName: values.companyName,
+      deviceInfo,
+      billNickname: values.billName,
+      walletNumber,
+    };
+
+    const apiResponse = await inquireBillService(payload);
+    if (apiResponse.successfulResponse) {
+      navigate(ScreenNames.NEW_SADAD_BILL, {
+        billNickname: values.billName,
+        billerName: values.companyName,
+        billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
+        serviceType: values.serviceType,
+        billNumOrBillingAcct: values.accountNumber,
+        dueDate: '2024-07-21T12:00:00Z', // TODO: No Due Date is coming from api response once receive from response will update it
+        totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
+        billerId: selectedBiller?.billerId,
+        billIdType: selectedBiller?.billIdType,
+        serviceDescription: selectedService?.serviceDesc,
+      });
     } else {
-      navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, { isPayOnly: true });
+      invoiceSheetRef.current.present();
     }
   };
 
@@ -74,18 +175,34 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
     selectSheeRef.current.present();
   };
 
-  const onSelect = (value: string) => {
-    if (value === NewSadadBillType.ALL_COMPANY) {
-      setFilterData(sadadBillsCompanyData);
-    } else {
-      const filterWithTab = sadadBillsCompanyData.filter((item) => item.type === value);
-      setFilterData(filterWithTab);
+  const onSelect = (value: string, tabObject: BillersCategoryType) => {
+    const billersValue = billers || [];
+
+    if (billersValue?.length > 0) {
+      if (tabObject.code === '0') {
+        setFilterData(billersValue);
+      } else {
+        const filterWithTab = billersValue?.filter((item) => item.billerType === tabObject.code);
+        setFilterData(filterWithTab);
+      }
     }
   };
 
-  const dataToRender = filterData?.filter((item) =>
-    search ? item?.text?.toLowerCase().includes(search.toLowerCase()) : true,
+  const dataToRenderCompany = filterData?.filter((item) =>
+    search ? item?.billerDesc?.toLowerCase().includes(search.toLowerCase()) : true,
   );
+  const dataToRenderService = filterData?.filter((item) =>
+    search ? item?.serviceDesc?.toLowerCase().includes(search.toLowerCase()) : true,
+  );
+
+  const getLength = () => {
+    if (sheetType === NewSadadBillType.COMPANY_NAME) {
+      return dataToRenderCompany?.length;
+    }
+    return dataToRenderService?.length;
+  };
+
+  const listViewData = sheetType === NewSadadBillType.COMPANY_NAME ? dataToRenderCompany : dataToRenderService;
 
   return (
     <IPayFormProvider<FormValues>
@@ -103,8 +220,10 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
           if (sheetType === NewSadadBillType.COMPANY_NAME) {
             setValue(FormFields.COMPANY_NAME, item.text);
             setSelectedImage(item.image);
+            setSelectedBiller(item);
           } else {
             setValue(FormFields.SERVICE_TYPE, item.text);
+            setSelectedService(item);
           }
           setSearch('');
           selectSheeRef.current.close();
@@ -151,6 +270,7 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
                     companyInputName={FormFields.COMPANY_NAME}
                     accountInputName={FormFields.ACCOUNT_NUMBER}
                     serviceInputName={FormFields.SERVICE_TYPE}
+                    accountInputLabel={selectedService?.mainBillIdLabel}
                   />
                   {watch(FormFields.SERVICE_TYPE) && (
                     <IPaySadadSaveBill
@@ -161,9 +281,9 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
                     />
                   )}
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRE}
                     btnType="primary"
-                    onPress={handleSubmit(onSubmit)}
+                    onPress={handleSubmit(onInquireBill)}
                     large
                     btnIconsDisabled
                     disabled={!watch(FormFields.ACCOUNT_NUMBER)}
@@ -197,7 +317,7 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
               bgGradientColors={colors.sheetGradientPrimary10}
               bottomSheetBgStyles={styles.sheetBackground}
             >
-              <IPayView>
+              <IPayView style={styles.bottomSheetContainer}>
                 <IPayView style={styles.sheetContainer}>
                   <IPayView style={styles.searchInputWrapper}>
                     <IPayTextInput
@@ -223,9 +343,9 @@ const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
                     <IPayTabs scrollable tabs={tabOption} onSelect={onSelect} />
                   )}
                 </IPayView>
-                {dataToRender?.length ? (
+                {getLength() ? (
                   <IPayListView
-                    list={dataToRender}
+                    list={listViewData}
                     onPressListItem={onSelectValue}
                     selectedListItem={
                       sheetType === NewSadadBillType.COMPANY_NAME

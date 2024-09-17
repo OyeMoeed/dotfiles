@@ -1,6 +1,7 @@
-
 interface TabBarIconProps {
-  testID?:string;
+  testID?: string;
   color?: string;
   isFocused?: boolean;
 }
+
+export default TabBarIconProps;

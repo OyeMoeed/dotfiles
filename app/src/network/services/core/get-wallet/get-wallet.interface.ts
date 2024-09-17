@@ -2,6 +2,8 @@ import { MockAPIDataProps, MockAPIOkProp } from '@network/services/services.inte
 
 interface WalletNumberProp {
   walletNumber: string;
+  hideSpinner?: boolean;
+  hideError?: boolean;
 }
 
 // Define the AddressDetails interface
@@ -106,6 +108,17 @@ interface GetWalletResponse {
   remainingNumberOfDaysToExpire: string;
   walletRisk: string;
   workDetails: WorkDetails;
+  isIdRenewalSheetVisible: boolean;
+  mobileNumber?: string;
+  nickName?: string;
+  poiNumber?: string;
+  correctDeviceId?: boolean;
+  newMember?: boolean;
+  hasInmaAccount?: boolean;
+  hasErsalAccount?: boolean;
+  profileImage?: string;
+  myBeneficiaryId: string;
+  otpTimeout: string;
 }
 
 // Define the Data interface

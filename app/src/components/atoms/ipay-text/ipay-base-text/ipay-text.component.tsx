@@ -2,7 +2,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import useFonts from '@app/styles/theming/fonts.hook';
 
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import React from 'react';
+import React, { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Text } from 'react-native';
 import { IPayTextProps } from './ipay-text.interface';
@@ -22,6 +22,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   children,
   isAmount,
   varient = 'primary',
+  fontWeight,
 }: IPayTextProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -33,7 +34,7 @@ const IPayText: React.FC<IPayTextProps> = ({
     <Text
       testID={`${testID}-base-text`}
       numberOfLines={numberOfLines}
-      style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, style]}
+      style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, { fontWeight }, style]}
     >
       {text ? t(`${isAmount ? formatNumberWithCommas(text) : text}`) : children}
     </Text>

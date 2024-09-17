@@ -4,7 +4,7 @@ import { IPayAnimatedView, IPayIcon, IPayLinearGradientView, IPayScrollView, IPa
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
-import { getCustomSheetThreshold } from '@app/utilities/custom-sheet-helper.utils';
+import { getCustomSheetThreshold } from '@app/utilities';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import React, { useEffect } from 'react';
 import { Gesture } from 'react-native-gesture-handler';
@@ -93,7 +93,7 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
           style={styles.logoContainer}
         >
           <LogoIcon width={scaleSize(28)} height={verticalScale(28)} />
-          <IPayView testID={testID} style={[styles.childContainer]}>
+          <IPayView testID={testID} style={styles.childContainer}>
             <IPayScrollView
               contentContainerStyle={[styles.innerStyle, isSheetOpen && styles.innerStyleOpen]}
               testID={testID}

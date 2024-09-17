@@ -80,6 +80,8 @@ const images = {
   license: require('./licence.png'),
   traffic: require('./traffic.png'),
   offersCover: require('./offers-cover.png'),
+  mada: require('./mada.png'),
+  liscence: require('./licence.png'),
   refresh: require('./refresh.png'),
   edit: require('./edit.png'),
   galleryAdd: require('./gallery-add.png'),
@@ -103,10 +105,13 @@ const images = {
   itunes: require('./itunes.png'),
   googlePlay: require('./google-play.png'),
   onlineStore: require('./online-store.png'),
+  xbox: require('./xbox.png'),
   transportation: require('./transportation.png'),
   spotifyCard: require('./spotify-card.png'),
+  offerPlaceholder: require('./offer-placeholder.png'),
   eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
+  mastercardIcon: require('./mastercard-icon.png'),
   truckTime: require('./truck-time.png'),
 };
 

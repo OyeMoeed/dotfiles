@@ -1,26 +1,27 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { SCALE_12, SCALE_34, spacing } from '@app/styles/spacing.const';
-import { FONT_SIZE_11, FONT_SIZE_12, FONT_SIZE_13 } from '@app/styles/typography.styles';
+import { SCALE_12, SCALE_34 } from '@app/styles/spacing.const';
+import { FONT_SIZE_11, FONT_SIZE_12, FONT_SIZE_13, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const transactionItemStyles = (colors: any) =>
   createStyleSheet({
     historyContStyle: {
       width: '100%',
-      paddingHorizontal: moderateScale(16),
+      paddingLeft: moderateScale(16),
+      paddingRight: moderateScale(24),
+      justifyContent: 'center',
       paddingVertical: moderateScale(16),
       borderRadius: moderateScale(28),
       backgroundColor: colors.natural.natural0,
       flexDirection: 'row',
-      justifyContent: 'space-between',
       alignItems: 'center',
       marginTop: moderateScale(8),
     },
     commonContainerStyle: {
       flexDirection: 'row',
       alignItems: 'center',
+      maxHeight: verticalScale(52),
     },
     detailView: {
       flex: 0.8,
@@ -30,11 +31,16 @@ const transactionItemStyles = (colors: any) =>
       fontSize: FONT_SIZE_12,
       width: moderateScale(146, 0.35),
     },
+    trasnactionTypeInternationalTransfer: {
+      marginTop: verticalScale(3),
+      color: colors.natural.natural900,
+      fontSize: FONT_SIZE_12,
+      width: moderateScale(146, 0.35),
+    },
     transactionStatus: {
       color: colors.natural.natural500,
       fontSize: FONT_SIZE_12,
-      marginTop: moderateScale(2),
-      marginBottom: moderateScale(2),
+      marginBottom: verticalScale(4),
     },
     iconStyle: {
       width: SCALE_34,
@@ -43,20 +49,25 @@ const transactionItemStyles = (colors: any) =>
       backgroundColor: colors.natural.natural100,
       justifyContent: 'center',
       alignItems: 'center',
-      marginRight: moderateScale(8),
+      marginRight: moderateScale(12),
     },
     footnoteBoldTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_13,
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
     },
     transactionRequestTypeDescStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_13,
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
       width: moderateScale(146, 0.35),
+    },
+    benficiaryInternationalTransfer: {
+      color: colors.natural.natural900,
+      width: moderateScale(146, 0.35),
+      marginTop: verticalScale(12),
     },
     currencyStyle: {
       alignItems: 'flex-end',
@@ -70,7 +81,7 @@ const transactionItemStyles = (colors: any) =>
     dateStyle: {
       color: colors.natural.natural500,
       fontSize: FONT_SIZE_11,
-      marginTop: verticalScale(6),
+      marginTop: moderateScale(2, 0.3),
     },
     leftImageStyle: {
       height: verticalScale(18),
@@ -79,7 +90,7 @@ const transactionItemStyles = (colors: any) =>
     },
     textContainer: {
       flexDirection: 'column',
-      gap: verticalScale(4),
+      gap: verticalScale(2),
       justifyContent: 'space-between',
     },
   });

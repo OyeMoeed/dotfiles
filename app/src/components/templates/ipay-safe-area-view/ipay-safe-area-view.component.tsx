@@ -1,8 +1,8 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
 import IPayStatusBar from '@app/components/atoms/ipay-statusbar/ipay-statusbar.component';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import { SafeAreaView, SafeAreaViewProps } from 'react-native-safe-area-context';
+import React, { JSX } from 'react';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { IPaySafeAreaViewProps } from './ipay-safe-area-view.interface';
 import safeAreaViewStyles from './ipay-safe-area-view.style';
 
@@ -18,7 +18,8 @@ const IPaySafeAreaView: React.FC<IPaySafeAreaViewProps> = ({
   linearGradientColors,
 }: IPaySafeAreaViewProps): JSX.Element => {
   const { colors } = useTheme();
-  const styles = safeAreaViewStyles(colors);
+  const styles = safeAreaViewStyles();
+
   return (
     <IPayLinearGradientView
       testID={`${testID}-safe-area-view`}

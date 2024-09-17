@@ -19,6 +19,7 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
   size,
   name,
   disabled,
+  onSelectListItem,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -48,6 +49,7 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
   };
   useEffect(() => {
     field.onChange(selectedValue);
+    if (onSelectListItem) onSelectListItem(selectedValue);
   }, [selectedValue]);
   return (
     <IPayAnimatedTextInput
@@ -60,7 +62,7 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
       showRightIcon
       customIcon={listCheckIcon}
       onClearInput={() => {
-        !disabled && showActionSheet();
+        if (!disabled) showActionSheet();
       }}
     />
   );

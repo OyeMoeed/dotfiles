@@ -1,5 +1,11 @@
 {
   "COMMON": {
+    "KYC_CHANGE": "Customer knowledge form has been updated!",
+    "CONTACTS_LIMIT_REACHED": "Contacts Limit Reached",
+    "INVALID_NUMBER": "Invalid Number",
+    "SEARCH_BENEFICIARY": "Search for Beneficiary",
+    "CHOOSE_BENEFICIARY": "Choose Beneficiary",
+    "PRICE_VARY": "Prices vary depending on the bank.",
     "SAVE_EDITS": "Save Edits",
     "EDIT_BENEFICIARY": "Edit Beneficiary",
     "BENEFECIARY_COUNTRY": "Beneficiary Country",
@@ -67,7 +73,8 @@
     "ENTER_CODE_TO_ACCESS_APPLICATION": "You will need to enter this code\neach time you access the application",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode",
     "PASSCODE_IS_INCORRECT": "Passcode is incorrect",
-    "PASSCODE_DOES_NOT_MATCH": "Passcode does not match",
+    "PASSCODE_DOES_NOT_MATCH": "Passcodes do not match",
+    "PLEASE_ENTER_AGAIN": "Please enter again",
     "TRY_NEW_PASSCODE": "Try new Different pin code",
     "SAVE": "Save",
     "VERIFIED": "Verified",
@@ -99,6 +106,7 @@
     "ENTER_INFORMATION": "Enter your information",
     "SETTINGS": "Settings",
     "CONTACT_US": "Contact us",
+    "NEED_ASSISTANCE": "Need Assistance",
     "SAR": "SAR",
     "HOME": "Home",
     "TOP_UP": "Top up",
@@ -160,7 +168,12 @@
     "DAILY_REMAINING_OUTGOING_AMOUNT": "Daily remaining outgoing amount",
     "SPENDING_LIMIT_EXCEED": "Spending limit exceeded by",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
-    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer"
+    "INSUFFICIENT_BALANCE": "Insufficient balance for transfer",
+    "INSUFFICIENT_BALANCE_COMMON": "Insufficient balance",
+    "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
+    "YES": "Yes",
+    "NO": "No",
+    "AMOUNT": "Amount"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -247,7 +260,7 @@
   "ID_RENEWAL": {
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
-    "ID_UPDATION_DES": "Your ID’s expiration date is within ${DAYS} days on ${DATE}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
+    "ID_UPDATION_DES": "Your ID’s expiration date is within {{DAYS}} days on {{DATE}}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
     "REMIND_ME_LATER": "Remind me later",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
@@ -258,12 +271,13 @@
     "WHY_VERIFY_TITLE": "Why do we need this?",
     "WHY_VERIFY": "To verify and check the renewal status of your ID to continue using AlinmaPay",
     "THANK_YOU": "Thank you!",
-    "ID_UPDATED": "your ID has been updated successfully"
+    "ID_UPDATED": "your ID has been updated successfully",
+    "STATUS_UNKOWN": "ID status unknown!"
   },
   "PROFILE": {
     "NAFATH_VALIDATION": "Nafath Validation",
     "PASSCODE_ERROR": "Passcode Error",
-    "PASSCODE_NOT_MATCHED": "Passcode deos not match.",
+    "PASSCODE_NOT_MATCHED": "Passcode does not match.",
     "ALINMA_WALLET_INFO": "AlinmaPay \nWallet Info",
     "NO_REMAINING_SPENDINDS": "No Remaining Spendings",
     "REACHED_SPENDING_LIMIT": "You have reached the spending limit",
@@ -282,6 +296,7 @@
     "UTILIZE_APP_FEATURE": "You can now easily utilize all the app's features",
     "CUSTOMER_KNOWLEDGE": "Customer knowledge",
     "EMPLOYEE_NAME": "Employee Name",
+    "EMPLOYER_NAME": "Employer Name",
     "EMPLOYMENT_DETAILS": "Employment details",
     "OCCUPATION": "Occupation",
     "INCOME_SOURCE": "Income Source",
@@ -329,9 +344,9 @@
     "ENTER_CONFIRM": "Enter the passcode again for confirmation",
     "PASSCODE_CHANGED_SUCCESSFULY": "Passcode Changed Successfully",
     "SAVE_FOR_LATER": "you will need to save it for later",
-    "NAFATH_VALIDATION_DESCRIPTION": "to complete your registration process, you will need to download\nNafath App, accept the request to verify your identity, and then\nreturn back to AlinmaPay App",
+    "NAFATH_VALIDATION_DESCRIPTION": "To complete your registration process, you will need to download\nNafath App, accept the request to verify your identity, and then\nreturn back to AlinmaPay App",
     "DOWNLOAD_NAFATH_ACCOUNT": "Download and setup your account\non Nafath application.",
-    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read\nand agree th the Terms & Conditions",
+    "NAFATH_TERMS_AND_CONDITION": "By proceeding, you confirm that you have read\nand agree the Terms & Conditions",
     "VALIDATE_THROUGH_NAFAH": "Validate through Nafath",
     "OPEN_NAFATH_APP": "Open Nafath application."
   },
@@ -351,7 +366,6 @@
     "OCCASION": "Occasion",
     "EIYDIAH": "Eiydiah",
     "GIFT_SUCCESSFUL": "Gift sent Successfully",
-    "RECEIVED_MONEY": "Received money",
     "CREDIT_CARD": "Credit Card",
     "USE_IBAN_NUMBER": "Use IBAN Number",
     "ENTER_CVV": "Enter your card CVV Number",
@@ -375,12 +389,14 @@
     "POINTS_REDEMPTION": "Points Redemption",
     "ADD_MONEY_USING": "Add money using",
     "ENTER_AMOUNT": "Enter the Amount",
+    "ENTER_AMOUNT2": "Enter the amount",
     "REMAINING": "Remaining Monthly Top up",
     "LIMIT_REACHED": "Limit reached, no top-ups left",
     "AMOUNT_EXCEEDS_CURRENT": "Amount exceeds Monthly limit",
+    "AMOUNT_EXCEEDS_ACCOUNT_BALANCE": "Amount exceeds account balance",
     "DAILY_LIMIT": "Daily Limit Exceeded:",
     "TOPUP_SUCCESS": "Top-up Successful",
-    "PENDING_PAYMENT":"Payment under process",
+    "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
@@ -413,15 +429,16 @@
     "PAY": "Pay",
     "TOPUP_FAILED": "Top-up Failed",
     "REF_NUMBER_COPIED": "The Ref. Number has been copied!",
+    "TRANSACTION_ID_COPIED": "The Transaction Id has been copied",
     "TRANSFER_TO": "Transfer To",
-    "SHATHA_MOHAMED": "Shatha Mohamed",
     "TRANSFER_SUCCESSFUL": "Transfer Successfully",
     "REASON": "Living Expenses",
     "AMOUNT": "3000 SAR",
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
     "AKHTAR_POINT": "Akthar Point",
-    "CARD": "Card"
+    "CARD": "Card",
+    "CARDS": "Cards"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
@@ -435,20 +452,20 @@
     "TRANSACTION_TYPE": "Transaction Type",
     "SENDER": "Sender",
     "RECEIVER": "Receiver",
-    "TRANSFER_REASON": "Reason for transfer",
+    "TRANSFER_REASON": "Reason for Transfer",
     "NOTE": "Note",
     "REF_NUMBER": "Ref. Number",
     "TRANSACTION_DATE": "Transaction Date",
     "MERCHANT_NAME": "Merchant name",
     "CARD": "Card",
     "FEE": "Fee",
-    "VAT": "VAT",
+    "VAT": "VAT(15%)",
     "SPLIT_BILL": "Split Bill",
     "ACQUIRE_COUNTRY": "Acquire Country",
     "BANK_NAME": "Bank Name",
     "RECEIVERS_IBAN": "Receiver's IBAN",
     "VAT_INVOICE": "VAT Invoice",
-    "CLEAR_FILTERS": "Clear Filter",
+    "CLEAR_FILTER": "Clear filter",
     "FILTERS": "Filters",
     "FILTER": "Filter",
     "BY_AMOUNT": "By Amount",
@@ -496,7 +513,7 @@
     "PAYROLL_AMOUNT": "Amount",
     "EXCHANGE_RATE": "Exchange Rate",
     "INCLUDE_FEES": "Include Fees",
-    "FEES": "Fees",
+    "FEES": "Fee",
     "PROMOCODE": "Promocode",
     "TOTAL_AMOUNT": "Total Amount",
     "MTCN": "MTCN",
@@ -511,26 +528,26 @@
     "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
     "TRANSFER_BY": "Transfer By",
     "SENDER_NICK_NAME": "Sender Nick Name",
-    "TYPE": "Type",
+    "TYPE": "Transaction Type",
     "AUTHORIZED": "Authorized",
     "ONGOING_SALARY_TRANSFER": "Incoming Salary Transfer",
     "OUTGOING_SALARY_TRANSFER": "Outgoing Salary Transfer",
-    "SENDER_NAME": "Sender name",
+    "SENDER_NAME": "Sender",
     "BENEFICIARY_NAME": "Beneficiary name",
     "PAID_TO": "Paid to",
-    "REFERENCE_NUMBER": "Reference number",
-    "RECIVED_FROM": "Recived from",
+    "REFERENCE_NUMBER": "Ref Number",
+    "RECIVED_FROM": "Received from",
     "DESCRIPTION": "Description",
     "ATM_ID": "ATM ID/number",
     "ATM_DESCRIPTION": "ATM description",
-    "SAUDI_RIYAL": "Saudi riyal",
+    "SAUDI_RIYAL": "SAR",
     "BONUS_AMOUNT": "Bonus Amount",
     "TRANSFER_TYPE": "Transfer type",
     "MONTHLY_SALARY": "Monthly salary",
     "NOTES": "Notes",
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
-    "DATE_AND_TIME": "Date and time",
+    "DATE_AND_TIME": "Transaction Date",
     "ACCOUNT": "Account"
   },
   "TRANSFER_SUMMARY": {
@@ -546,7 +563,9 @@
     "NOTE": "Note",
     "NOTE_DETAIL": "Hello My Dear",
     "ERSA_ALTURK": "Esra’ Alturk",
-    "AMOUNT_2": "500 SAR"
+    "AMOUNT_2": "500 SAR",
+    "FAST_CONVERSION_BY": "Fast conversion by",
+    "SARIE": "Sarie"
   },
   "LOCATION": {
     "ADDRESS_NOT_FOUND": "Address not found",
@@ -563,7 +582,10 @@
     "TYPE_MOBILE_NUMBER": "Type mobile number",
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
-    "CONTACT_NAME": "Contact Name"
+    "CONTACT_NAME": "Contact Name",
+    "NO_RESULTS_FOUND": "No Results Found",
+    "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
+    "CONTACT_LIMIT": "Contacts limit reached"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -597,7 +619,9 @@
     "PRINT_CARD_DESCRIPTION": "Print your virtual card and accommodate to your different needs!",
     "PRINT_CARD": "Print Card",
     "GO_TO_CARD": "Go to Card",
-    "CARD_HAS_BEEN_DELETED": "The card has been deleted"
+    "CARD_HAS_BEEN_DELETED": "The card has been deleted",
+    "CHANGE_PIN": "Change pincode",
+    "CARD_DETAILS": "Card Details"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -654,13 +678,15 @@
     "CARD_TRANSACTIONS_HISTORY": "Card Transactions History",
     "NOON_SHOP": "Noon Shop",
     "OFF": " OFF",
+    "OFF_SIMP": "OFF",
     "WHILE_USING_ALINMA_DEBIT_CARD": "while using AlinmaPay\nDebit Card",
     "BILL_PAYMENTS": "Bill Payments",
     "WALLET_WITH_EVERY_BILL": "on your wallet with \n every bill payment!",
     "BALANCE_IS_HIDDEN": "Balance is Hidden",
     "BALANCE_IS_VISIBLE": "Balance is Visible",
     "BIOMERTIC_STATUS": "Biometric status",
-    "BIOMETRIC_STATUS_UPDATED": "Biometric status updated",
+    "BIOMETRIC_STATUS_UPDATED": "Biometrics has been enabled",
+    "BIOMETRIC_STATUS_DISABLED": "Biometrics has been disabled",
     "ENTER_CARD_DETAILS": "Enter Card Details",
     "CARDS": "Cards",
     "CASHBACK": "CASHBACK",
@@ -668,6 +694,7 @@
     "VERIFY_CODE_ACCURACY": "Please verify the accuracy of the code.",
     "ENTER_CARD_PIN_CODE": "Enter Card PIN Code",
     "CARD_TYPE": "Card Type",
+    "CVV": "cvv",
     "CARD_NUMBER": "Card Number",
     "CARD_HOLDER_NAME": "Card's Holder Name",
     "EXPIRY_DATE": "Expiry date",
@@ -694,8 +721,8 @@
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
-    "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
-    "DEBIT_CARD": "Mada Debit Card - *** 1111",
+    "CARD_UNFREEZE_MESSAGE": "The card has been unfrozen",
+    "CARD": "Card",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
@@ -715,7 +742,9 @@
     "FIRST_TIME_CODE": "You will use this code for the first time using this card",
     "HEADER": "Virtual Card",
     "CLASSIC_DEBIT_CARD": "Classic Debit Card",
-    "DESCRIPTION": "Your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "DESCRIPTION": "your secure choice for shopping, online purchases, or at points of sales and gives you instant cashback on all your domestic and international purchases.",
+    "SIGNATURE_DETAILS": "your secure choice for Shopping, online purchase or at points of sales and gives you instant cashback on all your domestic and international purchases. ",
+    "MADA_DETAILS": "your secure choice for Shopping, online purchase or at points of sales , you can add the card on Apple Pay & Mada Pay",
     "VIEW_DETAILS": "View all Details",
     "CLOSE_DETAILS": "Close Details",
     "ISSUE_CARD": "Issue Card",
@@ -788,6 +817,7 @@
   "ATM": {
     "STEP_BY_STEP_VIDEO_GUIDE": "Step-by-step Video guide",
     "CODE_SCANNED_SUCCESSFULLY": "Code Scanned Successfully",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful",
     "MULTIPLE_OF_HUNDERED": "The amount should be multiples of 100",
     "CHECK_NEAREST_ATM": "Check nearest ATM",
     "NEAREST_ATM": "Nearest ATM",
@@ -797,6 +827,7 @@
   "ERROR": {
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!",
+    "SPECIAL_CHARACTERS": "Can't use special characters",
     "AMOUNT_ERROR": "Amount must be higher than the first selected amount",
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
@@ -810,9 +841,18 @@
     "INVALID_QRCODE": "Invalid QR Code!",
     "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
     "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
-    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number"
+    "FAILED_TO_OPEN_NUMBER": "Failed to open phone number",
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful"
   },
   "LOCAL_TRANSFER": {
+    "AMOUNT": "Amount",
+    "INVESTMENT": "Investment",
+    "TUITION": "Tuition Expenses",
+    "TRAVEL": "Travel Expenses",
+    "TREATMENT": "Treatment",
+    "PURCHASES": "Purchases",
+    "FIRENDS_AND_FAMILY": "Friends and Family Expenses",
+    "DONATION": "Donation",
     "NO_BENEFICIARIES": "You don't have any beneficiaries added",
     "ADD_NEW_BENEFICIARY": "Add new Beneficiary",
     "SEARCH_FOR_NAME": "Search for name",
@@ -826,7 +866,8 @@
     "VAT": "VAT",
     "FEES": "Fees",
     "ACTIVE_INACTIVE": "Active - Inactive",
-    "INACTIVE_ACTIVE": "Inactive - Active"
+    "INACTIVE_ACTIVE": "Inactive - Active",
+    "AMOUNT_TO_BE_REFUND": "Amount to be refund"
   },
   "ATM_WITHDRAWAL": {
     "NEAREST_ATM": "Nearest ATM",
@@ -853,7 +894,13 @@
     "SELECT_CITY": "Select City",
     "ATM_DETAILS": "ATM Details",
     "ALINMA_ATM": "Alinma ATM",
-    "GET_DIRECTION": "Get Direction"
+    "GET_DIRECTION": "Get Direction",
+    "SUCCESS_SCREEN": {
+      "TRANSACTION_TYPE": "Transaction Type",
+      "ATM_WITHDRAWAL": "ATM Withdrawal",
+      "REF_NUMBER": "Ref. Number",
+      "TRANSACTION_DATE": "Transaction Date"
+    }
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
@@ -863,7 +910,6 @@
     "SEND_ANOTHER": "Send Another Gift",
     "TITLE": "Send Gift",
     "REMOVE_CONFIRM": "Are you sure you want to remove the contact?",
-
     "SELECT_METHOD": "Select Distribution Method",
     "EQUALLY": "Equally",
     "SPLIT": "Split",
@@ -875,7 +921,7 @@
     "RECIPIENT": "Recipient",
     "OPENED": "Opened",
     "EXPIRED": "Expired",
-    "UNOPENED": "Unopened",
+    "UNOPENED": "UnOpened",
     "GIFT_DETAILS": "Gift Details",
     "SWIPE_TO_FLIP": "Swipe to Flip",
     "GIFT_CARD_MESSAGE": "Lorem ipsum dolor sit amet consectetur. Adipiscing habitasse gravida aliquam sed ultricies vestibulum sed. Dignissim sit in pulvinar elit. Pretium eleifend nunc ultrices vestibulum.",
@@ -888,7 +934,6 @@
     "BIRTHDAY": "Birthday",
     "CONGRATULATIONS": "Congratulations",
     "NEW": "New",
-    "NEW_BABY": "New Baby",
     "GIFTS": "Gifts",
     "PREVIEW": "Preview",
     "PREVIEW_GIFT": "Preview gift",
@@ -907,7 +952,10 @@
     "SAY_THANKS": "Say Thanks",
     "RECEIVER_MOBILE": "Receiver Number",
     "AMOUNT": "Amount",
-    "TRANSACTION_DATE_TIME": "Transfer Date"
+    "TRANSACTION_DATE_TIME": "Transfer Date",
+    "TRANSFER": "Transfer",
+    "NEW_BABY": "New baby",
+    "PREVIEW_GIFT_2": "Preview Gift"
   },
   "NEW_BENEFICIARY": {
     "NOW_MAKE_TRANSFER": "Now you can make international transfer for this Beneficiary",
@@ -958,12 +1006,20 @@
     "CATEGORY": "Category",
     "FOOD": "Food",
     "CLOTHS": "Clothes",
-    "ELECTRONICS": "Electronics",
-    "THEATER": "Theatre",
-    "GAMES": "Games",
     "AVAILABILITY": "Availability",
     "ONLINE": "Online",
-    "OFFLINE": "In-Store"
+    "OFFLINE": "Offline",
+    "OFFER_DETAILS": "Offer Detils",
+    "OFFER_EXPIRES_IN": "Offer expires in",
+    "DAYS": "Days",
+    "HOURS": "Hours",
+    "MINUTES": "Minutes",
+    "SECONDS": "Seconds",
+    "IN_STORES": "In-Stores",
+    "ELECTRONICS": "Electronics",
+    "THEATRE": "Theatre",
+    "GAMES": "Games",
+    "CLOTHES": "Clothes"
   },
   "KYC": {
     "GOVT_EMPLOYEE": "Government employee",
@@ -977,11 +1033,6 @@
     "TRADE": "Trade",
     "OTHER": "Other"
   },
-  "CITY": {
-    "RIYADH": "Riyadh",
-    "AL_KHOBAR": "Al-Khobar",
-    "DAMMAM": "Dammam"
-  },
   "INTERNATIONAL_TRANSFER": {
     "INTERNATIONAL_TRANSFER": "International Transfer",
     "SEARCH_BENEFICIARY": "Search for Beneficiary",
@@ -989,6 +1040,8 @@
     "ACTIVATE": "Activate",
     "PRICE_CALCULATOR": "Price Calculator",
     "CALCULATE_AND_DELIVERY": "Calculate and view our Delivery types",
+    "DELIVERY_TYPE": "Delivery type",
+    "SEARCH_FOR_BENEFICIARY": "Search for Beneficiary",
     "TRANSACTION_ONLY_UPDATE_MESSAGE": "This update is for this transaction only.",
     "EDIT_BENEFICIARY_MESSAGE": "Please update the beneficiary details from the beneficiaries’ page for the next times.",
     "EDIT_BENEFICIARY_PENDING_MESSAGE": "Edit Beneficiary Name Pending to WU",
@@ -1028,7 +1081,8 @@
     "COUNTRY_NAME": "Country Name",
     "CITY_NAME": "City Name",
     "DELIVERY_TYPE": "Delivery Type",
-    "CURRENCY": "Currency"
+    "CURRENCY": "Currency",
+    "INCLUDE_FEES": "Include Fees"
   },
   "BENEFICIARY_OPTIONS": {
     "REVIEW_AND_EDIT": "Review & Edit",
@@ -1080,13 +1134,16 @@
     "ADD_NEW_BILL": "Add new Bill",
     "PAY_PARTIALLY": "Pay Partially",
     "DELETE_NEW_BILL": "Delete the Bill",
-    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again unless you add it again through 'Add New Bills'",
+    "DELETE_BILL_WARNING_TEXT": "You will not be able to pay this bill again\nunless you add it again through 'Add New Bills'",
     "ACTIVATE": "Activate",
     "ACTIVATE_BILL": "Activate Bill",
     "ACTIVATE_BILL_MESSAGE": "Once the bill is activated, you can pay it anytime.",
     "BILL_HAS_BEEN_DELETED": "The Bill has been deleted",
     "EDIT_BILL": "Edit Bill",
-    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully"
+    "INVOICE_UPDATED_SUCCESSFULLY": "Invoice updated successfully",
+    "PAY": "Pay",
+    "DISCARD_CHANGES": "Discard Changes?",
+    "EDIT_YOU_MADE_WILL_LOST": "The edits you made will be lost."
   },
   "NEW_SADAD_BILLS": {
     "NEW_SADAD_BILLS": "New SADAD Bills",
@@ -1102,6 +1159,7 @@
     "YOU_OVERPAYING": "You're overpaying with",
     "AMOUNT_TO_BE_PAID": "Amount to be paid",
     "INQUIRY": "Inquiry",
+    "INQUIRE": "Inquire",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount",
     "SADAD_BILLS": "SADAD Bills",
@@ -1123,7 +1181,8 @@
     "DOES_NOT_ACCEPT_PARTIALLY_PAYMENT": "Saudi electricity does not accept partially payment",
     "PAY_NOW": "Pay Now",
     "VIEW_SADAD_BILLS": "View SADAD Bills",
-    "PAY_ANOTHER_BILL": "Pay Another Bill"
+    "PAY_ANOTHER_BILL": "Pay Another Bill",
+    "AMOUNT": "Amount"
   },
   "BILL_PAYMENTS": {
     "MOI_PAYMENT": "MOI Payment",
@@ -1209,12 +1268,13 @@
     "ID_TYPE": "ID Type",
     "FOUND_VIOLATION": "Found violation",
     "REFUND_VIOLATION": "Refund violation",
-    "VIOLATION": "Violation"
+    "VIOLATION": "Violation",
+    "REF_NUMBER": "Ref. Number"
   },
   "SHOP": {
     "ALL_MERCHANTS": "All Merchants",
     "TITLE": "All Categories",
-    "PLAYSTATION": "PlayStation",
+    "PLAYSTATION": "Playstation",
     "ENTERTAINMENT": "Entertainment",
     "FOOD": "Food and beverages",
     "SHOPPING": "Shopping",
@@ -1225,10 +1285,10 @@
     "TRANSPORTATION": "Transportation",
     "XBOX": "Xbox",
     "ITUNES": "iTunes",
-    "OFFER_DETAILS": "Offers details",
+    "OFFER_DETAILS": "Offer details",
     "PRODUCT_DETAILS": "Product Details",
     "HIDE_DETAILS": "Hide Details",
-    "VIEW_ALL_DETAILS": "View All Details",
+    "VIEW_ALL_DETAILS": "View all Details",
     "PRODUCT_DISCRIPTION": "Product Description",
     "PAY": "Pay",
     "TERMS_AND_CONDITIONS": "By Clicking Pay you are Agree to our Terms & Conditions",
@@ -1247,7 +1307,8 @@
     "VAT_INVOICE": "VAT Invoice",
     "VIEW_PRODUCT": "View Product",
     "PURCHASE_AGAIN": "Purchase again",
-    "NO_ORDER": "You have no order history"
+    "NO_ORDER": "You have no order history",
+    "PAY_PRODUCT": "Pay Product"
   },
 
   "REQUEST_SUMMARY": {
@@ -1260,20 +1321,26 @@
     "NOTE": "Note",
     "MOBILE_NUMBER": "Mobile Number",
     "AMOUNT": "Amount",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PAY_PRODUCT": "Pay Product",
     "INSUFFICIENT_BALANCE": "Insufficient balance",
     "NO_REMAINING_AMOUNT": "No Remaining Amount "
   },
   "REQUEST_MONEY": {
+    "MAKE_NEW_REQUEST": "Make new Request",
     "REQUEST_MONEY": "Request Money",
     "SEND_REQUESTS": "Sent Requests",
+    "SENT_REQUEST": "Send Request",
     "SEND_REQUEST": "Sent Request",
     "RECEIVED_REQUESTS": "Received Requests",
     "CREATE_REQUEST": "Create Request",
     "REQUEST_PAID": "Money Request paid\nSuccessfully",
     "YOU_HAVE_NO": "You have no",
     "MONEY_REQUESTS": "money requests",
+    "MONEY_REQUEST": "Money Request",
     "PENDING": "Pending",
     "CANCEL": "Cancel",
+    "CANCELLED": "Cancelled",
     "PAID": "Paid",
     "SEND_REQUEST_TO": "Send Request to",
     "REJECTED": "Rejected",
@@ -1281,9 +1348,9 @@
     "STATUS": "Status",
     "SEND_DATE": "Sent date",
     "REQUEST_DATE": "Request date",
-    "CANCELLATION_DATE": "Cancellation date",
-    "PAYMENT_DATE": "Payment date",
-    "REJECTION_DATE": "Rejection date",
+    "CANCELLATION_DATE": "Cancellation Date",
+    "PAYMENT_DATE": "Payment Date",
+    "REJECTION_DATE": "Rejection Date",
     "REF_NUMBER": "Ref. Number",
     "SENDER": "Sender",
     "NOTE": "Note",
@@ -1294,7 +1361,8 @@
     "CANCEL_REQUEST": "Cancel Request",
     "PAY": "Pay",
     "REJECT": "Reject",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "SEND_REQUEST_TITLE": "Send Request"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",
@@ -1314,7 +1382,7 @@
     "AMOUNT": "Amount",
     "DISCOUNT": "Discount",
     "FEES": "Fees",
-    "VAT": "VAT(15%)"
+    "VAT": "VAT (15%)"
   },
 
   "ORDER_SCREEN": {
@@ -1324,11 +1392,13 @@
     "AMOUNT": "Amount",
     "DISCOUNT": "Discount",
     "FEES": "Fees",
-    "VAT": "VAT(15%)",
+    "VAT": "VAT (15%)",
     "BACK": "Back to Shop",
     "VAT_INVOICE": "VAT Invoice",
     "COPY": "The Coupon code has been copied!",
-    "REJECT_THIS_REQUEST": "Reject this request"
+    "REJECT_THIS_REQUEST": "Reject this request",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PURCHASE_DATE": "Purchase date"
   },
   "PRICE_CALCULATOR": {
     "TITLE": "Price Calculator",

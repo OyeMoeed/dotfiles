@@ -1,11 +1,11 @@
 import { IPayCaption1Text, IPayIcon, IPayImage, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
-import React, { useState } from 'react';
+import React, { JSX, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import icons from '@app/assets/icons';
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { inputType } from '@app/utilities/enums.util';
+import { InputType } from '@app/utilities/enums.util';
 import { IPaySelectorInputProps } from './ipay-selector-input.interface';
 import textSelectorStyles from './ipay-selector-input.style';
 /**
@@ -31,7 +31,7 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
   currency = 'SAR',
   flagImage,
   showIcon = true,
-  variant = inputType.PHONE_NUMBER
+  variant = InputType.PHONE_NUMBER,
 }: IPaySelectorInputProps): JSX.Element => {
   const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState(false);
@@ -53,15 +53,15 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
           isFocused && styles.focusedContainer,
           isError && styles.errorContainer,
           !editable && styles.disabledContainer,
-          containerStyle
+          containerStyle,
         ]}
       >
         <IPayView style={styles.iconAndInputStyles}>
           <IPayPressable activeOpacity={1} style={styles.rowStyles} onPressIn={onClearInput}>
-            {variant === inputType.PHONE_NUMBER ? (
+            {variant === InputType.PHONE_NUMBER ? (
               <IPayImage image={flagImage} style={styles.flag} />
             ) : (
-              <IPayCaption1Text text={currency} style={[styles.numberValue]} />
+              <IPayCaption1Text text={currency} style={styles.numberValue} />
             )}
             {showIcon && (
               <IPayIcon
@@ -74,13 +74,13 @@ const IPaySelectorInput: React.FC<IPaySelectorInputProps> = ({
 
           <IPayView style={styles.outerView}>
             <IPayCaption1Text
-              text={variant === inputType.PHONE_NUMBER ? t('phoneNumber') : t('currency')}
+              text={variant === InputType.PHONE_NUMBER ? t('phoneNumber') : t('currency')}
               style={[styles.label, !editable && styles.disableLabel, headingStyles]}
               regular
             />
             <IPayView style={styles.rowStyles}>
-              {variant === inputType.PHONE_NUMBER && (
-                <IPayCaption1Text text={countryCode} style={[styles.numberValue]} regular />
+              {variant === InputType.PHONE_NUMBER && (
+                <IPayCaption1Text text={countryCode} style={styles.numberValue} regular />
               )}
               <IPayInput
                 isFocused={isFocused}

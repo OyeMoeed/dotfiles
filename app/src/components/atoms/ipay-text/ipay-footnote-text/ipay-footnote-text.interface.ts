@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 /**
@@ -33,4 +34,5 @@ export interface IPayFootnoteTextProps {
    * Text Color.
    */
   color?: string;
+  fontWeight?: string;
 }

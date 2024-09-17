@@ -1,5 +1,7 @@
+import { WALLET_TIERS } from '@app/constants/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
+import { RootState } from '../store';
 import { WalletInformationProps } from './wallet-information.interface';
 
 /**
@@ -28,6 +30,9 @@ const initialState: WalletInformationProps = {
     },
     dormant: false,
     idExpired: false,
+    aboutToExpire: false,
+    remainingNumberOfDaysToExpire: '',
+    expiryDate: '',
     passwordMigrated: false,
     nationalAddressComplete: false,
     basicTier: false,
@@ -86,7 +91,19 @@ const initialState: WalletInformationProps = {
       hasMoneyRequests: false,
     },
     viban: '',
+    isIdRenewalSheetVisible: false,
+    mobileNumber: '',
+    nickName: '',
+    poiNumber: '',
+    correctDeviceId: false,
+    newMember: false,
+    hasInmaAccount: false,
+    hasErsalAccount: false,
+    profileImage: '',
+    myBeneficiaryId: '',
+    otpTimeout: '',
   },
+  cashWithdrawalCardsList: [],
 };
 
 /**
@@ -110,13 +127,41 @@ const walletInfoSlice = createSlice({
         ...action.payload, // Merge the new data with the existing walletInfo
       };
     },
+
+    openIdRenewalSheet: (state) => {
+      state.walletInfo.isIdRenewalSheetVisible = true;
+    },
+    closeIdRenewalSheet: (state) => {
+      state.walletInfo.isIdRenewalSheetVisible = false;
+    },
+
+    resetWalletInfo(state) {
+      state.walletInfo = initialState.walletInfo;
+    },
+
+    setCashWithdrawalCardsList(state, action: PayloadAction<string[]>) {
+      state.cashWithdrawalCardsList = action.payload;
+    },
+
+    resetCashWithdrawalCardsList(state) {
+      state.cashWithdrawalCardsList = initialState.cashWithdrawalCardsList;
+    },
   },
 });
 
 /**
  * Action creators for setting the wallet info and login data.
  */
-export const { setWalletInfo } = walletInfoSlice.actions;
+export const { setWalletInfo, openIdRenewalSheet, closeIdRenewalSheet, resetWalletInfo, setCashWithdrawalCardsList } =
+  walletInfoSlice.actions;
+
+/**
+ * Selectors for setting the user info and login data.
+ */
+export const isBasicTierSelector = (state: RootState) => {
+  const { basicTier, walletTier } = state.walletInfoReducer.walletInfo;
+  return walletTier === WALLET_TIERS.BASIC && basicTier;
+};
 
 /**
  * Reducer function for the wallet info slice.

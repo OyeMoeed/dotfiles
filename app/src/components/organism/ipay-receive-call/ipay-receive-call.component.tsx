@@ -1,10 +1,8 @@
-import icons from '@app/assets/icons';
-import { CallIncoming } from '@app/assets/svgs';
+import { CallIncoming, RefreshIcon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFlatlist,
   IPayFootnoteText,
-  IPayIcon,
   IPayProgressBar,
   IPayTitle2Text,
   IPayView,
@@ -12,19 +10,29 @@ import {
 import { IPayButton, IPayGradientTextMasked, IPayList } from '@app/components/molecules';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import { formatCountdownTime } from '@app/utilities/date-helper.util';
 import React, { useEffect } from 'react';
 import useCallReceiverTimer from './ipay-receive-call.hook';
 import { GuideStep, IPayReceiveCallProps } from './ipay-receive-call.interface';
 import receiveCallStyles from './ipay-receive-call.styles';
 
-const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiveCall }) => {
+const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
+  testID,
+  guideToReceiveCall,
+  activateInternationalBeneficiary,
+  hanldePageNavigation,
+}) => {
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
   const localizationText = useLocalization();
+  // TODO: fix NodeJs types
+  // eslint-disable-next-line no-undef
   let interval: NodeJS.Timeout;
 
-  const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useCallReceiverTimer();
+  const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useCallReceiverTimer(
+    activateInternationalBeneficiary,
+  );
   useEffect(() => {
     if (!expired) {
       startTimer();
@@ -38,10 +46,12 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
     <IPayList
       key={title}
       title={
-        <IPayFootnoteText>
+        <IPayFootnoteText color={colors.primary.primary800}>
           {title}
-          <IPayFootnoteText regular={false}> {pressNumber}</IPayFootnoteText>
-          <IPayFootnoteText> {extraText}</IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800} regular={false}>
+            {pressNumber}{' '}
+          </IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800}>{extraText}</IPayFootnoteText>
         </IPayFootnoteText>
       }
       textStyle={styles.stepStyle}
@@ -60,10 +70,16 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
   return (
     <IPayView testID={`${testID}-receive-call`} style={styles.container}>
       <CallIncoming />
+
       <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE} />
       <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.RECEIVE_CALL_STEPS} />
 
-      <IPayProgressBar showExpired={expired} gradientWidth={gradientWidth} colors={colors.gradientSecondary} />
+      <IPayProgressBar
+        showExpired={expired}
+        style={styles.progressBar}
+        gradientWidth={gradientWidth}
+        colors={colors.gradientSecondary}
+      />
       <IPayCaption1Text
         style={expired ? styles.expiredTimerStyle : styles.timerStyle}
         text={
@@ -72,6 +88,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
             : `${localizationText.ACTIVATE_BENEFICIARY.REQUEST_EXPIRE_IN} ${formatCountdownTime(timeLeft)}`
         }
       />
+
       {expired ? (
         <>
           <IPayCaption1Text
@@ -83,7 +100,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
             btnType="primary"
             btnText={localizationText.ACTIVATE_BENEFICIARY.REQUEST_ANOTHER_CALL}
             onPress={handleRequestAgain}
-            rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0} />}
+            rightIcon={<RefreshIcon style={styles.refreshIcon} color={colors.natural.natural0} />}
           />
         </>
       ) : (
@@ -93,6 +110,15 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({ testID, guideToReceiv
           renderItem={renderGuideStepItem}
         />
       )}
+
+      <IPayButton
+        large
+        btnType={buttonVariants.OUTLINED}
+        btnText={localizationText.ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER}
+        btnIconsDisabled
+        btnStyle={styles.makeTransferStyles}
+        onPress={hanldePageNavigation}
+      />
     </IPayView>
   );
 };

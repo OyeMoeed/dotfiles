@@ -1,5 +1,4 @@
-import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
@@ -32,6 +31,8 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
   const {
+    moiPaymentDetailes,
+    handlePay,
     otp,
     setOtp,
     isLoading,
@@ -42,7 +43,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     otpVerificationRef,
     moiRefundBillSubList,
   } = useMoiPaymentConfirmation();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -171,15 +172,27 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
         titleStyle={styles.screenTitle}
       />
       <IPayView style={styles.container}>
-        <IPayAccountBalance balance={availableBalance} availableBalance={currentBalance} showRemainingAmount />
-        <IPayBillDetailsOption data={moiBillData} showHeader={false} optionsStyles={styles.moiPaymentDetailesTab} />
+        <IPayAccountBalance
+          balance={availableBalance}
+          availableBalance={currentBalance}
+          showRemainingAmount
+          topUpBtnStyle={styles.topUpButton}
+        />
+        <IPayBillDetailsOption
+          data={moiPaymentDetailes}
+          showHeader={false}
+          optionsStyles={styles.moiPaymentDetailesTab}
+        />
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
-          btnText={localizationText.SADAD.COMPLETE_PAYMENT}
+          btnText={localizationText.SADAD.PAY}
           totalAmount={totalAmount}
-          btnRightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
+          backgroundGradient={['transparent', 'transparent']}
+          gradientViewStyle={styles.sadadFooterGradient}
+          btnStyle={styles.sadadBtn}
+          disableBtnIcons
         />
       </IPayView>
       <IPayBottomSheet
@@ -200,7 +213,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}

@@ -1,7 +1,9 @@
-export enum KycFormCategories {
+enum KycFormCategories {
   OCCUPATION = 'OCCUPATION',
   INCOME_SOURCE = 'INCOME_SOURCE',
   MONTHLY_INCOME = 'MONTHLY_INCOME',
   SELECT_CITY = 'SELECT_CITY',
   CUSTOMER_KNOWLEDGE = 'CUSTOMER_KNOWLEDGE',
 }
+
+export default KycFormCategories;

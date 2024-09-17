@@ -19,14 +19,17 @@ export const calculateHeight = ({
   sheetStyles,
   showIcon,
   showCancel,
-  scrollEnabledRef
+  scrollEnabledRef,
 }: CalculateHeightProps): number => {
   // Function to combine styles from sheetStyles and any additional styles
   const getStyles = (): Record<keyof ActionSheetStyles, any[]> => {
     const combinedStyles: Record<keyof ActionSheetStyles, any[]> = {} as Record<keyof ActionSheetStyles, any[]>;
     (Object.keys(sheetStyles) as Array<keyof ActionSheetStyles>).forEach((key) => {
       combinedStyles[key] = [sheetStyles[key]];
+      // TODO: Fix styles no-use-before-define
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
       if (styles && styles[key]) {
+        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         combinedStyles[key].push(styles[key]);
       }
     });
@@ -44,13 +47,13 @@ export const calculateHeight = ({
     return attributes.reduce((totalHeight, attrName) => totalHeight + (style[attrName] || 0), moderateScale(0));
   };
 
+  // Initial height set to 0
+  let height = 0;
+
   // Helper function to add height of a specific component to the total height
   const addHeight = (name: keyof ActionSheetStyles) => {
     height += getHeight(name);
   };
-
-  // Initial height set to 0
-  let height = 0;
 
   // Define the sections to add height based on their conditions
   const sectionsToAddHeight = [
@@ -61,7 +64,7 @@ export const calculateHeight = ({
     { condition: showIcon, styleName: 'rightSvg' },
     { condition: showCancel, styleName: 'cancelBody' },
     { condition: showCancel, styleName: 'innerSpacing' },
-    { condition: showCancel, styleName: 'cancelSpacing' }
+    { condition: showCancel, styleName: 'cancelSpacing' },
   ];
 
   // Loop through each section and add its height if the condition is met
@@ -81,12 +84,16 @@ export const calculateHeight = ({
 
   // Check if the calculated height exceeds the maximum height and adjust if necessary
   if (height > MAX_HEIGHT) {
+    // TODO: Fix props reassign
+    // eslint-disable-next-line no-param-reassign
     scrollEnabledRef.current = true;
     height = MAX_HEIGHT;
   } else {
+    // TODO: Fix props reassign
+    // eslint-disable-next-line no-param-reassign
     scrollEnabledRef.current = false;
   }
 
   // Return the calculated height
-  return height 
+  return height;
 };

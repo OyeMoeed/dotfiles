@@ -1,9 +1,8 @@
 import { IPayFootnoteText, IPayLinearGradientView, IPayView } from '@app/components/atoms';
 import IPayPointRedemptionCard from '@app/components/atoms/ipay-point-redemption-card/ipay-point-redemption-card.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -14,14 +13,15 @@ import {
 } from '@app/network/services/cards-management/mazaya-topup/redeem-points-confirm/redeem-points-confirm.interface';
 import redeemPointsConfirm from '@app/network/services/cards-management/mazaya-topup/redeem-points-confirm/redeem-points-confirm.service';
 import redeemPointsPrepare from '@app/network/services/cards-management/mazaya-topup/redeem-points-prepare/redeem-points-prepare.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant, TopupStatus } from '@app/utilities/enums.util';
+import { TopupStatus } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { FC, useRef, useState } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
+import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayPointRedemptionConfirmatonProps } from './ipay-points-redemption-confirmation.interface';
 import pointRedemptionConfirmation from './ipay-points-redemption-confirmation.style';
 
@@ -30,29 +30,25 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const { colors } = useTheme();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const pointRemdemptionBottomSheetRef = useRef<bottomSheetTypes>(null);
-  const [apiError, setAPIError] = useState<string>('');
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const styles = pointRedemptionConfirmation(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
+
   const { otpConfig } = useConstantData();
 
-  const onConfirm = async () => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
+  const onConfirm = async (showOtpPopup: boolean = true) => {
     const apiResponse = await redeemPointsPrepare(walletInfo.walletNumber, {
       deviceInfo: await getDeviceInfo(),
     });
-    if (apiResponse.status.type === 'SUCCESS') {
-      pointRemdemptionBottomSheetRef.current?.present();
+    if (apiResponse?.status.type === 'SUCCESS') {
+      if (showOtpPopup) {
+        setOtpSheetVisible(true);
+      }
     }
-    hideSpinner();
+    otpVerificationRef?.current?.resetInterval();
   };
 
   const handleOnPressHelp = () => {
@@ -61,6 +57,8 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
+    pointRemdemptionBottomSheetRef?.current?.close();
+    setOtpSheetVisible(false);
   };
 
   const getRemainPoints = (): number => params.totalpoints - params.redeemPoints;
@@ -73,11 +71,10 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
       referenceNumber: data.referenceNumber,
       topupStatus: data.topupStatus,
     });
-    pointRemdemptionBottomSheetRef.current?.close();
+    setOtpSheetVisible(false);
   };
 
   const verifyOtp = async () => {
-    setIsLoading(true);
     const payload: IRedeemPointsConfirmReq = {
       deviceInfo: await getDeviceInfo(),
       otp,
@@ -88,26 +85,38 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
     const apiResponse = await redeemPointsConfirm(walletInfo.walletNumber, payload);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
-      if (apiResponse?.response)
+      if (apiResponse?.response) {
         onConfirmOtpVerification({ ...apiResponse?.response, topupStatus: TopupStatus.SUCCESS });
+      }
+    } else if (apiResponse?.status?.code === 'E002961') {
+      setOtpError(true);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
-      setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
       onConfirmOtpVerification({
         ...apiResponse?.response,
         topupStatus: TopupStatus.FAILED,
       } as IRedeemPointsConfirmRes);
     }
-    setIsLoading(false);
   };
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
     } else {
       verifyOtp();
     }
   };
+
+  const onResendCodePress = () => {
+    onConfirm(false);
+  };
+
+  useEffect(() => {
+    if (isOtpSheetVisible) {
+      setOtp('');
+    }
+  }, [isOtpSheetVisible]);
 
   return (
     <IPayView testID={testID} style={styles.container}>
@@ -177,30 +186,31 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           btnStyle={[styles.confirmButton]}
         />
       </IPaySafeAreaView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.TOP_UP.REDEEM_POINTS}
         enablePanDownToClose
         simpleBar
         bold
         cancelBnt
-        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
+        isVisible={isOtpSheetVisible}
         ref={pointRemdemptionBottomSheetRef}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={onConfirmOtp}
-          mobileNumber={userInfo?.mobileNumber ? userInfo?.mobileNumber : ''}
+          mobileNumber={walletInfo?.mobileNumber ? walletInfo?.mobileNumber : ''}
           setOtp={setOtp}
+          otp={otp}
           setOtpError={setOtpError}
           otpError={otpError}
-          isLoading={isLoading}
-          apiError={apiError}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.akhtrPoints.otpTimeout}
+          onResendCodePress={onResendCodePress}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose

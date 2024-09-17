@@ -1,7 +1,12 @@
+import { hideSpinner, showSpinner } from '@app/store/slices/spinner.slice';
+import { store } from '@app/store/store';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosClient from '../client';
+import onRequestFulfilled from '../interceptors/request';
+import { onResponseFulfilled, onResponseReject } from '../interceptors/response';
+import { handleAxiosError, isErrorResponse } from '../utilities/error-handling-helper';
+import { handleApiResponse } from './api-call.interceptors';
 import { ApiResponse } from './services.interface';
-import { handleApiError, handleApiResponse } from './api-call.interceptors';
 
 interface ApiCallParams {
   endpoint: string;
@@ -11,7 +16,17 @@ interface ApiCallParams {
   baseURL?: string;
 }
 
-const apiCall = async <T>({ endpoint, method, payload, headers = {} , baseURL=undefined}: ApiCallParams): Promise<ApiResponse<T>> => {
+/* register interceptors here to avoid cyclic import error */
+axiosClient.interceptors.request.use(onRequestFulfilled);
+axiosClient.interceptors.response.use(onResponseFulfilled, onResponseReject);
+
+const apiCall = async <T>({
+  endpoint,
+  method,
+  payload,
+  headers = {},
+  baseURL = undefined,
+}: ApiCallParams): Promise<ApiResponse<T> | undefined> => {
   const config: AxiosRequestConfig = {
     method,
     url: endpoint,
@@ -20,14 +35,35 @@ const apiCall = async <T>({ endpoint, method, payload, headers = {} , baseURL=un
     },
     data: payload,
   };
-  baseURL && (config.baseURL=baseURL)
+  if (baseURL) config.baseURL = baseURL;
+  if (headers?.hide_error_response) {
+    axiosClient.defaults.headers.x_hide_error_response = true;
+  }
+  if (headers?.hide_spinner_loading) {
+    axiosClient.defaults.headers.x_hide_spinner_loading = true;
+  }
 
   try {
-    const response: AxiosResponse<ApiResponse<T>> = await axiosClient(config);
-    return handleApiResponse<T>(response);
+    // show Spinner
+    if (!headers?.hide_spinner_loading) {
+      store.dispatch(showSpinner());
+    }
+
+    const response: AxiosResponse<T> = await axiosClient(config);
+    if (isErrorResponse(response)) {
+      store.dispatch(hideSpinner());
+      await handleAxiosError(response);
+      return undefined;
+    }
+    store.dispatch(hideSpinner());
+    return handleApiResponse(response);
   } catch (error: any) {
-    return handleApiError(error);
+    await handleAxiosError(error);
   }
+
+  // Hide Spinner
+  store.dispatch(hideSpinner());
+  return undefined;
 };
 
 export default apiCall;

@@ -3,6 +3,7 @@ interface SuccessItem {
   title: string;
   subTitle: string;
   icon: string;
+  currency?: string;
 }
 
 interface ItemProps {
@@ -11,3 +12,12 @@ interface ItemProps {
 }
 
 export { ItemProps, SuccessItem };
+
+export interface TransferDetails {
+  amount: string;
+  beneficiaryNickName: string;
+  transferPurpose: string;
+  instantTransferType: string;
+  note: string;
+  refNumber: string;
+}

@@ -20,18 +20,21 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
   const localizationText = useLocalization();
-  const ContactItemComponent = ({ item }: ContactItem) => {
-    const { title, phone_number } = item;
+
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ContactItemComponent = ({ item }: { item: ContactItem }) => {
+    const { title, phone_number: phoneNumber } = item;
     return (
       <IPayList
         key={title}
         title={title}
         isShowSubTitle
-        subTitle={phone_number}
+        subTitle={phoneNumber}
         containerStyle={styles.listContainer}
         isShowIcon
         icon={
-          <IPayPressable style={styles.iconWrapper} onPress={() => close(phone_number)}>
+          <IPayPressable style={styles.iconWrapper} onPress={() => close(phoneNumber)}>
             <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
           </IPayPressable>
         }
@@ -39,13 +42,13 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
     );
   };
 
-  const ContactListOptions = () => {
-    return (
-      <IPayView style={styles.childrenStyles}>
-        {contactList?.map((item: ContactItem) => <ContactItemComponent item={item} />)}
-      </IPayView>
-    );
-  };
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ContactListOptions = () => (
+    <IPayView style={styles.childrenStyles}>
+      {contactList?.map((item: ContactItem) => <ContactItemComponent key={`${item.title}`} item={item} />)}
+    </IPayView>
+  );
 
   const renderGuideStepItem = ({
     item: { title, pressNumber, extraText, stepNumber, isContactList },
@@ -55,10 +58,12 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
     <IPayList
       key={title}
       title={
-        <IPayFootnoteText>
+        <IPayFootnoteText color={colors.primary.primary800}>
           {title}
-          <IPayFootnoteText regular={false}> {pressNumber}</IPayFootnoteText>
-          <IPayFootnoteText> {extraText}</IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800} regular={false}>
+            {pressNumber}
+          </IPayFootnoteText>
+          <IPayFootnoteText color={colors.primary.primary800}> {extraText}</IPayFootnoteText>
         </IPayFootnoteText>
       }
       textStyle={styles.stepStyle}
@@ -72,8 +77,9 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
       }
       style={isContactList && styles.containerStyle}
       containerStyle={styles.curveStyle}
-      children={isContactList && <ContactListOptions />}
-    />
+    >
+      {isContactList ? <ContactListOptions /> : <IPayView />}
+    </IPayList>
   );
 
   return (

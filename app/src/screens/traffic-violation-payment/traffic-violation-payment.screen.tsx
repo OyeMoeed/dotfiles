@@ -29,21 +29,31 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     isLoading,
     otpError,
     setOtpError,
-    apiError,
+    otp,
     otpVerificationRef,
   } = useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = billPaymentStyles();
   const route = useRoute();
   const variant = route?.params?.variant;
+
+  const handleOTPVerify = () => {
+    handleOtpVerification();
+    setOtpError(false);
+  };
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title={localizationText.TRAFFIC_VIOLATION.TITLE} backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
-        <IPayAccountBalance availableBalance={availableBalance ?? 0} showRemainingAmount balance={balance ?? 0} />
+        <IPayAccountBalance
+          availableBalance={availableBalance ?? 0}
+          showRemainingAmount
+          balance={balance ?? 0}
+          topUpBtnStyle={styles.topUpButton}
+        />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
@@ -52,11 +62,12 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         </IPayScrollView>
       </IPayView>
       <SadadFooterComponent
-        onPressBtn={handleOtpVerification}
+        onPressBtn={handleOTPVerify}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
         btnText={localizationText.COMMON.PAY}
         disableBtnIcons
+        btnStyle={styles.payBtn}
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet
@@ -70,15 +81,19 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={handlePay}
-          mobileNumber={userInfo?.mobileNumber}
+          mobileNumber={walletInfo?.mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
-          showHelp={true}
+          otp={otp}
+          showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
+          containerStyle={styles.otpContainerStyle}
+          innerContainerStyle={styles.otpInnerContainer}
+          toastContainerStyle={styles.toastContainerStyle}
+          headingContainerStyle={styles.headingContainerStyle}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

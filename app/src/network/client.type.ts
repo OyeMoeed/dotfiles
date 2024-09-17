@@ -7,4 +7,4 @@ interface clientError {
   authenticationInfo: string;
 }
 
-export type { clientError };
+export default clientError;

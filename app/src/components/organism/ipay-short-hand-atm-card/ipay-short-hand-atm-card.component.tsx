@@ -11,7 +11,7 @@ import {
 } from '@app/components/atoms';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardTypes } from '@app/utilities/enums.util';
+import { CardTypes, CardTypesCodes } from '@app/utilities/enums.util';
 import React from 'react';
 import { IPayShortHandATMCardProps } from './ipay-short-hand-atm-card.interface';
 import cardStyles from './ipay-short-hand-atm-card.style';
@@ -22,10 +22,10 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, car
   const localizationText = useLocalization();
 
   const getCardImage = () => {
-    switch (cardData?.cardType) {
-      case CardTypes.DEBIT_CARD:
+    switch (cardData?.cardTypeId) {
+      case CardTypesCodes.MADA:
         return images.shortHandDeitCard;
-      case CardTypes.PLATINUIM_CARD:
+      case CardTypesCodes.PLATINUM:
         return images.shortHandPlatinuimCard;
       default:
         return images.shortHandSignatureCard;
@@ -43,27 +43,19 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, car
     }
   };
 
-  const maskCardNumber = (cardNumber: string): string => {
-    const parts = cardNumber.split(' ');
-    return `**** ${parts[parts.length - 1]}`;
-  };
-
   const textColor =
     cardData?.cardType === CardTypes.SIGNATURE_CARD ? colors.natural.natural0 : colors.primary.primary900;
+
   return (
     <IPayView style={styles.atmCardView} testID={`${textID}-short-hand-atm-card`}>
       <IPayImageBackground image={getCardImage()} resizeMode="stretch" style={styles.atmCardImg}>
         <IPayView style={styles.cartInfoView}>
           <IPayView>
             <IPayView style={styles.titleAndCardNumberView}>
-              <IPayFootnoteText regular={false} text={cardData.title} color={textColor} />
-              <IPayCaption2Text
-                text={maskCardNumber(cardData.cardNumber)}
-                style={styles.cardNumberText}
-                color={textColor}
-              />
+              <IPayFootnoteText regular={false} text={cardData.name} color={textColor} />
+              <IPayCaption2Text text={cardData?.maskedCardNumber} style={styles.cardNumberText} color={textColor} />
             </IPayView>
-            <IPayCaption2Text text={cardData.cardType} color={textColor} />
+            <IPayCaption2Text text={cardData.cardClassDesc} color={textColor} />
           </IPayView>
 
           <IPayView style={styles.cardlogoView}>

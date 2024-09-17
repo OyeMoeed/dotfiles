@@ -1,5 +1,4 @@
 import { IPayLinearGradientView } from '@app/components/atoms';
-import { SpinnerProvider } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useTheme from '@app/styles/hooks/theme.hook';
 import BottomSheet, {
@@ -8,12 +7,13 @@ import BottomSheet, {
   BottomSheetModal,
   BottomSheetView,
 } from '@gorhom/bottom-sheet';
-import { forwardRef, useCallback, useRef } from 'react';
+import { forwardRef, useCallback, useImperativeHandle, useRef } from 'react';
 import { Portal } from 'react-native-portalize';
 import IPayBottomSheetHandle from './ipay-bottom-sheet-handle.component';
-import { IPayBottomSheetProps } from './ipay-bottom-sheet.interface';
+import { IPayPortalBottomSheetProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
-const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
+
+const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheetProps>(
   (
     {
       children,
@@ -25,6 +25,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
       simpleBar,
       gradientBar,
       cancelBnt,
+      onCancel,
       doneBtn,
       backBtn,
       doneText,
@@ -37,7 +38,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
       bgGradientColors,
       headerContainerStyles,
       noGradient,
-      isVisible,
+      isVisible = false,
     },
     ref,
   ) => {
@@ -45,6 +46,16 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
     const styles = bottonSheetStyles(colors);
     const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
+    useImperativeHandle(ref, () => ({
+      present: () => bottomSheetModalRef.current?.snapToIndex(0),
+      close: () => bottomSheetModalRef.current?.close(),
+      dismiss: () => bottomSheetModalRef.current?.dismiss(),
+      snapToIndex: (index: number) => bottomSheetModalRef.current?.snapToIndex(index),
+      snapToPosition: (position: string | number) => bottomSheetModalRef.current?.snapToPosition(position),
+      expand: () => bottomSheetModalRef.current?.expand(),
+      collapse: () => bottomSheetModalRef.current?.collapse(),
+      forceClose: () => bottomSheetModalRef.current?.forceClose(), // Add forceClose method
+    }));
     const gradient = bgGradientColors || colors.bottomsheetGradient;
     const handleSheetChanges = useCallback(() => {}, []);
     const renderBackdrop = useCallback(
@@ -52,7 +63,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
         <BottomSheetBackdrop
           appearsOnIndex={0}
           disappearsOnIndex={-1}
-          pressBehavior="none"
+          pressBehavior="close"
           {...props}
           opacity={1}
           style={[props.style, styles.overlayStyle]}
@@ -61,9 +72,40 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
       [],
     );
 
+    const closeBottomSheet = () => {
+      if (onCancel) {
+        onCancel();
+      } else {
+        bottomSheetModalRef.current?.close();
+      }
+    };
+
+    const handleComponent = () => (
+      <IPayBottomSheetHandle
+        simpleBar={simpleBar}
+        gradientBar={gradientBar}
+        cancelBnt={cancelBnt}
+        doneBtn={doneBtn}
+        heading={heading}
+        simpleHeader={simpleHeader}
+        backBtn={backBtn}
+        doneButtonStyle={doneButtonStyle}
+        cancelButtonStyle={cancelButtonStyle}
+        doneText={doneText}
+        onPressCancel={closeBottomSheet}
+        onPressDone={closeBottomSheet}
+        bold={bold}
+        bgGradientColors={
+          noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
+        }
+        headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
+      />
+    );
+
     if (!isVisible) {
-      return <></>;
+      return null;
     }
+
     return (
       <Portal>
         <BottomSheet
@@ -78,36 +120,14 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
-          handleComponent={() => (
-            <IPayBottomSheetHandle
-              simpleBar={simpleBar}
-              gradientBar={gradientBar}
-              cancelBnt={cancelBnt}
-              doneBtn={doneBtn}
-              heading={heading}
-              simpleHeader={simpleHeader}
-              backBtn={backBtn}
-              doneButtonStyle={doneButtonStyle}
-              cancelButtonStyle={cancelButtonStyle}
-              doneText={doneText}
-              onPressCancel={onCloseBottomSheet}
-              onPressDone={onCloseBottomSheet}
-              bold={bold}
-              bgGradientColors={
-                noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
-              }
-              headerContainerStyles={[headerContainerStyles, noGradient && styles.borderRadius]}
-            />
-          )}
+          handleComponent={handleComponent}
         >
           <IPayLinearGradientView
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
           >
-            <SpinnerProvider>
-              <ToastProvider>
-                <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
-              </ToastProvider>
-            </SpinnerProvider>
+            <ToastProvider>
+              <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+            </ToastProvider>
           </IPayLinearGradientView>
         </BottomSheet>
       </Portal>
