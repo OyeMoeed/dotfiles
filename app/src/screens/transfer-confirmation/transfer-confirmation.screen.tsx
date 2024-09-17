@@ -15,9 +15,8 @@ import {
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
-import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -33,6 +32,7 @@ import { useRoute, RouteProp } from '@react-navigation/native';
 import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.interface';
 import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
 import getDeviceInfo from '@app/network/utilities/device-info-helper';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BeneficiaryDetailsProps, TransactionDetails } from './transfer-confirmation.interface';
 import transferConfirmationStyles from './transfer-confirmation.style';
@@ -53,7 +53,7 @@ const TransferConfirmation: React.FC = () => {
   const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
 
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState();
+  const [otpError, setOtpError] = useState<boolean>(false);
 
   type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
@@ -126,6 +126,10 @@ const TransferConfirmation: React.FC = () => {
 
   const onPressTransfer = () => {
     otpBottomSheetRef?.current?.present();
+  };
+
+  const onCloseHelpBottomSheet = () => {
+    helpCenterRef?.current?.close();
   };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
@@ -262,11 +266,11 @@ const TransferConfirmation: React.FC = () => {
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.LOCAL_TRANSFER.TRANSFER}
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '99%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={otpBottomSheetRef}
         bold
@@ -277,23 +281,25 @@ const TransferConfirmation: React.FC = () => {
           ref={otpBottomSheetRef}
           onPressConfirm={onConfirm}
           mobileNumber={mobileNumber}
+          otp={otp}
           setOtp={setOtp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
-          otpError={otpError !== ''}
+          otpError={otpError}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
 
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         ref={helpCenterRef}
+        onCloseBottomSheet={onCloseHelpBottomSheet}
       >
         <HelpCenterComponent />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };
