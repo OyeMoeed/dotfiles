@@ -193,6 +193,19 @@ const LocalTransferScreen: React.FC = () => {
     });
   };
 
+  const handleActivateBeneficiary = useCallback(() => {
+    setShowActivationSheet(true);
+    setActivateHeight(SNAP_POINT.X_SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE)
+      navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
+    else handleActivateBeneficiary();
+  };
+
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
     const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
@@ -356,18 +369,6 @@ const LocalTransferScreen: React.FC = () => {
       setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
     }
   }, []);
-
-  const handleActivateBeneficiary = useCallback(() => {
-    setShowActivationSheet(true);
-    setActivateHeight(SNAP_POINT.X_SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-    else handleActivateBeneficiary();
-  };
 
   const makeTransfer = () => {
     setShowActivationSheet(false);
