@@ -48,8 +48,13 @@ const apiCall = async <T>({
     if (!headers?.hide_spinner_loading) {
       store.dispatch(showSpinner());
     }
+    let response: AxiosResponse<T>;
 
-    const response: AxiosResponse<T> = await axiosClient(config);
+    if (method === 'GET') {
+      response = await axiosClient(config);
+    } else {
+      response = await axiosClient(config);
+    }
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
       await handleAxiosError(response);
