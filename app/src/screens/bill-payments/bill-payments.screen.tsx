@@ -32,7 +32,7 @@ const BillPaymentsScreen: React.FC = () => {
   const [billsData, setBillsData] = useState<PaymentInfoProps[]>([]);
   const [sadadBills, setSadadBillsData] = useState<PaymentInfoProps[]>([]);
   const [unpaidBillsCount, setUnpaidBillsCount] = useState<number>(0);
-  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const onPressViewAll = () => {
     navigate(ScreenNames.SADAD_BILLS, { sadadBills: billsData });

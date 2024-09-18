@@ -21,6 +21,7 @@ import { formatNumberWithCommas, isMultipleOfHundred } from '@app/utilities/numb
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
 const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
@@ -57,6 +58,27 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   };
   const closeBottomSheetTopUp = () => {
     topUpSelectionRef.current.close();
+  };
+
+  const navigateTOAktharPoints = async () => {
+    const aktharPointsResponse = await getAktharPoints(walletInfo?.walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
   };
 
   const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount === '' || !isMultipleOfHundred(topUpAmount);
@@ -178,7 +200,11 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
         bold
         cancelBnt
       >
-        <IPayTopUpSelection closeBottomSheet={closeBottomSheetTopUp} />
+        <IPayTopUpSelection
+          testID="topUp-selection"
+          closeBottomSheet={closeBottomSheetTopUp}
+          topupItemSelected={topupItemSelected}
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

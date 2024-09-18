@@ -261,7 +261,7 @@ const NearestAtmScreen: React.FC = () => {
         {childView === LIST ? (
           <NearestAtmListComponent onPressAtmCard={onPressAtmCard} nearestAtms={filteredData} />
         ) : (
-          <IPayNearestAtmLocations nearestAtms={filteredData} />
+          <IPayNearestAtmLocations onPressAtmCard={onPressAtmCard} nearestAtms={filteredData} />
         )}
       </IPayView>
 

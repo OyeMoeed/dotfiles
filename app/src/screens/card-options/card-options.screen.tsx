@@ -97,7 +97,7 @@ const CardOptionsScreen: React.FC = () => {
     initOnlinePurchase();
   }, []);
 
-  const getToastSubTitle = () => `${cardHeaderText}  - ${maskedCardNumber}`;
+  const getToastSubTitle = () => `${cardHeaderText}  - **** ${cardLastFourDigit}`;
 
   const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({

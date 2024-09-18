@@ -3,16 +3,15 @@ import {
   IPayCaption2Text,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPayView,
 } from '@app/components/atoms/index';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { LocalizationKeysMapping, TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dateTimeFormat } from '@app/utilities';
 import { formatAmount } from '@app/utilities/currency-helper.util';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import { dateTimeFormat } from '@app/utilities';
 import getTransationIcon from '@app/utilities/transation-types-helper.util';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,7 +39,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
 
   const renderLeftIcon = () => {
     if (isBeneficiaryHistory) {
-      return <IPayImage image={transaction?.bankImage} style={styles.leftImageStyle} />;
+      return <IPayIcon icon={transaction?.bankId} size={18} />;
     }
     if (internationalTransfer) {
       return <IpayFlagIcon country={transaction?.countryFlag} testID={testID} />;
@@ -55,10 +54,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   };
 
   const renderTrxsItemTitle = () => {
-    if (transaction?.transactionRequestType === TransactionTypes.PAY_WALLET) {
+    if (transaction?.transactionRequestType === TransactionTypes.PAY_WALLET || isBeneficiaryHistory) {
       return (
         <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-          {transaction?.nickname || transaction?.mobileNumber}
+          {isBeneficiaryHistory ? transaction?.beneficiaryName : transaction?.nickname || transaction?.mobileNumber}
         </IPayFootnoteText>
       );
     }
@@ -124,6 +123,17 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           color={colors.natural.natural900}
           text="TRANSACTION_HISTORY.SEND_MONEY"
         />
+      );
+    }
+    if (isBeneficiaryHistory) {
+      return (
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+        >
+          {transaction?.bankName ?? ''}
+        </IPayCaption1Text>
       );
     }
     if (

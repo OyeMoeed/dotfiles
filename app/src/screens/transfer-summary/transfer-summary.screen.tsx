@@ -111,6 +111,7 @@ const TransferSummaryScreen: React.FC = () => {
       },
       {
         id: '3',
+        label: t('TRANSFER_SUMMARY.REASON'),
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
       },
       { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: item.note },

@@ -17,7 +17,6 @@ import billPaymentStyles from './traffic-violation-payment.styles';
 const TrafficViolationPaymentScreen: React.FC = () => {
   const {
     billPayDetailes,
-    extraDetails,
     balanceData,
     handlePay,
     helpCenterRef,
@@ -56,7 +55,9 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
-            {!variant && <IPayBillDetailsOption showHeader={false} data={extraDetails} style={styles.listBottomView} />}
+            {!variant && (
+              <IPayBillDetailsOption showHeader={false} data={billPayDetailes} style={styles.listBottomView} />
+            )}
           </>
         </IPayScrollView>
       </IPayView>

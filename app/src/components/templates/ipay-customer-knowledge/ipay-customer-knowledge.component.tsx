@@ -6,10 +6,10 @@ import { IGetLovPayload, LovInfo } from '@app/network/services/core/lov/get-lov.
 import getLov from '@app/network/services/core/lov/get-lov.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { debounce } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { debounce } from 'lodash';
 import { buttonVariants } from '@app/utilities';
 import IPayCustomerKnowledgeDefault from './component/default-component';
 import { IFormData, IPayCustomerKnowledgeProps } from './ipay-customer-knowledge.interface';
@@ -281,7 +281,7 @@ const IPayCustomerKnowledge: React.FC<IPayCustomerKnowledgeProps> = ({
             <IPayView style={styles.buttonWrapper}>
               <IPayButton
                 btnType={buttonVariants.PRIMARY}
-                btnText="COMMON.SAVE"
+                btnText="PROFILE.SAVE_CHANGES"
                 large
                 btnIconsDisabled
                 disabled={!isDirty}
