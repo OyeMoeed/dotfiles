@@ -22,6 +22,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   guideToReceiveCall,
   activateInternationalBeneficiary,
   hanldePageNavigation,
+  makeTransfer = true,
 }) => {
   const { colors } = useTheme();
   const styles = receiveCallStyles(colors);
@@ -108,14 +109,16 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
         />
       )}
 
-      <IPayButton
-        large
-        btnType={buttonVariants.OUTLINED}
-        btnText="ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER"
-        btnIconsDisabled
-        btnStyle={styles.makeTransferStyles}
-        onPress={hanldePageNavigation}
-      />
+      {makeTransfer && (
+        <IPayButton
+          large
+          btnType={buttonVariants.OUTLINED}
+          btnText="ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER"
+          btnIconsDisabled
+          btnStyle={styles.makeTransferStyles}
+          onPress={hanldePageNavigation}
+        />
+      )}
     </IPayView>
   );
 };

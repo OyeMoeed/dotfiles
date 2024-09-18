@@ -6,6 +6,7 @@ import {
   IPayFootnoteText,
   IPayIcon,
   IPayImage,
+  IPayLottieAnimation,
   IPayPressable,
   IPaySubHeadlineText,
   IPayTitle1Text,
@@ -19,17 +20,20 @@ import { GiftLocalizationKeys, GiftStatus, GiftTransactionKey } from '@app/enums
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import { buttonVariants, GiftCardDetailsKey, GiftCardStatus, ToastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, GiftCardDetailsKey, ToastTypes } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
 import { useTranslation } from 'react-i18next';
-import { ItemProps } from './gift-details.interface';
+import { darkCards, giftsCardData } from '../send-gift-card/send-gift-card.constants';
+import { GiftDetails, GiftsCardDataProps } from '../send-gift-card/send-gift-card.interface';
+import { GiftDetailsProps, ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
 
-const GiftDetailsScreen: React.FC = ({ route }) => {
+const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   const { t } = useTranslation();
-  const { details, isSend } = route.params;
+  const { isSend, details, giftCategory } = route.params;
+  const giftNote = details?.userNotes?.split('#')[0] ?? '';
   const { colors } = useTheme();
   const styles = giftDetailsStyles(colors);
   const { showToast } = useToastContext();
@@ -63,12 +67,20 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
   };
 
+  const statusMapping = {
+    [GiftStatus.INITIATED]: t('SEND_GIFT.UNOPENED'),
+    [GiftStatus.EXECUTED]: t('SEND_GIFT.OPENED'),
+    [GiftStatus.FAILED]: t('SEND_GIFT.EXPIRED'),
+  };
+
   const getTitleColor = (subTitle: string) => {
     switch (subTitle) {
       case GiftStatus.INITIATED:
         return colors.warning.warning500;
       case GiftStatus.FAILED:
         return colors.error.error500;
+      case GiftStatus.EXECUTED:
+        return colors.success.success500;
       default:
         return colors.primary.primary800;
     }
@@ -96,28 +108,45 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
   ];
 
   const titleText = useCallback(
-    (value: string, item: string) => {
+    (value: string, key: string) => {
       const date = moment(value, dateTimeFormat.YearMonthDate, true);
-      if (date.isValid()) {
-        return formatTimeAndDate(value);
-      }
 
-      if (item === GiftCardDetailsKey.STATUS) {
-        switch (value) {
-          case GiftStatus.INITIATED:
-            return GiftCardStatus.UNOPENED;
-          case GiftStatus.FAILED:
-            return GiftCardStatus.EXPIRED;
-          case GiftStatus.EXECUTED:
-            return GiftCardStatus.OPENED;
-          default:
-            return GiftCardStatus.UNOPENED;
-        }
+      switch (key) {
+        case GiftTransactionKey.TRANSACTION_DATE_TIME:
+          if (date.isValid()) {
+            return formatTimeAndDate(value);
+          }
+          break;
+        case GiftTransactionKey.AMOUNT:
+          return `${value} ${t('COMMON.SAR')}`;
+        case GiftTransactionKey.STATUS:
+          return statusMapping[value as keyof typeof statusMapping];
+        default:
+          break;
       }
-      return item === GiftCardDetailsKey.AMOUNT ? `${value} ${t('COMMON.SAR')}` : value;
+      return key === GiftCardDetailsKey.AMOUNT ? `${value} ${t('COMMON.SAR')}` : value;
     },
     [details],
   );
+
+  const getGiftCardAnimation = () => {
+    if (details) {
+      const cardId = giftCategory;
+      const category = cardId?.split('_')[0].toLowerCase();
+
+      const getCardsList = giftsCardData[category as keyof GiftsCardDataProps];
+      if (!getCardsList) return {} as GiftDetails;
+
+      const allCards = getCardsList(colors);
+
+      const matchedGiftCard = allCards.find((card) => card.id === cardId) ?? allCards[1];
+
+      return matchedGiftCard;
+    }
+    return {} as GiftDetails;
+  };
+
+  const isDarkCard = darkCards.includes(getGiftCardAnimation()?.id);
 
   const customRightComponent = () => (
     <IPayButton
@@ -129,18 +158,38 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
     />
   );
   const giftCardFront = () => (
-    <IPayView style={[styles.previewContainer, !isSend && styles.receivePreviewContainer]}>
-      <IPayImage
-        image={images.eidMubarak}
-        style={[styles.giftCardFrontImage, !isSend && styles.receivedGiftCardFrontImage]}
+    <IPayView
+      style={[
+        styles.previewContainer,
+        !isSend && styles.receivePreviewContainer,
+        { backgroundColor: getGiftCardAnimation()?.bgColor },
+      ]}
+    >
+      <IPayLottieAnimation
+        source={getGiftCardAnimation()?.path ?? ''}
+        style={(styles.giftCardFrontImage, !isSend && styles.receivedGiftCardFrontImage)}
+        loop
       />
     </IPayView>
   );
 
   const giftCardBack = () => (
-    <IPayView style={[styles.previewContainer, !isSend && styles.receivePreviewContainer]}>
-      <IPayImage image={images.logo} style={[styles.logoStyles, !isSend && styles.receiveLogoStyles]} />
-      <IPayImage image={images.eidMubarak2} style={[styles.image, !isSend && styles.receiveImage]} />
+    <IPayView
+      style={[
+        styles.previewContainer,
+        !isSend && styles.receivePreviewContainer,
+        { backgroundColor: getGiftCardAnimation()?.bgColor },
+      ]}
+    >
+      <IPayImage
+        image={isDarkCard ? images.textLogoLight : images.logo}
+        style={[styles.logoStyles, !isSend && styles.receiveLogoStyles]}
+      />
+      <IPayLottieAnimation
+        source={getGiftCardAnimation()?.path ?? ''}
+        style={[styles.image, !isSend && styles.receiveImage]}
+        loop
+      />
       <IPayView style={styles.amount}>
         <IPayTitle1Text
           style={styles.receiveAmountStyle}
@@ -158,10 +207,12 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
       <IPayView style={styles.messagePreview}>
         <IPayFootnoteText
           style={[styles.messagePreviewText, !isSend && styles.receiveMessageText]}
-          text={details?.userNotes}
+          text={giftNote}
+          color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
         />
       </IPayView>
       <IPayFootnoteText
+        color={isDarkCard ? colors.backgrounds.orange : colors.primary.primary950}
         style={[styles.messagePreviewText, !isSend && styles.receiveNameText]}
         text={`${t('SEND_GIFT.FROM')}: ${details?.senderName}`}
       />
@@ -175,8 +226,8 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
-            text={titleText(details[item], item)}
-            color={getTitleColor(details[item])}
+            text={titleText(details?.[item], item)}
+            color={getTitleColor(details?.[item])}
             numberOfLines={1}
             style={getDynamicStyles(styles, details, item)}
           />
@@ -221,8 +272,8 @@ const GiftDetailsScreen: React.FC = ({ route }) => {
           <IPayView style={styles.bottomView}>
             <IPayFlatlist
               data={Object.keys(details)
-                .filter((key) => GiftTransactionKeys.includes(key))
-                .sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
+                ?.filter((key) => GiftTransactionKeys?.includes(key))
+                ?.sort((a, b) => GiftTransactionKeys.indexOf(a) - GiftTransactionKeys.indexOf(b))}
               keyExtractor={(_, index) => index.toString()}
               showsVerticalScrollIndicator={false}
               renderItem={renderCardDetails}

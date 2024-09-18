@@ -40,7 +40,6 @@ const MobileAndIqamaVerification: React.FC = () => {
     isOtpSheetVisible,
     onCloseBottomSheet,
     handleOnPressHelp,
-    keyboardVisible,
     onSubmit,
     onConfirm,
     otpError,
@@ -59,7 +58,7 @@ const MobileAndIqamaVerification: React.FC = () => {
   const styles = mobileAndIqamaStyles(colors);
 
   const { otpConfig } = useConstantData();
-  const { isKeyboardWillOpen } = useKeyboardStatus();
+  const { isKeyboardOpen } = useKeyboardStatus();
 
   const { mobileNumberSchema, iqamaIdSchema } = getValidationSchemas(t);
 
@@ -123,7 +122,7 @@ const MobileAndIqamaVerification: React.FC = () => {
               </IPayScrollView>
             </IPayView>
 
-            {(!keyboardVisible || !isKeyboardWillOpen) && (
+            {!isKeyboardOpen && (
               <IPayButton
                 onPress={handleOnPressHelp}
                 btnType={buttonVariants.LINK_BUTTON}

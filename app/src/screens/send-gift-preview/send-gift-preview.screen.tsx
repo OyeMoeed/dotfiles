@@ -104,7 +104,7 @@ const SendGiftPreview: FC = ({ route }) => {
         </IPayView>
       </IPayKeyboardAwareScrollView>
       <IPayBottomSheet
-        heading="SEND_GIFT.PREVIEW_GIFT"
+        heading="SEND_GIFT.PREVIEW_GIFT_2"
         ref={previewBottomSheetRef}
         customSnapPoint={['1%', '75%']}
         cancelBnt
@@ -118,6 +118,7 @@ const SendGiftPreview: FC = ({ route }) => {
               <IPayFootnoteText style={styles.messageText} color={themeTextColor} text={message} />
             </IPayScrollView>
             <IPayFootnoteText
+              shouldTranslate={false}
               style={styles.messagePreviewText}
               text={`${t('SEND_GIFT.FROM')}: ${firstName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}

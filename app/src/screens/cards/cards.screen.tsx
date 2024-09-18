@@ -8,6 +8,7 @@ import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-cus
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
+import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -29,7 +30,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { buttonVariants, CardOptions, CardStatusNumber, CardTypes, CarouselModes } from '@app/utilities/enums.util';
+import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
@@ -45,6 +46,7 @@ const CardsScreen: React.FC = () => {
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
+  const actionSheetRef = useRef<any>(null);
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
 
@@ -59,6 +61,7 @@ const CardsScreen: React.FC = () => {
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
   const [isCardIssueSheetVisible, setIsCardIssueSheetVisible] = useState(false);
   const [otpError, setOtpError] = useState<boolean>(false);
+  const [isCardsSheetVisible, setIsCardSheetVisible] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
@@ -77,10 +80,10 @@ const CardsScreen: React.FC = () => {
     }
   };
   const closeCardSheet = () => {
-    cardSheetRef.current.close();
+    setIsCardSheetVisible(false);
   };
   const handleNext = () => {
-    cardSheetRef.current.close();
+    setIsCardSheetVisible(false);
     if (selectedCard === CardOptions.VIRTUAL) {
       navigate(screenNames.VIRTUAL_CARD);
     } else {
@@ -253,6 +256,10 @@ const CardsScreen: React.FC = () => {
     prepareOtpCardDetails(false);
   };
 
+  const onATMLongPress = () => {
+    actionSheetRef.current.show();
+  };
+
   useEffect(() => {
     getCardsData();
   }, []);
@@ -295,7 +302,7 @@ const CardsScreen: React.FC = () => {
                 (item as { newCard?: boolean }).newCard ? (
                   newCard
                 ) : (
-                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} />
+                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} onLongPress={onATMLongPress} />
                 )
               }
             />
@@ -304,7 +311,7 @@ const CardsScreen: React.FC = () => {
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
               <IPayCardSection
                 currentCard={currentCard}
-                setCurrentCard={setCurrentCard}
+                setCards={setCardsData}
                 onOpenOTPSheet={onPinCodeSheet}
                 cards={cardsData}
               />
@@ -326,7 +333,7 @@ const CardsScreen: React.FC = () => {
           btnType={buttonVariants.LINK_BUTTON}
           btnText="CARDS.NEW_CARD"
           onPress={openCardSheet}
-          rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
+          rightIcon={<IPayIcon icon={icons.addSquare2} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
       {renderCardsCurrentState()}
@@ -380,6 +387,7 @@ const CardsScreen: React.FC = () => {
         simpleHeader
         simpleBar
         bold
+        isVisible={isCardsSheetVisible}
         cancelBnt
       >
         <IPayCardIssueBottomSheet
@@ -388,6 +396,12 @@ const CardsScreen: React.FC = () => {
           onNextPress={handleNext}
         />
       </IPayPortalBottomSheet>
+      <IPayFreezeConfirmationSheet
+        currentCard={currentCard}
+        cards={cardsData}
+        setCards={setCardsData}
+        ref={actionSheetRef}
+      />
     </IPaySafeAreaView>
   );
 };

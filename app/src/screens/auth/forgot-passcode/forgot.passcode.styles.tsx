@@ -38,7 +38,8 @@ const ForgotPasscodeStyles = (colors: typeof themeColors) =>
       zIndex: 1000,
     },
     inputFieldsContainer: {
-      marginVertical: moderateScale(20),
+      marginTop: moderateScale(20),
+      marginBottom: moderateScale(32),
     },
     inputTextView: {
       marginTop: moderateScale(12),

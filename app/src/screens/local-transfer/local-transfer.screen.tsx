@@ -46,6 +46,7 @@ import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useKeyboardStatus } from '@app/hooks';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
@@ -53,6 +54,7 @@ import localTransferStyles from './local-transfer.style';
 const LocalTransferScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const styles = localTransferStyles(colors);
   const beneficiariesToShow = 4;
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
@@ -191,19 +193,6 @@ const LocalTransferScreen: React.FC = () => {
       toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
-  };
-
-  const handleActivateBeneficiary = useCallback(() => {
-    setShowActivationSheet(true);
-    setActivateHeight(SNAP_POINT.X_SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE)
-      navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
-    else handleActivateBeneficiary();
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
@@ -367,6 +356,19 @@ const LocalTransferScreen: React.FC = () => {
     }
   }, []);
 
+  const handleActivateBeneficiary = useCallback(() => {
+    setShowActivationSheet(true);
+    setActivateHeight(SNAP_POINT.X_SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE)
+      navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
+    else handleActivateBeneficiary();
+  };
+
   const makeTransfer = () => {
     setShowActivationSheet(false);
     getBeneficiariesData();
@@ -380,6 +382,7 @@ const LocalTransferScreen: React.FC = () => {
             hanldePageNavigation={makeTransfer}
             activateInternationalBeneficiary={onPressActivateBeneficiary}
             guideToReceiveCall={guideToReceiveCall}
+            makeTransfer={false}
           />
         );
       case ActivateViewTypes.CALL_ALINMA:
@@ -590,7 +593,7 @@ const LocalTransferScreen: React.FC = () => {
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={SNAP_POINT.MEDIUM}
+        customSnapPoint={isKeyboardOpen ? SNAP_POINT.SMALL : SNAP_POINT.XX_SMALL}
         ref={editNickNameSheetRef}
         isVisible={showEditSheet}
       >

@@ -67,7 +67,7 @@ const IPayIdRenewalSheet: React.FC = () => {
       if (apiResponse) {
         setOTPRef(apiResponse?.response?.otpRef);
         setRenewId(true);
-        setCustomSnapPoints(['95%', '95%']);
+        setCustomSnapPoints(['99%', '99%']);
       }
     }
   };

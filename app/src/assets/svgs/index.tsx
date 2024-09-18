@@ -38,10 +38,12 @@ import RefreshIcon from './refresh.svg';
 import Send2Icon from './send-2.svg';
 import ShoppingCartIcon from './shopping-cart.svg';
 import TrashIcon from './trash.svg';
+import DottedRefresh from './refresh-dotted.svg';
 
 export {
   AlimapayLogo,
   Alinma,
+  DottedRefresh,
   AlinmaLogo,
   ArrangeSquare2,
   ArrowSquareRightIcon,

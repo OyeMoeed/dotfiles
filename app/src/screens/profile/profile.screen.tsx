@@ -69,7 +69,7 @@ const Profile = () => {
 
   const renderSuccessToast = () => {
     showToast({
-      title: t('COMMON.CHANGES_SAVED_SUCCESSFULLY'),
+      title: t('COMMON.KYC_CHANGE'),
       toastType: ToastTypes.INFORMATION,
       leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
     });
