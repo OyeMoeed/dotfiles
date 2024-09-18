@@ -21,6 +21,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
 
+import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
@@ -58,39 +59,39 @@ const MoiPaymentScreen: React.FC = () => {
   );
 
   useEffect(() => {
-    const fetchFields = async () => {
-      const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
-      if (response) {
-        const fetchedFields = response.response.dynamicFields;
-
-        const updatedFields = [
-          {
-            index: MoiPaymentFormFields.SERVICE_PROVIDER,
-            integrationTagName: 'BeneficiaryId.ServiceProvider',
-            label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
-            lovList: moiServiceProvider,
-            type: 'LIST_OF_VALUE',
-            dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
-          },
-          {
-            index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
-            label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
-            integrationTagName: 'BeneficiaryId.ServiceType',
-            lovList: [],
-            type: 'LIST_OF_VALUE',
-            disable: true,
-            dependsOn: MoiPaymentFormFields.SERVICE_TYPE, //MoiPaymentFormFields.SERVICE_PROVIDER,
-          },
-
-          ...fetchedFields, // Spread the existing dynamic fields here
-        ];
-
-        setFields(updatedFields);
-      }
-    };
     onGetBillers();
-    fetchFields();
-  }, [selectedBiller, selectedServiceType]);
+  }, []);
+
+  const fetchFields = async () => {
+    const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
+    if (response) {
+      const fetchedFields = response.response.dynamicFields;
+
+      const updatedFields = [
+        {
+          index: MoiPaymentFormFields.SERVICE_PROVIDER,
+          integrationTagName: 'BeneficiaryId.ServiceProvider',
+          label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+          lovList: moiServiceProvider,
+          type: 'LIST_OF_VALUE',
+          dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
+        },
+        {
+          index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
+          label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+          integrationTagName: 'BeneficiaryId.ServiceType',
+          lovList: [],
+          type: 'LIST_OF_VALUE',
+          disable: true,
+          dependsOn: MoiPaymentFormFields.SERVICE_TYPE, //MoiPaymentFormFields.SERVICE_PROVIDER,
+        },
+
+        ...fetchedFields, // Spread the existing dynamic fields here
+      ];
+
+      setFields(updatedFields);
+    }
+  };
 
   useEffect(() => {}, []);
   const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
@@ -106,13 +107,34 @@ const MoiPaymentScreen: React.FC = () => {
 
     const apiResponse = await getBillersService(payload);
     if (apiResponse.successfulResponse) {
-      setMoiServiceProvider(
-        apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
-          ...billerItem,
-          code: billerItem.billerId,
-          desc: billerItem.billerDesc,
-        })),
-      );
+      const serviceProvider = apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
+        ...billerItem,
+        code: billerItem.billerId,
+        desc: billerItem.billerDesc,
+      }));
+
+      setMoiServiceProvider(serviceProvider);
+
+      const updatedFields = [
+        {
+          index: MoiPaymentFormFields.SERVICE_PROVIDER,
+          integrationTagName: 'BeneficiaryId.ServiceProvider',
+          label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+          lovList: serviceProvider,
+          type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
+          dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
+        },
+        {
+          index: MoiPaymentFormFields.SERVICE_TYPE, 
+          label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+          integrationTagName: 'BeneficiaryId.ServiceType',
+          lovList: [],
+          type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
+          disable: true,
+          dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
+        },
+      ];
+      setFields(updatedFields);
     }
   };
   const onGetBillersServices = async (billerID?: string) => {
