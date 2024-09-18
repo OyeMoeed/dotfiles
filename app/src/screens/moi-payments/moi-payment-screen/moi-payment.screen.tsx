@@ -1,14 +1,15 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
   IPayContentNotFound,
   IPayHeader,
   IPayListView,
-  IPayMoiPaymentDetailForm,
   IPayNoResult,
   IPayTextInput,
 } from '@app/components/molecules';
+import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
+import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -26,7 +27,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import * as Yup from 'yup';
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
@@ -56,16 +56,16 @@ const MoiPaymentScreen: React.FC = () => {
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
     getValidationSchemas(localizationText);
 
-  const validationSchema = Yup.object().shape({
-    serviceProvider,
-    serviceType,
-    idType,
-    myIdCheck,
-    duration,
-    beneficiaryId,
-    myIdInput,
-    myId,
-  });
+  // const validationSchema = Yup.object().shape({
+  //   serviceProvider,
+  //   serviceType,
+  //   idType,
+  //   myIdCheck,
+  //   duration,
+  //   beneficiaryId,
+  //   myIdInput,
+  //   myId,
+  // });
 
   const setFormSheetData = (data: { id: number; text: string }[], snpaPoints: string[]) => {
     setBottomSheetData(data);
@@ -149,29 +149,46 @@ const MoiPaymentScreen: React.FC = () => {
     }
   };
 
+  const updatedFields = [
+    {
+      index: MoiPaymentFormFields.SERVICE_PROVIDER,
+      integrationTagName: 'BeneficiaryId.OfficialIdType',
+      lOVType: '315',
+      label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+      lovList: [],
+      maxWidth: 32,
+      minWidth: 1,
+      orderIndex: '2',
+      required: true,
+      requiredInPaymentOrRefund: 'PAYMENT',
+      type: 'LIST_OF_VALUE',
+      value: '1',
+    },
+    {
+      index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
+      label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+      integrationTagName: 'BeneficiaryId.OfficialIdType',
+      lOVType: '315',
+      lovList: [],
+      maxWidth: 32,
+      minWidth: 1,
+      orderIndex: '2',
+      required: true,
+      requiredInPaymentOrRefund: 'PAYMENT',
+      type: 'LIST_OF_VALUE',
+      value: '1',
+    },
+
+    ...fields, // Spread the existing dynamic fields here
+  ];
+
+  //dynamic form
+  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(updatedFields);
+
   return (
-    <IPayFormProvider<MoiFormFormValues>
-      validationSchema={validationSchema}
-      defaultValues={{
-        serviceProvider: '',
-        serviceType: '',
-        idType: '',
-        duration: '',
-        beneficiaryId: '',
-        myIdCheck: '',
-        myIdInput: '',
-        myId: '',
-      }}
-    >
-      {({ setValue, getValues, control, watch }) => {
+    <IPayFormProvider<MoiFormFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
+      {({ setValue, getValues, control, watch, errors, handleSubmit }) => {
         const myIdChecked = watch(MoiPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
-        const checkBtnDisabled = () => {
-          setBtnEnabled(() =>
-            Object.keys(MoiPaymentFormFields)
-              .filter((key) => key !== 'MY_ID_CHECK' && key !== 'BENEFICIARY_ID')
-              .some((key) => !getValues(MoiPaymentFormFields[key])),
-          );
-        };
 
         const onSelectValue = (item: { id: number; text: string }) => {
           const { text } = item;
@@ -191,27 +208,12 @@ const MoiPaymentScreen: React.FC = () => {
             default:
               break;
           }
-          checkBtnDisabled();
+
           setSearch('');
           selectSheeRef.current.close();
         };
 
-        const onCheckboxAction = () => {
-          const currentCheck = !getValues(MoiPaymentFormFields.MY_ID_CHECK);
-
-          /// TODO will change this
-          if (currentCheck) {
-            setValue(MoiPaymentFormFields.MY_ID, myBeneficiaryId); // TODO Set MY_ID if checkbox is checked
-          } else {
-            setValue(MoiPaymentFormFields.MY_ID, ''); // Clear MY_ID if checkbox is unchecked
-          }
-          setValue(MoiPaymentFormFields.MY_ID_CHECK, currentCheck); // Toggle the checkbox value
-          checkBtnDisabled();
-          setErrorMessage('');
-        };
-
         const getSelectedValue = () => {
-          checkBtnDisabled();
           switch (sheetType) {
             case MoiPaymentType.SERVICE_PROVIDER:
               return getValues(MoiPaymentFormFields.SERVICE_PROVIDER);
@@ -222,24 +224,6 @@ const MoiPaymentScreen: React.FC = () => {
             default:
               return getValues(MoiPaymentFormFields.DURATION);
           }
-        };
-
-        const clearBeneficiaryFelid = () => {
-          setErrorMessage('');
-          if (getValues(MoiPaymentFormFields.MY_ID).length > 0) {
-            setValue(MoiPaymentFormFields.MY_ID, '');
-          }
-          checkBtnDisabled();
-        };
-
-        const onChangeText = (text: string) => {
-          setBeneficiaryID(text);
-          if (text.length > 0) {
-            setBtnEnabled(false);
-          } else {
-            setBtnEnabled(true);
-          }
-          setErrorMessage('');
         };
 
         const getMoiBillData = () => {
@@ -281,7 +265,10 @@ const MoiPaymentScreen: React.FC = () => {
           return data;
         };
 
-        const onSubmit = () => {
+        const onSubmit = (data: any) => {
+          const originalData = revertFlatKeys(data);
+          console.log('originalData', originalData);
+
           const moiBillData = getMoiBillData();
           if (selectedTab === MoiPaymentTypes.REFUND) {
             navigate(ScreenNames.MOI_PAYMENT_REFUND, {
@@ -307,29 +294,20 @@ const MoiPaymentScreen: React.FC = () => {
                   <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
 
                   <IPayView style={styles.contentContainer}>
-                    <IPayMoiPaymentDetailForm
-                      onServiceProviderAction={() => onOpenSheet(MoiPaymentType.SERVICE_PROVIDER)}
-                      onServiceTypeAction={() => onOpenSheet(MoiPaymentType.SERVICE_TYPE)}
-                      onCheckboxAction={onCheckboxAction}
-                      onBeneficiaryIdAction={clearBeneficiaryFelid}
-                      onIdTypeAction={() => onOpenSheet(MoiPaymentType.ID_TYPE)}
-                      onDurationAction={() => onOpenSheet(MoiPaymentType.DURATION)}
-                      isServiceProviderValue={!!watch(MoiPaymentFormFields.SERVICE_PROVIDER)}
-                      isServiceTypeValue={!!watch(MoiPaymentFormFields.SERVICE_TYPE)}
-                      myIdCheck={myIdChecked}
-                      control={control}
-                      onChangeText={onChangeText}
-                      errorMessage={errorMessage}
-                      fields={fields}
-                    />
+                    <IPayView style={styles.dynamicFieldContainer}>
+                      <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+
+                      <DynamicFormComponent errors={errors} control={control} fields={updatedFields} />
+                    </IPayView>
+
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
                       btnType="primary"
-                      onPress={onSubmit}
+                      onPress={handleSubmit(onSubmit)}
                       btnStyle={styles.inquiryBtn}
                       large
                       btnIconsDisabled
-                      disabled={isBtnEnabled}
+                      // disabled={isBtnEnabled}
                     />
                   </IPayView>
                 </IPayView>
