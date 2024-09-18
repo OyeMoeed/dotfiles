@@ -18,11 +18,12 @@ import getBillersService from '@app/network/services/bills-management/get-biller
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+
 import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
-import MoiFormFormValues from './moi-payment.interface';
+import { useWatch } from 'react-hook-form';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
@@ -62,38 +63,6 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillers();
   }, []);
 
-  const fetchFields = async () => {
-    const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
-    if (response) {
-      const fetchedFields = response.response.dynamicFields;
-
-      const updatedFields = [
-        {
-          index: MoiPaymentFormFields.SERVICE_PROVIDER,
-          integrationTagName: 'BeneficiaryId.ServiceProvider',
-          label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
-          lovList: moiServiceProvider,
-          type: 'LIST_OF_VALUE',
-          dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
-        },
-        {
-          index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
-          label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
-          integrationTagName: 'BeneficiaryId.ServiceType',
-          lovList: [],
-          type: 'LIST_OF_VALUE',
-          disable: true,
-          dependsOn: MoiPaymentFormFields.SERVICE_TYPE, //MoiPaymentFormFields.SERVICE_PROVIDER,
-        },
-
-        ...fetchedFields, // Spread the existing dynamic fields here
-      ];
-
-      setFields(updatedFields);
-    }
-  };
-
-  useEffect(() => {}, []);
   const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
 
   const onGetBillers = async () => {
@@ -125,7 +94,7 @@ const MoiPaymentScreen: React.FC = () => {
           dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
         },
         {
-          index: MoiPaymentFormFields.SERVICE_TYPE, 
+          index: MoiPaymentFormFields.SERVICE_TYPE,
           label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
           integrationTagName: 'BeneficiaryId.ServiceType',
           lovList: [],
@@ -155,40 +124,61 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillersServices(selectedBiller);
   }, [selectedBiller]);
 
+  const fetchFields = async () => {
+    const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
+    if (response) {
+      const fetchedFields = response.response.dynamicFields;
+
+      const updatedFields = [...fields, ...fetchedFields];
+
+      setFields(updatedFields);
+    }
+  };
+
+  const onSubmit = (data: any) => {
+    const originalData = revertFlatKeys(data);
+    if (selectedTab === MoiPaymentTypes.REFUND) {
+      navigate(ScreenNames.MOI_PAYMENT_REFUND);
+    } else {
+      navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION);
+    }
+  };
+
+  const handleChange = async (triggerFieldIndex: string, selectedValue: string) => {
+    const dependentField = fields?.find((f) => f.index === triggerFieldIndex);
+
+    if (dependentField) {
+      const serviceList = await onGetBillersServices(selectedValue);
+
+      const updatedFields = fields.map((field) => {
+        if (field.index === dependentField.index) {
+          return {
+            ...field,
+            lovList: serviceList,
+            disable: false,
+          };
+        }
+        return field;
+      });
+
+      setFields(updatedFields);
+    }
+  };
   return (
-    <IPayFormProvider<MoiFormFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
-      {({ control, errors, handleSubmit }) => {
-        const handleChange = async (triggerFieldIndex: string, selectedValue: string) => {
-          // Find the dependent field
-          const dependentField = fields.find((f) => f.index === triggerFieldIndex);
+    <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
+      {({ control, formState: { errors }, handleSubmit, getValues }) => {
+        const serviceProviderValue = useWatch({ control, name: MoiPaymentFormFields.SERVICE_PROVIDER });
+        const serviceTypeValue = useWatch({ control, name: MoiPaymentFormFields.SERVICE_TYPE });
 
-          if (dependentField) {
-            const serviceList = await onGetBillersServices(selectedValue);
+        useEffect(() => {
+          handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
+        }, [serviceProviderValue]);
 
-            const updatedFields = fields.map((field) => {
-              if (field.index === dependentField.index) {
-                // Update the dependent field's lovList and enable it
-                return {
-                  ...field,
-                  lovList: serviceList,
-                  disable: false,
-                };
-              }
-              return field;
-            });
-
-            setFields(updatedFields);
+        useEffect(() => {
+          if (serviceTypeValue) {
+            fetchFields();
           }
-        };
-
-        const onSubmit = (data: any) => {
-          const originalData = revertFlatKeys(data);
-          if (selectedTab === MoiPaymentTypes.REFUND) {
-            navigate(ScreenNames.MOI_PAYMENT_REFUND);
-          } else {
-            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION);
-          }
-        };
+        }, [serviceTypeValue]);
 
         return (
           <>
@@ -206,12 +196,7 @@ const MoiPaymentScreen: React.FC = () => {
                 <IPayView style={styles.contentContainer}>
                   <IPayView style={styles.dynamicFieldContainer}>
                     <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-                    <DynamicFormComponent
-                      errors={errors}
-                      control={control}
-                      fields={fields}
-                      handleChange={handleChange}
-                    />
+                    <DynamicFormComponent errors={errors} control={control} fields={fields} />
                   </IPayView>
 
                   <IPayButton
