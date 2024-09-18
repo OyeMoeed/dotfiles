@@ -87,7 +87,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     // when on press copy icon this method will trigger, it will copy the number and render taost message
     const onPressCopyIcon = (refNo: string) => {
       copyText(refNo);
-      renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
+      renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
     };
 
     // To get the tile text for list view data of a trnasaction

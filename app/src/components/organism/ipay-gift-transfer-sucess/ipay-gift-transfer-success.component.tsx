@@ -43,8 +43,8 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
 
   const renderToast = () => {
     showToast({
-      title: t('TOP_UP.COPIED'),
-      subTitle: t('TOP_UP.REF_NUMBER_COPIED'),
+      title: 'TOP_UP.COPIED',
+      subTitle: 'TOP_UP.REF_NUMBER_COPIED',
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,

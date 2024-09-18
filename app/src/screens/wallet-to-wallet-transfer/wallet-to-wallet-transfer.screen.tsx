@@ -166,7 +166,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const renderToast = () => {
     showToast({
-      title: t('WALLET_TO_WALLET.CONTACT_LIMIT'),
+      title: 'WALLET_TO_WALLET.CONTACT_LIMIT',
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,

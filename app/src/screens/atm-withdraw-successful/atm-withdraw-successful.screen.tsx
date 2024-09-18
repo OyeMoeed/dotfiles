@@ -103,6 +103,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
           headingText="ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY"
           subHeadingText={`${route?.params?.amount} ${t('COMMON.SAR')}`}
           subHeadingTextStyle={styles.subHeadingTextStyle}
+          shouldTranslateSubHeadingText={false}
         />
         <IPayView style={styles.dataView}>
           <IPayFlatlist

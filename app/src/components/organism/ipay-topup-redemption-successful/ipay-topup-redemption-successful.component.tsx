@@ -44,8 +44,8 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
   const renderToast = () => {
     showToast({
-      title: t('TOP_UP.COPIED'),
-      subTitle: t('TOP_UP.REF_NUMBER_COPIED'),
+      title: 'TOP_UP.COPIED',
+      subTitle: 'TOP_UP.REF_NUMBER_COPIED',
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
     });
@@ -86,12 +86,12 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
 
   const successDetail = [
     {
-      title: t('TOP_UP.TOPUP_TYPE'),
+      title: 'TOP_UP.TOPUP_TYPE',
       value: t('TOP_UP.AKHTAR_POINT'),
       icon: icons.akhtr_pay,
     },
     {
-      title: t('TOP_UP.REF_NUMBER'),
+      title: 'TOP_UP.REF_NUMBER',
       value: params?.referenceNumber,
       icon: icons.copy,
       pressIcon: () => {
@@ -100,11 +100,11 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
       },
     },
     {
-      title: t('TOP_UP.TOPUP_DATE'),
+      title: 'TOP_UP.TOPUP_DATE',
       value: formatDateAndTime(new Date(params?.date as string), dateTimeFormat.TimeAndDate),
     },
     {
-      title: t('TOP_UP.POINTS_REDEEMED'),
+      title: 'TOP_UP.POINTS_REDEEMED',
       value: `${params?.redeemPoints} ${t('COMMON.POINTS')}`,
     },
   ];
@@ -183,6 +183,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                           text={value}
                           style={icon && styles.detailText}
                           color={colors.primary.primary800}
+                          shouldTranslate={false}
                         />
                         {icon && (
                           <IPayPressable onPress={pressIcon}>

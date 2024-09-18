@@ -136,7 +136,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
         const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
 
         renderToast({
-          title: t('SADAD.BILL_HAS_BEEN_DELETED'),
+          title: 'SADAD.BILL_HAS_BEEN_DELETED',
           subTitle: billToDelete?.billDesc,
           toastType: ToastTypes.SUCCESS,
         });
