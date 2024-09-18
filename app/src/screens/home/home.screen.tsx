@@ -14,8 +14,12 @@ import getAktharPoints from '@app/network/services/cards-management/mazaya-topup
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import {
+  CardListItem,
+  CardsProp,
+  TransactionsProp,
+} from '@app/network/services/core/transaction/transaction.interface';
+import { getCards, getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
@@ -28,6 +32,8 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
+import { CardStatusNumber, CardTypes } from '@app/utilities';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -43,7 +49,7 @@ const Home: React.FC = () => {
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
-
+  const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
@@ -148,6 +154,63 @@ const Home: React.FC = () => {
     rearrangeRef.current.close();
   };
 
+  const getCardDesc = (cardType: CardTypes) => {
+    switch (cardType) {
+      case CardTypes.PLATINUM:
+        return localizationText.CARDS.PLATINUM_CASHBACK_PREPAID_CARD;
+
+      case CardTypes.SIGNATURE:
+        return localizationText.CARDS.SIGNATURE_PREPAID_CARD;
+
+      case CardTypes.CLASSIC:
+        return localizationText.CARDS.CLASSIC_DEBIT_CARD;
+
+      default:
+        return '';
+    }
+  };
+
+  const mapCardData = (cards: CardListItem[]) => {
+    let mappedCards = [];
+    mappedCards = cards.map((card: any) => ({
+      name: card?.linkedName?.embossingName,
+      cardType: card?.cardTypeId,
+      cardHeaderText: getCardDesc(card?.cardTypeId),
+      expired: card?.reissueDue,
+      frozen: card.cardStatus === CardStatusNumber.Freezed,
+      suspended: false,
+      maskedCardNumber: card?.maskedCardNumber,
+      cardNumber: card.lastDigits,
+      creditCardDetails: {
+        availableBalance: '5200.40',
+      },
+      totalCashbackAmt: card.totalCashbackAmt,
+      ...card,
+    }));
+    return mappedCards;
+  };
+
+  const getCardsData = async () => {
+    const payload: CardsProp = {
+      walletNumber,
+      hideError: true,
+      hideSpinner: true,
+    };
+    const apiResponse: any = await getCards(payload);
+
+    if (apiResponse) {
+      const availableCardsForSearch = apiResponse?.response?.cards.filter(
+        (card: any) =>
+          card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
+          card.cardStatus === CardStatusNumber.Freezed,
+      );
+      if (availableCardsForSearch?.length) {
+        setCardsData(mapCardData(availableCardsForSearch));
+      }
+    }
+  };
+
   useFocusEffect(
     useCallback(() => {
       if (ref.current) {
@@ -181,13 +244,13 @@ const Home: React.FC = () => {
       dispatch(setWalletInfo(apiResponse?.response));
     }
   };
-
   useEffect(() => {
     if (isFocused) {
       if (appData.allowEyeIconFunctionality) {
         dispatch(setAppData({ hideBalance: true }));
       }
       getUpadatedWalletData();
+      getCardsData();
     }
   }, [isFocused, walletNumber]);
 
@@ -223,6 +286,7 @@ const Home: React.FC = () => {
               offersData={offersData}
               openBottomSheet={openBottomSheet}
               openProfileBottomSheet={openProfileBottomSheet}
+              cards={cardsData}
             />
           </IPayCustomSheet>
         )}

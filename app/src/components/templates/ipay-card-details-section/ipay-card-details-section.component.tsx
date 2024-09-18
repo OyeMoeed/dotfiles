@@ -318,7 +318,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           </IPayFootnoteText>
         </IPayView>
         <IPayButton
-          onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
+          onPress={() =>
+            navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, cards, isShowAmount: false })
+          }
           btnType={buttonVariants.LINK_BUTTON}
           hasRightIcon
           rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
