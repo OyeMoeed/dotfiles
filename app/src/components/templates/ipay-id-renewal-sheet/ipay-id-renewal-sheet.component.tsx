@@ -212,7 +212,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             <IPayTitle2Text style={styles.titleTextStyle}>
               {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
-            <IPayCaption1Text style={styles.captionTextStyle}>{formattedSubtitle}</IPayCaption1Text>
+            <IPayCaption1Text style={styles.captionTextStyle} text={formattedSubtitle} />
             <IPayButton
               large
               onPress={handleRenewalId}

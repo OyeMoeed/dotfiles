@@ -123,20 +123,20 @@ const CardOptionsScreen: React.FC = () => {
       case ApiResponseStatusType.SUCCESS:
         setIsOnlinePurchase((prev) => !prev);
         renderToast(
-          isOn ? t('CARD_OPTIONS.ONLINE_PURCHASE_ENABLED') : t('CARD_OPTIONS.ONLINE_PURCHASE_DISABLED'),
+          isOn ? 'CARD_OPTIONS.ONLINE_PURCHASE_ENABLED' : 'CARD_OPTIONS.ONLINE_PURCHASE_DISABLED',
           true,
           icons.receipt_item,
           false,
         );
         break;
       case apiResponse?.apiResponseNotOk:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
       case ApiResponseStatusType.FAILURE:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
       default:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
     }
   };
@@ -159,7 +159,7 @@ const CardOptionsScreen: React.FC = () => {
 
     setIsATMWithDraw(isOn);
     renderToast(
-      isOn ? t('CARD_OPTIONS.ATM_WITHDRAW_ENABLED') : t('CARD_OPTIONS.ATM_WITHDRAW_DISABLED'),
+      isOn ? 'CARD_OPTIONS.ATM_WITHDRAW_ENABLED' : 'CARD_OPTIONS.ATM_WITHDRAW_DISABLED',
       true,
       icons.moneys,
       false,
@@ -185,16 +185,16 @@ const CardOptionsScreen: React.FC = () => {
     switch (apiResponse?.status?.type) {
       case ApiResponseStatusType.SUCCESS:
         navigate(ScreenNames.CARDS);
-        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
+        renderToast('CARD_OPTIONS.CARD_HAS_BEEN_DELETED', true, icons.trash, true);
         break;
       case apiResponse?.apiResponseNotOk:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
       case ApiResponseStatusType.FAILURE:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
       default:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
     }
   };
@@ -249,17 +249,17 @@ const CardOptionsScreen: React.FC = () => {
           navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
           break;
         case ApiResponseStatusType.FAILURE:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
           break;
         default:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
           break;
       }
     } catch (error: any) {
-      renderToast(t('ERROR.SOMETHING_WENT_WRONG'), false, icons.warning, false);
+      renderToast('ERROR.SOMETHING_WENT_WRONG', false, icons.warning, false);
     }
   };
 
@@ -362,9 +362,7 @@ const CardOptionsScreen: React.FC = () => {
             <IPayCardOptionsIPayListToggle
               leftIcon={icons.receipt_item}
               title={
-                isOnlinePurchase
-                  ? t('CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE')
-                  : t('CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE')
+                isOnlinePurchase ? 'CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE' : 'CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE'
               }
               onToggleChange={toggleOnlinePurchase}
               toggleState={isOnlinePurchase}

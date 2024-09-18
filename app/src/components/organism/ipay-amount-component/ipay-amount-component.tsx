@@ -269,7 +269,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               large
               btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
-              btnText={currentState === TopUpStates.SAVED_CARD ? t('TOP_UP.PAY ') : t('COMMON.NEXT)')}
+              btnText={currentState === TopUpStates.SAVED_CARD ? 'TOP_UP.PAY ' : 'COMMON.NEXT)'}
               onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
               disabled={!isTopUpNextEnable}
             />
