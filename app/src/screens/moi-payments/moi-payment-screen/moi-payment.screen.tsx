@@ -167,11 +167,13 @@ const MoiPaymentScreen: React.FC = () => {
   return (
     <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
       {({ control, formState: { errors }, handleSubmit, getValues }) => {
-        const serviceProviderValue = useWatch({ control, name: MoiPaymentFormFields.SERVICE_PROVIDER });
-        const serviceTypeValue = useWatch({ control, name: MoiPaymentFormFields.SERVICE_TYPE });
+        const {
+          [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
+          [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
+        } = useWatch({ control });
 
         useEffect(() => {
-          handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
+          if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
         }, [serviceProviderValue]);
 
         useEffect(() => {
