@@ -108,8 +108,8 @@ const useMobileAndIqamaVerification = () => {
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: toastMsg || t('ERROR.API_ERROR_RESPONSE'),
-      subTitle: t('CARDS.VERIFY_CODE_ACCURACY'),
+      title: toastMsg || 'ERROR.API_ERROR_RESPONSE',
+      subTitle: 'CARDS.VERIFY_CODE_ACCURACY',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

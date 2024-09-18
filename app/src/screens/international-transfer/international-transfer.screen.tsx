@@ -99,7 +99,7 @@ const InternationalTransferScreen: React.FC = () => {
           setAEBeneficiaryData(apiResponse?.response?.beneficiaries);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          setAPIError('ERROR.API_ERROR_RESPONSE');
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -108,8 +108,8 @@ const InternationalTransferScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -121,7 +121,7 @@ const InternationalTransferScreen: React.FC = () => {
           setWUBeneficiaryData(apiResponse?.response?.beneficiaries);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          setAPIError('ERROR.API_ERROR_RESPONSE');
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -130,8 +130,8 @@ const InternationalTransferScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -187,7 +187,7 @@ const InternationalTransferScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           showToast({
-            title: t('BENEFICIARY_OPTIONS.BENEFICIARY_DELETED'),
+            title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
             subTitle: `${selectedBeneficiary.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
             containerStyle: styles.toast,
             isShowRightIcon: false,
@@ -196,7 +196,7 @@ const InternationalTransferScreen: React.FC = () => {
           });
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          setAPIError('ERROR.API_ERROR_RESPONSE');
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -205,8 +205,8 @@ const InternationalTransferScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
     setDeleteBeneficiary(false);
   };
@@ -216,8 +216,8 @@ const InternationalTransferScreen: React.FC = () => {
     const country = countryCode ? countryCode.toUpperCase() : '';
     const btnText =
       beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
-        ? t('INTERNATIONAL_TRANSFER.TRANSFER')
-        : t('INTERNATIONAL_TRANSFER.ACTIVATE');
+        ? 'INTERNATIONAL_TRANSFER.TRANSFER'
+        : 'INTERNATIONAL_TRANSFER.ACTIVATE';
 
     const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
       setSelectedBeneficiary(beneficiary);
@@ -287,12 +287,12 @@ const InternationalTransferScreen: React.FC = () => {
     filteredBeneficiaryData?.filter((item) => item?.beneficiaryStatus === status);
 
   const renderListHeader = (isActive: string, count: number, totalCount: number) => {
-    const statusText = isActive === InternationalBeneficiaryStatus.ACTIVE ? t('COMMON.ACTIVE') : t('COMMON.INACTIVE');
+    const statusText = isActive === InternationalBeneficiaryStatus.ACTIVE ? 'COMMON.ACTIVE' : 'COMMON.INACTIVE';
 
     return totalCount ? (
       <IPayView style={styles.listHeader}>
         <IPayFootnoteText text={statusText} />
-        <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} />
+        <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} shouldTranslate={false} />
       </IPayView>
     ) : (
       <IPayView />
@@ -379,8 +379,8 @@ const InternationalTransferScreen: React.FC = () => {
           return '';
       }
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
       return '';
     }
   };
@@ -416,7 +416,7 @@ const InternationalTransferScreen: React.FC = () => {
   };
 
   const onPressCall = (value: string) => {
-    openPhoneNumber({ phoneNumber: value, colors, showToast, translate: t });
+    openPhoneNumber({ phoneNumber: value, colors, showToast });
     hideContactUs();
   };
 
@@ -439,8 +439,8 @@ const InternationalTransferScreen: React.FC = () => {
 
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-      ? t('ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS')
-      : t('ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE');
+      ? 'ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS'
+      : 'ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE';
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -622,17 +622,17 @@ const InternationalTransferScreen: React.FC = () => {
         icon={<IPayIcon icon={icons.TRASH} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: t('COMMON.CANCEL'),
+          text: 'COMMON.CANCEL',
           onPress: onDeleteCancel,
         }}
         secondaryAction={{
-          text: t('COMMON.DELETE'),
+          text: 'COMMON.DELETE',
           onPress: handleDeleteBeneficiary,
         }}
       />
       <IPayActionSheet
         ref={editBeneficiaryRef}
-        options={[t('COMMON.CANCEL'), t('BENEFICIARY_OPTIONS.REVIEW_AND_EDIT'), t('BENEFICIARY_OPTIONS.DELETE')]}
+        options={['COMMON.CANCEL', 'BENEFICIARY_OPTIONS.REVIEW_AND_EDIT', 'BENEFICIARY_OPTIONS.DELETE']}
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}

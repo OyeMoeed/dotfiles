@@ -290,7 +290,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
                   />
                   <IPaySubHeadlineText
                     regular
-                    text={label === 'feeAmount' || label === 'vatAmount' ? `${value} SAR` : value}
+                    text={label === 'feeAmount' || label === 'vatAmount' ? `${value} ${t('COMMON.SAR')}` : value}
                     color={colors.primary.primary800}
                   />
                 </IPayView>

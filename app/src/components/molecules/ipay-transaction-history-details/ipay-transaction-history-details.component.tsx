@@ -43,7 +43,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     const { showToast } = useToastContext();
     const [transactionDataArray, setTransactionDataArray] = useState<{ key: string; value: any }[]>([]);
     const transactionTypeCheck = transactionData?.totalDebitAmount;
-    const transactionAmount = `${transactionTypeCheck ? '+' : '-'}${transactionData?.amount} ${senderCurrency}`;
+    const transactionAmount = `${transactionTypeCheck ? '+' : '-'}${transactionData?.amount} ${t(senderCurrency || '')}`;
 
     const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
       showToast(
@@ -87,7 +87,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     // when on press copy icon this method will trigger, it will copy the number and render taost message
     const onPressCopyIcon = (refNo: string) => {
       copyText(refNo);
-      renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
+      renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
     };
 
     // To get the tile text for list view data of a trnasaction

@@ -17,7 +17,7 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
 
   const renderToast = (value: string) => {
     showToast({
-      title: t('TOP_UP.COPIED'),
+      title: 'TOP_UP.COPIED',
       subTitle: value,
       containerStyle: styles.toast,
       isShowRightIcon: false,

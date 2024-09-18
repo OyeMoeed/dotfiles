@@ -202,7 +202,7 @@ const NotificationCenterScreen: React.FC = () => {
 
         case 'apiResponseNotOk':
           renderToast({
-            title: t('ERROR.API_ERROR_RESPONSE'),
+            title: 'ERROR.API_ERROR_RESPONSE',
             toastType: 'WARNING',
           });
           break;
@@ -215,7 +215,7 @@ const NotificationCenterScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
 
     return { data: [], hasMore: false };

@@ -42,7 +42,7 @@ const CardIssuanceConfirmationScreen = () => {
 
   const renderToast = () => {
     showToast({
-      title: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
+      title: 'COMMON.TERMS_AND_CONDITIONS_VALIDATION',
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
@@ -51,7 +51,7 @@ const CardIssuanceConfirmationScreen = () => {
   const checkAvailableBalance = (fees: number): boolean => {
     if (fees > +availableBalance) {
       showToast({
-        title: t('COMMON.INSUFFICIENT_BALANCE_COMMON'),
+        title: 'COMMON.INSUFFICIENT_BALANCE_COMMON',
         isShowRightIcon: false,
         leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       });
@@ -88,17 +88,17 @@ const CardIssuanceConfirmationScreen = () => {
   const listData = [
     {
       id: '1',
-      title: t('TOPUP_CONFIRMATION.HOLDERS_NAME'),
+      title: 'TOPUP_CONFIRMATION.HOLDERS_NAME',
       detailText: fullName,
     },
     {
       id: '2',
-      title: t('TOPUP_CONFIRMATION.CARD_TYPE'),
+      title: 'TOPUP_CONFIRMATION.CARD_TYPE',
       detailText: getCardTypeLabel(),
     },
     {
       id: '3',
-      title: t('TOPUP_CONFIRMATION.ISSUANCE_FEE'),
+      title: 'TOPUP_CONFIRMATION.ISSUANCE_FEE',
       detailText: `${getTotalFees()} ${t('COMMON.SAR')}`,
       style: styles.upperListContainer,
     },

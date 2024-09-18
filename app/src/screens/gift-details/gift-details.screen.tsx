@@ -64,13 +64,13 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
+    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
   const statusMapping = {
-    [GiftStatus.INITIATED]: t('SEND_GIFT.UNOPENED'),
-    [GiftStatus.EXECUTED]: t('SEND_GIFT.OPENED'),
-    [GiftStatus.FAILED]: t('SEND_GIFT.EXPIRED'),
+    [GiftStatus.INITIATED]: 'SEND_GIFT.UNOPENED',
+    [GiftStatus.EXECUTED]: 'SEND_GIFT.OPENED',
+    [GiftStatus.FAILED]: 'SEND_GIFT.EXPIRED',
   };
 
   const getTitleColor = (subTitle: string) => {

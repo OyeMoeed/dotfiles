@@ -102,8 +102,8 @@ const LocalTransferScreen: React.FC = () => {
         setBeneficiaryData(apiResponse?.response?.beneficiaries);
       }
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
     setIsLoadingData(false);
   };
@@ -154,7 +154,7 @@ const LocalTransferScreen: React.FC = () => {
 
   const showUpdateBeneficiaryToast = () => {
     showToast({
-      title: t('BENEFICIARY_OPTIONS.NAME_CHANGED'),
+      title: 'BENEFICIARY_OPTIONS.NAME_CHANGED',
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
@@ -177,7 +177,7 @@ const LocalTransferScreen: React.FC = () => {
       editNickNameSheetRef?.current?.close();
       getBeneficiariesData();
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
     setShowEditSheet(false);
   };
@@ -185,7 +185,7 @@ const LocalTransferScreen: React.FC = () => {
   const showDeleteBeneficiaryToast = () => {
     setDeleteBeneficiary(false);
     showToast({
-      title: t('BENEFICIARY_OPTIONS.BENEFICIARY_DELETED'),
+      title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
       isShowRightIcon: false,
       isShowLeftIcon: true,
@@ -219,8 +219,8 @@ const LocalTransferScreen: React.FC = () => {
               }}
               btnText={
                 beneficiaryStatus === BeneficiaryTypes.ACTIVE
-                  ? t('LOCAL_TRANSFER.TRANSFER')
-                  : t('BENEFICIARY_OPTIONS.ACTIVATE')
+                  ? 'LOCAL_TRANSFER.TRANSFER'
+                  : 'BENEFICIARY_OPTIONS.ACTIVATE'
               }
               btnType={buttonVariants.PRIMARY}
               small
@@ -342,8 +342,8 @@ const LocalTransferScreen: React.FC = () => {
           return null;
       }
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
       return null;
     }
   };
@@ -399,7 +399,7 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const onPressCall = (value: string) => {
-    openPhoneNumber({ phoneNumber: value, colors, showToast, translate: t });
+    openPhoneNumber({ phoneNumber: value, colors, showToast });
     hideContactUs();
   };
   const handleFinalAction = useCallback((index: number, value: string) => {
@@ -424,11 +424,11 @@ const LocalTransferScreen: React.FC = () => {
         getBeneficiariesData();
         showDeleteBeneficiaryToast();
       } else {
-        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
+        renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
     } catch (error: any) {
-      setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError('ERROR.SOMETHING_WENT_WRONG');
+      renderToast('ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -564,21 +564,17 @@ const LocalTransferScreen: React.FC = () => {
         icon={<IPayIcon icon={icons.TRASH} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: t('COMMON.CANCEL'),
+          text: 'COMMON.CANCEL',
           onPress: onDeleteCancel,
         }}
         secondaryAction={{
-          text: t('COMMON.DELETE'),
+          text: 'COMMON.DELETE',
           onPress: onDeleteBeneficiary,
         }}
       />
       <IPayActionSheet
         ref={editBeneficiaryRef}
-        options={[
-          t('COMMON.CANCEL'),
-          t('BENEFICIARY_OPTIONS.EDIT_NICK_NAME'),
-          t('BENEFICIARY_OPTIONS.DELETE_BENFICIARY'),
-        ]}
+        options={['COMMON.CANCEL', 'BENEFICIARY_OPTIONS.EDIT_NICK_NAME', 'BENEFICIARY_OPTIONS.DELETE_BENFICIARY']}
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}

@@ -13,7 +13,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { removeProfileImage } from '@app/network/services/core/update-wallet/update-wallet.service';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { useTranslation } from 'react-i18next';
 import profileStyles from './profile.style';
 
 interface UseChangeImageReturn {
@@ -24,7 +23,6 @@ interface UseChangeImageReturn {
 }
 
 const useChangeImage = (): UseChangeImageReturn => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
 
@@ -120,16 +118,16 @@ const useChangeImage = (): UseChangeImageReturn => {
     [handleImagePicker, handleCameraPicker, selectedImage],
   );
 
-  const walletOptions = [t('PROFILE.TAKE_PHOTO'), t('PROFILE.UPLOAD_PHOTO'), t('PROFILE.REMOVE'), t('COMMON.CANCEL')];
+  const walletOptions = ['PROFILE.TAKE_PHOTO', 'PROFILE.UPLOAD_PHOTO', 'PROFILE.REMOVE', 'COMMON.CANCEL'];
   const actionSheetOptions: IPayActionSheetProps = {
-    title: t('PROFILE.CHANGE_PICTURE'),
+    title: 'PROFILE.CHANGE_PICTURE',
     showIcon: true,
     customImage: <ProfileIcon />,
-    message: t('PROFILE.SELECT_OPTION'),
+    message: 'PROFILE.SELECT_OPTION',
     options:
       selectedImage || walletInfo.profileImage
         ? walletOptions
-        : [t('PROFILE.TAKE_PHOTO'), t('PROFILE.UPLOAD_PHOTO'), t('COMMON.CANCEL')],
+        : ['PROFILE.TAKE_PHOTO', 'PROFILE.UPLOAD_PHOTO', 'COMMON.CANCEL'],
     cancelButtonIndex: selectedImage || walletInfo.profileImage ? 3 : 2,
     showCancel: true,
     destructiveButtonIndex: selectedImage || walletInfo.profileImage ? 2 : undefined,
@@ -155,13 +153,13 @@ const useChangeImage = (): UseChangeImageReturn => {
         setAlertVisible(false);
       }}
       primaryAction={{
-        text: t('COMMON.CANCEL'),
+        text: 'COMMON.CANCEL',
         onPress: () => {
           setAlertVisible(false);
         },
       }}
       secondaryAction={{
-        text: t('PROFILE.REMOVE'),
+        text: 'PROFILE.REMOVE',
         onPress: handleRemoveImg,
       }}
       type={alertType.SIDE_BY_SIDE}

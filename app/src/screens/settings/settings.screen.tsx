@@ -19,7 +19,6 @@ import { LanguageCode, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
 import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
 import IPayResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
@@ -28,7 +27,6 @@ import settingStyles from './settings.styles';
 import useSettings from './use-settings.hook';
 
 const Settings: React.FC = () => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
@@ -72,7 +70,7 @@ const Settings: React.FC = () => {
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || t('PROFILE.PASSCODE_ERROR'),
+        title: title || 'PROFILE.PASSCODE_ERROR',
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -86,7 +84,7 @@ const Settings: React.FC = () => {
     // const newHideBalanceMode = !isHideBalanceMode;
     // setHideBalanceMode(newHideBalanceMode);
     renderToast({
-      title: allowEyeIconFunctionality ? t('CARDS.BALANCE_IS_VISIBLE') : t('CARDS.BALANCE_IS_HIDDEN'),
+      title: allowEyeIconFunctionality ? 'CARDS.BALANCE_IS_VISIBLE' : 'CARDS.BALANCE_IS_HIDDEN',
       toastType: ToastTypes.INFORMATION,
       icon: (
         <IPayIcon
@@ -115,21 +113,21 @@ const Settings: React.FC = () => {
       const apiResponse = await updateBiomatricStatus(payload, walletInfo.walletNumber);
       if (apiResponse.status.type === 'SUCCESS') {
         renderToast({
-          title: !biomatricToggle ? t('CARDS.BIOMETRIC_STATUS_UPDATED') : t('CARDS.BIOMETRIC_STATUS_DISABLED'),
+          title: !biomatricToggle ? 'CARDS.BIOMETRIC_STATUS_UPDATED' : 'CARDS.BIOMETRIC_STATUS_DISABLED',
           toastType: ToastTypes.INFORMATION,
           icon: <IPayIcon icon={icons.FACE_ID} size={24} color={colors.natural.natural0} />,
           displayTime: 1000,
         });
       } else {
         renderToast({
-          title: t('CARDS.BIOMERTIC_STATUS'),
-          subTitle: t('ERROR.API_ERROR_RESPONSE'),
+          title: 'CARDS.BIOMERTIC_STATUS',
+          subTitle: 'ERROR.API_ERROR_RESPONSE',
         });
       }
     } catch (error) {
       renderToast({
-        title: t('CARDS.BIOMERTIC_STATUS'),
-        subTitle: error?.message || t('ERROR.SOMETHING_WENT_WRONG'),
+        title: 'CARDS.BIOMERTIC_STATUS',
+        subTitle: error?.message || 'ERROR.SOMETHING_WENT_WRONG',
       });
     }
   };

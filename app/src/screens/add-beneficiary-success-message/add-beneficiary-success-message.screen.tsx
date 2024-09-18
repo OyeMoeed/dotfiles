@@ -78,7 +78,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   }, [currentOption]);
 
   const onPressCall = (value: string) => {
-    openPhoneNumber({ phoneNumber: value, colors, showToast, translate: t });
+    openPhoneNumber({ phoneNumber: value, colors, showToast });
   };
 
   const hideContactUs = () => {

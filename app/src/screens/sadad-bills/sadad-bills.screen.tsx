@@ -50,7 +50,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
-  const tabs = [t('SADAD.ACTIVE_BILLS'), t('SADAD.INACTIVE_BILLS')];
+  const tabs = ['SADAD.ACTIVE_BILLS', 'SADAD.INACTIVE_BILLS'];
 
   const getSelectedBillsCount = (billsData: BillsProps[]) => {
     const count = billsData.filter((bill) => bill.selected).length;
@@ -136,7 +136,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
         const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
 
         renderToast({
-          title: t('SADAD.BILL_HAS_BEEN_DELETED'),
+          title: 'SADAD.BILL_HAS_BEEN_DELETED',
           subTitle: billToDelete?.billDesc,
           toastType: ToastTypes.SUCCESS,
         });
@@ -160,7 +160,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
   const setEditBillSuccessToast = (billSubTitle: string) => {
     renderToast({
-      title: t('SADAD.INVOICE_UPDATED_SUCCESSFULLY'),
+      title: 'SADAD.INVOICE_UPDATED_SUCCESSFULLY',
       subTitle: billSubTitle,
       icon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
       toastType: ToastTypes.SUCCESS,
@@ -184,11 +184,11 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const deleteBillOptions = {
-    title: t('SADAD.DELETE_NEW_BILL'),
+    title: 'SADAD.DELETE_NEW_BILL',
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
-    message: t('SADAD.DELETE_BILL_WARNING_TEXT'),
-    options: [t('COMMON.DELETE'), t('COMMON.CANCEL')],
+    message: 'SADAD.DELETE_BILL_WARNING_TEXT',
+    options: ['COMMON.DELETE', 'COMMON.CANCEL'],
     cancelButtonIndex: 1,
     showCancel: true,
     destructiveButtonIndex: 0,
@@ -197,7 +197,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const editOrDeletedBillOptions = {
-    options: [t('PROFILE.EDIT'), t('COMMON.DELETE'), t('COMMON.CANCEL')],
+    options: ['PROFILE.EDIT', 'COMMON.DELETE', 'COMMON.CANCEL'],
     cancelButtonIndex: 2,
     showCancel: true,
     destructiveButtonIndex: 1,
@@ -207,11 +207,11 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const activeBillOptions = {
-    title: t('SADAD.ACTIVATE_BILL'),
+    title: 'SADAD.ACTIVATE_BILL',
     showIcon: true,
     customImage: <IPayIcon icon={icons.receipt_add} size={48} color={colors.primary.primary500} />,
-    message: t('SADAD.ACTIVATE_BILL_MESSAGE'),
-    options: [t('SADAD.ACTIVATE'), t('COMMON.CANCEL')],
+    message: 'SADAD.ACTIVATE_BILL_MESSAGE',
+    options: ['SADAD.ACTIVATE', 'COMMON.CANCEL'],
     cancelButtonIndex: 1,
     showCancel: true,
     onPress: handleActionSheetPress,

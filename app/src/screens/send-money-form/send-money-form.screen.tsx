@@ -201,7 +201,7 @@ const SendMoneyFormScreen: React.FC = () => {
 
   const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
   const removeFormOptions = {
-    title: t('SEND_MONEY_FORM.REMOVE'),
+    title: 'SEND_MONEY_FORM.REMOVE',
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
     message: t('SEND_MONEY_FORM.REMOVE_DETAIL'),

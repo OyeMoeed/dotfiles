@@ -8,7 +8,6 @@ interface OpenPhoneNumberProps {
   phoneNumber: string;
   colors: typeof themeColors;
   showToast: (props: ToastHookProps) => void;
-  translate: any;
 }
 
 /**
@@ -17,7 +16,7 @@ interface OpenPhoneNumberProps {
  * @param {string} phoneNumber - The phone number to call.
  * @return {Promise<void>} - A promise that resolves when the URL is handled or rejects with an error.
  */
-const openPhoneNumber = async ({ phoneNumber, colors, showToast, translate }: OpenPhoneNumberProps) => {
+const openPhoneNumber = async ({ phoneNumber, colors, showToast }: OpenPhoneNumberProps) => {
   const url = `tel:${phoneNumber}`;
 
   const renderToast = (title: string, subTitle?: string) => {
@@ -34,12 +33,12 @@ const openPhoneNumber = async ({ phoneNumber, colors, showToast, translate }: Op
     const supported = await Linking.canOpenURL(url);
 
     if (!supported) {
-      renderToast(translate('ERROR.PHONE_NUMBER_NOT_AVAILABE'));
+      renderToast('ERROR.PHONE_NUMBER_NOT_AVAILABE');
     } else {
       await Linking.openURL(url);
     }
   } catch (error) {
-    renderToast(translate('ERROR.FAILED_TO_OPEN_NUMBER'), error?.message);
+    renderToast('ERROR.FAILED_TO_OPEN_NUMBER', error?.message);
   }
 };
 

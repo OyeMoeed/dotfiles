@@ -65,7 +65,7 @@ const TransactionRefund: React.FC<TransactionRefundProps> = ({
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
+    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
   const getValueText = (value: string) => {

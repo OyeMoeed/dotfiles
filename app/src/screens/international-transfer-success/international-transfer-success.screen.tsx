@@ -49,7 +49,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
+    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
   // Function to check the condition dynamically

@@ -73,12 +73,12 @@ const HelpCenter: React.FC = () => {
         setAllFaqItems(itemsWithCategories);
         setFaqData(itemsWithCategories);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+        setAPIError('ERROR.API_ERROR_RESPONSE');
       } else {
         setAPIError(apiResponse?.error);
       }
     } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -150,8 +150,8 @@ const HelpCenter: React.FC = () => {
   };
 
   const contactList = [
-    { title: t('MENU.CALL_WITHIN_SA'), phone_number: insideSaPhone },
-    { title: t('MENU.CALL_OUTSIDE_SA'), phone_number: outsideSaPhone },
+    { title: 'MENU.CALL_WITHIN_SA', phone_number: insideSaPhone },
+    { title: 'MENU.CALL_OUTSIDE_SA', phone_number: outsideSaPhone },
   ];
 
   const openBottomSheet = () => {
