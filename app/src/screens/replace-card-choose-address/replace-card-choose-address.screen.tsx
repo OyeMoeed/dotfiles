@@ -20,7 +20,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { buttonVariants } from '@app/utilities';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
@@ -47,7 +46,6 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
   const { showToast } = useToastContext();
 
   const styles = replaceCardStyles(colors);
-  const { t } = useTranslation();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
 
@@ -71,8 +69,8 @@ const ReplaceCardChooseAddressScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: t('COMMON.TERMS_AND_CONDITIONS'),
-      subTitle: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
+      title: 'COMMON.TERMS_AND_CONDITIONS',
+      subTitle: 'COMMON.TERMS_AND_CONDITIONS_VALIDATION',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

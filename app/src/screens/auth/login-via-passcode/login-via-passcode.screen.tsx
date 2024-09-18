@@ -42,7 +42,6 @@ import { openPhoneNumber } from '@app/utilities';
 import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -69,7 +68,6 @@ const LoginViaPasscode: React.FC = () => {
     otp,
   } = useLogin();
   const dispatch = useTypedDispatch();
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
@@ -94,8 +92,8 @@ const LoginViaPasscode: React.FC = () => {
   const renderToast = (apiErrorValue: string) => {
     setPasscodeError(true);
     showToast({
-      title: t('COMMON.INCORRECT_CODE'),
-      subTitle: apiErrorValue || t('CARDS.VERIFY_CODE_ACCURACY'),
+      title: 'COMMON.INCORRECT_CODE',
+      subTitle: apiErrorValue || 'CARDS.VERIFY_CODE_ACCURACY',
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
@@ -255,10 +253,10 @@ const LoginViaPasscode: React.FC = () => {
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else {
-        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
+        renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
     } catch (error) {
-      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast('ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -364,7 +362,7 @@ const LoginViaPasscode: React.FC = () => {
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
   const onCall = (phoneNumber: string) => {
-    openPhoneNumber({ phoneNumber, colors, showToast, translate: t });
+    openPhoneNumber({ phoneNumber, colors, showToast });
   };
 
   return (

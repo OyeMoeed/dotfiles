@@ -61,7 +61,7 @@ const Profile = () => {
 
   const renderUploadSuccessToast = () => {
     showToast({
-      title: t('PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE'),
+      title: 'PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE',
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
     });
@@ -69,7 +69,7 @@ const Profile = () => {
 
   const renderSuccessToast = () => {
     showToast({
-      title: t('COMMON.KYC_CHANGE'),
+      title: 'COMMON.KYC_CHANGE',
       toastType: ToastTypes.INFORMATION,
       leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
     });
@@ -162,10 +162,10 @@ const Profile = () => {
     {
       key: CardKeys.IDENTITY_VERIFICATION,
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-      text: t('COMMON.INDENTITY_VERIFICATION'),
+      text: 'COMMON.INDENTITY_VERIFICATION',
       iconRight: isBasicTier ? icons.ARROW_RIGHT : undefined,
       button: {
-        text: t('COMMON.VERIFY'),
+        text: 'COMMON.VERIFY',
         iconColor: colors.primary.primary500,
         disabled: false,
         onPress: () => openNafathBottomSheet(),
@@ -174,12 +174,12 @@ const Profile = () => {
     {
       key: CardKeys.CUSTOMER_KNOWLEDGE_FORM,
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: t('PROFILE.CUSTOMER_KNOWLEDGE_FORM'),
+      text: 'PROFILE.CUSTOMER_KNOWLEDGE_FORM',
       button: {
         text:
           walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? t('PROFILE.EDIT')
-            : t('PROFILE.COMPLETE'),
+            ? 'PROFILE.EDIT'
+            : 'PROFILE.COMPLETE',
         iconColor: colors.natural.natural300,
         disabled: false,
         onPress: () => openBottomSheet(),
@@ -190,9 +190,7 @@ const Profile = () => {
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
         {item.icon}
-        <IPayFootnoteText regular style={styles.headingStyles}>
-          {item.text}
-        </IPayFootnoteText>
+        <IPayFootnoteText regular style={styles.headingStyles} text={item.text} />
       </IPayView>
       {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
         <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue="COMMON.VERIFIED" />

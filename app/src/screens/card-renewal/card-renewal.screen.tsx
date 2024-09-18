@@ -106,8 +106,8 @@ const CardRenewalScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: t('COMMON.TERMS_AND_CONDITIONS'),
-      subTitle: t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'),
+      title: 'COMMON.TERMS_AND_CONDITIONS',
+      subTitle: 'COMMON.TERMS_AND_CONDITIONS_VALIDATION',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,

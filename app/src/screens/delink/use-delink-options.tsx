@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 
 interface ActionSheetOptions {
   title: string;
@@ -15,20 +14,16 @@ interface ActionSheetOptions {
   onPress: () => void;
 }
 
-const useActionSheetOptions = (delinkSucessfully: (index?: number) => void): ActionSheetOptions => {
-  const { t } = useTranslation();
-
-  return {
-    title: t('COMMON.DELINK_ALERT.WANT_DELINK'),
-    customImage: <IPayIcon icon={icons.delinked} size={48} />,
-    showIcon: true,
-    message: t('COMMON.DELINK_ALERT.LOGIN_AGAIN'),
-    options: [t('COMMON.CANCEL'), t('COMMON.DELINK_ALERT.DELINK')],
-    cancelButtonIndex: 0,
-    showCancel: true,
-    destructiveButtonIndex: 1,
-    onPress: delinkSucessfully,
-  };
-};
+const useActionSheetOptions = (delinkSucessfully: (index?: number) => void): ActionSheetOptions => ({
+  title: 'COMMON.DELINK_ALERT.WANT_DELINK',
+  customImage: <IPayIcon icon={icons.delinked} size={48} />,
+  showIcon: true,
+  message: 'COMMON.DELINK_ALERT.LOGIN_AGAIN',
+  options: ['COMMON.CANCEL', 'COMMON.DELINK_ALERT.DELINK'],
+  cancelButtonIndex: 0,
+  showCancel: true,
+  destructiveButtonIndex: 1,
+  onPress: delinkSucessfully,
+});
 
 export default useActionSheetOptions;

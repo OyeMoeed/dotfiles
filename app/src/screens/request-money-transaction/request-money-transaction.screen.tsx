@@ -41,8 +41,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const [sentRequestsPage, setSentRequestsPage] = useState(1);
   const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
 
-  const SEND_REQUESTS = t('REQUEST_MONEY.SEND_REQUESTS');
-  const RECEIVED_REQUESTS = t('REQUEST_MONEY.RECEIVED_REQUESTS');
+  const SEND_REQUESTS = 'REQUEST_MONEY.SEND_REQUESTS';
+  const RECEIVED_REQUESTS = 'REQUEST_MONEY.RECEIVED_REQUESTS';
   const SEND_REQUESTS_TABS = [SEND_REQUESTS, RECEIVED_REQUESTS];
 
   const [selectedTab, setSelectedTab] = useState<string>(SEND_REQUESTS_TABS[0]);
@@ -126,7 +126,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
         case 'apiResponseNotOk':
           renderToast({
-            title: t('ERROR.API_ERROR_RESPONSE'),
+            title: 'ERROR.API_ERROR_RESPONSE',
             toastType: 'WARNING',
           });
           break;
@@ -164,7 +164,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           break;
         case 'apiResponseNotOk':
           renderToast({
-            title: t('ERROR.API_ERROR_RESPONSE'),
+            title: 'ERROR.API_ERROR_RESPONSE',
             toastType: ToastTypes.WARNING,
           });
           break;
