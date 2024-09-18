@@ -47,7 +47,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     }
     return (
       <IPayIcon
-        icon={getTransationIcon(transaction?.transactionRequestType)}
+        icon={getTransationIcon(transaction?.transactionRequestType, transaction?.transactionType)}
         size={18}
         color={colors.primary.primary800}
       />
