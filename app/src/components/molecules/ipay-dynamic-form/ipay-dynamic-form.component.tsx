@@ -6,6 +6,10 @@ import DynamicFieldRenderer from './ipay-field-renderer/ipay-field-renderer.comp
 
 const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ fields, control, errors, containerStyle }) => {
   const styles = dynamicFormoStyles();
+  
+  if (!fields.length) {
+    return null;
+  }
   return (
     <>
       {fields.map((field) => (

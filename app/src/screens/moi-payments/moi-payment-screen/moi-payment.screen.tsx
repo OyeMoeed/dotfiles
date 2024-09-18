@@ -18,12 +18,14 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { MoiPaymentTypes } from '@app/utilities/enums.util';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
@@ -43,6 +45,9 @@ const MoiPaymentScreen: React.FC = () => {
   const [, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [beneficiaryID, setBeneficiaryID] = useState<string>('');
+  const [selectedBiller, setSelectedBiller] = useState<string>();
+  const [fields, setFields] = useState<DynamicField[]>([]);
+  const [selectedServiceType, setSelectedServiceType] = useState<string>();
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
   const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -81,6 +86,17 @@ const MoiPaymentScreen: React.FC = () => {
     },
     [selectedTab],
   );
+
+  useEffect(() => {
+    const fetchFields = async () => {
+      const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
+      if (response) {
+        const fetchedFields = response.response.dynamicFields;
+        setFields(fetchedFields);
+      }
+    };
+    fetchFields();
+  }, [selectedBiller, selectedServiceType]);
 
   const setDataForBottomSheet = (type: string) => {
     switch (type) {
@@ -305,6 +321,7 @@ const MoiPaymentScreen: React.FC = () => {
                       onChangeText={onChangeText}
                       errorMessage={errorMessage}
                       walletNumber={walletNumber}
+                      fields={fields}
                     />
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}

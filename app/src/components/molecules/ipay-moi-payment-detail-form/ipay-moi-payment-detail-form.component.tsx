@@ -1,11 +1,16 @@
 import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
+import { IPayButton, IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
+
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
+import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
+import useDynamicForm from '../ipay-dynamic-form/ipay-dynamic-form.hook';
+import IPayFormProvider from '../ipay-form-provider/ipay-form-provider.component';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
 import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
@@ -40,9 +45,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   onChangeText,
   errorMessage,
   handleDynamicForm,
-  selectedServiceType,
-  selectedBiller,
-  walletNumber,
+  fields,
 }: IPayMoiPaymentDetailFormProps) => {
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
@@ -54,6 +57,17 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
+
+  //dynamic form
+  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+  const localization = useLocalization();
+
+  const onSubmit = (data: any) => {
+    // Api Returns nested object , which we first convert to flat object and handles everything
+    // then revert it back to origional state
+    const originalData = revertFlatKeys(data);
+    return originalData;
+  };
 
   return (
     <IPayView style={styles.inputWrapper} testID={testID}>
@@ -100,21 +114,33 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
       />
 
       {isServiceTypeValue && (
-        <>
-          <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-          <Controller
-            name={MoiPaymentFormFields.MY_ID_CHECK}
-            control={control}
-            render={() => (
-              <IPayCheckboxTitle
-                isCheck={myIdCheck || false}
-                testID="my-id"
-                heading={localizationText.BILL_PAYMENTS.USE_MY_ID}
-                onPress={onCheckboxAction}
+        <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
+          {({ handleSubmit, control, formState: { errors } }) => (
+            <IPayView style={styles.dynamicFieldContainer}>
+              <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+
+              <Controller
+                name={MoiPaymentFormFields.MY_ID_CHECK}
+                control={control}
+                render={() => (
+                  <IPayCheckboxTitle
+                    isCheck={myIdCheck || false}
+                    testID="my-id"
+                    heading={localizationText.BILL_PAYMENTS.USE_MY_ID}
+                    onPress={onCheckboxAction}
+                  />
+                )}
               />
-            )}
-          />
-        </>
+              <DynamicFormComponent errors={errors} control={control} fields={fields} />
+              <IPayButton
+                btnType={buttonVariants.PRIMARY}
+                onPress={handleSubmit(onSubmit)}
+                medium
+                btnText={localization.COMMON.DONE}
+              />
+            </IPayView>
+          )}
+        </IPayFormProvider>
       )}
     </IPayView>
   );
