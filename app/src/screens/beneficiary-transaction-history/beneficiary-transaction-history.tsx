@@ -9,7 +9,6 @@ import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templa
 import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import LocalBeneficiaryMetaMockProps, {
@@ -30,6 +29,7 @@ import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SNAP_POINT } from '@app/constants/constants';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
@@ -41,13 +41,13 @@ import {
 import transactionHistoryStyles from './beneficiary-transaction-history.style';
 
 const BeneficiaryTransactionHistoryScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = transactionHistoryStyles(colors);
-  const localizationText = useLocalization();
   const filterRef = useRef<bottomSheetTypes>(null);
   const { transferHistoryFilterDefaultValues } = useConstantData();
 
-  const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
+  const [activeTab, setActiveTab] = useState<string>(t('COMMON.SENT'));
   const transactionRef = React.createRef<any>();
   const [transaction, setTransaction] = useState<BeneficiaryTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['100%', isAndroidOS ? '95%' : '100%']);
@@ -61,7 +61,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
 
   const { showToast } = useToastContext();
 
-  const tabOptions = [localizationText.COMMON.SENT, localizationText.COMMON.RECEIVED];
+  const tabOptions = [t('COMMON.SENT'), t('COMMON.RECEIVED')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
@@ -76,8 +76,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const transactionType: TransactionType = {
-    [localizationText.COMMON.SENT]: TransactionTypes.DR,
-    [localizationText.COMMON.RECEIVED]: TransactionTypes.CR,
+    [t('COMMON.SENT')]: TransactionTypes.DR,
+    [t('COMMON.RECEIVED')]: TransactionTypes.CR,
   };
 
   const generatedData = () => {
@@ -117,8 +117,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         setBeneficiaryData(apiResponse?.response?.beneficiaries);
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -140,14 +140,14 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const filtersList = [
     {
       id: '1',
-      label: localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME,
+      label: t('LOCAL_TRANSFER.BENEFICIARY_NAME'),
       type: FiltersType.BENEFICIARY_NAME,
       icon: icons.user1,
       filterValues: getBeneficiryNamesList(),
     },
     {
       id: '2',
-      label: localizationText.TRANSACTION_HISTORY.BANK_NAME,
+      label: t('TRANSACTION_HISTORY.BANK_NAME'),
       type: FiltersType.BANK_NAME_LIST,
       filterValues: getLocalBankList(),
     },
@@ -182,7 +182,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
           }
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error?.error ?? '');
@@ -191,8 +191,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -274,7 +274,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title="COMMON.TRANSACTIONS_HISTORY"
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
@@ -333,7 +333,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={transactionRef}
@@ -345,7 +345,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         <IPayTransactionHistory isBeneficiaryHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
       <IPayPortalBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={() => setShowTransactionSheet(false)}
         customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         simpleHeader
@@ -362,7 +362,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         />
       </IPayPortalBottomSheet>
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={transferHistoryFilterDefaultValues}
         showAmountFilter
         showDateFilter

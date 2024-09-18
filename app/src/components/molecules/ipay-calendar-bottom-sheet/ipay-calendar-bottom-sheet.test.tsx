@@ -19,14 +19,6 @@ jest.mock('@app/components/organism', () => ({
 jest.mock('../../atoms/ipay-view/ipay-view.component', () => 'IPayView');
 
 describe('IPayCalendarBottomSheet', () => {
-  const mockLocalizationText = {
-    select_date: 'Select Date',
-  };
-
-  beforeEach(() => {
-    useLocalization.mockReturnValue(mockLocalizationText);
-  });
-
   const renderCalendarBottomSheet = (props = {}) => {
     const ref = createRef();
     return {

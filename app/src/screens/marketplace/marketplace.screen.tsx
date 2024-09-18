@@ -22,7 +22,6 @@ import { MerchantItem } from '@app/components/molecules/ipay-merchant-card/ipay-
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getApVoucherCategories from '@app/network/services/market/ap-vouchers-categories/ap-vouchers-categories.service';
@@ -36,11 +35,7 @@ import marketplaceStyles from './marketplace.style';
 const MarketPlace: React.FC = () => {
   const { colors } = useTheme();
   const styles = marketplaceStyles(colors);
-  const localizationText = useLocalization();
-  const {
-    SHOP: { READ_MORE, SHOP_BY_MERCHANTS, SHOP_BY_CATEGORIES },
-    COMMON: { HISTORY, SEARCH, VIEW_ALL },
-  } = localizationText;
+
   const showOffer = true;
   const { merchantData, shopsOffers, offerDetailData } = useConstantData();
   const { showToast } = useToastContext();
@@ -64,12 +59,12 @@ const MarketPlace: React.FC = () => {
         const data = mapCategoriesByCode(apiResponse?.response?.categories);
         setCategories(data);
       } else if (apiResponse?.apiResponseNotOk) {
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+        renderToast('ERROR.API_ERROR_RESPONSE');
       } else {
         renderToast(apiResponse?.error);
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -106,7 +101,7 @@ const MarketPlace: React.FC = () => {
         <IPayView style={styles.offerDetail}>
           <IPayBodyText text={title} color={colors.natural.natural900} regular={false} />
           <IPayCaption2Text text={description} />
-          <IPaySubHeadlineText text={READ_MORE} color={colors.primary.primary500} regular />
+          <IPaySubHeadlineText text="SHOP.READ_MORE" color={colors.primary.primary500} regular />
         </IPayView>
 
         <IPayView style={styles.offerImageView}>
@@ -128,12 +123,12 @@ const MarketPlace: React.FC = () => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="shop-ipay-header"
-        title={localizationText.HOME.SHOP}
+        title="HOME.SHOP"
         applyFlex
         rightComponent={
           <IPayPressable style={styles.history} onPress={orderHistory}>
             <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-            <IPaySubHeadlineText text={HISTORY} regular color={colors.primary.primary500} />
+            <IPaySubHeadlineText text="COMMON.HISTORY" regular color={colors.primary.primary500} />
           </IPayPressable>
         }
       />
@@ -141,7 +136,7 @@ const MarketPlace: React.FC = () => {
         <IPayTextInput
           text={search}
           onChangeText={setSearch}
-          placeholder={SEARCH}
+          placeholder="COMMON.SEARCH"
           rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
           simpleInput
           containerStyle={styles.searchInputStyle}
@@ -160,8 +155,8 @@ const MarketPlace: React.FC = () => {
         )}
 
         <IPaySectionHeader
-          leftText={SHOP_BY_CATEGORIES}
-          rightText={VIEW_ALL}
+          leftText="SHOP.SHOP_BY_CATEGORIES"
+          rightText="COMMON.VIEW_ALL"
           onRightOptionPress={allCategoriesPress}
           rightIcon={icons.arrow_right_square}
           showRightIcon
@@ -170,7 +165,7 @@ const MarketPlace: React.FC = () => {
         <IPayFlatlist
           data={categories}
           renderItem={renderCategoryItem}
-          keyExtractor={(item) => `${SHOP_BY_CATEGORIES}-${item.id}`}
+          keyExtractor={(item) => `${'SHOP.SHOP_BY_CATEGORIES'}-${item?.title}-${item.id}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.categoryListStyle}
@@ -178,8 +173,8 @@ const MarketPlace: React.FC = () => {
         />
 
         <IPaySectionHeader
-          leftText={SHOP_BY_MERCHANTS}
-          rightText={VIEW_ALL}
+          leftText="SHOP.SHOP_BY_MERCHANTS"
+          rightText="COMMON.VIEW_ALL"
           rightIcon={icons.arrow_right_square}
           onRightOptionPress={allMerchantPress}
           showRightIcon
@@ -189,7 +184,7 @@ const MarketPlace: React.FC = () => {
         <IPayFlatlist
           data={merchantData}
           renderItem={renderItem}
-          keyExtractor={(item) => `${SHOP_BY_MERCHANTS}-${item.id}`}
+          keyExtractor={(item) => `${'SHOP_BY_MERCHANTS'}-${item.id}`}
           style={styles.merchantList}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.containerWrapper}

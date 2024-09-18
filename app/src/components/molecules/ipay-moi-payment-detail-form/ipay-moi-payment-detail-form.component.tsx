@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
@@ -42,7 +41,6 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
 }: IPayMoiPaymentDetailFormProps) => {
   const { colors } = useTheme();
   const styles = moiPaymentDetialStyles(colors);
-  const localizationText = useLocalization();
 
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
@@ -60,7 +58,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
           <IPayRHFAnimatedTextInput
             testID="service-provider-input"
             name={MoiPaymentFormFields.SERVICE_PROVIDER}
-            label={localizationText.BILL_PAYMENTS.SERVICE_PROVIDER}
+            label="BILL_PAYMENTS.SERVICE_PROVIDER"
             inputStyle={styles.inputStyle}
             editable={false}
             containerStyle={styles.inputContainerStyle}
@@ -77,7 +75,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
           <IPayRHFAnimatedTextInput
             testID="service-type-input"
             name={MoiPaymentFormFields.SERVICE_TYPE}
-            label={localizationText.BILL_PAYMENTS.SERVICE_TYPE}
+            label="BILL_PAYMENTS.SERVICE_TYPE"
             editable={false}
             showRightIcon
             containerStyle={[styles.inputContainerStyle, !isServiceProviderValue && styles.greyInputStyle]}
@@ -97,7 +95,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
 
       {isServiceTypeValue && (
         <>
-          <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+          <IPayCaption2Text regular text="BILL_PAYMENTS.BENEFECIARY_DETAILS" />
 
           <Controller
             name={MoiPaymentFormFields.MY_ID_CHECK}
@@ -106,7 +104,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayCheckboxTitle
                 isCheck={myIdCheck || false}
                 testID="my-id"
-                heading={localizationText.BILL_PAYMENTS.USE_MY_ID}
+                heading="BILL_PAYMENTS.USE_MY_ID"
                 onPress={onCheckboxAction}
               />
             )}
@@ -119,7 +117,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayRHFAnimatedTextInput
                 testID="beneficiary-id-input"
                 name={MoiPaymentFormFields.MY_ID}
-                label={myIdCheck ? localizationText.BILL_PAYMENTS.MY_ID : localizationText.BILL_PAYMENTS.BENEFICIARY_ID}
+                label={myIdCheck ? 'BILL_PAYMENTS.MY_ID' : 'BILL_PAYMENTS.BENEFICIARY_ID'}
                 labelColor={myIdCheck ? { color: colors.natural.natural500 } : colors.primary.primary500}
                 inputStyle={styles.inputStyle}
                 showRightIcon={!myIdCheck}
@@ -141,7 +139,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayRHFAnimatedTextInput
                 testID="id-type-input"
                 name={MoiPaymentFormFields.ID_TYPE}
-                label={localizationText.BILL_PAYMENTS.ID_TYPE}
+                label="BILL_PAYMENTS.ID_TYPE"
                 editable={false}
                 showRightIcon
                 inputStyle={styles.inputStyle}
@@ -159,7 +157,7 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
               <IPayRHFAnimatedTextInput
                 testID="duration-input"
                 name={MoiPaymentFormFields.DURATION}
-                label={localizationText.BILL_PAYMENTS.DURATION}
+                label="BILL_PAYMENTS.DURATION"
                 editable={false}
                 inputStyle={styles.inputStyle}
                 showRightIcon

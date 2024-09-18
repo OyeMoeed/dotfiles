@@ -1,5 +1,4 @@
 import { IPayBottomSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { FC, forwardRef, useImperativeHandle, useRef } from 'react';
 import IPayView from '../../atoms/ipay-view/ipay-view.component';
 import IPayCalendar from '../ipay-calendar/ipay-calendar.component';
@@ -14,7 +13,6 @@ const IPayCalendarBottomSheet: FC<IPayCalendarBottomSheetProps> = forwardRef<
   IPayCalendarBottomSheetHandle,
   IPayCalendarBottomSheetProps
 >(({ onDateSelected, heading }, ref) => {
-  const localizationText = useLocalization();
   const calendarBottomSheetRef = useRef(null);
 
   useImperativeHandle(ref, () => ({
@@ -28,7 +26,7 @@ const IPayCalendarBottomSheet: FC<IPayCalendarBottomSheetProps> = forwardRef<
 
   return (
     <IPayBottomSheet
-      heading={heading || localizationText.COMMON.SELECT_DATE}
+      heading={heading || 'COMMON.SELECT_DATE'}
       ref={calendarBottomSheetRef}
       customSnapPoint={['1%', '80%']}
       enablePanDownToClose

@@ -11,7 +11,6 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
 
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
@@ -31,12 +30,13 @@ import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
 import getTotalAmount from '@app/utilities/total-amount-utils';
+import { useTranslation } from 'react-i18next';
 import { IW2WTransferSummaryItem, ParamsProps } from './create-money-request-summary.interface';
 import createMoneyRequestSummaryStyles from './create-money-request-summary.styles';
 
 const CreateMoneyRequestSummaryScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const route = useRoute<
     RouteProp<{
       params: ParamsProps;
@@ -67,7 +67,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
       if (!hasWallet) {
         return {
           id: '1',
-          label: localizationText.REQUEST_SUMMARY.FROM,
+          label: t('REQUEST_SUMMARY.FROM'),
           value: transfersDetails.formInstances[index]?.subtitle,
           leftIcon: icons.user_square,
           color: colors.primary.primary900,
@@ -76,7 +76,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
       }
       return {
         id: '1',
-        label: localizationText.REQUEST_SUMMARY.FROM,
+        label: t('REQUEST_SUMMARY.FROM'),
         value: transfersDetails.formInstances[index]?.subtitle,
         leftIcon: images.alinmaP,
         isAlinma: true,
@@ -84,7 +84,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
     };
 
     summeryArray.push(titleObject());
-    summeryArray.push({ id: '2', label: localizationText.TRANSFER_SUMMARY.AMOUNT, value: item.amount });
+    summeryArray.push({ id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: item.amount });
     if (transfersDetails.formInstances[index]?.selectedItem) {
       summeryArray.push({
         id: '3',
@@ -92,7 +92,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
       });
     }
     if (item.notes) {
-      summeryArray.push({ id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.notes });
+      summeryArray.push({ id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: item.notes });
     }
     return summeryArray;
   });
@@ -146,7 +146,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
               headingStyles={styles.chipColors}
             />
           </IPayView>
@@ -194,7 +194,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
-      <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
+      <IPayHeader backBtn title="TRANSFER_SUMMARY.TITLE" applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>
@@ -225,7 +225,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText="COMMON.CONFIRM"
             btnColor={colors.primary.primary500}
             large
             onPress={onConfirm}

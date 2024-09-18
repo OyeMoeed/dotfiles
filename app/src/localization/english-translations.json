@@ -999,6 +999,7 @@
     "EIYDIAH": "Eiydiah"
   },
   "OFFERS": {
+    "THEATER": "Theater",
     "OFFERS_TITLE": "Offers",
     "AVAILABLE_OFFERS": "Available offers",
     "DETAILS": "Details",
@@ -1275,6 +1276,8 @@
     "REF_NUMBER": "Ref. Number"
   },
   "SHOP": {
+    "PURCHASED_AT": "Pubrchased at: ",
+    "COUPON_CODE": "Coupon code",
     "ALL_MERCHANTS": "All Merchants",
     "TITLE": "All Categories",
     "PLAYSTATION": "Playstation",

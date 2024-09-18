@@ -8,7 +8,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { GiftStatus } from '@app/enums/gift-status.enum';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { ExecuteGiftMockProps } from '@app/network/services/transfers/execute-gift/execute-gift.interface';
@@ -22,14 +21,15 @@ import { ApiResponseStatusType, FiltersType, buttonVariants } from '@app/utiliti
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useIsFocused } from '@react-navigation/core';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import sendGiftStyles from './send-gift-list.style';
 
 const SendGiftListScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const isFocused = useIsFocused();
   const styles = sendGiftStyles(colors);
-  const GIFT_TABS = [localizationText.SEND_GIFT.SENT, localizationText.SEND_GIFT.RECEIVED];
+  const GIFT_TABS = [t('SEND_GIFT.SENT'), t('SEND_GIFT.RECEIVED')];
   const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [filters, setFilters] = useState<Array<string>>([]);
@@ -48,7 +48,7 @@ const SendGiftListScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status, occasion } = data;
-      const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
+      const amountRange = `${amountFrom} - ${amountTo} ${t('COMMON.SAR')}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
 
       filtersArray = [contactNumber, amountRange, dateRange, status, occasion];
@@ -73,13 +73,13 @@ const SendGiftListScreen: React.FC = () => {
 
   let noResultMessage;
 
-  if (selectedTab === localizationText.SEND_GIFT.RECEIVED) {
+  if (selectedTab === t('SEND_GIFT.RECEIVED')) {
     noResultMessage = `
-    ${localizationText.SEND_GIFT.RECIEVE_ANY_GIFT}
+    ${t('SEND_GIFT.RECIEVE_ANY_GIFT')}
     `;
   } else {
     noResultMessage = `
-    ${localizationText.SEND_GIFT.SENT_ANY_GIFT}
+    ${t('SEND_GIFT.SENT_ANY_GIFT')}
     `;
   }
 
@@ -106,13 +106,13 @@ const SendGiftListScreen: React.FC = () => {
           navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: giftDetails, isSend, giftCategory });
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'));
           break;
         default:
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -126,13 +126,13 @@ const SendGiftListScreen: React.FC = () => {
           setWalletTransferData(apiResponse?.response?.transferRequestsResult?.groupedCategories);
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'));
           break;
         default:
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -151,14 +151,14 @@ const SendGiftListScreen: React.FC = () => {
   }, [isFocused]);
 
   const giftTypeMapping = {
-    eid: localizationText.SEND_GIFT.EIYDIAH,
-    birthday: localizationText.SEND_GIFT.BIRTHDAY,
-    congrat: localizationText.SEND_GIFT.CONGRATULATIONS,
+    eid: t('SEND_GIFT.EIYDIAH'),
+    birthday: t('SEND_GIFT.BIRTHDAY'),
+    congrat: t('SEND_GIFT.CONGRATULATIONS'),
   };
 
   const renderItem = ({ item }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount } = item;
-    const isSend = selectedTab === localizationText.SEND_GIFT.SENT;
+    const isSend = selectedTab === t('SEND_GIFT.SENT');
 
     const giftCategory = userNotes.split('#')[1];
     const giftType = giftCategory?.split('_')[0]?.toLowerCase();
@@ -180,15 +180,14 @@ const SendGiftListScreen: React.FC = () => {
     );
   };
 
-  const selectedTabData =
-    selectedTab === localizationText.SEND_GIFT.SENT ? walletTransferData?.SENT : walletTransferData.RECEIVED;
+  const selectedTabData = selectedTab === t('SEND_GIFT.SENT') ? walletTransferData?.SENT : walletTransferData.RECEIVED;
 
   return (
     <IPaySafeAreaView>
       <IPayHeader
         testID="send-gift-header"
         backBtn
-        title={localizationText.SEND_GIFT.GIFTS}
+        title="SEND_GIFT.GIFTS"
         applyFlex
         rightComponent={
           <IPayPressable onPress={applyFilter}>
@@ -213,7 +212,7 @@ const SendGiftListScreen: React.FC = () => {
             {filters?.map((text) => (
               <IPayChip
                 testID="filter-chip"
-                key={text}
+                key={`${text}-ipay-chip`}
                 containerStyle={styles.chipContainer}
                 headingStyles={styles.chipHeading}
                 textValue={text}
@@ -242,8 +241,8 @@ const SendGiftListScreen: React.FC = () => {
           <IPayView>
             <IPayButton
               leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
-              btnType="primary"
-              btnText={localizationText.SEND_GIFT.SEND_NEW_GIFT}
+              btnType={buttonVariants.PRIMARY}
+              btnText="SEND_GIFT.SEND_NEW_GIFT"
               large
               onPress={sendGiftNow}
               btnStyle={styles.btnStyle}
@@ -253,11 +252,11 @@ const SendGiftListScreen: React.FC = () => {
       ) : (
         <IPayView style={styles.noResult}>
           <IPayNoResult textColor={colors.primary.primary800} message={noResultMessage} showEmptyBox />
-          {selectedTab === localizationText.SEND_GIFT.SENT && (
+          {selectedTab === t('SEND_GIFT.SENT') && (
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               medium
-              btnText={localizationText.SEND_GIFT.SEND_GIFT_NOW}
+              btnText="SEND_GIFT.SEND_GIFT_NOW"
               hasRightIcon
               onPress={sendGiftNow}
               btnStyle={styles.sendButton}
@@ -267,7 +266,7 @@ const SendGiftListScreen: React.FC = () => {
         </IPayView>
       )}
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={sendGiftFilterDefaultValues}
         showAmountFilter
         showDateFilter

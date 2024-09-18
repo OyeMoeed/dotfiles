@@ -1,5 +1,4 @@
 import { OsTypes, PermissionsStatus } from '@app/enums';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
 import { useState, useCallback, useEffect } from 'react';
 import { Platform } from 'react-native';
@@ -7,15 +6,17 @@ import { PERMISSIONS, request } from 'react-native-permissions';
 import { useDispatch } from 'react-redux';
 import Geolocation from 'react-native-geolocation-service';
 import { IlocationDetails } from '@app/network/services/services.interface';
+import { useTranslation } from 'react-i18next';
 
 const useLocation = () => {
+  const { t } = useTranslation();
   const [permissionStatus, setPermissionStatus] = useState(PermissionsStatus.UNKNOWN);
-  const localizationText = useLocalization();
   const [location, setLocation] = useState<IlocationDetails | null>(null);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const dispatch = useDispatch();
-  const title = localizationText.LOCATION.PERMISSION_REQUIRED;
-  const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
+
+  const title = t('LOCATION.PERMISSION_REQUIRED');
+  const description = t('LOCATION.LOCATION_PERMISSION_REQUIRED');
 
   const requestLocationPermission = useCallback(async (): Promise<string> => {
     if (Platform.OS === OsTypes.ANDROID) {

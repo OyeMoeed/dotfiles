@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayList, IPayTextInput } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -15,7 +14,6 @@ import chooseBeneficiaryStyles from './choose-beneficiary.styles';
 const ChooseBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = chooseBeneficiaryStyles(colors);
-  const localizationText = useLocalization();
   const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>();
 
   const handleBeneficiaryTransfer = () => {
@@ -58,12 +56,12 @@ const ChooseBeneficiaryScreen: React.FC = () => {
   };
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.COMMON.CHOOSE_BENEFICIARY} applyFlex />
+      <IPayHeader backBtn title="COMMON.CHOOSE_BENEFICIARY" applyFlex />
       <IPayView style={styles.innerStyles}>
         <IPayTextInput
           text={search}
           onChangeText={setSearch}
-          placeholder={localizationText.COMMON.SEARCH_BENEFICIARY}
+          placeholder="COMMON.SEARCH_BENEFICIARY"
           rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
           simpleInput
           style={styles.inputStyle}
@@ -81,7 +79,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
         <IPayView style={styles.addBeneficiaryBtn}>
           <IPayButton
             onPress={handleAddNewBeneficiray}
-            btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+            btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
             btnType={buttonVariants.OUTLINED}
             medium
             leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
@@ -93,7 +91,7 @@ const ChooseBeneficiaryScreen: React.FC = () => {
         large
         disabled={!selectedBeneficiary}
         btnType={buttonVariants.PRIMARY}
-        btnText={localizationText.COMMON.NEXT}
+        btnText="COMMON.NEXT"
         btnStyle={styles.buttonStyles}
         onPress={handleBeneficiaryTransfer}
       />

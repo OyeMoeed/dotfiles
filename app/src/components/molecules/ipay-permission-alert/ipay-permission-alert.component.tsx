@@ -1,5 +1,4 @@
 import { IPayFootnoteText, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 
 import IPayOverlay from '@app/components/atoms/ipay-overlay/ipay-overlay.component';
@@ -12,7 +11,6 @@ import alertStyles from './ipay-permission-alert.styles';
 
 const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, testID }) => {
   const { title, description } = useTypedSelector((state) => state.permissionAlertReducer);
-  const localizationText = useLocalization();
 
   // Function to navigate to settings
   const onGoToSettings = () => {
@@ -36,12 +34,10 @@ const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, t
           <IPayFootnoteText style={styles.message}>{description}</IPayFootnoteText>
           <IPayView style={styles.rowStyles}>
             <IPayPressable style={styles.cancelBtn} onPress={onClose}>
-              <IPaySubHeadlineText style={styles.textColor}>{localizationText.COMMON.CANCEL}</IPaySubHeadlineText>
+              <IPaySubHeadlineText style={styles.textColor} text="COMMON.CANCEL" />
             </IPayPressable>
             <IPayPressable style={styles.settignsBtn} onPress={onGoToSettings}>
-              <IPaySubHeadlineText regular style={styles.textColor}>
-                {localizationText.LOCATION.GO_TO_SETTINGS}
-              </IPaySubHeadlineText>
+              <IPaySubHeadlineText regular style={styles.textColor} text="LOCATION.GO_TO_SETTINGS" />
             </IPayPressable>
           </IPayView>
         </IPayView>

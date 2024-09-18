@@ -19,4 +19,5 @@ export interface IPayPrimaryButtonProps {
   rightIcon?: JSX.Element;
   textColor?: string;
   textStyle?: StyleProp<TextStyle>;
+  shouldTranslateBtnText?: boolean;
 }

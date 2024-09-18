@@ -7,7 +7,6 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
@@ -27,6 +26,7 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import homeStyles from './home.style';
 
@@ -35,7 +35,7 @@ const Home: React.FC = () => {
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
   const styles = homeStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
@@ -96,13 +96,13 @@ const Home: React.FC = () => {
       if (apiResponse?.status?.type === 'SUCCESS') {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
       } else {
         setAPIError(apiResponse?.error);
       }
     } catch (error) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -200,7 +200,7 @@ const Home: React.FC = () => {
       <>
         {/* ---------Top Navigation------------- */}
         <IPayView style={styles.topNavCon}>
-          <IPayTopbar captionText={localizationText.HOME.WELCOME} userName={firstName} />
+          <IPayTopbar captionText="HOME.WELCOME" userName={firstName} />
         </IPayView>
         {/* ----------BalanceBox------------ */}
         <IPayView style={styles.balanceCon}>
@@ -228,7 +228,7 @@ const Home: React.FC = () => {
         )}
 
         <IPayBottomSheet
-          heading={localizationText.COMMON.RE_ARRANGE_SECTIONS}
+          heading="COMMON.RE_ARRANGE_SECTIONS"
           onCloseBottomSheet={closeBottomSheet}
           customSnapPoint={['90%', '99%', maxHeight]}
           ref={rearrangeRef}
@@ -244,7 +244,7 @@ const Home: React.FC = () => {
 
         <IPayPortalBottomSheet
           noGradient
-          heading={localizationText.TOP_UP.ADD_MONEY_USING}
+          heading="TOP_UP.ADD_MONEY_USING"
           onCloseBottomSheet={closeBottomSheetTopUp}
           customSnapPoint={SNAP_POINT.XS_SMALL}
           ref={topUpSelectionRef}

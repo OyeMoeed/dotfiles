@@ -15,23 +15,23 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { MoiPaymentTypes } from '@app/utilities/enums.util';
+import { buttonVariants, MoiPaymentTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { moiServiceProvider, moiServiceType, moiPaymentDuration, idTypes } = useConstantData();
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [sheetType, setSheetType] = useState<string>('');
@@ -46,10 +46,10 @@ const MoiPaymentScreen: React.FC = () => {
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
   const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
+  const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
 
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
-    getValidationSchemas(localizationText);
+    getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     serviceProvider,
@@ -123,13 +123,13 @@ const MoiPaymentScreen: React.FC = () => {
   const getBottomSheetHeading = () => {
     switch (sheetType) {
       case MoiPaymentType.SERVICE_TYPE:
-        return localizationText.BILL_PAYMENTS.SERVICE_TYPE;
+        return 'BILL_PAYMENTS.SERVICE_TYPE';
       case MoiPaymentType.ID_TYPE:
-        return localizationText.BILL_PAYMENTS.ID_TYPE;
+        return 'BILL_PAYMENTS.ID_TYPE';
       case MoiPaymentType.DURATION:
-        return localizationText.BILL_PAYMENTS.DURATION;
+        return 'BILL_PAYMENTS.DURATION';
       default:
-        return localizationText.BILL_PAYMENTS.SERVICE_PROVIDER;
+        return 'BILL_PAYMENTS.SERVICE_PROVIDER';
     }
   };
 
@@ -232,32 +232,32 @@ const MoiPaymentScreen: React.FC = () => {
           const data = [
             {
               id: '1',
-              label: localizationText.BILL_PAYMENTS.DUE_AMOUNT,
-              value: `${amount} ${localizationText.COMMON.SAR}`,
+              label: 'BILL_PAYMENTS.DUE_AMOUNT',
+              value: `${amount} ${t('COMMON.SAR')}`,
             },
             {
               id: '2',
-              label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+              label: 'BILL_PAYMENTS.SERVICE_PROVIDER',
               value: getValues(MoiPaymentFormFields.SERVICE_PROVIDER),
             },
             {
               id: '3',
-              label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+              label: 'BILL_PAYMENTS.SERVICE_TYPE',
               value: getValues(MoiPaymentFormFields.SERVICE_TYPE),
             },
             {
               id: '4',
-              label: localizationText.BILL_PAYMENTS.BENEFICIARY_ID,
+              label: 'BILL_PAYMENTS.BENEFICIARY_ID',
               value: currentCheck ? `${myBeneficiaryId}` : `${beneficiaryID}`,
             },
             {
               id: '5',
-              label: localizationText.BILL_PAYMENTS.LICENSE_TYPE,
+              label: 'BILL_PAYMENTS.LICENSE_TYPE',
               value: getValues(MoiPaymentFormFields.ID_TYPE),
             },
             {
               id: '6',
-              label: localizationText.BILL_PAYMENTS.DURATION,
+              label: 'BILL_PAYMENTS.DURATION',
               value: getValues(MoiPaymentFormFields.DURATION),
             },
           ];
@@ -284,7 +284,7 @@ const MoiPaymentScreen: React.FC = () => {
                   backBtn
                   onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
                   applyFlex
-                  title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
+                  title="BILL_PAYMENTS.MOI_PAYMENT"
                   titleStyle={styles.screenTitle}
                 />
                 <IPayView style={styles.container}>
@@ -306,8 +306,8 @@ const MoiPaymentScreen: React.FC = () => {
                       errorMessage={errorMessage}
                     />
                     <IPayButton
-                      btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                      btnType="primary"
+                      btnText="NEW_SADAD_BILLS.INQUIRY"
+                      btnType={buttonVariants.PRIMARY}
                       onPress={onSubmit}
                       btnStyle={styles.inquiryBtn}
                       large
@@ -337,7 +337,7 @@ const MoiPaymentScreen: React.FC = () => {
                       <IPayTextInput
                         text={search}
                         onChangeText={onSearchTextChange}
-                        placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
+                        placeholder="LOCAL_TRANSFER.SEARCH_FOR_NAME"
                         rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                         simpleInput
                         style={styles.inputStyle}
@@ -360,8 +360,8 @@ const MoiPaymentScreen: React.FC = () => {
                         iconViewStyles={styles.iconView}
                         message={
                           sheetType === MoiPaymentType.SERVICE_PROVIDER
-                            ? localizationText.BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND
-                            : localizationText.BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND
+                            ? t('BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND')
+                            : t('BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND')
                         }
                         showIcon
                         icon={icons.note_remove}
@@ -374,7 +374,7 @@ const MoiPaymentScreen: React.FC = () => {
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
-              heading={localizationText.BILL_PAYMENTS.MOI_BILLS}
+              heading="BILL_PAYMENTS.MOI_BILLS"
               customSnapPoint={['1%', isAndroidOS ? '43%' : '44%']}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
@@ -386,9 +386,9 @@ const MoiPaymentScreen: React.FC = () => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayContentNotFound
-                title={localizationText.BILL_PAYMENTS.NO_BILLS_WERE_FOUND}
-                message={localizationText.BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE}
-                btnText={localizationText.COMMON.TRY_AGAIN}
+                title="BILL_PAYMENTS.NO_BILLS_WERE_FOUND"
+                message="BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE"
+                btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

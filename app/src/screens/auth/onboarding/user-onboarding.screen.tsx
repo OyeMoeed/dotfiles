@@ -1,6 +1,5 @@
 import React from 'react';
 import { useStepper } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
@@ -10,7 +9,6 @@ import OnboardingScreen from './onboarding.component'; // Adjust the import path
 
 const UserOnBoarding: React.FC = () => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const { handleNext, skip, currentView, getStarted } = useStepper();
 
   return (
@@ -19,13 +17,13 @@ const UserOnBoarding: React.FC = () => {
         <OnboardingScreen
           currentStep={1}
           image={images.cards}
-          title={localizationText.ONBOARDING.TITLE_ONBOARDING_ONE}
-          description={localizationText.ONBOARDING.DESCRIPTION_ONBOARDING_ONE}
+          title="ONBOARDING.TITLE_ONBOARDING_ONE"
+          description="ONBOARDING.DESCRIPTION_ONBOARDING_ONE"
           gradientColors={colors.appGradient.gradientSecondary10}
           onSkip={skip}
           onNext={() => handleNext(OnboardingSteps.SendAndReceiveStep)}
-          skipText={localizationText.ONBOARDING.SKIP}
-          nextText={localizationText.COMMON.NEXT}
+          skipText="ONBOARDING.SKIP"
+          nextText="COMMON.NEXT"
           type={OnboardingSteps.OpportunitiesStep}
         />
       )}
@@ -33,13 +31,13 @@ const UserOnBoarding: React.FC = () => {
         <OnboardingScreen
           currentStep={2}
           image={images.money}
-          title={localizationText.ONBOARDING.TITLE_ONBOARDING_TWO}
-          description={localizationText.ONBOARDING.DESCRIPTION_ONBOARDING_TWO}
+          title="ONBOARDING.TITLE_ONBOARDING_TWO"
+          description="ONBOARDING.DESCRIPTION_ONBOARDING_TWO"
           gradientColors={colors.appGradient.gradientSecondary20}
           onSkip={skip}
           onNext={() => handleNext(OnboardingSteps.PurchasesStep)}
-          skipText={localizationText.ONBOARDING.SKIP}
-          nextText={localizationText.COMMON.NEXT}
+          skipText="ONBOARDING.SKIP"
+          nextText="COMMON.NEXT"
           type={OnboardingSteps.SendAndReceiveStep}
         />
       )}
@@ -48,12 +46,12 @@ const UserOnBoarding: React.FC = () => {
         <OnboardingScreen
           currentStep={3}
           image={images.globe}
-          title={localizationText.ONBOARDING.TITLE_ONBOARDING_THREE}
-          description={localizationText.ONBOARDING.DESCRIPTION_ONBOARDING_THREE}
+          title="ONBOARDING.TITLE_ONBOARDING_THREE"
+          description="ONBOARDING.DESCRIPTION_ONBOARDING_THREE"
           gradientColors={colors.appGradient.gradientSecondary30}
           onSkip={skip}
           onNext={() => getStarted()}
-          nextText={localizationText.ONBOARDING.GET_STARTED}
+          nextText="ONBOARDING.GET_STARTED"
           type={OnboardingSteps.PurchasesStep}
           bottomButtonViewStyle={{
             marginBottom: isIosOS ? scaleSize(0) : scaleSize(6),
