@@ -1,3 +1,4 @@
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
 import React from 'react';
 
 export interface FormValues {
@@ -75,6 +76,7 @@ export interface IPayMoiPaymentDetailFormProps {
    * name of my id to use
    */
   myId?: string;
+ fields: DynamicField[];
 
   control?: any;
   onChangeText?: (text: string) => void;

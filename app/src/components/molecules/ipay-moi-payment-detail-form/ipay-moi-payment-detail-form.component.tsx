@@ -11,8 +11,8 @@ import { Controller } from 'react-hook-form';
 import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
 import useDynamicForm from '../ipay-dynamic-form/ipay-dynamic-form.hook';
 import IPayFormProvider from '../ipay-form-provider/ipay-form-provider.component';
+import { IPayMoiPaymentDetailFormProps } from './ipay-moi-payment-detail-form.interface';
 import moiPaymentDetialStyles from './ipay-moi-payment-detail-form.style';
-import { IPayMoiPaymentDetailFormProps } from './ipy-moi-payment-detail-form.imterface';
 
 /**
  * Props for the SadadBillDetailForm component.
@@ -37,14 +37,9 @@ const IPayMoiPaymentDetailForm: React.FC<IPayMoiPaymentDetailFormProps> = ({
   onServiceProviderAction,
   onServiceTypeAction,
   onCheckboxAction,
-  onBeneficiaryIdAction,
-  onIdTypeAction,
-  onDurationAction,
   myIdCheck,
   control,
-  onChangeText,
   errorMessage,
-  handleDynamicForm,
   fields,
 }: IPayMoiPaymentDetailFormProps) => {
   const { colors } = useTheme();

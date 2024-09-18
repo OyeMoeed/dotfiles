@@ -320,7 +320,6 @@ const MoiPaymentScreen: React.FC = () => {
                       control={control}
                       onChangeText={onChangeText}
                       errorMessage={errorMessage}
-                      walletNumber={walletNumber}
                       fields={fields}
                     />
                     <IPayButton
