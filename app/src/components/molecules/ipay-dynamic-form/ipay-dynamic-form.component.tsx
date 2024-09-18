@@ -13,7 +13,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ fields, con
   return (
     <>
       {fields.map((field) => (
-        <IPayView key={field.index} style={[styles.dynamicFieldRenderer, containerStyle]}>
+        <IPayView key={field.index} style={[containerStyle]}>
           <DynamicFieldRenderer key={field.index} field={field} control={control} errors={errors} />
         </IPayView>
       ))}
