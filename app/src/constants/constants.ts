@@ -682,10 +682,10 @@ export enum DYNAMIC_FIELDS_TYPES {
   ALPHA_NO_DIGITS = 'alphaNoDigits',
   ENGLISH_CHARACTERS = 'englishCharacters',
   ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
-  LIST_OF_VALUE = 'listOfValue',
+  LIST_OF_VALUE = 'LIST_OF_VALUE',
   LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
   TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
-  NUMBER = 'number',
+  NUMBER = 'NUMBER',
   DATE = 'date',
   GREGORIAN_DATE = 'gregorianDate',
   GREGORIAN_DATE_PAST = 'gregorianDatePast',
@@ -746,7 +746,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES,
+  WU_TRANSFER_TYPES
 };
 
 export default constants;

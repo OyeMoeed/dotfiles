@@ -5,12 +5,15 @@ import { moderateScale } from 'react-native-size-matters';
 
 const moiPaymentDetialStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    dynamicFieldContainer: {
+      flex: 1,
+    },
     inputWrapper: {
       gap: scaleFont(16),
       backgroundColor: themeColors.natural.natural0,
       padding: scaleFont(24),
       borderRadius: scaleFont(28),
-      flex:1
+      flex: 1,
     },
     inputContainerStyle: {
       paddingLeft: scaleFont(20),
