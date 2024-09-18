@@ -1,7 +1,7 @@
 import React from 'react';
 import { MapStyleElement } from 'react-native-maps';
 
-interface InitialRegionProps {
+export interface InitialRegionProps {
   latitude: number;
   longitude: number;
   latitudeDelta: number;
