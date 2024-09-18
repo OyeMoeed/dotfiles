@@ -5,6 +5,9 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const moiPaymentStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    dynamicFieldContainer: {
+      flex: 1,
+    },
     screenTitle: {
       textTransform: 'none',
     },
@@ -16,7 +19,7 @@ const moiPaymentStyles = (themeColors: typeof colors) =>
     contentContainer: {
       marginTop: scaleFont(16),
       gap: scaleFont(16),
-      flex:1
+      flex: 1,
     },
     searchInputWrapper: {
       flexDirection: 'row',

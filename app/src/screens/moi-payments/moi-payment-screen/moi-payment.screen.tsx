@@ -173,9 +173,7 @@ const MoiPaymentScreen: React.FC = () => {
 
   return (
     <IPayFormProvider<MoiFormFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
-      {({ setValue, getValues, control, watch, errors, handleSubmit }) => {
-        const myIdChecked = watch(MoiPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
-
+      {({ setValue, getValues, control, errors, handleSubmit }) => {
         const onSelectValue = (item: { id: number; text: string }) => {
           const { text } = item;
           switch (sheetType) {
@@ -268,35 +266,33 @@ const MoiPaymentScreen: React.FC = () => {
         return (
           <>
             <IPaySafeAreaView>
-              <>
-                <IPayHeader
-                  backBtn
-                  onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
-                  applyFlex
-                  title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
-                  titleStyle={styles.screenTitle}
-                />
-                <IPayView style={styles.container}>
-                  <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
+              <IPayHeader
+                backBtn
+                onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
+                applyFlex
+                title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
+                titleStyle={styles.screenTitle}
+              />
+              <IPayView style={styles.container}>
+                <IPayTabs tabs={tabs} onSelect={handleTabSelect} />
 
-                  <IPayView style={styles.contentContainer}>
-                    <IPayView style={styles.dynamicFieldContainer}>
-                      <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+                <IPayView style={styles.contentContainer}>
+                  <IPayView style={styles.dynamicFieldContainer}>
+                    <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
 
-                      <DynamicFormComponent errors={errors} control={control} fields={updatedFields} />
-                    </IPayView>
-
-                    <IPayButton
-                      btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                      btnType={buttonVariants.PRIMARY}
-                      onPress={handleSubmit(onSubmit)}
-                      btnStyle={styles.inquiryBtn}
-                      large
-                      btnIconsDisabled
-                    />
+                    <DynamicFormComponent errors={errors} control={control} fields={updatedFields} />
                   </IPayView>
+
+                  <IPayButton
+                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnType={buttonVariants.PRIMARY}
+                    onPress={handleSubmit(onSubmit)}
+                    btnStyle={styles.inquiryBtn}
+                    large
+                    btnIconsDisabled
+                  />
                 </IPayView>
-              </>
+              </IPayView>
             </IPaySafeAreaView>
             <IPayBottomSheet
               heading={getBottomSheetHeading()}
