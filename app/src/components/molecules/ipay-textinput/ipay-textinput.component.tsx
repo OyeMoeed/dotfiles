@@ -1,13 +1,12 @@
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import { IPayCaption1Text, IPayIcon, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayTextInputProps } from './ipay-textinput.interface';
 import textInputStyles from './ipay-textinput.style';
-import { buttonVariants } from '@app/utilities';
-import IPayButton from '../ipay-button/ipay-button.component';
-import { moderateScale } from 'react-native-size-matters';
 /**
  * A component to display and input text.
  * @param {IPayTextInputProps} props - The props for the RNTextInput component.

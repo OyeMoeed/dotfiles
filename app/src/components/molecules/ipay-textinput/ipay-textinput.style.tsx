@@ -15,7 +15,7 @@ const textInputStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      // width: '100%',
+      width: '100%',
     },
     label: {
       color: themeColors.primary.primary600,

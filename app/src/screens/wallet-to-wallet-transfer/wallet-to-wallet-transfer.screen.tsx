@@ -162,7 +162,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   }, [permissionStatus]);
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
-  const clearIcon = <IPayIcon icon={icons.CLOSE_SQUARE} size={20} color={colors.primary.primary500} />;
 
   const renderToast = () => {
     showToast({
