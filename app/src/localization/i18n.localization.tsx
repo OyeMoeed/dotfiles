@@ -38,10 +38,10 @@ i18n
      */
     compatibilityJSON: 'v3',
     /**
-     * Resources for translation.
+     * Use to check the missing keys.
      */
     // resources,
-    debug: true,
+    debug: false,
     fallbackLng: 'en', // Fallback language
     lng: 'en', // Default language
     fallbackNS: 'en', // Default fallback namespace
@@ -77,4 +77,5 @@ i18n
       useSuspense: false, // Disable suspense for React Native
     },
   });
+
 export default i18n;
