@@ -32,19 +32,19 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
   const withdrawSuccessData = [
     {
       id: 1,
-      title: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_TYPE'),
-      subTitle: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.ATM_WITHDRAWAL'),
+      title: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_TYPE',
+      subTitle: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.ATM_WITHDRAWAL',
       icon: '',
     },
     {
       id: 2,
-      title: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.REF_NUMBER'),
+      title: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.REF_NUMBER',
       subTitle: route?.params?.referenceNumber,
       icon: icons.copy,
     },
     {
       id: 3,
-      title: t('ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_DATE'),
+      title: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_DATE',
       subTitle: formatTimeAndDate(new Date().toString()),
       icon: '',
     },
@@ -55,7 +55,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || t('passcode_error'),
+        title: title || '',
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -75,7 +75,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: t('TOP_UP.REF_NUMBER_COPIED'), toastType: ToastTypes.INFORMATION });
+    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
   const renderItem = ({ item }: ItemProps) => (

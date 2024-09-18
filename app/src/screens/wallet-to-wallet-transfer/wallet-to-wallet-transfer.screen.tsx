@@ -333,7 +333,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
-        title={heading || t('HOME.SEND_MONEY')}
+        title={heading || 'HOME.SEND_MONEY'}
         isRight
         rightComponent={
           showHistory && (

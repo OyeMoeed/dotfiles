@@ -266,9 +266,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
               transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber
             }`}
             shouldTranslate={false}
-          >
-            {}
-          </IPayCaption1Text>
+          />
           <IPayCaption1Text
             numberOfLines={CAPTION_LINES}
             style={styles.trasnactionTypeText}
