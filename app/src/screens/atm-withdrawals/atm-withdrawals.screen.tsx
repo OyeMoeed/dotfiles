@@ -93,7 +93,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     if (monthlyRemaining === 0) {
       setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${dailyOutgoingLimit} SAR`);
+      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${dailyOutgoingLimit} ${t('COMMON.SAR')}`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else if (updatedTopUpAmount > currentBalance) {

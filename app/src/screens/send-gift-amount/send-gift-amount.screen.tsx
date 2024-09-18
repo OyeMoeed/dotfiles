@@ -78,7 +78,7 @@ const SendGiftAmountScreen = ({ route }) => {
         setChipValue(t('TOP_UP.LIMIT_REACHED'));
         break;
       case updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining:
-        setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${dailyOutgoingLimit} SAR`);
+        setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${dailyOutgoingLimit} ${t('COMMON.SAR')}`);
         break;
       case updatedTopUpAmount > monthlyRemaining:
         setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));

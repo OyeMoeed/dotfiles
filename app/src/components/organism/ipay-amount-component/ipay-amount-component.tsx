@@ -196,7 +196,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${limitsDetails.dailyRemainingIncomingAmount} SAR`);
+      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${limitsDetails.dailyRemainingIncomingAmount} ${t('COMMON.SAR')}`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setIsTopUpNextEnable(false);
       setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));

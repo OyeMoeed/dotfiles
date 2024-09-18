@@ -178,7 +178,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} SAR`}
+                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} ${t('COMMON.SAR')}`}
               </IPayTitle3Text>
             </IPayView>
             {transaction &&

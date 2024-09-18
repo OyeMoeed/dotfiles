@@ -232,7 +232,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 regular={false}
                 shouldTranslate={false}
               >
-                {`${isCredit ? '+' : '-'}${transaction?.amount} SAR`}
+                {`${isCredit ? '+' : '-'}${transaction?.amount} ${t('COMMON.SAR')}`}
               </IPayTitle3Text>
             </IPayView>
             <IPayView style={styles.listWrapper}>

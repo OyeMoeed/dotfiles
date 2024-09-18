@@ -43,7 +43,7 @@ const IPayTransactionHistoryDetails = forwardRef(
     const { showToast } = useToastContext();
     const [transactionDataArray, setTransactionDataArray] = useState<{ key: string; value: any }[]>([]);
     const transactionTypeCheck = transactionData?.totalDebitAmount;
-    const transactionAmount = `${transactionTypeCheck ? '+' : '-'}${transactionData?.amount} ${senderCurrency}`;
+    const transactionAmount = `${transactionTypeCheck ? '+' : '-'}${transactionData?.amount} ${t(senderCurrency || '')}`;
 
     const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
       showToast(
