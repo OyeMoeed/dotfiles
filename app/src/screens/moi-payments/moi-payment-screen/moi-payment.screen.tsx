@@ -147,11 +147,10 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillersServices(selectedBiller);
   }, [selectedBiller]);
 
-
   return (
     <IPayFormProvider<MoiFormFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
       {({ control, errors, handleSubmit }) => {
-        const handleDependentApiCall = async (triggerFieldIndex: string, selectedValue: string) => {
+        const handleChange = async (triggerFieldIndex: string, selectedValue: string) => {
           // Find the dependent field
           const dependentField = fields.find((f) => f.index === triggerFieldIndex);
 
@@ -205,7 +204,7 @@ const MoiPaymentScreen: React.FC = () => {
                       errors={errors}
                       control={control}
                       fields={fields}
-                      handleDependentApiCall={handleDependentApiCall}
+                      handleChange={handleChange}
                     />
                   </IPayView>
 

@@ -6,12 +6,7 @@ import { Controller } from 'react-hook-form';
 import IPayAnimatedTextInput from '../../ipay-animated-input-text/ipay-animated-input-text.component';
 import DynamicFieldRendererProps from './ipay-field-renderer.interface';
 
-const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleDependentApiCall }) => {
-  const handleChange = (selectedItem: string) => {
-    if (field.dependsOn) {
-      handleDependentApiCall(field.dependsOn, selectedItem);
-    }
-  };
+const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleChange }) => {
   const renderField = () => {
     // Replace "." with "_" to flatten the name
     const flatKey = field.index.replace(/\./g, '_');
@@ -57,8 +52,8 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                   selectedValue={value}
                   label={field.label}
                   onSelectListItem={(selectedItem: string) => {
-                    handleChange(selectedItem);
                     onChange(selectedItem);
+                    if (handleChange) handleChange(field.dependsOn, selectedItem);
                   }}
                   isSearchable={false}
                   testID={`${flatKey}-dropdown`}

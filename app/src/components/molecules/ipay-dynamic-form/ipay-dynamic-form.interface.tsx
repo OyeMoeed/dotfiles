@@ -7,6 +7,7 @@ interface DynamicFormComponentProps {
   control: Control;
   errors: FieldErrors;
   containerStyle?: StyleProp<ViewStyle>;
+  handleChange?: () => void;
 }
 
 export default DynamicFormComponentProps;

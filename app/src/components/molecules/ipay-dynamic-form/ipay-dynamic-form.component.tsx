@@ -8,7 +8,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
   control,
   errors,
   containerStyle,
-  handleDependentApiCall,
+  handleChange,
 }) => {
   if (!fields.length) {
     return null;
@@ -22,7 +22,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
             field={field}
             control={control}
             errors={errors}
-            handleDependentApiCall={handleDependentApiCall}
+            handleChange={handleChange}
           />
         </IPayView>
       ))}
