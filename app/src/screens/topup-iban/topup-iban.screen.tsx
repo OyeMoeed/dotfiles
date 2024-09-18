@@ -45,7 +45,7 @@ const TopUpIBAN = () => {
   const renderToast = (toastTitleType: number) => {
     showToast({
       toastType: ToastTypes.SUCCESS,
-      title: toastTitleType === 1 ? t('HOME.NAME_COPIED') : t('HOME.IBAN_NUMBER'),
+      title: toastTitleType === 1 ? 'HOME.NAME_COPIED' : 'HOME.IBAN_NUMBER',
       containerStyle: styles.toastContainer,
       leftIcon: <IPayIcon icon={icons.copy_success} size={moderateScale(18)} color={colors.natural.natural0} />,
     });

@@ -34,7 +34,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND')];
+  const tabs = ['TRAFFIC_VIOLATION.INQUIRE', 'TRAFFIC_VIOLATION.REFUND'];
 
   const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } = getValidationSchemas(t);
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
@@ -164,7 +164,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     errorMessage={errorMessage}
                   />
                   <IPayButton
-                    btnText={isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('NEW_SADAD_BILLS.INQUIRY')}
+                    btnText={isRefund ? 'TRAFFIC_VIOLATION.REFUND' : 'NEW_SADAD_BILLS.INQUIRY'}
                     btnType={buttonVariants.PRIMARY}
                     onPress={onSubmit}
                     large

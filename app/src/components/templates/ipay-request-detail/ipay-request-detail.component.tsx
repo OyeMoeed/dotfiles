@@ -169,11 +169,14 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
         <>
           <IPayView>
             <IPayView style={styles.amountSection}>
-              <IPayCaption1Text color={colors.primary.primary800}>
-                {transaction?.type === TransactionOperations.DEBIT
-                  ? t('REQUEST_MONEY.RECEIVED_REQUEST_FROM')
-                  : t('REQUEST_MONEY.SEND_REQUEST_TO')}
-              </IPayCaption1Text>
+              <IPayCaption1Text
+                color={colors.primary.primary800}
+                text={
+                  transaction?.type === TransactionOperations.DEBIT
+                    ? 'REQUEST_MONEY.RECEIVED_REQUEST_FROM'
+                    : 'REQUEST_MONEY.SEND_REQUEST_TO'
+                }
+              />
               <IPayTitle3Text style={styles.footnoteBoldTitleTextStyle} regular={false}>
                 {transaction.title}
               </IPayTitle3Text>

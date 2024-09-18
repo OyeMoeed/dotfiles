@@ -36,7 +36,7 @@ const TrafficViolationScreen: React.FC = () => {
         />
         <IPayButton
           btnIconsDisabled
-          btnText={selectedBillsCount === billsData?.length ? t('COMMON.DESELECT_ALL') : t('COMMON.SELECT_ALL')}
+          btnText={selectedBillsCount === billsData?.length ? 'COMMON.DESELECT_ALL' : 'COMMON.SELECT_ALL'}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={selectedBillsCount === billsData?.length ? deselectAllBills : selectAllBills}
         />

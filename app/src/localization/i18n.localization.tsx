@@ -41,7 +41,7 @@ i18n
      * Use to check the missing keys.
      */
     // resources,
-    debug: false,
+    debug: true,
     fallbackLng: 'en', // Fallback language
     lng: 'en', // Default language
     fallbackNS: 'en', // Default fallback namespace
