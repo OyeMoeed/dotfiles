@@ -153,7 +153,7 @@ const MoiPaymentScreen: React.FC = () => {
   };
   return (
     <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
-      {({ control, formState: { errors }, handleSubmit, getValues }) => {
+      {({ control, formState: { errors }, handleSubmit }) => {
         const {
           [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
           [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
