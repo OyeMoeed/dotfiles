@@ -40,8 +40,13 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { useTypedSelector } from '@app/store/store';
+import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
+import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
