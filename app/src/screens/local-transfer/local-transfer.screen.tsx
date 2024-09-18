@@ -46,10 +46,10 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { Keyboard, ViewStyle } from 'react-native';
+import { useKeyboardStatus } from '@app/hooks';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
-import { useKeyboardStatus } from '@app/hooks';
 
 const LocalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -193,19 +193,6 @@ const LocalTransferScreen: React.FC = () => {
       toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
-  };
-
-  const handleActivateBeneficiary = useCallback(() => {
-    setShowActivationSheet(true);
-    setActivateHeight(SNAP_POINT.X_SMALL);
-    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
-  }, []);
-
-  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
-    selectedBeneficiaryRef.current = beneficiary;
-    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE)
-      navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
-    else handleActivateBeneficiary();
   };
 
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
@@ -384,7 +371,7 @@ const LocalTransferScreen: React.FC = () => {
       navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
     else handleActivateBeneficiary();
   };
-    
+
   const makeTransfer = () => {
     setShowActivationSheet(false);
     getBeneficiariesData();
