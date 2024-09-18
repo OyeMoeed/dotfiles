@@ -148,21 +148,12 @@ const SendMoneyRequest: React.FC = () => {
         <IPayHeader backBtn title={heading} applyFlex />
 
         <IPayView style={styles.inncerContainer}>
-          {/* Topup box */}
-          <IPayTopUpBox
-            availableBalance={formatNumberWithCommas(availableBalance)}
-            isShowTopup
-            isShowRemaining
-            isShowProgressBar
-            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
-            monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
-          />
-
           {/* total selected contact label */}
           {getContactInfoText()}
 
           {/* amount form */}
           <IPaySendMoneyForm
+            showCount={false}
             showReason={false}
             subtitle={selectedContacts[0].givenName}
             setAmount={handleAmountChange}
@@ -173,24 +164,7 @@ const SendMoneyRequest: React.FC = () => {
             setNotes={handleNotesChange}
           />
           {!isKeyboardWillOpen && !isKeyboardOpen && (
-            <IPayLinearGradientView style={styles.buttonBackground}>
-              <IPayList
-                title="SEND_MONEY_FORM.TOTAL_AMOUNT"
-                rightText={
-                  <IPaySubHeadlineText
-                    regular
-                    color={colors.primary.primary800}
-                    text={`${getTotalAmount(formInstances) ? formatNumberWithCommas(getTotalAmount(formInstances)) : 0} ${t('COMMON.SAR')}`}
-                  />
-                }
-              />
-              <IPayBalanceStatusChip
-                monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-                currentBalance={Number(availableBalance)}
-                amount={getTotalAmount(formInstances)}
-                setWarningStatus={setWarningStatus}
-                dailySpendingLimit={Number(dailyOutgoingLimit)}
-              />
+            <IPayView style={styles.buttonBackground}>
               <IPayButton
                 disabled={isTransferButtonDisabled() || !getTotalAmount(formInstances) || !!warningStatus}
                 btnIconsDisabled
@@ -199,7 +173,7 @@ const SendMoneyRequest: React.FC = () => {
                 onPress={onConfirm}
                 btnText="REQUEST_MONEY.SEND_REQUEST_TITLE"
               />
-            </IPayLinearGradientView>
+            </IPayView>
           )}
         </IPayView>
         <IPayActionSheet

@@ -13,10 +13,10 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     contactInfoContainer: {
       flexDirection: 'row',
       gap: moderateScale(2),
-      marginTop: moderateScale(10),
+      paddingBottom: moderateScale(3),
     },
     inncerContainer: {
-      marginTop: moderateScale(22),
+      marginTop: moderateScale(20),
       marginHorizontal: moderateScale(24, 0.2),
       flex: 1,
     },
@@ -25,7 +25,6 @@ const sendMoneyFormStyles = (theme: typeof colors) =>
     },
     buttonBackground: {
       flex: 0,
-      backgroundColor: theme.appGradient.buttonBackground,
       borderRadius: moderateScale(24),
       ...Platform.select({
         android: {
