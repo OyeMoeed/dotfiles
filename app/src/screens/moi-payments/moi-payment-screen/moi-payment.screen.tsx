@@ -1,14 +1,15 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
   IPayContentNotFound,
   IPayHeader,
   IPayListView,
-  IPayMoiPaymentDetailForm,
   IPayNoResult,
   IPayTextInput,
 } from '@app/components/molecules';
+import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
+import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -18,19 +19,20 @@ import { MoiPaymentFormFields, MoiPaymentType } from '@app/enums/moi-payment.enu
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
-import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { MoiPaymentTypes } from '@app/utilities/enums.util';
+import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import * as Yup from 'yup';
+
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
@@ -51,6 +53,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [, setIsRefund] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [beneficiaryID, setBeneficiaryID] = useState<string>('');
+  const [fields, setFields] = useState<DynamicField[]>([]);
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
   const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -60,16 +63,6 @@ const MoiPaymentScreen: React.FC = () => {
   const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
     getValidationSchemas(localizationText);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const validationSchema = Yup.object().shape({
-    serviceProvider,
-    serviceType,
-    idType,
-    myIdCheck,
-    duration,
-    beneficiaryId,
-    myIdInput,
-    myId,
-  });
 
   const setFormSheetData = (data: { id: number; text: string }[], snpaPoints: string[]) => {
     setBottomSheetData(data);
@@ -90,6 +83,17 @@ const MoiPaymentScreen: React.FC = () => {
     },
     [selectedTab],
   );
+
+  useEffect(() => {
+    const fetchFields = async () => {
+      const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
+      if (response) {
+        const fetchedFields = response.response.dynamicFields;
+        setFields(fetchedFields);
+      }
+    };
+    fetchFields();
+  }, [selectedBiller, selectedServiceType]);
 
   const setDataForBottomSheet = (type: string) => {
     switch (type) {
@@ -183,32 +187,47 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillersServices(selectedBiller);
   }, [selectedBiller]);
 
-  return (
-    <IPayFormProvider<MoiFormFormValues>
-      validationSchema={validationSchema}
-      defaultValues={{
-        serviceProvider: '',
-        serviceType: '',
-        idType: '',
-        duration: '',
-        beneficiaryId: '',
-        myIdCheck: '',
-        myIdInput: '',
-        myId: '',
-      }}
-    >
-      {({ setValue, getValues, control, watch }) => {
-        const myIdChecked = watch(MoiPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
-        const checkBtnDisabled = () => {
-          setBtnEnabled(() =>
-            Object.keys(MoiPaymentFormFields)
-              .filter((key) => key !== 'MY_ID_CHECK' && key !== 'BENEFICIARY_ID')
-              .some((key) => !getValues(MoiPaymentFormFields[key])),
-          );
-        };
+  const updatedFields = [
+    {
+      index: MoiPaymentFormFields.SERVICE_PROVIDER,
+      integrationTagName: 'BeneficiaryId.OfficialIdType',
+      lOVType: '315',
+      label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+      lovList: [],
+      maxWidth: 32,
+      minWidth: 1,
+      orderIndex: '2',
+      required: true,
+      requiredInPaymentOrRefund: 'PAYMENT',
+      type: 'LIST_OF_VALUE',
+      value: '1',
+    },
+    {
+      index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
+      label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+      integrationTagName: 'BeneficiaryId.OfficialIdType',
+      lOVType: '315',
+      lovList: [],
+      maxWidth: 32,
+      minWidth: 1,
+      orderIndex: '2',
+      required: true,
+      requiredInPaymentOrRefund: 'PAYMENT',
+      type: 'LIST_OF_VALUE',
+      value: '1',
+    },
 
-        const onSelectValue = (item: { id: string; text: string }) => {
-          const { text, id } = item;
+    ...fields, // Spread the existing dynamic fields here
+  ];
+
+  //dynamic form
+  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(updatedFields);
+
+  return (
+    <IPayFormProvider<MoiFormFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
+      {({ setValue, getValues, control, errors, handleSubmit }) => {
+        const onSelectValue = (item: { id: number; text: string }) => {
+          const { text } = item;
           switch (sheetType) {
             case MoiPaymentType.SERVICE_PROVIDER:
               setValue(MoiPaymentFormFields.SERVICE_PROVIDER, text);
@@ -227,27 +246,12 @@ const MoiPaymentScreen: React.FC = () => {
             default:
               break;
           }
-          checkBtnDisabled();
+
           setSearch('');
           selectSheeRef.current.close();
         };
 
-        const onCheckboxAction = () => {
-          const currentCheck = !getValues(MoiPaymentFormFields.MY_ID_CHECK);
-
-          /// TODO will change this
-          if (currentCheck) {
-            setValue(MoiPaymentFormFields.MY_ID, myBeneficiaryId); // TODO Set MY_ID if checkbox is checked
-          } else {
-            setValue(MoiPaymentFormFields.MY_ID, ''); // Clear MY_ID if checkbox is unchecked
-          }
-          setValue(MoiPaymentFormFields.MY_ID_CHECK, currentCheck); // Toggle the checkbox value
-          checkBtnDisabled();
-          setErrorMessage('');
-        };
-
         const getSelectedValue = () => {
-          checkBtnDisabled();
           switch (sheetType) {
             case MoiPaymentType.SERVICE_PROVIDER:
               return getValues(MoiPaymentFormFields.SERVICE_PROVIDER);
@@ -260,105 +264,89 @@ const MoiPaymentScreen: React.FC = () => {
           }
         };
 
-        const clearBeneficiaryFelid = () => {
-          setErrorMessage('');
-          if (getValues(MoiPaymentFormFields.MY_ID).length > 0) {
-            setValue(MoiPaymentFormFields.MY_ID, '');
-          }
-          checkBtnDisabled();
+        const getMoiBillData = () => {
+          const currentCheck = getValues(MoiPaymentFormFields.MY_ID_CHECK);
+          const amount = 500;
+          const data = [
+            {
+              id: '1',
+              label: localizationText.BILL_PAYMENTS.DUE_AMOUNT,
+              value: `${amount} ${localizationText.COMMON.SAR}`,
+            },
+            {
+              id: '2',
+              label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+              value: getValues(MoiPaymentFormFields.SERVICE_PROVIDER),
+            },
+            {
+              id: '3',
+              label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+              value: getValues(MoiPaymentFormFields.SERVICE_TYPE),
+            },
+            {
+              id: '4',
+              label: localizationText.BILL_PAYMENTS.BENEFICIARY_ID,
+              value: currentCheck ? `${myBeneficiaryId}` : `${beneficiaryID}`,
+            },
+            {
+              id: '5',
+              label: localizationText.BILL_PAYMENTS.LICENSE_TYPE,
+              value: getValues(MoiPaymentFormFields.ID_TYPE),
+            },
+            {
+              id: '6',
+              label: localizationText.BILL_PAYMENTS.DURATION,
+              value: getValues(MoiPaymentFormFields.DURATION),
+            },
+          ];
+
+          return data;
         };
 
-        const onChangeText = (text: string) => {
-          setBeneficiaryID(text);
-          if (text.length > 0) {
-            setBtnEnabled(false);
+        const onSubmit = (data: any) => {
+          const originalData = revertFlatKeys(data);
+          console.log('originalData', originalData);
+
+          const moiBillData = getMoiBillData();
+          if (selectedTab === MoiPaymentTypes.REFUND) {
+            navigate(ScreenNames.MOI_PAYMENT_REFUND, {
+              moiBillData,
+            });
           } else {
-            setBtnEnabled(true);
-          }
-          setErrorMessage('');
-        };
-
-        const validateBills = async (data: any) => {
-          const payLoad = {
-            dynamicFields: [
-              {
-                label: 'Iqama ID',
-                index: 'BeneficiaryId.OfficialId',
-                value: '1092103737',
-                description: '1092103737',
-                isFormValid: 'false',
-              },
-              {
-                label: 'ID Type',
-                index: 'BeneficiaryId.OfficialIdType',
-                value: 'IQA',
-                description: 'Iqama ID',
-                isFormValid: 'false',
-              },
-              {
-                label: 'Fees Duration End Date (Hijri)',
-                index: 'PayAllAssociateFees.FeeDurationEndDate',
-                value: '',
-                description: '',
-                isFormValid: 'false',
-              },
-            ],
-            walletNumber: walletNumber,
-            refund: false,
-          };
-
-          const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
-          if (apiResponse?.successfulResponse) {
-            if (selectedTab === MoiPaymentTypes.REFUND) {
-              navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: apiResponse.response });
-            } else {
-              navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { billData: apiResponse.response });
-            }
+            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { moiBillData });
           }
         };
 
         return (
           <>
             <IPaySafeAreaView>
-              <>
-                <IPayHeader
-                  backBtn
-                  onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
-                  applyFlex
-                  title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
-                  titleStyle={styles.screenTitle}
-                />
-                <IPayView style={styles.container}>
-                  <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
+              <IPayHeader
+                backBtn
+                onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
+                applyFlex
+                title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
+                titleStyle={styles.screenTitle}
+              />
+              <IPayView style={styles.container}>
+                <IPayTabs tabs={tabs} onSelect={handleTabSelect} />
 
-                  <>
-                    <IPayMoiPaymentDetailForm
-                      onServiceProviderAction={() => onOpenSheet(MoiPaymentType.SERVICE_PROVIDER)}
-                      onServiceTypeAction={() => onOpenSheet(MoiPaymentType.SERVICE_TYPE)}
-                      onCheckboxAction={onCheckboxAction}
-                      onBeneficiaryIdAction={clearBeneficiaryFelid}
-                      onIdTypeAction={() => onOpenSheet(MoiPaymentType.ID_TYPE)}
-                      onDurationAction={() => onOpenSheet(MoiPaymentType.DURATION)}
-                      isServiceProviderValue={!!watch(MoiPaymentFormFields.SERVICE_PROVIDER)}
-                      isServiceTypeValue={!!watch(MoiPaymentFormFields.SERVICE_TYPE)}
-                      myIdCheck={myIdChecked}
-                      control={control}
-                      onChangeText={onChangeText}
-                      errorMessage={errorMessage}
-                      onPress={validateBills}
-                    />
-                    <IPayButton
-                      btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                      btnType="primary"
-                      onPress={validateBills}
-                      btnStyle={styles.inquiryBtn}
-                      large
-                      btnIconsDisabled
-                      disabled={isBtnEnabled}
-                    />
-                  </>
+                <IPayView style={styles.contentContainer}>
+                  <IPayView style={styles.dynamicFieldContainer}>
+                    <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+
+                    <DynamicFormComponent errors={errors} control={control} fields={updatedFields} />
+                  </IPayView>
+
+                  <IPayButton
+                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnType={buttonVariants.PRIMARY}
+                    onPress={handleSubmit(onSubmit)}
+                    btnStyle={styles.inquiryBtn}
+                    large
+                    btnIconsDisabled
+                  />
                 </IPayView>
-              </>
+              </IPayView>
             </IPaySafeAreaView>
             <IPayBottomSheet
               heading={getBottomSheetHeading()}

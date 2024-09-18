@@ -1,7 +1,12 @@
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import { Control, FieldErrors } from 'react-hook-form';
+import { StyleProp, ViewStyle } from 'react-native';
+
 interface DynamicFormComponentProps {
-  billerId: string;
-  serviceId: string;
-  walletNumber: string;
+  fields: DynamicField[];
+  control: Control;
+  errors: FieldErrors;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 export default DynamicFormComponentProps;
