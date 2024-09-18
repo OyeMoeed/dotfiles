@@ -31,7 +31,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { buttonVariants, CardOptions, CardStatusNumber, CardTypes, CarouselModes } from '@app/utilities/enums.util';
+import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
@@ -61,6 +61,7 @@ const CardsScreen: React.FC = () => {
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
   const [isCardIssueSheetVisible, setIsCardIssueSheetVisible] = useState(false);
   const [otpError, setOtpError] = useState<boolean>(false);
+  const [isCardsSheetVisible, setIsCardSheetVisible] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
@@ -79,10 +80,10 @@ const CardsScreen: React.FC = () => {
     }
   };
   const closeCardSheet = () => {
-    cardSheetRef.current.close();
+    setIsCardSheetVisible(false);
   };
   const handleNext = () => {
-    cardSheetRef.current.close();
+    setIsCardSheetVisible(false);
     if (selectedCard === CardOptions.VIRTUAL) {
       navigate(screenNames.VIRTUAL_CARD);
     } else {
@@ -332,7 +333,7 @@ const CardsScreen: React.FC = () => {
           btnType={buttonVariants.LINK_BUTTON}
           btnText={localizationText.CARDS.NEW_CARD}
           onPress={openCardSheet}
-          rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
+          rightIcon={<IPayIcon icon={icons.addSquare2} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
       {renderCardsCurrentState()}
@@ -386,6 +387,7 @@ const CardsScreen: React.FC = () => {
         simpleHeader
         simpleBar
         bold
+        isVisible={isCardsSheetVisible}
         cancelBnt
       >
         <IPayCardIssueBottomSheet

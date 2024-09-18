@@ -24,7 +24,7 @@ const NewSadadBillScreen: React.FC = () => {
     totalAmount: '550',
   };
 
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<

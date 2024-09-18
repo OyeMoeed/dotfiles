@@ -225,6 +225,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                 <IPayAnimatedTextInput
                   label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
                   value={value}
+                  maxLength={50}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.beneficiaryName}
@@ -275,6 +276,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                 <IPayAnimatedTextInput
                   label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
                   value={value}
+                  maxLength={50}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.beneficiaryNickName}
