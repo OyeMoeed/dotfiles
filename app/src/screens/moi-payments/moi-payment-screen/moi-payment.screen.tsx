@@ -21,11 +21,10 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
 import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
-import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { MoiPaymentTypes } from '@app/utilities/enums.util';
+import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import MoiFormFormValues from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
@@ -53,19 +52,6 @@ const MoiPaymentScreen: React.FC = () => {
   const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { serviceProvider, serviceType, idType, myIdCheck, duration, beneficiaryId, myIdInput, myId } =
-    getValidationSchemas(localizationText);
-
-  // const validationSchema = Yup.object().shape({
-  //   serviceProvider,
-  //   serviceType,
-  //   idType,
-  //   myIdCheck,
-  //   duration,
-  //   beneficiaryId,
-  //   myIdInput,
-  //   myId,
-  // });
 
   const setFormSheetData = (data: { id: number; text: string }[], snpaPoints: string[]) => {
     setBottomSheetData(data);
@@ -302,12 +288,11 @@ const MoiPaymentScreen: React.FC = () => {
 
                     <IPayButton
                       btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                      btnType="primary"
+                      btnType={buttonVariants.PRIMARY}
                       onPress={handleSubmit(onSubmit)}
                       btnStyle={styles.inquiryBtn}
                       large
                       btnIconsDisabled
-                      // disabled={isBtnEnabled}
                     />
                   </IPayView>
                 </IPayView>
