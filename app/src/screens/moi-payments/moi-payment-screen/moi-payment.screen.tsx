@@ -44,13 +44,6 @@ const MoiPaymentScreen: React.FC = () => {
   const [selectedServiceType, setSelectedServiceType] = useState<string>();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const setFormSheetData = (data: { id: number; text: string }[], snpaPoints: string[]) => {
-    setBottomSheetData(data);
-    setFilteredData(data);
-    setCustomSnapPoints(snpaPoints);
-    setSearch('');
-  };
-
   const handleTabSelect = useCallback(
     (tab: string) => {
       if (tab === MoiPaymentTypes.REFUND) {
@@ -58,7 +51,7 @@ const MoiPaymentScreen: React.FC = () => {
       } else {
         setIsRefund(false);
       }
-      setFormSheetData(bottomSheetData, customSnapPoint);
+
       setSelectedTab(tab);
     },
     [selectedTab],
