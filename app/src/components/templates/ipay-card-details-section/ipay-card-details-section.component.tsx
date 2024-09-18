@@ -171,7 +171,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false}>
-            {currentCard.totalCashbackAmt} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
+            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
           </IPaySubHeadlineText>
         }
       />
@@ -215,6 +215,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           hasRightIcon
           rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
           medium
+          textColor={colors.primary.primary600}
           btnText={localizationText.COMMON.VIEW_ALL}
         />
       </IPayView>

@@ -490,12 +490,6 @@ const useConstantData = () => {
       label: localizationText.TRAFFIC_VIOLATION.VIOLATION_DATE,
       value: '14/03/2024 - 15:30',
     },
-    {
-      id: '5',
-      label: localizationText.TRAFFIC_VIOLATION.REF_NUMBER,
-      value: 'FTA35346',
-      icon: icons.copy,
-    },
   ];
 
   const notificationRequestFilters: FilterTypes[] = [

@@ -81,7 +81,7 @@ const transactionItemStyles = (colors: any) =>
     dateStyle: {
       color: colors.natural.natural500,
       fontSize: FONT_SIZE_11,
-      marginTop: moderateScale(2, 0.3),
+      marginTop: moderateScale(4, 0.3),
     },
     leftImageStyle: {
       height: verticalScale(18),

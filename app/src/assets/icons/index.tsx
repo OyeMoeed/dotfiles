@@ -1,6 +1,7 @@
 import {
   AlimapayLogo,
   BulkLock,
+  DottedRefresh,
   FaceId,
   FallbackImage,
   IncomingCall,
@@ -19,6 +20,7 @@ const icons = {
   finger_scan: 'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
+  dottedRefresh: DottedRefresh,
   discountShape1: 'discount-shape1',
   task: 'task1',
   trash: 'trash',
@@ -253,6 +255,7 @@ const icons = {
   call_incoming: IncomingCall,
   call_outgoing: Outgoing,
   nonALinma: NonAlinma,
+  addSquare2: 'add-square2',
 };
 
 export default icons;
