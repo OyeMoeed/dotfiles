@@ -5,6 +5,7 @@ import {
   IPayFootnoteText,
   IPayHeadlineText,
   IPayIcon,
+  IPayImage,
   IPayMapView,
   IPayView,
 } from '@app/components/atoms';
@@ -16,6 +17,8 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPayAtmDetailsProps } from './ipay-atm-details.interface';
 import atmDetailsStyle from './ipay-atm-details.style';
+import { Marker } from 'react-native-maps';
+import images from '@app/assets/images';
 
 const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, openGoogleMapsWeb }) => {
   const { colors } = useTheme();
@@ -56,7 +59,14 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
         <IPayFootnoteText text={address} color={colors.primary.primary800} />
 
         <IPayView style={styles.mapView}>
-          <IPayMapView initialRegion={initialRegion} />
+          <IPayMapView initialRegion={initialRegion} >
+          <Marker
+              coordinate={initialRegion}
+              
+            >
+              <IPayImage image={images.location} style={styles.marker} resizeMode="contain" />
+            </Marker>
+          </IPayMapView>
         </IPayView>
 
         <IPayButton
