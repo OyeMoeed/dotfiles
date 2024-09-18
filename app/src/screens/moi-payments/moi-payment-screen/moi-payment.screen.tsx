@@ -62,15 +62,52 @@ const MoiPaymentScreen: React.FC = () => {
       const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
       if (response) {
         const fetchedFields = response.response.dynamicFields;
-        setFields(fetchedFields);
+
+        const updatedFields = [
+          {
+            index: MoiPaymentFormFields.SERVICE_PROVIDER,
+            integrationTagName: 'BeneficiaryId.ServiceProvider',
+            lOVType: '315',
+            label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+            lovList: moiServiceProvider,
+            maxWidth: 32,
+            minWidth: 1,
+            orderIndex: '2',
+            required: true,
+            requiredInPaymentOrRefund: 'PAYMENT',
+            type: 'LIST_OF_VALUE',
+            value: '1',
+            dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
+          },
+          {
+            index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
+            label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+            integrationTagName: 'BeneficiaryId.ServiceType',
+            lOVType: '315',
+            lovList: [],
+            maxWidth: 32,
+            minWidth: 1,
+            orderIndex: '2',
+            required: true,
+            requiredInPaymentOrRefund: 'PAYMENT',
+            type: 'LIST_OF_VALUE',
+            value: '1',
+            disable: true,
+            dependsOn: MoiPaymentFormFields.SERVICE_TYPE, //MoiPaymentFormFields.SERVICE_PROVIDER,
+          },
+
+          ...fetchedFields, // Spread the existing dynamic fields here
+        ];
+
+        setFields(updatedFields);
       }
     };
+    onGetBillers();
     fetchFields();
   }, [selectedBiller, selectedServiceType]);
 
-  useEffect(() => {
-    onGetBillers();
-  }, []);
+  useEffect(() => {}, []);
+  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
 
   const onGetBillers = async () => {
     const deviceInfo = await getDeviceInfo();
@@ -98,10 +135,11 @@ const MoiPaymentScreen: React.FC = () => {
     if (apiResponse.successfulResponse) {
       const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
         ...serviceItem,
-        id: serviceItem.serviceId,
-        text: serviceItem.serviceDesc,
+        code: serviceItem.serviceId,
+        desc: serviceItem.serviceDesc,
       }));
       setMoiServiceType(serviceList);
+      return serviceList;
     }
   };
 
@@ -109,95 +147,41 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillersServices(selectedBiller);
   }, [selectedBiller]);
 
-  const updatedFields = [
-    {
-      index: MoiPaymentFormFields.SERVICE_PROVIDER,
-      integrationTagName: 'BeneficiaryId.OfficialIdType',
-      lOVType: '315',
-      label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
-      lovList: moiServiceProvider,
-      maxWidth: 32,
-      minWidth: 1,
-      orderIndex: '2',
-      required: true,
-      requiredInPaymentOrRefund: 'PAYMENT',
-      type: 'LIST_OF_VALUE',
-      value: '1',
-    },
-    {
-      index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
-      label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
-      integrationTagName: 'BeneficiaryId.OfficialIdType',
-      lOVType: '315',
-      lovList: [],
-      maxWidth: 32,
-      minWidth: 1,
-      orderIndex: '2',
-      required: true,
-      requiredInPaymentOrRefund: 'PAYMENT',
-      type: 'LIST_OF_VALUE',
-      value: '1',
-    },
-
-    ...fields, // Spread the existing dynamic fields here
-  ];
-
-  //dynamic form
-  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(updatedFields);
 
   return (
     <IPayFormProvider<MoiFormFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
-      {({ getValues, control, errors, handleSubmit }) => {
-        const getMoiBillData = () => {
-          const currentCheck = getValues(MoiPaymentFormFields.MY_ID_CHECK);
-          const amount = 500;
-          const data = [
-            {
-              id: '1',
-              label: localizationText.BILL_PAYMENTS.DUE_AMOUNT,
-              value: `${amount} ${localizationText.COMMON.SAR}`,
-            },
-            {
-              id: '2',
-              label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
-              value: getValues(MoiPaymentFormFields.SERVICE_PROVIDER),
-            },
-            {
-              id: '3',
-              label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
-              value: getValues(MoiPaymentFormFields.SERVICE_TYPE),
-            },
-            {
-              id: '4',
-              label: localizationText.BILL_PAYMENTS.BENEFICIARY_ID,
-              value: currentCheck ? `${myBeneficiaryId}` : `${beneficiaryID}`,
-            },
-            {
-              id: '5',
-              label: localizationText.BILL_PAYMENTS.LICENSE_TYPE,
-              value: getValues(MoiPaymentFormFields.ID_TYPE),
-            },
-            {
-              id: '6',
-              label: localizationText.BILL_PAYMENTS.DURATION,
-              value: getValues(MoiPaymentFormFields.DURATION),
-            },
-          ];
+      {({ control, errors, handleSubmit }) => {
+        const handleDependentApiCall = async (triggerFieldIndex: string, selectedValue: string) => {
+          // Find the dependent field
+          const dependentField = fields.find((f) => f.index === triggerFieldIndex);
 
-          return data;
+          if (dependentField) {
+            const serviceList = await onGetBillersServices(selectedValue);
+
+            const updatedFields = fields.map((field) => {
+              if (field.index === dependentField.index) {
+                // Update the dependent field's lovList and enable it
+                return {
+                  ...field,
+                  lovList: serviceList,
+                  disable: false,
+                };
+              }
+
+              return field;
+            });
+
+            setFields(updatedFields);
+          }
         };
 
         const onSubmit = (data: any) => {
           const originalData = revertFlatKeys(data);
-          console.log('originalData', originalData);
 
-          const moiBillData = getMoiBillData();
           if (selectedTab === MoiPaymentTypes.REFUND) {
-            navigate(ScreenNames.MOI_PAYMENT_REFUND, {
-              moiBillData,
-            });
+            navigate(ScreenNames.MOI_PAYMENT_REFUND);
           } else {
-            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { moiBillData });
+            navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION);
           }
         };
 
@@ -217,7 +201,12 @@ const MoiPaymentScreen: React.FC = () => {
                 <IPayView style={styles.contentContainer}>
                   <IPayView style={styles.dynamicFieldContainer}>
                     <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
-                    <DynamicFormComponent errors={errors} control={control} fields={updatedFields} />
+                    <DynamicFormComponent
+                      errors={errors}
+                      control={control}
+                      fields={fields}
+                      handleDependentApiCall={handleDependentApiCall}
+                    />
                   </IPayView>
 
                   <IPayButton

@@ -3,6 +3,7 @@ export interface DynamicField {
   parentIndex: number | null;
   onlyHijri: boolean | null;
   type: string;
+  disable?:boolean;
   required: boolean;
   lovFilter3: string | null;
   billIdType: string | null;

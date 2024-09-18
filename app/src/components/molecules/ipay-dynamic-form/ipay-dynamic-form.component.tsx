@@ -3,7 +3,13 @@ import React from 'react';
 import DynamicFormComponentProps from './ipay-dynamic-form.interface';
 import DynamicFieldRenderer from './ipay-field-renderer/ipay-field-renderer.component';
 
-const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ fields, control, errors, containerStyle }) => {
+const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
+  fields,
+  control,
+  errors,
+  containerStyle,
+  handleDependentApiCall,
+}) => {
   if (!fields.length) {
     return null;
   }
@@ -11,7 +17,13 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({ fields, con
     <>
       {fields.map((field) => (
         <IPayView key={field.index} style={[containerStyle]}>
-          <DynamicFieldRenderer key={field.index} field={field} control={control} errors={errors} />
+          <DynamicFieldRenderer
+            key={field.index}
+            field={field}
+            control={control}
+            errors={errors}
+            handleDependentApiCall={handleDependentApiCall}
+          />
         </IPayView>
       ))}
     </>
