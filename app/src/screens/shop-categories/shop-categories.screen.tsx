@@ -2,59 +2,126 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayDescriptiveCard, IPayHeader, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
+import { PayloadMerchantsCategoryProps } from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.interface';
+import getProductsByCategoryId from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import { LanguageCode } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
+import { MarketPlaceCategoriesProps } from '../marketplace/marketplace.interface';
 import shopCategoriesStyles from './shop-categories.styles';
 
-const ShopCategoriesScreen: React.FC = () => {
-  const { playstationData } = useConstantData();
+const ShopCategoriesScreen: React.FC = ({ route }) => {
+  const {
+    categories,
+    selectedCategory,
+  }: { categories: MarketPlaceCategoriesProps[]; selectedCategory: MarketPlaceCategoriesProps } = route.params;
   const { colors } = useTheme();
   const styles = shopCategoriesStyles(colors);
   const localizationText = useLocalization();
   const [search, setSearch] = useState<string>('');
+  const [categoriesTabsData, setCategoriesTabsData] = useState<string[]>([]);
+  const [selectedTab, setSelectedTab] = useState<string>('');
+  const [categoryProductsData, setCategoryProductsData] = useState([]);
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const { selectedLanguage } = useTypedSelector((state) => state.languageReducer);
+  const { showToast } = useToastContext();
 
-  // Tabs and selectedTab state
-  const CATEGORY_TABS = [
-    localizationText.SHOP.SHOPPING,
-    localizationText.SHOP.PLAYSTATION,
-    localizationText.SHOP.FOOD,
-    localizationText.SHOP.ENTERTAINMENT,
-    localizationText.SHOP.TELECOM,
-    localizationText.SHOP.GOOGLE,
-    localizationText.SHOP.GAMES,
-    localizationText.SHOP.STORE,
-    localizationText.SHOP.TRANSPORTATION,
-    localizationText.SHOP.XBOX,
-    localizationText.SHOP.ITUNES,
-  ];
+  const renderToast = (apiError?: string) => {
+    showToast({
+      title: localizationText.ERROR.API_ERROR_RESPONSE,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
-  const [selectedTab, setSelectedTab] = useState(CATEGORY_TABS[0]);
+  const getProducts = async (categoryId: string) => {
+    try {
+      const payload: PayloadMerchantsCategoryProps = {
+        categoryId,
+      };
+
+      const apiResponse: any = await getProductsByCategoryId(payload);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        setCategoryProductsData(apiResponse?.response?.merchants);
+        setCategoryProducts(apiResponse?.response?.merchants);
+      } else if (apiResponse?.apiResponseNotOk) {
+        renderToast();
+      } else {
+        renderToast(apiResponse?.error);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
+  const getCategoriesForTabs = () => {
+    let catagoryTabs: string[] = [];
+    switch (selectedLanguage) {
+      case LanguageCode.AR:
+        catagoryTabs = categories.map((item: { addtionalAttribute1: string }) => item.addtionalAttribute1);
+        break;
+      default:
+        catagoryTabs = categories.map((item: { desc: string }) => item.desc);
+        break;
+    }
+    setCategoriesTabsData(catagoryTabs);
+    setSelectedTab(selectedCategory.desc);
+  };
+
+  useEffect(() => {
+    getCategoriesForTabs();
+    const categoryId = selectedCategory.code;
+    if (categoryId) getProducts(categoryId);
+  }, [selectedLanguage]);
+
+  // Function to get code based on desc or addtionalAttribute1
+  const getCodeByDescOrAttribute = (keyword: string) => {
+    const item = categories.find(
+      (element: { desc: string; addtionalAttribute1: string }) =>
+        element.desc.toLowerCase().includes(keyword.toLowerCase()) ||
+        element.addtionalAttribute1.toLowerCase().includes(keyword.toLowerCase()),
+    );
+    return item ? item.code : null;
+  };
 
   // Handle tab selection
   const handleTabChange = (tab: string) => {
-    setSelectedTab(tab);
+    if (tab !== selectedTab) {
+      setSelectedTab(tab);
+      const code = getCodeByDescOrAttribute(tab);
+      getProducts(code);
+    }
   };
 
+  // Search function
+  const searchByDesc = (keyword: string) =>
+    categoryProductsData.filter((item: { desc: string }) => item.desc.toLowerCase().includes(keyword.toLowerCase()));
+
   const handleSearch = (newText: string) => {
+    if (newText.length > 0) {
+      const searchResult = searchByDesc(newText);
+      setCategoryProducts(searchResult);
+    } else {
+      setCategoryProducts(categoryProductsData);
+    }
     setSearch(newText);
   };
 
-  const onCardPress = () => navigate(ScreenNames.PLAYSTATION);
-
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.SHOP.TITLE} applyFlex />
+      <IPayHeader backBtn title={localizationText.SHOP.TITLE_SHOP} applyFlex />
       <IPayTabs
-        tabs={CATEGORY_TABS}
+        tabs={categoriesTabsData}
         scrollable
         customStyles={styles.tabs}
         unselectedTabStyle={styles.unselectedTab}
+        preSelectedTab={selectedTab}
         onSelect={handleTabChange}
       />
       <IPayView style={styles.searchRow}>
@@ -71,8 +138,10 @@ const ShopCategoriesScreen: React.FC = () => {
 
       <IPayView style={styles.container}>
         {/* Conditionally render content based on the selected tab */}
-        {selectedTab === localizationText.SHOP.PLAYSTATION ? (
-          <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={playstationData} onCardPress={onCardPress} />
+        {categoryProducts.length > 0 ? (
+          <IPayView>
+            <IPayDescriptiveCard cardType={CardDetails.NORMAL} data={categoryProducts} onCardPress={() => {}} />
+          </IPayView>
         ) : (
           <IPayView style={styles.noResultContainer}>
             <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />

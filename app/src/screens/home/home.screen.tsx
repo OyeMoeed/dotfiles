@@ -59,7 +59,7 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      checkUserAccess();
+      checkUserAccess(true);
     }, DURATIONS.MEDIUM);
   }, []);
 

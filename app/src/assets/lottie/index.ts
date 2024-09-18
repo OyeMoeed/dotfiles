@@ -13,6 +13,7 @@ import eidCard2 from './gifts/eid/Card2.json';
 import eidCard3 from './gifts/eid/Card3.json';
 import eidCard4 from './gifts/eid/Card4.json';
 import successIconAnimation from './sucess.json';
+import penddingSuccessIconAnimation from './pendding-success.json';
 
 export {
   birthdayCard1,
@@ -30,4 +31,5 @@ export {
   eidCard3,
   eidCard4,
   successIconAnimation,
+  penddingSuccessIconAnimation,
 };

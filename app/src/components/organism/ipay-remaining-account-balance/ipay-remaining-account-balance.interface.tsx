@@ -35,5 +35,7 @@ interface IPayRemainingBalanceProps {
   onPressIcon?: () => void;
   onPressQR?: () => void;
   balanceType?: 'Incoming' | 'Outgoing';
+  channel?: string;
+  onSelectCard?: (selectedCardId: string) => void;
 }
 export default IPayRemainingBalanceProps;

@@ -1397,7 +1397,7 @@ const useConstantData = () => {
     // TODO: Replaced with api
     {
       id: '1',
-      image: images.playStatuon,
+      image: images.playStation,
       title: localizationText.SHOP.PLAYSTATION,
     },
     {

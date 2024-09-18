@@ -108,6 +108,8 @@ const enum ScreenNames {
   ALL_ORDERS = 'AllOrders',
   MERCHANTS = 'Merchants',
   SHOP_CATEGORIES = 'ShopCategories',
+  CATEGORY_SCREEN = 'CategoryScreen',
+  ALL_CATEGORIES_SCREEN = 'AllCategoriesScreen',
   PLAYSTATION = 'PlayStation',
   SADAD_EDIT_BILL_SCREEN = 'SadadEditBillsScreen',
   CARD_MANAGEMENT = 'CardManagement',

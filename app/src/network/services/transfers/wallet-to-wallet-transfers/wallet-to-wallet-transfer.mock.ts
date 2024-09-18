@@ -113,7 +113,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'Happy eid#Eid_1',
-            status: 'expired',
+            status: 'failed',
           },
           {
             amount: '32.00',
@@ -149,7 +149,7 @@ const walletToWalletTransferMock: WalletToWalletTransferMockProps = {
             vatAmt: null,
             bankVATAmt: null,
             userNotes: 'Happy eid#Eid_1',
-            status: 'expired',
+            status: 'failed',
           },
         ],
       },

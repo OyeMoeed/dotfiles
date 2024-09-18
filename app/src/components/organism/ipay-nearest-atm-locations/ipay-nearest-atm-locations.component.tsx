@@ -6,7 +6,12 @@ import { Marker } from 'react-native-maps';
 import { IPayNearestAtmLocationsProps } from './ipay-nearest-atm-locations.interface';
 import mapViewStyles from './ipay-nearest-atm-locations.style';
 
-const IPayNearestAtmLocations: React.FC<IPayNearestAtmLocationsProps> = ({ testID, style, nearestAtms }) => {
+const IPayNearestAtmLocations: React.FC<IPayNearestAtmLocationsProps> = ({
+  testID,
+  style,
+  nearestAtms,
+  onPressAtmCard,
+}) => {
   const styles = mapViewStyles();
   const mapRef = useRef<any>(null);
 
@@ -37,6 +42,9 @@ const IPayNearestAtmLocations: React.FC<IPayNearestAtmLocationsProps> = ({ testI
               title={atm?.type}
               description={atm?.address}
               testID={`marker-${index}`}
+              onPress={() => {
+                onPressAtmCard(atm);
+              }}
             >
               <IPayImage image={images.location} style={styles.marker} resizeMode="contain" />
             </Marker>

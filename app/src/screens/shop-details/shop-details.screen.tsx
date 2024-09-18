@@ -38,6 +38,7 @@ const ShopDetails: React.FC = ({ route }) => {
   const discountDetail = '20% Discount on Yearly subscribe on Spotify'; // TODO: Replace with API
   const amount = '470.00'; // TODO: Replace with API
   const localizationText = useLocalization();
+
   const requestFailed = false;
   const {
     SHOP: { PRODUCT_DISCRIPTION, VIEW_ALL_DETAILS, HIDE_DETAILS, PLAYSTATION, OFFER_DETAILS, PAY },

@@ -5,6 +5,7 @@ interface MultiTransactionsProps {
   isDebit: boolean;
   isCountGift: boolean;
   isCountWu: boolean;
+  isBeneficiaryHistory?: boolean;
 }
 interface IPayTransactionProps {
   testID?: string;

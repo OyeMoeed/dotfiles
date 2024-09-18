@@ -261,7 +261,7 @@
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
     "ID_UPDATION_DES": "Your ID’s expiration date is within {{DAYS}} days on {{DATE}}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
-    "REMIND_ME_LATER": "Remind me later",
+    "REMIND_ME_LATER": "Remind me again",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
     "ID_EXPIRED_DISCRIPTION": "Please make sure to renew it so you can still use AlinmaPay application.",
@@ -398,6 +398,8 @@
     "TOPUP_SUCCESS": "Top-up Successful",
     "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
+    "CARDS_TOPUP_TRX_TYPE": "Transaction type",
+    "CARDS_TOPUP_TRX_TYPE_VALUE": "Adding balance from card",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
     "REF_NUMBER": "Ref. Number",
@@ -548,7 +550,8 @@
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
     "DATE_AND_TIME": "Transaction Date",
-    "ACCOUNT": "Account"
+    "ACCOUNT": "Account",
+    "REASON_OF_TRANSFER": "Reason of Transfer"
   },
   "TRANSFER_SUMMARY": {
     "NAME": "Name",
