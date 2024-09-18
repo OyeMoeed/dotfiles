@@ -14,6 +14,7 @@ interface AtmDetailsProps {
 
 interface AtmProps {
   item: AtmDetailsProps;
+  index: number;
 }
 
 interface NearestAtmListComponentProps {

@@ -21,19 +21,27 @@ const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testI
   const localizationText = useLocalization();
   const getDistance = (distance: string | number) => `${distance}  ${localizationText.COMMON.KM}`;
 
-  const renderAtms = ({ item }: AtmProps) => (
-    <IPayPressable style={styles.atmCard} key={item.address} onPress={() => onPressAtmCard(item)}>
-      <IPayView style={styles.titleView}>
-        <IPayCaption1Text text={item.type} style={styles.typeText} color={colors.natural.natural700} />
-        <IPayView style={styles.fill}>
-          <IPayFootnoteText text={item.title} style={styles.titleText} numberOfLines={2} />
+  const renderAtms = ({ item, index }: AtmProps) => (
+    <IPayView>
+      <IPayPressable style={styles.atmCard} key={item.address} onPress={() => onPressAtmCard(item)}>
+        <IPayView style={styles.titleView}>
+          <IPayCaption1Text text={item.type} style={styles.typeText} color={colors.natural.natural700} />
+          <IPayView style={styles.fill}>
+            <IPayFootnoteText text={item.title} style={styles.titleText} numberOfLines={2} />
+          </IPayView>
         </IPayView>
-      </IPayView>
-      <IPayView style={styles.distanceView}>
-        <IPaySubHeadlineText regular text={getDistance(item?.distance)} style={styles.distanceText} />
-        <IPayIcon icon={icons.infoIcon} />
-      </IPayView>
-    </IPayPressable>
+        <IPayView style={styles.distanceView}>
+          <IPaySubHeadlineText regular text={getDistance(item?.distance)} style={styles.distanceText} />
+          <IPayIcon icon={icons.infoIcon} />
+        </IPayView>
+      </IPayPressable>
+      {index + 1 === nearestAtms?.length && (
+        <IPayFootnoteText
+          text={localizationText.ATM_WITHDRAWAL.NO_MORE_BRANCHES_OR_ATMS}
+          style={styles.noMoreNearestAtms}
+        />
+      )}
+    </IPayView>
   );
   return (
     <IPayView style={styles.atmListContainer} testID={`${testID}-atm-list`}>
