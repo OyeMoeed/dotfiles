@@ -67,31 +67,17 @@ const MoiPaymentScreen: React.FC = () => {
           {
             index: MoiPaymentFormFields.SERVICE_PROVIDER,
             integrationTagName: 'BeneficiaryId.ServiceProvider',
-            lOVType: '315',
             label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
             lovList: moiServiceProvider,
-            maxWidth: 32,
-            minWidth: 1,
-            orderIndex: '2',
-            required: true,
-            requiredInPaymentOrRefund: 'PAYMENT',
             type: 'LIST_OF_VALUE',
-            value: '1',
             dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
           },
           {
             index: MoiPaymentFormFields.SERVICE_TYPE, // Static Field
             label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
             integrationTagName: 'BeneficiaryId.ServiceType',
-            lOVType: '315',
             lovList: [],
-            maxWidth: 32,
-            minWidth: 1,
-            orderIndex: '2',
-            required: true,
-            requiredInPaymentOrRefund: 'PAYMENT',
             type: 'LIST_OF_VALUE',
-            value: '1',
             disable: true,
             dependsOn: MoiPaymentFormFields.SERVICE_TYPE, //MoiPaymentFormFields.SERVICE_PROVIDER,
           },
@@ -166,7 +152,6 @@ const MoiPaymentScreen: React.FC = () => {
                   disable: false,
                 };
               }
-
               return field;
             });
 
@@ -176,7 +161,6 @@ const MoiPaymentScreen: React.FC = () => {
 
         const onSubmit = (data: any) => {
           const originalData = revertFlatKeys(data);
-
           if (selectedTab === MoiPaymentTypes.REFUND) {
             navigate(ScreenNames.MOI_PAYMENT_REFUND);
           } else {
