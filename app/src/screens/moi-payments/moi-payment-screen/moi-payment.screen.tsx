@@ -30,17 +30,9 @@ const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
   const localizationText = useLocalization();
-  const [moiServiceProvider, setMoiServiceProvider] = useState<BillersTypes[]>([]);
-  const [moiServiceType, setMoiServiceType] = useState<BillersService[]>();
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
-  const [search, setSearch] = useState<string>('');
-  const [bottomSheetData, setBottomSheetData] = useState<{ id: number; text: string }[]>(moiServiceProvider);
-  const [filteredData, setFilteredData] = useState<{ id: number; text: string }[]>(moiServiceProvider);
-  const [customSnapPoint, setCustomSnapPoints] = useState<string[]>(['1%', '92%']);
   const [, setIsRefund] = useState<boolean>(false);
-  const [beneficiaryID, setBeneficiaryID] = useState<string>('');
   const [fields, setFields] = useState<DynamicField[]>([]);
-  const { myBeneficiaryId = '123123123' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
   const [selectedBiller, setSelectedBiller] = useState<string>();
   const [selectedServiceType, setSelectedServiceType] = useState<string>();
@@ -53,7 +45,6 @@ const MoiPaymentScreen: React.FC = () => {
       } else {
         setIsRefund(false);
       }
-
       setSelectedTab(tab);
     },
     [selectedTab],
@@ -81,9 +72,6 @@ const MoiPaymentScreen: React.FC = () => {
         code: billerItem.billerId,
         desc: billerItem.billerDesc,
       }));
-
-      setMoiServiceProvider(serviceProvider);
-
       const updatedFields = [
         {
           index: MoiPaymentFormFields.SERVICE_PROVIDER,
@@ -115,7 +103,6 @@ const MoiPaymentScreen: React.FC = () => {
         code: serviceItem.serviceId,
         desc: serviceItem.serviceDesc,
       }));
-      setMoiServiceType(serviceList);
       return serviceList;
     }
   };
