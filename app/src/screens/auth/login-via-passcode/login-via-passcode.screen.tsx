@@ -350,7 +350,7 @@ const LoginViaPasscode: React.FC = () => {
     actionSheetRef.current.hide();
   };
 
-  const delinkSuccessfully = useCallback((index: number) => {
+  const delinkSuccessfully = useCallback((index?: number) => {
     if (index === 1) {
       delinkDevice();
     } else {

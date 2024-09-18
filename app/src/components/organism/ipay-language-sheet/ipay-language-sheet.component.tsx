@@ -18,7 +18,7 @@ import { IPayLanguageSheetProps } from './ipay-language.interface';
 import { languagesAll } from './languagesData';
 import { useLanguageChange, useModalActions } from './useLanguageChange';
 
-const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((_, ref) => {
+const IPayLanguageSheet: React.FC<any> = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((props, ref) => {
   const { bottomSheetModalRef, handleClosePress } = useModalActions(ref);
   const { colors } = useTheme();
   const sheetStyles = styles(colors);
