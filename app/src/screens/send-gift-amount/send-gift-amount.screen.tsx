@@ -37,7 +37,6 @@ const SendGiftAmountScreen = ({ route }) => {
   const { selectedContacts, giftDetails } = route.params;
   const localizationText = useLocalization();
   const [topUpAmount, setTopUpAmount] = useState('');
-  const [warningStatus] = useState<string>('');
   const MAX_CONTACTS = 5;
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
@@ -65,6 +64,11 @@ const SendGiftAmountScreen = ({ route }) => {
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
     if (tab === localizationText.SEND_GIFT.MANUAL) setTopUpAmount('');
+  };
+
+  const showRemoveAlert = (contact: Contact) => {
+    setContactToRemove(contact);
+    setAlertVisible(true);
   };
 
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
@@ -128,11 +132,6 @@ const SendGiftAmountScreen = ({ route }) => {
 
       return updatedContacts;
     });
-  };
-
-  const showRemoveAlert = (contact: Contact) => {
-    setContactToRemove(contact);
-    setAlertVisible(true);
   };
 
   const renderItem = ({ item }: { item: Contact }) => {
@@ -425,7 +424,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnText={localizationText.SEND_GIFT.SEND}
           btnIconsDisabled
           onPress={getW2WActiveFriends}
-          disabled={isDisabled || !!warningStatus}
+          disabled={isDisabled}
           btnStyle={styles.btnText}
         />
       </IPayView>

@@ -32,7 +32,7 @@ const SendMoneyRequest: React.FC = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
-  const { selectedContacts, heading, showHistory } = route.params;
+  const { selectedContacts, heading } = route.params as any;
   const [selectedId, setSelectedId] = useState<number | string>('');
   const [warningStatus, setWarningStatus] = useState<string>('');
 

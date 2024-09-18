@@ -30,6 +30,7 @@ import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { SNAP_POINT } from '@app/constants/constants';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import {
@@ -38,7 +39,6 @@ import {
   TransactionType,
 } from './beneficiary-transaction-history.interface';
 import transactionHistoryStyles from './beneficiary-transaction-history.style';
-import { SNAP_POINT } from '@app/constants/constants';
 
 const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const { colors } = useTheme();

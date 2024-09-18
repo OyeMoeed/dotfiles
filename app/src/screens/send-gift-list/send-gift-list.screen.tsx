@@ -7,28 +7,27 @@ import { IPayFilterBottomSheet, IPayGiftTransactionList } from '@app/components/
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { GiftStatus } from '@app/enums/gift-status.enum';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { ExecuteGiftMockProps } from '@app/network/services/transfers/execute-gift/execute-gift.interface';
+import executeGift from '@app/network/services/transfers/execute-gift/execute-gift.service';
+import { TransferItem } from '@app/network/services/transfers/wallet-to-wallet-transfers/wallet-to-wallet-transfer.interface';
 import getWalletToWalletTransfers from '@app/network/services/transfers/wallet-to-wallet-transfers/wallet-to-wallet-transfers.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, FiltersType, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useIsFocused } from '@react-navigation/core';
 import React, { useEffect, useRef, useState } from 'react';
 import sendGiftStyles from './send-gift-list.style';
 
-interface Item {
-  date: string;
-  titleText: string;
-  footText: string;
-  status: typeof GiftStatus;
-  amount: number;
-  onPress?: () => void;
-}
 const SendGiftListScreen: React.FC = () => {
   const { colors } = useTheme();
   const localizationText = useLocalization();
+  const isFocused = useIsFocused();
   const styles = sendGiftStyles(colors);
   const GIFT_TABS = [localizationText.SEND_GIFT.SENT, localizationText.SEND_GIFT.RECEIVED];
   const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
@@ -72,20 +71,16 @@ const SendGiftListScreen: React.FC = () => {
     navigate(ScreenNames.SEND_GIFT_CARD);
   };
 
-  const sendGiftDetail = (item: Item, isSend: boolean) => {
-    navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: item, isSend });
-  };
-
   let noResultMessage;
 
   if (selectedTab === localizationText.SEND_GIFT.RECEIVED) {
     noResultMessage = `
-  ${localizationText.SEND_GIFT.RECIEVE_ANY_GIFT}
-  `;
+    ${localizationText.SEND_GIFT.RECIEVE_ANY_GIFT}
+    `;
   } else {
     noResultMessage = `
-  ${localizationText.SEND_GIFT.SENT_ANY_GIFT}
-  `;
+    ${localizationText.SEND_GIFT.SENT_ANY_GIFT}
+    `;
   }
 
   const renderToast = (toastMsg: string) => {
@@ -96,6 +91,29 @@ const SendGiftListScreen: React.FC = () => {
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
+  };
+
+  const executeReceivedGift = async (giftDetails: TransferItem, isSend: boolean, giftCategory: string) => {
+    const payload = {
+      trxReqType: TransactionTypes.COUT_GIFT,
+      trxId: giftDetails?.requestID ?? '',
+      deviceInfo: await getDeviceInfo(),
+    };
+    try {
+      const apiResponse: ExecuteGiftMockProps = await executeGift(walletNumber, payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: giftDetails, isSend, giftCategory });
+          break;
+        case apiResponse?.apiResponseNotOk:
+          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          break;
+        default:
+          break;
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
   };
 
   const getWalletToWalletTransferData = async () => {
@@ -118,23 +136,43 @@ const SendGiftListScreen: React.FC = () => {
     }
   };
 
+  const sendGiftDetail = (item: TransferItem, isSend: boolean, giftCategory: string) => {
+    if (!isSend && item?.status === GiftStatus.INITIATED) {
+      executeReceivedGift(item, isSend, giftCategory);
+    } else {
+      navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: item, isSend, giftCategory });
+    }
+  };
+
   useEffect(() => {
-    getWalletToWalletTransferData();
-  }, []);
+    if (isFocused) {
+      getWalletToWalletTransferData();
+    }
+  }, [isFocused]);
+
+  const giftTypeMapping = {
+    eid: localizationText.SEND_GIFT.EIYDIAH,
+    birthday: localizationText.SEND_GIFT.BIRTHDAY,
+    congrat: localizationText.SEND_GIFT.CONGRATULATIONS,
+  };
 
   const renderItem = ({ item }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount } = item;
     const isSend = selectedTab === localizationText.SEND_GIFT.SENT;
+
+    const giftCategory = userNotes.split('#')[1];
+    const giftType = giftCategory?.split('_')[0]?.toLowerCase();
+    const occasion = giftTypeMapping[giftType as keyof typeof giftTypeMapping];
 
     return (
       <IPayView style={styles.listView}>
         <IPayGiftTransactionList
           date={trnsDateTime}
           titleText={isSend ? receiverName : senderName}
-          footText={userNotes}
+          footText={occasion}
           status={status}
           amount={amount}
-          onPress={() => sendGiftDetail(item, isSend)}
+          onPress={() => sendGiftDetail(item, isSend, giftCategory)}
           titleWrapper={styles.titleWrapper}
           tab={selectedTab}
         />
@@ -194,7 +232,12 @@ const SendGiftListScreen: React.FC = () => {
       {selectedTabData?.length ? (
         <IPayView style={styles.view}>
           <IPayView style={styles.listWrapper}>
-            <IPayFlatlist data={selectedTabData} renderItem={renderItem} style={styles.flexStyle} />
+            <IPayFlatlist
+              data={selectedTabData}
+              renderItem={renderItem}
+              showsVerticalScrollIndicator={false}
+              style={styles.flexStyle}
+            />
           </IPayView>
           <IPayView>
             <IPayButton

@@ -55,7 +55,6 @@ const TransferSummaryScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>();
   const [otpError, setOtpError] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [expandMsg, setExpandMsg] = useState<boolean>(false);
@@ -235,7 +234,6 @@ const TransferSummaryScreen: React.FC = () => {
   };
 
   const verifyOtp = async () => {
-    setIsLoading(true);
     try {
       const payload: IW2WTransferConfirmReq = {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
@@ -257,9 +255,7 @@ const TransferSummaryScreen: React.FC = () => {
           totalAmount: transfersDetails?.formInstances?.[0]?.totalAmount,
         });
       }
-      setIsLoading(false);
     } catch (error) {
-      setIsLoading(false);
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
@@ -350,7 +346,6 @@ const TransferSummaryScreen: React.FC = () => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          isLoading={isLoading}
           otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
