@@ -43,6 +43,12 @@ const customSheetStyles = (theme: any) =>
     rotateIcon: {
       transform: [{ rotate: '180deg' }],
     },
+    touchableWithoutFeedbackViewStyle: {
+      height: '100%',
+      width: '100%',
+      zIndex: 1,
+      position: 'absolute',
+    },
   });
 
 export default customSheetStyles;
