@@ -139,7 +139,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       height: moderateScale(24),
     },
     btn: {
-      marginTop: moderateScale(16),
+      marginTop: moderateScale(10),
     },
   });
 

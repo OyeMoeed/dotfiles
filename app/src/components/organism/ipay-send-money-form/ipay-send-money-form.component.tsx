@@ -17,12 +17,13 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   addForm,
   formInstances,
   setNotes,
+  showCount = true,
+  maxLength = 500,
   setSelectedItem,
   showReason = true,
 }) => {
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
-  const MAX_LENGTH = 500;
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const ListFooterComponent = () => (
@@ -46,6 +47,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   }) => (
     <IPayTransferInformation
       showReason={showReason}
+      showCount={showCount}
       amount={amount}
       subtitle={subtitle}
       setAmount={(value) => setAmount(id, value)}
@@ -53,7 +55,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
       selectedItem={selectedItem?.text}
       setNotes={(value) => setNotes(id, value)}
       notes={notes}
-      maxLength={MAX_LENGTH}
+      maxLength={maxLength}
       openReason={() => openReason?.(id)}
       showRemoveFormOption={() => showRemoveFormOption(id)}
       showRemoveBtn

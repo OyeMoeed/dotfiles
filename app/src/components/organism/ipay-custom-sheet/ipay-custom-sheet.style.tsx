@@ -11,6 +11,7 @@ const customSheetStyles = (theme: any) =>
       width: '100%',
       position: 'absolute',
       top: WINDOW_HEIGHT,
+      zIndex: 2,
     },
     innerStyle: {
       paddingBottom: verticalScale(380),
@@ -42,6 +43,12 @@ const customSheetStyles = (theme: any) =>
     },
     rotateIcon: {
       transform: [{ rotate: '180deg' }],
+    },
+    touchableWithoutFeedbackViewStyle: {
+      height: '100%',
+      width: '100%',
+      zIndex: 1,
+      position: 'absolute',
     },
   });
 
