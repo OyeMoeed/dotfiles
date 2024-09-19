@@ -96,6 +96,8 @@ interface FilterFormDataProp {
 
 interface CardsProp {
   walletNumber?: string;
+  hideSpinner?: boolean;
+  hideError?: boolean;
 }
 
 interface resetPinCodeProp {

@@ -452,7 +452,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       regular
                       style={styles.headingStyles}
                       color={colors.natural.natural900}
-                      text="TRANSACTION_HISTORY.PAY_FROM"
+                      text="TRANSACTION_HISTORY.SENDER"
                     />
                   )}
                   {isDebit && (
@@ -460,7 +460,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                       regular
                       style={styles.headingStyles}
                       color={colors.natural.natural900}
-                      text="TRANSACTION_HISTORY.PAY_TO"
+                      text="TRANSACTION_HISTORY.RECEIVER"
                     />
                   )}
                   <IPaySubHeadlineText
@@ -700,25 +700,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 </IPayView>
               )}
 
-              {!isPayOneCard && !isCountMusaned && !isBeneficiaryHistory && (
-                <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText
-                    regular
-                    style={styles.headingStyles}
-                    color={colors.natural.natural900}
-                    text="TRANSACTION_HISTORY.AMOUNT"
-                  />
-                  <IPaySubHeadlineText
-                    regular
-                    color={colors.primary.primary800}
-                    numberOfLines={2}
-                    shouldTranslate={false}
-                  >
-                    {`${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
-                  </IPaySubHeadlineText>
-                </IPayView>
-              )}
-
               {transaction?.transactionDescription &&
                 transaction?.transactionJustfication !== '0' &&
                 transaction?.transactionJustfication !== '2' && (
@@ -741,8 +722,8 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 )}
 
               {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA &&
-                transaction?.transactionRequestType !== TransactionTypes.PAY_ONECARD &&
-                !isBeneficiaryHistory && (
+                !isPayOneCard &&
+                (!isCredit || !isBeneficiaryHistory) && (
                   <IPayView style={styles.cardStyle}>
                     <IPayFootnoteText
                       regular
@@ -762,8 +743,8 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 )}
 
               {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA &&
-                transaction?.transactionRequestType !== TransactionTypes.PAY_ONECARD &&
-                !isBeneficiaryHistory && (
+                !isPayOneCard &&
+                (!isCredit || !isBeneficiaryHistory) && (
                   <IPayView style={styles.cardStyle}>
                     <IPayFootnoteText
                       regular
@@ -805,43 +786,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 (isBeneficiaryHistory &&
                   renderHistory('TRANSACTION_HISTORY.NOTES', transaction?.transactionDescription))}
 
-              {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA && !isPayOneCard && !isCredit && (
-                <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText
-                    regular
-                    style={styles.headingStyles}
-                    color={colors.natural.natural900}
-                    text="TRANSACTION_HISTORY.FEES"
-                  />
-                  <IPaySubHeadlineText
-                    regular
-                    color={colors.primary.primary800}
-                    numberOfLines={2}
-                    shouldTranslate={false}
-                  >
-                    {`${transaction?.feesAmount || ''}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
-                  </IPaySubHeadlineText>
-                </IPayView>
-              )}
-
-              {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA && !isPayOneCard && !isCredit && (
-                <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText
-                    regular
-                    style={styles.headingStyles}
-                    color={colors.natural.natural900}
-                    text="TRANSACTION_HISTORY.VAT"
-                  />
-                  <IPaySubHeadlineText
-                    regular
-                    color={colors.primary.primary800}
-                    numberOfLines={2}
-                    shouldTranslate={false}
-                  >
-                    {`${transaction?.vatAmount || ''}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
-                  </IPaySubHeadlineText>
-                </IPayView>
-              )}
 
               {isPayOneCard && (
                 <IPayView style={styles.cardStyle}>

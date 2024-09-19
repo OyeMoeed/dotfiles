@@ -32,9 +32,9 @@ import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import { useTranslation } from 'react-i18next';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
 

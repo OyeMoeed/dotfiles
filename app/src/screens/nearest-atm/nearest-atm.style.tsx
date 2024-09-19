@@ -82,6 +82,13 @@ const nearestAtmStyles = (colors: any) =>
     listFooterStyle: {
       height: verticalScale(50),
     },
+    noMoreNearestAtms: {
+      marginTop: verticalScale(20),
+      marginBottom: verticalScale(10),
+      alignSelf: 'center',
+      textAlign: 'center',
+      color: colors.natural.natural700,
+    },
   });
 
 export default nearestAtmStyles;
