@@ -6,22 +6,22 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import CardDetails from '@app/enums/card-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { PayloadMerchantsCategoryProps } from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.interface';
 import getProductsByCategoryId from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, LanguageCode, States } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import DataItem from './category-screen.interface';
 import CategoryStyles from './category-screen.styles';
 
 const CategoryScreen: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const { category } = route.params;
   const { playStationPrices, sortingData } = useConstantData();
   const { colors } = useTheme();
   const styles = CategoryStyles(colors);
-  const localizationText = useLocalization();
   const sortRef = useRef<typeof IPayBottomSheet>(null);
 
   const [search, setSearch] = useState<string>('');
@@ -33,7 +33,7 @@ const CategoryScreen: React.FC = ({ route }) => {
 
   const renderToast = (apiError?: string) => {
     showToast({
-      title: localizationText.ERROR.API_ERROR_RESPONSE,
+      title: 'ERROR.API_ERROR_RESPONSE',
       subTitle: apiError,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -62,7 +62,7 @@ const CategoryScreen: React.FC = ({ route }) => {
         renderToast(apiResponse?.error);
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -82,7 +82,7 @@ const CategoryScreen: React.FC = ({ route }) => {
   const handleSort = useCallback(
     (option: string) => {
       const sorted = [...playStationPrices].sort((a, b) =>
-        option === localizationText.SHOP.HIGH_TO_LOW ? b.price - a.price : a.price - b.price,
+        option === t('SHOP.HIGH_TO_LOW') ? b.price - a.price : a.price - b.price,
       );
       setCategoryProducts(sorted);
       if (sortRef.current) {
@@ -90,7 +90,7 @@ const CategoryScreen: React.FC = ({ route }) => {
       }
       setSelectedOption(option); // Update selected option state
     },
-    [playStationPrices, localizationText.SHOP.HIGH_TO_LOW],
+    [playStationPrices],
   );
 
   const renderItem = ({ item }: { item: DataItem }) => {
@@ -116,11 +116,7 @@ const CategoryScreen: React.FC = ({ route }) => {
             containerStyle={styles.chip}
             variant={States.SEVERE}
             icon={<IPayIcon icon={icons.CLOSE_SQUARE} color={colors.secondary.secondary500} size={16} />}
-            textValue={
-              selectedOption === localizationText.SHOP.HIGH_TO_LOW
-                ? localizationText.SHOP.HIGH_CHIP
-                : localizationText.SHOP.LOW_CHIP
-            }
+            textValue={selectedOption === t('SHOP.HIGH_TO_LOW') ? 'SHOP.HIGH_CHIP' : 'SHOP.LOW_CHIP'}
           />
         </IPayView>
       );
@@ -136,23 +132,21 @@ const CategoryScreen: React.FC = ({ route }) => {
           <IPayTextInput
             text={search}
             onChangeText={setSearch}
-            placeholder={localizationText.COMMON.SEARCH}
+            placeholder="COMMON.SEARCH"
             rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
             simpleInput
             containerStyle={styles.background}
           />
 
           <IPayPressable onPress={openRef}>
-            <IPayIcon
-              icon={selectedOption === localizationText.SHOP.HIGH_TO_LOW ? icons.arrow_updown2 : icons.arrow_updown1}
-            />
+            <IPayIcon icon={selectedOption === t('SHOP.HIGH_TO_LOW') ? icons.arrow_updown2 : icons.arrow_updown1} />
           </IPayPressable>
         </IPayView>
         {renderChip()}
         <IPayDescriptiveCard cardType={CardDetails.DESVRIPTIVE} data={categoryProducts} />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         cancelBnt

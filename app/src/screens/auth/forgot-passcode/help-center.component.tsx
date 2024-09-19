@@ -1,5 +1,4 @@
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import {
@@ -21,7 +20,6 @@ import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
 const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs, hideFAQError = false }) => {
-  const localizationText = useLocalization();
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
@@ -82,8 +80,8 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
         <>
           <IPayView style={styles.titleContainer}>
             <icons.question width={scale(40)} height={verticalScale(40)} />
-            <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
-            <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
+            <IPayTitle2Text text="FORGOT_PASSCODE.FAQ" style={styles.title} />
+            <IPayCaption1Text regular text="FORGOT_PASSCODE.FAQ_DEFINITION" style={styles.subtitle} />
           </IPayView>
           <IPayFlatlist
             scrollEnabled={false}
@@ -92,16 +90,12 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
             keyExtractor={(item, index) => index.toString()}
           />
           <IPayView style={styles.contactUsContainer}>
-            <IPaySubHeadlineText regular style={styles.contactUsText}>
-              {localizationText.COMMON.ASSISTANCE}
-            </IPaySubHeadlineText>
-            <IPayCaption1Text regular style={styles.contactUsSubText}>
-              {localizationText.COMMON.CONTACT_SERVICE_TEAM}
-            </IPayCaption1Text>
+            <IPaySubHeadlineText regular style={styles.contactUsText} text="COMMON.ASSISTANCE" />
+            <IPayCaption1Text regular style={styles.contactUsSubText} text="COMMON.CONTACT_SERVICE_TEAM" />
             <IPayButton
               btnType={buttonVariants.PRIMARY}
               rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
-              btnText={localizationText.COMMON.CONTACT_US}
+              btnText="COMMON.CONTACT_US"
               textColor={colors.secondary.secondary800}
               btnStyle={styles.buttonBg}
               large

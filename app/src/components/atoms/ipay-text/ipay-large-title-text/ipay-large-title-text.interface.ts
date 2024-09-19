@@ -30,4 +30,8 @@ export interface IPayLargeTitleTextProps {
    * Children components to be rendered inside the RNText.
    */
   children?: React.ReactNode;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

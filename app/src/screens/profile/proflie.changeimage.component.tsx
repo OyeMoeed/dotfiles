@@ -4,7 +4,6 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayActionSheetProps } from '@app/components/organism/ipay-actionsheet/ipay-actionsheet-interface';
 import IPayActionSheet from '@app/components/organism/ipay-actionsheet/ipay-actionsheet.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { alertType, alertVariant } from '@app/utilities/enums.util';
@@ -24,12 +23,12 @@ interface UseChangeImageReturn {
 }
 
 const useChangeImage = (): UseChangeImageReturn => {
+  const { colors } = useTheme();
+  const styles = profileStyles(colors);
+
   const actionSheetRef = useRef<any>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
-  const localizationText = useLocalization();
-  const { colors } = useTheme();
-  const styles = profileStyles(colors);
   const [, setIsLoading] = useState<boolean>(false);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const dispatch = useTypedDispatch();
@@ -119,21 +118,16 @@ const useChangeImage = (): UseChangeImageReturn => {
     [handleImagePicker, handleCameraPicker, selectedImage],
   );
 
-  const walletOptions = [
-    localizationText.PROFILE.TAKE_PHOTO,
-    localizationText.PROFILE.UPLOAD_PHOTO,
-    localizationText.PROFILE.REMOVE,
-    localizationText.COMMON.CANCEL,
-  ];
+  const walletOptions = ['PROFILE.TAKE_PHOTO', 'PROFILE.UPLOAD_PHOTO', 'PROFILE.REMOVE', 'COMMON.CANCEL'];
   const actionSheetOptions: IPayActionSheetProps = {
-    title: localizationText.PROFILE.CHANGE_PICTURE,
+    title: 'PROFILE.CHANGE_PICTURE',
     showIcon: true,
     customImage: <ProfileIcon />,
-    message: localizationText.PROFILE.SELECT_OPTION,
+    message: 'PROFILE.SELECT_OPTION',
     options:
       selectedImage || walletInfo.profileImage
         ? walletOptions
-        : [localizationText.PROFILE.TAKE_PHOTO, localizationText.PROFILE.UPLOAD_PHOTO, localizationText.COMMON.CANCEL],
+        : ['PROFILE.TAKE_PHOTO', 'PROFILE.UPLOAD_PHOTO', 'COMMON.CANCEL'],
     cancelButtonIndex: selectedImage || walletInfo.profileImage ? 3 : 2,
     showCancel: true,
     destructiveButtonIndex: selectedImage || walletInfo.profileImage ? 2 : undefined,
@@ -147,8 +141,8 @@ const useChangeImage = (): UseChangeImageReturn => {
   const IPayAlertComponent = alertVisible ? (
     <IPayAlert
       testID="removePhotoAlert"
-      title={localizationText.PROFILE.REMOVE_PHOTO}
-      message={localizationText.PROFILE.REMOVE_CONFIRM}
+      title="PROFILE.REMOVE_PHOTO"
+      message="PROFILE.REMOVE_CONFIRM"
       icon={<IPayIcon icon={icons.TRASH} size={64} />}
       visible={alertVisible}
       variant={alertVariant.DESTRUCTIVE}
@@ -159,13 +153,13 @@ const useChangeImage = (): UseChangeImageReturn => {
         setAlertVisible(false);
       }}
       primaryAction={{
-        text: localizationText.COMMON.CANCEL,
+        text: 'COMMON.CANCEL',
         onPress: () => {
           setAlertVisible(false);
         },
       }}
       secondaryAction={{
-        text: localizationText.PROFILE.REMOVE,
+        text: 'PROFILE.REMOVE',
         onPress: handleRemoveImg,
       }}
       type={alertType.SIDE_BY_SIDE}

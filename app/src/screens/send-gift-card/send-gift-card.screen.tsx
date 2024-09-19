@@ -2,7 +2,6 @@ import { IPayFootnoteText, IPayLottieAnimation, IPayTitle3Text, IPayView } from 
 import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -10,6 +9,7 @@ import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { giftsCardData } from './send-gift-card.constants';
 import { GiftDetails } from './send-gift-card.interface';
 import sendGiftCard from './send-gift-card.style';
@@ -18,12 +18,15 @@ const SendGiftCard = () => {
   const { colors } = useTheme();
   const [carouselData, setCarouselData] = useState<GiftDetails[]>(giftsCardData?.eid(colors));
 
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
-  const {
-    SEND_GIFT: { EIYDIAH, BIRTHDAY, CONGRATULATIONS, SEND_GIFT, SEND_GIFT_CARD_DETAIL, SEND_GIFT_CARD_DESCRIPTION },
-    COMMON: { NEXT },
-  } = localizationText;
+  const EIYDIAH = t('SEND_GIFT.EIYDIAH');
+  const BIRTHDAY = t('SEND_GIFT.BIRTHDAY');
+  const CONGRATULATIONS = t('SEND_GIFT.CONGRATULATIONS');
+  const SEND_GIFT = t('SEND_GIFT.SEND_GIFT');
+  const SEND_GIFT_CARD_DETAIL = t('SEND_GIFT.SEND_GIFT_CARD_DETAIL');
+  const SEND_GIFT_CARD_DESCRIPTION = t('SEND_GIFT.SEND_GIFT_CARD_DESCRIPTION');
+
   const SEND_GIFT_TABS = [EIYDIAH, BIRTHDAY, CONGRATULATIONS];
   const styles = sendGiftCard(colors);
 
@@ -87,7 +90,7 @@ const SendGiftCard = () => {
       </IPayView>
       <IPayButton
         btnType={buttonVariants.PRIMARY}
-        btnText={NEXT}
+        btnText="COMMON.NEXT"
         btnIconsDisabled
         btnStyle={styles.nextButton}
         onPress={onNext}

@@ -22,7 +22,6 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
 import useTransferMethodsData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import WUBeneficiaryDetailsMetaDataProps, {
@@ -31,7 +30,7 @@ import WUBeneficiaryDetailsMetaDataProps, {
 import getWUBeneficiaryInfoMetaData from '@app/network/services/international-transfer/wu-beneficiary-details-metadata/wu-beneficiary-details-metadata.service';
 import { FeesInquiryPayload } from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.interface';
 import westerUnionFeesInquiry from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
@@ -39,16 +38,17 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import Flag from 'react-native-round-flags';
+import { useTranslation } from 'react-i18next';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
 import beneficiaryKeysMapping from './international-transfer-info.constant';
 import InternationalBeneficiariesDetails from './international-transfer-info.interface';
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
+  const { t } = useTranslation();
   const { transferData } = route.params;
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
-  const localizationText = useLocalization();
   const reasonOfTransferSheet = useRef<any>(null);
   const sectionListRef = useRef<any>(null);
   const beneficiaryDetailsRef = useRef<any>(null);
@@ -69,7 +69,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalBeneficiariesDetails];
-    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
+    const localization = localizationKey ? t(`INTERNATIONAL_TRANSFER.${localizationKey}`) : label;
 
     return (
       <IPayList
@@ -133,7 +133,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           setBeneficiaryDetailsData(apiResponse?.response?.transferReasonList);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -142,8 +142,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -163,7 +163,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           setWUFeesInquiryData(apiResponse?.response);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -172,8 +172,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -192,10 +192,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     setBeneficiaryCurrencyAmount(egpAmount?.toFixed(2));
   };
 
-  const transferFees = localizationText.LOCAL_TRANSFER.FEES;
-  const feeAmount = `${wuFeesInquiryData?.feeAmount ?? ''} ${localizationText.COMMON.SAR}`;
-  const transferVat = localizationText.COMMON.AND_VAT;
-  const vatAmount = `${wuFeesInquiryData?.vatAmount ?? ''} ${localizationText.COMMON.SAR}`;
+  const transferFees = t('LOCAL_TRANSFER.FEES');
+  const feeAmount = `${wuFeesInquiryData?.feeAmount ?? ''} ${t('COMMON.SAR')}`;
+  const transferVat = t('COMMON.AND_VAT');
+  const vatAmount = `${wuFeesInquiryData?.vatAmount ?? ''} ${t('COMMON.SAR')}`;
 
   const onTransferGateway = (methodName: string, index: number) => {
     setTransferGateway({ transferMethod: methodName, index });
@@ -203,7 +203,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.TRANSFER.TRANSFER_INFRORMATION} applyFlex />
+      <IPayHeader backBtn title="TRANSFER.TRANSFER_INFRORMATION" applyFlex />
       <IPayView style={styles.contentContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayView>
@@ -221,6 +221,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
             />
             <IPayView>
               <IPayList
+                shouldTranslateTitle={false}
                 regularTitle={false}
                 title={transferData?.fullName}
                 subTitle={transferData?.countryDesc}
@@ -232,7 +233,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                   <IPayButton
                     btnIconsDisabled
                     btnType={buttonVariants.LINK_BUTTON}
-                    btnText={localizationText.COMMON.VIEW_DETAILS}
+                    btnText="COMMON.VIEW_DETAILS"
                     onPress={() => beneficiaryDetailsRef.current.present()}
                   />
                 }
@@ -262,9 +263,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
               <IPayView style={styles.feeContainer}>
                 <IPayView style={styles.feeText}>
                   <IPayView>
-                    <IPayFootnoteText color={colors.natural.natural900}>
-                      {localizationText.COMMON.INCLUDE_FEES}
-                    </IPayFootnoteText>
+                    <IPayFootnoteText color={colors.natural.natural900} text="COMMON.INCLUDE_FEES" />
                     <IPayCaption1Text
                       color={colors.natural.natural500}
                     >{`${transferFees} ${feeAmount} ${transferVat} ${vatAmount}`}</IPayCaption1Text>
@@ -274,7 +273,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
               </IPayView>
               <IPayView>
                 <IPayAnimatedTextInput
-                  label={localizationText.COMMON.REASON_OF_TRANSFER}
+                  label="COMMON.REASON_OF_TRANSFER"
                   editable={false}
                   value={selectedReason?.desc}
                   containerStyle={styles.inputContainerStyle}
@@ -288,7 +287,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
           </IPayView>
         </IPayScrollView>
         <IPayButton
-          btnText={localizationText.COMMON.NEXT}
+          btnText="COMMON.NEXT"
           btnType={buttonVariants.PRIMARY}
           large
           disabled={!selectedReason?.desc}
@@ -298,7 +297,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.COMMON.REASON_OF_TRANSFER}
+        heading="COMMON.REASON_OF_TRANSFER"
         customSnapPoint={['1%', '60%']}
         onCloseBottomSheet={() => reasonOfTransferSheet.current.close()}
         ref={reasonOfTransferSheet}
@@ -329,7 +328,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         </IPayView>
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS}
+        heading="INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS"
         customSnapPoint={['1%', '90%']}
         onCloseBottomSheet={() => beneficiaryDetailsRef.current.close()}
         ref={beneficiaryDetailsRef}
@@ -343,13 +342,13 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
             data={getGeneratedBeneficiary(beneficiaryKeysMapping[BeneficiariesDetails.INFORMATIONS])}
             showsVerticalScrollIndicator={false}
             renderItem={renderOption}
-            ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_INFORMATION)}
+            ListHeaderComponent={renderListHeader(t('INTERNATIONAL_TRANSFER.BENEFECIARY_INFORMATION'))}
           />
           <IPayFlatlist
             data={getGeneratedBeneficiary(beneficiaryKeysMapping[BeneficiariesDetails.DETAILS])}
             showsVerticalScrollIndicator={false}
             renderItem={renderOption}
-            ListHeaderComponent={renderListHeader(localizationText.INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS)}
+            ListHeaderComponent={renderListHeader(t('INTERNATIONAL_TRANSFER.BENEFECIARY_DETAILS'))}
           />
         </IPayView>
       </IPayBottomSheet>

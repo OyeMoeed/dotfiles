@@ -2,11 +2,11 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon } from '@app/components/atoms';
 import { IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { BeneficiaryTypes } from '@app/utilities/enums.util';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import localTransferStyles from '../../../screens/local-transfer/local-transfer.style';
 import { BeneficiariesSortSheetProps } from './beneficiaries-sort-sheet.interface';
 
@@ -22,16 +22,16 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
   sortByActive = true,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = localTransferStyles(colors);
 
   const sortTypes = [
     {
-      type: localizationText.LOCAL_TRANSFER.ACTIVE_INACTIVE,
+      type: t('LOCAL_TRANSFER.ACTIVE_INACTIVE'),
       isActiveToInactive: BeneficiaryTypes.ACTIVE,
     },
     {
-      type: localizationText.LOCAL_TRANSFER.INACTIVE_ACTIVE,
+      type: t('LOCAL_TRANSFER.INACTIVE_ACTIVE'),
       isActiveToInactive: BeneficiaryTypes.INACTIVE,
     },
   ];
@@ -45,7 +45,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
 
   return (
     <IPayBottomSheet
-      heading={localizationText.COMMON.SORT_BY}
+      heading="COMMON.SORT_BY"
       enablePanDownToClose
       cancelBnt
       bold
@@ -55,7 +55,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
       bgGradientColors={colors.sheetGradientPrimary10}
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
-      doneText={localizationText.COMMON.RESET}
+      doneText="COMMON.RESET"
       onDone={() => setSortByActive(BeneficiaryTypes.ACTIVE)}
     >
       <IPayFlatlist

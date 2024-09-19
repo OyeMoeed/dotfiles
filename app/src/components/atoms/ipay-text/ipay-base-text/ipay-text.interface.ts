@@ -41,4 +41,8 @@ export interface IPayTextProps {
   isAmount?: boolean;
 
   fontWeight?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

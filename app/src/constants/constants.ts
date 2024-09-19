@@ -661,6 +661,7 @@ const COUNTRIES = [
 const SNAP_POINT = {
   X_SMALL: ['35%', '90%'],
   XS_SMALL: ['40%', '90%'],
+  MID_SMALL: ['55%', '63%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
   MEDIUM_LARGE: ['95%', '95%'],

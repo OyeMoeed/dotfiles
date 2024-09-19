@@ -44,5 +44,9 @@ const billPaymentStyles = () =>
     otpInnerContainer: {
       paddingHorizontal: moderateScale(24),
     },
+    footerContainer: {
+      paddingTop: moderateScale(12, 0.3),
+      marginBottom: moderateScale(6, 0.3),
+    },
   });
 export default billPaymentStyles;

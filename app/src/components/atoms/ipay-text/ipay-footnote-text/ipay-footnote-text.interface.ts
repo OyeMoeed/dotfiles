@@ -35,4 +35,8 @@ export interface IPayFootnoteTextProps {
    */
   color?: string;
   fontWeight?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }
