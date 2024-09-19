@@ -74,6 +74,7 @@ const CardsScreen: React.FC = () => {
   const openCardSheet = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
+      setIsCardSheetVisible(true);
       cardSheetRef.current.present();
     }
   };
