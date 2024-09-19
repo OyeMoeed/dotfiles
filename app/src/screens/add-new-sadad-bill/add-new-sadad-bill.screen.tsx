@@ -32,8 +32,10 @@ import { BillersService } from '@app/network/services/bills-management/get-bille
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillers from '@app/network/services/bills-management/get-billers/get-billers.service';
-import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
+import { InquireBillPayloadProps } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
+import { SaveBillPayloadTypes } from '@app/network/services/bills-management/save-bill/save-bill.interface';
+import saveBillService from '@app/network/services/bills-management/save-bill/save-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
@@ -144,7 +146,35 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const onInquireBill = async (values: FormValues) => {
     const deviceInfo = await getDeviceInfo();
-    const payload: InquireBillPayloadTypes = {
+    const payload: InquireBillPayloadProps = {
+      billerId: selectedBiller?.billerId,
+      billAccountNumber: values.accountNumber,
+      serviceId: selectedService?.serviceId,
+      deviceInfo,
+    };
+
+    const apiResponse = await inquireBillService(payload);
+    if (apiResponse.successfulResponse) {
+      // navigate(ScreenNames.NEW_SADAD_BILL, {
+      //   billNickname: values.billName,
+      //   billerName: values.companyName,
+      //   billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+      //   serviceType: values.serviceType,
+      //   billNumOrBillingAcct: values.accountNumber,
+      //   dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
+      //   totalAmount: '0',
+      //   billerId: selectedBiller?.billerId,
+      //   billIdType: selectedBiller?.billIdType,
+      //   serviceDescription: selectedService?.serviceDesc,
+      // });
+    } else {
+      invoiceSheetRef.current.present();
+    }
+  };
+
+  const onSaveBill = async (values: FormValues) => {
+    const deviceInfo = await getDeviceInfo();
+    const payload: SaveBillPayloadTypes = {
       billerId: selectedBiller?.billerId,
       billNumOrBillingAcct: values.accountNumber,
       billIdType: selectedBiller?.billIdType,
@@ -154,7 +184,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       walletNumber,
     };
 
-    const apiResponse = await inquireBillService(payload);
+    const apiResponse = await saveBillService(payload);
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
