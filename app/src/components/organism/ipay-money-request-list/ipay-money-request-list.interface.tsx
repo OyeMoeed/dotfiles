@@ -10,4 +10,5 @@ export interface IPayMoneyRequestListProps {
   amount: number;
   onPress?: () => void;
   testID?: string;
+  shouldTranslateTitle?: boolean;
 }

@@ -12,10 +12,10 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayChip, IPayList } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPaySadadBillDetailBoxProps, SadadBillItemProps } from './ipay-sadad-bill-details-box.interface';
 import sadadBillDetailBoxStyles from './ipay-sadad-bill-details-box.style';
 
@@ -45,21 +45,21 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
   handleAmountInputFromOutSide = false,
   onChangeAmountOutside,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = sadadBillDetailBoxStyles(colors);
-  const localizationText = useLocalization();
   const {
     overPaidAmount = 0,
     isOverPaid,
     billTitle,
     vendor,
     vendorIcon,
-    currency = localizationText.COMMON.SAR,
     billAmount,
     isTransactionDeclined,
     declinedTitle,
     declinedMessage,
   }: SadadBillItemProps = item;
+  const currency = item.currency || t('COMMON.SAR');
   const [amount, setAmount] = useState<number>(billAmount);
   const [overPayBill, setOverPayBill] = useState<boolean>(false);
   const [overPayingValue, setOverPayingValue] = useState<number>(overPaidAmount);
@@ -85,11 +85,12 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
     <IPayView testID={testID} style={[styles.boxContainer, style]}>
       {isOverPaid && (
         <IPayView style={styles.topInfoWrapper}>
-          <IPayCaption2Text color={colors.natural.natural900} text={localizationText.NEW_SADAD_BILLS.OVERPAID_BY} />
+          <IPayCaption2Text color={colors.natural.natural900} text="NEW_SADAD_BILLS.OVERPAID_BY" />
           <IPayCaption2Text
             color={colors.natural.natural900}
             regular={false}
             text={`: ${overPaidAmount} ${currency}`}
+            shouldTranslate={false}
           />
         </IPayView>
       )}
@@ -135,10 +136,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
       />
       {showAmountToPay && (
         <IPayView style={styles.amountToBePaidWrapper}>
-          <IPayFootnoteText
-            color={colors.natural.natural700}
-            text={localizationText.NEW_SADAD_BILLS.AMOUNT_TO_BE_PAID}
-          />
+          <IPayFootnoteText color={colors.natural.natural700} text="NEW_SADAD_BILLS.AMOUNT_TO_BE_PAID" />
           <IPayView style={styles.amountWrapper}>
             <IPayInput
               style={styles.amountInput}
@@ -156,7 +154,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
           containerStyle={styles.chipContainer}
           isShowIcon={false}
           variant={States.SEVERE}
-          textValue={`${localizationText.NEW_SADAD_BILLS.YOU_OVERPAYING} ${overPayingValue} ${currency}`}
+          textValue={`${t('NEW_SADAD_BILLS.YOU_OVERPAYING')} ${overPayingValue} ${currency}`}
         />
       )}
       {showActionBtn && (

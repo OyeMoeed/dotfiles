@@ -2,7 +2,6 @@ import images from '@app/assets/images';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayOtpInputText, IPayPageDescriptionText } from '@app/components/molecules';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { validateForgetPasscodeOtpReq } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
 import { validateForgetPasscodeOtp } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
@@ -13,6 +12,7 @@ import icons from '@assets/icons';
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { buttonVariants } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import otpStyles from './otp-verification.stlye';
 
@@ -32,7 +32,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
     ref,
   ) => {
     const { colors } = useTheme();
-    const localizationText = useLocalization();
+    const { t } = useTranslation();
     const styles = otpStyles();
     const [otp, setOtp] = useState<string>('');
     const [otpError, setOtpError] = useState<boolean>(false);
@@ -118,8 +118,8 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             </IPayView>
             <IPayView style={styles.headingView}>
               <IPayPageDescriptionText
-                heading={localizationText.COMMON.ENTER_RECEIVED_CODE}
-                text={`${localizationText.COMMON.ENTER_FOUR_DIGIT_OTP} ${replaceFirstSixWithX(phoneNumber)}`}
+                heading="COMMON.ENTER_RECEIVED_CODE"
+                text={`${t('COMMON.ENTER_FOUR_DIGIT_OTP')} ${replaceFirstSixWithX(phoneNumber)}`}
               />
             </IPayView>
 
@@ -128,13 +128,13 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             </IPayView>
 
             <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
-              {`${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
+              {`${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
             </IPayCaption1Text>
 
             <IPayButton
               disabled={counter > 0}
               btnType={buttonVariants.LINK_BUTTON}
-              btnText={localizationText.COMMON.SEND_CODE_AGAIN}
+              btnText="COMMON.SEND_CODE_AGAIN"
               small
               btnStyle={styles.sendCodeBtnStyle}
               rightIcon={
@@ -152,7 +152,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
             />
             <IPayButton
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.CONFIRM}
+              btnText="COMMON.CONFIRM"
               large
               btnIconsDisabled
               onPress={onConfirm}
@@ -163,19 +163,22 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
                 <IPayView style={styles.verifyViewRow}>
                   <IPayIcon icon={icons.info_circle} color={colors.natural.natural700} />
                   <IPayCaption1Text regular style={styles.verifyText} color={colors.primary.primary800}>
-                    {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
+                    {t('ID_RENEWAL.WHY_VERIFY_TITLE')}
                   </IPayCaption1Text>
                 </IPayView>
 
-                <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-                  {localizationText.ID_RENEWAL.WHY_VERIFY}
-                </IPayCaption1Text>
+                <IPayCaption1Text
+                  regular
+                  style={styles.verifyText}
+                  color={colors.natural.natural700}
+                  text="ID_RENEWAL.WHY_VERIFY"
+                />
               </IPayView>
             )}
             <IPayButton
               onPress={handleOnPressHelp}
               btnType={buttonVariants.LINK_BUTTON}
-              btnText={localizationText.COMMON.NEED_HELP}
+              btnText="COMMON.NEED_HELP"
               large
               btnStyle={styles.needHelpBtn}
               rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}

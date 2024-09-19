@@ -7,7 +7,7 @@ const helpCenterMockData = {
     requestReference: '07705376242783844123',
   },
   response: {
-    faq: [
+    faqs: [
       {
         answer: [
           'AlinmaPay is a mobile wallet that can be used to pay from point of sale, send money to your friends, and pay your bills, and more.',

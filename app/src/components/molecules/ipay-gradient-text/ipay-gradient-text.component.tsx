@@ -1,5 +1,6 @@
 import React from 'react';
 import Svg, { Defs, LinearGradient, Stop, Text as SvgText } from 'react-native-svg';
+import { useTranslation } from 'react-i18next';
 import { IPayGradientTextProps } from './ipay-gradient-text.interface';
 
 const IPayGradientText: React.FC<IPayGradientTextProps> = ({
@@ -13,9 +14,11 @@ const IPayGradientText: React.FC<IPayGradientTextProps> = ({
   yScale = 10,
   xScale = '50%',
   textAnchor = 'middle',
+  shouldTranslate = true,
 }) => {
+  const { t } = useTranslation();
   const textId = 'textGradient';
-  const lines = text.split('\n');
+  const lines = `${shouldTranslate ? t(text) : text}`.split('\n');
   const textHeight = fontSize * lineHeight * lines.length;
 
   return (

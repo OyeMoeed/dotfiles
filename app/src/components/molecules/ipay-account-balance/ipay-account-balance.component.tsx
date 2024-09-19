@@ -1,11 +1,12 @@
+import React from 'react';
+
 import icons from '@app/assets/icons';
 import { IPayCaption2Text, IPayIcon, IPayProgressBar, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import React from 'react';
+
 import { IPayAccountBalanceProps } from './ipay-account-balance.interface';
 import ipayAccountBalanceStyles from './ipay-account-balance.style';
 
@@ -29,7 +30,6 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
   topUpBtnStyle = {},
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = ipayAccountBalanceStyles(colors);
 
   const currentAvailableBalance = hideBalance ? '*****' : `${formatNumberWithCommas(balance)}`;
@@ -42,7 +42,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
         <IPayView style={styles.textContainer}>
           <IPayCaption2Text
             color={colors.primary.primary900}
-            text={localizationText.HOME.ACCOUNT_BALANCE}
+            text="HOME.ACCOUNT_BALANCE"
             style={[styles.textColor, accountBalanceTextStyle]}
           />
           <IPayView style={styles.balanceContainer}>
@@ -50,13 +50,14 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               color={colors.primary.primary900}
               testID="balance-text"
               style={[styles.textColor, currentBalanceTextStyle]}
-              text={currentAvailableBalance}
+              text={`${currentAvailableBalance === '0' ? '0.00' : currentAvailableBalance}`}
+              shouldTranslate={false}
             />
             <IPaySubHeadlineText
               color={colors.primary.primary900}
               style={[styles.textColor, currencyTextStyle]}
               regular
-              text={` ${localizationText.COMMON.SAR}`}
+              text="COMMON.SAR"
             />
           </IPayView>
         </IPayView>
@@ -68,7 +69,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
           btnStyle={[styles.topupButton, topUpBtnStyle]}
           btnType={buttonVariants.OUTLINED}
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-          btnText={localizationText.COMMON.TOP_UP}
+          btnText="COMMON.TOP_UP"
           textColor={colors.primary.primary500}
         />
       </IPayView>
@@ -87,16 +88,21 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
             <IPayCaption2Text
               color={colors.natural.natural700}
               style={remainingAmountTextStyle}
-              text={localizationText.HOME.REMAINING_AMOUNT}
+              text="HOME.REMAINING_AMOUNT"
             />
             <IPayView style={styles.remainingBalanceView}>
-              <IPayCaption2Text regular={false} style={currentAvailableTextStyle} text={monthlyAvailableBalance} />
               <IPayCaption2Text
-                style={totalAvailableTextStyle}
-                color={colors.natural.natural500}
-                text={` ${localizationText.HOME.OF} `}
+                regular={false}
+                style={currentAvailableTextStyle}
+                text={`${monthlyAvailableBalance} `}
+                shouldTranslate={false}
               />
-              <IPayCaption2Text text={totalAvailableBalance} color={colors.natural.natural500} />
+              <IPayCaption2Text style={totalAvailableTextStyle} color={colors.natural.natural500} text="HOME.OF" />
+              <IPayCaption2Text
+                text={` ${totalAvailableBalance}`}
+                color={colors.natural.natural500}
+                shouldTranslate={false}
+              />
             </IPayView>
           </IPayView>
         </IPayView>

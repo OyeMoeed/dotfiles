@@ -1,4 +1,4 @@
-const shortString = (text: string, length: number) => {
+const shortString = (text: string, length: number = 0) => {
   if (text.length < length) {
     return text;
   }
