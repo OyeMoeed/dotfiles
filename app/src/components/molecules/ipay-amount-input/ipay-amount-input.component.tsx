@@ -4,7 +4,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TouchableOpacity } from 'react-native';
-import { useTranslation } from 'react-i18next';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
 
@@ -26,10 +25,8 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = amountInputStyles(colors);
-  const amountStr = amount ? formatCurrencyValue(amount) : '';
-  const { t } = useTranslation();
   const amountStr = (amount as string) || '';
-        
+
   return (
     <IPayView testID={`${testID}-amount-input`} style={[styles.inputContainer, style]}>
       <IPayInput

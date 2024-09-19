@@ -9,59 +9,53 @@ import { handleApiResponse } from './api-call.interceptors';
 import { ApiResponse } from './services.interface';
 import queryClient from '../queryClient';
 
-const getQueryIDName = (url: string) => url.split('/')[0];
+export interface QueryOptionsProps {
+  invalidateCache?: boolean;
+  reactQueryOptions?: {};
+  queryId?: string;
+}
 
-const getFeatureName = (url: string) => url.split('/')[2];
-
-const getQueryData = async <T>({
+const getQueryData = async ({
   config = {},
   options = {
     invalidateCache: false,
     reactQueryOptions: {},
+    queryId: '',
   },
 }: {
   config: AxiosRequestConfig;
-  options: any;
-}): Promise<AxiosResponse<T, any>> =>
-  new Promise(async (resolve, reject) => {
-    const url = config?.url || '';
-    const { invalidateCache, reactQueryOptions } = options;
-    const MILLIE_SECOND = 60 * 1000;
-    const staleTime = 1000;
+  options: QueryOptionsProps;
+}): Promise<AxiosResponse<any, any>> => {
+  const { invalidateCache, reactQueryOptions, queryId } = options;
+  const MILLIE_SECOND = 60 * 1000;
+  const staleTime = 1000;
 
-    // remove v1/v2 form the
-    const ID = getQueryIDName(url);
-    const feature = getFeatureName(url);
+  queryClient.setDefaultOptions({
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      staleTime: staleTime * MILLIE_SECOND,
+      ...reactQueryOptions,
+    },
+  });
 
-    queryClient.setDefaultOptions({
-      queries: {
-        refetchOnWindowFocus: false,
-        refetchOnMount: false,
-        refetchOnReconnect: false,
-        retry: false,
-        staleTime: staleTime * MILLIE_SECOND,
-        ...reactQueryOptions,
-      },
+  if (invalidateCache) {
+    queryClient?.invalidateQueries({ queryKey: [queryId] });
+  }
+
+  try {
+    const response = await queryClient.fetchQuery({
+      queryKey: [queryId],
+      queryFn: async () => axiosClient(config),
     });
 
-    if (invalidateCache) {
-      queryClient?.invalidateQueries({ queryKey: [feature, ID] });
-    }
-
-    try {
-      const response = await queryClient.fetchQuery({
-        queryKey: [feature, ID],
-        queryFn: async () => axiosClient(config),
-      });
-
-      setTimeout(() => {
-        resolve(response);
-      }, 10);
-    } catch (e) {
-      reject(e);
-      console.error('react query API', e);
-    }
-  });
+    return response;
+  } catch (resError: any) {
+    return resError;
+  }
+};
 
 interface ApiCallParams {
   endpoint: string;
@@ -69,6 +63,7 @@ interface ApiCallParams {
   payload?: any;
   headers?: any;
   baseURL?: string;
+  queryOptions: QueryOptionsProps;
 }
 
 /* register interceptors here to avoid cyclic import error */
@@ -81,7 +76,7 @@ const apiCall = async <T>({
   payload,
   headers = {},
   baseURL = undefined,
-  queryOptions: { invalidateCache, reactQueryOptions },
+  queryOptions: { invalidateCache, reactQueryOptions, queryId },
 }: ApiCallParams): Promise<ApiResponse<T> | undefined> => {
   const config: AxiosRequestConfig = {
     method,
@@ -112,6 +107,7 @@ const apiCall = async <T>({
         options: {
           invalidateCache,
           reactQueryOptions,
+          queryId,
         },
       });
     } else {

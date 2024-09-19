@@ -25,7 +25,7 @@ const SendMoneyRequest: React.FC = () => {
   const route = useRoute();
   const { selectedContacts, heading } = route.params as any;
   const [selectedId, setSelectedId] = useState<number | string>('');
-  const [warningStatus, setWarningStatus] = useState<string>('');
+  const [warningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
