@@ -1,7 +1,7 @@
-import { wuRefundRequestResponse } from './western_union_refund_request.interface';
+import { WURefundRequestResponse } from './western_union_refund_request.interface';
 
 
-const wuRefundRequestResponseData: wuRefundRequestResponse = {
+const wuRefundRequestResponseData: WURefundRequestResponse = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
