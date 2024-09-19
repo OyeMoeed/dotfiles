@@ -63,7 +63,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     {
       id: 3,
       label: t('REQUEST_SUMMARY.AMOUNT'),
-      detailsText: transaction.amount,
+      detailsText: `${transaction.amount} ${t('COMMON.SAR')}`,
     },
   ];
 
@@ -119,7 +119,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
       screen: SummaryType.MONEY_REQUEST_SUMMARY,
       receviedRequestSummaryData,
       transId: transaction.id,
-      heading: t('REQUEST_MONEY.MONEY_REQUESTS'),
+      heading: t('REQUEST_SUMMARY.TITLE'),
     });
   };
 
