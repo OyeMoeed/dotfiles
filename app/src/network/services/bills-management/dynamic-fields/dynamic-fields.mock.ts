@@ -1,6 +1,6 @@
 const getDynamicFieldsMockResponse = {
   response: {
-    billNumberLabel: 'Iqama ID',
+    billNumberLabel: 'Violator ID',
     billNumberMinimumWidth: 10,
     customerIdNumber: { fieldIndex: 'BeneficiaryId.OfficialId', value: '1092103737' },
     customerIdType: { fieldIndex: 'BeneficiaryId.OfficialIdType', value: '1' },
@@ -8,7 +8,7 @@ const getDynamicFieldsMockResponse = {
       {
         index: 'BeneficiaryId.OfficialId',
         integrationTagName: 'BeneficiaryId.OfficialId',
-        label: 'Iqama ID',
+        label: 'Violator ID',
         maxWidth: 10,
         minWidth: 10,
         orderIndex: '1',
@@ -37,28 +37,46 @@ const getDynamicFieldsMockResponse = {
         value: '1',
       },
       {
-        dateCompareOperation: 'any',
-        hijriType: false,
-        index: 'PayAllAssociateFees.FeeDurationEndDate',
-        integrationTagName: 'PayAllAssociateFees.FeeDurationEndDate',
-        label: 'Fees Duration End Date (Hijri)',
+        index: 'BeneficiaryId.OfficialNumber',
+        integrationTagName: 'BeneficiaryId.OfficialId',
+        label: 'Violation Number',
         maxWidth: 10,
         minWidth: 10,
-        onlyHijri: false,
-        orderIndex: '3',
-        required: false,
-        requiredInPaymentOrRefund: 'BOTH',
-        type: 'DATE',
+        orderIndex: '1',
+        required: true,
+        requiredInPaymentOrRefund: 'PAYMENT',
+        type: 'NUMBER',
+        value: '1092103737',
       },
+    ],
+    showbillNumbertHint: false,
+  },
+  successfulResponse: true,
+  status: {
+    sessionReference: 'SSPAYC0f6c1165e9fb4c70b39530f8137b509f',
+    code: 'I000000',
+    requestReference: '02461994742498236274',
+    type: 'SUCCESS',
+    desc: 'retail.msg.default.success',
+  },
+};
+
+const getDynamicFieldsMockResponseByID = {
+  response: {
+    billNumberLabel: 'Violator ID',
+    billNumberMinimumWidth: 10,
+    customerIdNumber: { fieldIndex: 'BeneficiaryId.OfficialId', value: '1092103737' },
+    customerIdType: { fieldIndex: 'BeneficiaryId.OfficialIdType', value: '1' },
+    dynamicFields: [
       {
         index: 'BeneficiaryId.OfficialId',
         integrationTagName: 'BeneficiaryId.OfficialId',
-        label: 'Iqama ID',
+        label: 'Violator ID',
         maxWidth: 10,
         minWidth: 10,
-        orderIndex: '4',
+        orderIndex: '1',
         required: true,
-        requiredInPaymentOrRefund: 'REFUND',
+        requiredInPaymentOrRefund: 'PAYMENT',
         type: 'NUMBER',
         value: '1092103737',
       },
@@ -75,9 +93,9 @@ const getDynamicFieldsMockResponse = {
         ],
         maxWidth: 32,
         minWidth: 1,
-        orderIndex: '5',
+        orderIndex: '2',
         required: true,
-        requiredInPaymentOrRefund: 'REFUND',
+        requiredInPaymentOrRefund: 'PAYMENT',
         type: 'LIST_OF_VALUE',
         value: '1',
       },
@@ -94,4 +112,4 @@ const getDynamicFieldsMockResponse = {
   },
 };
 
-export default getDynamicFieldsMockResponse;
+export { getDynamicFieldsMockResponse, getDynamicFieldsMockResponseByID };

@@ -6,7 +6,13 @@ import { Controller } from 'react-hook-form';
 import IPayAnimatedTextInput from '../../ipay-animated-input-text/ipay-animated-input-text.component';
 import DynamicFieldRendererProps from './ipay-field-renderer.interface';
 
-const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleChange }) => {
+const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
+  field,
+  control,
+  handleChange,
+  myIdCheck,
+  customerIdValue,
+}) => {
   const renderField = () => {
     // Replace "." with "_" to flatten the name
     const flatKey = field.index.replace(/\./g, '_');
@@ -24,12 +30,12 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
               return (
                 <IPayAnimatedTextInput
                   label={field.label}
-                  value={value}
+                  value={myIdCheck ? customerIdValue : value}
                   maxLength={field.maxWidth}
                   onChangeText={onChange}
                   keyboardType={field.type === DYNAMIC_FIELDS_TYPES.NUMBER ? 'number-pad' : 'default'}
                   isError={!!get(errors, flatKey)}
-                  editable
+                  editable={!myIdCheck}
                   assistiveText={errorMessage as string}
                   testID={`${flatKey}-text-input`}
                 />

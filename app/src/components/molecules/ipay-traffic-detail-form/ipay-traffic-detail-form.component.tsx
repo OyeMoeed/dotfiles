@@ -1,14 +1,15 @@
-import icons from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 
 import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TrafficVoilationTypes } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
-import { Controller } from 'react-hook-form';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 
+import icons from '@app/assets/icons';
+import { TrafficVoilationTypes } from '@app/utilities';
+import { Controller } from 'react-hook-form';
+import IPayRHFAnimatedTextInput from '../ipay-animated-input-text/ipay-rhf-animated-input-text.component';
+import IPayCheckboxTitle from '../ipay-checkbox-title/ipay-chekbox-title.component';
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
 import trafficDetailStyles from './ipay-traffic-detail-form.style';
 
@@ -31,15 +32,16 @@ import trafficDetailStyles from './ipay-traffic-detail-form.style';
 const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   testID,
   onCheckboxAction,
-  onBeneficiaryIdAction,
-  onIdTypeAction,
   myIdCheck,
   control,
-  onChangeText,
-  errorMessage,
-  clearVoilationNumber,
   formSelectedTab,
   handleFormTabSelect,
+  buttonComponent,
+  onPress,
+  billerId,
+  serviceId,
+  walletNumber,
+  errorMessage,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
   const styles = trafficDetailStyles(colors);
@@ -51,6 +53,8 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   }, [errorMessage, myIdCheck]);
   const tabs = ['TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER', 'TRAFFIC_VIOLATION.BY_VIOLATION_ID'];
 
+  // console.log('formSelectedTab in form details', formSelectedTab);
+
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
       <IPayFootnoteText regular text="TRAFFIC_VIOLATION.SERVICE_TYPE" color={colors.primary.primary600} />
@@ -60,7 +64,6 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
         tabs={tabs}
         onSelect={handleFormTabSelect}
       />
-
       <Controller
         name={TrafficPaymentFormFields.MY_ID_CHECK}
         control={control}
@@ -87,8 +90,8 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
             containerStyle={getInputStyles()}
             inputStyle={styles.inputStyle}
             customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
-            onClearInput={onBeneficiaryIdAction}
-            onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
+            // onClearInput={onBeneficiaryIdAction}
+            // onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
             assistiveText={errorMessage}
             isError
             maxLength={10}
@@ -109,7 +112,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
             containerStyle={[styles.inputContainerStyle]}
             inputStyle={styles.inputStyle}
             customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
-            onClearInput={onIdTypeAction}
+            // onClearInput={onIdTypeAction}
           />
         )}
       />
@@ -126,8 +129,8 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
               containerStyle={[styles.inputContainerStyle]}
               inputStyle={styles.inputStyle}
               customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
-              onClearInput={clearVoilationNumber}
-              onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
+              // onClearInput={clearVoilationNumber}
+              // onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
               assistiveText={errorMessage}
               showRightIcon
               isError

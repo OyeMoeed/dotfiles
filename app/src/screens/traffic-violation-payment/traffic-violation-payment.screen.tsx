@@ -1,15 +1,22 @@
-import { IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
+import icons from '@app/assets/icons';
+import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayHeader, SadadFooterComponent, useToastContext } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.interface';
+import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
+import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-bill/prepare-moi-bill.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useRoute } from '@react-navigation/core';
-import React from 'react';
+import React, { useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
@@ -18,7 +25,6 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const {
     billPayDetailes,
     balanceData,
-    handlePay,
     helpCenterRef,
     otpRef,
     handleOtpVerification,
@@ -33,15 +39,71 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const { otpConfig } = useConstantData();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = billPaymentStyles();
   const route = useRoute();
-  const variant = route?.params?.variant;
+  const { variant, payOnly } = route?.params;
+  const [otpRefState, setOtpRefState] = useState<string>('');
 
-  const handleOTPVerify = () => {
-    handleOtpVerification();
-    setOtpError(false);
+  const { showToast } = useToastContext();
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
   };
+
+  const handleOTPVerify = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const payLoad = {
+      deviceInfo,
+      walletNumber,
+    };
+
+    const apiResponse = await prepareMoiBill('', payLoad);
+    if (apiResponse?.successfulResponse) {
+      setOtpRefState(apiResponse?.response?.otpRef);
+      handleOtpVerification();
+      setOtpError(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    try {
+      const deviceInfo = await getDeviceInfo();
+
+      const payload: MOIBillPaymentPayloadProps = {
+        deviceInfo,
+        otp,
+        otpRef: otpRefState,
+        walletNumber,
+        moiBillPaymentType: '',
+        billerId: '',
+        billNumOrBillingAcct: '',
+        dueDateTime: '',
+        billIdType: '',
+        billingCycle: '',
+        serviceDescription: '',
+      };
+
+      const apiResponse: any = await moiBillPayment(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        if (apiResponse?.response) {
+          otpRef?.current?.close();
+          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !payOnly });
+        }
+      } else {
+        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    }
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
@@ -83,8 +145,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
-          onPressConfirm={handlePay}
-          mobileNumber={walletInfo?.mobileNumber}
+          onPressConfirm={verifyOtp}
+          mobileNumber={mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
