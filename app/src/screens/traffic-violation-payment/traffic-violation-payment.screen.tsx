@@ -3,8 +3,9 @@ import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -73,12 +74,14 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           backgroundGradient={colors.appGradient.buttonBackground}
         />
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
-        backBtn
-        customSnapPoint={SNAP_POINTS.LARGE}
+        cancelBnt
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={() => otpRef?.current?.close()}
+        isVisible
         ref={otpRef}
       >
         <IPayOtpVerification
@@ -98,7 +101,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           toastContainerStyle={styles.toastContainerStyle}
           headingContainerStyle={styles.headingContainerStyle}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose

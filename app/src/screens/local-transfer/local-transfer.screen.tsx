@@ -172,7 +172,7 @@ const LocalTransferScreen: React.FC = () => {
         selectedBeneficiaryRef?.current?.beneficiaryCode || '',
         activateBeneficiaryPayload,
       );
-
+      setShowEditSheet(false);
       showUpdateBeneficiaryToast();
       editNickNameSheetRef?.current?.close();
       getBeneficiariesData();

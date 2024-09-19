@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images/index';
+import { RefreshIcon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
@@ -31,9 +32,9 @@ import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verificat
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useTranslation } from 'react-i18next';
 import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
@@ -290,7 +291,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
                   large
                   style={styles.resendButton}
                   onPress={() => getNafathRandomNumber()}
-                  rightIcon={<icons.dottedRefresh />}
+                  rightIcon={<RefreshIcon style={styles.refreshIcon} color={colors.natural.natural0} />}
                 />
               ) : (
                 <IPayPressable style={styles.codeWrapper}>

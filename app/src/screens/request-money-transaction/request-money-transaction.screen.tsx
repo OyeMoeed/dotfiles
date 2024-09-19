@@ -4,7 +4,8 @@ import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
-import { IPayActionSheet, IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
+import { IPayActionSheet, IPayFilterBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayMoneyRequestList from '@app/components/organism/ipay-money-request-list/ipay-money-request-list.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
@@ -48,7 +49,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>(SEND_REQUESTS_TABS[0]);
   const [requestDetail, setRequestDetail] = useState<IPayRequestMoneyProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
-
+  const [showDetailSheet, setShowDetailSheet] = useState<boolean>(false);
   const { showToast } = useToastContext();
 
   // // states
@@ -231,7 +232,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   };
 
   const closeRequestDetailsBottomSheet = () => {
-    requestdetailRef.current?.forceClose();
+    setShowDetailSheet(false);
   };
 
   // function to open reject action sheet
@@ -243,7 +244,9 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   // function to open cancel action sheet
   const showCancelActionSheet = () => {
     closeRequestDetailsBottomSheet();
-    cancelRequestRef.current?.show();
+    setTimeout(() => {
+      cancelRequestRef.current?.show();
+    }, 10);
   };
 
   const mapTransactionKeys = (item: any) => {
@@ -287,15 +290,14 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     }
   };
   const openBottomSheet = (item: IPayRequestMoneyProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
+    const calculatedSnapPoint = [heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
 
     // Map the item keys
     const mappedItem = mapTransactionKeys(item);
 
     setRequestDetail(mappedItem);
-
-    requestdetailRef.current?.present();
+    setShowDetailSheet(true);
   };
 
   const createRequest = () => {
@@ -442,15 +444,15 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         showCancel
         onPress={onPressCancelActionSheet}
       />
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="REQUEST_MONEY.REQUEST_DETAILS"
-        onCloseBottomSheet={closeRequestDetailsBottomSheet}
-        customSnapPoint={snapPoint}
-        ref={requestdetailRef}
         simpleHeader
         simpleBar
         cancelBnt
         bold
+        customSnapPoint={snapPoint}
+        onCloseBottomSheet={closeRequestDetailsBottomSheet}
+        isVisible={showDetailSheet}
       >
         <IPayRequestDetails
           transaction={requestDetail}
@@ -458,7 +460,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           showRejectActionSheet={showRejectActionSheet}
           showCancelActionSheet={showCancelActionSheet}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayFilterBottomSheet
         heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={requestMoneyFilterDefaultValues}
