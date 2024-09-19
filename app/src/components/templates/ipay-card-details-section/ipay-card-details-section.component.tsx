@@ -92,7 +92,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       icon: icons.setting_21,
       text: t('CARDS.CARD_OPTIONS'),
       key: '2',
-      onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard, cards, setCards }),
+      onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard }),
     },
     {
       icon: icons.info_circle1,
