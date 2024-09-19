@@ -36,7 +36,7 @@ const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testI
         </IPayView>
       </IPayPressable>
       {index + 1 === nearestAtms?.length && (
-        <IPayFootnoteText text={t('ATM_WITHDRAWAL.NO_MORE_BRANCHES_OR_ATMS')} style={styles.noMoreNearestAtms} />
+        <IPayFootnoteText text="ATM_WITHDRAWAL.NO_MORE_BRANCHES_OR_ATMS" style={styles.noMoreNearestAtms} />
       )}
     </IPayView>
   );
