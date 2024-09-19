@@ -8,7 +8,6 @@ import {
   IPayView,
 } from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
 import React from 'react';
@@ -62,9 +61,10 @@ const IPayList: React.FC<IPayListProps> = ({
   titleLines,
   subTitleLines,
   regularTitle = true,
+  shouldTranslateTitle = true,
+  shouldTranslateSubTitle = true,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const dynamicStyles = styles(colors);
 
   const hasRightComponent = () =>
@@ -85,9 +85,9 @@ const IPayList: React.FC<IPayListProps> = ({
                 numberOfLines={titleLines}
                 style={[dynamicStyles.font, textStyle]}
                 regular={regularTitle}
-              >
-                {title}
-              </IPayFootnoteText>
+                text={String(title)}
+                shouldTranslate={shouldTranslateTitle}
+              />
               {adjacentTitle && (
                 <IPayFootnoteText numberOfLines={1} style={dynamicStyles.adjacentTitleStyle} regular>
                   {` | ${adjacentTitle}`}
@@ -97,7 +97,11 @@ const IPayList: React.FC<IPayListProps> = ({
           )}
           {isShowSubTitle && (
             <IPayView style={dynamicStyles.flexRow}>
-              <IPayCaption1Text numberOfLines={subTitleLines} style={[dynamicStyles.subTitleStyle, subTextStyle]}>
+              <IPayCaption1Text
+                numberOfLines={subTitleLines}
+                style={[dynamicStyles.subTitleStyle, subTextStyle]}
+                shouldTranslate={shouldTranslateSubTitle}
+              >
                 {subTitle}
               </IPayCaption1Text>
               {adjacentSubTitle && (
@@ -112,7 +116,7 @@ const IPayList: React.FC<IPayListProps> = ({
               btnStyle={dynamicStyles.buttonStyle}
               onPress={onPressSaveQR}
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.SAVE}
+              btnText="COMMON.SAVE"
               textColor={colors.secondary.secondary800}
               rightIcon={<IPayIcon icon={icons.save2} color={colors.secondary.secondary800} />}
             />
@@ -172,23 +176,17 @@ const IPayList: React.FC<IPayListProps> = ({
             )}
           </IPayView>
           <IPayView>
-            {isShowTime ? (
+            {isShowTime && (
               <IPayButton
                 onPress={() => onTimePress?.()}
                 btnStyle={[dynamicStyles.btnStyle, dynamicStyles.btnTimeContainer]}
                 textStyle={[dynamicStyles.btnTextStyle, dynamicStyles.btnTimeTextStyle]}
                 btnText={timeText}
               />
-            ) : (
-              <IPayView />
             )}
           </IPayView>
           <IPayView>
-            {isShowIPayToggleButton ? (
-              <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />
-            ) : (
-              <IPayView />
-            )}
+            {isShowIPayToggleButton && <IPayToggleButton toggleState={toggleState} onToggleChange={onToggleChange} />}
           </IPayView>
           <IPayView>
             {isShowCounterButton ? <IPayCounterButton onPressUp={onPressUp} onPressDown={onPressDown} /> : <IPayView />}

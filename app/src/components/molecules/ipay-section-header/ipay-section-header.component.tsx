@@ -32,9 +32,7 @@ const IPaySectionHeader: React.FC<IPaySectionHeaderProps> = ({
   return (
     <IPayView testID={`${testID}-section-header`} style={[styles.headerRow, containerStyle]}>
       <IPayView style={styles.headerLeft}>
-        <IPayFootnoteText color={leftTextColor} style={styles.headerText} regular={isLeftTextRegular}>
-          {leftText}
-        </IPayFootnoteText>
+        <IPayFootnoteText color={leftTextColor} style={styles.headerText} regular={isLeftTextRegular} text={leftText} />
         {subText && (
           <>
             {showDotBeforeSubtext && <IPayView style={styles.dotView} />}

@@ -13,7 +13,6 @@ import { heightMapping } from '@app/components/templates/ipay-request-detail/ipa
 import useConstantData from '@app/constants/use-constants';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
@@ -28,11 +27,12 @@ import { formatDate } from '@app/utilities/date-helper.util';
 import { ApiResponseStatusType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = requestMoneyStyles(colors);
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
   const requestdetailRef = React.createRef<bottomSheetTypes>();
@@ -41,17 +41,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const [sentRequestsPage, setSentRequestsPage] = useState(1);
   const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
 
-  const {
-    REQUEST_MONEY: {
-      REQUEST_MONEY,
-      SEND_REQUESTS,
-      RECEIVED_REQUESTS,
-      YOU_HAVE_NO,
-      MONEY_REQUESTS,
-      CREATE_REQUEST,
-      MAKE_NEW_REQUEST,
-    },
-  } = localizationText;
+  const SEND_REQUESTS = 'REQUEST_MONEY.SEND_REQUESTS';
+  const RECEIVED_REQUESTS = 'REQUEST_MONEY.RECEIVED_REQUESTS';
   const SEND_REQUESTS_TABS = [SEND_REQUESTS, RECEIVED_REQUESTS];
 
   const [selectedTab, setSelectedTab] = useState<string>(SEND_REQUESTS_TABS[0]);
@@ -135,7 +126,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
         case 'apiResponseNotOk':
           renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            title: 'ERROR.API_ERROR_RESPONSE',
             toastType: 'WARNING',
           });
           break;
@@ -148,7 +139,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
 
     return { data: [], hasMore: false };
@@ -173,7 +164,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           break;
         case 'apiResponseNotOk':
           renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            title: 'ERROR.API_ERROR_RESPONSE',
             toastType: ToastTypes.WARNING,
           });
           break;
@@ -186,7 +177,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -232,7 +223,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status } = data;
-      const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
+      const amountRange = `${amountFrom} - ${amountTo} ${t('COMMON.SAR')}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
       filtersArray = [contactNumber, amountRange, dateRange, status];
     }
@@ -310,7 +301,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const createRequest = () => {
     navigate(ScreenNames.WALLET_TRANSFER, {
       from: TRANSFERTYPE.REQUEST_MONEY,
-      heading: CREATE_REQUEST,
+      heading: t('REQUEST_MONEY.CREATE_REQUEST'),
       showHistory: false,
     });
   };
@@ -325,6 +316,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           status={transactionState}
           amount={targetAmount}
           onPress={() => openBottomSheet(item)}
+          shouldTranslateTitle={false}
         />
       </IPayView>
     );
@@ -335,7 +327,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayNoResult
         textColor={colors.primary.primary800}
         iconColor={colors.primary.primary800}
-        message={`${YOU_HAVE_NO} ${selectedTab.split(' ')[0].toLowerCase()} ${MONEY_REQUESTS}`}
+        message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${selectedTab.split(' ')[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
         showIcon
         containerStyle={styles.noResultContent}
         iconSize={40}
@@ -367,7 +359,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayHeader
         testID="request-money-header"
         backBtn
-        title={REQUEST_MONEY}
+        title="REQUEST_MONEY.REQUEST_MONEY"
         applyFlex
         rightComponent={
           <IPayPressable onPress={handleFiltersShow}>
@@ -415,7 +407,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             onPress={createRequest}
-            btnText={CREATE_REQUEST}
+            btnText="REQUEST_MONEY.CREATE_REQUEST"
             btnStyle={styles.requestButton}
             leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
           />
@@ -424,7 +416,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             onPress={createRequest}
-            btnText={MAKE_NEW_REQUEST}
+            btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
             btnStyle={styles.requestButton}
             leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
           />
@@ -433,23 +425,25 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayActionSheet
         ref={rejectRequestRef}
         testID="reject-card-action-sheet"
-        options={[localizationText.COMMON.CANCEL, localizationText.REQUEST_MONEY.REJECT_THIS_REQUEST]}
+        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.REJECT_THIS_REQUEST')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel
+        buttonStyle={styles.rejectThisRequestBtn}
+        cancelButtonStyle={styles.rejectThisRequestCancelBtn}
         onPress={onPressRejectActionSheet}
       />
       <IPayActionSheet
         ref={cancelRequestRef}
         testID="reject-card-action-sheet"
-        options={[localizationText.COMMON.CANCEL, localizationText.REQUEST_MONEY.CANCEL_REQUEST]}
+        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.CANCEL_REQUEST')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel
         onPress={onPressCancelActionSheet}
       />
       <IPayBottomSheet
-        heading={localizationText.REQUEST_MONEY.REQUEST_DETAILS}
+        heading="REQUEST_MONEY.REQUEST_DETAILS"
         onCloseBottomSheet={closeRequestDetailsBottomSheet}
         customSnapPoint={snapPoint}
         ref={requestdetailRef}
@@ -466,7 +460,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={requestMoneyFilterDefaultValues}
         filters={requestMoneyFilterData}
         bottomFilters={requestMoneyBottomFilterData}

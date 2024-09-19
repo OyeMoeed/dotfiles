@@ -17,6 +17,7 @@ const IPayCaption2Text: React.FC<IPayCaption2TextProps> = ({
   numberOfLines,
   children,
   color,
+  shouldTranslate = true,
 }: IPayCaption2TextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -25,6 +26,7 @@ const IPayCaption2Text: React.FC<IPayCaption2TextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>

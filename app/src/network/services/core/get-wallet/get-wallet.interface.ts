@@ -2,6 +2,8 @@ import { MockAPIDataProps, MockAPIOkProp } from '@network/services/services.inte
 
 interface WalletNumberProp {
   walletNumber: string;
+  hideSpinner?: boolean;
+  hideError?: boolean;
 }
 
 // Define the AddressDetails interface

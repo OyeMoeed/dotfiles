@@ -23,7 +23,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
@@ -42,13 +41,14 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, buttonVariants, LanguageCode } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FC, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
   const selectSheeRef = useRef<any>(null);
@@ -69,7 +69,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
+  const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     companyName,
@@ -121,7 +121,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         setServices(serviceList);
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -302,11 +302,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             <IPayHeader
               testID="sadad-bill-ipay-header"
               backBtn
-              title={
-                isSaveOnly
-                  ? localizationText.NEW_SADAD_BILLS.PAY_SADAD_BILLS
-                  : localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS
-              }
+              title={isSaveOnly ? t('NEW_SADAD_BILLS.PAY_SADAD_BILLS') : t('NEW_SADAD_BILLS.NEW_SADAD_BILLS')}
               titleStyle={styles.headerText}
               applyFlex
             />
@@ -345,7 +341,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                   )}
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnText="NEW_SADAD_BILLS.INQUIRE"
                     btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onInquireBill)}
                     large
@@ -354,7 +350,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   />
                   {watch(FormFields.SAVE_BILL) && (
                     <IPayButton
-                      btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
+                      btnText="NEW_SADAD_BILLS.SAVE_ONLY"
                       btnType={buttonVariants.OUTLINED}
                       onPress={handleSubmit(onPressSaveOnly)}
                       large
@@ -367,9 +363,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             )}
             <IPayBottomSheet
               heading={
-                sheetType === NewSadadBillType.COMPANY_NAME
-                  ? localizationText.COMMON.COMPANY
-                  : localizationText.NEW_SADAD_BILLS.SERVICE_TYPE
+                sheetType === NewSadadBillType.COMPANY_NAME ? t('COMMON.COMPANY') : t('NEW_SADAD_BILLS.SERVICE_TYPE')
               }
               customSnapPoint={['1%', '90%']}
               onCloseBottomSheet={() => selectSheeRef.current.close()}
@@ -387,7 +381,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayTextInput
                       text={search}
                       onChangeText={setSearch}
-                      placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
+                      placeholder="LOCAL_TRANSFER.SEARCH_FOR_NAME"
                       rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                       simpleInput
                       style={styles.inputStyle}
@@ -395,7 +389,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                     {search && (
                       <IPayButton
-                        btnText={localizationText.COMMON.CANCEL}
+                        btnText="COMMON.CANCEL"
                         btnIconsDisabled
                         small
                         btnType={buttonVariants.LINK_BUTTON}
@@ -442,7 +436,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   <IPayView style={styles.noRecordContainer}>
                     <IPayNoResult
                       containerStyle={styles.noRecordWrapper}
-                      message={localizationText.NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND}
+                      message="NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND"
                       showIcon
                       icon={icons.note_remove1}
                       iconSize={40}
@@ -453,7 +447,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
-              heading={localizationText.NEW_SADAD_BILLS.SADAD_BILLS}
+              heading="NEW_SADAD_BILLS.SADAD_BILLS"
               customSnapPoint={['1%', isAndroidOS ? '43%' : '50%']}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
@@ -465,9 +459,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayContentNotFound
-                title={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
-                message={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
-                btnText={localizationText.COMMON.TRY_AGAIN}
+                title="NEW_SADAD_BILLS.NO_INVOICE_FOUND"
+                message="NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE"
+                btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

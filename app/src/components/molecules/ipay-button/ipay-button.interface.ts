@@ -44,4 +44,8 @@ export interface IPayButtonProps {
   width?: number | string;
   children?: JSX.Element;
   textColor?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslateBtnText?: boolean;
 }

@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -15,24 +16,23 @@ import {
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
-import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.interface';
+import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
+import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import copyText from '@app/utilities/clip-board.util';
 import { APIResponseType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
-import images from '@app/assets/images';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { LocalTransferConfirmPayloadTypes } from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.interface';
-import localTransferConfirm from '@app/network/services/local-transfer/local-transfer-confirm/local-transfer-confirm.service';
-import getDeviceInfo from '@app/network/utilities/device-info-helper';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BeneficiaryDetailsProps, TransactionDetails } from './transfer-confirmation.interface';
 import transferConfirmationStyles from './transfer-confirmation.style';
@@ -40,20 +40,20 @@ import transferConfirmationStyles from './transfer-confirmation.style';
 const TransferConfirmation: React.FC = () => {
   const { colors } = useTheme();
   const styles = transferConfirmationStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const otpBottomSheetRef = useRef<any>(null);
-  const helpCenterRef = useRef<any>(null);
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { userContactInfo } = walletInfo;
   const { mobileNumber } = userContactInfo;
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const [beneficiaryData, setBeneficiaryData] = useState();
-  const transferInfoData = constants.BANK_DETAILS;
-  const vatTax = `${localizationText.LOCAL_TRANSFER.VAT} (15%)`;
+  const vatTax = `${t('LOCAL_TRANSFER.VAT')} (15%)`;
 
   const [otp, setOtp] = useState('');
-  const [otpError, setOtpError] = useState();
+  const [otpError, setOtpError] = useState<boolean>(false);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
 
   type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
@@ -71,37 +71,24 @@ const TransferConfirmation: React.FC = () => {
     vatAmount,
     totalAmount,
     authentication,
+    bankDetails,
   } = route.params;
 
   useEffect(() => {
     const beneficiaryDataArray = [
-      { title: localizationText.TRANSFER_SUMMARY.AMOUNT, subTitle: `${amount} ${localizationText.COMMON.SAR}` },
-      { title: localizationText.INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME, subTitle: beneficiaryNickName, icon: '' },
-      { title: localizationText.TRANSFER_SUMMARY.REASON, subTitle: transferPurpose, icon: '' },
+      { title: 'TRANSFER_SUMMARY.AMOUNT', subTitle: `${amount} ${t('COMMON.SAR')}` },
+      { title: 'INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME', subTitle: beneficiaryNickName, icon: '' },
+      { title: 'TRANSFER_SUMMARY.REASON', subTitle: transferPurpose, icon: '' },
       {
-        title: localizationText.TRANSFER_SUMMARY.FAST_CONVERSION_BY,
+        title: 'TRANSFER_SUMMARY.FAST_CONVERSION_BY',
         subTitle: instantTransferType,
         icon: images.sarie,
       },
-      { title: localizationText.TRANSFER_SUMMARY.NOTE, subTitle: note, icon: '' },
-      { title: localizationText.COMMON.REF_NUMBER, subTitle: authentication.transactionId, icon: icons.copy },
+      { title: 'TRANSFER_SUMMARY.NOTE', subTitle: note, icon: '' },
+      { title: 'COMMON.REF_NUMBER', subTitle: authentication.transactionId, icon: icons.copy },
     ];
     setBeneficiaryData(beneficiaryDataArray);
-  }, [
-    amount,
-    authentication.transactionId,
-    beneficiaryNickName,
-    instantTransferType,
-    localizationText.COMMON.REF_NUMBER,
-    localizationText.COMMON.SAR,
-    localizationText.INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME,
-    localizationText.TRANSFER_SUMMARY.AMOUNT,
-    localizationText.TRANSFER_SUMMARY.FAST_CONVERSION_BY,
-    localizationText.TRANSFER_SUMMARY.NOTE,
-    localizationText.TRANSFER_SUMMARY.REASON,
-    note,
-    transferPurpose,
-  ]);
+  }, [amount, authentication.transactionId, beneficiaryNickName, instantTransferType, note, transferPurpose]);
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -117,15 +104,15 @@ const TransferConfirmation: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: ToastTypes.INFORMATION });
+    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
   const onCloseBottomSheet = () => {
-    otpBottomSheetRef?.current?.close();
+    setOtpSheetVisible(false);
   };
 
   const onPressTransfer = () => {
-    otpBottomSheetRef?.current?.present();
+    setOtpSheetVisible(true);
   };
 
   const renderBenificaryDetails = ({ item }: BeneficiaryDetailsProps) => {
@@ -158,7 +145,7 @@ const TransferConfirmation: React.FC = () => {
   };
 
   const handleOnPressHelp = () => {
-    helpCenterRef?.current?.present();
+    setHelpCenterVisible(true);
   };
 
   const onConfirm = async () => {
@@ -189,17 +176,17 @@ const TransferConfirmation: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.LOCAL_TRANSFER.TRANSFER_CONFIRMATION} />
+      <IPayHeader backBtn applyFlex title="LOCAL_TRANSFER.TRANSFER_CONFIRMATION" />
       <IPayScrollView style={styles.container}>
         <IPayLinearGradientView gradientColors={colors.bottomsheetGradient} style={styles.beneficiaryDetailsView}>
           <IPayView style={styles.beneficiaryBankDetailsView}>
-            <IPayImage image={transferInfoData?.icon} style={styles.bankLogo} />
+            <IPayIcon icon={bankDetails?.icon} size={30} />
             <IPayView style={styles.bankDetailsView}>
               <IPayView style={styles.bankTitleView}>
-                <IPayFootnoteText regular={false} text={transferInfoData?.title} color={colors.natural.natural900} />
-                <IPayCaption2Text regular text={` | ${transferInfoData?.bankName}`} color={colors.natural.natural900} />
+                <IPayFootnoteText regular={false} text={bankDetails?.title} color={colors.natural.natural900} />
+                <IPayCaption2Text regular text={` | ${bankDetails?.bankName}`} color={colors.natural.natural900} />
               </IPayView>
-              <IPayCaption1Text text={transferInfoData?.accountNumber} color={colors.natural.natural500} />
+              <IPayCaption1Text text={bankDetails?.accountNumber} color={colors.natural.natural500} />
             </IPayView>
           </IPayView>
           <IPayView style={styles.listView}>
@@ -214,16 +201,18 @@ const TransferConfirmation: React.FC = () => {
             <IPayView style={styles.smallerTabView}>
               <IPayFootnoteText text={vatTax} color={colors.natural.natural900} />
               <IPayFootnoteText
-                text={`${vatAmount} ${localizationText.COMMON.SAR}`}
+                text={`${vatAmount} ${t('COMMON.SAR')}`}
                 color={colors.primary.primary800}
+                shouldTranslate={false}
               />
             </IPayView>
 
             <IPayView style={[styles.smallerTabView, styles.feesView]}>
-              <IPayFootnoteText text={localizationText.LOCAL_TRANSFER.FEES} color={colors.natural.natural900} />
+              <IPayFootnoteText text="LOCAL_TRANSFER.FEES" color={colors.natural.natural900} />
               <IPayFootnoteText
-                text={`${feesAmount} ${localizationText.COMMON.SAR}`}
+                text={`${feesAmount} ${t('COMMON.SAR')}`}
                 color={colors.primary.primary800}
+                shouldTranslate={false}
               />
             </IPayView>
           </IPayView>
@@ -236,19 +225,17 @@ const TransferConfirmation: React.FC = () => {
             <IPayView style={styles.transferInfoView}>
               <IPayIcon icon={icons.clock_circle} size={24} color={colors.primary.primary900} />
               <IPayFootnoteText
-                text={localizationText.LOCAL_TRANSFER.THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS}
+                text="LOCAL_TRANSFER.THE_AMOUNT_WILL_BE_TRANSFERRED_DURING_OFFICIAL_HOURS"
                 style={styles.transferAmountDetailsText}
               />
             </IPayView>
             <IPayView style={styles.totalAmountView}>
               <IPayView style={styles.smallerTabView}>
+                <IPayFootnoteText text="LOCAL_TRANSFER.TOTAL_AMOUNT" color={colors.natural.natural900} />
                 <IPayFootnoteText
-                  text={localizationText.LOCAL_TRANSFER.TOTAL_AMOUNT}
-                  color={colors.natural.natural900}
-                />
-                <IPayFootnoteText
-                  text={`${totalAmount} ${localizationText.COMMON.SAR}`}
+                  text={`${totalAmount} ${t('COMMON.SAR')}`}
                   color={colors.primary.primary800}
+                  shouldTranslate={false}
                 />
               </IPayView>
             </IPayView>
@@ -257,43 +244,46 @@ const TransferConfirmation: React.FC = () => {
               btnType={buttonVariants.PRIMARY}
               large
               btnIconsDisabled
-              btnText={localizationText.COMMON.TRANSFER_TEXT}
+              btnText="COMMON.TRANSFER_TEXT"
             />
           </IPayLinearGradientView>
         </IPayView>
       </IPayView>
-      <IPayBottomSheet
-        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+      <IPayPortalBottomSheet
+        heading="LOCAL_TRANSFER.TRANSFER"
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '99%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={otpBottomSheetRef}
         bold
         cancelBnt
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={onCloseBottomSheet}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           setOtpError={setOtpError}
           ref={otpBottomSheetRef}
           onPressConfirm={onConfirm}
           mobileNumber={mobileNumber}
+          otp={otp}
           setOtp={setOtp}
           showHelp
           handleOnPressHelp={handleOnPressHelp}
-          otpError={otpError !== ''}
+          onResendCodePress={() => otpBottomSheetRef.current.resetInterval()}
+          otpError={otpError}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
 
-      <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+      <IPayPortalBottomSheet
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
-        ref={helpCenterRef}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={() => setHelpCenterVisible(false)}
+        isVisible={isHelpCenterVisible}
       >
         <HelpCenterComponent />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

@@ -27,7 +27,12 @@ const IPayUserAvatar: React.FC<UserProfileImageProps> = ({ image, name, style })
   ) : (
     <IPayView style={[styles.image, style]}>
       <IPayGradientTextMasked colors={colors.gradientPrimary}>
-        <IPayTitle2Text regular={false} text={getInitialLetterOfName()} style={styles.innerText} />
+        <IPayTitle2Text
+          regular={false}
+          text={getInitialLetterOfName()}
+          style={styles.innerText}
+          shouldTranslate={false}
+        />
       </IPayGradientTextMasked>
     </IPayView>
   );

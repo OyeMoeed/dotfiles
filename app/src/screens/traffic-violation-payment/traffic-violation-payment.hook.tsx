@@ -1,10 +1,10 @@
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/core';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface billPayDetail {
   id: string;
@@ -21,7 +21,7 @@ interface BalanceData {
 
 // TODO will be replaced by API
 const useBillPaymentConfirmation = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { billPayDetailsData } = useConstantData();
   const helpCenterRef = useRef<bottomSheetTypes>(null);
   const otpRef = useRef<bottomSheetTypes>(null);
@@ -56,8 +56,8 @@ const useBillPaymentConfirmation = () => {
   const extraDetails: billPayDetail[] = [
     {
       id: '2',
-      label: localizationText.TRAFFIC_VIOLATION.AMOUNT,
-      value: `1000 ${localizationText.COMMON.SAR}`,
+      label: t('TRAFFIC_VIOLATION.AMOUNT'),
+      value: `1000 ${t('COMMON.SAR')}`,
     },
   ];
 
@@ -68,13 +68,12 @@ const useBillPaymentConfirmation = () => {
   const handlePay = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       onConfirm();
     }
   };
   return {
-    localizationText,
     billPayDetailes,
     balanceData,
     extraDetails,

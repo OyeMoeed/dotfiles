@@ -2,11 +2,12 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon } from '@app/components/atoms';
 import { IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
+
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { BeneficiaryTypes } from '@app/utilities/enums.util';
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import localTransferStyles from '../local-transfer.style';
 import { LocalTransferSortSheetProps } from './local-transfer-sort-sheet.interface';
 
@@ -18,16 +19,17 @@ import { LocalTransferSortSheetProps } from './local-transfer-sort-sheet.interfa
  */
 const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy, sortSheetRef, sortBy = true }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+
   const styles = localTransferStyles(colors);
+  const { t } = useTranslation();
 
   const sortTypes = [
     {
-      type: localizationText.LOCAL_TRANSFER.ACTIVE_INACTIVE,
+      type: t('LOCAL_TRANSFER.ACTIVE_INACTIVE'),
       isActiveToInactive: BeneficiaryTypes.ACTIVE,
     },
     {
-      type: localizationText.LOCAL_TRANSFER.INACTIVE_ACTIVE,
+      type: t('LOCAL_TRANSFER.INACTIVE_ACTIVE'),
       isActiveToInactive: BeneficiaryTypes.INACTIVE,
     },
   ];
@@ -41,7 +43,7 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
 
   return (
     <IPayBottomSheet
-      heading={localizationText.COMMON.SORT_BY}
+      heading="COMMON.SORT_BY"
       enablePanDownToClose
       cancelBnt
       bold
@@ -51,7 +53,7 @@ const IPayLocalTransferSortSheet: FC<LocalTransferSortSheetProps> = ({ setSortBy
       bgGradientColors={colors.sheetGradientPrimary10}
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
-      doneText={localizationText.COMMON.RESET}
+      doneText="COMMON.RESET"
       onDone={() => setSortBy(BeneficiaryTypes.ACTIVE)}
     >
       <IPayFlatlist

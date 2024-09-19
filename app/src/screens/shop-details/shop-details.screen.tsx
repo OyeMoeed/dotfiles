@@ -12,36 +12,34 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules';
-import { IPayLoadFailed, IPayTermsAndConditions } from '@app/components/organism';
+import { IPayLoadFailed } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import SummaryType from '@app/enums/summary-type';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { WINDOW_WIDTH } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import React, { useState } from 'react';
 import { Animated } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { RenderItemProps } from '../send-gift-card/send-gift-card.interface';
 import shopDetailStyles from './shop-details.style';
 
 const ShopDetails: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const { heading = '', details = [] } = route?.params || {};
   const { colors } = useTheme();
   const styles = shopDetailStyles(colors);
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showTermsAndConditionsSheet, setShowTermsAndConditionsSheet] = useState(false);
   const animatedHeight = useState(new Animated.Value(100))[0];
   const discountDetail = '20% Discount on Yearly subscribe on Spotify'; // TODO: Replace with API
   const amount = '470.00'; // TODO: Replace with API
-  const localizationText = useLocalization();
+
   const requestFailed = false;
-  const {
-    SHOP: { PRODUCT_DISCRIPTION, VIEW_ALL_DETAILS, HIDE_DETAILS, PLAYSTATION, OFFER_DETAILS, PAY },
-    COMMON: { SAR },
-  } = localizationText;
 
   const bulletPoints = [
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
@@ -60,8 +58,13 @@ const ShopDetails: React.FC = ({ route }) => {
     }).start();
   };
 
+  const dispatch = useDispatch();
   const onPressTermsAndConditions = () => {
-    setShowTermsAndConditionsSheet(true);
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+      }),
+    );
   };
 
   const renderCarouselItem = ({ item }: RenderItemProps) => (
@@ -76,10 +79,14 @@ const ShopDetails: React.FC = ({ route }) => {
     </IPayView>
   );
 
-  const onPay = () => navigate(ScreenNames.REQUEST_SUMMARY, { screen: SummaryType.ORDER_SUMMARY });
+  const onPay = () =>
+    navigate(ScreenNames.REQUEST_SUMMARY, {
+      screen: SummaryType.ORDER_SUMMARY,
+      heading: t('SHOP.PAY_PRODUCT'),
+    });
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader testID="shop-details-ipay-header" backBtn title={heading || OFFER_DETAILS} applyFlex />
+      <IPayHeader testID="shop-details-ipay-header" backBtn title={heading || 'SHOP.OFFER_DETAILS'} applyFlex />
       {!requestFailed ? (
         <>
           <IPayScrollView style={styles.contentContainer} showsVerticalScrollIndicator={false}>
@@ -98,37 +105,38 @@ const ShopDetails: React.FC = ({ route }) => {
                 />
               )}
               <IPayView style={styles.discountCard}>
-                <IPaySubHeadlineText text={PLAYSTATION} regular />
+                <IPaySubHeadlineText text="SHOP.PLAYSTATION" regular />
                 <IPayTitle2Text text={discountDetail} />
               </IPayView>
               <Animated.View style={[styles.pointsCard, { flex: animatedHeight }]}>
-                <IPayFootnoteText style={styles.title} regular={false}>
-                  {PRODUCT_DISCRIPTION}
-                </IPayFootnoteText>
+                <IPayFootnoteText style={styles.title} regular={false} text="SHOP.PRODUCT_DISCRIPTION" />
 
                 {isExpanded
                   ? bulletPoints.map((point, index) => renderBulletPoints(point, index))
                   : bulletPoints.slice(0, 1).map((point, index) => renderBulletPoints(point, index))}
 
                 <IPayPressable onPress={toggleExpanded}>
-                  <IPaySubHeadlineText style={styles.viewDetailToggle} color={colors.primary.primary500} regular>
-                    {isExpanded ? HIDE_DETAILS : VIEW_ALL_DETAILS}
-                  </IPaySubHeadlineText>
+                  <IPaySubHeadlineText
+                    style={styles.viewDetailToggle}
+                    color={colors.primary.primary500}
+                    regular
+                    text={isExpanded ? 'SHOP.HIDE_DETAILS' : 'SHOP.VIEW_ALL_DETAILS'}
+                  />
                 </IPayPressable>
               </Animated.View>
               <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
                 <IPayView style={styles.termsChildContainer}>
-                  <IPayFootnoteText style={styles.termText} text={localizationText.SHOP.TERMS_AND_CONDITIONS} />
+                  <IPayFootnoteText style={styles.termText} text="SHOP.TERMS_AND_CONDITIONS" />
                   <IPayIcon icon={icons.infoIcon} size={18} color={colors.primary.primary500} />
                 </IPayView>
               </IPayPressable>
             </>
           </IPayScrollView>
           <IPayView style={styles.bottomContainer}>
-            <IPayTitle3Text text={`${SAR} ${amount}`} regular={false} style={styles.amountText} />
+            <IPayTitle3Text text={`${t('COMMON.SAR')} ${amount}`} regular={false} style={styles.amountText} />
 
             <IPayButton
-              btnText={PAY}
+              btnText="SHOP.PAY"
               btnType={buttonVariants.PRIMARY}
               large
               btnIconsDisabled
@@ -140,11 +148,6 @@ const ShopDetails: React.FC = ({ route }) => {
       ) : (
         <IPayLoadFailed />
       )}
-
-      <IPayTermsAndConditions
-        showTermsAndConditions={showTermsAndConditionsSheet}
-        setShowTermsAndConditions={setShowTermsAndConditionsSheet}
-      />
     </IPaySafeAreaView>
   );
 };

@@ -4,7 +4,7 @@ export interface TermsAndConditionsRefTypes {
 
 export interface IPayTermsAndConditionsProps {
   showTermsAndConditions: boolean;
-  setShowTermsAndConditions: (show: boolean) => void;
-  termsAndConditionsURL?: string;
+  termsAndConditionsURL?: string | null;
   isVirtualCardTermsAndConditions?: boolean;
+  isNafathTerms?: boolean;
 }

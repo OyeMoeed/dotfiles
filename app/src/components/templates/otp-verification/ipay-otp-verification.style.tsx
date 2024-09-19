@@ -1,9 +1,9 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import themeColors from '@app/styles/theming/theme-colors';
 import { isAndroidOS } from '@app/utilities/constants';
+import { Platform } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
-const otpVerificationStyles = (colors: typeof themeColors) =>
+const otpVerificationStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -53,9 +53,11 @@ const otpVerificationStyles = (colors: typeof themeColors) =>
       bottom: verticalScale(24),
     },
     needHelpBtn: {
-      marginTop: verticalScale(24),
+      ...Platform.select({
+        android: { marginTop: moderateScale(14) },
+        ios: { marginTop: moderateScale(24) },
+      }),
     },
-
   });
 
 export default otpVerificationStyles;

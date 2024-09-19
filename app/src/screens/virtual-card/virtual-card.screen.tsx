@@ -5,7 +5,6 @@ import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import { ANIMATION_DURATION } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -13,6 +12,7 @@ import { buttonVariants, CardOptions, CardTypes } from '@app/utilities/enums.uti
 import React, { useCallback, useEffect, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
 import { useTypedSelector } from '@app/store/store';
 import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
@@ -27,7 +27,7 @@ import virtualCardStyles from './virtual-card.style';
 import useVirtualCardData from './use-virtual-card-data';
 
 const VirtualCardScreen: React.FC = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const [tabs, setTabs] = useState<string[]>([]);
   const { colors } = useTheme();
@@ -54,13 +54,13 @@ const VirtualCardScreen: React.FC = () => {
 
   const mapSelectedCardType = (tab: string): CardType | '' => {
     switch (tab) {
-      case localizationText.VIRTUAL_CARD.CLASSIC:
+      case t('VIRTUAL_CARD.CLASSIC'):
         setSelectedCardType('IPMC');
         return 'IPMC';
-      case localizationText.VIRTUAL_CARD.PLATINUM:
+      case t('VIRTUAL_CARD.PLATINUM'):
         setSelectedCardType('VPPC');
         return 'VPPC';
-      case localizationText.VIRTUAL_CARD.SIGNATURE:
+      case t('VIRTUAL_CARD.SIGNATURE'):
         setSelectedCardType('VSCC');
         return 'VSCC';
       default:
@@ -86,11 +86,11 @@ const VirtualCardScreen: React.FC = () => {
       const tabsArr = apiResponse?.response?.cards?.map((el) => {
         switch (el.cardTypeId) {
           case 'IPMC':
-            return localizationText.VIRTUAL_CARD.CLASSIC;
+            return 'VIRTUAL_CARD.CLASSIC';
           case 'VPPC':
-            return localizationText.VIRTUAL_CARD.PLATINUM;
+            return 'VIRTUAL_CARD.PLATINUM';
           case 'VSCC':
-            return localizationText.VIRTUAL_CARD.SIGNATURE;
+            return 'VIRTUAL_CARD.SIGNATURE';
           default:
             return '';
         }
@@ -130,7 +130,7 @@ const VirtualCardScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.VIRTUAL_CARD.HEADER} applyFlex />
+      <IPayHeader backBtn title="VIRTUAL_CARD.HEADER" applyFlex />
       <IPayTabs
         preSelectedTab={tabs[0]}
         tabs={tabs}
@@ -160,9 +160,7 @@ const VirtualCardScreen: React.FC = () => {
           btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={toggleAnimation}
-          btnText={
-            isExpanded ? localizationText.VIRTUAL_CARD.CLOSE_DETAILS : localizationText.VIRTUAL_CARD.VIEW_DETAILS
-          }
+          btnText={isExpanded ? t('VIRTUAL_CARD.CLOSE_DETAILS') : t('VIRTUAL_CARD.VIEW_DETAILS')}
           btnIconsDisabled
         />
       </IPayAnimatedView>
@@ -170,7 +168,7 @@ const VirtualCardScreen: React.FC = () => {
         <IPayButton
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={localizationText.VIRTUAL_CARD.ISSUE_CARD}
+          btnText="VIRTUAL_CARD.ISSUE_CARD"
           btnIconsDisabled
           btnStyle={styles.marginStyles}
           onPress={onPressIsssueCard}

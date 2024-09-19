@@ -17,6 +17,7 @@ interface IPayNearestAtmLocationsProps {
   testID?: string;
   style?: ViewStyle;
   nearestAtms: AtmDetailsProps[] | null;
+  onPressAtmCard: (atmData: AtmDetailsProps) => void;
 }
 
 export { AtmDetailsProps, IPayNearestAtmLocationsProps };

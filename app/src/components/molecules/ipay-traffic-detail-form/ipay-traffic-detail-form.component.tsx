@@ -3,7 +3,6 @@ import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
 
 import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficVoilationTypes } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
@@ -44,25 +43,17 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
   const styles = trafficDetailStyles(colors);
-  const localizationText = useLocalization();
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
     const additionalStyle = (errorMessage && styles.errorStyle) || (myIdCheck && styles.greyInputStyle);
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
-  const tabs = [
-    localizationText.TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER,
-    localizationText.TRAFFIC_VIOLATION.BY_VIOLATION_ID,
-  ];
+  const tabs = ['TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER', 'TRAFFIC_VIOLATION.BY_VIOLATION_ID'];
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
-      <IPayFootnoteText
-        regular
-        text={localizationText.TRAFFIC_VIOLATION.SERVICE_TYPE}
-        color={colors.primary.primary600}
-      />
+      <IPayFootnoteText regular text="TRAFFIC_VIOLATION.SERVICE_TYPE" color={colors.primary.primary600} />
       <IPaySegmentedControls
         customStyles={styles.segmentStyles}
         selectedTab={formSelectedTab}
@@ -76,8 +67,9 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
         render={() => (
           <IPayCheckboxTitle
             isCheck={myIdCheck || false}
-            heading={localizationText.BILL_PAYMENTS.USE_MY_ID}
+            heading="BILL_PAYMENTS.USE_MY_ID"
             onPress={onCheckboxAction}
+            checkBoxStyle={styles.checkBoxStyle}
           />
         )}
       />
@@ -88,16 +80,18 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
         render={() => (
           <IPayRHFAnimatedTextInput
             name={TrafficPaymentFormFields.MY_ID}
-            label={myIdCheck ? localizationText.BILL_PAYMENTS.MY_ID : localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID}
+            label={myIdCheck ? 'BILL_PAYMENTS.MY_ID' : 'TRAFFIC_VIOLATION.VIOLATOR_ID'}
             labelColor={myIdCheck ? colors.natural.natural500 : colors.primary.primary500}
             showRightIcon={!myIdCheck}
             editable={!myIdCheck}
             containerStyle={getInputStyles()}
+            inputStyle={styles.inputStyle}
             customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
             onClearInput={onBeneficiaryIdAction}
             onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
             assistiveText={errorMessage}
             isError
+            maxLength={10}
           />
         )}
       />
@@ -109,11 +103,12 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
           <IPayRHFAnimatedTextInput
             testID="id-type-input"
             name={TrafficPaymentFormFields.ID_TYPE}
-            label={localizationText.BILL_PAYMENTS.ID_TYPE}
+            label="BILL_PAYMENTS.ID_TYPE"
             editable={false}
             showRightIcon
             containerStyle={[styles.inputContainerStyle]}
-            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={18} color={colors.primary.primary500} />}
+            inputStyle={styles.inputStyle}
+            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
             onClearInput={onIdTypeAction}
           />
         )}
@@ -126,15 +121,17 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
           render={() => (
             <IPayRHFAnimatedTextInput
               name={TrafficPaymentFormFields.VOILATION_NUMBER}
-              label={localizationText.TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL}
+              label="TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL"
               labelColor={colors.primary.primary500}
               containerStyle={[styles.inputContainerStyle]}
+              inputStyle={styles.inputStyle}
               customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
               onClearInput={clearVoilationNumber}
               onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
               assistiveText={errorMessage}
               showRightIcon
               isError
+              maxLength={10}
             />
           )}
         />

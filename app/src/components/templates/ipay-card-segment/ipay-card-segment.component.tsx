@@ -4,7 +4,7 @@ import useVirtualCardData from '@app/screens/virtual-card/use-virtual-card-data'
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardDetailsSegment } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
-import IPayCardFlatList from '../ipay-card-flatlist/ipay-card-flatlist.component';
+import IPayCardList from '../ipay-card-list/ipay-card-list.component';
 import IPayCardSegmentProps from './ipay-card-segment.interface';
 import cardSegmentStyles from './ipay-card-segment.styles';
 
@@ -27,7 +27,7 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({ testID, selectedCardT
       />
 
       <IPayView style={styles.flatListContainer}>
-        <IPayCardFlatList segmentType={selectedTab} selectedCardType={selectedCardType} cardOption={cardOption} />
+        <IPayCardList segmentType={selectedTab} selectedCardType={selectedCardType} cardOption={cardOption} />
       </IPayView>
     </IPayView>
   );

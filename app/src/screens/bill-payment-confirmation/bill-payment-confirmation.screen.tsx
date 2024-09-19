@@ -18,6 +18,7 @@ import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
@@ -31,9 +32,9 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     availableBalance,
     limitsDetails: { monthlyRemainingOutgoingAmount, monthlyOutgoingLimit },
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { t } = useTranslation();
 
   const {
-    localizationText,
     handlePay,
     setOtp,
     otp,
@@ -77,17 +78,17 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
     {
       id: '1',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      label: t('PAY_BILL.SERVICE_TYPE'),
       value: item.serviceDescription ? shortString(item.serviceDescription, 15) : '-',
     },
     {
       id: '2',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      label: t('PAY_BILL.ACCOUNT_NUMBER'),
       value: item.billNumOrBillingAcct,
     },
     {
       id: '3',
-      label: localizationText.COMMON.DUE_DATE,
+      label: t('COMMON.DUE_DATE'),
       value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
     },
   ];
@@ -95,7 +96,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   return (
     <>
       <IPaySafeAreaView style={styles.container}>
-        <IPayHeader title={localizationText.PAY_BILL.HEADER} backBtn applyFlex />
+        <IPayHeader title="PAY_BILL.HEADER" backBtn applyFlex />
         <IPayView style={styles.innerContainer}>
           {showBalanceBox && (
             <IPayAccountBalance
@@ -131,13 +132,13 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         <SadadFooterComponent
           style={styles.margins}
           totalAmount={billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) || '0'}
-          btnText={localizationText.COMMON.CONFIRM}
+          btnText="COMMON.CONFIRM"
           disableBtnIcons
           onPressBtn={onMultiPaymentPrepareBill}
         />
 
         <IPayBottomSheet
-          heading={localizationText.PAY_BILL.HEADER}
+          heading="PAY_BILL.HEADER"
           enablePanDownToClose
           simpleBar
           backBtn
@@ -151,7 +152,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         </IPayBottomSheet>
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.PAY_BILL.HEADER}
+        heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -174,9 +175,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
-          onResendCodePress={function (): void {
-            throw new Error('Function not implemented.');
-          }}
+          onResendCodePress={() => {}}
         />
       </IPayBottomSheet>
     </>

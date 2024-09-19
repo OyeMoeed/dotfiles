@@ -27,6 +27,7 @@ const MainNavigation: React.FC = () => {
     appData: state.appDataReducer.appData,
     isAuthorized: state.auth.isAuthorized,
   }));
+
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
   const isSessionTimeout = useTypedSelector((state) => state.alertReducer.sessionTimeout);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
