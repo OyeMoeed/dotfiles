@@ -8,9 +8,11 @@ import OnboardingSteps from '../screens/auth/onboarding/onboarding-enum.util';
 const useStepper = () => {
   const [currentView, setCurrentView] = useState(OnboardingSteps.OpportunitiesStep);
   const dispatch = useTypedDispatch();
+
   const hideWalkThrough = () => {
     dispatch(setAppData({ isFirstTime: false }));
   };
+
   const skip = () => {
     hideWalkThrough();
     setCurrentView(OnboardingSteps.PurchasesStep);

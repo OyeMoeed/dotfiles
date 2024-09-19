@@ -26,7 +26,7 @@ const IPaySegmentedControls: React.FC<IPayTabsProps> = ({
       {tabs.map((tab, index) => (
         <IPayPressable
           testID={`${testID}-${tab}-segmented-tab`}
-          key={tab}
+          key={`${testID}-${tab}-segmented-tab`}
           onPress={() => handleTabClick(tab, index)}
           style={
             tab === selectedTab ? [styles.selectedTab, selectedTabStyle] : [styles.unSelectedTab, unselectedTabStyle]

@@ -5,12 +5,12 @@ import { setSelectedType } from '@app/store/slices/dropdown-slice';
 import { RootState } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IPayDropdownComponentSheetProps, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
-const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentSheetProps> = (_, ref) => {
+const IPayDropdownSheet = forwardRef<{}, IPayDropdownComponentSheetProps>((_, ref) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
@@ -120,6 +120,6 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
       </IPayView>
     </IPayBottomSheet>
   );
-};
+});
 
-export default React.forwardRef(IPayDropdownSheet);
+export default IPayDropdownSheet;
