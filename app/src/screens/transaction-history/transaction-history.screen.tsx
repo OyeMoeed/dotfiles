@@ -5,7 +5,6 @@ import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
@@ -98,7 +97,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getTransactionsData = async (filtersData?: any) => {
-    console.log('from getTransactionsData ', filteredData);
     setIsLoading(true);
 
     const payload: TransactionsProp = {
@@ -130,7 +128,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
-    console.log('from W2W ', trxType);
     setIsLoadingW2W(true);
     setTransactionsData([]);
     setFilteredData([]);
@@ -236,7 +233,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     }
   };
   const handleSelectedTab = (tab: string) => {
-    console.log('selected tab is ', tab);
     setSelectedTab(tab);
   };
 

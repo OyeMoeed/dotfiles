@@ -1,4 +1,4 @@
-import { MockAPIStatusProps } from "../../services.interface";
+import { MockAPIStatusProps } from '../../services.interface';
 
 // Interface for the transaction object
 interface WuTransaction {

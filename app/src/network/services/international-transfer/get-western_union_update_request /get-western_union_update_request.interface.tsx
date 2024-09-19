@@ -1,7 +1,7 @@
-import { MockAPIStatusProps } from "../../services.interface";
+import { MockAPIStatusProps } from '../../services.interface';
 
 export interface WUUpdateRequestResponse {
-  status:MockAPIStatusProps;
+  status: MockAPIStatusProps;
   response: {
     updateRequestsList: {};
   };

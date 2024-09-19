@@ -786,7 +786,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 (isBeneficiaryHistory &&
                   renderHistory('TRANSACTION_HISTORY.NOTES', transaction?.transactionDescription))}
 
-
               {isPayOneCard && (
                 <IPayView style={styles.cardStyle}>
                   <IPayFootnoteText
