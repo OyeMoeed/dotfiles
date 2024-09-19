@@ -1,3 +1,5 @@
+import { DeleteBillResponse } from './bills-management/delete-bill/delete-bill.interface';
+
 // Define the Status interface
 interface MockAPIStatusProps {
   sessionReference: string;
@@ -5,6 +7,7 @@ interface MockAPIStatusProps {
   requestReference: string;
   type: string;
   desc: string;
+  translation: string;
 }
 
 // Define the Data interface
@@ -15,7 +18,7 @@ interface MockAPIDataProps {
 
 // Define the ok property type
 type MockAPIOkProp = {
-  ok: boolean;
+  ok?: boolean;
 };
 
 type DeviceInfoProps = {
@@ -45,9 +48,10 @@ interface IApiStatus {
 }
 
 interface ApiResponse<T> {
+  data: DeleteBillResponse;
   status: IApiStatus;
   response?: T;
-  successfulResponse: boolean;
+  successfulResponse?: boolean;
   authentication?: {
     transactionId: string;
   };

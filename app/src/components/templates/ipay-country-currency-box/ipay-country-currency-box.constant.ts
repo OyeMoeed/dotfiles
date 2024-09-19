@@ -1,8 +1,8 @@
 import images from '@app/assets/images';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTranslation } from 'react-i18next';
 
 const useTransferMethodsData = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const transferMethods = [
     {
       id: 1,
@@ -16,8 +16,8 @@ const useTransferMethodsData = () => {
           beneficiaryAmount: 12.8,
           totalBeneficiaryAmount: '12,690',
           fee: '10',
-          remitterCurrency: localizationText.COMMON.SAR,
-          beneficiaryCurrency: localizationText.COMMON.EGP,
+          remitterCurrency: t('COMMON.SAR'),
+          beneficiaryCurrency: t('COMMON.EGP'),
         },
         {
           id: 1,
@@ -27,8 +27,8 @@ const useTransferMethodsData = () => {
           beneficiaryAmount: 12.8,
           totalBeneficiaryAmount: '0',
           fee: '15',
-          remitterCurrency: localizationText.COMMON.SAR,
-          beneficiaryCurrency: localizationText.COMMON.EGP,
+          remitterCurrency: t('COMMON.SAR'),
+          beneficiaryCurrency: t('COMMON.EGP'),
         },
       ],
     },

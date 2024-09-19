@@ -5,6 +5,7 @@ export interface SadadFooterComponentProps {
   textColor?: string;
   testID?: string;
   style?: StyleProp<ViewStyle>;
+  gradientViewStyle?: StyleProp<ViewStyle>;
   totalAmount?: string | number;
   totalAmountText?: string;
   selectedItemsCount?: number;
@@ -23,4 +24,5 @@ export interface SadadFooterComponentProps {
    * To display button only without gradient background
    */
   showButtonOnly?: boolean;
+  shouldTranslateBtnText?: boolean;
 }

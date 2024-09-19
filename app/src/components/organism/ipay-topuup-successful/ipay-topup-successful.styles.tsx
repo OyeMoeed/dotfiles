@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
-import { payChannel } from '@app/utilities/enums.util';
+import { PayChannel } from '@app/utilities/enums.util';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: string) =>
@@ -10,8 +10,14 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     parent: {
       flex: 1,
     },
+    btn: {
+      borderRadius: moderateScale(16),
+      backgroundColor: themeColors.primary.primary500,
+      paddingVertical: moderateScale(14),
+      justifyContent: 'center',
+    },
     chipContainer: {
-      marginBottom: moderateScale(8),
+      marginBottom: moderateScale(10),
     },
     chipColors: {
       alignSelf: 'stretch',
@@ -54,7 +60,6 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     },
     linearGradientTextView: {
       width: '100%',
-      marginBottom: moderateScale(24),
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -78,9 +83,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       justfiyContent: 'center',
     },
     listContainer: {
-      backgroundColor: themeColors.natural.natural0,
+      backgroundColor: themeColors.primary.primary10,
       width: '100%',
-      borderRadius: scaleSize(16),
+      borderRadius: scaleSize(12),
       marginBottom: moderateScale(8),
     },
 
@@ -106,6 +111,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       width: '100%',
       justifyContent: 'space-around',
       marginBottom: verticalScale(2),
+    },
+    actionButton: {
+      top: verticalScale(80),
     },
     margins: {
       marginTop: verticalScale(58),
@@ -150,6 +158,9 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
 
     detailesFlex: {
       flex: 0,
+      backgroundColor: colors.natural.natural0,
+      padding: moderateScale(12),
+      borderRadius: moderateScale(22),
     },
     topupContainer: {
       alignItems: 'center',
@@ -167,7 +178,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       justifyContent: 'space-between',
     },
     leftIcon: {
-      paddingRight: moderateScale(12),
+      paddingRight: moderateScale(6),
     },
     toastContainer: {
       borderColor: themeColors.success.success500,
@@ -178,10 +189,13 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       backgroundColor: themeColors.secondary.secondary500,
     },
     walletBackground: {
-      backgroundColor: themeColors.natural.natural0,
       paddingHorizontal: moderateScale(12),
+      backgroundColor: themeColors.natural.natural0,
       paddingTop: moderateScale(12),
-      borderRadius: topupChannel === payChannel.WALLET ? moderateScale(22) : 0,
+      borderRadius:
+        topupChannel === PayChannel.WALLET || topupChannel === PayChannel.REQUEST || topupChannel === PayChannel.CARD
+          ? moderateScale(22)
+          : 0,
       borderTopLeftRadius: moderateScale(22),
       borderTopRightRadius: moderateScale(22),
     },
@@ -206,7 +220,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     },
     walletListBackground: {
       backgroundColor: themeColors.backgrounds.greyOverlay,
-      borderRadius: moderateScale(22),
+      borderRadius: moderateScale(16),
       paddingVertical: scaleSize(12),
       paddingHorizontal: scaleSize(18),
       justifyContent: 'space-between',

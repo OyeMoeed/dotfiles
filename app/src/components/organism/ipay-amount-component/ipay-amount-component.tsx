@@ -1,39 +1,41 @@
+// TODO: Refactor this component
 import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
 import applePayCheckout from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-checkout.service';
 import { CheckOutProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { topupCheckout } from '@app/network/services/core/topup-cards/topup-cards.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, TopUpStates, TopupStatus, payChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants, PayChannel, TopUpStates, TopupStatus } from '@app/utilities/enums.util';
+
+// TODO: fix no-extraneous-dependencies
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { getErrorMessage } from '@rnw-community/shared';
+
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
-import { getErrorMessage } from '@rnw-community/shared';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
 
 const IPayAmount: React.FC<IPayAmountProps> = ({
   channel,
-  onPressAddCards,
   openPressExpired,
   walletInfo,
-  handleCardSelect,
   openExpirationBottomSheet,
   openExpiredDateBottomSheet,
   openCvvBottomSheet,
   selectedDate,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const [currentState, setCurrentState] = useState(TopUpStates.INITAL_STATE);
   const [topUpAmount, setTopUpAmount] = useState('');
@@ -41,122 +43,45 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [isCardSaved, setIsCardSaved] = useState(true);
   const [chipValue, setChipValue] = useState('');
-  const [processToast, setProcessToast] = useState(false);
-  const localizationText = useLocalization();
   const styles = amountStyles(colors);
-  const [error, setError] = useState('');
-  const [response, setResponse] = useState<object>();
-  const [isWalletAvailable, setIsWalletAvailable] = useState(false);
-  const { showToast } = useToastContext();
+  const [, setError] = useState('');
+  const [, setResponse] = useState<object>();
 
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const [apiError, setAPIError] = useState<string>('');
-  const [redirectUrl, setRedirectUrl] = useState<string>('');
-  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [, setAPIError] = useState<string>('');
+  const [, setRedirectUrl] = useState<string>('');
+  const [selectedCardTypeId, setSelectedCardTypeId] = useState<string>('');
 
-  const addCard = () => {
-    handlePressPay();
+  const methodData: PaymentMethodData[] = [
+    {
+      supportedMethods: PaymentMethodNameEnum.ApplePay,
+      data: {
+        merchantIdentifier: 'merchant.com.clickpay',
+        supportedNetworks: [SupportedNetworkEnum.Visa, SupportedNetworkEnum.Mada, SupportedNetworkEnum.Mastercard],
+        countryCode: 'SA',
+        currencyCode: t('COMMON.SAR'),
+      },
+    },
+  ];
+
+  const paymentDetails: PaymentDetailsInit = {
+    total: {
+      amount: {
+        currency: t('COMMON.SAR'),
+        value: topUpAmount,
+      },
+      label: t('TRANSACTION_HISTORY.TOTAL_AMOUNT'),
+    },
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
-  const handlePressPay = async () => {
-    renderSpinner(true);
-    if (channel === payChannel.APPLE) {
-      try {
-        handlePay();
-        return;
-      } catch (error) {
-        return;
-      } finally {
-        renderSpinner(false);
-      }
-    }
-    const deviceInfo = await getDeviceInfo();
-    const body: any = {
-      amount: topUpAmount,
-      deviceInfo: deviceInfo,
-      paymentDescription: 'nothing',
-    };
-    if (selectedCardObj.registrationId) {
-      body.cardRegistrationId = selectedCardObj.registrationId;
-    }
-    if (selectedCardObj?.cardBrand) {
-      body.cardBrand = selectedCardObj?.cardBrand?.toLocaleLowerCase();
-    } else {
-      body.cardBrand = 'mada';
-    }
-
-    const payload: CheckOutProp = {
-      walletNumber,
-      checkOutBody: body,
-    };
-
-    const apiResponse: any = await topupCheckout(payload);
-
-    switch (apiResponse?.status?.type) {
-      case ApiResponseStatusType.SUCCESS:
-        let paymentGateway = apiResponse?.response?.paymentGateway;
-        setRedirectUrl(apiResponse?.response?.redirectUrl);
-        if (paymentGateway == 'CLICKPAY') {
-          navigate(screenNames.CARD_VERIFICATION, {
-            redirectUrl: apiResponse?.response?.redirectUrl,
-            transactionRefNumber: apiResponse?.response?.transactionRefNumber,
-            paymentGateway,
-          });
-        } else {
-          navigate(screenNames.CARD_VERIFICATION, {
-            redirectUrl: apiResponse?.response?.redirectUrl,
-            paymentGateway,
-          });
-        }
-        break;
-      case apiResponse?.apiResponseNotOk:
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-        break;
-      case ApiResponseStatusType.FAILURE:
-        setAPIError(apiResponse?.error);
-        break;
-      default:
-        break;
-    }
-
-    renderSpinner(false);
-  };
   const createPaymentRequest = (): PaymentRequest => {
     setError('');
     setResponse(undefined);
     return new PaymentRequest(methodData, paymentDetails);
   };
 
-  const handlePay = (): void => {
-    createPaymentRequest()
-      .show()
-      .then((paymentResponse) => {
-        applePayCheckOutId(paymentResponse);
-
-        setResponse(paymentResponse.details);
-
-        return paymentResponse.complete(PaymentComplete.SUCCESS);
-      })
-      .catch((err: unknown) => void setError(getErrorMessage(err)));
-  };
   const applePayCheckOutId = async (paymentResponse: IosPaymentResponse): Promise<void> => {
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-
     const applePayCheckOutPayload: ApplePayCheckOutReq = {
       clickPayApplePayToken: {
         transactionIdentifier: paymentResponse.details.applePayToken.transactionIdentifier,
@@ -172,65 +97,109 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       deviceInfo: appData?.deviceInfo!,
     };
 
-    try {
-      const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
-      if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
-        hideSpinner();
-        renderSpinner(false);
-
-        navigate(screenNames.TOP_UP, {
-          topupChannel: payChannel.APPLE,
-          topupStatus: TopupStatus.SUCCESS,
-          amount: topUpAmount,
-        });
-      }
-    } catch (error) {
-      hideSpinner();
-      renderSpinner(false);
-
-      setError(getErrorMessage(error));
+    const appleCheckoutResponse = await applePayCheckout(walletInfo.walletNumber, applePayCheckOutPayload);
+    if (appleCheckoutResponse?.status?.type === 'SUCCESS') {
+      navigate(screenNames.TOP_UP, {
+        topupChannel: PayChannel.APPLE,
+        topupStatus: TopupStatus.SUCCESS,
+        amount: topUpAmount,
+      });
     }
-    hideSpinner();
-    renderSpinner(false);
   };
 
-  const methodData = [
-    {
-      supportedMethods: PaymentMethodNameEnum.ApplePay,
-      data: {
-        merchantIdentifier: 'merchant.com.clickpay',
-        supportedNetworks: [SupportedNetworkEnum.Visa, SupportedNetworkEnum.Mada, SupportedNetworkEnum.Mastercard],
-        countryCode: 'SA',
-        currencyCode: localizationText.COMMON.SAR,
-      },
-    },
-  ];
+  const handlePay = (): void => {
+    createPaymentRequest()
+      .show()
+      .then((paymentResponse) => {
+        applePayCheckOutId(paymentResponse);
 
-  const paymentDetails: PaymentDetailsInit = {
-    total: {
-      amount: {
-        currency: localizationText.COMMON.SAR,
-        value: topUpAmount,
-      },
-      label: localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT,
-    },
+        setResponse(paymentResponse.details);
+
+        return paymentResponse.complete(PaymentComplete.SUCCESS);
+      })
+      .catch((err: unknown) => setError(getErrorMessage(err)));
+  };
+
+  const handlePressPay = async () => {
+    if (channel === PayChannel.APPLE) {
+      try {
+        handlePay();
+        return;
+      } catch (error) {
+        return;
+      }
+    }
+    const deviceInfo = await getDeviceInfo();
+    const body: any = {
+      amount: topUpAmount,
+      deviceInfo,
+      paymentDescription: 'nothing',
+    };
+    if (selectedCardObj.registrationId) {
+      body.cardRegistrationId = selectedCardObj.registrationId;
+    }
+    if (selectedCardObj?.cardBrand) {
+      body.cardBrand = selectedCardObj?.cardBrand?.toLocaleLowerCase();
+    } else {
+      body.cardBrand = selectedCardTypeId;
+    }
+
+    const payload: CheckOutProp = {
+      walletNumber,
+      checkOutBody: body,
+    };
+
+    const apiResponse: any = await topupCheckout(payload);
+
+    switch (apiResponse?.status?.type) {
+      case ApiResponseStatusType.SUCCESS: {
+        const paymentGateway = apiResponse?.response?.paymentGateway;
+
+        setRedirectUrl(apiResponse?.response?.redirectUrl);
+        if (paymentGateway === 'CLICKPAY') {
+          navigate(screenNames.CARD_VERIFICATION, {
+            redirectUrl: apiResponse?.response?.redirectUrl,
+            transactionRefNumber: apiResponse?.response?.transactionRefNumber,
+            paymentGateway,
+          });
+        } else {
+          navigate(screenNames.CARD_VERIFICATION, {
+            redirectUrl: apiResponse?.response?.redirectUrl,
+            paymentGateway,
+          });
+        }
+        break;
+      }
+      case apiResponse?.apiResponseNotOk:
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+        break;
+      case ApiResponseStatusType.FAILURE:
+        setAPIError(apiResponse?.error);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const addCard = () => {
+    handlePressPay();
   };
 
   const { limitsDetails } = walletInfo;
   useEffect(() => {
-    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingOutgoingAmount);
+    const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingIncomingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingIncomingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
 
     if (monthlyRemaining === 0) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+      setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyRemainingIncomingAmount} SAR`);
+      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${limitsDetails.dailyRemainingIncomingAmount} ${t('COMMON.SAR')}`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else {
       if (topUpAmount === '' || topUpAmount === '0') {
         setIsTopUpNextEnable(false);
@@ -239,12 +208,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       }
       setChipValue('');
     }
-  }, [
-    topUpAmount,
-    limitsDetails.monthlyRemainingOutgoingAmount,
-    limitsDetails.dailyRemainingOutgoingAmount,
-    localizationText,
-  ]);
+  }, [topUpAmount, limitsDetails.monthlyRemainingOutgoingAmount, limitsDetails.dailyRemainingOutgoingAmount, t]);
 
   const handleNextPress = () => {
     if (isCardSaved) {
@@ -252,9 +216,8 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     } else {
       setCurrentState(TopUpStates.NEW_CARD);
     }
-    setIsEditable(false);
+    // setIsEditable(false);
   };
-  const [isEditable, setIsEditable] = useState(true);
   const handleIconPress = () => {
     // setIsEditable(!isEditable);
     setCurrentState(TopUpStates.INITAL_STATE);
@@ -262,34 +225,41 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const handleCardObjSelect = (card: any) => {
     setSelectedCardObj(card);
   };
+  const onSelectCard = (selectedCardType: string) => {
+    setSelectedCardTypeId(selectedCardType);
+  };
   return (
     <IPayView style={styles.safeAreaView}>
-      {currentState != TopUpStates.NEW_CARD ? (
+      {currentState !== TopUpStates.NEW_CARD ? (
         <>
-          <IPayAmountHeader title={localizationText.TOP_UP.CARD_TITLE} channel={channel} />
+          <IPayAmountHeader title="TOP_UP.CARD_TITLE" channel={channel} />
           <IPayRemainingAccountBalance
             currentState={currentState}
             topUpAmount={topUpAmount}
             setTopUpAmount={setTopUpAmount}
             chipValue={chipValue}
             walletInfo={walletInfo}
-            payChannelType={payChannel.CARD}
+            payChannelType={PayChannel.CARD}
             openPressExpired={openPressExpired}
             onPressAddCards={addCard}
             handleCardSelect={handleCardObjSelect}
             showIcon={currentState !== TopUpStates.INITAL_STATE}
             isEditable={currentState === TopUpStates.INITAL_STATE}
             onPressIcon={handleIconPress}
+            balanceType="Incoming"
+            channel={channel}
+            onSelectCard={onSelectCard}
           />
 
-          {channel === payChannel.APPLE ? (
+          <IPayView style={styles.nextButton} />
+          {channel === PayChannel.APPLE ? (
             <IPayButton
               large
               btnStyle={[
                 styles.payButton,
                 { backgroundColor: isTopUpNextEnable ? colors.natural.natural1000 : colors.natural.natural300 },
               ]}
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               leftIcon={<IPayIcon icon={icons.apple_pay} size={48} color={colors.natural.natural0} />}
               onPress={handlePressPay}
               disabled={!isTopUpNextEnable}
@@ -297,11 +267,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           ) : (
             <IPayButton
               large
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
-              btnText={
-                currentState === TopUpStates.SAVED_CARD ? localizationText.TOP_UP.PAY : localizationText.COMMON.NEXT
-              }
+              btnText={currentState === TopUpStates.SAVED_CARD ? t('TOP_UP.PAY ') : t('COMMON.NEXT)')}
               onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
               disabled={!isTopUpNextEnable}
             />

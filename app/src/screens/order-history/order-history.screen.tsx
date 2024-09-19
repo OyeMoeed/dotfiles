@@ -4,7 +4,6 @@ import { IPayChip, IPayHeader, IPayNoResult, IPayOrdersCard } from '@app/compone
 import { IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
@@ -12,9 +11,8 @@ import allOrdersStyle from './all-orders.style';
 
 const AllOrdersScreen: React.FC = () => {
   const { colors } = useTheme();
-  const { allOrders, OrderHistoryFilterDefaultValues } = useConstantData();
+  const { allOrders, orderHistoryFilterDefaultValues } = useConstantData();
   const styles = allOrdersStyle(colors);
-  const localizationText = useLocalization();
   const [filters, setFilters] = useState<Array<string>>([]);
 
   const filterRef = useRef<bottomSheetTypes>(null);
@@ -42,14 +40,14 @@ const AllOrdersScreen: React.FC = () => {
     <IPaySafeAreaView>
       <IPayHeader
         backBtn
-        title={localizationText.SHOP.TITLE}
+        title="SHOP.TITLE"
         applyFlex
         rightComponent={
           <IPayPressable onPress={handleFiltersShow}>
             <IPayIcon
-              icon={!!filters.length ? icons.filter_edit_purple : icons.filter}
+              icon={filters.length ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={!!filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }
@@ -77,13 +75,13 @@ const AllOrdersScreen: React.FC = () => {
         {allOrders && allOrders.length > 0 ? (
           <IPayOrdersCard data={allOrders} />
         ) : (
-          <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_ORDER} />
+          <IPayNoResult showEmptyBox message="SHOP.NO_ORDER" />
         )}
       </IPayView>
 
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
-        defaultValues={OrderHistoryFilterDefaultValues}
+        heading="TRANSACTION_HISTORY.FILTER"
+        defaultValues={orderHistoryFilterDefaultValues}
         showDateFilter
         ref={filterRef}
         onSubmit={handleSubmit}

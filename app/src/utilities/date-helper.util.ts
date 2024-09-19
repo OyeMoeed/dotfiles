@@ -33,11 +33,13 @@ const formatTime = (seconds: number): string => {
   return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
 };
 function minutesToSeconds(minutes: string | number) {
-  const min = parseInt(minutes);
+  const min = parseInt(String(minutes), 10);
   return min * 60;
 }
 
 const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
+
+const getDateFormate = (date: string, dateFormate: string) => moment(date).format(dateFormate);
 
 /**
  * Format date string to 'DD/MM/YYYY - HH:mm'
@@ -55,14 +57,26 @@ const formatDate = (dateStr: string): string => {
   return `${day}/${month}/${year} - ${hours}:${minutes}`;
 };
 
+const formatSlashDateTime = (tisoDate?: any): string => {
+  const date = new Date(tisoDate);
+  const hours = date?.getHours();
+  const minutes = date?.getMinutes();
+  let strMin: string | number = '';
+  strMin = minutes < 10 ? `0${minutes}` : minutes;
+  const strTime = `${hours}:${strMin}`;
+  return strTime;
+};
+
 export {
   FORMAT_1,
   checkDateValidation,
   formatCountdownTime,
+  formatDate,
   formatDateAndTime,
+  formatSlashDateTime,
   formatTime,
   formatTimeAndDate,
   formatYearToLastTwoDigits,
+  getDateFormate,
   minutesToSeconds,
-  formatDate,
 };

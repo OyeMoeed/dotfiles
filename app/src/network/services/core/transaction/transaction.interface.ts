@@ -98,6 +98,63 @@ interface CardsProp {
   walletNumber?: string;
 }
 
+interface resetPinCodeProp {
+  walletNumber?: string;
+  cardIndex?: string;
+  body?: {
+    cardPinCode?: string;
+    otp?: string;
+    otpRef?: string;
+    deviceInfo?: any;
+  };
+}
+
+interface getCardDetailsProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string;
+    otp?: string;
+    otpRef?: string;
+    deviceInfo?: any;
+  };
+}
+
+interface renewCardProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string;
+    otp?: string;
+    otpRef?: string;
+    cardType?: string;
+    physicalCard?: boolean;
+    deviceInfo?: any;
+  };
+}
+
+interface prepareShowDetailsProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string;
+    deviceInfo: any;
+  };
+}
+
+interface prepareRenewCardProp {
+  walletNumber?: string;
+  body?: {
+    deviceInfo: any;
+  };
+}
+
+interface changeStatusProp {
+  walletNumber?: string;
+  body?: {
+    status?: string;
+    cardIndex?: string;
+    deviceInfo?: any;
+  };
+}
+
 interface CardListItem {
   registrationId: string;
   cardBin: string;
@@ -122,6 +179,12 @@ interface CardListResponse {
   successfulResponse: boolean;
 }
 
+enum CardStatus {
+  ONLINE_PURCHASE_DISABLE = '0',
+  ONLINE_PURCHASE_ENABLE = '100',
+  DISABLE = '700',
+}
+
 export {
   CardListItem,
   CardListResponse,
@@ -130,4 +193,11 @@ export {
   TransactionsMockProps,
   TransactionsProp,
   WalletNumberProp,
+  resetPinCodeProp,
+  changeStatusProp,
+  CardStatus,
+  prepareShowDetailsProp,
+  getCardDetailsProp,
+  prepareRenewCardProp,
+  renewCardProp,
 };

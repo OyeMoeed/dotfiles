@@ -1,12 +1,8 @@
 import requestType from '@app/network/request-types.network';
 import constants from '@app/constants/constants';
-import { getAllRetainedMessages, readSingleNotification, deleteSingleNotification } from './notifications.service';
+import { getAllRetainedMessages, readNotification, deleteSingleNotification } from './notifications.service';
 import apiCall from '../../api-call.service';
-import {
-  getAllRetainedMessagesMock,
-  readSingleNotificationsMock,
-  deleteSingleNotificationMock,
-} from './notifications.mock';
+import { getAllRetainedMessagesMock, deleteSingleNotificationMock, readNotificationsMock } from './notifications.mock';
 import CORE_URLS from '../core.urls';
 
 jest.mock('../../api-call.service');
@@ -59,7 +55,7 @@ describe('Notification Service', () => {
     });
   });
 
-  describe('readSingleNotification', () => {
+  describe('readNotification', () => {
     it('should return mock data when MOCK_API_RESPONSE is true', async () => {
       constants.MOCK_API_RESPONSE = true;
       const payload = {
@@ -69,8 +65,8 @@ describe('Notification Service', () => {
           messageIds: ['msg1'],
         },
       };
-      const result = await readSingleNotification(payload);
-      expect(result).toBe(readSingleNotificationsMock);
+      const result = await readNotification(payload);
+      expect(result).toBe(readNotificationsMock);
     });
 
     it('should return API response when MOCK_API_RESPONSE is false and API call is successful', async () => {
@@ -85,7 +81,7 @@ describe('Notification Service', () => {
       const mockApiResponse = { status: { type: 'SUCCESS' } };
       (apiCall as jest.Mock).mockResolvedValue(mockApiResponse);
 
-      const result = await readSingleNotification(payload);
+      const result = await readNotification(payload);
       expect(result).toBe(mockApiResponse);
       expect(apiCall).toHaveBeenCalledWith({
         endpoint: CORE_URLS.MARK_SINGLE_NOTIFICATION_AS_READ(payload.walletNumber),
@@ -106,7 +102,7 @@ describe('Notification Service', () => {
       const mockError = new Error('API Error');
       (apiCall as jest.Mock).mockRejectedValue(mockError);
 
-      const result = await readSingleNotification(payload);
+      const result = await readNotification(payload);
       expect(result).toEqual({ error: 'API Error' });
     });
   });

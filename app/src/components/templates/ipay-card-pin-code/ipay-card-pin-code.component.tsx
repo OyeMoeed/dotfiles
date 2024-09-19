@@ -2,7 +2,6 @@ import images from '@app/assets/images';
 import { IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import React, { useState } from 'react';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import icons from '@app/assets/icons';
@@ -13,7 +12,6 @@ import cardPinCodeStyle from './ipay-card-pin-code.style';
 
 const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCode }) => {
   const pinCode = '1234'; // TODO update with saved pin
-  const localizationText = useLocalization();
   const styles = cardPinCodeStyle();
   const { showToast } = useToastContext();
   const { colors } = useTheme();
@@ -22,8 +20,8 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCo
 
   const renderErrorToast = () => {
     showToast({
-      title: localizationText.CARDS.INCORRECT_CODE,
-      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      title: 'CARDS.INCORRECT_CODE',
+      subTitle: 'CARDS.VERIFY_CODE_ACCURACY',
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
@@ -44,7 +42,7 @@ const IPayCardPinCode: React.FC<IPayCardPinCodeProps> = ({ testID, onEnterPassCo
         <IPayImage style={styles.securityIcon} image={images.securityCard} />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayTitle2Text text={localizationText.CARDS.ENTER_CARD_PIN_CODE} />
+        <IPayTitle2Text text="CARDS.ENTER_CARD_PIN_CODE" />
       </IPayView>
       <IPayView style={styles.pincodeViewContainer}>
         <IPayPasscode

@@ -55,4 +55,23 @@ interface TopupCardsMockProps extends MockAPIOkProp {
   data: TopupCardsResponseDetails;
 }
 
-export { TopupCardsMockProps, WalletNumberProp, CheckOutProp, CheckStatusProp };
+export interface TopUpCardsRes {
+  cardList: TopUpCardItem[];
+}
+
+export interface TopUpCardItem {
+  registrationId: string;
+  cardBin: string;
+  lastDigits: string;
+  binCountry: any;
+  expirationYear: string;
+  expirationMonth: string;
+  embossingName: any;
+  cardBrand: string;
+  createdAt: string;
+  paymentGateway1: string;
+  transactionReferenceNumber: string;
+  token: string;
+}
+
+export { CheckOutProp, CheckStatusProp, TopupCardsMockProps, TopupCardsResponseDetails, WalletNumberProp };

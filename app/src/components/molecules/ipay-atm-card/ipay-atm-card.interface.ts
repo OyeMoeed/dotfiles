@@ -49,10 +49,24 @@ export interface CardInterface {
   expiryDate?: string;
   reissueDue?: boolean;
   cardStatus?: string;
+  cardTypeId?: string;
+  linkedName?: {
+    title?: string;
+    embossingName?: string;
+    firstName?: string;
+    lastName?: string;
+  };
   /**
    * card printing status
    */
   isCardPrinted?: boolean;
+  /**
+   * card type description
+   */
+  cardTypeDesc?: string;
+  annualFeeDue?: any;
+  nextAnnualFeeAmt?: any;
+  nextAnnualFeeVAT?: any;
 }
 
 export interface IPayATMCardProps {
@@ -76,4 +90,8 @@ export interface IPayATMCardProps {
    * card printing status
    */
   backgroundImageStyle?: StyleProp<ViewStyle>;
+  /**
+   * onLongPress function
+   */
+  onLongPress?: () => void;
 }

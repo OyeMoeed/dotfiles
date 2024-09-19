@@ -1,5 +1,4 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { Platform } from 'react-native';
@@ -39,7 +38,8 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     inputText: {
       fontSize: FONT_SIZE_20,
       lineHeight: moderateScale(30),
-      minWidth: scaleSize(45),
+      minWidth: moderateScale(45),
+      textAlign: 'right',
     },
     inputContainer: {
       alignItems: 'center',
@@ -47,7 +47,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderWidth: moderateScale(1),
       borderColor: themeColors.primary.primary100,
       borderRadius: moderateScale(22),
-      paddingVertical: moderateScale(12),
+      paddingTop: moderateScale(12),
     },
     focusedContainer: {
       alignItems: 'center',
@@ -55,7 +55,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderWidth: moderateScale(1),
       borderColor: themeColors.primary.primary500,
       borderRadius: moderateScale(22),
-      paddingVertical: moderateScale(12),
+      paddingTop: moderateScale(12),
     },
 
     currencyStyle: {
@@ -90,23 +90,26 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       color: themeColors.primary.primary500,
     },
     chipContainer: {
+      marginBottom: moderateScale(10),
+      marginTop: moderateScale(-2),
       alignSelf: 'center',
-      marginBottom: moderateScale(12),
     },
     amountInput: {
+      paddingBottom: moderateScale(8),
       ...Platform.select({
         android: {
-          marginVertical: moderateScale(8),
+          marginTop: moderateScale(-10),
+          marginBottom: moderateScale(-10),
         },
         ios: {
-          marginVertical: 0,
+          marginTop: moderateScale(-5),
+          marginBottom: moderateScale(-1),
         },
       }),
     },
     alinmaLogo: {
       wdith: moderateScale(18),
       height: moderateScale(18),
-      magrinLeft: moderateScale(50),
     },
     alinmaContainer: {
       marginLeft: moderateScale(30),

@@ -17,7 +17,7 @@ const moneyRequestStyles = (theme: typeof colors) =>
       backgroundColor: theme.natural.natural0,
       width: '100%',
       borderRadius: moderateScale(16),
-      marginBottom: moderateScale(8),
+      marginBottom: moderateScale(12),
     },
     leftIconCard: {
       height: moderateScale(22),
@@ -37,6 +37,7 @@ const moneyRequestStyles = (theme: typeof colors) =>
       flexDirection: 'row',
     },
     walletListBackground: {
+      marginTop: 4,
       backgroundColor: theme.backgrounds.successBackground,
       borderRadius: moderateScale(22),
       padding: moderateScale(16),
@@ -48,6 +49,7 @@ const moneyRequestStyles = (theme: typeof colors) =>
       padding: moderateScale(16),
       gap: moderateScale(16),
       borderRadius: moderateScale(22),
+      marginBottom: moderateScale(8),
     },
     listDetails: {
       flexDirection: 'row',
@@ -57,5 +59,10 @@ const moneyRequestStyles = (theme: typeof colors) =>
       marginRight: moderateScale(12),
     },
     detailsText: { color: theme.primary.primary800 },
+    confirmButton: {
+      height: moderateScale(50, 0.3),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });
 export default moneyRequestStyles;

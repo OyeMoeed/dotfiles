@@ -1,32 +1,24 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPaySpinner, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import {
-  CardsProp,
-  FilterFormDataProp,
-  TransactionsProp,
-} from '@app/network/services/core/transaction/transaction.interface';
-import {
-  getCards,
-  getTransactionTypes,
-  getTransactions,
-} from '@app/network/services/core/transaction/transactions.service';
+import { FilterFormDataProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getTransactionTypes, getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, FiltersType, spinnerVariant } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import React, { useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
@@ -34,42 +26,30 @@ import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const {
-    isW2WTransactions,
-    isShowCard,
-    isShowTabs = false,
-    currentCard,
-    cards,
-    contacts,
-    isShowAmount = true,
-  } = route.params;
-  const { transactionHistoryFilterDefaultValues, W2WFilterData, W2WFilterDefaultValues } = useConstantData();
+  const { isW2WTransactions, isShowTabs = false, currentCard, cards, contacts, isShowAmount = true } = route.params;
+  const { transactionHistoryFilterDefaultValues, w2WFilterData, w2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
-  const localizationText = useLocalization();
-  const TRANSACTION_TABS = [
-    localizationText.TRANSACTION_HISTORY.SEND_MONEY,
-    localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY,
-  ];
+  const { t } = useTranslation();
+  const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
+
+  const cardLastFourDigit = currentCard?.maskedCardNumber?.slice(-4);
 
   const [filters, setFilters] = useState<Array<string>>([]);
   const transactionRef = React.createRef<any>();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
-  const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const [appliedFilters, setAppliedFilters] = useState<SubmitEvent | null>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [apiError, setAPIError] = useState<string>('');
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isLoadingW2W, setIsLoadingW2W] = useState<boolean>(false);
+  const [, setIsLoadingW2W] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
-  const [cardsData, setCardssData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
   const [selectedCard, setSelectedCard] = useState<any>(currentCard);
 
@@ -92,17 +72,118 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }, [transactionsData]);
 
   // Function to apply filters dynamically
+
+  const getCardInfo = (card: string) => {
+    if (cards?.length) {
+      const foundCard = cards.find((item: CardInterface) => item?.maskedCardNumber === card);
+      return foundCard;
+    }
+    return '';
+  };
+
+  const getTrxReqTypeCode = (trxTypeName: string) => {
+    if (transactionHistoryFilterData) {
+      const foundReqType = transactionHistoryFilterData[0]?.filterValues?.find(
+        (type: any) => type?.value === trxTypeName,
+      );
+      return foundReqType?.key;
+    }
+    return '';
+  };
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const getTransactionsData = async (filtersData?: any) => {
+    setIsLoading(true);
+    try {
+      const payload: TransactionsProp = {
+        walletNumber,
+        maxRecords: '50',
+        offset: '1',
+        fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
+        toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
+        cardIndex: selectedCard ? selectedCard?.cardIndex : '',
+        trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transaction_type) : '',
+      };
+
+      const apiResponse: any = await getTransactions(payload);
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          if (apiResponse?.response?.transactions?.length) {
+            setTransactionsData(apiResponse?.response?.transactions);
+          } else {
+            setTransactionsData([]);
+            setNoFilterResult(true);
+          }
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      setIsLoading(false);
+    } catch (error: any) {
+      setIsLoading(false);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
   const applyFilters = (filtersArray: FiltersArrayProps) => {
     setNoFilterResult(false);
     getTransactionsData(filtersArray);
   };
 
-  const getCardInfo = (card: string) => {
-    if (cards?.length) {
-      const foundCard = cards.find((item: CardInterface) => item?.maskedCardNumber == card);
-      return foundCard;
+  const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
+    setIsLoadingW2W(true);
+    setTransactionsData([]);
+    setFilteredData([]);
+    try {
+      const payload: TransactionsProp = {
+        walletNumber,
+        maxRecords: '100',
+        offset: '1',
+        trxReqType: 'PAY_WALLET',
+        trxType,
+        fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
+        fromAmount: filterData?.amountFrom,
+        toAmount: filterData?.amountTo,
+      };
+      const apiResponse: any = await getTransactions(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setTransactionsData(apiResponse?.response?.transactions);
+          setFilteredData(apiResponse?.response?.transactions);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          break;
+        default:
+          break;
+      }
+      setIsLoadingW2W(false);
+    } catch (error: any) {
+      setIsLoadingW2W(false);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
-    return '';
   };
 
   const handleSubmit = (data: any) => {
@@ -149,8 +230,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     const isDateRange = filter.includes('-') && !filter.includes('SAR');
 
     if (isDateRange) {
-      const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
-
       updatedFilters = {
         ...updatedFilters,
         dateFrom: '',
@@ -179,211 +258,47 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     setSelectedTab(tab);
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
-  const getCardsData = async () => {
-    renderSpinner(true);
-    try {
-      const payload: CardsProp = {
-        walletNumber,
-      };
-      const apiResponse: any = await getCards(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setCardssData(apiResponse?.response?.cards);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  const getTrxReqTypeCode = (trxTypeName: string) => {
-    if (transactionHistoryFilterData) {
-      const foundReqType = transactionHistoryFilterData[0]?.filterValues?.find(
-        (type: any) => type?.value == trxTypeName,
-      );
-      return foundReqType?.key;
-    }
-    return '';
-  };
-
-  const getTransactionsData = async (filtersData?: any) => {
-    renderSpinner(true);
-    setIsLoading(true);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '50',
-        offset: '1',
-        fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
-        toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
-        cardIndex: selectedCard ? selectedCard?.cardIndex : '',
-        trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transaction_type) : '',
-      };
-
-      const apiResponse: any = await getTransactions(payload);
-
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          if (apiResponse?.response?.transactions?.length) {
-            setTransactionsData(apiResponse?.response?.transactions);
-          } else {
-            setTransactionsData([]);
-            setNoFilterResult(true);
-          }
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      setIsLoading(false);
-      renderSpinner(false);
-    } catch (error: any) {
-      setIsLoading(false);
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
-  const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
-    renderSpinner(true);
-    setIsLoadingW2W(true);
-    setTransactionsData([]);
-    setFilteredData([]);
-    try {
-      const payload: TransactionsProp = {
-        walletNumber,
-        maxRecords: '100',
-        offset: '1',
-        trxReqType: 'PAY_WALLET',
-        trxType,
-        fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-        fromAmount: filterData?.amountFrom,
-        toAmount: filterData?.amountTo,
-      };
-      const apiResponse: any = await getTransactions(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setTransactionsData(apiResponse?.response?.transactions);
-          setFilteredData(apiResponse?.response?.transactions);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-      setIsLoadingW2W(false);
-      renderSpinner(false);
-    } catch (error: any) {
-      setIsLoadingW2W(false);
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-    }
-  };
-
   const mapFiltersTypes = (transactionTypesRes: []) => {
-    const transactionTypesResMap = transactionTypesRes?.length
-      ? transactionTypesRes?.map((transactionType: any, index: number) => ({
-          id: index,
-          key: transactionType?.transactionRequestType,
-          value: transactionType?.defaultDescEn,
-        }))
-      : [];
+    let transactionTypesResMap: any = [];
+    if (transactionTypesRes?.length) {
+      transactionTypesResMap = transactionTypesRes?.map((transactionType: any, index: number) => ({
+        id: index,
+        key: transactionType?.transactionRequestType,
+        value: transactionType?.defaultDescEn,
+      }));
+    }
 
-    const filters = [];
+    const filtersTransaction = [];
 
-    filters.push({
+    filtersTransaction.push({
       id: '1',
-      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      label: t('TRANSACTION_HISTORY.TRANSACTION_TYPE'),
       type: FiltersType.TRANSACTION_TYPE,
       filterValues: transactionTypesResMap,
     });
 
     if (selectedCard && cards?.length) {
-      const cardsFilterMap = cards.map((card: CardInterface, index: number) => ({
+      const cardsFilterMap = cards.map((card: CardInterface) => ({
         id: card.cardIndex,
         key: card.cardIndex,
-        value: card?.maskedCardNumber,
+        value: card?.maskedCardNumber || '',
       }));
-      filters.push({
+      filtersTransaction.push({
         id: '2',
-        label: localizationText.TRANSACTION_HISTORY.CARD,
+        label: t('TRANSACTION_HISTORY.CARD'),
         type: FiltersType.CARD,
         filterValues: cardsFilterMap,
       });
     }
 
-    return filters;
+    return filtersTransaction;
   };
 
   const getTransactionTypesData = async () => {
-    renderSpinner(true);
-    try {
-      const apiResponse: any = await getTransactionTypes();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          setTransactionHistoryFilterData(mapFiltersTypes([]));
-          break;
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+    const apiResponse: any = await getTransactionTypes();
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setTransactionHistoryFilterData(mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs));
     }
   };
 
@@ -415,10 +330,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       displayValue: item?.displayName,
       value: item?.phoneNumbers[0]?.number,
       description: item?.phoneNumbers[0]?.number,
-      heading: localizationText.WALLET_TO_WALLET.CONTACT_NAME,
+      heading: t('WALLET_TO_WALLET.CONTACT_NAME'),
     }));
 
-  const selectedFilterData = isW2WTransactions ? W2WFilterData(onContactsList(contacts)) : transactionHistoryFilterData;
+  const selectedFilterData = isW2WTransactions ? w2WFilterData(onContactsList(contacts)) : transactionHistoryFilterData;
 
   const renderTrxsList = () => (
     <IPayView>
@@ -431,12 +346,27 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     </IPayView>
   );
 
+  const renderNoResult = () =>
+    noFilterResult ? (
+      <IPayNoResult textColor={colors.primary.primary800} message="TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND" />
+    ) : (
+      <IPayNoResult
+        textColor={colors.primary.primary800}
+        message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
+      />
+    );
+
+  const renderLoadingWithNoResult = () => (isLoading ? <IPaySpinner hasBackgroundColor={false} /> : renderNoResult());
+
+  const headerTitle = currentCard ? 'CARDS.CARD_TRANSACTIONS_HISTORY' : 'COMMON.TRANSACTIONS_HISTORY';
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title={headerTitle}
+        titleStyle={styles.cardTransactionsTitle}
         applyFlex
         rightComponent={
           <IPayPressable onPress={() => handleFiltersShow()}>
@@ -449,17 +379,16 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {/* {currentCard && (
+      {currentCard && (
         <IPayView style={styles.cardContainerStyleParent}>
           <IPayCardDetailsBannerComponent
             cardType={currentCard.cardType}
             cardTypeName={currentCard.cardHeaderText}
             carHolderName={currentCard.name}
-            cardLastFourDigit={currentCard.cardNumber}
+            cardLastFourDigit={cardLastFourDigit}
           />
         </IPayView>
-      )} */}
-      {selectedCard && <IPayShortHandAtmCard cardData={selectedCard} />}
+      )}
 
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
@@ -490,30 +419,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         />
       )}
       <IPayView style={styles.listContainer}>
-        {filteredData && filteredData.length ? (
-          renderTrxsList()
-        ) : (
-          <>
-            {!isLoading ? (
-              noFilterResult ? (
-                <IPayNoResult
-                  textColor={colors.primary.primary800}
-                  message={localizationText.TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND}
-                />
-              ) : (
-                <IPayNoResult
-                  textColor={colors.primary.primary800}
-                  message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
-                />
-              )
-            ) : (
-              <IPaySpinner hasBackgroundColor={false} />
-            )}
-          </>
-        )}
+        {filteredData && filteredData.length ? renderTrxsList() : renderLoadingWithNoResult()}
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={transactionRef}
@@ -526,8 +435,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       </IPayBottomSheet>
       {selectedFilterData && (
         <IPayFilterBottomSheet
-          heading={localizationText.TRANSACTION_HISTORY.FILTER}
-          defaultValues={isW2WTransactions ? W2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
+          heading="TRANSACTION_HISTORY.FILTER"
+          defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
           showAmountFilter={isShowAmount}
           showDateFilter
           ref={filterRef}
@@ -539,15 +448,16 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={noFilterResult}
         closeOnTouchOutside
+        transparentOverlay={false}
         animationType="fade"
         showIcon={false}
-        title={localizationText.TRANSACTION_HISTORY.NO_RESULTS}
+        title="TRANSACTION_HISTORY.NO_RESULTS"
         onClose={() => {
           setNoFilterResult(false);
         }}
-        message={localizationText.TRANSACTION_HISTORY.NO_RESULTS_DETAIL}
+        message="TRANSACTION_HISTORY.NO_RESULTS_DETAIL"
         primaryAction={{
-          text: localizationText.TRANSACTION_HISTORY.GOT_IT,
+          text: t('TRANSACTION_HISTORY.GOT_IT'),
           onPress: () => {
             setNoFilterResult(false);
           },

@@ -2,8 +2,8 @@ import React from 'react';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 
-import { IPayList } from '@app/components/molecules';
 import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayList } from '@app/components/molecules';
 import { IPayListDescriptionProps } from './card-options.interface';
 import cardOptionsStyles from './card-options.style';
 

@@ -1,55 +1,40 @@
-import React, { useEffect, useState } from 'react';
-import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayHeader, IPayNoResult } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
-import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import IPayNotificationList from '@app/components/organism/ipay-notification-list/ipay-notification-list.component';
 import icons from '@app/assets/icons';
+import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayHeader, IPayNoResult, useToastContext } from '@app/components/molecules';
+import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
+import IPaySectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
+import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
+import IPayNotificationList from '@app/components/organism/ipay-notification-list/ipay-notification-list.component';
+import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import IPaySectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
-import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import {
   deleteSingleNotification,
   getAllRetainedMessages,
-  readSingleNotification,
+  readNotification,
 } from '@app/network/services/core/notifications/notifications.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Notification } from './notification-center.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 
 /**
  * NoRequestComponent displays a message when there are no pending requests.
  * @param {Object} props - Component props.
- * @param {Object} props.localization - Localization object.
  * @param {Object} props.colors - Colors object.
  * @param {Object} props.styles - Styles object.
  */
-const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any }> = ({
-  localization,
-  colors,
-  styles,
-}) => (
+const NoRequestComponent: React.FC<{ colors: any; styles: any }> = ({ colors, styles }) => (
   <IPayView style={styles.noRequestContainer}>
     <IPayIcon size={24} icon={icons.empty_box_icon} />
-    <IPayCaption1Text
-      style={styles.noRequestText}
-      regular={false}
-      text={localization.NOTIFICATION_CENTER.ALL_CAUGHT_UP}
-    />
-    <IPayCaption1Text style={styles.noPendingRequestText} text={localization.NOTIFICATION_CENTER.NO_PENDING_REQUESTS} />
+    <IPayCaption1Text style={styles.noRequestText} regular={false} text="NOTIFICATION_CENTER.ALL_CAUGHT_UP" />
+    <IPayCaption1Text style={styles.noPendingRequestText} text="NOTIFICATION_CENTER.NO_PENDING_REQUESTS" />
     <IPayPressable onPress={() => navigate(ScreenNames.REQUEST_LISTING_SCREEN)}>
-      <IPaySubHeadlineText
-        color={colors.primary.primary500}
-        regular
-        text={localization.NOTIFICATION_CENTER.SHOW_REQUESTS}
-      />
+      <IPaySubHeadlineText color={colors.primary.primary500} regular text="NOTIFICATION_CENTER.SHOW_REQUESTS" />
     </IPayPressable>
   </IPayView>
 );
@@ -59,10 +44,9 @@ const NoRequestComponent: React.FC<{ localization: any; colors: any; styles: any
  */
 const NotificationCenterScreen: React.FC = () => {
   // hooks
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { showToast } = useToastContext();
-  const localization = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
 
   // states
   const [notifications, setNotifications] = useState<Notification[]>([] as Notification[]);
@@ -76,18 +60,12 @@ const NotificationCenterScreen: React.FC = () => {
   const pendingNotificationsCount = pendingNotifications.length;
   const hasPendingRequest = pendingNotificationsCount > 0;
   const hasNotifications = notifications.length > 0;
-  const unreadNotificationCount = 1;
+  const unreadNotificationCount = notifications.filter((notification) => !notification.read).length;
+  const notificationSubText =
+    unreadNotificationCount > 0 ? `${unreadNotificationCount} ${t('NOTIFICATION_CENTER.UNREAD')}` : undefined;
 
   const styles = getNotificationCenterStyles(colors);
 
-  /**
-   * Render toast message
-   * @param title - Title of the toast
-   * @param subTitle - Subtitle of the toast
-   * @param icon - Icon to display in the toast
-   * @param toastType - Type of the toast
-   * @param displayTime - Duration to display the toast
-   */
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
@@ -95,31 +73,17 @@ const NotificationCenterScreen: React.FC = () => {
         subTitle,
         toastType,
         isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
+        containerStyle: styles.toastStyle,
+        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
       },
       displayTime,
     );
   };
 
   /**
-   * Render spinner
-   * @param isVisible - Boolean to show or hide spinner
-   */ const renderSpinner = (isVisible: boolean) => {
-    if (isVisible) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
-  /**
    * Handle delete notification
    * @param id - Notification ID
    */ const handleDeleteNotification = async (id: string) => {
-    renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       messageId: id,
@@ -129,7 +93,6 @@ const NotificationCenterScreen: React.FC = () => {
       const apiResponse = await deleteSingleNotification(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
-        renderSpinner(false);
         // remove the deleted notification from the list
         setNotifications((prevNotifications) =>
           prevNotifications?.filter((notification) => notification.messageId !== id),
@@ -138,7 +101,35 @@ const NotificationCenterScreen: React.FC = () => {
       }
       return { apiResponseNotOk: true };
     } catch (error: any) {
-      renderSpinner(false);
+      return { error: error.message || 'Unknown error' };
+    }
+  };
+
+  /**
+   * Handle mark all as read
+   * @param id - Notification ID
+   */
+  const handleAllMarkAsRead = async () => {
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      apiPayload: {
+        deviceInfo: appData.deviceInfo as DeviceInfoProps,
+        messageIds: [],
+      },
+    };
+
+    try {
+      const apiResponse = await readNotification(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        // mark the notification as read
+        setNotifications((prevNotifications) =>
+          prevNotifications?.map((notification) => ({ ...notification, read: true })),
+        );
+        return apiResponse;
+      }
+      return { apiResponseNotOk: true };
+    } catch (error: any) {
       return { error: error.message || 'Unknown error' };
     }
   };
@@ -148,7 +139,6 @@ const NotificationCenterScreen: React.FC = () => {
    * @param id - Notification ID
    */
   const handleMarkAsRead = async (id: string) => {
-    renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
       apiPayload: {
@@ -158,10 +148,9 @@ const NotificationCenterScreen: React.FC = () => {
     };
 
     try {
-      const apiResponse = await readSingleNotification(payload);
+      const apiResponse = await readNotification(payload);
 
       if (apiResponse?.status?.type === 'SUCCESS') {
-        renderSpinner(false);
         // mark the notification as read
         setNotifications((prevNotifications) =>
           prevNotifications?.map((notification) =>
@@ -172,8 +161,6 @@ const NotificationCenterScreen: React.FC = () => {
       }
       return { apiResponseNotOk: true };
     } catch (error: any) {
-      renderSpinner(false);
-
       return { error: error.message || 'Unknown error' };
     }
   };
@@ -188,10 +175,9 @@ const NotificationCenterScreen: React.FC = () => {
     page: number,
     pageSize: number,
   ): Promise<{ data: Notification[]; hasMore: boolean }> => {
-    renderSpinner(true);
     const payload = {
       walletNumber: walletInfo.walletNumber,
-      currentPage: page,
+      pageNumber: page,
       pageSize,
     };
     try {
@@ -211,13 +197,12 @@ const NotificationCenterScreen: React.FC = () => {
             setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
           }
 
-          renderSpinner(false);
           return { data: paginatedData, hasMore };
         }
 
         case 'apiResponseNotOk':
           renderToast({
-            title: localization.ERROR.API_ERROR_RESPONSE,
+            title: 'ERROR.API_ERROR_RESPONSE',
             toastType: 'WARNING',
           });
           break;
@@ -230,9 +215,7 @@ const NotificationCenterScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localization.ERROR.SOMETHING_WENT_WRONG);
-    } finally {
-      renderSpinner(false);
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
 
     return { data: [], hasMore: false };
@@ -240,19 +223,19 @@ const NotificationCenterScreen: React.FC = () => {
 
   // Fetch notifications on component mount with page 1 and page size 10
   useEffect(() => {
-    getNotifications(1, 10);
+    getNotifications(1, 20);
   }, []);
 
   return (
     <IPaySafeAreaView style={styles.safeArea}>
-      <IPayHeader title={localization.COMMON.NOTIFICATIONS} backBtn applyFlex />
+      <IPayHeader title="COMMON.NOTIFICATIONS" backBtn applyFlex />
       <IPayView style={styles.bannerContainer}>
         {hasPendingRequest ? (
           <>
             <IPaySectionHeader
-              subText={`( ${pendingNotificationsCount} ${localization.NOTIFICATION_CENTER.PENDING})`}
-              leftText={localization.NOTIFICATION_CENTER.REQUESTS}
-              rightText={localization.NOTIFICATION_CENTER.VIEW_ALL}
+              subText={`( ${pendingNotificationsCount} ${t('NOTIFICATION_CENTER.PENDING')})`}
+              leftText="NOTIFICATION_CENTER.REQUESTS"
+              rightText="NOTIFICATION_CENTER.VIEW_ALL"
               rightIcon={icons.arrow_right_square}
               showRightIcon
             />
@@ -260,8 +243,8 @@ const NotificationCenterScreen: React.FC = () => {
           </>
         ) : (
           <>
-            <IPaySectionHeader leftText={localization.NOTIFICATION_CENTER.REQUESTS} />
-            <NoRequestComponent localization={localization} colors={colors} styles={styles} />
+            <IPaySectionHeader leftText="NOTIFICATION_CENTER.REQUESTS" />
+            <NoRequestComponent colors={colors} styles={styles} />
           </>
         )}
       </IPayView>
@@ -270,20 +253,22 @@ const NotificationCenterScreen: React.FC = () => {
           <IPaySectionHeader
             subTextColor={colors.primary.primary500}
             showDotBeforeSubtext
-            leftText={localization.NOTIFICATION_CENTER.NOTIFICATIONS}
-            subText={`${unreadNotificationCount} ${localization.NOTIFICATION_CENTER.UNREAD}`}
-            rightText={localization.NOTIFICATION_CENTER.READ_ALL}
+            leftText="NOTIFICATION_CENTER.NOTIFICATIONS"
+            subText={notificationSubText}
+            rightText="NOTIFICATION_CENTER.READ_ALL"
+            onRightOptionPress={handleAllMarkAsRead}
           />
+
           <IPayTabs
             scrollEnabled
             scrollable
             unSelectedTabStyle={styles.unSelectedTabStyle}
             tabs={[
-              localization.NOTIFICATION_CENTER.ALL,
-              localization.NOTIFICATION_CENTER.GIFTS,
-              localization.NOTIFICATION_CENTER.QATTAHS,
-              localization.NOTIFICATION_CENTER.OFFERS,
-              localization.NOTIFICATION_CENTER.SUGGESTED_FOR_YOU,
+              t('NOTIFICATION_CENTER.ALL'),
+              t('NOTIFICATION_CENTER.GIFTS'),
+              t('NOTIFICATION_CENTER.QATTAHS'),
+              t('NOTIFICATION_CENTER.OFFERS'),
+              t('NOTIFICATION_CENTER.SUGGESTED_FOR_YOU'),
             ]}
           />
         </IPayView>
@@ -298,7 +283,7 @@ const NotificationCenterScreen: React.FC = () => {
           </IPayView>
         ) : (
           <IPayView style={styles.noResultContainer}>
-            <IPayNoResult message={localization.NOTIFICATION_CENTER.NO_NOTIFICATIONS} showEmptyBox />
+            <IPayNoResult message="NOTIFICATION_CENTER.NO_NOTIFICATIONS" showEmptyBox />
           </IPayView>
         )}
       </IPayView>

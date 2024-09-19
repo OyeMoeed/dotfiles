@@ -141,7 +141,6 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
     },
     subheadingTextStyle: {
       color: themeColors.primary.primary600,
-      marginRight: scaleFont(8),
     },
     toast: {
       bottom: verticalScale(88),

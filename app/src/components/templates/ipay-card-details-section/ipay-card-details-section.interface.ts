@@ -1,11 +1,13 @@
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
-import { CardStatusRes } from '@app/network/services/cards-management/card-status/card-status.interface';
+import { Dispatch, SetStateAction } from 'react';
 
 interface IPayCardDetailsSectionProps {
   testID?: string;
+  isCardPrinted?: boolean;
   onOpenOTPSheet?: () => void;
   currentCard: CardInterface;
   cards: CardInterface[];
+  setCards: Dispatch<SetStateAction<CardInterface[]>>;
 }
 
 interface Option {

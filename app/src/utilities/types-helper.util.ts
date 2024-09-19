@@ -23,4 +23,6 @@ export interface bottomSheetTypes {
   showTermsAndConditions: () => void;
   resetInterval: () => void;
   triggerToast: (text: string, hide?: boolean) => void;
+  clearTimer: () => void;
+  startTimer: () => void;
 }

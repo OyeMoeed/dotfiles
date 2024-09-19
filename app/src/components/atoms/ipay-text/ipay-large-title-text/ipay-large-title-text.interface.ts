@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 /**
@@ -29,4 +30,8 @@ export interface IPayLargeTitleTextProps {
    * Children components to be rendered inside the RNText.
    */
   children?: React.ReactNode;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

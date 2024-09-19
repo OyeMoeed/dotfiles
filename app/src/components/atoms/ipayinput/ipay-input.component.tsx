@@ -1,6 +1,6 @@
+import React, { JSX } from 'react';
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput } from 'react-native';
 import { IPayInputProps } from '../ipay-input/ipay-input.interface';
@@ -51,10 +51,10 @@ const IPayInput: React.FC<IPayInputProps> = ({
   return (
     <TextInput
       testID={`${testID}-input`}
-      value={t(`${text}`)}
+      value={text}
       numberOfLines={numberOfLines}
       style={[styles.textInputStyle, commonStyles.subHeadlineText, style]}
-      placeholder={placeholder}
+      placeholder={`${t(placeholder || '')}`}
       placeholderTextColor={colors.natural.natural500}
       autoCapitalize={autoCapitalize}
       autoFocus={autoFocus}

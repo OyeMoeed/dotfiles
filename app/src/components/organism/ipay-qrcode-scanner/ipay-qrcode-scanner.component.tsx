@@ -7,39 +7,43 @@ import React from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 
 import { IPayImage, IPayView } from '@app/components/atoms';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import PermissionTypes from '@app/enums/permissions-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { PermissionsStatus, PermissionTypes } from '@app/enums';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import { scaleSize } from '@app/styles/mixins';
 import { alertVariant } from '@app/utilities/enums.util';
 import { debounce } from 'lodash';
 import { ActivityIndicator, Animated } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { useTranslation } from 'react-i18next';
+import { openSettings } from 'react-native-permissions';
 import { IPayQRCodeScannerProps } from './ipay-qrcode-scanner.interface';
 import qrCodeScannerComponentStyles from './ipay-qrcode-scanner.style';
 
 const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, onRead }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
-  const { permissionStatus: permissionStatusCheck, retryPermission } = usePermissions(PermissionTypes.CAMERA, true);
+  const { permissionStatus: permissionStatusCheck } = usePermissions(PermissionTypes.CAMERA, true);
 
   const styles = qrCodeScannerComponentStyles();
   const animatedStyle = useLoopingAnimation(1000, [0, -scaleSize(120)]);
 
   const goBackQr = debounce(() => {
     goBack();
-  }, 500);
+  }, 100);
+
+  const goToSettings = debounce(async () => {
+    await openSettings();
+  }, 100);
 
   const renderComponent = () => {
     switch (permissionStatusCheck) {
-      case permissionsStatus.UNKNOWN:
+      case PermissionsStatus.UNKNOWN:
         return (
           <IPayView testID="qrcode-loader" style={[styles.fill, styles.loaderContainer]}>
             <ActivityIndicator size="small" color={colors.primary.primary500} />
           </IPayView>
         );
-      case permissionsStatus.GRANTED:
+      case PermissionsStatus.GRANTED:
         return (
           <IPayView testID="qrcode-scanner" style={[styles.fill, styles.cameraContainerStyles]}>
             <QRCodeScanner
@@ -61,16 +65,16 @@ const IPayQRCodeScannerComponent: React.FC<IPayQRCodeScannerProps> = ({ testID, 
         return (
           <IPayAlert
             secondaryAction={{
-              text: localizationText.COMMON.GO_BACK,
+              text: t('COMMON.GO_BACK'),
               onPress: goBackQr,
             }}
             primaryAction={{
-              text: localizationText.PERMISSIONS.ALLOW_ACCESS,
-              onPress: retryPermission,
+              text: t('PERMISSIONS.ALLOW_ACCESS'),
+              onPress: goToSettings,
             }}
             variant={alertVariant.DESTRUCTIVE}
-            title={localizationText.PERMISSIONS.PERMISSION_DENIED}
-            message={localizationText.PERMISSIONS.ENABLE_CAMERA_ACCESS}
+            title="PERMISSIONS.PERMISSION_DENIED"
+            message="PERMISSIONS.ENABLE_CAMERA_ACCESS"
           />
         );
     }

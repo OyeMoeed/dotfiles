@@ -9,7 +9,6 @@ import {
   IPayText,
   IPayView,
 } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardTypes, CardTypesCodes } from '@app/utilities/enums.util';
 import React from 'react';
@@ -19,7 +18,6 @@ import cardStyles from './ipay-short-hand-atm-card.style';
 const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, cardData }) => {
   const { colors } = useTheme();
   const styles = cardStyles(colors);
-  const localizationText = useLocalization();
 
   const getCardImage = () => {
     switch (cardData?.cardTypeId) {
@@ -35,21 +33,17 @@ const IPayShortHandAtmCard: React.FC<IPayShortHandATMCardProps> = ({ textID, car
   const getCardlogo = () => {
     switch (cardData?.cardType) {
       case CardTypes.SIGNATURE_CARD:
-        return <IPayText style={styles.cashBackTextSignatureCard} text={localizationText.CARDS.CASHBACK} />;
+        return <IPayText style={styles.cashBackTextSignatureCard} text="CARDS.CASHBACK" />;
       case CardTypes.PLATINUIM_CARD:
-        return <IPayText style={styles.cashBackText} text={localizationText.CARDS.CASHBACK} />;
+        return <IPayText style={styles.cashBackText} text="CARDS.CASHBACK" />;
       default:
         return <IPayIcon icon={icons.mada_logo} size={35} />;
     }
   };
 
-  const maskCardNumber = (cardNumber: string): string => {
-    const parts = cardNumber.split(' ');
-    return `**** ${parts[parts.length - 1]}`;
-  };
-
   const textColor =
     cardData?.cardType === CardTypes.SIGNATURE_CARD ? colors.natural.natural0 : colors.primary.primary900;
+
   return (
     <IPayView style={styles.atmCardView} testID={`${textID}-short-hand-atm-card`}>
       <IPayImageBackground image={getCardImage()} resizeMode="stretch" style={styles.atmCardImg}>

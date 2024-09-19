@@ -1,3 +1,4 @@
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 import '@testing-library/react-native';
 import 'lottie-react-native';
 import 'react-native-gesture-handler/jestSetup';
@@ -15,12 +16,25 @@ jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock
 
 jest.mock('@react-native-clipboard/clipboard');
 
+// Mock NetInfo
+jest.mock('@react-native-community/netinfo', () => ({
+  __esModule: true,
+  default: {
+    addEventListener: jest.fn(),
+    fetch: jest.fn(() => Promise.resolve({ isConnected: true })),
+  },
+}));
+
 jest.mock('react-native-share', () => ({
   open: jest.fn(),
   Social: {
     WHATSAPP: '',
   },
 }));
+
+// Mock NetInfo
+
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
 jest.mock('react-native-device-info', () => {
   return {
@@ -49,7 +63,7 @@ jest.mock('@app/localization/hooks/localization.hook', () => {
   });
 });
 
-jest.mock('@app/network/utilities/device-info-helper');
+jest.mock('@app/network/utilities');
 jest.mock('@network/services/api-call.service');
 jest.mock('@app/store/slices/app-data-slice', () => ({
   setAppData: jest.fn(),

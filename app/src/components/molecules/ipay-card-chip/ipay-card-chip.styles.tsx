@@ -15,7 +15,7 @@ const IPayCardChipStyles = (colors: typeof themeColors) =>
       padding: moderateScale(12),
       borderRadius: moderateScale(12),
       flex: 1,
-      gap: moderateScale(8),
+      gap: moderateScale(4),
     },
     textColor: { color: colors.natural.natural900 },
   });

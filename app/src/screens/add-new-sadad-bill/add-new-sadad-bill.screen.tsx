@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
 import {
   IPayButton,
@@ -12,36 +13,36 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { getValidationSchemas } from '@app/services/validation-service';
+import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
+import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
+import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
+import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
+import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
+import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
+import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
+import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
+import { getDeviceInfo } from '@app/network/utilities';
+import { getValidationSchemas } from '@app/services';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { FC, useEffect, useRef, useState, useCallback } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
-import getBillersCategoriesService from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.service';
-import { BillersCategoryType } from '@app/network/services/bills-management/get-billers-categories/get-billers-categories.interface';
-import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
-import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
-import getBillersServicesService from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
-import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { spinnerVariant } from '@app/utilities/enums.util';
-import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
-import { useTypedSelector } from '@app/store/store';
-import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
-import images from '@app/assets/images';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import addSadadBillStyles from './add-new-sadad-bill.style';
+import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
+import addSadadBillStyles from './add-new-sadad-bill.style';
 
 const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const { selectedBills = [], isSaveOnly, isPayPartially } = route.params || {};
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
   const selectSheeRef = useRef<any>(null);
@@ -56,11 +57,11 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const [services, setServices] = useState<BillersService[]>();
   const [selectedService, setSelectedService] = useState<BillersService>();
+  const { showToast } = useToastContext();
 
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(localizationText);
+  const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     companyName,
@@ -69,16 +70,14 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     billName,
   });
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
 
   const onGetBillersCategory = async () => {
     const apiResponse = await getBillersCategoriesService();
@@ -100,7 +99,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
           ...billerItem,
           id: billerItem.billerId,
-          image: '', // TODO: There is no image on get billers response will add image here when receive from response
+          image: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerItem.billerId), // TODO: There is no image on get billers response will add image here when receive from response
           text: billerItem.billerDesc,
           type: billerItem.billerTypeDesc,
         })),
@@ -109,20 +108,23 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onGetBillersServices = async (billerID: string) => {
-    const apiResponse = await getBillersServicesService(billerID);
-    if (apiResponse.successfulResponse) {
-      setServices(
-        apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+    try {
+      const apiResponse = await getBillersServiceProvider(billerID);
+      if (apiResponse.successfulResponse) {
+        const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
           ...serviceItem,
           id: serviceItem.serviceId,
           text: serviceItem.serviceDesc,
-        })),
-      );
+        }));
+        setServices(serviceList);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   useEffect(() => {
-    onGetBillersServices(selectedBiller?.billerId);
+    onGetBillersServices(walletNumber);
   }, [selectedBiller]);
 
   useEffect(() => {
@@ -150,9 +152,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       walletNumber,
     };
 
-    renderSpinner(true);
     const apiResponse = await inquireBillService(payload);
-    renderSpinner(false);
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
@@ -160,7 +160,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: '14/12/2024', // TODO: No Due Date is coming from api response once receive from response will update it
+        dueDate: '2024-07-21T12:00:00Z', // TODO: No Due Date is coming from api response once receive from response will update it
         totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
@@ -177,11 +177,15 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onSelect = (value: string, tabObject: BillersCategoryType) => {
-    if (tabObject.code === '0') {
-      setFilterData(billers);
-    } else {
-      const filterWithTab = billers.filter((item) => item.billerType === tabObject.code);
-      setFilterData(filterWithTab);
+    const billersValue = billers || [];
+
+    if (billersValue?.length > 0) {
+      if (tabObject.code === '0') {
+        setFilterData(billersValue);
+      } else {
+        const filterWithTab = billersValue?.filter((item) => item.billerType === tabObject.code);
+        setFilterData(filterWithTab);
+      }
     }
   };
 
@@ -235,11 +239,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             <IPayHeader
               testID="sadad-bill-ipay-header"
               backBtn
-              title={
-                isSaveOnly
-                  ? localizationText.NEW_SADAD_BILLS.PAY_SADAD_BILLS
-                  : localizationText.NEW_SADAD_BILLS.NEW_SADAD_BILLS
-              }
+              title={isSaveOnly ? t('NEW_SADAD_BILLS.PAY_SADAD_BILLS') : t('NEW_SADAD_BILLS.NEW_SADAD_BILLS')}
               titleStyle={styles.headerText}
               applyFlex
             />
@@ -278,8 +278,8 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                   )}
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
-                    btnType="primary"
+                    btnText="NEW_SADAD_BILLS.INQUIRE"
+                    btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onInquireBill)}
                     large
                     btnIconsDisabled
@@ -287,8 +287,8 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   />
                   {watch(FormFields.SAVE_BILL) && (
                     <IPayButton
-                      btnText={localizationText.NEW_SADAD_BILLS.SAVE_ONLY}
-                      btnType="outline"
+                      btnText="NEW_SADAD_BILLS.SAVE_ONLY"
+                      btnType={buttonVariants.OUTLINED}
                       onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
                       large
                       disabled={!watch(FormFields.BILL_NAME)}
@@ -300,9 +300,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             )}
             <IPayBottomSheet
               heading={
-                sheetType === NewSadadBillType.COMPANY_NAME
-                  ? localizationText.COMMON.COMPANY
-                  : localizationText.NEW_SADAD_BILLS.SERVICE_TYPE
+                sheetType === NewSadadBillType.COMPANY_NAME ? t('COMMON.COMPANY') : t('NEW_SADAD_BILLS.SERVICE_TYPE')
               }
               customSnapPoint={['1%', '90%']}
               onCloseBottomSheet={() => selectSheeRef.current.close()}
@@ -320,7 +318,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayTextInput
                       text={search}
                       onChangeText={setSearch}
-                      placeholder={localizationText.LOCAL_TRANSFER.SEARCH_FOR_NAME}
+                      placeholder="LOCAL_TRANSFER.SEARCH_FOR_NAME"
                       rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                       simpleInput
                       style={styles.inputStyle}
@@ -328,10 +326,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     />
                     {search && (
                       <IPayButton
-                        btnText={localizationText.COMMON.CANCEL}
+                        btnText="COMMON.CANCEL"
                         btnIconsDisabled
                         small
-                        btnType="link-button"
+                        btnType={buttonVariants.LINK_BUTTON}
                         onPress={() => setSearch('')}
                       />
                     )}
@@ -355,7 +353,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   <IPayView style={styles.noRecordContainer}>
                     <IPayNoResult
                       containerStyle={styles.noRecordWrapper}
-                      message={localizationText.NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND}
+                      message="NEW_SADAD_BILLS.NO_SERVICE_PROVIDER_FOUND"
                       showIcon
                       icon={icons.note_remove1}
                       iconSize={40}
@@ -366,7 +364,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
-              heading={localizationText.NEW_SADAD_BILLS.SADAD_BILLS}
+              heading="NEW_SADAD_BILLS.SADAD_BILLS"
               customSnapPoint={['1%', isAndroidOS ? '43%' : '50%']}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
@@ -378,9 +376,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayContentNotFound
-                title={localizationText.NEW_SADAD_BILLS.NO_INVOICE_FOUND}
-                message={localizationText.NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE}
-                btnText={localizationText.COMMON.TRY_AGAIN}
+                title="NEW_SADAD_BILLS.NO_INVOICE_FOUND"
+                message="NEW_SADAD_BILLS.INVOICE_WARNING_MESSAGE"
+                btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

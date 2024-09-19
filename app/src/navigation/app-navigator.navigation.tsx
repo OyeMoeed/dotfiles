@@ -1,4 +1,5 @@
 import { IPayDropdownSheet } from '@app/components/atoms';
+import IPaySpinnerContainer from '@app/components/atoms/ipay-spinner/ipay-spinner.helper';
 import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
@@ -26,11 +27,13 @@ const MainNavigation: React.FC = () => {
     appData: state.appDataReducer.appData,
     isAuthorized: state.auth.isAuthorized,
   }));
+
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
   const isSessionTimeout = useTypedSelector((state) => state.alertReducer.sessionTimeout);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const isDropdownVisible = useTypedSelector((state) => state.dropdownReducer.isDropdownVisible);
   const isPermissionVisible = useTypedSelector((state) => state.permissionAlertReducer.visible);
+  const { visible: isSpinnerVisible, spinnerProps } = useTypedSelector((state) => state.spinnerReducer);
   const { i18n } = useTranslation();
   const languageSheetRef = useRef<any>();
   const navigationRef = useRef<any>();
@@ -98,6 +101,8 @@ const MainNavigation: React.FC = () => {
       <IPaySessionTimeoutAlert visible={isSessionTimeout} />
       <IPayDropdownSheet ref={dropdownRef} />
       <IPayServiceErrorToast testID={navigationRef?.current?.getCurrentRoute().name} />
+
+      <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />
     </>
   );
 };

@@ -8,9 +8,9 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayMoneyRequestListProps } from './ipay-money-request-list.interface';
 import moneyRequestListStyles from './ipay-money-request.list.style';
 
@@ -23,36 +23,37 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
   amount,
   testID,
   onPress,
+  shouldTranslateTitle,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = moneyRequestListStyles(colors);
 
-  //this function should change the color of the status of the gift
+  // this function should change the color of the status of the gift
   const getStatusStyles = () => {
     switch (status) {
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
-          text: localizationText.REQUEST_MONEY.CANCEL,
+          text: t('REQUEST_MONEY.CANCELLED'),
           backgroundColor: colors.natural.natural100,
         };
       case MoneyRequestStatus.PAID:
         return {
           color: colors.tertiary.tertiary500,
-          text: localizationText.REQUEST_MONEY.PAID,
+          text: t('REQUEST_MONEY.PAID'),
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
         return {
           color: colors.critical.critical800,
-          text: localizationText.REQUEST_MONEY.PENDING,
+          text: t('REQUEST_MONEY.PENDING'),
           backgroundColor: colors.critical.critical25,
         };
       default:
         return {
           color: colors.error.error500,
-          text: localizationText.REQUEST_MONEY.REJECTED,
+          text: t('REQUEST_MONEY.REJECTED'),
           backgroundColor: colors.error.error25,
         };
     }
@@ -70,9 +71,10 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
           <IPayView style={styles.textContainer}>
             <IPaySubHeadlineText
               regular={false}
-              text={titleText}
+              text={titleText.substring(0, 15)}
               styles={titleStyle}
               color={colors.primary.primary900}
+              shouldTranslate={shouldTranslateTitle}
             />
             <IPayCaption2Text text={date} styles={headingStyle} color={colors.natural.natural500} />
           </IPayView>
@@ -84,7 +86,8 @@ const IPayMoneyRequestList: React.FC<IPayMoneyRequestListProps> = ({
         </IPayView>
         <IPayFootnoteText
           regular={false}
-          text={`${amount} ${localizationText.COMMON.SAR}`}
+          text={`${status === MoneyRequestStatus.PAID ? '+' : ''}${amount} ${t('COMMON.SAR')}`}
+          shouldTranslate={false}
           color={colors.natural.natural900}
         />
       </IPayView>

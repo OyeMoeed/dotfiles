@@ -12,38 +12,39 @@ import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate, resetNavigation } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
+import { useTranslation } from 'react-i18next';
 import { ATMWithdrawalSuccessScreenProps, ItemProps } from './atm-withdraw-successful.interface';
 import atmWithdrawSuccessStyles from './atm-withdraw-successful.style';
 
 const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ route }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = atmWithdrawSuccessStyles(colors);
-  const localizationText = useLocalization();
+
   const withdrawSuccessData = [
     {
       id: 1,
-      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_TYPE,
-      subTitle: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.ATM_WITHDRAWAL,
+      title: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_TYPE',
+      subTitle: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.ATM_WITHDRAWAL',
       icon: '',
     },
     {
       id: 2,
-      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.REF_NUMBER,
+      title: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.REF_NUMBER',
       subTitle: route?.params?.referenceNumber,
       icon: icons.copy,
     },
     {
       id: 3,
-      title: localizationText.ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_DATE,
+      title: 'ATM_WITHDRAWAL.SUCCESS_SCREEN.TRANSACTION_DATE',
       subTitle: formatTimeAndDate(new Date().toString()),
       icon: '',
     },
@@ -54,7 +55,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
       {
-        title: title || localizationText.passcode_error,
+        title: title || '',
         subTitle,
         toastType,
         isShowRightIcon: false,
@@ -74,7 +75,7 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
 
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
   const renderItem = ({ item }: ItemProps) => (
@@ -99,9 +100,10 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
       >
         <IPaySuccess
           style={styles.zeroFlex}
-          headingText={localizationText.ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY}
-          subHeadingText={`${route?.params?.amount} ${localizationText.COMMON.SAR}`}
+          headingText="ATM_WITHDRAWAL.WITHDRAW_SUCCESSFULLY"
+          subHeadingText={`${route?.params?.amount} ${t('COMMON.SAR')}`}
           subHeadingTextStyle={styles.subHeadingTextStyle}
+          shouldTranslateSubHeadingText={false}
         />
         <IPayView style={styles.dataView}>
           <IPayFlatlist
@@ -117,14 +119,14 @@ const AtmWithdrawSuccessful: React.FC<ATMWithdrawalSuccessScreenProps> = ({ rout
             onPress={onPressNewWithdarawal}
             btnType={buttonVariants.LINK_BUTTON}
             large
-            btnText={localizationText.ATM_WITHDRAWAL.NEW_WITHDRAWAL}
+            btnText="ATM_WITHDRAWAL.NEW_WITHDRAWAL"
             leftIcon={<IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />}
           />
           <IPayButton
             onPress={onPressHome}
             btnType={buttonVariants.PRIMARY}
             large
-            btnText={localizationText.COMMON.HOME}
+            btnText="COMMON.HOME"
             leftIcon={<IPayIcon icon={icons.HOME} size={20} color={colors.natural.natural0} />}
           />
         </IPayView>

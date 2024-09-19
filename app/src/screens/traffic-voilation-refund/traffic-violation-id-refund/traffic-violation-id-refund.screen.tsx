@@ -3,17 +3,17 @@ import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayView } from '@app/compone
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, SadadFooterComponent } from '@app/components/molecules';
 import IPayTrafficViolationCard from '@app/components/organism/ipay-traffic-violation-card/ipay-traffic-violation-card.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import useTrafficViolation from './traffic-violation-id-refund.hook';
 import trafficViolationStyles from './traffic-violation-id-refund.style';
 
 const TrafficVoilationIDRefundScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const {
     billsData,
     selectedBillsCount,
@@ -27,11 +27,11 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle} />
+      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle" />
       <IPayView style={styles.rowStyles}>
         <IPayList
-          title={localizationText.TRAFFIC_VIOLATION.VIOLATOR_ID}
-          detailText={`${billsData?.length} ${localizationText.TRAFFIC_VIOLATION.VIOLATION}`}
+          title="TRAFFIC_VIOLATION.VIOLATOR_ID"
+          detailText={`${billsData?.length} ${t('TRAFFIC_VIOLATION.VIOLATION')}`}
           subTitle={voilatorID}
           isShowSubTitle
           showDetail
@@ -39,18 +39,10 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
         />
       </IPayView>
       <IPayView style={styles.rowStyles}>
-        <IPayFootnoteText
-          color={colors.primary.primary900}
-          regular={false}
-          text={localizationText.TRAFFIC_VIOLATION.FOUND_VIOLATION}
-        />
+        <IPayFootnoteText color={colors.primary.primary900} regular={false} text="TRAFFIC_VIOLATION.FOUND_VIOLATION" />
         <IPayButton
           btnIconsDisabled
-          btnText={
-            selectedBillsCount === billsData?.length
-              ? localizationText.COMMON.DESELECT_ALL
-              : localizationText.COMMON.SELECT_ALL
-          }
+          btnText={selectedBillsCount === billsData?.length ? t('COMMON.DESELECT_ALL') : t('COMMON.SELECT_ALL')}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={selectedBillsCount === billsData?.length ? deselectAllBills : selectAllBills}
         />
@@ -66,8 +58,8 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
               showsVerticalScrollIndicator={false}
               renderItem={({ item, index }) => (
                 <IPayView>
-                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox={true} />
-                  {index === billsData?.length - 1 && selectedBillsCount > 0 && (
+                  <IPayTrafficViolationCard billDetails={item} onSelectBill={onSelectBill} showCheckBox />
+                  {index === (billsData || []).length - 1 && selectedBillsCount > 0 && (
                     <IPayView style={styles.listBottomView} />
                   )}
                 </IPayView>
@@ -79,9 +71,10 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
               <SadadFooterComponent
                 textColor={colors.natural.natural500}
                 onPressBtn={handlePayButton}
-                btnText={`${localizationText.TRAFFIC_VIOLATION.REFUND} (${selectedBillsAmount} ${localizationText.COMMON.SAR})`}
+                btnText={`${t('TRAFFIC_VIOLATION.REFUND')} (${selectedBillsAmount} ${t('COMMON.SAR')})`}
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
+                shouldTranslateBtnText={false}
               />
             </IPayView>
           )}
@@ -94,12 +87,12 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
             iconColor={colors.primary.primary800}
             iconSize={40}
             iconViewStyles={styles.noResultIconView}
-            message={localizationText.SADAD.NO_ACTIVE_BILLS}
+            message="SADAD.NO_ACTIVE_BILLS"
           />
           <IPayButton
             medium
             btnType={buttonVariants.PRIMARY}
-            btnText={localizationText.SADAD.ADD_NEW_BILL}
+            btnText="SADAD.ADD_NEW_BILL"
             btnStyle={styles.addNewBillBtn}
             leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
           />

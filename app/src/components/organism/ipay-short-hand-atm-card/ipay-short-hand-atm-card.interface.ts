@@ -1,4 +1,4 @@
-type CardDetails = {
+export type CardDetails = {
   title: string;
   cardNumber: string;
   cardType: string;

@@ -1,6 +1,7 @@
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
+import { moderateScale } from 'react-native-size-matters';
 
 const customerKnowledgeStyles = (colors: any) =>
   createStyleSheet({
@@ -59,8 +60,8 @@ const customerKnowledgeStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
     },
     buttonWrapper: {
-      marginTop: spacing.CUSTOME_SCALE(8),
-      marginBottom: spacing.CUSTOME_SCALE(100),
+      paddingTop: moderateScale(20),
+      marginBottom: spacing.CUSTOME_SCALE(90),
     },
     listStyle: {
       marginBottom: spacing.CUSTOME_SCALE(8),
@@ -71,6 +72,7 @@ const customerKnowledgeStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
     },
     inputStyle: {
+      paddingVertical: moderateScale(1),
       marginVertical: scaleSize(-12),
     },
   });

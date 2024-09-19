@@ -4,7 +4,6 @@ import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
 
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import getOffers from '@app/network/services/core/offers/offers.service';
 
 import {
@@ -18,20 +17,20 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { useTypedSelector } from '@app/store/store';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { GetOffersPayload, OfferItem } from '@app/network/services/core/offers/offers.interface';
+import { useTypedSelector } from '@app/store/store';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
+import { RouteProp, useRoute } from '@react-navigation/native';
 
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
-import offerDetailsStyles from './offer-details.style';
+import { dateTimeFormat } from '@app/utilities';
+import { useTranslation } from 'react-i18next';
 import { NearestStoreSheetTypes } from './offer-details.interface';
+import offerDetailsStyles from './offer-details.style';
 
 // Added dummy details for now because there is no following details key in offer details response
 const DUMMY_DETAILS =
@@ -39,9 +38,9 @@ const DUMMY_DETAILS =
 const DUMMY_AVAILABILITY = 'In Store';
 
 const OfferDetailsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = offerDetailsStyles(colors);
-  const localizationText = useLocalization();
   const nearestStoreSheetRef = useRef<NearestStoreSheetTypes>({
     hide() {},
     show() {},
@@ -49,28 +48,13 @@ const OfferDetailsScreen: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: { id: string } }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
   const { showToast } = useToastContext();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [offersData, setOffersData] = useState<OfferItem[] | null>([]);
 
   const { id } = route.params;
-
-  const renderSpinner = useCallback(
-    (isVisbile: boolean) => {
-      if (isVisbile) {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-      } else {
-        hideSpinner();
-      }
-    },
-    [isLoading],
-  );
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -83,7 +67,6 @@ const OfferDetailsScreen: React.FC = () => {
   };
 
   const getOffersData = async () => {
-    renderSpinner(true);
     try {
       const payload: GetOffersPayload = {
         walletNumber,
@@ -94,15 +77,13 @@ const OfferDetailsScreen: React.FC = () => {
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
       } else {
         setAPIError(apiResponse?.error);
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -134,6 +115,7 @@ const OfferDetailsScreen: React.FC = () => {
 
       return isoFormat;
     }
+    return undefined;
   };
 
   const calculateTimeLeft = () => {
@@ -178,8 +160,8 @@ const OfferDetailsScreen: React.FC = () => {
   }, [offersData[0]?.endDate]);
 
   return (
-    <IPaySafeAreaView>
-      <IPayHeader title={localizationText.OFFERS.DETAILS} backBtn applyFlex />
+    <IPaySafeAreaView style={styles.backgroundColor}>
+      <IPayHeader title="OFFERS.DETAILS" backBtn applyFlex />
       <IPayView style={styles.container}>
         {offersData && (
           <IPayLatestOfferCard
@@ -198,11 +180,7 @@ const OfferDetailsScreen: React.FC = () => {
             <>
               <IPayView style={[styles.offerExpiryContainer, styles.detailsSectionCommon]}>
                 <IPayView style={styles.expiryTop}>
-                  <IPayFootnoteText
-                    color={colors.natural.natural900}
-                    regular={false}
-                    text={localizationText.OFFERS.OFFER_EXPIRES_IN}
-                  />
+                  <IPayFootnoteText color={colors.natural.natural900} regular={false} text="OFFERS.OFFER_EXPIRES_IN" />
                   {offersData && (
                     <IPayFootnoteText
                       color={colors.primary.primary800}
@@ -215,31 +193,19 @@ const OfferDetailsScreen: React.FC = () => {
                   <IPayView style={styles.expiryTop}>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.days || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text text={localizationText.OFFERS.DAYS} regular color={colors.natural.natural500} />
+                      <IPayCaption1Text text="OFFERS.DAYS" regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.hours || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text
-                        text={localizationText.OFFERS.HOURS}
-                        regular
-                        color={colors.natural.natural500}
-                      />
+                      <IPayCaption1Text text="OFFERS.HOURS" regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.minutes || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text
-                        text={localizationText.OFFERS.MINUTES}
-                        regular
-                        color={colors.natural.natural500}
-                      />
+                      <IPayCaption1Text text="OFFERS.MINUTES" regular color={colors.natural.natural500} />
                     </IPayView>
                     <IPayView style={styles.center}>
                       <IPayTitle1Text text={timeLeft.seconds || '00'} regular color={colors.primary.primary800} />
-                      <IPayCaption1Text
-                        text={localizationText.OFFERS.SECONDS}
-                        regular
-                        color={colors.natural.natural500}
-                      />
+                      <IPayCaption1Text text="OFFERS.SECONDS" regular color={colors.natural.natural500} />
                     </IPayView>
                   </IPayView>
                 )}
@@ -253,22 +219,18 @@ const OfferDetailsScreen: React.FC = () => {
                 )}
               </IPayView>
               <IPayView style={[styles.detailsContainer, styles.detailsSectionCommon]}>
-                <IPayFootnoteText
-                  regular={false}
-                  color={colors.natural.natural900}
-                  text={localizationText.OFFERS.OFFER_DETAILS}
-                />
+                <IPayFootnoteText regular={false} color={colors.natural.natural900} text="OFFERS.OFFER_DETAILS" />
                 <IPayCaption1Text color={colors.natural.natural500} text={DUMMY_DETAILS} />
               </IPayView>
               <IPayView style={[styles.availabilityContainer, styles.detailsSectionCommon]}>
-                <IPayFootnoteText color={colors.natural.natural900} text={localizationText.OFFERS.AVAILABILITY} />
+                <IPayFootnoteText color={colors.natural.natural900} text="OFFERS.AVAILABILITY" />
                 <IPaySubHeadlineText color={colors.primary.primary800} regular text={DUMMY_AVAILABILITY} />
               </IPayView>
               <IPayView style={[styles.termsContainer, styles.detailsSectionCommon]}>
                 <IPayFootnoteText
                   regular={false}
                   color={colors.natural.natural900}
-                  text={localizationText.COMMON.TERMS_AND_CONDITIONS}
+                  text="COMMON.TERMS_AND_CONDITIONS"
                 />
                 <IPayCaption1Text color={colors.natural.natural500} text={offersData[0]?.termsDetailsEn} />
               </IPayView>
@@ -281,7 +243,7 @@ const OfferDetailsScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} />}
-            btnText={localizationText.OFFERS.VISIT_WEBSITE}
+            btnText="OFFERS.VISIT_WEBSITE"
             btnStyle={styles.flexStyle}
           />
           <IPayButton
@@ -289,7 +251,7 @@ const OfferDetailsScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.location1} color={colors.primary.primary500} />}
-            btnText={localizationText.OFFERS.NEAREST_STORE}
+            btnText="OFFERS.NEAREST_STORE"
             btnStyle={styles.flexStyle}
           />
         </IPayView>
@@ -297,7 +259,7 @@ const OfferDetailsScreen: React.FC = () => {
       <IPayActionSheet
         ref={nearestStoreSheetRef}
         testID="nearest-store-action-sheet"
-        options={[localizationText.COMMON.CANCEL, localizationText.OFFERS.OPEN_GOOGLE_MAP]}
+        options={[t('COMMON.CANCEL'), t('OFFERS.OPEN_GOOGLE_MAP')]}
         cancelButtonIndex={0}
         showCancel
         onPress={onClickDeleteCardSheet}

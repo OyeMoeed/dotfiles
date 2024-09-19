@@ -1,23 +1,22 @@
-import { osTypes } from '@app/enums/os-types.enum';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import PermissionTypes from '@app/enums/permissions-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { OsTypes, PermissionsStatus, PermissionTypes } from '@app/enums';
 import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities/storage-helper.util';
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Alert, Platform } from 'react-native';
 import { PERMISSIONS, check, checkNotifications, openSettings, request } from 'react-native-permissions';
 
 const usePermissions = (permissionType: string, isLocationMandatory = false) => {
-  const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
+  const { t } = useTranslation();
+
+  const [permissionStatus, setPermissionStatus] = useState(PermissionsStatus.UNKNOWN);
   const [alertShown, setAlertShown] = useState(false);
-  const localizationText = useLocalization();
 
   useEffect(() => {
     // Check and handle alertShown state from AsyncStorage on component mount
     getValueFromAsyncStorage('alertShown').then((value) => {
       if (value === 'true') {
         setAlertShown(true);
-        setPermissionStatus(permissionsStatus.DENIED); // Assuming DENIED means the user denied permission
+        setPermissionStatus(PermissionsStatus.DENIED); // Assuming DENIED means the user denied permission
       }
     });
   }, []);
@@ -29,17 +28,19 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
       switch (permissionType) {
         case PermissionTypes.LOCATION:
           switch (Platform.OS) {
-            case osTypes.ANDROID:
+            case OsTypes.ANDROID:
               permission = await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
               break;
-            case osTypes.IOS:
+            case OsTypes.IOS:
               permission = await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+              break;
+            default:
               break;
           }
           break;
 
         case PermissionTypes.NOTIFICATION:
-          if (Platform.OS === osTypes.ANDROID && Platform.Version >= 33) {
+          if (Platform.OS === OsTypes.ANDROID && Platform.Version >= 33) {
             permission = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
           } else {
             const { status } = await checkNotifications();
@@ -49,30 +50,34 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
 
         case PermissionTypes.CAMERA:
           switch (Platform.OS) {
-            case osTypes.ANDROID:
+            case OsTypes.ANDROID:
               permission = await request(PERMISSIONS.ANDROID.CAMERA);
               break;
-            case osTypes.IOS:
+            case OsTypes.IOS:
               permission = await request(PERMISSIONS.IOS.CAMERA);
+              break;
+            default:
               break;
           }
           break;
 
         case PermissionTypes.CONTACTS:
           switch (Platform.OS) {
-            case osTypes.ANDROID:
+            case OsTypes.ANDROID:
               permission = await request(PERMISSIONS.ANDROID.READ_CONTACTS);
               break;
-            case osTypes.IOS:
+            case OsTypes.IOS:
               permission = await request(PERMISSIONS.IOS.CONTACTS);
+              break;
+            default:
               break;
           }
           break;
 
         case PermissionTypes.BIOMETRIC:
-          if (Platform.OS === osTypes.IOS) {
+          if (Platform.OS === OsTypes.IOS) {
             permission = await check(PERMISSIONS.IOS.FACE_ID);
-            if (permission === permissionsStatus.DENIED) {
+            if (permission === PermissionsStatus.DENIED) {
               permission = await request(PERMISSIONS.IOS.FACE_ID);
             }
           }
@@ -83,26 +88,26 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
       }
 
       switch (permission) {
-        case permissionsStatus.GRANTED:
-          setPermissionStatus(permissionsStatus.GRANTED);
+        case PermissionsStatus.GRANTED:
+          setPermissionStatus(PermissionsStatus.GRANTED);
           break;
 
-        case permissionsStatus.DENIED:
-          setPermissionStatus(permissionsStatus.DENIED);
+        case PermissionsStatus.DENIED:
+          setPermissionStatus(PermissionsStatus.DENIED);
           break;
 
-        case permissionsStatus.BLOCKED:
-          setPermissionStatus(permissionsStatus.BLOCKED);
+        case PermissionsStatus.BLOCKED:
+          setPermissionStatus(PermissionsStatus.BLOCKED);
           if (isLocationMandatory && permissionType === PermissionTypes.LOCATION && !alertShown) {
             setAlertShown(true);
             await setValueToAsyncStorage('alertShown', 'true'); // Persist alertShown state
 
             Alert.alert(
-              localizationText.LOCATION.PERMISSION_REQUIRED,
-              localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED,
+              t('LOCATION.PERMISSION_REQUIRED'),
+              t('LOCATION.LOCATION_PERMISSION_REQUIRED'),
               [
                 {
-                  text: localizationText.LOCATION.GO_TO_SETTINGS,
+                  text: t('LOCATION.GO_TO_SETTINGS'),
                   onPress: async () => {
                     await openSettings();
                     setAlertShown(false); // Reset alertShown after returning from settings
@@ -115,19 +120,19 @@ const usePermissions = (permissionType: string, isLocationMandatory = false) => 
           }
           break;
 
-        case permissionsStatus.LIMITED:
-          setPermissionStatus(permissionsStatus.LIMITED);
+        case PermissionsStatus.LIMITED:
+          setPermissionStatus(PermissionsStatus.LIMITED);
           break;
 
-        case permissionsStatus.UNAVAILABLE:
+        case PermissionsStatus.UNAVAILABLE:
         default:
-          setPermissionStatus(permissionsStatus.UNAVAILABLE);
+          setPermissionStatus(PermissionsStatus.UNAVAILABLE);
           break;
       }
     } catch (error) {
-      setPermissionStatus(permissionsStatus.UNAVAILABLE);
+      setPermissionStatus(PermissionsStatus.UNAVAILABLE);
     }
-  }, [permissionType, isLocationMandatory, alertShown, localizationText, permissionStatus]);
+  }, [permissionType, isLocationMandatory, alertShown, t, permissionStatus]);
 
   useEffect(() => {
     checkPermission();

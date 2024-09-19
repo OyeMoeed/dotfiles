@@ -37,7 +37,6 @@ const issueNewCardConfirmDetailsStyles = (colors: typeof themeColors) =>
     },
     bottomContainer: {
       gap: moderateScale(12),
-      marginTop: moderateScale(52),
       marginBottom: verticalScale(16),
     },
     termsChildContainer: {
@@ -47,9 +46,6 @@ const issueNewCardConfirmDetailsStyles = (colors: typeof themeColors) =>
       width: '100%',
     },
     termText: {
-      flex: 1,
-      marginStart: moderateScale(16),
-      marginEnd: moderateScale(10),
       color: colors.natural.natural900,
     },
     footNoteTextStyle: {
@@ -59,6 +55,13 @@ const issueNewCardConfirmDetailsStyles = (colors: typeof themeColors) =>
       flexDirection: 'row',
       alignItems: 'center',
       gap: moderateScale(4),
+    },
+    button: {
+      borderRadius: moderateScale(8),
+      paddingVertical: moderateScale(14),
+      paddingHorizontal: moderateScale(20),
+      justifyContent: 'center',
+      backgroundColor: colors.primary.primary500,
     },
   });
 

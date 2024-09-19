@@ -1,70 +1,68 @@
-import { osTypes } from '@app/enums/os-types.enum';
-import { permissionsStatus } from '@app/enums/permissions-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { OsTypes, PermissionsStatus } from '@app/enums';
 import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
 import { useState, useCallback, useEffect } from 'react';
 import { Platform } from 'react-native';
 import { PERMISSIONS, request } from 'react-native-permissions';
 import { useDispatch } from 'react-redux';
 import Geolocation from 'react-native-geolocation-service';
-import axios from 'axios';
-import CONFIG from 'react-native-config';
 import { IlocationDetails } from '@app/network/services/services.interface';
+import { useTranslation } from 'react-i18next';
 
 const useLocation = () => {
-  const [permissionStatus, setPermissionStatus] = useState(permissionsStatus.UNKNOWN);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
+  const [permissionStatus, setPermissionStatus] = useState(PermissionsStatus.UNKNOWN);
   const [location, setLocation] = useState<IlocationDetails | null>(null);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const dispatch = useDispatch();
-  const title = localizationText.LOCATION.PERMISSION_REQUIRED;
-  const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
+
+  const title = t('LOCATION.PERMISSION_REQUIRED');
+  const description = t('LOCATION.LOCATION_PERMISSION_REQUIRED');
+
+  const requestLocationPermission = useCallback(async (): Promise<string> => {
+    if (Platform.OS === OsTypes.ANDROID) {
+      return request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
+    }
+    return request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
+  }, []);
+
+  const handlePermissionStatus = (status: string): boolean => {
+    switch (status) {
+      case PermissionsStatus.GRANTED:
+        setPermissionStatus(PermissionsStatus.GRANTED);
+        return true;
+
+      case PermissionsStatus.DENIED:
+        setPermissionStatus(PermissionsStatus.DENIED);
+        return false;
+
+      case PermissionsStatus.BLOCKED:
+        setPermissionStatus(PermissionsStatus.BLOCKED);
+        dispatch(showPermissionAlert({ title, description }));
+        return false;
+
+      case PermissionsStatus.LIMITED:
+        setPermissionStatus(PermissionsStatus.LIMITED);
+        return false;
+
+      case PermissionsStatus.UNAVAILABLE:
+      default:
+        setPermissionStatus(PermissionsStatus.UNAVAILABLE);
+        return false;
+    }
+  };
+
   const checkPermission = async (): Promise<boolean> => {
     try {
       const permission = await requestLocationPermission();
       return handlePermissionStatus(permission);
     } catch (error) {
-      setPermissionStatus(permissionsStatus.UNAVAILABLE);
+      setPermissionStatus(PermissionsStatus.UNAVAILABLE);
       return false;
     }
   };
 
   useEffect(() => {
     checkPermission();
-  }, []);
-
-  const handlePermissionStatus = (status: string): boolean => {
-    switch (status) {
-      case permissionsStatus.GRANTED:
-        setPermissionStatus(permissionsStatus.GRANTED);
-        return true;
-
-      case permissionsStatus.DENIED:
-        setPermissionStatus(permissionsStatus.DENIED);
-        return false;
-
-      case permissionsStatus.BLOCKED:
-        setPermissionStatus(permissionsStatus.BLOCKED);
-        dispatch(showPermissionAlert({ title, description }));
-        return false;
-
-      case permissionsStatus.LIMITED:
-        setPermissionStatus(permissionsStatus.LIMITED);
-        return false;
-
-      case permissionsStatus.UNAVAILABLE:
-      default:
-        setPermissionStatus(permissionsStatus.UNAVAILABLE);
-        return false;
-    }
-  };
-
-  const requestLocationPermission = useCallback(async (): Promise<string> => {
-    if (Platform.OS === osTypes.ANDROID) {
-      return await request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION);
-    } else {
-      return await request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
-    }
   }, []);
 
   const fetchLocation = useCallback(async (): Promise<IlocationDetails | null> => {
@@ -89,8 +87,7 @@ const useLocation = () => {
         setLocation(locationDetails);
         return locationDetails;
       } catch (error) {
-        console.error('Error fetching location: ', error);
-        setPermissionStatus(permissionsStatus.UNAVAILABLE);
+        setPermissionStatus(PermissionsStatus.UNAVAILABLE);
         return null;
       } finally {
         setIsFetchingLocation(false);
@@ -99,43 +96,9 @@ const useLocation = () => {
     return null;
   }, [permissionStatus]);
 
-  const fetchLocationDetails = useCallback(async (latitude: number, longitude: number): Promise<IlocationDetails> => {
-    try {
-      const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${CONFIG.GOOGE_MAPS_KEY}`,
-      );
-
-      if (response.data.status === 'OK') {
-        const addressComponents = response.data.results[0].address_components;
-        const locationDetails: IlocationDetails = {};
-
-        addressComponents.forEach((component: any) => {
-          const types = component.types;
-          if (types.includes('locality')) {
-            locationDetails.city = component.long_name;
-          }
-          if (types.includes('administrative_area_level_2')) {
-            locationDetails.district = component.long_name;
-          }
-          if (types.includes('country')) {
-            locationDetails.country = component.long_name;
-          }
-        });
-
-        return locationDetails;
-      } else {
-        console.error('Google Maps API failed to fetch location details');
-        return {};
-      }
-    } catch (error) {
-      console.error('Error fetching location details:', error);
-      return {};
-    }
-  }, []);
-
   useEffect(() => {
     const fetchAndSetLocation = async () => {
-      if (permissionStatus === permissionsStatus.GRANTED) {
+      if (permissionStatus === PermissionsStatus.GRANTED) {
         await fetchLocation();
       }
     };

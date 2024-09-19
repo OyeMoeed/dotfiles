@@ -1,3 +1,6 @@
+import { JSX } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
+
 interface IPayOtpVerificationProps {
   testID?: string;
   mobileNumber?: string;
@@ -7,12 +10,18 @@ interface IPayOtpVerificationProps {
   isLoading?: boolean;
   onPressConfirm?: () => void;
   ref: string;
-  apiError: string;
   isBottomSheet?: boolean;
   handleOnPressHelp?: () => void;
   showHelp?: boolean;
   title?: string;
   timeout?: number;
   onResendCodePress: () => void;
+  toastContainerStyle?: StyleProp<ViewStyle>;
+  headingContainerStyle?: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
+  innerContainerStyle?: StyleProp<ViewStyle>;
+  otp: string;
+  hasDisclaimerSection?: boolean;
+  disclaimerSection?: JSX;
 }
 export default IPayOtpVerificationProps;

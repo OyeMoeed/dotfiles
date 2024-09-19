@@ -1,4 +1,4 @@
-import { MockAPIStatusProps } from "../../services.interface";
+import { MockAPIStatusProps } from '../../services.interface';
 
 interface AlinmaExpressBeneficiariesProps {
   status: MockAPIStatusProps;

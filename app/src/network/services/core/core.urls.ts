@@ -1,3 +1,5 @@
+// TODO: will be fixed in another PR
+/* eslint-disable @typescript-eslint/naming-convention */
 import { TransactionsProp } from './transaction/transaction.interface';
 
 const CORE_URLS = {
@@ -12,7 +14,7 @@ const CORE_URLS = {
   GET_CORE_MANAGEMENT_LOV: 'core-management/common/lov/inquiry',
   SET_PASSCODE: 'core-management/v1/user/register',
   FAQ: 'core-management/v1/faq',
-  GET_TRAFIC_VIOLATION: 'core/v1/moi/traffic-violations',
+  GET_TRAFIC_VIOLATION: 'bills-management/v1/moi/traffic-violations',
   GET_OFFERS: (walletNumber: string) => `core/v1/${walletNumber}/offers`,
   GET_TOP_UP_CARDS: (walletNumber: string) => `core/v1/${walletNumber}/topup-cards`,
   GET_TRANSACTIONS: (walletNumber: string) => `core/v1/${walletNumber}/transaction`,
@@ -43,8 +45,19 @@ const CORE_URLS = {
   DEVICE_DELINK: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/delink-device`,
   CHANGE_LANGUAGE: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/update`,
   GET_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards`,
+  ACTIVATE_ONLINE_PURCHASE: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/status`,
+  PREPARE_CARD_RESET: (walletNumber?: string, cardIndex?: string) =>
+    `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin/prepare`,
+  PREPARE_SHOW_DETAILS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/showNumber/prepare`,
+  PREPARE_RENEW_CARD: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/card-annual-fees/prepare`,
+  RESET_PINCODE: (walletNumber?: string, cardIndex?: string) =>
+    `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin`,
+  OTP_GET_CARD_DETAILS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/showNumber/confirm`,
+  OTP_RENEW_CARD: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/card-annual-fees`,
   GET_TRANSACTION_TYPES: 'core-management/v1/transactionRequestTypes',
   GET_TOPUP_CARDS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/topup-cards`,
+  deleteTopupCard: (walletNumber?: string, registrationIid?: string) =>
+    `cards-management/v1/${walletNumber}/topup-cards/${registrationIid}`,
   TOPUP_CHECK_OUT: (walletNumber?: string) => `cards-management/v1/${walletNumber}/credit-topup/check-out`,
   CHECK_STATUS: (walletNumber?: string, refNumber?: string) =>
     `cards-management/v1/${walletNumber}/credit-topup/${refNumber}/status`,
@@ -52,7 +65,8 @@ const CORE_URLS = {
   GET_NAFATH_INQUIRY: (channelId?: string, requestId?: string) =>
     `api/nafath-authentication/v1/iam/${channelId}/requests/${requestId}`,
   UPDATE_WALLET_TIER: (walletNumber?: string) => `core-management/v1/wallet/${walletNumber}/upgrade`,
-  GET_NOTIFICATIONS: (walletNumber?: string) => `core-management/v1/${walletNumber}/retainedMessages`,
+  GET_NOTIFICATIONS: (walletNumber?: string, pageNumber?: number, pageSize?: number) =>
+    `core-management/v1/${walletNumber}/retainedMessages?offset=${pageNumber}&max-records=${pageSize}`,
   MARK_SINGLE_NOTIFICATION_AS_READ: (walletNumber?: string) =>
     `core-management/v1/${walletNumber}/retainedMessages/read`,
   DELETE_SINGLE_NOTIFICATION: (walletNumber: string, messageId: string) =>

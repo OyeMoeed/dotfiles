@@ -1,4 +1,5 @@
 import { alertType, alertVariant } from '@app/utilities/enums.util';
+import React from 'react';
 
 /**
  * Defines the props interface for the IpayAlert component.
@@ -31,7 +32,7 @@ export interface IPayAlertProps {
   primaryAction?: { text: string; onPress: () => void };
 
   // Configuration for the secondary action button, providing an alternative choice
-  secondaryAction?: { text: string; onPress: () => void };
+  secondaryAction?: { text: string; onPress: () => void; isLoading?: boolean };
 
   // Configuration for the tertiary action button, offering another option
   tertiaryAction?: { text: string; onPress: () => void };
@@ -44,4 +45,9 @@ export interface IPayAlertProps {
 
   // Indicates whether to display the icon within the alert or not
   showIcon?: boolean;
+
+  leftIcon?: React.JSX.Element;
+
+  // Determines whether to display a transparent overlay behind the alert
+  transparentOverlay?: boolean;
 }

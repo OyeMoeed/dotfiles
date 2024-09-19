@@ -17,7 +17,7 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
       borderRadius: moderateScale(16),
     },
     inputContainer: { marginHorizontal: moderateScale(24), marginTop: moderateScale(24), flex: 1 },
-    input: { textAlignVertical: 'top', height: verticalScale(230), paddingLeft: 0 },
+    input: { textAlignVertical: 'top', height: verticalScale(230), paddingTop: 0, paddingLeft: 0 },
     assistiveText: { textAlign: 'right' },
     buttonContainer: {
       marginTop: moderateScale(12),
@@ -28,7 +28,7 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
       flex: 1,
       width: '100%',
       height: moderateScale(500),
-      marginHorizontal: moderateScale(24),
+      paddingHorizontal: moderateScale(49.39),
       marginTop: moderateScale(12),
     },
     logoStyles: {
@@ -41,18 +41,17 @@ const sendGiftPreviewStyles = (colors: typeof themeColors) =>
     },
     previewContainer: {
       backgroundColor: colors.backgrounds.skyBlue,
-      borderRadius: moderateScale(12),
+      borderRadius: moderateScale(10.8),
       alignItems: 'center',
-      marginHorizontal: moderateScale(36),
-      height: moderateScale(415),
-      width: moderateScale(295),
+      height: moderateScale(425),
+      width: '100%',
       paddingTop: moderateScale(24),
       alignSelf: 'center',
     },
     image: { width: moderateScale(130), height: moderateScale(120), marginBottom: verticalScale(25) },
     amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2) },
     messagePreview: {
-      marginTop: moderateScale(50),
+      paddingVertical: moderateScale(50),
       marginHorizontal: moderateScale(24),
     },
 

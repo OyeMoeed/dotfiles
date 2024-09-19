@@ -53,16 +53,6 @@ jest.mock('@app/styles/hooks/theme.hook', () => () => ({
 }));
 
 describe('TransferInformation', () => {
-  const localizationTextMock = {
-    TRANSFER: { TRANSFER_INFRORMATION: 'Transfer Information' },
-    COMMON: { NEXT: 'Next' },
-    TOP_UP: {
-      AMOUNT_EXCEEDS_CURRENT: 'Amount exceeds current limit',
-      MONTHLY_SPENDING_LIMIT_REACHED: 'Monthly spending limit reached',
-    },
-    TRANSACTION_HISTORY: { TRANSACTION_DETAILS: 'Transaction Details' },
-  };
-
   const walletInfoMock = {
     limitsDetails: {
       monthlyRemainingOutgoingAmount: '1000',
@@ -89,7 +79,7 @@ describe('TransferInformation', () => {
 
   it('renders correctly', () => {
     const { getByText } = render(<TransferInformation />);
-    expect(getByText(localizationTextMock.TRANSFER.TRANSFER_INFRORMATION)).toBeTruthy();
+    expect(getByText('TRANSFER.TRANSFER_INFRORMATION')).toBeTruthy();
   });
 
   it('renders account balance correctly', () => {
@@ -113,6 +103,6 @@ describe('TransferInformation', () => {
 
   it('triggers next button callback', () => {
     const { getByText } = render(<TransferInformation />);
-    fireEvent.press(getByText(localizationTextMock.COMMON.NEXT));
+    fireEvent.press(getByText('COMMON.NEXT'));
   });
 });

@@ -2,7 +2,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { IPayCaption1Text, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { IPayNoResultProps } from './ipay-no-result.interface';
@@ -39,16 +38,12 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = noResultStyles();
-  const localizationText = useLocalization();
+  const rowStyle = displayInRow ? styles.displayInRowImageStyle : {};
 
   return (
     <IPayView testID={testID} style={[styles.container, displayInRow && styles.displayInRowStyle, containerStyle]}>
       {showEmptyBox && (
-        <IPayImage
-          testID={testID}
-          image={images.noRecordBox}
-          style={[styles.emptyRecordImage, displayInRow && styles.displayInRowImageStyle]}
-        />
+        <IPayImage testID={testID} image={images.noRecordBox} style={[styles.emptyRecordImage, rowStyle]} />
       )}
       {showIcon && (
         <IPayView testID={`${testID}-icon`} style={[styles.iconWrapper, iconViewStyles]}>
@@ -59,9 +54,8 @@ const IPayNoResult: React.FC<IPayNoResultProps> = ({
         testID={testID}
         color={textColor || colors.primary.primary800}
         style={[styles.messageStyle, textStyle]}
-      >
-        {message || localizationText.COMMON.NO_RESULTS_AVAILABLE}
-      </IPayCaption1Text>
+        text={message || 'COMMON.NO_RESULTS_AVAILABLE'}
+      />
     </IPayView>
   );
 };

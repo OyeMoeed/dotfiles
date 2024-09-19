@@ -1,6 +1,6 @@
+import React, { JSX } from 'react';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IPayText } from '@components/atoms/index';
-import React from 'react';
 import { IPaySubHeadlineTextProps } from './ipay-headline-text.interface';
 import styles from './ipay-headline-text.styles';
 
@@ -17,6 +17,7 @@ const IPayHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   numberOfLines,
   children,
   color,
+  shouldTranslate = true,
 }: IPaySubHeadlineTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -25,6 +26,7 @@ const IPayHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>

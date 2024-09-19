@@ -8,7 +8,6 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import { ImageBackground } from 'react-native';
@@ -27,7 +26,6 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
   onPress,
   isSpecialOffer,
 }: IPayLatestOfferCardProps) => {
-  const localizationText = useLocalization();
   const { colors } = useTheme();
 
   const styles = latestOfferCardStyle(colors);
@@ -43,11 +41,7 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
   }, [offer?.imageUrlEn]);
 
   return (
-    <IPayPressable
-      onPress={onPress}
-      testID={testID}
-      style={[styles.container, containerStyle, isLastItem && styles.lastOffer]}
-    >
+    <IPayPressable onPress={onPress} testID={testID} style={[containerStyle, isLastItem && styles.lastOffer]}>
       <ImageBackground resizeMode="contain" source={images.offersCover} style={styles.imageBackgroundContainer}>
         <IPayView style={[styles.childContainer, childContainerStyle]}>
           <IPayImage
@@ -63,9 +57,7 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
               <IPayFootnoteText style={styles.percentageTextStyle} regular={false}>
                 {' %'}
               </IPayFootnoteText>
-              <IPayCaption1Text style={[styles.captionTextStyle, offStyles]}>
-                {localizationText.CARDS.OFF}
-              </IPayCaption1Text>
+              <IPayCaption1Text text="CARDS.OFF" style={[styles.captionTextStyle, offStyles]} />
             </IPayView>
 
             <IPayCaption2Text
@@ -76,11 +68,7 @@ const IPayLatestOfferCard: React.FC<IPayLatestOfferCardProps> = ({
             />
             {isSpecialOffer && (
               <IPayView style={styles.specialOfferContainer}>
-                <IPayCaption2Text
-                  color={colors.secondary.secondary500}
-                  regular
-                  text={localizationText.OFFERS.SPECIAL_OFFER}
-                />
+                <IPayCaption2Text color={colors.secondary.secondary500} regular text="OFFERS.SPECIAL_OFFER" />
               </IPayView>
             )}
           </IPayView>

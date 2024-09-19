@@ -1,26 +1,26 @@
 import images from '@app/assets/images';
 import { IPayCaption1Text, IPayHeadlineText, IPayImage, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { InfoTypes } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayExpBottomSheetProps } from './ipay-exp-bottomsheet.interface';
 import IPayExpBottomSheetStyles from './ipay-exp-bottomsheet.styles';
 
-const IPayExpBottomSheet = forwardRef<IPayExpBottomSheetProps>(({ testID, type = InfoTypes.CVV }, ref) => {
-  const localizationText = useLocalization();
+const IPayExpBottomSheet = forwardRef<IPayExpBottomSheetProps>(({ testID, type = InfoTypes.CVV }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = IPayExpBottomSheetStyles(colors);
 
   const infoData = {
     [InfoTypes.CVV]: {
-      headline: localizationText.COMMON.CVV_NUMBER,
-      caption: localizationText.COMMON.FIND_CVV,
+      headline: t('COMMON.CVV_NUMBER'),
+      caption: t('COMMON.FIND_CVV'),
       image: images.cvvCard,
     },
     [InfoTypes.EXPIRY]: {
-      headline: localizationText.COMMON.EXPIRATION_DATE,
-      caption: localizationText.COMMON.FIND_EXP,
+      headline: t('COMMON.EXPIRATION_DATE'),
+      caption: t('COMMON.FIND_EXP'),
       image: images.cvvCard,
     },
   };
