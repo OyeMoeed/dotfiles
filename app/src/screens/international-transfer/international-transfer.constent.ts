@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
+import { BeneficiaryFields } from '../edit-international-beneficiary-transfer/edit-international-beneficiary-transfer.interface';
 import { BeneficiaryDetailsProps } from './international-transfer.interface';
 
 const internationalBeneficiaryData: BeneficiaryDetailsProps[] = [
@@ -136,12 +137,12 @@ const internationalTransferBeneficiaryDetails = {
 };
 
 const dynamicFormFields = {
-  'BEN.FRST.NAME': 'firstName',
-  'BEN.THIRD.NAME': 'thirdName',
-  'BEN.SECOND.NAME': 'secondName',
-  'BEN.LAST.NAME': 'lastName',
-  'BEN.NATIONALITY': 'beneficiaryNationality',
-  'BEN.RELATION': 'relationship',
+  'BEN.FRST.NAME': BeneficiaryFields.FIRST_NAME,
+  'BEN.THIRD.NAME': BeneficiaryFields.THIRD_NAME,
+  'BEN.SECOND.NAME': BeneficiaryFields.SECOND_NAME,
+  'BEN.LAST.NAME': BeneficiaryFields.LAST_NAME,
+  'BEN.NATIONALITY': BeneficiaryFields.BENEFICIARY_NATIONALITY,
+  'BEN.RELATION': BeneficiaryFields.RELATIONSHIP,
 };
 
 export {

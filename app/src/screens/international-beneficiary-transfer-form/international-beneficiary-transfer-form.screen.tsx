@@ -47,7 +47,6 @@ const IBeneficiaryTransferScreen: React.FC = () => {
   const { transferService, dynamicFieldsData } = route?.params;
   const styles = beneficiaryTransferStyles(colors);
   const [apiError, setAPIError] = useState<string>('');
-  const [beneficiariesWURes, setBeneficiariesWURes] = useState();
 
   const { cities } = useInternationalTransferHook();
   const validationSchema = Yup.object().shape({});
