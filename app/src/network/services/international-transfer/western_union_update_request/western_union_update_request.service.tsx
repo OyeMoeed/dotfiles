@@ -3,7 +3,7 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import INTERNATIONAL_TRANSFERS_URLS from '../international-transfer.urls';
-import { wuUpdateRequestResponse } from './western_union_update_request.interface';
+import { WUUpdateRequestResponse } from './western_union_update_request.interface';
 import wuUpdateRequestResponseData from './western_union_update_request.mock';
 
 const wuUpdateRequest = async (beneficiaryCode: string)=> {
@@ -11,7 +11,7 @@ const wuUpdateRequest = async (beneficiaryCode: string)=> {
     return wuUpdateRequestResponseData;
   }
   try {
-    const apiResponse: ApiResponse<wuUpdateRequestResponse> = await apiCall({
+    const apiResponse: ApiResponse<WUUpdateRequestResponse> = await apiCall({
       endpoint: INTERNATIONAL_TRANSFERS_URLS.western_union_update_request(beneficiaryCode),
       method: requestType.POST,
     });

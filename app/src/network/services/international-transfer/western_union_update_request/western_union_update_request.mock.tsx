@@ -1,7 +1,7 @@
-import { wuUpdateRequestResponse } from './western_union_update_request.interface';
+import { WUUpdateRequestResponse } from './western_union_update_request.interface';
 
 
-const wuUpdateRequestResponseData: wuUpdateRequestResponse = {
+const wuUpdateRequestResponseData: WUUpdateRequestResponse = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
