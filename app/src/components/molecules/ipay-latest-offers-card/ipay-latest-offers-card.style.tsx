@@ -14,6 +14,7 @@ const latestOfferCardStyle = (colors: typeof themeColors) =>
     },
     captionsTextStyle: {
       marginTop: verticalScale(10),
+      width: moderateScale(130),
     },
     childContainer: {
       flexDirection: 'row',

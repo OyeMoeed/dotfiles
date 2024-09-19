@@ -659,6 +659,7 @@ const COUNTRIES = [
   { id: 10, title: 'Iraq' },
 ];
 const SNAP_POINT = {
+  XX_SMALL: ['30%', '90%'],
   X_SMALL: ['35%', '90%'],
   XS_SMALL: ['40%', '90%'],
   MID_SMALL: ['55%', '63%'],
