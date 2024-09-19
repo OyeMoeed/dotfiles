@@ -37,8 +37,9 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { regex } from '@app/styles/typography.styles';
 import { buttonVariants, PayChannel, TopupStatus } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -132,10 +133,19 @@ const SendMoneyFormScreen: React.FC = () => {
     }
   }, []);
 
-  const handleAmountChange = (id: number, value: string) => {
-    setFormInstances((prevInstances) =>
-      prevInstances.map((instance) => (instance.id === id ? { ...instance, amount: value } : instance)),
-    );
+  const handleAmountChange = (id: number, value: string | number) => {
+    const newFormInstances = formInstances.map((instance) => {
+      if (instance.id === id) {
+        return { ...instance, amount: value as string };
+      }
+      return instance;
+    });
+
+    const newAmount = removeCommas(value.toString());
+    const reg = regex.AMOUNT;
+    if (reg.test(newAmount.toString()) || newAmount === '') {
+      setFormInstances(newFormInstances);
+    }
   };
 
   const handleNotesChange = (id: number, value: string) => {

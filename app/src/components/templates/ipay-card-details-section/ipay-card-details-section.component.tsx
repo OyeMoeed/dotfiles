@@ -44,7 +44,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const { colors } = useTheme();
   const styles = cardBalanceSectionStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
+  const [activeCardStatus, setActiveCardStatus] = useState(CardActiveStatus.FREEZE);
   const [statusIndication, setStatusIndication] = useState<CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY>();
   const [cardStatusType, setCardStatusType] = useState<CardStatusType.ALERT | CardStatusType.WARNING>(
     CardStatusType.WARNING,
@@ -84,7 +84,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     // TODO will be handle on the basis of api
     {
       icon: icons.freeze_icon,
-      text: actionTypeRef.current === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
+      text: activeCardStatus === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
       key: '1',
       onPress: showActionSheet,
     },
@@ -92,7 +92,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       icon: icons.setting_21,
       text: t('CARDS.CARD_OPTIONS'),
       key: '2',
-      onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard }),
+      onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard, cards, setCards }),
     },
     {
       icon: icons.info_circle1,
@@ -120,7 +120,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 
   useEffect(() => {
     getTransactionsData();
-    actionTypeRef.current = currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE;
+    setActiveCardStatus(currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
   }, [currentCard]);
 
   const renderItem = (item: Option) => (
@@ -219,7 +219,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
       />
-      <IPayFreezeConfirmationSheet currentCard={currentCard} cards={cards} setCards={setCards} ref={actionSheetRef} />
+      <IPayFreezeConfirmationSheet
+        currentCard={currentCard}
+        cards={cards}
+        setCards={setCards}
+        ref={actionSheetRef}
+        setActiveCardStatus={setActiveCardStatus}
+      />
     </IPayView>
   );
 };
