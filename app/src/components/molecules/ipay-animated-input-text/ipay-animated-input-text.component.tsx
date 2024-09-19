@@ -5,6 +5,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import inputFieldStyles from './ipay-animated-input-text.styles';
 
@@ -30,6 +31,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   suffix,
   ...props
 }) => {
+  const { t } = useTranslation();
   const [isFocused, setIsFocused] = useState((!editable && !!value) || false);
   const animatedIsFocused = useRef(new Animated.Value(0)).current;
   const { colors } = useTheme();
@@ -87,7 +89,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
         <IPayView style={styles.iconAndInputStyles}>
           {rightIcon}
           <IPayView style={styles.outerView}>
-            <Animated.Text style={labelStyle}>{label}</Animated.Text>
+            <Animated.Text style={labelStyle}>{t(label)}</Animated.Text>
             <TextInput
               {...props}
               onChangeText={handleOnChangeText}
@@ -101,9 +103,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
           </IPayView>
           {suffix && value && (
             <IPayView style={styles.suffix}>
-              <IPaySubHeadlineText color={colors.natural.natural900} regular>
-                {suffix}
-              </IPaySubHeadlineText>
+              <IPaySubHeadlineText color={colors.natural.natural900} regular text={suffix} />
             </IPayView>
           )}
         </IPayView>

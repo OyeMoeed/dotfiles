@@ -16,7 +16,6 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocation from '@app/hooks/location.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
@@ -72,7 +71,6 @@ const LoginViaPasscode: React.FC = () => {
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
@@ -94,8 +92,8 @@ const LoginViaPasscode: React.FC = () => {
   const renderToast = (apiErrorValue: string) => {
     setPasscodeError(true);
     showToast({
-      title: localizationText.COMMON.INCORRECT_CODE,
-      subTitle: apiErrorValue || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      title: 'COMMON.INCORRECT_CODE',
+      subTitle: apiErrorValue || 'CARDS.VERIFY_CODE_ACCURACY',
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
@@ -255,10 +253,10 @@ const LoginViaPasscode: React.FC = () => {
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
     } catch (error) {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast('ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -313,7 +311,7 @@ const LoginViaPasscode: React.FC = () => {
             otpError={otpError}
             otp={otp}
             showHelp
-            title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            title="FORGOT_PASSCODE.RECIEVED_PHONE_CODE"
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
             onResendCodePress={() => {
@@ -364,7 +362,7 @@ const LoginViaPasscode: React.FC = () => {
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
   const onCall = (phoneNumber: string) => {
-    openPhoneNumber(phoneNumber, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber, colors, showToast });
   };
 
   return (
@@ -375,10 +373,11 @@ const LoginViaPasscode: React.FC = () => {
           <IPayUserAvatar style={styles.image} />
         </IPayView>
         <IPayView style={styles.childContainer}>
-          <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
+          <IPayCaption1Text text="LOGIN.WELCOME_BACK" style={styles.welcomeText} />
           {firstName && (
             <IPayGradientText
               text={`${firstName} ${fatherName || ''}`}
+              shouldTranslate={false}
               gradientColors={gradientColors}
               yScale={12}
               fontSize={styles.linearGradientText.fontSize}
@@ -391,7 +390,7 @@ const LoginViaPasscode: React.FC = () => {
             regular
             color={colors.primary.primary800}
             style={styles.enterPasscodeText}
-            text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
+            text="LOGIN.ENTER_YOUR_PASSCODE"
           />
         </IPayView>
         <IPayPasscode
@@ -406,7 +405,7 @@ const LoginViaPasscode: React.FC = () => {
       </IPayView>
       <IPayPortalBottomSheet
         noGradient
-        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
+        heading="FORGOT_PASSCODE.FORGET_PASSWORD"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -419,7 +418,7 @@ const LoginViaPasscode: React.FC = () => {
 
       <IPayBottomSheet
         noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
@@ -429,7 +428,7 @@ const LoginViaPasscode: React.FC = () => {
         <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} hideFAQError />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.COMMON.CONTACT_US}
+        heading="COMMON.CONTACT_US"
         customSnapPoint={['1%', '45%']}
         ref={contactUsRef}
         simpleHeader
@@ -438,12 +437,8 @@ const LoginViaPasscode: React.FC = () => {
         cancelBnt
       >
         <IPayView style={styles.contactWrapper}>
-          <IPayFootnoteText
-            style={styles.headerStyle}
-            text={localizationText.COMMON.ASSISTANCE}
-            color={colors.primary.primary900}
-          />
-          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+          <IPayFootnoteText style={styles.headerStyle} text="COMMON.ASSISTANCE" color={colors.primary.primary900} />
+          <IPayCaption1Text text="COMMON.CONTACT_SERVICE_TEAM" color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactusList.map((item) => (

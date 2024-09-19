@@ -3,7 +3,6 @@ import { IPayIcon } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { IPayActionSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
 import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -11,6 +10,7 @@ import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { CardActiveStatus, CardStatusNumber, ToastTypes } from '@app/utilities';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SheetVariants, ToastVariants } from '../ipay-card-details-section/ipay-card-details-section.interface';
 import {
   IPayFreezeConfirmationSheetHandle,
@@ -20,8 +20,8 @@ import freezeConfirmationSheetStyles from './ipay-freeze-confirmation-sheet.styl
 
 const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle, IPayFreezeConfirmationSheetProps>(
   ({ currentCard, cards, setCards }, ref) => {
+    const { t } = useTranslation();
     const { showToast } = useToastContext();
-    const localizationText = useLocalization();
     const styles = freezeConfirmationSheetStyles();
 
     const actionSheetRef = useRef<any>(null);
@@ -40,15 +40,15 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
 
     const sheetVariant: SheetVariants = {
       freeze: {
-        title: localizationText.CARDS.FREEZE_CARD,
-        subtitle: localizationText.CARDS.CARD_FREEZE_INDICATION_MESSAGE,
-        option: localizationText.CARDS.FREEZE,
+        title: t('CARDS.FREEZE_CARD'),
+        subtitle: t('CARDS.CARD_FREEZE_INDICATION_MESSAGE'),
+        option: t('CARDS.FREEZE'),
         icon: icons.cardSlash1,
       },
       unfreeze: {
-        title: localizationText.CARDS.UNFREEZE_CARD,
-        subtitle: localizationText.CARDS.CARD_UNFREEZE_INDICATION_MESSAGE,
-        option: localizationText.CARDS.UNFREEZE,
+        title: t('CARDS.UNFREEZE_CARD'),
+        subtitle: t('CARDS.CARD_UNFREEZE_INDICATION_MESSAGE'),
+        option: t('CARDS.UNFREEZE'),
         icon: icons.card_tick11,
       },
     };
@@ -64,12 +64,12 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
     const renderToast = (toastMsg: string, type: string) => {
       const toastVariant: ToastVariants = {
         freeze: {
-          title: localizationText.CARDS.CARD_FREEZE_MESSAGE,
+          title: t('CARDS.CARD_FREEZE_MESSAGE'),
           toastType: ToastTypes.SUCCESS,
           icon: icons.snow_flake1,
         },
         unfreeze: {
-          title: localizationText.CARDS.CARD_UNFREEZE_MESSAGE,
+          title: t('CARDS.CARD_UNFREEZE_MESSAGE'),
           toastType: ToastTypes.SUCCESS,
           icon: icons.snow_flake1,
         },
@@ -152,7 +152,7 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
       <IPayActionSheet
         ref={actionSheetRef}
         bodyStyle={styles.actionSheetStyle}
-        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, localizationText.COMMON.CANCEL]}
+        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, 'COMMON.CANCEL']}
         cancelButtonIndex={1}
         onPress={(index) => handleFinalAction(index, sheetVariant[actionTypeRef.current as keyof SheetVariants].option)}
         showCancel

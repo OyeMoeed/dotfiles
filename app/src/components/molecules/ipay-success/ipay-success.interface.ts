@@ -18,4 +18,8 @@ export interface IPaySuccessProps {
    * Style for description text
    */
   descriptionStyle?: StyleProp<TextStyle>;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslateSubHeadingText?: boolean;
 }

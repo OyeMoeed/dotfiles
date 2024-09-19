@@ -1,13 +1,13 @@
 import images from '@app/assets/images';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { useTranslation } from 'react-i18next';
 
 const useSadadBillDetailsData = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
 
   const BILL_DETAILS = [
     {
       title: 'My Electricity Bill',
-      currency: localizationText.COMMON.SAR,
+      currency: t('COMMON.SAR'),
       companyDetails: '123 - Saudi electricity co.',
       amountToPay: 300,
       isOverPaid: false,
@@ -19,7 +19,7 @@ const useSadadBillDetailsData = () => {
     },
     {
       title: 'License',
-      currency: localizationText.COMMON.SAR,
+      currency: t('COMMON.SAR'),
       companyDetails: '574 - Madinah regional mun..',
       amountToPay: 250,
       isOverPaid: false,
@@ -31,7 +31,7 @@ const useSadadBillDetailsData = () => {
     },
     {
       title: 'My Electricity Bill',
-      currency: localizationText.COMMON.SAR,
+      currency: t('COMMON.SAR'),
       companyDetails: '123 - Saudi electricity co.',
       amountToPay: 300,
       isOverPaid: true,
@@ -43,7 +43,7 @@ const useSadadBillDetailsData = () => {
     },
     {
       title: 'License',
-      currency: localizationText.COMMON.SAR,
+      currency: t('COMMON.SAR'),
       companyDetails: '574 - Madinah regional mun..',
       amountToPay: 250,
       isOverPaid: false,

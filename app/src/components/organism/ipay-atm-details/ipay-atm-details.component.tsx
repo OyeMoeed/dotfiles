@@ -11,10 +11,10 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip } from '@app/components/molecules';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayAtmDetailsProps } from './ipay-atm-details.interface';
 import atmDetailsStyle from './ipay-atm-details.style';
 import { Marker } from 'react-native-maps';
@@ -23,14 +23,14 @@ import images from '@app/assets/images';
 const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, openGoogleMapsWeb }) => {
   const { colors } = useTheme();
   const styles = atmDetailsStyle(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { title, address, distance, type, location } = data;
   const initialRegion = { ...constants.INITIAL_REGION, longitude: location?.longitude, latitude: location?.latitude };
 
   const memoizedDistance = useMemo(() => {
     const distanceInKm = distance && distance.replace('.', ',');
-    return `${distanceInKm} ${localizationText.COMMON.KM}`;
-  }, [distance, localizationText]);
+    return `${distanceInKm} ${t('COMMON.KM')}`;
+  }, [distance, t]);
 
   const onPressGetDirection = () => {
     const { latitude, longitude } = location;
@@ -51,7 +51,7 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
             containerStyle={styles.chipContainerStyle}
           />
           <IPayCaption1Text text="-" style={styles.dash} />
-          <IPayCaption1Text text={localizationText.ATM_WITHDRAWAL.ALINMA_ATM} color={colors.natural.natural900} />
+          <IPayCaption1Text text="ATM_WITHDRAWAL.ALINMA_ATM" color={colors.natural.natural900} />
         </IPayView>
       </IPayView>
 
@@ -73,7 +73,7 @@ const IPayAtmDetails: React.FC<IPayAtmDetailsProps> = ({ testID, style, data, op
           onPress={onPressGetDirection}
           btnType={buttonVariants.PRIMARY}
           large
-          btnText={localizationText.ATM_WITHDRAWAL.GET_DIRECTION}
+          btnText="ATM_WITHDRAWAL.GET_DIRECTION"
           rightIcon={<IPayIcon icon={icons.add_location} size={20} color={colors.natural.natural0} />}
         />
       </IPayView>

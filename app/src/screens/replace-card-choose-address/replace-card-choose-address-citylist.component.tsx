@@ -3,7 +3,6 @@ import React from 'react';
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayList, IPayTextInput } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { Formik } from 'formik';
 import { ReplaceCardChooseCityListComponentProps } from './replace-card-choose-address.interface';
@@ -17,7 +16,6 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
 }: ReplaceCardChooseCityListComponentProps) => {
   const { colors } = useTheme();
   const styles = replaceCardStyles(colors);
-  const localizationText = useLocalization();
 
   const searchIcon = <IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />;
   const checkMark = <IPayIcon icon={icons.tick_check_mark_default} size={18} color={colors.primary.primary500} />;
@@ -30,7 +28,7 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
             label=""
             text={values.cityName}
             onChangeText={handleChange('cityName')}
-            placeholder={localizationText.COMMON.SEARCH}
+            placeholder="COMMON.SEARCH"
             rightIcon={searchIcon}
             simpleInput
             containerStyle={styles.citySearchStyle}
@@ -52,9 +50,7 @@ const IPayReplaceCardChooseCityListComponent: React.FC<ReplaceCardChooseCityList
             />
           ))}
           {!CITIES.filter((key) => (values.cityName ? key.toLowerCase().includes(values.cityName.toLowerCase()) : true))
-            .length && (
-            <IPayList title={localizationText.REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle} />
-          )}
+            .length && <IPayList title="REPLACE_CARD.NO_DATA_FOR_GIVEN_SEARCH} style={styles.listStyle" />}
         </>
       )}
     </Formik>

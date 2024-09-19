@@ -2,6 +2,7 @@ import { IPayCaption1Text, IPayTitle2Text, IPayView } from '@app/components/atom
 import { IPayButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FC } from 'react';
+import { buttonVariants } from '@app/utilities';
 import { ContentNotFoundProps } from './ipay-content-not-found.interface';
 import contentNotFoundStyles from './ipay-content-not-found.style';
 
@@ -42,7 +43,7 @@ const IPayContentNotFound: FC<ContentNotFoundProps> = ({
           btnText={btnText}
           btnStyle={[styles.btnStyle, btnStyle]}
           btnIconsDisabled
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           large
           onPress={onBtnPress}
           testID={`${testID}-button`}

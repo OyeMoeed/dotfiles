@@ -34,4 +34,8 @@ export interface IPaySubHeadlineTextProps {
    * Color for the text.
    */
   color?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

@@ -26,19 +26,9 @@ describe('IPayAccountBalance', () => {
       natural4: '#000000',
     },
   };
-  const localizationText = {
-    HOME: {
-      ACCOUNT_BALANCE: 'Account Balance',
-    },
-    COMMON: {
-      TOP_UP: 'Top Up',
-      IPaySafeAreaView: 'Safe Area',
-    },
-  };
 
   beforeEach(() => {
     (useTheme as jest.Mock).mockReturnValue({ colors });
-    (useLocalization as jest.Mock).mockReturnValue(localizationText);
   });
 
   it('renders the component correctly', () => {

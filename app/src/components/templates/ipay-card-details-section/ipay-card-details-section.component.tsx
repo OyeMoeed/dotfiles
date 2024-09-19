@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
@@ -29,6 +28,7 @@ import {
   IPayView,
 } from '@components/atoms';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
@@ -40,7 +40,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   cards,
   setCards,
 }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = cardBalanceSectionStyles(colors);
   const actionSheetRef = useRef<any>(null);
@@ -84,22 +84,19 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     // TODO will be handle on the basis of api
     {
       icon: icons.freeze_icon,
-      text:
-        actionTypeRef.current === CardActiveStatus.FREEZE
-          ? localizationText.CARDS.FREEZE_CARD
-          : localizationText.CARDS.UNFREEZE_CARD,
+      text: actionTypeRef.current === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
       key: '1',
       onPress: showActionSheet,
     },
     {
       icon: icons.setting_21,
-      text: localizationText.CARDS.CARD_OPTIONS,
+      text: t('CARDS.CARD_OPTIONS'),
       key: '2',
       onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard }),
     },
     {
       icon: icons.info_circle1,
-      text: localizationText.CARDS.CARD_DETAILS,
+      text: t('CARDS.CARD_DETAILS'),
       key: '3',
       onPress: onOpenOTPSheet,
     },
@@ -151,12 +148,10 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       )}
       <IPayView style={styles.accountBalanceContainer}>
         <IPayView style={styles.accountBalanceInnerContainer}>
-          <IPayCaption2Text style={styles.accountBalanceText}>
-            {localizationText.CARDS.ACCOUNT_BALANCE}
-          </IPayCaption2Text>
-          <IPaySubHeadlineText style={styles.accountBalanceText}>
+          <IPayCaption2Text style={styles.accountBalanceText} text="CARDS.ACCOUNT_BALANCE" />
+          <IPaySubHeadlineText style={styles.accountBalanceText} shouldTranslate={false}>
             {walletInfo.availableBalance}
-            <IPaySubHeadlineText regular>{` ${localizationText.COMMON.SAR}`}</IPaySubHeadlineText>
+            <IPaySubHeadlineText regular text={` ${t('COMMON.SAR')}`} shouldTranslate={false} />
           </IPaySubHeadlineText>
         </IPayView>
         <IPayAddAppleWalletButton selectedCard={currentCard} />
@@ -166,12 +161,12 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         containerStyle={styles.cashbackContainer}
         leftIcon={<IPayIcon color={colors.secondary.secondary500} size={16} icon={icons.discount_shape3} />}
         isShowLeftIcon
-        title={localizationText.CARDS.TOTAL_CASHBACK}
+        title="CARDS.TOTAL_CASHBACK"
         textStyle={styles.listText}
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
-          <IPaySubHeadlineText style={styles.listText} regular={false}>
-            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText>{localizationText.COMMON.SAR}</IPayFootnoteText>
+          <IPaySubHeadlineText style={styles.listText} regular={false} shouldTranslate={false}>
+            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText text='"COMMON.SAR"' />
           </IPaySubHeadlineText>
         }
       />
@@ -198,16 +193,14 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
             medium
-            btnText={localizationText.CARDS.PRINT_CARD}
+            btnText="CARDS.PRINT_CARD"
             btnStyle={styles.printBtn}
           />
         )}
       </IPayView>
       <IPayView style={styles.headingsContainer}>
         <IPayView style={styles.commonContainerStyle}>
-          <IPayFootnoteText style={styles.footnoteTextStyle}>
-            {localizationText.CARDS.CARD_TRANSACTIONS_HISTORY}
-          </IPayFootnoteText>
+          <IPayFootnoteText style={styles.footnoteTextStyle} text="CARDS.CARD_TRANSACTIONS_HISTORY" />
         </IPayView>
         <IPayButton
           onPress={() => navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, cards, isShowAmount: false })}
@@ -216,7 +209,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
           medium
           textColor={colors.primary.primary600}
-          btnText={localizationText.COMMON.VIEW_ALL}
+          btnText="COMMON.VIEW_ALL"
         />
       </IPayView>
       <IPayFlatlist

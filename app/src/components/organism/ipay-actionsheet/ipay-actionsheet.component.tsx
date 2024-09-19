@@ -143,11 +143,11 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
 
     const renderCancelButton = () => {
       if (!isset(cancelButtonIndex) || !showCancel) return null;
-      return createButton(options[cancelButtonIndex], cancelButtonIndex);
+      return createButton(options?.[cancelButtonIndex] || '', cancelButtonIndex);
     };
 
     const renderOptions = () =>
-      options.map((optionsTitle, index) => (cancelButtonIndex === index ? null : createButton(optionsTitle, index)));
+      options?.map((optionsTitle, index) => (cancelButtonIndex === index ? null : createButton(optionsTitle, index)));
 
     return (
       <Modal

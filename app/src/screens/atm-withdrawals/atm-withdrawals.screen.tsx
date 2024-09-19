@@ -12,7 +12,6 @@ import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet, IPayNearestAtmComponent, IPayRemainingAccountBalance } from '@app/components/organism';
 import IPayAtmWithdrawalTurtorials from '@app/components/organism/ipay-atm-withdrawal-tutorial/ipay-atm-withdrawal-tutorial.component';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
@@ -21,6 +20,7 @@ import { PayChannel, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, isMultipleOfHundred } from '@app/utilities/number-helper.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import atmWithdrawalsStyles from './atm-withdrawals.style';
 
@@ -28,7 +28,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const { hideBalance } = route.params;
   const { colors } = useTheme();
   const styles = atmWithdrawalsStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const [topUpAmount, setTopUpAmount] = useState<string>('');
   const [chipValue, setChipValue] = useState<string>('');
@@ -40,7 +40,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, dailyOutgoingLimit, monthlyOutgoingLimit } =
     limitsDetails;
 
-  const monthlyOutgoingLimitFormatted: string = ` ${localizationText.HOME.OF} ${hideBalance ? '*****' : formatNumberWithCommas(monthlyOutgoingLimit)}`;
+  const monthlyOutgoingLimitFormatted: string = ` ${t('HOME.OF')} ${hideBalance ? '*****' : formatNumberWithCommas(monthlyOutgoingLimit)}`;
   const monthlyRemainingOutgoingBalanceFormatted: string = hideBalance
     ? '*****'
     : formatNumberWithCommas(monthlyRemainingOutgoingAmount);
@@ -91,20 +91,20 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     const currentBalance = parseFloat(availableBalance);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
     if (monthlyRemaining === 0) {
-      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+      setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${dailyOutgoingLimit} SAR`);
+      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${dailyOutgoingLimit} ${t('COMMON.SAR')}`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else if (updatedTopUpAmount > currentBalance) {
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_ACCOUNT_BALANCE);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_ACCOUNT_BALANCE'));
     } else {
       setChipValue('');
     }
   }, [topUpAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.HOME.ATM_WITHDRAWALS} titleStyle={styles.titleStyle} applyFlex />
+      <IPayHeader backBtn title="HOME.ATM_WITHDRAWALS" titleStyle={styles.titleStyle} applyFlex />
 
       <IPayView style={styles.container}>
         <IPayView style={styles.accountBalanceView}>
@@ -113,15 +113,16 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               <IPayFootnoteText
                 color={colors.primary.primary900}
                 style={styles.accountBalanceTitle}
-                text={localizationText.HOME.ACCOUNT_BALANCE}
+                text="HOME.ACCOUNT_BALANCE"
               />
 
               <IPayView style={styles.balanceContainer}>
                 <IPayTitle2Text
                   style={styles.balanceTextStyle}
                   text={hideBalance ? '*****' : `${formatNumberWithCommas(availableBalance)}`}
+                  shouldTranslate={false}
                 />
-                <IPayFootnoteText style={styles.currencyStyle} text={localizationText.COMMON.SAR} />
+                <IPayFootnoteText style={styles.currencyStyle} text="COMMON.SAR" />
               </IPayView>
             </IPayView>
             <IPayButton
@@ -129,7 +130,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
               small
               btnType={buttonVariants.OUTLINED}
               leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.primary.primary500} />}
-              btnText={localizationText.COMMON.TOP_UP}
+              btnText="COMMON.TOP_UP"
               btnStyle={styles.topUpBtn}
             />
           </IPayView>
@@ -141,7 +142,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
           </IPayView>
 
           <IPayView style={[styles.gap, styles.commonContainer]}>
-            <IPayCaption2Text color={colors.natural.natural700} text={localizationText.HOME.REMAINING_AMOUNT} />
+            <IPayCaption2Text color={colors.natural.natural700} text="HOME.REMAINING_AMOUNT" />
             <IPayView style={styles.remainingBalanceView}>
               <IPayCaption2Text style={styles.textBold} text={monthlyRemainingOutgoingBalanceFormatted} />
               <IPayCaption2Text color={colors.natural.natural500} text={monthlyOutgoingLimitFormatted} />
@@ -175,7 +176,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
       <IPayBottomSheet
         cancelButtonStyle={styles.cancelButtonStyle}
         noGradient
-        heading={localizationText.ATM_WITHDRAWAL.WITHDRAW_TUTORIAL}
+        heading="ATM_WITHDRAWAL.WITHDRAW_TUTORIAL"
         customSnapPoint={['20%', '85%']}
         ref={withdrawTutorialsRef}
         enablePanDownToClose
@@ -189,7 +190,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
 
       <IPayBottomSheet
         noGradient
-        heading={localizationText.TOP_UP.ADD_MONEY_USING}
+        heading="TOP_UP.ADD_MONEY_USING"
         onCloseBottomSheet={closeBottomSheetTopUp}
         customSnapPoint={Platform.OS === 'android' ? ['20%', '45%'] : ['20%', '56%']}
         ref={topUpSelectionRef}

@@ -5,7 +5,6 @@ import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
 import CardDetails from '@app/enums/card-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { PayloadMerchantsCategoryProps } from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.interface';
 import getProductsByCategoryId from '@app/network/services/market/get-products-by-category-id/get-products-by-category-id.service';
 import { useTypedSelector } from '@app/store/store';
@@ -22,7 +21,6 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
   }: { categories: MarketPlaceCategoriesProps[]; selectedCategory: MarketPlaceCategoriesProps } = route.params;
   const { colors } = useTheme();
   const styles = shopCategoriesStyles(colors);
-  const localizationText = useLocalization();
   const [search, setSearch] = useState<string>('');
   const [categoriesTabsData, setCategoriesTabsData] = useState<string[]>([]);
   const [selectedTab, setSelectedTab] = useState<string>('');
@@ -33,7 +31,7 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
 
   const renderToast = (apiError?: string) => {
     showToast({
-      title: localizationText.ERROR.API_ERROR_RESPONSE,
+      title: 'ERROR.API_ERROR_RESPONSE',
       subTitle: apiError,
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
@@ -56,7 +54,7 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
         renderToast(apiResponse?.error);
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -115,7 +113,7 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.SHOP.TITLE_SHOP} applyFlex />
+      <IPayHeader backBtn title="SHOP.TITLE_SHOP" applyFlex />
       <IPayTabs
         tabs={categoriesTabsData}
         scrollable
@@ -128,7 +126,7 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
         <IPayTextInput
           text={search}
           onChangeText={handleSearch}
-          placeholder={localizationText.COMMON.SEARCH}
+          placeholder="COMMON.SEARCH"
           rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
           simpleInput
           containerStyle={styles.background}
@@ -144,7 +142,7 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
           </IPayView>
         ) : (
           <IPayView style={styles.noResultContainer}>
-            <IPayNoResult showEmptyBox message={localizationText.SHOP.NO_RESULT} />
+            <IPayNoResult showEmptyBox message="SHOP.NO_RESULT" />
           </IPayView>
         )}
       </IPayView>

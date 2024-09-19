@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import useLocation from '@app/hooks/location.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
@@ -23,13 +22,14 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { Keyboard } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { FormValues } from './mobile-and-iqama-verification.interface';
 
 const useMobileAndIqamaVerification = () => {
   const { colors } = useTheme();
   const dispatch = useTypedDispatch();
   const { showToast } = useToastContext();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>('');
@@ -108,8 +108,8 @@ const useMobileAndIqamaVerification = () => {
 
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-      subTitle: localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      title: toastMsg || 'ERROR.API_ERROR_RESPONSE',
+      subTitle: 'CARDS.VERIFY_CODE_ACCURACY',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
@@ -152,7 +152,7 @@ const useMobileAndIqamaVerification = () => {
     } catch (error: any) {
       setIsLoading(false);
       setOtpError(true);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -171,7 +171,7 @@ const useMobileAndIqamaVerification = () => {
       }
     } catch (error: any) {
       setOtpError(true);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -217,7 +217,7 @@ const useMobileAndIqamaVerification = () => {
     }
     setOtpError(false);
     if (!checkTermsAndConditions) {
-      renderToast(localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION);
+      renderToast(t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'));
       return;
     }
     prepareTheLoginService(data);
@@ -246,7 +246,7 @@ const useMobileAndIqamaVerification = () => {
   const onConfirm = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       verifyOtp();
     }

@@ -11,7 +11,6 @@ import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-ca
 import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -35,18 +34,19 @@ import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants
 import React, { useEffect, useRef, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
-  const localizationText = useLocalization();
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
 
@@ -99,7 +99,7 @@ const CardsScreen: React.FC = () => {
       <IPayButton
         onPress={openCardSheet}
         btnType={buttonVariants.OUTLINED}
-        btnText={localizationText.CARDS.NEW_CARD}
+        btnText="CARDS.NEW_CARD"
         rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
       />
     </IPayView>
@@ -139,13 +139,13 @@ const CardsScreen: React.FC = () => {
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
-        return localizationText.CARDS.PLATINUM_CASHBACK_PREPAID_CARD;
+        return t('CARDS.PLATINUM_CASHBACK_PREPAID_CARD');
 
       case CardTypes.SIGNATURE:
-        return localizationText.CARDS.SIGNATURE_PREPAID_CARD;
+        return t('CARDS.SIGNATURE_PREPAID_CARD');
 
       case CardTypes.CLASSIC:
-        return localizationText.CARDS.CLASSIC_DEBIT_CARD;
+        return t('CARDS.CLASSIC_DEBIT_CARD');
 
       default:
         return '';
@@ -242,7 +242,7 @@ const CardsScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       getCardDetails();
     }
@@ -271,12 +271,12 @@ const CardsScreen: React.FC = () => {
           <IPayNoResult
             testID="no-result"
             textColor={colors.primary.primary800}
-            message={localizationText.CARDS.YOU_DO_NOT_HAVE_CARD}
+            message="CARDS.YOU_DO_NOT_HAVE_CARD"
             showEmptyBox
           />
           <IPayButton
             btnStyle={styles.buttonStyle}
-            btnText={localizationText.CARDS.CREATE_NEW_CARD}
+            btnText="CARDS.CREATE_NEW_CARD"
             btnType={buttonVariants.PRIMARY}
             large
             onPress={openCardSheet}
@@ -327,18 +327,18 @@ const CardsScreen: React.FC = () => {
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
       <IPayView style={styles.topDetails}>
-        <IPayTitle2Text regular={false}>{localizationText.CARDS.CARDS}</IPayTitle2Text>
+        <IPayTitle2Text regular={false} text="CARDS.CARDS" />
         <IPayButton
           small
           btnType={buttonVariants.LINK_BUTTON}
-          btnText={localizationText.CARDS.NEW_CARD}
+          btnText="CARDS.NEW_CARD"
           onPress={openCardSheet}
           rightIcon={<IPayIcon icon={icons.addSquare2} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
       {renderCardsCurrentState()}
       <IPayPortalBottomSheet
-        heading={localizationText.CARD_OPTIONS.CARD_DETAILS}
+        heading="CARD_OPTIONS.CARD_DETAILS"
         enablePanDownToClose
         simpleBar
         bold
@@ -365,7 +365,7 @@ const CardsScreen: React.FC = () => {
       <IPayPortalBottomSheet
         isVisible={isCardDetailsSheetVisible}
         ref={cardDetailsSheetRef}
-        heading={localizationText.CARDS.CARD_DETAILS}
+        heading="CARDS.CARD_DETAILS"
         customSnapPoint={['50%', '60%']}
         onCloseBottomSheet={onCloseCardSheet}
         simpleBar
@@ -379,7 +379,7 @@ const CardsScreen: React.FC = () => {
       </IPayPortalBottomSheet>
       <IPayPortalBottomSheet
         isVisible={isCardIssueSheetVisible}
-        heading={localizationText.CARD_ISSUE.ISSUE_NEW_CARD}
+        heading="CARD_ISSUE.ISSUE_NEW_CARD"
         onCloseBottomSheet={closeCardSheet}
         customSnapPoint={['55%', '60%']}
         ref={cardSheetRef}

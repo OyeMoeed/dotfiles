@@ -14,7 +14,6 @@ import {
 import { IPayButton, IPayList, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { TransactionOperations, TransactionsStatus, TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
@@ -22,6 +21,7 @@ import { isIosOS } from '@app/utilities/constants';
 import { formatSlashDateTime } from '@app/utilities/date-helper.util';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
 import transactionHistoryStyle from './ipay-transaction-history.style';
 
@@ -33,7 +33,6 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({
   isBeneficiaryHistory,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
   const { fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -51,10 +50,13 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({
 
   return multiTransactionTypes ? (
     <IPayView style={styles.cardStyle}>
-      <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-        {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
-      </IPayFootnoteText>
-      <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+      <IPayFootnoteText
+        regular
+        style={styles.headingStyles}
+        color={colors.natural.natural900}
+        text="TRANSACTION_HISTORY.SENDER_NAME"
+      />
+      <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2} shouldTranslate={false}>
         {fullName}
       </IPaySubHeadlineText>
     </IPayView>
@@ -69,9 +71,8 @@ const IPayShareableOtherView = ({
   onPressShare,
   isBeneficiaryHistory,
   isBKFTransfer,
-}) => {
+}: any) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = transactionHistoryStyle(colors);
 
   return (
@@ -79,7 +80,7 @@ const IPayShareableOtherView = ({
       {showSplitButton && (
         <IPayButton
           btnType={buttonVariants.PRIMARY}
-          btnText={localizationText.TRANSACTION_HISTORY.SPLIT_BILL}
+          btnText="TRANSACTION_HISTORY.SPLIT_BILL"
           medium
           btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
           leftIcon={<IPayIcon icon={icons.bill1} size={18} color={colors.natural.natural0} />}
@@ -90,7 +91,7 @@ const IPayShareableOtherView = ({
         <IPayButton
           btnType={buttonVariants.OUTLINED}
           onPress={onPressShare}
-          btnText={localizationText.TOP_UP.SHARE}
+          btnText="TOP_UP.SHARE"
           medium
           btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
           leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
@@ -99,7 +100,7 @@ const IPayShareableOtherView = ({
       {isBKFTransfer && (
         <IPayButton
           btnType={buttonVariants.PRIMARY}
-          btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+          btnText="TRANSACTION_HISTORY.VAT_INVOICE"
           medium
           btnStyle={styles.button}
           rightIcon={<IPayIcon icon={icons.export_2} size={18} color={colors.natural.natural0} />}
@@ -121,7 +122,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   isBeneficiaryHistory,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = transactionHistoryStyle(colors);
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const { showToast } = useToastContext();
@@ -150,7 +151,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
+      title: t('TOP_UP.COPIED'),
       subTitle: value,
       containerStyle: isIosOS ? styles.containerToastIosStyle : styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
@@ -222,17 +223,16 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
         >
           <IPayView>
             <IPayView style={styles.amountSection}>
-              <IPayFootnoteText color={colors.natural.natural900}>
-                {localizationText.TRANSACTION_HISTORY.AMOUNT}
-              </IPayFootnoteText>
+              <IPayFootnoteText color={colors.natural.natural900} text="TRANSACTION_HISTORY.AMOUNT" />
               <IPayTitle3Text
                 style={[
                   styles.footnoteBoldTextStyle,
                   isCredit ? styles.footnoteGreenTextStyle : styles.footnoteRedTextStyle,
                 ]}
                 regular={false}
+                shouldTranslate={false}
               >
-                {`${isCredit ? '+' : '-'}${transaction?.amount} SAR`}
+                {`${isCredit ? '+' : '-'}${transaction?.amount} ${t('COMMON.SAR')}`}
               </IPayTitle3Text>
             </IPayView>
             <IPayView style={styles.listWrapper}>
@@ -249,13 +249,19 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
               {!isBeneficiaryHistory && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.TYPE}
-                  </IPayFootnoteText>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.TYPE"
+                  />
                   {initiatedWallet && !isCountGift && isNotPayVCardVisa && (
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {localizationText.TRANSACTION_HISTORY.AUTHORIZED}
-                    </IPaySubHeadlineText>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      text="TRANSACTION_HISTORY.AUTHORIZED"
+                    />
                   )}
                   {!isCardIssue && !isPayOneCard && !isCountMusaned && renderSubHeadline()}
                   {isCardIssue && renderSubHeadline()}
@@ -266,12 +272,8 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   {transactionRequestType === TransactionTypes.CIN_CASH_BACK && renderSubHeadline()}
                   {transactionRequestType === TransactionTypes.PAY_VCARD_REFUND && isCredit && renderSubHeadline()}
                   {transactionRequestType === TransactionTypes.CARD_VCB_ISSUE && isDebit && renderSubHeadline()}
-                  {isCountMusaned &&
-                    isCredit &&
-                    renderSubHeadline(true, localizationText.TRANSACTION_HISTORY.ONGOING_SALARY_TRANSFER)}
-                  {isCountMusaned &&
-                    isDebit &&
-                    renderSubHeadline(true, localizationText.TRANSACTION_HISTORY.OUTGOING_SALARY_TRANSFER)}
+                  {isCountMusaned && isCredit && renderSubHeadline(true, 'TRANSACTION_HISTORY.ONGOING_SALARY_TRANSFER')}
+                  {isCountMusaned && isDebit && renderSubHeadline(true, 'TRANSACTION_HISTORY.OUTGOING_SALARY_TRANSFER')}
                   {isPayOneCard && isDebit && renderSubHeadline(true, transaction?.transactionRequestTypeDesc)}
                 </IPayView>
               )}
@@ -287,17 +289,25 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA ||
                 (isCountExpress && isBeneficiaryHistory)) && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.BENEFICIARY_NAME}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.BENEFICIARY_NAME"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.beneficiaryName}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
               {(transactionRequestType === TransactionTypes.COUT_ALINMA || (isBeneficiaryHistory && !isCredit)) && (
                 <IPayView style={styles.cardStyle}>
-                  {renderFootnote(localizationText.TRANSACTION_HISTORY.BENEFICIARY_NICK_NAME)}
+                  {renderFootnote('TRANSACTION_HISTORY.BENEFICIARY_NICK_NAME')}
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
                     {transaction?.nickname}
                   </IPaySubHeadlineText>
@@ -305,7 +315,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
               {(transactionRequestType === TransactionTypes.COUT_ALINMA || (isBeneficiaryHistory && isCredit)) && (
                 <IPayView style={styles.cardStyle}>
-                  {renderFootnote(localizationText.TRANSACTION_HISTORY.SENDER_NICK_NAME)}
+                  {renderFootnote('TRANSACTION_HISTORY.SENDER_NICK_NAME')}
                   <IPaySubHeadlineText regular color={colors.primary.primary800}>
                     {transaction?.senderName?.length >= 18
                       ? `${transaction?.senderName?.slice(0, 18)}...`
@@ -315,13 +325,13 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
               {(transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (
                 <IPayView style={styles.cardStyle}>
-                  {renderFootnote(localizationText.TRANSACTION_HISTORY.TRANSFER_BY)}
+                  {renderFootnote('TRANSACTION_HISTORY.TRANSFER_BY')}
                   <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2} />
                 </IPayView>
               )}
               {(transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (
                 <IPayView style={styles.cardStyle}>
-                  {renderFootnote(localizationText.TRANSACTION_HISTORY.REASON_OF_TRANSFER)}
+                  {renderFootnote('TRANSACTION_HISTORY.REASON_OF_TRANSFER')}
                   <IPaySubHeadlineText
                     regular
                     color={colors.primary.primary800}
@@ -332,10 +342,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               )}
               {isCountMusaned && isDebit && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.PAID_TO}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.PAID_TO"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.beneficiaryName || transaction?.mobileNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -343,10 +361,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {transaction?.transactionRequestType === 'Musaned.trxDetails.paidFrom' && isDebit && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.SENDER_NAME"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.nickname}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -354,10 +380,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {isCountMusaned && isCredit && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.SENDER_NAME}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.SENDER_NAME"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.senderName}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -365,14 +399,22 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {(isCountWu || isCountExpress) && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.REFERENCE_NUMBER}
-                  </IPayFootnoteText>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.REFERENCE_NUMBER"
+                  />
                   <IPayPressable
                     style={styles.actionWrapper}
                     onPress={() => copyRefNo(transaction?.remittanceRefNumber)}
                   >
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.remittanceRefNumber}
                     </IPaySubHeadlineText>
 
@@ -383,10 +425,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {isCountExpress && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.REFERENCE_NUMBER}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.REFERENCE_NUMBER"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionRefNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -398,16 +448,27 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 (transaction?.transactionRequestType === TransactionTypes.PAY_WALLET && !isBeneficiaryHistory)) && (
                 <IPayView style={styles.cardStyle}>
                   {isCredit && (
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.PAY_FROM}
-                    </IPayFootnoteText>
+                    <IPayFootnoteText
+                      regular
+                      style={styles.headingStyles}
+                      color={colors.natural.natural900}
+                      text="TRANSACTION_HISTORY.PAY_FROM"
+                    />
                   )}
                   {isDebit && (
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.PAY_TO}
-                    </IPayFootnoteText>
+                    <IPayFootnoteText
+                      regular
+                      style={styles.headingStyles}
+                      color={colors.natural.natural900}
+                      text="TRANSACTION_HISTORY.PAY_TO"
+                    />
                   )}
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -416,16 +477,27 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               {transaction?.transactionRequestType === TransactionTypes.REFUND && (
                 <IPayView style={styles.cardStyle}>
                   {transaction?.TrnType === TransactionOperations.DEBIT && (
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.PAY_FROM}
-                    </IPayFootnoteText>
+                    <IPayFootnoteText
+                      regular
+                      style={styles.headingStyles}
+                      color={colors.natural.natural900}
+                      text="TRANSACTION_HISTORY.PAY_FROM"
+                    />
                   )}
                   {!(transaction?.TrnType === TransactionOperations.DEBIT) && (
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.RECIVED_FROM}
-                    </IPayFootnoteText>
+                    <IPayFootnoteText
+                      regular
+                      style={styles.headingStyles}
+                      color={colors.natural.natural900}
+                      text="TRANSACTION_HISTORY.RECIVED_FROM"
+                    />
                   )}
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.nickname}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -433,10 +505,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {transaction?.bankName && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.BANK_NAME}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.BANK_NAME"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.bankName}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -444,10 +524,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {transaction?.iban && !isCredit && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.IBAN}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.IBAN"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.iban}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -461,14 +549,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_SETTLE ||
                 transaction?.transactionRequestType === TransactionTypes.CIN_CASH_BACK) && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.DESCRIPTION}
-                  </IPayFootnoteText>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.DESCRIPTION"
+                  />
                   <IPaySubHeadlineText
                     style={styles.fullFlex}
                     regular
                     color={colors.primary.primary800}
                     numberOfLines={2}
+                    shouldTranslate={false}
                   >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
@@ -477,10 +569,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {isCountAtm && transaction?.terminalId && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.ATM_ID}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.ATM_ID"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.terminalId}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -488,10 +588,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.ACCOUNT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.ACCOUNT"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.iban}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -499,10 +607,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {isCountAtm && transaction?.transactionRequestTypeDesc && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.ATM_DESCRIPTION}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.ATM_DESCRIPTION"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionRequestTypeDesc}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -510,32 +626,56 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {isCountMusaned && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.amount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.TOTAL_AMOUNT"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {transaction?.bonusAmount && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.BONUS_AMOUNT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.bonusAmount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.BONUS_AMOUNT"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.bonusAmount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {isCountMusaned && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.TRANSFER_TYPE}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.TRANSFER_TYPE"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionJustfication}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -543,10 +683,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {isCountMusaned && transaction?.salaryMonth && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.MONTHLY_SALARY}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.MONTHLY_SALARY"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.salaryMonth}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -554,11 +702,19 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {!isPayOneCard && !isCountMusaned && !isBeneficiaryHistory && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.AMOUNT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.amount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.AMOUNT"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
@@ -567,10 +723,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 transaction?.transactionJustfication !== '0' &&
                 transaction?.transactionJustfication !== '2' && (
                   <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.NOTES}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPayFootnoteText
+                      regular
+                      style={styles.headingStyles}
+                      color={colors.natural.natural900}
+                      text="TRANSACTION_HISTORY.NOTES"
+                    />
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.transactionDescription}
                     </IPaySubHeadlineText>
                   </IPayView>
@@ -580,11 +744,19 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 transaction?.transactionRequestType !== TransactionTypes.PAY_ONECARD &&
                 !isBeneficiaryHistory && (
                   <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.FEES}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {`${transaction?.feesAmount || '0.00'}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                    <IPayFootnoteText
+                      regular
+                      style={styles.headingStyles}
+                      color={colors.natural.natural900}
+                      text="TRANSACTION_HISTORY.FEES"
+                    />
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
+                      {`${transaction?.feesAmount || '0.00'}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}
@@ -593,92 +765,156 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                 transaction?.transactionRequestType !== TransactionTypes.PAY_ONECARD &&
                 !isBeneficiaryHistory && (
                   <IPayView style={styles.cardStyle}>
-                    <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                      {localizationText.TRANSACTION_HISTORY.VAT}
-                    </IPayFootnoteText>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                      {`${transaction?.vatAmount || '0.00'}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                    <IPayFootnoteText
+                      regular
+                      style={styles.headingStyles}
+                      color={colors.natural.natural900}
+                      text="TRANSACTION_HISTORY.VAT"
+                    />
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
+                      {`${transaction?.vatAmount || '0.00'}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                     </IPaySubHeadlineText>
                   </IPayView>
                 )}
 
               {transaction?.transactionRequestType === TransactionTypes.PAY_ONECARD && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.AMOUNT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.amount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.AMOUNT"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {transactionJustification ||
                 (isBeneficiaryHistory &&
-                  renderHistory(localizationText.TRANSACTION_HISTORY.NOTES, transaction?.transactionDescription))}
+                  renderHistory('TRANSACTION_HISTORY.NOTES', transaction?.transactionDescription))}
 
               {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA && !isPayOneCard && !isCredit && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.FEES}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.feesAmount || ''}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.FEES"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.feesAmount || ''}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {transaction?.transactionRequestType !== TransactionTypes.CIN_CARD_MADA && !isPayOneCard && !isCredit && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.VAT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.vatAmount || ''}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.VAT"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.vatAmount || ''}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {isPayOneCard && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.ITEM_PRICE}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.oneCardPriceBeforeVat}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.ITEM_PRICE"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.oneCardPriceBeforeVat}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {isPayOneCard && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.VAT}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.oneCardVat}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.VAT"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.oneCardVat}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {isPayOneCard && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.TOTAL}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
-                    {`${transaction?.oneCardPriceAfterVat}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`}
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.TOTAL"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
+                    {`${transaction?.oneCardPriceAfterVat}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`}
                   </IPaySubHeadlineText>
                 </IPayView>
               )}
 
               {isCountWu && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.MTCN}
-                  </IPayFootnoteText>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.MTCN"
+                  />
                   <IPayPressable style={styles.actionWrapper} onPress={() => copyRefNo(transaction?.mtcn)}>
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.mtcn}
                     </IPaySubHeadlineText>
 
@@ -689,10 +925,18 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {isCountWu && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.REFERENCE_NUMBER}
-                  </IPayFootnoteText>
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.REFERENCE_NUMBER"
+                  />
+                  <IPaySubHeadlineText
+                    regular
+                    color={colors.primary.primary800}
+                    numberOfLines={2}
+                    shouldTranslate={false}
+                  >
                     {transaction?.transactionRefNumber}
                   </IPaySubHeadlineText>
                 </IPayView>
@@ -700,14 +944,22 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
 
               {!isCountWu && !isCountExpress && (
                 <IPayView style={styles.cardStyle}>
-                  <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-                    {localizationText.TRANSACTION_HISTORY.REFERENCE_NUMBER}
-                  </IPayFootnoteText>
+                  <IPayFootnoteText
+                    regular
+                    style={styles.headingStyles}
+                    color={colors.natural.natural900}
+                    text="TRANSACTION_HISTORY.REFERENCE_NUMBER"
+                  />
                   <IPayPressable
                     style={styles.actionWrapper}
                     onPress={() => copyRefNo(transaction?.transactionRefNumber)}
                   >
-                    <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2}>
+                    <IPaySubHeadlineText
+                      regular
+                      color={colors.primary.primary800}
+                      numberOfLines={2}
+                      shouldTranslate={false}
+                    >
                       {transaction?.transactionRefNumber}
                     </IPaySubHeadlineText>
 
@@ -718,14 +970,11 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               {isBeneficiaryHistory &&
                 !isCredit &&
                 renderHistory(
-                  localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT,
-                  `${transaction?.amount}  ${localizationText.TRANSACTION_HISTORY.SAUDI_RIYAL}`,
+                  'TRANSACTION_HISTORY.TOTAL_AMOUNT',
+                  `${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`,
                 )}
               {!isBeneficiaryHistory &&
-                renderHistory(
-                  localizationText.TRANSACTION_HISTORY.DATE_AND_TIME,
-                  getDate(transaction?.transactionDateTime || ''),
-                )}
+                renderHistory('TRANSACTION_HISTORY.DATE_AND_TIME', getDate(transaction?.transactionDateTime || ''))}
             </IPayView>
           </IPayView>
         </IPayShareableImageView>
