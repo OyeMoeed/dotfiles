@@ -54,7 +54,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState('');
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
-  const [shippingFee, setShippingFee] = useState<string | undefined>('');
+  const [shippingFee, setShippingFee] = useState<string | undefined>('0');
   const { address } = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
@@ -133,7 +133,12 @@ const PrintCardConfirmationScreen: React.FC = () => {
     }
   };
 
-  const onResendCodePress = () => {};
+  const onResendCodePress = () => {
+    onCloseBottomSheet();
+    setTimeout(() => {
+      onPressConfirm();
+    }, 1000);
+  };
 
   const getTotalFees = (fees: IssueCardFeesRes) => {
     // eslint-disable-next-line no-unsafe-optional-chaining
@@ -149,8 +154,6 @@ const PrintCardConfirmationScreen: React.FC = () => {
     );
     if (feesApiResponse?.successfulResponse === true) {
       setShippingFee(getTotalFees(feesApiResponse?.response));
-    } else {
-      setShippingFee('0');
     }
   };
 

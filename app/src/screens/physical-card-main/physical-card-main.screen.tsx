@@ -8,7 +8,6 @@ import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import { buttonVariants, CarouselModes, CardStatusNumber, CardTypes } from '@app/utilities/enums.util';
 import React, { useState, useEffect } from 'react';
 import { verticalScale } from 'react-native-size-matters';
-import useCardsData from '@app/screens/cards/use-cards-data';
 import icons from '@app/assets/icons';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -16,12 +15,12 @@ import { getCards } from '@app/network/services/core/transaction/transactions.se
 import { useTypedSelector } from '@app/store/store';
 import { CardsProp, CardListItem } from '@app/network/services/core/transaction/transaction.interface';
 import physicalCardMainStyles from './physical-card-main-style';
+import PhysicalCardMainNoCardScreen from '../physical-card-main-no-card/physical-card-main-no-card.screen';
 
 const PhysicalCardMainScreen: React.FC = () => {
   const { colors } = useTheme();
-  const { CARD_DATA } = useCardsData();
   const styles = physicalCardMainStyles(colors);
-  const [currentCard, setCurrentCard] = useState<CardInterface>(CARD_DATA[0]); // #TODO will be replaced with API data
+  const [currentCard, setCurrentCard] = useState<CardInterface>();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
 
@@ -120,7 +119,15 @@ const PhysicalCardMainScreen: React.FC = () => {
     </IPayView>
   );
 
-  return (
+  return cardsData.length === 0 ? (
+    <PhysicalCardMainNoCardScreen
+      onPressIssueNewCard={() =>
+        navigate(ScreenNames.ISSUE_NEW_CARD_DETAILS, {
+          currentCard,
+        })
+      }
+    />
+  ) : (
     <IPaySafeAreaView testID="ipay-safearea">
       <IPayHeader title="CARD_OPTIONS.PHYSICAL_CARD" backBtn applyFlex />
 
