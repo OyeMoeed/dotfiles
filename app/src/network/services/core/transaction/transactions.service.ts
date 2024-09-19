@@ -44,26 +44,20 @@ const getCards = async (payload: CardsProp): Promise<any> => {
   if (constants.MOCK_API_RESPONSE) {
     return cardsListMock;
   }
-  try {
-    const header = {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      'api-version': 'v2',
-    };
 
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
-      method: requestType.GET,
-      headers: header,
-    });
+  const header = {
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    'api-version': 'v2',
+    hide_error_response: payload.hideError ?? false,
+    hide_spinner_loading: payload.hideSpinner ?? false,
+  };
 
-    // return cardsListMock;
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
+    method: requestType.GET,
+    headers: header,
+  });
+  return apiResponse;
 };
 
 const resetPinCode = async (payload: resetPinCodeProp): Promise<any> => {

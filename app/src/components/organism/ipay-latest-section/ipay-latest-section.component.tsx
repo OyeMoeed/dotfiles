@@ -33,6 +33,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   offersData,
   openBottomSheet,
   openProfileBottomSheet,
+  cards,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -47,6 +48,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const moveToTransactionHistory = () =>
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
+      cards,
       isShowCard: false,
       isShowAmount: true,
     });
