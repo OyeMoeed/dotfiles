@@ -358,7 +358,7 @@ const SendGiftAmountScreen = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader title="SEND_GIFT.TITLE" applyFlex backBtn />
-      <IPayScrollView>
+      <IPayScrollView nestedScrollEnabled>
         <IPayView style={styles.container}>
           <IPayView>
             <IPayTopUpBox
@@ -380,12 +380,12 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualContactList : styles.contactList}>
             {getContactInfoText()}
             <IPayFlatlist
-              scrollEnabled
+              scrollEnabled={false}
+              keyExtractor={(item, index) => `${item.recordID}-${index}`}
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
               ListFooterComponent={<ListFooterContacts />}
-              keyExtractor={(item) => item.recordID}
               showsVerticalScrollIndicator={false}
             />
           </IPayView>

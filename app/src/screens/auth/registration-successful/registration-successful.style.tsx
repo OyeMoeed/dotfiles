@@ -1,6 +1,7 @@
 import { fonts, typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const genratedStyles = (colors: any) =>
@@ -102,7 +103,7 @@ const genratedStyles = (colors: any) =>
     activateFaceIDText: {
       fontSize: typography.FONT_VARIANTS.TITLE3.FONT_SIZE,
       marginBottom: moderateScale(12),
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
       color: colors.primary.primary900,
     },
     faceIdDescription: {
@@ -142,11 +143,6 @@ const genratedStyles = (colors: any) =>
       flex: 0,
       marginTop: verticalScale(40),
       paddingHorizontal: moderateScale(10),
-    },
-
-    successIcon: {
-      height: scaleSize(120),
-      width: scaleSize(120),
     },
     descriptionStyle: {
       marginTop: verticalScale(12),

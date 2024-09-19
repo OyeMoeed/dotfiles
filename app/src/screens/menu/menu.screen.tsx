@@ -20,7 +20,6 @@ import { getDeviceInfo } from '@app/network/utilities';
 import clearSession from '@app/network/utilities/network-session-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType } from '@app/utilities/enums.util';
 import { FC, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import useActionSheetOptions from '../delink/use-delink-options';
@@ -65,11 +64,9 @@ const MenuScreen: FC = () => {
       walletNumber,
     };
 
-    const apiResponse: any = await deviceDelink(payload);
+    await deviceDelink(payload);
 
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      delinkSuccessfullyDone();
-    }
+    delinkSuccessfullyDone();
   };
 
   const handleDelink = () => {

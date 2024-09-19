@@ -282,10 +282,8 @@ const LoginViaPasscode: React.FC = () => {
       walletNumber,
     };
 
-    const apiResponse: any = await deviceDelink(payload);
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      delinkSuccessfullyDone();
-    }
+    await deviceDelink(payload);
+    delinkSuccessfullyDone();
   };
 
   const onEnterPassCode = (newCode: string) => {

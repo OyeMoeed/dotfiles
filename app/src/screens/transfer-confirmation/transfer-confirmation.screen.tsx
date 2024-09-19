@@ -177,7 +177,7 @@ const TransferConfirmation: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="LOCAL_TRANSFER.TRANSFER_CONFIRMATION" />
-      <IPayScrollView style={styles.container}>
+      <IPayScrollView style={styles.container} nestedScrollEnabled>
         <IPayLinearGradientView gradientColors={colors.bottomsheetGradient} style={styles.beneficiaryDetailsView}>
           <IPayView style={styles.beneficiaryBankDetailsView}>
             <IPayIcon icon={bankDetails?.icon} size={30} />
@@ -191,8 +191,9 @@ const TransferConfirmation: React.FC = () => {
           </IPayView>
           <IPayView style={styles.listView}>
             <IPayFlatlist
+              scrollEnabled={false}
               data={beneficiaryData}
-              keyExtractor={(_, index) => index.toString()}
+              keyExtractor={(item, index) => `${item.title}-${index}`}
               renderItem={renderBenificaryDetails}
               itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
             />

@@ -471,7 +471,7 @@ const LocalTransferScreen: React.FC = () => {
             </IPayView>
             {hasBeneficiariesData() ? (
               <IPayView style={styles.listWrapper}>
-                <IPayScrollView showsVerticalScrollIndicator={false}>
+                <IPayScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
                   <IPayView
                     style={[
                       styles.activeInactiveListWrapper,
@@ -480,6 +480,8 @@ const LocalTransferScreen: React.FC = () => {
                   >
                     {!!getSortedData(BeneficiaryTypes.ACTIVE)?.length && (
                       <IPayFlatlist
+                        scrollEnabled={false}
+                        keyExtractor={(item, index) => `${item.fullName}-active-status-${index}`}
                         data={listData(viewAll.ACTIVATE, BeneficiaryTypes.ACTIVE)}
                         renderItem={beneficiaryItem}
                         ListHeaderComponent={() =>
@@ -494,9 +496,10 @@ const LocalTransferScreen: React.FC = () => {
                     )}
                     {!!getSortedData(BeneficiaryTypes.INACTIVE)?.length && (
                       <IPayFlatlist
+                        scrollEnabled={false}
+                        keyExtractor={(item, index) => `${item.fullName}-inactive-status-${index}`}
                         data={listData(viewAll.NEW_BENEFICIARY, BeneficiaryTypes.INACTIVE)}
                         renderItem={beneficiaryItem}
-                        keyExtractor={(item) => item.id}
                         ListHeaderComponent={() =>
                           renderHeader(
                             BeneficiaryTypes.INACTIVE,

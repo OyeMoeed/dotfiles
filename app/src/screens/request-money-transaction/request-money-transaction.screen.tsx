@@ -28,6 +28,7 @@ import { ApiResponseStatusType, buttonVariants, ToastTypes } from '@app/utilitie
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
@@ -286,7 +287,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         return baseMapping;
     }
   };
-  const openBottomSheet = (item: IPayRequestMoneyProps) => {
+  const openBottomSheet = (item: RequestItem) => {
     const calculatedSnapPoint = ['1%', heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
 
@@ -306,7 +307,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     });
   };
 
-  const renderItem = ({ item }: { item: IPayRequestMoneyProps }) => {
+  const renderItem = ({ item }: { item: RequestItem }) => {
     const { transactionTime, targetFullName, transactionState, targetAmount } = item;
     return (
       <IPayView style={styles.listView}>
@@ -391,9 +392,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         <IPayPaginatedFlatlist
           showsVerticalScrollIndicator={false}
           externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
-          keyExtractor={(index: number) => {
-            index.toString(); // Convert the index to a string
-          }}
+          keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`} // Convert the index to a string
           renderItem={renderItem}
           fetchData={(page, pageSize) =>
             getRequestsData(selectedTab === SEND_REQUESTS ? sentRequestsPage : receivedRequestsPage, pageSize)

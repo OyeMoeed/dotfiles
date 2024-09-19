@@ -4,6 +4,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { formatCurrencyValue } from '@app/utilities/currency-helper.util';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
 
@@ -22,6 +23,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   handleBlur,
   handleIconPress,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = amountInputStyles(colors);
   const amountStr = amount ? formatCurrencyValue(amount) : '';
@@ -43,7 +45,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         caretHidden={carretHidden}
       />
       <IPayInput
-        text="COMMON.SAR"
+        text={t('COMMON.SAR')}
         editable={false}
         style={[styles.currencyText, !amount && styles.darkStyle, currencyStyle]}
       />
