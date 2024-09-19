@@ -1,13 +1,13 @@
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 
 import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
-import { t } from 'i18next';
+
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 
 const useDynamicForm = (fetchedFields: DynamicField[]) => {
-
-
+  const { t } = useTranslation();
   // Memoized function to create default values
   const defaultValues = useMemo(() => {
     const defaultVals: Record<string, string> = {};
