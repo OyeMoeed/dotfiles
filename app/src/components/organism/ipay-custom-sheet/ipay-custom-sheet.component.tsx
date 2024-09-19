@@ -16,7 +16,7 @@ import { isIosOS } from '@app/utilities/constants';
 import { getCustomSheetThreshold } from '@app/utilities';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import { Gesture } from 'react-native-gesture-handler';
-import { runOnJS, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
 import { IPayCustomSheetProps } from './ipay-custom-sheet.interface';
 import customSheetStyles from './ipay-custom-sheet.style';
@@ -26,7 +26,7 @@ import customSheetStyles from './ipay-custom-sheet.style';
  */
 const TOP_SCALE = verticalScale(isIosOS ? 100 : 60);
 const ANIMATION_CONFIG = {
-  duration: 200,
+  duration: 150,
 };
 
 /**
@@ -72,13 +72,13 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
 
       // THIS CONDITION IS TO KEEP THE SHEET POSITION BETWEEN TWO BORDERS
       if (newTranslateY <= 0 && newTranslateY >= MAX_TRANSLATE_Y && newTranslateY <= TOP_TRANSLATE_Y) {
-        translateY.value = withTiming(newTranslateY);
+        translateY.value = withSpring(newTranslateY);
       }
     })
     .onEnd(() => {
-      if (isSheetOpen && translateY.value > MAX_TRANSLATE_Y + 25) {
+      if (isSheetOpen && translateY.value > MAX_TRANSLATE_Y + 10) {
         runOnJS(closeSheet)();
-      } else if (!isSheetOpen && translateY.value < TOP_TRANSLATE_Y - 25) {
+      } else if (!isSheetOpen && translateY.value < TOP_TRANSLATE_Y - 10) {
         runOnJS(openSheet)();
       } else if (isSheetOpen) {
         // THIS CONDITION IS TO KEEP SHEET SAME POSITION IF THE USER DID NOT MOVE IT 25 pixel
