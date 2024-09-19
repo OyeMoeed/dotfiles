@@ -58,7 +58,7 @@ export interface Response {
   refundRequest?: RefundRequest;
 }
 
-export interface wuTransactionDetailsResponse {
+export interface WUTransactionDetailsResponse {
   status: MockAPIStatusProps;
   response: Response;
   successfulResponse: boolean;

@@ -1,6 +1,6 @@
-import { wuTransactionDetailsResponse } from './get-western_union_transaction_details.interface';
+import { WUTransactionDetailsResponse } from './get-western_union_transaction_details.interface';
 
-const wuTransactiontResponseData: wuTransactionDetailsResponse = {
+const wuTransactiontResponseData: WUTransactionDetailsResponse = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
