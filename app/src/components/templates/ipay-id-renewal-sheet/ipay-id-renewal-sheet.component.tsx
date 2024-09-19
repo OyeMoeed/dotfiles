@@ -10,6 +10,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
+import { isIosOS } from '@app/utilities/constants';
 import { buttonVariants, IdRenewalState } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
@@ -67,7 +68,7 @@ const IPayIdRenewalSheet: React.FC = () => {
       if (apiResponse) {
         setOTPRef(apiResponse?.response?.otpRef);
         setRenewId(true);
-        setCustomSnapPoints(['99%', '99%']);
+        setCustomSnapPoints(isIosOS ? ['94%', '94%'] : ['99%', '99%']);
       }
     }
   };
