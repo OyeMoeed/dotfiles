@@ -1,25 +1,25 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isIosOS } from '@app/utilities/constants';
 import { PayChannel } from '@app/utilities/enums.util';
 import { forwardRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayTopUpSelectionProps } from './ipay-topup-selection.interface';
 import ipayTopupSelectionStyles from './ipay-topup-selection.styles';
 
 const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, topupItemSelected }, ref) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = ipayTopupSelectionStyles(colors);
 
   const topUpTypes = [
     {
       key: 1,
       rightIcon: icons.apple_pay,
-      text: localizationText.TOP_UP.APPLE_PAY,
+      text: t('TOP_UP.APPLE_PAY'),
       iconColor: colors.primary.primary900,
       leftIcon: icons.right_greater_icon,
       navigateTo: screenNames.TOP_UP,
@@ -28,7 +28,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
     {
       key: 2,
       rightIcon: icons.cards,
-      text: localizationText.TOP_UP.CARD_TITLE,
+      text: t('TOP_UP.CARD_TITLE'),
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
       navigateTo: screenNames.TOP_UP,
@@ -37,7 +37,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
     {
       key: 3,
       rightIcon: icons.bank,
-      text: localizationText.TOP_UP.BANK_TRANSFER_TO_MY_WALLET,
+      text: t('TOP_UP.BANK_TRANSFER_TO_MY_WALLET'),
       leftIcon: icons.right_greater_icon,
       iconColor: colors.primary.primary900,
       navigateTo: screenNames.TOP_UP_IBAN,
@@ -45,7 +45,7 @@ const IPayTopUpSelection = forwardRef<{}, IPayTopUpSelectionProps>(({ testID, to
     {
       key: 4,
       rightIcon: icons.akhtar,
-      text: localizationText.TOP_UP.AKHTR,
+      text: t('TOP_UP.AKHTR'),
       leftIcon: icons.right_greater_icon,
       navigateTo: screenNames.POINTS_REDEMPTIONS,
       payVariant: PayChannel.AKHTAR,

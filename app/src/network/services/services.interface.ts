@@ -1,3 +1,5 @@
+import { DeleteBillResponse } from './bills-management/delete-bill/delete-bill.interface';
+
 // Define the Status interface
 interface MockAPIStatusProps {
   sessionReference: string;
@@ -5,7 +7,7 @@ interface MockAPIStatusProps {
   requestReference: string;
   type: string;
   desc: string;
-  translation:string
+  translation: string;
 }
 
 // Define the Data interface
@@ -46,6 +48,7 @@ interface IApiStatus {
 }
 
 interface ApiResponse<T> {
+  data: DeleteBillResponse;
   status: IApiStatus;
   response?: T;
   successfulResponse?: boolean;
@@ -71,6 +74,5 @@ export {
   IApiStatus,
   MockAPIDataProps,
   MockAPIOkProp,
-  MockAPIStatusProps
+  MockAPIStatusProps,
 };
-

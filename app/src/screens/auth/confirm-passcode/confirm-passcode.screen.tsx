@@ -1,11 +1,9 @@
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { SetPasscodeServiceProps } from '@app/network/services/core/set-passcode/set-passcode.interface';
@@ -16,23 +14,22 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import passcodeStyles from '../set-passcode/set-passcode.style';
 
 const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const { passcode } = route.params;
   const { colors } = useTheme();
   const styles = passcodeStyles();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [apiError] = useState<string>('');
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const renderToast = (toastHeading: string, toastMsg: string) => {
     showToast({
@@ -44,22 +41,9 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
     });
   };
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: false,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
   const setNewPasscode = async (newCode: string) => {
-    renderSpinner(true);
-
     const payload: SetPasscodeServiceProps = {
       passCode:
         encryptData(
@@ -93,14 +77,12 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
       dispatch(setWalletInfo({ walletNumber, fullName: 'Alinma', firstName: 'Pay' }));
       navigate(screenNames.REGISTRATION_SUCCESSFUL);
     }
-
-    renderSpinner(false);
   };
 
   const validatePasscode = (newCode: string) => {
     if (passcode && newCode && passcode !== newCode) {
       setPasscodeError(true);
-      renderToast(localizationText.COMMON.INCORRECT_CODE, localizationText.CHANGE_PIN.ENSURE_YOU_WRITE);
+      renderToast(t('COMMON.INCORRECT_CODE'), t('CHANGE_PIN.ENSURE_YOU_WRITE'));
     } else {
       dispatch(
         setAppData({
@@ -128,10 +110,7 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
           </IPayView>
 
           <IPayView style={styles.headingView}>
-            <IPayPageDescriptionText
-              heading={localizationText.REGISTRATION.CONFIRM_PASSCODE}
-              text={localizationText.REGISTRATION.ENTER_PASSCODE_AGAIN}
-            />
+            <IPayPageDescriptionText heading="REGISTRATION.CONFIRM_PASSCODE" text="REGISTRATION.ENTER_PASSCODE_AGAIN" />
           </IPayView>
           <IPayPasscode data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} passcodeError={passcodeError} />
         </IPayView>

@@ -1,10 +1,10 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
+import { ApiResponse } from '../../services.interface';
 import CORE_URLS from '../core.urls';
 import { CheckOutProp, CheckStatusProp, TopUpCardsRes, WalletNumberProp } from './topup-cards.interface';
-import topupCardsMock from './topup-cards.mock';
-import { ApiResponse } from '../../services.interface';
+import { topupCardsMock, topupCardStatusMock } from './topup-cards.mock';
 
 const getTopupCards = async (payload: WalletNumberProp): Promise<ApiResponse<TopUpCardsRes>> => {
   if (constants.MOCK_API_RESPONSE) {
@@ -37,6 +37,9 @@ const topupCheckout = async (payload: CheckOutProp): Promise<unknown> => {
 };
 
 const topupCheckStatus = async (payload: CheckStatusProp): Promise<unknown> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return topupCardStatusMock;
+  }
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.CHECK_STATUS(payload?.walletNumber, payload?.refNumber),
     method: requestType.GET,

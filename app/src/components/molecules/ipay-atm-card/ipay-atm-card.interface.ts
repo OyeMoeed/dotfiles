@@ -60,6 +60,13 @@ export interface CardInterface {
    * card printing status
    */
   isCardPrinted?: boolean;
+  /**
+   * card type description
+   */
+  cardTypeDesc?: string;
+  annualFeeDue?: any;
+  nextAnnualFeeAmt?: any;
+  nextAnnualFeeVAT?: any;
 }
 
 export interface IPayATMCardProps {
@@ -83,4 +90,8 @@ export interface IPayATMCardProps {
    * card printing status
    */
   backgroundImageStyle?: StyleProp<ViewStyle>;
+  /**
+   * onLongPress function
+   */
+  onLongPress?: () => void;
 }

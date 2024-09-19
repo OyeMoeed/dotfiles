@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayChip, IPayHeader, IPayOutlineButton, IPayUserAvatar } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { KycFormCategories } from '@app/enums';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import {
@@ -16,7 +15,6 @@ import {
 } from '@components/atoms';
 
 import images from '@app/assets/images';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IFormData } from '@app/components/templates/ipay-customer-knowledge/ipay-customer-knowledge.interface';
@@ -27,16 +25,17 @@ import walletUpdate from '@app/network/services/core/update-wallet/update-wallet
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { isBasicTierSelector, setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { States, spinnerVariant, ToastTypes } from '@app/utilities/enums.util';
+import { States, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCustomerKnowledge, IPayNafathVerification, IPaySafeAreaView } from '@components/templates';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useEffect, useRef, useState } from 'react';
-import CardKeys from './profile.interface';
+import { useTranslation } from 'react-i18next';
+import { CardKeys, UserFieldKeys } from './profile.interface';
 import profileStyles from './profile.style';
 import useChangeImage from './proflie.changeimage.component';
 
 const Profile = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = profileStyles(colors);
   const [userData, setUserData] = useState<object[]>([]);
@@ -46,7 +45,6 @@ const Profile = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { showToast } = useToastContext();
 
   const formatAddress = (userInfoData: any) => {
@@ -61,20 +59,9 @@ const Profile = () => {
       .replace(/,\s*,/g, ',');
   };
 
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
-
   const renderUploadSuccessToast = () => {
     showToast({
-      title: localizationText.PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE,
+      title: 'PROFILE.PROFILE_UPLOAD_SUCCESS_MESSAGE',
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.tick_square} size={24} color={colors.natural.natural0} />,
     });
@@ -82,14 +69,12 @@ const Profile = () => {
 
   const renderSuccessToast = () => {
     showToast({
-      title: localizationText.COMMON.CHANGES_SAVED_SUCCESSFULLY,
+      title: 'COMMON.KYC_CHANGE',
       toastType: ToastTypes.INFORMATION,
       leftIcon: <IPayIcon icon={icons.DOCUMENT} size={24} color={colors.natural.natural0} />,
     });
   };
   const updateProfileImage = async () => {
-    renderSpinner(true);
-
     const apiResponse = await walletUpdate(
       {
         deviceInfo: appData.deviceInfo as DeviceInfoProps,
@@ -99,10 +84,8 @@ const Profile = () => {
     );
     if (apiResponse) {
       dispatch(setWalletInfo({ profileImage: `${selectedImage}` }));
-      renderSpinner(false);
       renderUploadSuccessToast();
     }
-    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -159,7 +142,12 @@ const Profile = () => {
       <IPayFootnoteText style={styles.personalInfoCardTitleText} regular>
         {item.text}
       </IPayFootnoteText>
-      <IPaySubHeadlineText regular style={styles.subHeadline} numberOfLines={2}>
+      <IPaySubHeadlineText
+        regular
+        style={styles.subHeadline}
+        numberOfLines={item?.key === UserFieldKeys.NATIONAL_ADDRESS ? 1 : 2}
+        shouldTranslate={false}
+      >
         {item.details}
       </IPaySubHeadlineText>
     </IPayView>
@@ -174,10 +162,10 @@ const Profile = () => {
     {
       key: CardKeys.IDENTITY_VERIFICATION,
       icon: <IPayImage style={styles.imageStyle} image={images.nafathLogo} />,
-      text: localizationText.COMMON.INDENTITY_VERIFICATION,
+      text: 'COMMON.INDENTITY_VERIFICATION',
       iconRight: isBasicTier ? icons.ARROW_RIGHT : undefined,
       button: {
-        text: localizationText.COMMON.VERIFY,
+        text: 'COMMON.VERIFY',
         iconColor: colors.primary.primary500,
         disabled: false,
         onPress: () => openNafathBottomSheet(),
@@ -186,12 +174,12 @@ const Profile = () => {
     {
       key: CardKeys.CUSTOMER_KNOWLEDGE_FORM,
       icon: <IPayIcon icon={icons.DOCUMENT} color={colors.primary.primary900} size={20} />,
-      text: localizationText.PROFILE.CUSTOMER_KNOWLEDGE_FORM,
+      text: 'PROFILE.CUSTOMER_KNOWLEDGE_FORM',
       button: {
         text:
           walletInfo.accountBasicInfoCompleted && walletInfo.nationalAddressComplete
-            ? localizationText.PROFILE.EDIT
-            : localizationText.PROFILE.COMPLETE,
+            ? 'PROFILE.EDIT'
+            : 'PROFILE.COMPLETE',
         iconColor: colors.natural.natural300,
         disabled: false,
         onPress: () => openBottomSheet(),
@@ -202,12 +190,10 @@ const Profile = () => {
     <IPayView style={styles.cardStyle}>
       <IPayView style={styles.cardText}>
         {item.icon}
-        <IPayFootnoteText regular style={styles.headingStyles}>
-          {item.text}
-        </IPayFootnoteText>
+        <IPayFootnoteText regular style={styles.headingStyles} text={item.text} />
       </IPayView>
       {item.key === CardKeys.IDENTITY_VERIFICATION && !isBasicTier ? (
-        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue={localizationText.COMMON.VERIFIED} />
+        <IPayChip variant={States.SUCCESS} isShowIcon={false} textValue="COMMON.VERIFIED" />
       ) : (
         <IPayOutlineButton
           rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={14} color={colors.primary.primary500} />}
@@ -265,13 +251,11 @@ const Profile = () => {
       },
       deviceInfo: appData.deviceInfo as DeviceInfoProps,
     };
-    renderSpinner(true);
     const walletUpdateResponse = await walletUpdate(payload, walletInfo.walletNumber as string);
     if (walletUpdateResponse.status.type === 'SUCCESS') {
       await getUpadatedWalletData(walletUpdateResponse?.response?.walletNumber as string);
       renderSuccessToast();
     }
-    renderSpinner(false);
   };
 
   const onSubmit = (formData: IFormData) => {
@@ -288,11 +272,10 @@ const Profile = () => {
       setKycVisible(false);
     }
   };
-
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView2}>
-        <IPayHeader title={localizationText.PROFILE.TITLE} backBtn applyFlex />
+        <IPayHeader title="PROFILE.TITLE" backBtn applyFlex />
         <IPayView style={styles.imageContainer}>
           <IPayPressable>
             <IPayUserAvatar image={walletInfo.profileImage} />
@@ -301,9 +284,7 @@ const Profile = () => {
         </IPayView>
         <IPayView>
           <IPayView style={styles.body1}>
-            <IPayFootnoteText regular style={styles.containerHeadings}>
-              {localizationText.PROFILE.REGISTERATION_COMPLETION}
-            </IPayFootnoteText>
+            <IPayFootnoteText regular style={styles.containerHeadings} text="PROFILE.REGISTERATION_COMPLETION" />
             <IPayFlatlist
               style={styles.listStyle}
               testID="profile"
@@ -314,9 +295,7 @@ const Profile = () => {
             />
           </IPayView>
           <IPayView style={styles.body2}>
-            <IPayFootnoteText regular style={styles.containerHeadings}>
-              {localizationText.COMMON.PERSONAL_INFO}
-            </IPayFootnoteText>
+            <IPayFootnoteText regular style={styles.containerHeadings} text="COMMON.PERSONAL_INFO" />
             <IPayFlatlist
               // scrollEnabled={false}
               showsVerticalScrollIndicator={false}
@@ -334,7 +313,7 @@ const Profile = () => {
       <IPayPortalBottomSheet
         animate={false}
         noGradient
-        heading={localizationText.PROFILE[category]}
+        heading={t([`PROFILE.${category}`, 'PROFILE.TITLE'])}
         customSnapPoint={snapPoint}
         onCloseBottomSheet={onCloseKycSheet}
         ref={kycBottomSheetRef}
@@ -347,7 +326,7 @@ const Profile = () => {
         <IPayCustomerKnowledge category={category} onChangeCategory={handleChangeCategory} onSubmit={onSubmit} />
       </IPayPortalBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.COMMON.INDENTITY_VERIFICATION}
+        heading="COMMON.INDENTITY_VERIFICATION"
         onCloseBottomSheet={onCloseNafathVerificationSheet}
         ref={nafathVerificationBottomSheetRef}
         customSnapPoint={defaultSnapPoint}

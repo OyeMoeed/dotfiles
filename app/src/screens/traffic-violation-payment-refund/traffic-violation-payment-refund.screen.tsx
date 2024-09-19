@@ -14,7 +14,6 @@ import billPaymentStyles from './traffic-violation-payment-refund.styles';
 
 const TrafficViolationPaymentRefundScreen: React.FC = () => {
   const {
-    localizationText,
     billPayDetailes,
     extraDetails,
     balanceData,
@@ -37,7 +36,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
   const styles = billPaymentStyles();
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.TRAFFIC_VIOLATION.TITLE} backBtn applyFlex />
+      <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
@@ -51,12 +50,12 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
         onPressBtn={handleOtpVerification}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
-        btnText={localizationText.TRAFFIC_VIOLATION.REFUND}
+        btnText="TRAFFIC_VIOLATION.REFUND"
         disableBtnIcons
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet
-        heading={localizationText.PAY_BILL.HEADER}
+        heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         backBtn
@@ -78,7 +77,7 @@ const TrafficViolationPaymentRefundScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

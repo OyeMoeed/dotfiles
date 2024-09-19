@@ -54,6 +54,7 @@ const enum ScreenNames {
   SEND_MONEY_FORM = 'SendMoneyForm',
   REPLACE_CARD_SUCCESS = 'ReplaceCardSuccess',
   TRANSFER_SUMMARY = 'TransferSummary',
+  CREATE_MONEY_REQUEST_SUMMARY = 'CreateMoneyRequestSummary',
   GIFT_TRANSFER_SUMMARY = 'GiftTransferSummary',
   INTERNATIONAL_TRANSFER_HISTORY = 'InternationalTransferHistory',
   BENEFICIARY_TRANSACTION_HISTORY = 'BeneficiaryTransactionHistory',
@@ -107,6 +108,8 @@ const enum ScreenNames {
   ALL_ORDERS = 'AllOrders',
   MERCHANTS = 'Merchants',
   SHOP_CATEGORIES = 'ShopCategories',
+  CATEGORY_SCREEN = 'CategoryScreen',
+  ALL_CATEGORIES_SCREEN = 'AllCategoriesScreen',
   PLAYSTATION = 'PlayStation',
   SADAD_EDIT_BILL_SCREEN = 'SadadEditBillsScreen',
   CARD_MANAGEMENT = 'CardManagement',
@@ -122,6 +125,7 @@ const enum ScreenNames {
   SHOP_ALL_CATEGORIES = 'SHOP_ALL_CATEGORIES',
   GIFT_TRANSFER_SUCCESS_SCREEN = 'GiftTransferSuccessScreen',
   CHOOSE_BENEFICIARY = 'ChooseBeneficiary',
+  SEND_MONEY_REQUEST = 'SendMoneyRequest',
 }
 
 export default ScreenNames;

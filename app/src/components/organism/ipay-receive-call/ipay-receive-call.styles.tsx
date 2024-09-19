@@ -18,6 +18,10 @@ const receiveCallStyles = (colors: typeof themeColors) =>
       marginBottom: moderateScale(16),
       marginHorizontal: moderateScale(16),
     },
+    makeTransferStyles: {
+      width: '100%',
+      marginVertical: verticalScale(24),
+    },
     desStyle: {
       color: colors.primary.primary800,
       textAlign: 'center',

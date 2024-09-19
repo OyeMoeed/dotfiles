@@ -10,7 +10,10 @@ const BILLS_MANAGEMENT_URLS = {
   multi_payment_bill: () => 'bills-management/v1/alinmaPay/multi-payment/bill',
   GET_BILLS: 'bills-management/v1/bills',
   GET_BILLS_BY_STATUS: (walletNumber: string, billStatus: string) =>
-    `bills-management/v1/alinmapay/bills/${walletNumber}/?billStatus=${billStatus}`,
+    `bills-management/v1/alinmapay/bills/${walletNumber}?billStatus=${billStatus}`,
+  GET_BILLER_IMAGE: (billerId: string) =>
+    `https://www.alinma.com/ADS/channels/retail/assets/images/billers/${billerId}.png`,
+  DELETE_BILL: 'bills-management/v1/alinma-pay/bill',
 };
 
 export default BILLS_MANAGEMENT_URLS;

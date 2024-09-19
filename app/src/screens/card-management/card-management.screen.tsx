@@ -13,29 +13,28 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayCardListItem from '@app/components/molecules/ipay-card-list-item/ipay-card-list-item.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { TopUpCardItem, WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { useKeyboardStatus } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { TopUpCardItem, WalletNumberProp } from '@app/network/services/core/topup-cards/topup-cards.interface';
+import { deleteSavedCard, getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
-import { alertType, alertVariant, buttonVariants, PayChannel, spinnerVariant } from '@app/utilities/enums.util';
+import { alertType, alertVariant, buttonVariants, PayChannel } from '@app/utilities/enums.util';
 import { IPaySafeAreaView } from '@components/templates';
 import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bottomSheetModal';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
-import { useTypedSelector } from '@app/store/store';
-import { deleteSavedCard, getTopupCards } from '@app/network/services/core/topup-cards/topup-cards.service';
-import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
+import { useTranslation } from 'react-i18next';
 import cardManagementStyles from './card-management.style';
+import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 
 const CardManagementScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
-  const localizationText = useLocalization();
   const [cards, setCards] = useState<any[]>([]);
   const [defaultCardID, setDefaultCardID] = useState('1');
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
@@ -46,19 +45,7 @@ const CardManagementScreen: React.FC = () => {
   const [selectedCardName, setSelectedCardName] = useState('');
   const { isKeyboardOpen } = useKeyboardStatus();
   const styles = cardManagementStyles(colors);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
 
   const getCardImage = (cardType: string): any => {
     if (cardType.toLowerCase() === 'visa') {
@@ -77,8 +64,6 @@ const CardManagementScreen: React.FC = () => {
   };
 
   const getTopupCardsData = async () => {
-    renderSpinner(true);
-
     const payload: WalletNumberProp = {
       walletNumber,
     };
@@ -98,7 +83,6 @@ const CardManagementScreen: React.FC = () => {
         setCards(mappedData);
       }
     }
-    renderSpinner(false);
   };
 
   useEffect(() => {
@@ -109,11 +93,7 @@ const CardManagementScreen: React.FC = () => {
     <IPayView>
       {id === defaultCardID && (
         <IPayView style={styles.renderItemContainer}>
-          <IPaySubHeadlineText
-            regular
-            color={colors.success.success500}
-            text={localizationText.CARD_MANAGEMENT.DEFAULT}
-          />
+          <IPaySubHeadlineText regular color={colors.success.success500} text="CARD_MANAGEMENT.DEFAULT" />
         </IPayView>
       )}
       <IPayCardListItem
@@ -145,22 +125,17 @@ const CardManagementScreen: React.FC = () => {
   };
 
   const onDeleteCard = async () => {
-    renderSpinner(true);
     setShowDeleteAlert(false);
     const registrationId = cards[selectedCardIndex]?.registrationId;
-    try {
-      const apiResponse = await deleteSavedCard(walletNumber, registrationId);
-      if (apiResponse.status.type === 'SUCCESS') {
-        setSelectedCardIndex(0);
-        const filteredData = cards.filter((el) => el.id !== currentCardID);
-        setCards(filteredData);
-        setShowDeleteAlert(false);
-        renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, icons.trash);
-      }
-    } catch (e) {
-      renderSpinner(false);
+
+    const apiResponse = await deleteSavedCard(walletNumber, registrationId);
+    if (apiResponse) {
+      setSelectedCardIndex(0);
+      const filteredData = cards.filter((el) => el.id !== currentCardID);
+      setCards(filteredData);
+      setShowDeleteAlert(false);
+      renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), icons.trash);
     }
-    renderSpinner(false);
   };
 
   const hideBottomSheet = () => {
@@ -189,19 +164,19 @@ const CardManagementScreen: React.FC = () => {
       showIcon={false}
       icon={<IPayIcon icon={icons.TRASH} size={64} color="red" />}
       primaryAction={{
-        text: localizationText.COMMON.CANCEL,
+        text: t('COMMON.CANCEL'),
         onPress: () => setShowDeleteAlert(false),
       }}
-      secondaryAction={{ text: localizationText.COMMON.DELETE, onPress: onDeleteCard }}
+      secondaryAction={{ text: t('COMMON.DELETE'), onPress: onDeleteCard }}
       variant={alertVariant.DESTRUCTIVE}
-      title={localizationText.CARD_MANAGEMENT.DELETE_CARD}
+      title="CARD_MANAGEMENT.DELETE_CARD"
       message={`${cards[selectedCardIndex].name}\n**** **** **** ${cards[selectedCardIndex].lastFourDigit}`}
     />
   );
 
   const onPressSave = () => {
     editNickNameSheet.current?.close();
-    renderToast(localizationText.CARD_MANAGEMENT.THE_CARD_HAS_RENAMED, icons.tick_square);
+    renderToast(t('CARD_MANAGEMENT.THE_CARD_HAS_RENAMED'), icons.tick_square);
   };
 
   const onAddCard = () => {
@@ -212,16 +187,12 @@ const CardManagementScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.CARD_MANAGEMENT.CARD_MANAGEMENT} backBtn applyFlex />
+      <IPayHeader title="CARD_MANAGEMENT.CARD_MANAGEMENT" backBtn applyFlex />
       {cards?.length === 0 ? (
         <IPayNoCardIndicatorComponenent addCard={onAddCard} />
       ) : (
         <IPayView style={styles.cardListContainer}>
-          <IPayFootnoteText
-            regular
-            color={colors.natural.natural500}
-            text={localizationText.CARD_MANAGEMENT.YOUR_CARDS}
-          />
+          <IPayFootnoteText regular color={colors.natural.natural500} text="CARD_MANAGEMENT.YOUR_CARDS" />
           <IPayFlatlist
             contentContainerStyle={styles.contentContainerStyle}
             data={cards}
@@ -232,7 +203,7 @@ const CardManagementScreen: React.FC = () => {
             btnStyle={styles.addCardButton}
             btnType={buttonVariants.PRIMARY}
             large
-            btnText={localizationText.MENU.ADD_CARD}
+            btnText="MENU.ADD_CARD"
             leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.natural.natural0} />}
           />
         </IPayView>
@@ -244,10 +215,10 @@ const CardManagementScreen: React.FC = () => {
         title={cards[selectedCardIndex]?.name || ''}
         message={`**** **** **** ${cards[selectedCardIndex]?.lastFourDigit}` || ''}
         options={[
-          localizationText.CARD_MANAGEMENT.MAKE_IT_DEFAULT,
-          localizationText.CARD_MANAGEMENT.DELETE_CARD,
-          localizationText.COMMON.CANCEL,
-          // localizationText.CARD_MANAGEMENT.EDIT_NICK_NAME,
+          t('CARD_MANAGEMENT.MAKE_IT_DEFAULT'),
+          t('CARD_MANAGEMENT.DELETE_CARD'),
+          t('COMMON.CANCEL'),
+          // t("CARD_MANAGEMENT.EDIT_NICK_NAME"),
         ]}
         cancelButtonIndex={3}
         destructiveButtonIndex={2}
@@ -266,7 +237,7 @@ const CardManagementScreen: React.FC = () => {
       />
 
       <IPayBottomSheet
-        heading={localizationText.CARD_MANAGEMENT.EDIT_NICK_NAME}
+        heading="CARD_MANAGEMENT.EDIT_NICK_NAME"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -288,7 +259,7 @@ const CardManagementScreen: React.FC = () => {
             />
             <IPayView style={styles.inputContainer}>
               <IPayAnimatedTextInput
-                label={localizationText.COMMON.CARD_NAME}
+                label="COMMON.CARD_NAME"
                 value={selectedCardName}
                 containerStyle={styles.inputStyles}
                 editable
@@ -308,7 +279,7 @@ const CardManagementScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             btnIconsDisabled
-            btnText={localizationText.COMMON.SAVE}
+            btnText="COMMON.SAVE"
             leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.natural.natural0} />}
           />
         </IPayView>

@@ -8,11 +8,9 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayHeader, IPayUserAvatar } from '@app/components/molecules';
 import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
@@ -22,30 +20,19 @@ import { getDeviceInfo } from '@app/network/utilities';
 import clearSession from '@app/network/utilities/network-session-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType } from '@app/utilities/enums.util';
 import { FC, useCallback, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
 const MenuScreen: FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = menuStyles(colors);
   const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const localizationText = useLocalization();
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  };
 
   const onPressSettings = () => {
     navigate(screenNames.SETTINGS);
@@ -72,22 +59,16 @@ const MenuScreen: FC = () => {
   };
 
   const delinkDevice = async () => {
-    renderSpinner(true);
-    try {
-      const delinkReqBody = await getDeviceInfo();
-      const payload: DelinkPayload = {
-        delinkReq: delinkReqBody,
-        walletNumber,
-      };
+    const delinkReqBody = await getDeviceInfo();
+    const payload: DelinkPayload = {
+      delinkReq: delinkReqBody,
+      walletNumber,
+    };
 
-      const apiResponse: any = await deviceDelink(payload);
+    const apiResponse: any = await deviceDelink(payload);
 
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        delinkSuccessfullyDone();
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      delinkSuccessfullyDone();
     }
   };
 
@@ -141,8 +122,9 @@ const MenuScreen: FC = () => {
                     text={fullName}
                     color={colors.primary.primary900}
                     style={styles.profileNameText}
+                    shouldTranslate={false}
                   />
-                  <IPayCaption1Text text={localizationText.MENU.SHOW_PROFILE} color={colors.natural.natural900} />
+                  <IPayCaption1Text text="MENU.SHOW_PROFILE" color={colors.natural.natural900} />
                 </IPayView>
                 <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
               </IPayLinearGradientView>
@@ -153,7 +135,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.setting} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.COMMON.SETTINGS}
+              text="COMMON.SETTINGS"
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -164,7 +146,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.messageQuestion} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.MENU.SUPPORT_AND_HELP}
+              text="MENU.SUPPORT_AND_HELP"
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -175,7 +157,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.cards} size={24} color={colors.primary.primary900} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.MENU.CARDS_MANAGEMENT}
+              text="MENU.CARDS_MANAGEMENT"
               style={styles.menuItemText}
               color={colors.primary.primary800}
             />
@@ -188,7 +170,7 @@ const MenuScreen: FC = () => {
             <IPayIcon icon={icons.logout} size={24} color={colors.natural.natural700} />
             <IPaySubHeadlineText
               regular
-              text={localizationText.COMMON.DELINK_ALERT.DELINK}
+              text="COMMON.DELINK_ALERT.DELINK"
               style={styles.menuItemText}
               color={colors.natural.natural700}
             />
@@ -197,7 +179,7 @@ const MenuScreen: FC = () => {
           <IPayPressable onPress={onPressLogout} style={styles.secondayItemView}>
             <IPaySubHeadlineText
               regular
-              text={localizationText.MENU.LOGOUT}
+              text="MENU.LOGOUT"
               style={styles.menuItemText}
               color={colors.natural.natural700}
             />
@@ -222,8 +204,8 @@ const MenuScreen: FC = () => {
         <IPayActionSheet
           ref={logoutConfirmationSheet}
           testID="logout-action-sheet"
-          title={localizationText.MENU.LOGOUT_CONFIRMATION}
-          options={[localizationText.COMMON.CANCEL, localizationText.MENU.LOGOUT]}
+          title="MENU.LOGOUT_CONFIRMATION"
+          options={[t('COMMON.CANCEL'), t('MENU.LOGOUT')]}
           cancelButtonIndex={actionSheetOptions.cancelButtonIndex}
           destructiveButtonIndex={actionSheetOptions.destructiveButtonIndex}
           showIcon={actionSheetOptions.showIcon}

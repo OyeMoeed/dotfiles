@@ -1,11 +1,10 @@
 import icons from '@app/assets/icons';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 
-const getTransationIcon = (transaction: TransactionTypes) => {
-  switch (transaction) {
+const getTransationIcon = (transactionRequestType: TransactionTypes, transactionType: TransactionOperations) => {
+  switch (transactionRequestType) {
     // type #1
     case TransactionTypes.COUT_MUSANED:
-    case TransactionTypes.PAY_WALLET:
     case TransactionTypes.PAY_MRCHNT_BILL:
     case TransactionTypes.COUT_MOBILE:
     case TransactionTypes.COUT_IPS:
@@ -14,10 +13,10 @@ const getTransationIcon = (transaction: TransactionTypes) => {
     case TransactionTypes.CARD_REISSUE:
     case TransactionTypes.CARD_REPLACE:
     case TransactionTypes.PAY_VCARD:
-    case TransactionTypes.BKF_TRANSFER:
     case TransactionTypes.PAY_VCARD_REFUND:
-      return icons.send_money;
-
+    case TransactionTypes.BKF_TRANSFER:
+    case TransactionTypes.PAY_WALLET:
+      return transactionType === TransactionOperations.DEBIT ? icons.send_money : icons.money_request;
     // type #2
     case TransactionTypes.CIN_MUSANED:
     case TransactionTypes.PAY_MRCHNT_IN:

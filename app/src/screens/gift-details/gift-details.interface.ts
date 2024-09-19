@@ -1,3 +1,5 @@
+import { TransferItem } from '@app/network/services/transfers/wallet-to-wallet-transfers/wallet-to-wallet-transfer.interface';
+
 interface SuccessItem {
   id: number;
   title: string;
@@ -5,9 +7,21 @@ interface SuccessItem {
   icon: string;
 }
 
+interface GiftDetailsParams {
+  params: {
+    isSend?: boolean;
+    details: TransferItem;
+    giftCategory: string;
+  };
+}
+
+interface GiftDetailsProps {
+  route: GiftDetailsParams;
+}
+
 interface ItemProps {
   item: SuccessItem;
   index: number;
 }
 
-export { ItemProps, SuccessItem };
+export { GiftDetailsProps, ItemProps, SuccessItem };

@@ -13,6 +13,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
   onPressListItem,
   isCompleteItem,
   cardStyles,
+  listStyles,
 }) => {
   const { colors } = useTheme();
   const styles = listViewStyles();
@@ -41,7 +42,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
             }}
           />
         )}
-        style={styles.listContainer}
+        style={[styles.listContainer, listStyles]}
       />
     </IPayView>
   );

@@ -23,6 +23,7 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   rightIcon,
   textColor,
   textStyle,
+  shouldTranslateBtnText,
 }) => {
   const { colors } = useTheme();
   const styles = generatedStyles();
@@ -40,9 +41,21 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   const ButtonText = useMemo(() => {
     const newTextColor = disabled ? colors.natural.natural300 : textColor || colors.natural.natural0;
     return large ? (
-      <IPayBodyText regular text={btnText} color={newTextColor} style={textStyle} />
+      <IPayBodyText
+        regular
+        text={btnText}
+        color={newTextColor}
+        style={textStyle}
+        shouldTranslate={shouldTranslateBtnText}
+      />
     ) : (
-      <IPaySubHeadlineText text={btnText} regular color={newTextColor} style={textStyle} />
+      <IPaySubHeadlineText
+        text={btnText}
+        regular
+        color={newTextColor}
+        style={textStyle}
+        shouldTranslate={shouldTranslateBtnText}
+      />
     );
   }, [btnText, disabled, large, colors, textColor]);
 

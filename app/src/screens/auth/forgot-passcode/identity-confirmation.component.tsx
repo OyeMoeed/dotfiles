@@ -1,5 +1,4 @@
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   IPayRHFAnimatedTextInput as IPayAnimatedTextInput,
   IPayButton,
@@ -8,7 +7,6 @@ import {
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { setToken } from '@app/network/client';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { PrepareForgetPasscodeProps } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.interface';
@@ -19,11 +17,12 @@ import { getValidationSchemas } from '@app/services';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import { SetPasscodeComponentProps } from './forget-passcode.interface';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
@@ -32,36 +31,24 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   const { colors } = useTheme();
   const [apiError, setAPIError] = useState<string>('');
   const styles = ForgotPasscodeStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
   const validationSchema = Yup.object().shape({
-    iqamaId: getValidationSchemas(localizationText).iqamaIdSchema,
+    iqamaId: getValidationSchemas(t).iqamaIdSchema,
   });
 
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
-      subTitle: apiError || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      subTitle: apiError || t('CARDS.VERIFY_CODE_ACCURACY'),
       borderColor: colors.error.error25,
       isBottomSheet: true,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainerStyle,
     });
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
   };
 
   const prepareForgetPass = async (
@@ -100,7 +87,6 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
   const prepareEncryptionData = async (iqamaId: string) => {
     try {
-      renderSpinner(true);
       const deviceInfo = await getDeviceInfo();
       const prepareLoginPayload: DeviceInfoProps = {
         ...deviceInfo,
@@ -118,14 +104,12 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
         setToken(apiResponse?.headers?.authorization);
         await prepareForgetPass(apiResponse?.response, apiResponse?.authentication?.transactionId, iqamaId);
       } else {
-        setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
+        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
-      setAPIError(localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -148,8 +132,8 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
           <IPayView style={styles.headingView}>
             <IPayPageDescriptionText
               style={styles.headingStyle}
-              heading={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING}
-              text={localizationText.FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE}
+              heading="FORGOT_PASSCODE.FORGOT_PASSCODE_HEADING"
+              text="FORGOT_PASSCODE.FORGOT_PASSCODE_SUBTITLE"
             />
           </IPayView>
 
@@ -157,7 +141,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
             <IPayView style={styles.inputTextView}>
               <IPayAnimatedTextInput
                 name="iqamaId"
-                label={localizationText.COMMON.ID_IQAMA}
+                label="COMMON.ID_IQAMA"
                 editable
                 keyboardType="decimal-pad"
                 maxLength={constants.IQAMA_ID_NUMBER_LENGTH}
@@ -167,16 +151,16 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
 
           <IPayButton
             onPress={handleSubmit(onSubmit)}
-            btnType="primary"
-            btnText={localizationText.COMMON.NEXT}
+            btnType={buttonVariants.PRIMARY}
+            btnText="COMMON.NEXT"
             large
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
           />
 
           <IPayButton
             onPress={handleOnPressHelp}
-            btnType="link-button"
-            btnText={localizationText.COMMON.NEED_HELP}
+            btnType={buttonVariants.LINK_BUTTON}
+            btnText="COMMON.NEED_HELP"
             large
             btnStyle={styles.needHelpBtn}
             rightIcon={<IPayIcon icon={icons.messageQuestion} size={20} color={colors.primary.primary500} />}

@@ -1,13 +1,11 @@
 import icons from '@app/assets/icons';
 import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { ALINMA_TRANSFER_TYPES, CUSTOM_SNAP_POINT, SNAP_POINTS, WU_TRANSFER_TYPES } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -21,9 +19,10 @@ import WUBeneficiaryMetaDataProps, {
 import getWUBeneficiaryMetaData from '@app/network/services/international-transfer/wu-beneficiary-metadata/wu-beneficiary-metadata.service';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, buttonVariants, spinnerVariant } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useState } from 'react';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import {
   AddBeneficiaryFields,
   AddBeneficiaryValues,
@@ -34,7 +33,7 @@ import addBeneficiaryStyles from './add-international-beneficiary.style';
 const AddInternationalBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = addBeneficiaryStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { alinmaDirectData, westernUnionData } = useConstantData();
   const [selectedService, setSelectedService] = useState<ServiceDataProps>();
   const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[]>([]);
@@ -45,9 +44,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, { transferService: { ...data, ...selectedService } });
   };
   const { showToast } = useToastContext();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
 
-  const { required } = getValidationSchemas(localizationText);
+  const { required } = getValidationSchemas(t);
   const validationSchema = Yup.object().shape({
     currency: required,
     transferType: required,
@@ -79,27 +77,27 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         {isCheck && (
           <>
             <IPayDropdown
-              dropdownType={localizationText.INTERNATIONAL_TRANSFER.COUNTRY}
+              dropdownType="INTERNATIONAL_TRANSFER.COUNTRY"
               data={getCountriesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.country}
-              label={localizationText.COMMON.BENEFECIARY_COUNTRY}
+              label="COMMON.BENEFECIARY_COUNTRY"
               isSearchable
               onSelectListItem={onSelectCountry}
             />
             <IPayDropdown
-              dropdownType={localizationText.NEW_BENEFICIARY.SELECT_DELIVERY_TYPE}
+              dropdownType="NEW_BENEFICIARY.SELECT_DELIVERY_TYPE"
               data={serviceName === alinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : WU_TRANSFER_TYPES}
               size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
               name={AddBeneficiaryFields.transferType}
-              label={localizationText.COMMON.DELIVERY_TYPE}
+              label="COMMON.DELIVERY_TYPE"
             />
             <IPayDropdown
-              dropdownType={localizationText.NEW_BENEFICIARY.CHOOSE_CURRENCY}
+              dropdownType="NEW_BENEFICIARY.CHOOSE_CURRENCY"
               data={getCurrenciesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.currency}
-              label={localizationText.COMMON.CURRENCY}
+              label="COMMON.CURRENCY"
             />
           </>
         )}
@@ -117,19 +115,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     });
   };
 
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
-
   const getWUBeneficiaryMetaDataData = async () => {
-    renderSpinner(true);
     try {
       const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData();
       switch (apiResponse?.status?.type) {
@@ -137,24 +123,21 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setBeneficiaryMetaData(apiResponse?.response?.westernUnionCountryList);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const getWUBeneficiaryCurrenciesData = async () => {
-    renderSpinner(true);
     const payload = {
       countryCode,
     };
@@ -165,19 +148,17 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setCurrenciesData(apiResponse?.response?.currencies);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -199,19 +180,19 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     >
       {({ handleSubmit, formState: { isValid } }) => (
         <IPaySafeAreaView>
-          <IPayHeader backBtn title={localizationText.NEW_BENEFICIARY.NEW_BENEFICIARY} applyFlex />
+          <IPayHeader backBtn title="NEW_BENEFICIARY.NEW_BENEFICIARY" applyFlex />
           <IPayView style={styles.outerContainer}>
             <IPayFootnoteText
               color={colors.natural.natural500}
               style={styles.textStyle}
-              text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
+              text="NEW_BENEFICIARY.METHOD_OF_DELIVERY"
             />
             <TransferMethods data={alinmaDirectData} />
             <TransferMethods data={westernUnionData} />
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.NEXT}
+              btnText="COMMON.NEXT"
               btnIconsDisabled
               onPress={handleSubmit(handleBeneficiaryTransfer)}
               btnStyle={styles.btnStyles}

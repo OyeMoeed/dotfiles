@@ -1,3 +1,4 @@
+import { IDeveiceInfo } from '../../core/id-renewal/id-renewal.interface';
 import { ApiError, MockAPIStatusProps } from '../../services.interface';
 
 interface WuFeesInquiryResponse {
@@ -20,20 +21,13 @@ interface WuFeesInquiryProps {
   error?: ApiError;
 }
 
-interface DeviceInfo {
-  platformVersion: string;
-  deviceId: string;
-  deviceName: string;
-  platform: string;
-}
-
 interface FeesInquiryPayload {
   amount: string;
   amountCurrency: string;
   convertedAmountCurrency: string;
   deductFeesFromAmount: boolean;
   promoCode: string | null;
-  deviceInfo: DeviceInfo;
+  deviceInfo: IDeveiceInfo;
 }
 
 export { FeesInquiryPayload, WuFeesInquiryProps, WuFeesInquiryResponse };

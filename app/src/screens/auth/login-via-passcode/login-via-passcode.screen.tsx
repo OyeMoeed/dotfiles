@@ -6,9 +6,7 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 
-import { openPhoneNumber } from '@app/utilities';
 import { IPayGradientText, IPayHeader, IPayList, IPayUserAvatar } from '@app/components/molecules';
 import IPayDelink from '@app/components/molecules/ipay-delink/ipay-delink.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -18,7 +16,6 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocation from '@app/hooks/location.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
@@ -34,14 +31,15 @@ import forgetPasscode from '@app/network/services/core/forget-passcode/forget-pa
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
-import { getDeviceInfo, encryptData } from '@app/network/utilities';
+import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setAuth } from '@app/store/slices/auth-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
+import { openPhoneNumber } from '@app/utilities';
+import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
@@ -73,7 +71,6 @@ const LoginViaPasscode: React.FC = () => {
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const localizationText = useLocalization();
   const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
@@ -87,7 +84,6 @@ const LoginViaPasscode: React.FC = () => {
   );
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig, contactusList } = useConstantData();
   const contactUsRef = useRef<any>(null);
 
@@ -96,22 +92,11 @@ const LoginViaPasscode: React.FC = () => {
   const renderToast = (apiErrorValue: string) => {
     setPasscodeError(true);
     showToast({
-      title: localizationText.COMMON.INCORRECT_CODE,
-      subTitle: apiErrorValue || localizationText.CARDS.VERIFY_CODE_ACCURACY,
+      title: 'COMMON.INCORRECT_CODE',
+      subTitle: apiErrorValue || 'CARDS.VERIFY_CODE_ACCURACY',
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
-  };
-
-  const renderSpinner = (isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
   };
 
   const onPressForgetPassword = () => {
@@ -139,7 +124,6 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const resetPasscode = async () => {
-    renderSpinner(true);
     const payload: IconfirmForgetPasscodeOtpReq = {
       poiNumber: encryptData(
         `${appData?.encryptionData?.passwordEncryptionPrefix}${forgetPasswordFormData.iqamaId}`,
@@ -164,7 +148,6 @@ const LoginViaPasscode: React.FC = () => {
 
       redirectToResetConfirmation();
     }
-    renderSpinner(false);
   };
 
   const onCloseBottomSheet = () => {
@@ -188,7 +171,6 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
-    renderSpinner(true);
     const payload: WalletNumberProp = {
       walletNumber: resWalletNumber as string,
     };
@@ -200,7 +182,6 @@ const LoginViaPasscode: React.FC = () => {
       saveProfileImage(apiResponse?.response);
       redirectToHome(idExpired);
     }
-    renderSpinner(false);
   };
 
   const loginUsingPasscode = async (
@@ -244,11 +225,9 @@ const LoginViaPasscode: React.FC = () => {
     }
     setPasscodeError(false);
 
-    renderSpinner(true);
     const location = await fetchLocation();
     if (!location) {
       setPasscodeError(true);
-      renderSpinner(false);
       return;
     }
     setPasscodeError(false);
@@ -274,12 +253,10 @@ const LoginViaPasscode: React.FC = () => {
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
       } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
-      renderSpinner(false);
     } catch (error) {
-      renderSpinner(false);
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast('ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -298,21 +275,16 @@ const LoginViaPasscode: React.FC = () => {
 
   const delinkDevice = async () => {
     actionSheetRef.current.hide();
-    renderSpinner(true);
-    try {
-      const delinkReqBody = await getDeviceInfo();
-      const payload: DelinkPayload = {
-        delinkReq: delinkReqBody,
-        walletNumber,
-      };
 
-      const apiResponse: any = await deviceDelink(payload);
-      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-        delinkSuccessfullyDone();
-      }
-      renderSpinner(false);
-    } catch (error: any) {
-      renderSpinner(false);
+    const delinkReqBody = await getDeviceInfo();
+    const payload: DelinkPayload = {
+      delinkReq: delinkReqBody,
+      walletNumber,
+    };
+
+    const apiResponse: any = await deviceDelink(payload);
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      delinkSuccessfullyDone();
     }
   };
 
@@ -339,7 +311,7 @@ const LoginViaPasscode: React.FC = () => {
             otpError={otpError}
             otp={otp}
             showHelp
-            title={localizationText.FORGOT_PASSCODE.RECIEVED_PHONE_CODE}
+            title="FORGOT_PASSCODE.RECIEVED_PHONE_CODE"
             handleOnPressHelp={handleOnPressHelp}
             timeout={otpConfig.forgetPasscode.otpTimeout}
             onResendCodePress={() => {
@@ -390,7 +362,7 @@ const LoginViaPasscode: React.FC = () => {
   const actionSheetOptions = useActionSheetOptions(delinkSuccessfully);
 
   const onCall = (phoneNumber: string) => {
-    openPhoneNumber(phoneNumber, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber, colors, showToast });
   };
 
   return (
@@ -401,10 +373,11 @@ const LoginViaPasscode: React.FC = () => {
           <IPayUserAvatar style={styles.image} />
         </IPayView>
         <IPayView style={styles.childContainer}>
-          <IPayCaption1Text text={localizationText.LOGIN.WELCOME_BACK} style={styles.welcomeText} />
+          <IPayCaption1Text text="LOGIN.WELCOME_BACK" style={styles.welcomeText} />
           {firstName && (
             <IPayGradientText
               text={`${firstName} ${fatherName || ''}`}
+              shouldTranslate={false}
               gradientColors={gradientColors}
               yScale={12}
               fontSize={styles.linearGradientText.fontSize}
@@ -417,7 +390,7 @@ const LoginViaPasscode: React.FC = () => {
             regular
             color={colors.primary.primary800}
             style={styles.enterPasscodeText}
-            text={localizationText.LOGIN.ENTER_YOUR_PASSCODE}
+            text="LOGIN.ENTER_YOUR_PASSCODE"
           />
         </IPayView>
         <IPayPasscode
@@ -432,7 +405,7 @@ const LoginViaPasscode: React.FC = () => {
       </IPayView>
       <IPayPortalBottomSheet
         noGradient
-        heading={localizationText.FORGOT_PASSCODE.FORGET_PASSWORD}
+        heading="FORGOT_PASSCODE.FORGET_PASSWORD"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -445,7 +418,7 @@ const LoginViaPasscode: React.FC = () => {
 
       <IPayBottomSheet
         noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
@@ -455,7 +428,7 @@ const LoginViaPasscode: React.FC = () => {
         <HelpCenterComponent onPressContactUs={openContactUsBottomSheet} hideFAQError />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.COMMON.CONTACT_US}
+        heading="COMMON.CONTACT_US"
         customSnapPoint={['1%', '45%']}
         ref={contactUsRef}
         simpleHeader
@@ -464,12 +437,8 @@ const LoginViaPasscode: React.FC = () => {
         cancelBnt
       >
         <IPayView style={styles.contactWrapper}>
-          <IPayFootnoteText
-            style={styles.headerStyle}
-            text={localizationText.COMMON.ASSISTANCE}
-            color={colors.primary.primary900}
-          />
-          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+          <IPayFootnoteText style={styles.headerStyle} text="COMMON.ASSISTANCE" color={colors.primary.primary900} />
+          <IPayCaption1Text text="COMMON.CONTACT_SERVICE_TEAM" color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactusList.map((item) => (

@@ -96,6 +96,8 @@ interface FilterFormDataProp {
 
 interface CardsProp {
   walletNumber?: string;
+  hideSpinner?: boolean;
+  hideError?: boolean;
 }
 
 interface resetPinCodeProp {
@@ -119,10 +121,29 @@ interface getCardDetailsProp {
   };
 }
 
+interface renewCardProp {
+  walletNumber?: string;
+  body?: {
+    cardIndex?: string;
+    otp?: string;
+    otpRef?: string;
+    cardType?: string;
+    physicalCard?: boolean;
+    deviceInfo?: any;
+  };
+}
+
 interface prepareShowDetailsProp {
   walletNumber?: string;
   body?: {
     cardIndex?: string;
+    deviceInfo: any;
+  };
+}
+
+interface prepareRenewCardProp {
+  walletNumber?: string;
+  body?: {
     deviceInfo: any;
   };
 }
@@ -179,4 +200,6 @@ export {
   CardStatus,
   prepareShowDetailsProp,
   getCardDetailsProp,
+  prepareRenewCardProp,
+  renewCardProp,
 };

@@ -17,6 +17,7 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
   numberOfLines,
   children,
   color,
+  shouldTranslate = true,
 }: IPaySubHeadlineTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -25,6 +26,7 @@ const IPaySubHeadlineText: React.FC<IPaySubHeadlineTextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>
