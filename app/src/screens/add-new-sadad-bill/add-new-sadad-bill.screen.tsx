@@ -152,39 +152,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       serviceId: selectedService?.serviceId,
       deviceInfo,
     };
+    console.debug('payload: ', JSON.stringify(payload, null, 2));
 
     const apiResponse = await inquireBillService(payload);
-    if (apiResponse.successfulResponse) {
-      // navigate(ScreenNames.NEW_SADAD_BILL, {
-      //   billNickname: values.billName,
-      //   billerName: values.companyName,
-      //   billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
-      //   serviceType: values.serviceType,
-      //   billNumOrBillingAcct: values.accountNumber,
-      //   dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
-      //   totalAmount: '0',
-      //   billerId: selectedBiller?.billerId,
-      //   billIdType: selectedBiller?.billIdType,
-      //   serviceDescription: selectedService?.serviceDesc,
-      // });
-    } else {
-      invoiceSheetRef.current.present();
-    }
-  };
-
-  const onSaveBill = async (values: FormValues) => {
-    const deviceInfo = await getDeviceInfo();
-    const payload: SaveBillPayloadTypes = {
-      billerId: selectedBiller?.billerId,
-      billNumOrBillingAcct: values.accountNumber,
-      billIdType: selectedBiller?.billIdType,
-      billerName: values.companyName,
-      deviceInfo,
-      billNickname: values.billName,
-      walletNumber,
-    };
-
-    const apiResponse = await saveBillService(payload);
+    console.debug('apiResponse: ', JSON.stringify(apiResponse, null, 2));
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
@@ -247,7 +218,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
-  const onPressSaveOnly = (values: FormValues) => {
+  const onPressSaveOnly = (values: FormValues, payload: SaveBillPayloadTypes) => {
     const headerAttributes = {
       billNickname: values.billName,
       billerName: values.companyName,
@@ -268,22 +239,22 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     const billPaymentData = [
       {
         id: '1',
-        label: localizationText.PAY_BILL.SERVICE_TYPE,
+        label: 'PAY_BILL.SERVICE_TYPE',
         value: values.serviceType,
       },
       {
         id: '2',
-        label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+        label: 'PAY_BILL.ACCOUNT_NUMBER',
         value: values.accountNumber,
       },
       {
         id: '3',
-        label: localizationText.COMMON.AMOUNT,
-        value: `0 ${localizationText.COMMON.SAR}`,
+        label: 'COMMON.AMOUNT',
+        value: `0 ${'COMMON.SAR'}`,
       },
       {
         id: '4',
-        label: localizationText.COMMON.DUE_DATE,
+        label: 'COMMON.DUE_DATE',
         value: null,
       },
     ];
@@ -294,7 +265,41 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       billPaymentInfos,
       headerAttributes,
       totalAmount: '0',
+      inquireBillPayload: payload,
     });
+  };
+
+  const onSaveBill = async (values: FormValues) => {
+    const deviceInfo = await getDeviceInfo();
+    const payload: SaveBillPayloadTypes = {
+      billerId: selectedBiller?.billerId,
+      billNumOrBillingAcct: values.accountNumber,
+      billIdType: selectedBiller?.billerType,
+      billerName: values.companyName,
+      deviceInfo,
+      billNickname: values.billName,
+      walletNumber,
+    };
+
+    const apiResponse = await saveBillService(payload);
+    if (apiResponse.successfulResponse) {
+      onPressSaveOnly(values, payload);
+      return;
+      navigate(ScreenNames.NEW_SADAD_BILL, {
+        billNickname: values.billName,
+        billerName: values.companyName,
+        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+        serviceType: values.serviceType,
+        billNumOrBillingAcct: values.accountNumber,
+        dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
+        totalAmount: '0',
+        billerId: selectedBiller?.billerId,
+        billIdType: selectedBiller?.billIdType,
+        serviceDescription: selectedService?.serviceDesc,
+      });
+    } else {
+      invoiceSheetRef.current.present();
+    }
   };
 
   return (
@@ -320,7 +325,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             setSelectedService(item);
           }
           setSearch('');
-          selectSheeRef.current.close();
+          requestAnimationFrame(() => {
+            selectSheeRef.current.close();
+          });
         };
 
         const onPressServiceAction = () => {
@@ -382,7 +389,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayButton
                       btnText="NEW_SADAD_BILLS.SAVE_ONLY"
                       btnType={buttonVariants.OUTLINED}
-                      onPress={handleSubmit(onPressSaveOnly)}
+                      onPress={handleSubmit(onSaveBill)}
                       large
                       disabled={!watch(FormFields.BILL_NAME)}
                       btnIconsDisabled

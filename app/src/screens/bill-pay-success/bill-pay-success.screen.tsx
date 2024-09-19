@@ -5,11 +5,13 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import { IPayPageWrapper } from '@app/components/templates';
 import { navigate, popAndReplace } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, shortString, States } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
@@ -22,8 +24,16 @@ interface BillPaymentItemProps {
 
 const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   const { t } = useTranslation();
-  const { isSaveOnly, isPayOnly, isPayPartially, totalAmount, billPaymentInfos, billPaymentData, headerAttributes } =
-    route.params;
+  const {
+    isSaveOnly,
+    isPayOnly,
+    isPayPartially,
+    totalAmount,
+    billPaymentInfos,
+    billPaymentData,
+    headerAttributes,
+    inquireBillPayload,
+  } = route.params;
   const { colors } = useTheme();
   const styles = ipayBillSuccessStyles(colors);
   const { goToHome } = usePayBillSuccess();
@@ -34,12 +44,6 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   };
 
   const successMessage = isSaveOnly ? 'PAY_BILL.SAVED_SUCCESS' : 'PAY_BILL.PAID_SUCCESS';
-  const onPressSaveOnlyPay = () => {
-    navigate(ScreenNames.NEW_SADAD_BILL, {
-      ...billPaymentInfos,
-      isSaveOnly,
-    });
-  };
 
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
     {
@@ -64,6 +68,16 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
       icon: icons.copy,
     },
   ];
+
+  const onInquireBill = async () => {
+    const apiResponse = await inquireBillService(inquireBillPayload);
+    if (apiResponse.successfulResponse) {
+      navigate(ScreenNames.NEW_SADAD_BILL, {
+        ...billPaymentInfos,
+        isSaveOnly,
+      });
+    }
+  };
 
   return (
     <IPayPageWrapper>
@@ -154,7 +168,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 btnType={buttonVariants.PRIMARY}
                 btnIconsDisabled
                 btnText="PAY_BILL.PAY_NOW"
-                onPress={onPressSaveOnlyPay}
+                onPress={onInquireBill}
               />
             </IPayView>
           )}
