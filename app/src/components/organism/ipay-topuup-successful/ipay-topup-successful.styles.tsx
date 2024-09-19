@@ -115,6 +115,12 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     actionButton: {
       top: verticalScale(80),
     },
+    cardsButton: {
+      flexDirection: 'row',
+      width: '100%',
+      justifyContent: 'space-between',
+      marginBottom: verticalScale(2),
+    },
     margins: {
       marginTop: verticalScale(58),
     },

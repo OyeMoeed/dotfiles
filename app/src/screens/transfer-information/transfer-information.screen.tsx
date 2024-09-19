@@ -20,7 +20,9 @@ import localTransferPrepare from '@app/network/services/local-transfer/local-tra
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import colors from '@app/styles/colors.const';
+import { regex } from '@app/styles/typography.styles';
 import { ApiResponseStatusType, APIResponseType, buttonVariants } from '@app/utilities/enums.util';
+import { removeCommas } from '@app/utilities/number-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import transferInformationStyles from './transfer-information.style';
@@ -88,7 +90,11 @@ const TransferInformation: React.FC = () => {
   }, [transferAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
 
   const setAmount = (text: string | number) => {
-    setTransferAmount(text.toString());
+    const newAmount = removeCommas(text.toString());
+    const reg = regex.AMOUNT;
+    if (reg.test(newAmount.toString()) || newAmount === '') {
+      setTransferAmount?.(newAmount.toString());
+    }
   };
 
   const isTransferButtonDisabled = () => {
