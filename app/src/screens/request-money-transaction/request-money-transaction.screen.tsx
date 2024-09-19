@@ -25,7 +25,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { FilterSelectedValue } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { formatDate } from '@app/utilities/date-helper.util';
-import { ApiResponseStatusType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -147,6 +147,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   };
 
   const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
+    setShowDetailSheet(false);
     try {
       if (UpdateRequestType === UpdateRequestTypes.reject) {
         rejectRequestRef.current?.hide();
@@ -237,16 +238,12 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
   // function to open reject action sheet
   const showRejectActionSheet = () => {
-    closeRequestDetailsBottomSheet();
     rejectRequestRef.current?.show();
   };
 
   // function to open cancel action sheet
   const showCancelActionSheet = () => {
-    closeRequestDetailsBottomSheet();
-    setTimeout(() => {
-      cancelRequestRef.current?.show();
-    }, 10);
+    cancelRequestRef.current?.show();
   };
 
   const mapTransactionKeys = (item: any) => {
