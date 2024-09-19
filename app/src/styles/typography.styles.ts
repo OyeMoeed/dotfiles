@@ -64,6 +64,7 @@ const fonts = {
 
 const regex = {
   NUMBERS_ONLY: /^\d*$/,
+  AMOUNT: /^(\d+(?:\.\d{0,2})?)?$/,
 };
 
 /**

@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayInput, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { formatCurrencyValue } from '@app/utilities/currency-helper.util';
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -18,7 +17,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   testID,
   currencyStyle,
   defaultValue = '0',
-  maxLength = 6,
+  maxLength = 7,
   isEditable,
   handleBlur,
   handleIconPress,
@@ -26,7 +25,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = amountInputStyles(colors);
-  const amountStr = amount ? formatCurrencyValue(amount) : '';
+  const amountStr = (amount as string) || '';
 
   return (
     <IPayView testID={`${testID}-amount-input`} style={[styles.inputContainer, style]}>
