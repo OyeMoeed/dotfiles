@@ -20,9 +20,9 @@ import {
   prepareShowDetailsProp,
 } from '@app/network/services/core/transaction/transaction.interface';
 import {
-  getCards,
   otpGetCardDetails,
   prepareShowCardDetails,
+  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -31,7 +31,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
@@ -44,9 +44,13 @@ const CardsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = cardScreenStyles(colors);
+
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
+
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
 
@@ -55,7 +59,6 @@ const CardsScreen: React.FC = () => {
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
@@ -170,14 +173,10 @@ const CardsScreen: React.FC = () => {
     }));
     return mappedCards;
   };
-  const getCardsData = async () => {
-    const payload: CardsProp = {
-      walletNumber,
-    };
-    const apiResponse: any = await getCards(payload);
 
-    if (apiResponse) {
-      const availableCards = apiResponse?.response?.cards.filter(
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = cardApiResponse?.response?.cards.filter(
         (card: any) =>
           card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
@@ -193,6 +192,12 @@ const CardsScreen: React.FC = () => {
       }
     }
   };
+
+  const getCardPayload: CardsProp = {
+    walletNumber,
+  };
+
+  useGetCards({ payload: getCardPayload, onSuccess: getCardsData });
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
@@ -219,7 +224,7 @@ const CardsScreen: React.FC = () => {
   };
 
   const getCardDetails = async () => {
-    const payload: getCardDetailsProp = {
+    const cardDetailsPayload: getCardDetailsProp = {
       walletNumber,
       body: {
         cardIndex: currentCard?.cardIndex,
@@ -228,7 +233,7 @@ const CardsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       },
     };
-    const apiResponse: any = await otpGetCardDetails(payload);
+    const apiResponse: any = await otpGetCardDetails(cardDetailsPayload);
     if (apiResponse.status.type === 'SUCCESS') {
       otpVerificationRef?.current?.resetInterval();
       setOtpSheetVisible(false);
@@ -258,10 +263,6 @@ const CardsScreen: React.FC = () => {
   const onATMLongPress = () => {
     actionSheetRef.current.show();
   };
-
-  useEffect(() => {
-    getCardsData();
-  }, []);
 
   const renderCardsCurrentState = () => {
     if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {

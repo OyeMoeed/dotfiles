@@ -1,15 +1,21 @@
 import { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { QueryFunction, QueryKey, useQuery } from 'react-query';
 
-const useCustomQuery = ({
+const useCustomQuery = <TQueryFnData>({
   onSuccess,
   onError,
+  queryFn,
+  queryKey,
   ...queyKeys
 }: {
+  queryFn?: QueryFunction<TQueryFnData, QueryKey>;
+  queryKey?: QueryKey;
   onSuccess?: (data?: object) => void;
   onError?: (error?: object) => void;
 }) => {
   const { data, error, isSuccess, isError, status, isFetched, ...useQueryParams } = useQuery({
+    queryFn,
+    queryKey,
     retry: false,
     ...queyKeys,
   });
