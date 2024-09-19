@@ -59,7 +59,6 @@ const CardsScreen: React.FC = () => {
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
-  const [isCardIssueSheetVisible, setIsCardIssueSheetVisible] = useState(false);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isCardsSheetVisible, setIsCardSheetVisible] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
@@ -75,7 +74,7 @@ const CardsScreen: React.FC = () => {
   const openCardSheet = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
-      setIsCardIssueSheetVisible(true);
+      setIsCardSheetVisible(true);
       cardSheetRef.current.present();
     }
   };
@@ -378,7 +377,6 @@ const CardsScreen: React.FC = () => {
         <IPayCardDetails cardDetails={cardDetails} />
       </IPayPortalBottomSheet>
       <IPayPortalBottomSheet
-        isVisible={isCardIssueSheetVisible}
         heading="CARD_ISSUE.ISSUE_NEW_CARD"
         onCloseBottomSheet={closeCardSheet}
         customSnapPoint={['55%', '60%']}
