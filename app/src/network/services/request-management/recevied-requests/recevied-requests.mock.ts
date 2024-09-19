@@ -62,6 +62,7 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
         realTransactionAmount: null,
         realTransactionTotalPaidAmount: null,
         realTransactionNumberOfPaymentRequests: null,
+        realTransactionRefNumber: 'FTA35346',
         targetProfileImage: null,
       },
 

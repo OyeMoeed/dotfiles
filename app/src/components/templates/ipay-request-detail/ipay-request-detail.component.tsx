@@ -163,6 +163,9 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     );
   };
 
+  const showMinusSign = () =>
+    transaction?.type === TransactionOperations.DEBIT && transaction?.status === MoneyRequestStatus.PAID;
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
@@ -178,7 +181,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} ${t('COMMON.SAR')}`}
+                {`${showMinusSign() ? '-' : ''}${transaction?.amount} ${t('COMMON.SAR')}`}
               </IPayTitle3Text>
             </IPayView>
             <IPayView style={styles.fieldsSection}>
