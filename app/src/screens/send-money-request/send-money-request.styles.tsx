@@ -1,10 +1,9 @@
-import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { Platform } from 'react-native';
 import { moderateScale, moderateVerticalScale, verticalScale } from 'react-native-size-matters';
 
-const sendMoneyFormStyles = (theme: typeof colors) =>
+const sendMoneyFormStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
