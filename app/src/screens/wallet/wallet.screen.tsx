@@ -4,7 +4,6 @@ import { IPayAnimatedCircularProgress, IPayGradientTextMasked, IPayHeader } from
 import IPayList from '@app/components/molecules/ipay-list/ipay-list.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
@@ -23,6 +22,7 @@ import { useState } from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import Share from 'react-native-share';
 import { moderateScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import useSaveQRCode from './use-save-qrcode.hook';
 import walletStyles from './wallet.style';
 
@@ -30,7 +30,7 @@ const WalletScreen = () => {
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const styles = walletStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { qrRef, qrData, saveQrToDisk } = useSaveQRCode();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -41,10 +41,10 @@ const WalletScreen = () => {
   const headingTextGradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const getShareableMessage = () => {
-    const appTitle = localizationText.COMMON.ALINMA_PAY;
-    const walletInfoLabel = localizationText.HOME.WALLET_INFO;
-    const nameLabel = localizationText.COMMON.NAME;
-    const ibanLabel = localizationText.COMMON.IBAN;
+    const appTitle = t('COMMON.ALINMA_PAY');
+    const walletInfoLabel = t('HOME.WALLET_INFO');
+    const nameLabel = t('COMMON.NAME');
+    const ibanLabel = t('COMMON.IBAN');
 
     return `${appTitle}\n${walletInfoLabel}\n${nameLabel} : ${walletInfo?.fullName}\n${ibanLabel} : ${walletInfo?.viban}`;
   };
@@ -53,7 +53,7 @@ const WalletScreen = () => {
     const otherOptions = {
       subject: 'Wa',
       message: getShareableMessage(),
-      title: localizationText.PROFILE.ALINMA_WALLET_INFO,
+      title: t('PROFILE.ALINMA_WALLET_INFO'),
       social: Share.Social.WHATSAPP,
       whatsAppNumber: walletInfo?.userContactInfo?.mobileNumber,
     };
@@ -84,7 +84,7 @@ const WalletScreen = () => {
       }, 1000);
     }
     copyText(textToCopy);
-    renderToast(step === 1 ? localizationText.HOME.NAME_COPIED : localizationText.HOME.IBAN_NUMBER, icons.copy_success);
+    renderToast(step === 1 ? t('HOME.NAME_COPIED') : t('HOME.IBAN_NUMBER'), icons.copy_success);
   };
 
   const remainingSpendingLimit = parseFloat(walletInfo.limitsDetails.monthlyRemainingOutgoingAmount);
@@ -107,7 +107,7 @@ const WalletScreen = () => {
 
   return (
     <IPaySafeAreaView style={styles.mainWrapper}>
-      <IPayHeader title={localizationText.HOME.WALLET_INFO} backBtn applyFlex />
+      <IPayHeader title="HOME.WALLET_INFO" backBtn applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.limitContainer}>
           <IPayAnimatedCircularProgress
@@ -121,11 +121,15 @@ const WalletScreen = () => {
             lineCap="round"
           >
             <IPayView style={styles.progressContainer}>
-              <IPayFootnoteText color={colors.primary.primary800} style={styles.limitTextStyle}>
-                {localizationText.HOME.SPENDING_LIMIT}
-              </IPayFootnoteText>
+              <IPayFootnoteText
+                color={colors.primary.primary800}
+                style={styles.limitTextStyle}
+                text="HOME.SPENDING_LIMIT"
+              />
               <IPayGradientTextMasked colors={headingTextGradientColors}>
-                <IPayTitle1Text regular={false}>{formatNumberWithCommas(remainingSpendingLimit)} </IPayTitle1Text>
+                <IPayTitle1Text regular={false} shouldTranslate={false}>
+                  {formatNumberWithCommas(remainingSpendingLimit)}{' '}
+                </IPayTitle1Text>
               </IPayGradientTextMasked>
 
               <IPayLinearGradientView
@@ -133,43 +137,45 @@ const WalletScreen = () => {
                 style={styles.gradientBarStyle}
               />
               <IPayView style={styles.progressBarContainer}>
-                <IPayFootnoteText style={styles.amountStyle}>{localizationText.HOME.OF} </IPayFootnoteText>
-                <IPayFootnoteText regular={false} style={styles.amountStyle}>
+                <IPayFootnoteText style={styles.amountStyle} text={`${t('HOME.OF')} `} />
+                <IPayFootnoteText regular={false} style={styles.amountStyle} shouldTranslate={false}>
                   {formatNumberWithCommas(monthlySpendingLimit)}
                 </IPayFootnoteText>
               </IPayView>
             </IPayView>
           </IPayAnimatedCircularProgress>
         </IPayView>
-        <IPayFootnoteText color={colors.natural.natural500}>{localizationText.HOME.WALLET_INFO}</IPayFootnoteText>
+        <IPayFootnoteText color={colors.natural.natural500} text="HOME.WALLET_INFO" />
         <IPayList
           onPressIcon={() => handleClickOnCopy(1, walletInfo?.fullName)}
-          title={localizationText.COMMON.NAME}
+          title="COMMON.NAME"
           isShowSubTitle
           subTitle={walletInfo?.fullName}
           isShowIcon
           isShowDetail
           textStyle={styles.titleStyle}
           subTextStyle={styles.listTextStyle}
-          detailText={isNameCopied ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
+          detailText={isNameCopied ? 'TOP_UP.COPIED' : 'TOP_UP.COPY'}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          shouldTranslateSubTitle={false}
         />
         <IPayList
           onPressIcon={() => handleClickOnCopy(2, walletInfo?.viban)}
-          title={localizationText.COMMON.IBAN}
+          title="COMMON.IBAN"
           isShowSubTitle
           subTitle={walletInfo?.viban}
           isShowIcon
           isShowDetail
           textStyle={styles.titleStyle}
           subTextStyle={styles.listTextStyle}
-          detailText={isIbanCopied ? localizationText.TOP_UP.COPIED : localizationText.TOP_UP.COPY}
+          detailText={isIbanCopied ? 'TOP_UP.COPIED' : 'TOP_UP.COPY'}
           icon={<IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
+          shouldTranslateSubTitle={false}
         />
         <IPayList
-          title={localizationText.HOME.QR_CODE}
+          title="HOME.QR_CODE"
           isShowSubTitle
-          subTitle={localizationText.HOME.FOR_EASY_MONEY_TRANSFERS}
+          subTitle="HOME.FOR_EASY_MONEY_TRANSFERS"
           isShowIcon
           textStyle={styles.titleStyle}
           isShowSaveQRButton
@@ -191,7 +197,7 @@ const WalletScreen = () => {
 
         <IPayPressable onPress={bottonSheetOpen}>
           <IPayView style={styles.buttonContainer}>
-            <IPayBodyText style={styles.codeBarTextStyle}>{localizationText.HOME.SHARE_ALL_DETAILS}</IPayBodyText>
+            <IPayBodyText style={styles.codeBarTextStyle} text="HOME.SHARE_ALL_DETAILS" />
             <IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />
           </IPayView>
         </IPayPressable>

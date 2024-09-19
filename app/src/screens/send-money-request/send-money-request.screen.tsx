@@ -1,41 +1,31 @@
 import icons from '@app/assets/icons';
-import {
-  IPayFootnoteText,
-  IPayIcon,
-  IPayLinearGradientView,
-  IPayPressable,
-  IPaySubHeadlineText,
-  IPayView,
-} from '@app/components/atoms';
-import { IPayBalanceStatusChip, IPayButton, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayActionSheet, IPaySendMoneyForm } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useKeyboardStatus from '@app/hooks/use-keyboard-status';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { buttonVariants } from '@app/utilities';
+import getTotalAmount from '@app/utilities/total-amount-utils';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import getTotalAmount from '@app/utilities/total-amount-utils';
-import sendMoneyFormStyles from './send-money-request.styles';
+import { useTranslation } from 'react-i18next';
 import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-request.interface';
+import sendMoneyFormStyles from './send-money-request.styles';
 
 const SendMoneyRequest: React.FC = () => {
   const { colors } = useTheme();
   const { isKeyboardWillOpen, isKeyboardOpen } = useKeyboardStatus();
-  const styles = sendMoneyFormStyles(colors);
-  const localizationText = useLocalization();
+  const styles = sendMoneyFormStyles();
+  const { t } = useTranslation();
   const MAX_CONTACT = 5;
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { availableBalance } = walletInfo; // TODO replace with orignal data
   const route = useRoute();
-  const { selectedContacts } = route.params;
+  const { selectedContacts, heading } = route.params as any;
   const [selectedId, setSelectedId] = useState<number | string>('');
-  const [warningStatus, setWarningStatus] = useState<string>('');
+  const [warningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
@@ -100,13 +90,12 @@ const SendMoneyRequest: React.FC = () => {
     goBack();
   };
 
-  const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = walletInfo.limitsDetails;
   const removeFormOptions = {
-    title: localizationText.SEND_MONEY_FORM.REMOVE,
+    title: 'SEND_MONEY_FORM.REMOVE',
     showIcon: true,
     customImage: <IPayIcon icon={icons.TRASH} size={42} />,
-    message: localizationText.SEND_MONEY_FORM.REMOVE_DETAIL,
-    options: [localizationText.PROFILE.REMOVE, localizationText.COMMON.CANCEL],
+    message: 'SEND_MONEY_FORM.REMOVE_DETAIL',
+    options: [t('PROFILE.REMOVE'), t('COMMON.CANCEL')],
     cancelButtonIndex: 1,
     showCancel: true,
     destructiveButtonIndex: 0,
@@ -129,60 +118,31 @@ const SendMoneyRequest: React.FC = () => {
       <IPayView style={styles.contactInfoContainer}>
         <IPayFootnoteText
           regular={false}
-          text={`${selectedContactsCount} ${localizationText.HOME.OF}`}
+          text={`${selectedContactsCount} ${t('HOME.OF')}`}
           color={colors.natural.natural900}
         />
         <IPayFootnoteText
           regular
           color={colors.natural.natural500}
-          text={`${MAX_CONTACT} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+          text={`${MAX_CONTACT} ${t('WALLET_TO_WALLET.CONTACTS')}`}
         />
       </IPayView>
     );
-  };
-  const history = () => {
-    navigate(ScreenNames.TRANSACTIONS_HISTORY, {
-      isShowTabs: true,
-      isShowCard: false,
-    });
   };
 
   return (
     <IPaySafeAreaView style={styles.container}>
       <>
         {/* header */}
-        <IPayHeader
-          backBtn
-          title={localizationText.HOME.SEND_MONEY}
-          rightComponent={
-            <IPayPressable style={styles.history} onPress={history}>
-              <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-              <IPaySubHeadlineText
-                text={localizationText.WALLET_TO_WALLET.HISTORY}
-                regular
-                color={colors.primary.primary500}
-              />
-            </IPayPressable>
-          }
-          applyFlex
-        />
+        <IPayHeader backBtn title={heading} applyFlex />
 
         <IPayView style={styles.inncerContainer}>
-          {/* Topup box */}
-          <IPayTopUpBox
-            availableBalance={formatNumberWithCommas(availableBalance)}
-            isShowTopup
-            isShowRemaining
-            isShowProgressBar
-            monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
-            monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
-          />
-
           {/* total selected contact label */}
           {getContactInfoText()}
 
           {/* amount form */}
           <IPaySendMoneyForm
+            showCount={false}
             showReason={false}
             subtitle={selectedContacts[0].givenName}
             setAmount={handleAmountChange}
@@ -193,33 +153,16 @@ const SendMoneyRequest: React.FC = () => {
             setNotes={handleNotesChange}
           />
           {!isKeyboardWillOpen && !isKeyboardOpen && (
-            <IPayLinearGradientView style={styles.buttonBackground}>
-              <IPayList
-                title={localizationText.SEND_MONEY_FORM.TOTAL_AMOUNT}
-                rightText={
-                  <IPaySubHeadlineText
-                    regular
-                    color={colors.primary.primary800}
-                    text={`${getTotalAmount(formInstances) ? formatNumberWithCommas(getTotalAmount(formInstances)) : 0} ${localizationText.COMMON.SAR}`}
-                  />
-                }
-              />
-              <IPayBalanceStatusChip
-                monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-                currentBalance={Number(availableBalance)}
-                amount={getTotalAmount(formInstances)}
-                setWarningStatus={setWarningStatus}
-                dailySpendingLimit={Number(dailyOutgoingLimit)}
-              />
+            <IPayView style={styles.buttonBackground}>
               <IPayButton
                 disabled={isTransferButtonDisabled() || !getTotalAmount(formInstances) || !!warningStatus}
                 btnIconsDisabled
                 medium
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 onPress={onConfirm}
-                btnText={localizationText.REQUEST_MONEY.SEND_REQUEST_TITLE}
+                btnText="REQUEST_MONEY.SEND_REQUEST_TITLE"
               />
-            </IPayLinearGradientView>
+            </IPayView>
           )}
         </IPayView>
         <IPayActionSheet

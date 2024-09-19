@@ -13,9 +13,9 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useTranslation } from 'react-i18next';
 import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -39,6 +39,7 @@ const DUMMY_DATA = {
 
 const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -50,8 +51,6 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
   const {
     currentCard: { cardHeaderText, name },
   } = route.params;
-
-  const localizationText = useLocalization();
 
   const veriyOTPSheetRef = useRef<bottomSheetModal>(null);
   const otpVerificationRef = useRef<bottomSheetModal>(null);
@@ -108,7 +107,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      title: 'COMMON.TERMS_AND_CONDITIONS_VALIDATION',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
@@ -126,7 +125,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} backBtn applyFlex />
+      <IPayHeader title="PHYSICAL_CARD.ISSUE_A_NEW_CARD" backBtn applyFlex />
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance
           showRemainingAmount
@@ -137,27 +136,27 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
             <IPayView style={styles.contentTopMargin}>
-              <IPayFootnoteText text={localizationText.CARDS.CARD_DETAILS} color={colors.natural.natural500} />
+              <IPayFootnoteText text="CARDS.CARD_DETAILS" color={colors.natural.natural500} />
               <IPayList
                 testID="ipay-list-card-holders-name"
-                title={localizationText.REPLACE_CARD.HOLDERS_NAME}
+                title="REPLACE_CARD.HOLDERS_NAME"
                 isShowDetail
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
               />
               <IPayList
                 testID="ipay-list-card-type"
-                title={localizationText.CARDS.CARD_TYPE}
+                title="CARDS.CARD_TYPE"
                 rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
               />
 
               <IPayFootnoteText
-                text={localizationText.REPLACE_CARD.SHIPPING_ADDRESS}
+                text="REPLACE_CARD.SHIPPING_ADDRESS"
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
               <IPayList
                 testID="ipay-list-national-address"
-                title={localizationText.PROFILE.NATIONAL_ADDRESS}
+                title="PROFILE.NATIONAL_ADDRESS"
                 rightText={
                   <IPayPressable
                     onPress={() => addressInfoSheetRef.current?.showAddressInfoSheet()}
@@ -169,30 +168,30 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
                 }
               />
               <IPayFootnoteText
-                text={localizationText.CARD_OPTIONS.CARD_FEE}
+                text="CARD_OPTIONS.CARD_FEE"
                 color={colors.natural.natural500}
                 style={styles.footNoteTextStyle}
               />
               <IPayList
                 testID="ipay-list-issuance-fee"
-                title={localizationText.TOPUP_CONFIRMATION.ISSUANCE_FEE}
+                title="TOPUP_CONFIRMATION.ISSUANCE_FEE"
                 rightText={
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${DUMMY_DATA.replaceFee} ${localizationText.COMMON.SAR}`}
+                    text={`${DUMMY_DATA.replaceFee} ${t('COMMON.SAR')}`}
                   />
                 }
               />
 
               <IPayList
                 testID="ipay-list-shipping-fee"
-                title={localizationText.REPLACE_CARD.SHIPPING_FEE}
+                title="REPLACE_CARD.SHIPPING_FEE"
                 rightText={
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${DUMMY_DATA.shippingFee} ${localizationText.COMMON.SAR}`}
+                    text={`${DUMMY_DATA.shippingFee} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -202,18 +201,18 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+                <IPayFootnoteText style={styles.termText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
             <IPayList
               testID="ipay-list-total-fee"
-              title={localizationText.REPLACE_CARD.TOTAL_FEE}
+              title="REPLACE_CARD.TOTAL_FEE"
               rightText={
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
                   regular
-                  text={`${DUMMY_DATA.totalFee} ${localizationText.COMMON.SAR}`}
+                  text={`${DUMMY_DATA.totalFee} ${t('COMMON.SAR')}`}
                 />
               }
             />
@@ -223,7 +222,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
               btnStyle={styles.button}
               btnIconsDisabled
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.CONFIRM}
+              btnText="COMMON.CONFIRM"
             />
           </IPayView>
         </IPayView>
@@ -231,7 +230,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         testID="ipay-bottom-sheet-pin-code"
-        heading={localizationText.CHANGE_PIN.CHANGE_PIN_CODE}
+        heading="CHANGE_PIN.CHANGE_PIN_CODE"
         enablePanDownToClose
         simpleHeader
         cancelBnt
@@ -243,7 +242,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayBottomSheet
         testID="ipay-bottom-physical-card"
-        heading={localizationText.REPLACE_CARD.REPLACE_PHYSICAL_CARD}
+        heading="REPLACE_CARD.REPLACE_PHYSICAL_CARD"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -266,7 +265,7 @@ const IssueNewCardConfirmDetailsScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayBottomSheet
         testID="ipay-bottom-help-center"
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

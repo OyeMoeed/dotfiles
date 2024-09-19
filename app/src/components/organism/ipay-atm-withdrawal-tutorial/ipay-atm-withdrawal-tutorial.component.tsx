@@ -34,7 +34,7 @@ const IPayAtmWithdrawalTurtorials: React.FC<IPayAtmWithdrawalTurtorialsProps> = 
         <IPayGradientText
           yScale={7}
           fontSize={typography.FONT_VARIANTS.CAPTION1.FONT_SIZE}
-          text={`${item.id}`}
+          text={item.id || ''}
           gradientColors={colors.appGradient.gradientPrimary10}
         />
       </IPayView>

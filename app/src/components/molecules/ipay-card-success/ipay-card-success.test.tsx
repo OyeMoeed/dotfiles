@@ -1,5 +1,4 @@
 import { successIconAnimation } from '@app/assets/lottie';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { render } from '@testing-library/react-native';
 import { default as IPayCardSuccess } from './ipay-card-success.component';
 
@@ -39,18 +38,6 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
 }));
 
 describe('IPayCardSuccess', () => {
-  const localizationText = {
-    CARDS: {
-      GO_TO_CARD: 'Go to Card',
-    },
-    COMMON: {
-      TOP_UP: 'Top Up',
-      IPaySafeAreaView: 'Safe Area',
-    },
-  };
-  beforeEach(() => {
-    (useLocalization as jest.Mock).mockReturnValue(localizationText);
-  });
   it('renders correctly', () => {
     const { getByTestId } = render(
       <IPayCardSuccess

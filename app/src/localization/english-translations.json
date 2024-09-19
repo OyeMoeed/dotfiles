@@ -261,7 +261,7 @@
     "TITLE": "ID Renewal",
     "ID_ABOUT_EXPIRE": "Your ID is About to Expire!",
     "ID_UPDATION_DES": "Your ID’s expiration date is within {{DAYS}} days on {{DATE}}.\nPlease make sure to renew it so you can still use AlinmaPay \n application.",
-    "REMIND_ME_LATER": "Remind me later",
+    "REMIND_ME_LATER": "Remind me again",
     "DONT_SHOW": "Don’t Show This Again",
     "ID_EXPIRED": "Your ID Has Expired!",
     "ID_EXPIRED_DISCRIPTION": "Please make sure to renew it so you can still use AlinmaPay application.",
@@ -398,6 +398,8 @@
     "TOPUP_SUCCESS": "Top-up Successful",
     "PENDING_PAYMENT": "Payment under process",
     "TOPUP_TYPE": "Top-up Type",
+    "CARDS_TOPUP_TRX_TYPE": "Transaction type",
+    "CARDS_TOPUP_TRX_TYPE_VALUE": "Adding balance from card",
     "TOPUP_DATE": "Top-up Date",
     "NEW_TOP_UP": "New Top Up",
     "REF_NUMBER": "Ref. Number",
@@ -437,7 +439,8 @@
     "TRANSACTION_ID": "Transaction ID",
     "MONTHLY_SPENDING_LIMIT_REACHED": "Monthly Spending Limit Reached",
     "AKHTAR_POINT": "Akthar Point",
-    "CARD": "Card"
+    "CARD": "Card",
+    "CARDS": "Cards"
   },
   "TRANSACTION_HISTORY": {
     "GIFT_TO": "Gift to",
@@ -547,7 +550,8 @@
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
     "DATE_AND_TIME": "Transaction Date",
-    "ACCOUNT": "Account"
+    "ACCOUNT": "Account",
+    "REASON_OF_TRANSFER": "Reason of Transfer"
   },
   "TRANSFER_SUMMARY": {
     "NAME": "Name",
@@ -582,7 +586,7 @@
     "CONTACTS": "Contacts",
     "CONTACT_NUMBER_OR_NAME": "Contact Number or Name",
     "CONTACT_NAME": "Contact Name",
-    "NO_RESULTS_FOUND":"No Results Found",
+    "NO_RESULTS_FOUND": "No Results Found",
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
     "CONTACT_LIMIT": "Contacts limit reached"
   },
@@ -720,8 +724,8 @@
     "FREEZE": "Freeze",
     "CARD_FREEZE_MESSAGE": "The card has been frozen",
     "CARD_FREEZE_INDICATION_MESSAGE": "You won't be able to use the card while it's frozen and will need to unfreeze it before using it again",
-    "CARD_UNFREEZE_MESSAGE": "The card has been unfreezed",
-    "DEBIT_CARD": "Card - *** 1111",
+    "CARD_UNFREEZE_MESSAGE": "The card has been unfrozen",
+    "CARD": "Card",
     "UNFREEZE_CARD": "Unfreeze Card",
     "UNFREEZE": "Unfreeze",
     "CARD_UNFREEZE_INDICATION_MESSAGE": "Do you want to unfreeze the card and use it?",
@@ -841,7 +845,7 @@
     "INCORRECT_ACCOUNT_NUMBER": "Incorrect Account Number",
     "PHONE_NUMBER_NOT_AVAILABE": "Phone number is not available",
     "FAILED_TO_OPEN_NUMBER": "Failed to open phone number",
-    "SCAN_UNSUCCESSFUL":"Scan Unsuccessful"
+    "SCAN_UNSUCCESSFUL": "Scan Unsuccessful"
   },
   "LOCAL_TRANSFER": {
     "AMOUNT": "Amount",
@@ -899,7 +903,8 @@
       "ATM_WITHDRAWAL": "ATM Withdrawal",
       "REF_NUMBER": "Ref. Number",
       "TRANSACTION_DATE": "Transaction Date"
-    }
+    },
+    "NO_MORE_BRANCHES_OR_ATMS": "No More Branch/ATM’s available in your location"
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN_RENEWED": "The Card Has Been\nRenewed"
@@ -995,6 +1000,7 @@
     "EIYDIAH": "Eiydiah"
   },
   "OFFERS": {
+    "THEATER": "Theater",
     "OFFERS_TITLE": "Offers",
     "AVAILABLE_OFFERS": "Available offers",
     "DETAILS": "Details",
@@ -1271,6 +1277,8 @@
     "REF_NUMBER": "Ref. Number"
   },
   "SHOP": {
+    "PURCHASED_AT": "Pubrchased at: ",
+    "COUPON_CODE": "Coupon code",
     "ALL_MERCHANTS": "All Merchants",
     "TITLE": "All Categories",
     "PLAYSTATION": "Playstation",

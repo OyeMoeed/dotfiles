@@ -91,4 +91,8 @@ export interface IPayATMCardProps {
    * card printing status
    */
   backgroundImageStyle?: StyleProp<ViewStyle>;
+  /**
+   * onLongPress function
+   */
+  onLongPress?: () => void;
 }

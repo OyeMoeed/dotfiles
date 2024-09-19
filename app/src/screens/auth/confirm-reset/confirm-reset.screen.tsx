@@ -5,7 +5,6 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
@@ -15,13 +14,14 @@ import { encryptData } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
 
 const ConfirmPasscode = forwardRef((props) => {
   const { closeBottomSheet } = props;
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = ConfirmPasscodeStyles();
-  const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
@@ -29,7 +29,7 @@ const ConfirmPasscode = forwardRef((props) => {
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {
     showToast({
-      title: localizationText.COMMON.PASSCODE_DOES_NOT_MATCH,
+      title: t('COMMON.PASSCODE_DOES_NOT_MATCH'),
       subTitle: toastMsg,
       containerStyle: styles.toast,
       isShowRightIcon: false,
@@ -85,7 +85,7 @@ const ConfirmPasscode = forwardRef((props) => {
         changePasscode(newCode);
       } else {
         setPasscodeError(true);
-        renderToast(localizationText.COMMON.PLEASE_ENTER_AGAIN);
+        renderToast(t('COMMON.PLEASE_ENTER_AGAIN'));
       }
     }
   };
@@ -96,10 +96,7 @@ const ConfirmPasscode = forwardRef((props) => {
         <BulkLock />
       </IPayView>
       <IPayView>
-        <IPayPageDescriptionText
-          heading={localizationText.SETTINGS.CONFIRM_PASSCODE}
-          text={localizationText.SETTINGS.ENTER_CONFIRM}
-        />
+        <IPayPageDescriptionText heading="SETTINGS.CONFIRM_PASSCODE" text="SETTINGS.ENTER_CONFIRM" />
       </IPayView>
       <IPayView style={styles.dialerView}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

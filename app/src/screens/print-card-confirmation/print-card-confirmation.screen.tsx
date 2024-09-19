@@ -12,14 +12,14 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-sheet/ipay-address-info-sheet.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute, RouteProp } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTypedSelector } from '@app/store/store';
 import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
@@ -44,6 +44,7 @@ const DUMMY_DATA = {
 };
 
 const PrintCardConfirmationScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
@@ -63,8 +64,6 @@ const PrintCardConfirmationScreen: React.FC = () => {
     currentCard: { cardHeaderText, name },
   } = route.params;
 
-  const localizationText = useLocalization();
-
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const helpCenterRef = useRef<bottomSheetTypes>(null);
@@ -83,7 +82,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.COMMON.TERMS_AND_CONDITIONS_VALIDATION,
+      title: 'COMMON.TERMS_AND_CONDITIONS_VALIDATION',
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
@@ -154,7 +153,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.CARD_OPTIONS.PRINT_CARD} backBtn applyFlex />
+      <IPayHeader title="CARD_OPTIONS.PRINT_CARD" backBtn applyFlex />
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance
           showRemainingAmount
@@ -164,28 +163,24 @@ const PrintCardConfirmationScreen: React.FC = () => {
           monthlyIncomingLimit="20,000"
         />
         <IPayView style={styles.contentContainer}>
-          <IPayFootnoteText
-            text={localizationText.CARDS.CARD_DETAILS}
-            color={colors.natural.natural500}
-            style={styles.header}
-          />
+          <IPayFootnoteText text="CARDS.CARD_DETAILS" color={colors.natural.natural500} style={styles.header} />
           <IPayList
-            title={localizationText.REPLACE_CARD.HOLDERS_NAME}
+            title="REPLACE_CARD.HOLDERS_NAME"
             isShowDetail
             rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={name} />}
           />
           <IPayList
-            title={localizationText.CARDS.CARD_TYPE}
+            title="CARDS.CARD_TYPE"
             rightText={<IPaySubHeadlineText color={colors.primary.primary800} regular text={cardHeaderText} />}
           />
 
           <IPayFootnoteText
-            text={localizationText.REPLACE_CARD.SHIPPING_ADDRESS}
+            text="REPLACE_CARD.SHIPPING_ADDRESS"
             color={colors.natural.natural500}
             style={styles.footNoteTextStyle}
           />
           <IPayList
-            title={localizationText.PROFILE.NATIONAL_ADDRESS}
+            title="PROFILE.NATIONAL_ADDRESS"
             rightText={
               <IPayPressable
                 onPress={() => addressInfoSheetRef.current?.showAddressInfoSheet()}
@@ -199,17 +194,17 @@ const PrintCardConfirmationScreen: React.FC = () => {
             }
           />
           <IPayFootnoteText
-            text={localizationText.CARD_OPTIONS.CARD_FEE}
+            text="CARD_OPTIONS.CARD_FEE"
             color={colors.natural.natural500}
             style={styles.footNoteTextStyle}
           />
           <IPayList
-            title={localizationText.REPLACE_CARD.SHIPPING_FEE}
+            title="REPLACE_CARD.SHIPPING_FEE"
             rightText={
               <IPaySubHeadlineText
                 color={colors.primary.primary800}
                 regular
-                text={`${shippingFee} ${localizationText.COMMON.SAR}`}
+                text={`${shippingFee} ${t('COMMON.SAR')}`}
               />
             }
           />
@@ -217,7 +212,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
             <IPayPressable onPress={onPressTermsAndConditions} style={styles.termsContainer}>
               <IPayView style={styles.termsChildContainer}>
                 <IPayCheckbox onPress={toggleTermsAndConditions} isCheck={checkTermsAndConditions} />
-                <IPayFootnoteText style={styles.termText} text={localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+                <IPayFootnoteText style={styles.termText} text="COMMON.TERMS_AND_CONDITIONS_TEXT" />
                 <IPayIcon icon={icons.infoIcon} size={20} color={colors.primary.primary500} />
               </IPayView>
             </IPayPressable>
@@ -228,7 +223,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
               btnIconsDisabled
               btnStyle={styles.confirmButton}
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.CONFIRM}
+              btnText="COMMON.CONFIRM"
             />
           </IPayView>
         </IPayView>
@@ -236,7 +231,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
       <IPayAddressInfoSheet ref={addressInfoSheetRef} />
       <IPayBottomSheet
         noGradient
-        heading={localizationText.CARD_OPTIONS.PHYSICAL_CARD}
+        heading="CARD_OPTIONS.PHYSICAL_CARD"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -259,7 +254,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayBottomSheet
         noGradient
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

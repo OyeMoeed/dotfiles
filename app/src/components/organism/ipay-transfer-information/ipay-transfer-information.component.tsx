@@ -5,16 +5,15 @@ import {
   IPayCaption2Text,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
 import { IPayAmountInput, IPayAnimatedTextInput, IPayButton, IPayChip, IPayList } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { IPayTransferInformationProps } from './ipay-transfer-information.interface';
 import transferInfoStyles from './ipay-transfer-information.style';
 
@@ -36,19 +35,20 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   transferInfo,
   chipValue,
   transferInfoData,
+  showCount = true,
   maxLength = 70,
   subtitle,
   hasWallet,
   inputFieldStyle,
 }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = transferInfoStyles(colors);
 
   const [isFocused, setIsFocused] = useState(false);
-  const localizationText = useLocalization();
 
-  const notesText = localizationText.TRANSACTION_HISTORY.NOTE;
-  const optionalText = localizationText.COMMON.OPTIONAL;
+  const notesText = t('TRANSACTION_HISTORY.NOTE');
+  const optionalText = t('COMMON.OPTIONAL');
   const notesLabel = `${notesText} ${transferInfo ? `(${optionalText})` : ''}`;
   const defaultValue: string = '0.00';
 
@@ -61,7 +61,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           <IPayChip
             containerStyle={styles.chipColors}
             icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-            textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+            textValue="TRANSFER_SUMMARY.CHIP_TITLE"
             headingStyles={styles.chipColors}
           />
         </IPayView>
@@ -69,7 +69,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
       <IPayView>
         {transferInfo ? (
           <IPayView style={styles.headingView}>
-            <IPayImage image={transferInfoData?.icon} style={styles.bankLogo} />
+            <IPayIcon icon={transferInfoData?.icon} size={30} />
             <IPayView style={styles.bankDetailsView}>
               <IPayView style={styles.bankTitleView}>
                 <IPayFootnoteText regular={false} text={transferInfoData?.title} color={colors.natural.natural900} />
@@ -81,7 +81,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         ) : (
           <IPayList
             textStyle={styles.titleText}
-            title={localizationText.SEND_MONEY_FORM.RECIPIENT}
+            title="SEND_MONEY_FORM.RECIPIENT"
             subTextStyle={StyleSheet.flatten(styles.subtitleText)}
             isShowSubTitle
             subTitle={subtitle}
@@ -94,12 +94,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         )}
       </IPayView>
       <IPayView style={styles.inputContainer}>
-        <IPayFootnoteText
-          regular
-          style={styles.text}
-          text={localizationText.TOP_UP.ENTER_AMOUNT}
-          color={colors.natural.natural700}
-        />
+        <IPayFootnoteText regular style={styles.text} text="TOP_UP.ENTER_AMOUNT" color={colors.natural.natural700} />
         <IPayAmountInput
           carretHidden={false}
           style={styles.amountInput}
@@ -118,7 +113,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             containerStyle={styles.chipContainer}
             icon={
               <IPayIcon
-                icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
+                icon={chipValue === t('TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross')}
                 color={colors.critical.critical800}
                 size={16}
               />
@@ -132,7 +127,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             onChangeText={setSelectedItem}
             containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
             labelColor={colors.natural.natural500}
-            label={localizationText.COMMON.REASON_OF_TRANSFER}
+            label="COMMON.REASON_OF_TRANSFER"
             value={selectedItem}
             editable={false}
             showRightIcon
@@ -156,13 +151,15 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         maxLength={maxLength}
         onChangeText={setNotes}
       />
-      <IPayCaption1Text text={getLetterCount()} style={styles.letterCount} />
+
+      {showCount && <IPayCaption1Text text={getLetterCount()} style={styles.letterCount} />}
+
       {showRemoveBtn && (
         <IPayView style={styles.btn}>
           <IPayButton
             small
             textStyle={styles.btnText}
-            btnText={localizationText.PROFILE.REMOVE}
+            btnText="PROFILE.REMOVE"
             hasRightIcon
             rightIcon={<IPayIcon icon={icons.trash} color={colors.primary.primary500} size={14} />}
             btnType={buttonVariants.LINK_BUTTON}

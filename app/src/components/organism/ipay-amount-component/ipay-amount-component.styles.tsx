@@ -133,6 +133,9 @@ const amountStyles = (colors) =>
       alignItems: 'center',
       height: scaleSize(36),
     },
+    nextButton: {
+      height: scaleSize(14),
+    },
   });
 
 export default amountStyles;

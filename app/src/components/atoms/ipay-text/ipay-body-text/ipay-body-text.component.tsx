@@ -17,6 +17,7 @@ const IPayBodyText: React.FC<IPayBodyTextProps> = ({
   numberOfLines,
   children,
   color,
+  shouldTranslate = true,
 }: IPayBodyTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -25,6 +26,7 @@ const IPayBodyText: React.FC<IPayBodyTextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>

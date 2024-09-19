@@ -39,6 +39,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       fontSize: FONT_SIZE_20,
       lineHeight: moderateScale(30),
       minWidth: moderateScale(45),
+      textAlign: 'right',
     },
     inputContainer: {
       alignItems: 'center',
@@ -90,16 +91,19 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     },
     chipContainer: {
       marginBottom: moderateScale(10),
+      marginTop: moderateScale(-2),
       alignSelf: 'center',
     },
     amountInput: {
       paddingBottom: moderateScale(8),
       ...Platform.select({
         android: {
-          marginVertical: moderateScale(-5),
+          marginTop: moderateScale(-10),
+          marginBottom: moderateScale(-10),
         },
         ios: {
-          marginVertical: 0,
+          marginTop: moderateScale(-5),
+          marginBottom: moderateScale(-1),
         },
       }),
     },
@@ -135,7 +139,7 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       height: moderateScale(24),
     },
     btn: {
-      marginTop: moderateScale(16),
+      marginTop: moderateScale(10),
     },
   });
 

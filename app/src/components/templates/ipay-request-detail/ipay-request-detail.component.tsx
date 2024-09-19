@@ -19,7 +19,6 @@ import {
 } from '@app/enums/money-request-status.enum';
 import SummaryType from '@app/enums/summary-type';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
@@ -28,6 +27,7 @@ import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayRequestDetailProps, IPayRequestMoneyProps } from './iipay-request-detail.interface';
 import { getTypeFieldMapping } from './ipay-request-detail.constant';
 import transactionHistoryStyle from './ipay-request-detail.style';
@@ -40,7 +40,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   showCancelActionSheet,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = transactionHistoryStyle(colors);
   const applyStatusKeys: (keyof IPayRequestMoneyProps)[] = [LocalizationKeys.STATUS];
   const copiableItems: (keyof IPayTransactionItemProps)[] = [CopiableKeys.REF_NUMBER];
@@ -51,25 +51,25 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
   const receviedRequestSummaryData = [
     {
       id: 1,
-      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      label: t('REQUEST_SUMMARY.PAY_TO'),
       detailsText: transaction.title,
       leftIcon: true,
     },
     {
       id: 2,
-      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      label: t('REQUEST_SUMMARY.MOBILE_NUMBER'),
       detailsText: transaction.receiver_mobile_number,
     },
     {
       id: 3,
-      label: localizationText.REQUEST_SUMMARY.AMOUNT,
-      detailsText: transaction.amount,
+      label: t('REQUEST_SUMMARY.AMOUNT'),
+      detailsText: `${transaction.amount} ${t('COMMON.SAR')}`,
     },
   ];
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
+      title: t('TOP_UP.COPIED'),
       subTitle: value,
       containerStyle: styles.containerToastStyle,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
@@ -82,25 +82,25 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
       case MoneyRequestStatus.CANCEL:
         return {
           color: colors.natural.natural700,
-          text: localizationText.REQUEST_MONEY.CANCELLED,
+          text: t('REQUEST_MONEY.CANCELLED'),
           backgroundColor: colors.natural.natural100,
         };
       case MoneyRequestStatus.PAID:
         return {
           color: colors.tertiary.tertiary500,
-          text: localizationText.REQUEST_MONEY.PAID,
+          text: t('REQUEST_MONEY.PAID'),
           backgroundColor: colors.success.success25,
         };
       case MoneyRequestStatus.PENDING:
         return {
           color: colors.critical.critical800,
-          text: localizationText.REQUEST_MONEY.PENDING,
+          text: t('REQUEST_MONEY.PENDING'),
           backgroundColor: colors.critical.critical25,
         };
       default:
         return {
           color: colors.error.error500,
-          text: localizationText.REQUEST_MONEY.REJECTED,
+          text: t('REQUEST_MONEY.REJECTED'),
           backgroundColor: colors.error.error25,
         };
     }
@@ -119,7 +119,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
       screen: SummaryType.MONEY_REQUEST_SUMMARY,
       receviedRequestSummaryData,
       transId: transaction.id,
-      heading: localizationText.REQUEST_MONEY.MONEY_REQUESTS,
+      heading: t('REQUEST_SUMMARY.TITLE'),
     });
   };
 
@@ -133,9 +133,12 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
 
     return (
       <IPayView style={styles.cardStyle} key={index}>
-        <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
-          {localizationText?.REQUEST_MONEY?.[LocalizationKeysMapping[field]]}
-        </IPayFootnoteText>
+        <IPayFootnoteText
+          regular
+          style={styles.headingStyles}
+          color={colors.natural.natural900}
+          text={`REQUEST_MONEY.${LocalizationKeysMapping[field]}`}
+        />
         <IPayPressable
           style={styles.actionWrapper}
           disabled={!copiableItems.includes(field)}
@@ -168,14 +171,14 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
             <IPayView style={styles.amountSection}>
               <IPayCaption1Text color={colors.primary.primary800}>
                 {transaction?.type === TransactionOperations.DEBIT
-                  ? localizationText.REQUEST_MONEY.RECEIVED_REQUEST_FROM
-                  : localizationText.REQUEST_MONEY.SEND_REQUEST_TO}
+                  ? t('REQUEST_MONEY.RECEIVED_REQUEST_FROM')
+                  : t('REQUEST_MONEY.SEND_REQUEST_TO')}
               </IPayCaption1Text>
               <IPayTitle3Text style={styles.footnoteBoldTitleTextStyle} regular={false}>
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} SAR`}
+                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} ${t('COMMON.SAR')}`}
               </IPayTitle3Text>
             </IPayView>
             {transaction &&
@@ -188,7 +191,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
               <IPayButton
                 btnType={buttonVariants.OUTLINED}
                 onPress={showCancelActionSheet}
-                btnText={localizationText.REQUEST_MONEY.CANCEL_REQUEST}
+                btnText="REQUEST_MONEY.CANCEL_REQUEST"
                 medium
                 btnStyle={[styles.button]}
                 leftIcon={<IPayIcon icon={icons.remove} size={18} color={colors.primary.primary500} />}
@@ -199,7 +202,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 <IPayButton
                   btnType={buttonVariants.PRIMARY}
                   onPress={onPressPay}
-                  btnText={localizationText.REQUEST_MONEY.PAY}
+                  btnText="REQUEST_MONEY.PAY"
                   large
                   btnIconsDisabled
                   btnStyle={styles.button}
@@ -207,7 +210,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 <IPayButton
                   btnType={buttonVariants.OUTLINED}
                   onPress={showRejectActionSheet}
-                  btnText={localizationText.REQUEST_MONEY.REJECT}
+                  btnText="REQUEST_MONEY.REJECT"
                   large
                   btnIconsDisabled
                   btnStyle={styles.rejectButton}

@@ -34,4 +34,8 @@ export interface IPayCaption1TextProps {
    * Text Color.
    */
   color?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

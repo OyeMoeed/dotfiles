@@ -104,6 +104,10 @@ const transactionsStyles = (colors: any) =>
       backgroundColor: colors.transparent,
     },
     unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
+    cardTransactionsTitle: {
+      fontSize: FONT_SIZE_13,
+      lineHeight: moderateScale(18),
+    },
   });
 
 export default transactionsStyles;

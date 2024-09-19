@@ -1,11 +1,11 @@
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PasscodeChangeState, PasscodeTypes } from './settings.interface';
 
 const useSettings = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [currentPasscode, setCurrentPasscode] = useState<string>('');
   const [newPaasscode, setNewPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState(false);
@@ -27,7 +27,7 @@ const useSettings = () => {
         changeView({ currentCode, nextComponent: PasscodeTypes.NewPasscode });
       } else {
         setPasscodeError(true);
-        currentPasscodeRef.current?.triggerToast(localizationText.PROFILE.PASSCODE_ERROR);
+        currentPasscodeRef.current?.triggerToast(t('PROFILE.PASSCODE_ERROR'));
       }
     } else {
       setPasscodeError(false);
