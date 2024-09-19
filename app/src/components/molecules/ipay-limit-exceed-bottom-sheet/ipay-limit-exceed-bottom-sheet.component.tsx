@@ -1,11 +1,12 @@
 import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatDateAndTime } from '@app/utilities/date-helper.util';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { forwardRef, useImperativeHandle, useRef } from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayLimitExceedProps from './ipay-limit-exceed-bottom-sheet.interface';
 import limitExceedStyle from './ipay-limit-exceed-bottom-sheet.style';
@@ -26,13 +27,13 @@ import limitExceedStyle from './ipay-limit-exceed-bottom-sheet.style';
 
 const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
   ({ testID, handleContinue, close, amount, date }, ref) => {
+    const { t } = useTranslation();
     const { colors } = useTheme();
     const styles = limitExceedStyle();
-    const localizationText = useLocalization();
     const bottomSheetRef = useRef<any>();
 
     const handleCancel = () => {
-      close && close();
+      close?.();
       requestAnimationFrame(() => {
         bottomSheetRef.current?.close();
       });
@@ -45,9 +46,17 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
         bottomSheetRef.current?.close();
       },
     }));
+
+    const textCaption1 = `
+    ${t('PROFILE.REACHED_SPENDING_LIMIT')} 
+    ${amount} ${t('COMMON.SAR')} 
+    ${t('PROFILE.NOT_ABLE_TO_SEND_AMOUNT')} 
+    [${formatDateAndTime(date, dateTimeFormat.ShortDate)}]
+    `;
+
     return (
       <IPayBottomSheet
-        heading={localizationText.HOME.SEND_MONEY}
+        heading="HOME.SEND_MONEY"
         enablePanDownToClose
         simpleBar
         ref={bottomSheetRef}
@@ -58,31 +67,28 @@ const IPayLimitExceedBottomSheet = forwardRef<{}, IPayLimitExceedProps>(
         <IPayView testID={`${testID}-limit-exceed`} style={styles.container}>
           <IPayView style={styles.detail}>
             <IPayIcon icon={icons.send_money_error} size={64} color={colors.error.error500} />
-            <IPayTitle2Text
-              regular={false}
-              style={styles.fontBold}
-              text={localizationText.PROFILE.NO_REMAINING_SPENDINDS}
-            />
+            <IPayTitle2Text regular={false} style={styles.fontBold} text="PROFILE.NO_REMAINING_SPENDINDS" />
             <IPayCaption1Text
-              text={`${localizationText.PROFILE.REACHED_SPENDING_LIMIT} ${amount} ${localizationText.COMMON.SAR} ${localizationText.PROFILE.NOT_ABLE_TO_SEND_AMOUNT} [${formatDateAndTime(date, dateTimeFormat.ShortDate)}]`}
+              text={textCaption1}
               style={styles.description}
               color={colors.primary.primary800}
+              shouldTranslate={false}
             />
           </IPayView>
           <IPayView style={styles.actionButtons}>
             <IPayButton
               medium
               btnIconsDisabled
-              btnText={localizationText.COMMON.CLOSE}
+              btnText="COMMON.CLOSE"
               onPress={handleCancel}
-              btnType={'primary'}
+              btnType={buttonVariants.PRIMARY}
             />
             <IPayButton
               medium
               btnIconsDisabled
-              btnText={localizationText.COMMON.CONTINUE}
+              btnText="COMMON.CONTINUE"
               onPress={handleContinue}
-              btnType={'outline'}
+              btnType={buttonVariants.OUTLINED}
             />
           </IPayView>
         </IPayView>

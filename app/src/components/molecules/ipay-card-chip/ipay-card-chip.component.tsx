@@ -9,9 +9,9 @@ const IPayCardChip: React.FC<IPayCardChipProps> = ({ data, testID }) => {
   const styles = IPayCardChipStyles(colors);
   return (
     <IPayView testID={`${testID}-card-chip`} style={styles.container}>
-      {data.map((item, index) => (
+      {data?.map((item, index) => (
         <IPayLinearGradientView
-          key={index}
+          key={`${item.icon}-${`${index}IPayLinearGradientView`}`}
           gradientColors={colors.appGradient.gradientPrimary40}
           style={styles.frame}
           start={{ x: 1, y: 0 }}

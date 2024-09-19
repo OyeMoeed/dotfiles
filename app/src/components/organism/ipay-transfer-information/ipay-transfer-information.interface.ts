@@ -7,12 +7,12 @@ interface TransferInfoData {
   accountNumber?: string;
 }
 
-export interface IPayTransferInformationProps {
+interface IPayTransferInformationProps {
+  showCount?: boolean;
   testID?: string;
-  showReason?: boolean;
   currencyStyle?: ViewStyle;
-  style?: ViewStyle;
   amount: string | number;
+  style?: ViewStyle;
   setAmount: (text: string | number) => void;
   isEditable?: boolean;
   openReason?: () => void;
@@ -29,4 +29,7 @@ export interface IPayTransferInformationProps {
   subtitle?: string;
   maxLength?: number;
   inputFieldStyle?: ViewStyle;
+  showReason?: boolean;
 }
+
+export { IPayTransferInformationProps, TransferInfoData };

@@ -17,6 +17,7 @@ const IPayTitle1Text: React.FC<IPayTitle1TextProps> = ({
   numberOfLines,
   children,
   color,
+  shouldTranslate = true,
 }: IPayTitle1TextProps) => {
   const textColor = color ? { color } : {};
   return (
@@ -25,6 +26,7 @@ const IPayTitle1Text: React.FC<IPayTitle1TextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>

@@ -1,3 +1,4 @@
+import React from 'react';
 import icons from '@app/assets/icons';
 import {
   IPayCaption2Text,
@@ -11,21 +12,21 @@ import {
 } from '@app/components/atoms';
 import useConstantData from '@app/constants/use-constants';
 import SummaryType from '@app/enums/summary-type';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { CategoriesItem, IPayOrdersCardProps } from './ipay-orders-card-interface';
 import IPayOrdersCardStyle from './ipay-orders-card.style';
 
 const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = IPayOrdersCardStyle(colors);
   const { productDetailData } = useConstantData();
-  const localizationText = useLocalization();
 
   const handleClickOnCopy = (step: number, textToCopy: string) => {
     copyText(textToCopy);
@@ -37,7 +38,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
     const onPressView = () =>
       navigate(ScreenNames.SHOP_DETAILS, {
         details: productDetailData,
-        heading: localizationText.SHOP.PRODUCT_DETAILS,
+        heading: t('SHOP.PRODUCT_DETAILS'),
       });
 
     return (
@@ -50,7 +51,8 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
                 <IPayView style={styles.textView}>
                   <IPaySubHeadlineText
                     color={colors.primary.primary900}
-                    text={`${localizationText.COMMON.SAR} ${amount}`}
+                    text={`${t('COMMON.SAR')} ${amount}`}
+                    shouldTranslate={false}
                   />
                   <IPayFootnoteText regular={false} text={title} color={colors.natural.natural900} />
                   <IPayView style={styles.couponRow}>
@@ -72,7 +74,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
                   btnStyle={styles.buttonStyles}
                   onPress={onPressView}
                   btnIconsDisabled
-                  btnText={localizationText.SHOP.VIEW_PRODUCT}
+                  btnText="SHOP.VIEW_PRODUCT"
                   small
                 />
                 <IPayButton
@@ -80,7 +82,7 @@ const IPayOrdersCard: React.FC<IPayOrdersCardProps> = ({ testID, data }) => {
                   btnStyle={styles.buttonStyles}
                   btnIconsDisabled
                   onPress={purchaseAgain}
-                  btnText={localizationText.SHOP.PURCHASE_AGAIN}
+                  btnText="SHOP.PURCHASE_AGAIN"
                   small
                 />
               </IPayView>

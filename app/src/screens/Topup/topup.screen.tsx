@@ -1,7 +1,6 @@
 import { IPayHeader } from '@app/components/molecules';
 import IPayAmount from '@app/components/organism/ipay-amount-component/ipay-amount-component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 
 import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
@@ -12,19 +11,14 @@ const TopUpScreen = () => {
   const today = new Date();
   const formattedDate = `${String(today.getMonth() + 1).padStart(2, '0')}/${String(today.getFullYear()).slice(2)}`;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [selectedDate, setSelectedDate] = useState(formattedDate);
-  const [selectedCard, setSelectedCard] = useState({});
-  const localizationText = useLocalization();
+  const [selectedDate] = useState(formattedDate);
+  const [, setSelectedCard] = useState({});
   const route = useRoute();
   const { variant } = route.params;
   const expirationRef = React.createRef<any>();
   const cvvRef = React.createRef<any>();
   const expiryDateRef = React.createRef<any>();
   const addCardRef = React.createRef<any>();
-
-  const closeExpirationBottomSheet = () => {
-    expirationRef.current?.close();
-  };
 
   const openExpirationBottomSheet = () => {
     expirationRef.current?.present();
@@ -34,14 +28,6 @@ const TopUpScreen = () => {
     expiryDateRef.current?.present();
   };
 
-  const closeExpiredBottomSheet = () => {
-    expiryDateRef.current?.close();
-  };
-
-  const closeCvvBottomSheet = () => {
-    cvvRef.current?.close();
-  };
-
   const openCvvBottomSheet = () => {
     cvvRef.current?.present();
   };
@@ -49,9 +35,6 @@ const TopUpScreen = () => {
     addCardRef.current.present();
   };
 
-  const closeBottomSheet = () => {
-    addCardRef.current.close();
-  };
   const expiratedRef = React.createRef<any>();
   const openExpiredBottomSheet = () => {
     expiratedRef.current.present();
@@ -60,6 +43,7 @@ const TopUpScreen = () => {
   const handleCardSelect = (cardKey: number | null) => {
     setSelectedCard(cardKey);
   };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title={screenNames.TOP_UP} applyFlex />
@@ -83,7 +67,7 @@ const TopUpScreen = () => {
       />
 
       <IPayBottomSheet
-        heading={localizationText.TOP_UP.EXPIRY_DATE}
+        heading={"TOP_UP.EXPIRY_DATE"}
         onCloseBottomSheet={closeExpirationBottomSheet}
         customSnapPoint={['10%', '40%']}
         enableDynamicSizing
@@ -97,7 +81,7 @@ const TopUpScreen = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.COMMON.CVV}
+        heading={"COMMON.CVV"}
         onCloseBottomSheet={closeCvvBottomSheet}
         customSnapPoint={['10%', '40%']}
         enableDynamicSizing
@@ -110,7 +94,7 @@ const TopUpScreen = () => {
         <IPayExpBottomSheet type={InfoTypes.CVV} />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.MENU.ADD_CARD}
+        heading={"MENU.ADD_CARD"}
         cancelBnt
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['10%', '85%']}

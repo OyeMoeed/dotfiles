@@ -1,6 +1,6 @@
 import commonStyles from '@app/styles/common.styles';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { JSX } from 'react';
 import { useTranslation } from 'react-i18next';
 import { TextInput } from 'react-native';
 import { IPayInputProps } from './ipay-input.interface';
@@ -29,10 +29,10 @@ import inputStyles from './ipay-input.style';
  */
 const IPayInput: React.FC<IPayInputProps> = ({
   testID,
-  text,
+  text = '',
   style,
   numberOfLines,
-  placeholder,
+  placeholder = '',
   autoCapitalize,
   autoFocus,
   maxLength,
@@ -46,6 +46,8 @@ const IPayInput: React.FC<IPayInputProps> = ({
   editable = true,
   blurOnSubmit,
   selectionColor,
+  returnKeyLabel = 'done',
+
   placeholderTextColor,
 }: IPayInputProps): JSX.Element => {
   const { t } = useTranslation();
@@ -54,10 +56,10 @@ const IPayInput: React.FC<IPayInputProps> = ({
   return (
     <TextInput
       testID={`${testID}-input`}
-      value={t(`${text}`)}
+      value={text}
       numberOfLines={numberOfLines}
       style={[styles.textInputStyle, commonStyles.subHeadlineText, style]}
-      placeholder={placeholder}
+      placeholder={`${t(placeholder)}`}
       placeholderTextColor={placeholderTextColor || colors.natural.natural500}
       autoCapitalize={autoCapitalize}
       autoFocus={autoFocus}
@@ -71,7 +73,7 @@ const IPayInput: React.FC<IPayInputProps> = ({
       onSubmitEditing={() => onSubmitEditing && onSubmitEditing(text)}
       editable={editable}
       blurOnSubmit={blurOnSubmit}
-      returnKeyType="done"
+      returnKeyType={returnKeyLabel}
       selectionColor={selectionColor}
     />
   );

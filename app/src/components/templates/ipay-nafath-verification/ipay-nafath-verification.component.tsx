@@ -12,15 +12,13 @@ import {
   IPayText,
   IPayView,
 } from '@app/components/atoms';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayGradientText, IPayPageDescriptionText, IPayPrimaryButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import {
   IActivationAbsherReq,
   INafathInqRes,
-  NAFATH_STATUSES,
+  NafathStatus,
   PrepareIdRenewalProp,
 } from '@app/network/services/core/nafath-verification/nafath-verification.interface';
 import {
@@ -28,31 +26,31 @@ import {
   getNafathRandom,
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
+import { getDeviceInfo } from '@app/network/utilities';
+import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { APIResponseType, spinnerVariant } from '@app/utilities/enums.util';
-import { forwardRef, useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
+import React, { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
-const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ testID, onComplete }) => {
+const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID, onComplete }) => {
   const [step, setStep] = useState<number>(1);
   const [isExpired, setIsExpired] = useState<boolean>(false);
   const [counter, setCounter] = useState<number>(90); // in seconds
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
+
   const styles = nafathVerificationStyles(colors);
   const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const [apiError, setAPIError] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [nafathNumber, setNafathNumber] = useState<number>();
-  const [nafathRequestId, setNafathRequestId] = useState<string>('');
   const [duration, setDuration] = useState<number>();
-  const [waitngScnds, setWaitngScnds] = useState<number>(20);
+  const [waitngScnds] = useState<number>(20);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const [startInqiryInterval, setStartInqiryInterval] = useState<boolean>(false);
 
   useEffect(() => {
@@ -68,33 +66,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     onComplete();
   };
 
-  useEffect(() => {
-    let timer: any = null;
-    timer = setInterval(() => {
-      nafathInquiry();
-    }, waitngScnds * 1000);
-
-    if (!startInqiryInterval) {
-      clearInterval(timer);
-    }
-
-    return () => clearInterval(timer);
-  }, [startInqiryInterval]);
-
-  const renderSpinner = useCallback(
-    (isVisbile: boolean) => {
-      if (isVisbile) {
-        showSpinner({
-          variant: spinnerVariant.DEFAULT,
-          hasBackgroundColor: true,
-        });
-      } else {
-        hideSpinner();
-      }
-    },
-    [isLoading],
-  );
-
   const renderStep = (_step: string) => (
     <IPayView style={styles.stepIndicator}>
       <IPayGradientText
@@ -109,7 +80,6 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
   );
 
   const getNafathRandomNumber = async () => {
-    renderSpinner(true);
     const payLoad: PrepareIdRenewalProp = {
       requestId: appData?.loginData?.iamRequestId,
       channelId: appData?.loginData?.channelId,
@@ -117,10 +87,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     const apiResponse: any = await getNafathRandom(payLoad);
 
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      setNafathRequestId(apiResponse.response.nafathRequestId);
-      setNafathNumber(
-        Number.isNaN(apiResponse.response.token) ? atob(apiResponse.response.token) : apiResponse.response.token,
-      );
+      const nafathToken = Number.isNaN(apiResponse.response.token)
+        ? atob(apiResponse.response.token)
+        : apiResponse.response.token;
+
+      setNafathNumber(nafathToken);
       setCounter(apiResponse.response.waitingTimeSeconds);
       setDuration(apiResponse.response.waitingTimeSeconds * 10);
       if (step === 2) {
@@ -130,20 +101,17 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       }
       setStartInqiryInterval(true);
     }
-    setIsLoading(false);
-    renderSpinner(false);
   };
 
   const getIamDate = () => {
-    let currentDate = new Date();
-    let day = currentDate.getDate();
-    let month = currentDate.getMonth();
-    let year = currentDate.getFullYear();
-    return year + '-' + ('0' + (month + 1)).slice(-2) + '-' + ('0' + day).slice(-2);
+    const currentDate = new Date();
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth();
+    const year = currentDate.getFullYear();
+    return `${year}-${`0${month + 1}`.slice(-2)}-${`0${day}`.slice(-2)}`;
   };
 
   const updateWalletTier = async (nafathRes: INafathInqRes) => {
-    renderSpinner(true);
     const { dispatch } = store || {};
 
     const deviceInfo = await getDeviceInfo();
@@ -194,7 +162,7 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
       onCloseNafathVerificationSheet();
       navigate(screenNames.IDENTITY_SUCCESSFUL);
-      renderSpinner(false);
+
       return;
     }
 
@@ -207,7 +175,17 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         ...updatedValues,
       }),
     );
-    renderSpinner(false);
+  };
+  const dispatch = useDispatch();
+
+  const openTermsAndConditionModal = () => {
+    dispatch(
+      setTermsConditionsVisibility({
+        isVisible: true,
+        isNafathTerms: true,
+      }),
+    );
+    onCloseNafathVerificationSheet();
   };
 
   const nafathInquiry = async () => {
@@ -219,25 +197,35 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
 
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       switch (apiResponse?.response?.status) {
-        case NAFATH_STATUSES.ACCEPTED:
+        case NafathStatus.ACCEPTED:
           setStartInqiryInterval(false);
           updateWalletTier(apiResponse);
           break;
-        case NAFATH_STATUSES.EXPIRED:
+        case NafathStatus.EXPIRED:
           setStartInqiryInterval(false);
-          setAPIError('Sorry! Nafath session has expired. Please try again later');
           break;
-        case NAFATH_STATUSES.REJECTED:
+        case NafathStatus.REJECTED:
           setStartInqiryInterval(false);
-          setAPIError('Sorry ! Nafath request was rejected. Please try again later');
           setStep(1);
           break;
         default:
           break;
       }
     }
-    setIsLoading(false);
   };
+
+  useEffect(() => {
+    let timer: any = null;
+    timer = setInterval(() => {
+      nafathInquiry();
+    }, waitngScnds * 1000);
+
+    if (!startInqiryInterval) {
+      clearInterval(timer);
+    }
+
+    return () => clearInterval(timer);
+  }, [startInqiryInterval]);
 
   const format = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
@@ -245,15 +233,11 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
     return `${minutes < 10 ? '0' : ''}${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
   };
 
-  const onResend = () => {
-    onComplete();
-    navigate(screenNames.IDENTITY_SUCCESSFUL);
-  };
-
   const onTimerCompete = () => {
     setIsExpired(true);
     setStartInqiryInterval(false);
   };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -261,28 +245,18 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
       </IPayView>
       {step === 1 ? (
         <>
-          <IPayPageDescriptionText
-            heading={localizationText.PROFILE.NAFATH_VALIDATION}
-            text={localizationText.SETTINGS.NAFATH_VALIDATION_DESCRIPTION}
-          />
+          <IPayPageDescriptionText heading="PROFILE.NAFATH_VALIDATION" text="SETTINGS.NAFATH_VALIDATION_DESCRIPTION" />
           <IPayPressable style={styles.downloadSection}>
-            <IPayFootnoteText
-              regular={false}
-              style={styles.downloadText}
-              text={localizationText.SETTINGS.DOWNLOAD_NAFATH_ACCOUNT}
-            />
+            <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.DOWNLOAD_NAFATH_ACCOUNT" />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
-          <IPayView style={styles.disclaimer}>
-            <IPayFootnoteText
-              color={colors.natural.natural900}
-              text={localizationText.SETTINGS.NAFATH_TERMS_AND_CONDITION}
-            />
+          <IPayPressable onPress={openTermsAndConditionModal} style={styles.disclaimer}>
+            <IPayFootnoteText color={colors.natural.natural900} text="SETTINGS.NAFATH_TERMS_AND_CONDITION" />
             <IPayIcon icon={icons.infoIcon} size={20} />
-          </IPayView>
+          </IPayPressable>
           <IPayButton
-            btnType="primary"
-            btnText={localizationText.PROFILE.VALIDATE}
+            btnType={buttonVariants.PRIMARY}
+            btnText="PROFILE.VALIDATE"
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
             onPress={() => getNafathRandomNumber()}
             large
@@ -291,22 +265,18 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
         </>
       ) : (
         <>
-          <IPayPageDescriptionText heading={localizationText.SETTINGS.VALIDATE_THROUGH_NAFAH} />
+          <IPayPageDescriptionText heading="SETTINGS.VALIDATE_THROUGH_NAFAH" />
           <IPayPressable style={styles.stepper}>
             {renderStep('1')}
-            <IPayFootnoteText
-              regular={false}
-              style={styles.downloadText}
-              text={localizationText.SETTINGS.OPEN_NAFATH_APP}
-            />
+            <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.OPEN_NAFATH_APP" />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
           <IPayView style={styles.stepTwo}>
             <IPayView style={styles.flexRow}>
               {renderStep('2')}
               <IPayView>
-                <IPayHeadlineText style={styles.sectionText} text={localizationText.HOME.SELECT_CODE} />
-                <IPayCaption1Text text={localizationText.COMMON.INTO_NAFATH_APP} color={colors.primary.primary800} />
+                <IPayHeadlineText style={styles.sectionText} text="HOME.SELECT_CODE" />
+                <IPayCaption1Text text="COMMON.INTO_NAFATH_APP" color={colors.primary.primary800} />
               </IPayView>
             </IPayView>
             <IPayLinearGradientView
@@ -316,17 +286,17 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
             >
               {isExpired ? (
                 <IPayPrimaryButton
-                  btnType="primary"
-                  btnText={localizationText.COMMON.SEND_NEW_CODE}
+                  btnText="COMMON.SEND_NEW_CODE"
                   large
                   style={styles.resendButton}
                   onPress={() => getNafathRandomNumber()}
-                  rightIcon={<IPayIcon icon={icons.refresh} color={colors.natural.natural0} />}
+                  rightIcon={<icons.dottedRefresh />}
                 />
               ) : (
                 <IPayPressable style={styles.codeWrapper}>
                   <IPayGradientText
                     text={`${nafathNumber}`}
+                    shouldTranslate={false}
                     yScale={28}
                     gradientColors={colors.gradient1}
                     fontSize={styles.linearGradientText.fontSize}
@@ -344,24 +314,24 @@ const IPayNafathVerification = forwardRef<{}, IPayNafathVerificationProps>(({ te
                 showExpired={isExpired}
                 intervalTime={duration}
               />
-              <IPayText style={[styles.expireText, isExpired && styles.expireTextColor]}>
-                {isExpired
-                  ? localizationText.COMMON.CODE_HAS_EXPIRED
-                  : `${localizationText.COMMON.CODE_EXPIRES_IN} ${format(counter)}`}
-              </IPayText>
+              <IPayText
+                style={[styles.expireText, isExpired && styles.expireTextColor]}
+                text={isExpired ? t('COMMON.CODE_HAS_EXPIRED') : `${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
+                shouldTranslate={false}
+              />
             </IPayView>
           </IPayView>
           <IPayPressable style={styles.stepper}>
             {renderStep('3')}
             <IPayView style={styles.backSection}>
-              <IPayHeadlineText style={styles.sectionText} text={localizationText.PROFILE.BACK_TO_ALINMA_APP} />
-              <IPayCaption1Text text={localizationText.PROFILE.VERIFY_ACCOUNT} color={colors.primary.primary800} />
+              <IPayHeadlineText style={styles.sectionText} text="PROFILE.BACK_TO_ALINMA_APP" />
+              <IPayCaption1Text text="PROFILE.VERIFY_ACCOUNT" color={colors.primary.primary800} />
             </IPayView>
           </IPayPressable>
         </>
       )}
     </IPayView>
   );
-});
+};
 
 export default IPayNafathVerification;

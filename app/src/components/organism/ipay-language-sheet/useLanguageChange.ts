@@ -1,4 +1,3 @@
-import constants from '@app/constants/constants';
 import { useTypedDispatch } from '@app/store/store';
 import { LanguageCode } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -9,7 +8,7 @@ import RNRestart from 'react-native-restart';
 
 // Hook for modal actions
 export const useModalActions = (ref: any) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen] = useState(false);
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {
@@ -34,15 +33,15 @@ export const useLanguageChange = (handleClosePress: () => void) => {
 
   const handleLanguagePress = useCallback(
     (language: string, isRTL: boolean, code: LanguageCode) => {
-      dispatch(setSelectedLanguage(code));
-      I18nManager.forceRTL(isRTL);
       handleClosePress();
 
-      if (isRTL !== I18nManager.isRTL) {
-        setTimeout(() => {
-          RNRestart.restart();
-        }, constants.RESTART_DELAY_MILISECONDS);
-      }
+      dispatch(setSelectedLanguage(code));
+      I18nManager.forceRTL(isRTL);
+      I18nManager.allowRTL(isRTL);
+
+      setTimeout(() => {
+        RNRestart.restart();
+      }, 300);
     },
     [dispatch, handleClosePress],
   );

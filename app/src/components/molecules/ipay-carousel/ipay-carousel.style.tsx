@@ -2,7 +2,7 @@ import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { verticalScale } from 'react-native-size-matters';
 
-const carouselStyles = (colors: any) =>
+const carouselStyles = () =>
   createStyleSheet({
     defaultCarousel: {
       height: verticalScale(160),

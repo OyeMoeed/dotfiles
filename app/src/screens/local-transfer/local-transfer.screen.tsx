@@ -1,81 +1,87 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
 import { TrashIcon } from '@app/assets/svgs';
 import {
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
-  IPayImage,
   IPayPressable,
   IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
+import {
+  IPayActionSheet,
+  IPayActivateBeneficiary,
+  IPayActivationCall,
+  IPayReceiveCall,
+} from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
-import { SNAP_POINTS } from '@app/constants/constants';
-import { useKeyboardStatus } from '@app/hooks/use-keyboard-status';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import { SNAP_POINT } from '@app/constants/constants';
+import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import deleteLocalTransferBeneficiary from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.service';
+import editLocalTransferBeneficiary from '@app/network/services/local-transfer/edit-beneficiary/edit-beneficiary.service';
+import { ActivationMethods } from '@app/network/services/local-transfer/local-transfer-activate-beneficiary/local-transfer-activate-beneficiary.interface';
+import activateLocalBeneficiary from '@app/network/services/local-transfer/local-transfer-activate-beneficiary/local-transfer-activate-beneficiary.service';
 import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isIosOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   BeneficiaryTypes,
+  ToastTypes,
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant,
-  toastTypes,
 } from '@app/utilities/enums.util';
+import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { ViewStyle } from 'react-native';
-import { BeneficiaryDetails, FooterStatus } from './local-transfer.interface';
+import { useFocusEffect } from '@react-navigation/core';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+import { Keyboard, ViewStyle } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { useKeyboardStatus } from '@app/hooks';
+import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
+import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
 
 const LocalTransferScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const styles = localTransferStyles(colors);
-  const localizationText = useLocalization();
   const beneficiariesToShow = 4;
-  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>([]);
+  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
   const [nickName, setNickName] = useState('');
+  const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
+  const [activateHeight, setActivateHeight] = useState(SNAP_POINT.SMALL);
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const isKeyboardOpen = useKeyboardStatus();
   const { showToast } = useToastContext();
   const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const selectedBeneficiaryRef = useRef<BeneficiaryDetails | null>(null);
   const [apiError, setAPIError] = useState<string>('');
   const sortSheetRef = useRef<bottomSheetTypes>(null);
+  const actionSheetRef = useRef<any>(null);
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
+  const [selectedNumber, setSelectedNumber] = useState<string>('');
+  const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const [viewAll, setViewAll] = useState({
-    active: false,
-    inactive: false,
+    ACTIVATE: false,
+    NEW_BENEFICIARY: false,
   });
   const [sortBy, setSortBy] = useState<string>(BeneficiaryTypes.ACTIVE);
-
-  const renderSpinner = useCallback((isVisbile: boolean) => {
-    if (isVisbile) {
-      showSpinner({
-        variant: spinnerVariant.DEFAULT,
-        hasBackgroundColor: true,
-      });
-    } else {
-      hideSpinner();
-    }
-  }, []);
+  const [isLoadingData, setIsLoadingData] = useState<boolean>(false);
+  const [showEditSheet, setShowEditSheet] = useState<boolean>(false);
+  const [showActivationSheet, setShowActivationSheet] = useState<boolean>(false);
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -84,42 +90,35 @@ const LocalTransferScreen: React.FC = () => {
       borderColor: colors.error.error25,
       isShowRightIcon: false,
       isShowLeftIcon: true,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
     });
   };
 
   const getBeneficiariesData = async () => {
-    renderSpinner(true);
+    setIsLoadingData(true);
     try {
       const apiResponse: LocalTransferBeneficiariesMockProps = await getlocalTransferBeneficiaries();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryData(apiResponse?.data?.beneficiaries);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
+      if (apiResponse?.successfulResponse) {
+        setBeneficiaryData(apiResponse?.response?.beneficiaries);
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
+    setIsLoadingData(false);
   };
 
-  useEffect(() => {
-    getBeneficiariesData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getBeneficiariesData();
+
+      return () => {};
+    }, []),
+  );
 
   const handleOnEditNickName = () => {
     editBeneficiaryRef.current.hide();
-    editNickNameSheetRef?.current?.present();
+    setShowEditSheet(true);
   };
 
   const handleDelete = () => {
@@ -128,6 +127,7 @@ const LocalTransferScreen: React.FC = () => {
   };
 
   const onPressMenuOption = (item: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = item;
     setNickName(item?.nickname ?? '');
     setselectedBeneficiary(item);
     setTimeout(() => {
@@ -154,43 +154,53 @@ const LocalTransferScreen: React.FC = () => {
 
   const showUpdateBeneficiaryToast = () => {
     showToast({
-      title: localizationText.BENEFICIARY_OPTIONS.NAME_CHANGED,
+      title: 'BENEFICIARY_OPTIONS.NAME_CHANGED',
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.tick_circle} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
+      titleStyle: styles.toastTitle,
     });
   };
 
-  const handleChangeBeneficiaryName = () => {
-    showUpdateBeneficiaryToast();
-    editNickNameSheetRef?.current?.close();
+  const handleChangeBeneficiaryName = async () => {
+    const activateBeneficiaryPayload = {
+      nickname: nickName,
+    };
+    try {
+      await editLocalTransferBeneficiary(
+        selectedBeneficiaryRef?.current?.beneficiaryCode || '',
+        activateBeneficiaryPayload,
+      );
+
+      showUpdateBeneficiaryToast();
+      editNickNameSheetRef?.current?.close();
+      getBeneficiariesData();
+    } catch (error: any) {
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+    }
+    setShowEditSheet(false);
   };
 
   const showDeleteBeneficiaryToast = () => {
     setDeleteBeneficiary(false);
     showToast({
-      title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
+      title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
       subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-      containerStyle: styles.toast,
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
-      toastType: toastTypes.SUCCESS,
+      toastType: ToastTypes.SUCCESS,
       titleStyle: styles.toastTitle,
     });
   };
 
-  const onPressBtn = (beneficiaryStatus: string) => {
-    if (beneficiaryStatus === BeneficiaryTypes.ACTIVE) navigate(ScreenNames.TRANSFER_INFORMATION);
-  };
-
   const beneficiaryItem = ({ item }: { item: BeneficiaryDetails }) => {
-    const { beneficiaryBankDetail, fullName, bankLogo, beneficiaryAccountNumber, beneficiaryStatus } = item;
+    const { beneficiaryBankDetail, fullName, beneficiaryAccountNumber, beneficiaryStatus } = item;
     return (
       <IPayList
-        style={styles.listContainer}
+        shouldTranslateTitle={false}
+        containerStyle={styles.listContainer}
         textStyle={styles.textStyle}
         title={fullName}
         subTitle={beneficiaryAccountNumber}
@@ -199,15 +209,18 @@ const LocalTransferScreen: React.FC = () => {
         subTitleLines={1}
         adjacentTitle={beneficiaryBankDetail?.bankName}
         centerContainerStyles={styles.listCenterContainer}
-        leftIcon={<IPayImage style={styles.bankLogo} image={bankLogo ?? images.alinmaBankLogo} />}
+        leftIcon={<IPayIcon icon={item?.beneficiaryBankDetail?.bankCode} size={30} />}
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton
-              onPress={() => onPressBtn(beneficiaryStatus)}
+              onPress={() => {
+                // eslint-disable-next-line @typescript-eslint/no-use-before-define
+                onPressBtn(item);
+              }}
               btnText={
                 beneficiaryStatus === BeneficiaryTypes.ACTIVE
-                  ? localizationText.LOCAL_TRANSFER.TRANSFER
-                  : localizationText.BENEFICIARY_OPTIONS.ACTIVATE
+                  ? 'LOCAL_TRANSFER.TRANSFER'
+                  : 'BENEFICIARY_OPTIONS.ACTIVATE'
               }
               btnType={buttonVariants.PRIMARY}
               small
@@ -253,18 +266,14 @@ const LocalTransferScreen: React.FC = () => {
   const renderHeader = (sortType: string, count: number, totalCount: number) =>
     totalCount ? (
       <IPayView style={styles.listHeader}>
-        <IPayFootnoteText
-          text={
-            sortType === BeneficiaryTypes.ACTIVE ? localizationText.COMMON.ACTIVE : localizationText.COMMON.INACTIVE
-          }
-        />
-        <IPayFootnoteText text={`(${count} ${localizationText.HOME.OF} ${totalCount})`} />
+        <IPayFootnoteText text={sortType === BeneficiaryTypes.ACTIVE ? 'COMMON.ACTIVE' : 'COMMON.INACTIVE'} />
+        <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} />
       </IPayView>
     ) : (
       <IPayView />
     );
 
-  const renderFooter = (statusKey: FooterStatus, totalCount: number) =>
+  const renderFooter = (statusKey: BeneficiaryTypes, totalCount: number) =>
     totalCount > beneficiariesToShow ? (
       <IPayPressable
         style={styles.listFooter}
@@ -274,7 +283,7 @@ const LocalTransferScreen: React.FC = () => {
           style={styles.capitalizeTitle}
           color={colors.primary.primary500}
           regular
-          text={viewAll[statusKey] ? localizationText.COMMON.CLOSE : localizationText.COMMON.VIEW_ALL}
+          text={viewAll[statusKey] ? 'COMMON.CLOSE' : 'COMMON.VIEW_ALL'}
         />
         <IPayIcon
           icon={viewAll[statusKey] ? icons.arrowUp : icons.arrowDown}
@@ -287,24 +296,155 @@ const LocalTransferScreen: React.FC = () => {
     );
 
   const listData = (viewAllStatus: boolean, sort: string) =>
-    viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 3);
+    viewAllStatus ? getSortedData(sort) : getSortedData(sort).slice(0, 4);
 
   const hasBeneficiariesData = () =>
     [...getSortedData(BeneficiaryTypes.ACTIVE), ...getSortedData(BeneficiaryTypes.INACTIVE)]?.length;
+
+  // IVR
+  const currentOptionText =
+    currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
+      ? 'ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS'
+      : 'ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE';
+
+  const showActionSheet = (phoneNumber: string) => {
+    setSelectedNumber(phoneNumber);
+    setShowActivationSheet(false);
+    setTimeout(() => {
+      actionSheetRef.current.show();
+    }, 500);
+  };
+  const closeActivateBeneficiary = useCallback(() => {
+    setShowActivationSheet(false);
+  }, []);
+
+  const handleCallAlinma = useCallback(() => {
+    setActivateHeight(SNAP_POINT.MEDIUM_LARGE);
+    setCurrentOption(ActivateViewTypes.CALL_ALINMA);
+  }, []);
+
+  const onPressActivateBeneficiary = async () => {
+    const activateBeneficiaryPayload = {
+      beneficiaryCode: selectedBeneficiaryRef.current?.beneficiaryCode,
+      activationMethod: ActivationMethods.IVR,
+    };
+
+    try {
+      const apiResponse = await activateLocalBeneficiary(activateBeneficiaryPayload);
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          return apiResponse?.status?.type || '';
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error);
+          return null;
+        default:
+          return null;
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      return null;
+    }
+  };
+
+  const handleReceiveCall = useCallback(async () => {
+    const repsonse = await onPressActivateBeneficiary();
+    if (repsonse === ApiResponseStatusType.SUCCESS) {
+      setActivateHeight(SNAP_POINT.MEDIUM_LARGE);
+      setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
+    }
+  }, []);
+
+  const handleActivateBeneficiary = useCallback(() => {
+    setShowActivationSheet(true);
+    setActivateHeight(SNAP_POINT.X_SMALL);
+    setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
+  }, []);
+
+  const onPressBtn = (beneficiary: BeneficiaryDetails) => {
+    selectedBeneficiaryRef.current = beneficiary;
+    if (beneficiary.beneficiaryStatus === BeneficiaryTypes.ACTIVE)
+      navigate(ScreenNames.TRANSFER_INFORMATION, { beneficiaryDetails: beneficiary });
+    else handleActivateBeneficiary();
+  };
+
+  const makeTransfer = () => {
+    setShowActivationSheet(false);
+    getBeneficiariesData();
+  };
+
+  const renderCurrentOption = useMemo(() => {
+    switch (currentOption) {
+      case ActivateViewTypes.RECEIVE_CALL:
+        return (
+          <IPayReceiveCall
+            hanldePageNavigation={makeTransfer}
+            activateInternationalBeneficiary={onPressActivateBeneficiary}
+            guideToReceiveCall={guideToReceiveCall}
+            makeTransfer={false}
+          />
+        );
+      case ActivateViewTypes.CALL_ALINMA:
+        return (
+          <IPayActivationCall contactList={contactList} guideStepsToCall={guideStepsToCall} close={showActionSheet} />
+        );
+      default:
+        return <IPayActivateBeneficiary handleReceiveCall={handleReceiveCall} handleCallAlinma={handleCallAlinma} />;
+    }
+  }, [currentOption]);
+
+  const hideContactUs = () => {
+    actionSheetRef.current.hide();
+  };
+
+  const onPressCall = (value: string) => {
+    openPhoneNumber({ phoneNumber: value, colors, showToast });
+    hideContactUs();
+  };
+  const handleFinalAction = useCallback((index: number, value: string) => {
+    switch (index) {
+      case 0:
+        onPressCall(value);
+        break;
+      case 1:
+        hideContactUs();
+        break;
+      default:
+        break;
+    }
+  }, []);
+
+  const onDeleteBeneficiary = async () => {
+    setDeleteBeneficiary(false);
+    try {
+      const apiResponse = await deleteLocalTransferBeneficiary(selectedBeneficiaryRef.current?.beneficiaryCode);
+
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        getBeneficiariesData();
+        showDeleteBeneficiaryToast();
+      } else {
+        renderToast('ERROR.SOMETHING_WENT_WRONG');
+      }
+    } catch (error: any) {
+      setAPIError('ERROR.SOMETHING_WENT_WRONG');
+      renderToast('ERROR.SOMETHING_WENT_WRONG');
+    }
+  };
 
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="local-transfer-ipay-header"
         backBtn
-        title={localizationText.HOME.LOCAL_TRANSFER}
+        title="HOME.LOCAL_TRANSFER"
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
           <IPayPressable onPress={() => navigate(ScreenNames.BENEFICIARY_TRANSACTION_HISTORY)}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
-              <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
+              <IPaySubHeadlineText regular color={colors.primary.primary500} text="COMMON.HISTORY" />
             </IPayView>
           </IPayPressable>
         }
@@ -316,7 +456,7 @@ const LocalTransferScreen: React.FC = () => {
               <IPayTextInput
                 text={search}
                 onChangeText={handleSearchChange}
-                placeholder={localizationText.COMMON.SEARCH}
+                placeholder="COMMON.SEARCH"
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
                 style={styles.inputStyle}
@@ -340,12 +480,12 @@ const LocalTransferScreen: React.FC = () => {
                   >
                     {!!getSortedData(BeneficiaryTypes.ACTIVE)?.length && (
                       <IPayFlatlist
-                        data={listData(viewAll.active, BeneficiaryTypes.ACTIVE)}
+                        data={listData(viewAll.ACTIVATE, BeneficiaryTypes.ACTIVE)}
                         renderItem={beneficiaryItem}
                         ListHeaderComponent={() =>
                           renderHeader(
                             BeneficiaryTypes.ACTIVE,
-                            listData(viewAll.active, BeneficiaryTypes.ACTIVE)?.length,
+                            listData(viewAll.ACTIVATE, BeneficiaryTypes.ACTIVE)?.length,
                             getSortedData(BeneficiaryTypes.ACTIVE)?.length,
                           )
                         }
@@ -354,13 +494,13 @@ const LocalTransferScreen: React.FC = () => {
                     )}
                     {!!getSortedData(BeneficiaryTypes.INACTIVE)?.length && (
                       <IPayFlatlist
-                        data={listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)}
+                        data={listData(viewAll.NEW_BENEFICIARY, BeneficiaryTypes.INACTIVE)}
                         renderItem={beneficiaryItem}
                         keyExtractor={(item) => item.id}
                         ListHeaderComponent={() =>
                           renderHeader(
                             BeneficiaryTypes.INACTIVE,
-                            listData(viewAll.inactive, BeneficiaryTypes.INACTIVE)?.length,
+                            listData(viewAll.NEW_BENEFICIARY, BeneficiaryTypes.INACTIVE)?.length,
                             getSortedData(BeneficiaryTypes.INACTIVE)?.length,
                           )
                         }
@@ -374,30 +514,34 @@ const LocalTransferScreen: React.FC = () => {
               </IPayView>
             ) : (
               <IPayView style={styles.noResultContainer}>
-                <IPayNoResult
-                  showIcon
-                  icon={icons.user_search}
-                  iconColor={colors.primary.primary800}
-                  iconSize={40}
-                  message={localizationText.LOCAL_TRANSFER.NO_BENEFICIARIES}
-                  containerStyle={styles.noResult as ViewStyle}
-                  testID="no-result"
-                />
-                <IPayButton
-                  btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
-                  medium
-                  onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
-                  btnType={buttonVariants.PRIMARY}
-                  btnStyle={styles.btnStyle}
-                  leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
-                />
+                {!isLoadingData && (
+                  <>
+                    <IPayNoResult
+                      showIcon
+                      icon={icons.user_search}
+                      iconColor={colors.primary.primary800}
+                      iconSize={40}
+                      message="LOCAL_TRANSFER.NO_BENEFICIARIES"
+                      containerStyle={styles.noResult as ViewStyle}
+                      testID="no-result"
+                    />
+                    <IPayButton
+                      btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
+                      medium
+                      onPress={() => navigate(ScreenNames.NEW_BENEFICIARY, {})}
+                      btnType={buttonVariants.PRIMARY}
+                      btnStyle={styles.btnStyle}
+                      leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
+                    />
+                  </>
+                )}
               </IPayView>
             )}
           </IPayView>
 
           {hasBeneficiariesData() ? (
             <IPayButton
-              btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+              btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
               btnType={buttonVariants.OUTLINED}
               medium
               leftIcon={<IPayIcon icon={icons.add_bold} size={24} color={colors.primary.primary500} />}
@@ -412,29 +556,25 @@ const LocalTransferScreen: React.FC = () => {
       <IPayAlert
         visible={deleteBeneficiary}
         onClose={onDeleteCancel}
-        title={localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY}
-        message={localizationText.BENEFICIARY_OPTIONS.DELETION_CONFIRMATION}
+        title="BENEFICIARY_OPTIONS.DELETE_BENFICIARY"
+        message="BENEFICIARY_OPTIONS.DELETION_CONFIRMATION"
         type={alertType.SIDE_BY_SIDE}
         closeOnTouchOutside
         variant={alertVariant.DESTRUCTIVE}
         icon={<IPayIcon icon={icons.TRASH} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: localizationText.COMMON.CANCEL,
+          text: 'COMMON.CANCEL',
           onPress: onDeleteCancel,
         }}
         secondaryAction={{
-          text: localizationText.COMMON.DELETE,
-          onPress: showDeleteBeneficiaryToast,
+          text: 'COMMON.DELETE',
+          onPress: onDeleteBeneficiary,
         }}
       />
       <IPayActionSheet
         ref={editBeneficiaryRef}
-        options={[
-          localizationText.COMMON.CANCEL,
-          localizationText.BENEFICIARY_OPTIONS.EDIT_NICK_NAME,
-          localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY,
-        ]}
+        options={['COMMON.CANCEL', 'BENEFICIARY_OPTIONS.EDIT_NICK_NAME', 'BENEFICIARY_OPTIONS.DELETE_BENFICIARY']}
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}
@@ -442,31 +582,60 @@ const LocalTransferScreen: React.FC = () => {
         bodyStyle={styles.actionSheetStyle}
         onPress={(index) => handleBeneficiaryActions(index)}
       />
-      <IPayBottomSheet
-        heading={localizationText.BENEFICIARY_OPTIONS.EDIT_NICK_NAME}
+
+      <IPayPortalBottomSheet
+        onCloseBottomSheet={() => setShowEditSheet(false)}
+        heading="BENEFICIARY_OPTIONS.EDIT_NICK_NAME"
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={['1%', isIosOS && isKeyboardOpen ? '63%' : '35%']}
+        customSnapPoint={isKeyboardOpen ? SNAP_POINT.SMALL : SNAP_POINT.XX_SMALL}
         ref={editNickNameSheetRef}
+        isVisible={showEditSheet}
       >
         <IPayView style={styles.editStyles}>
           <IPayTextInput
+            maxLength={50}
             containerStyle={styles.inputStyles}
             onChangeText={setNickName}
-            label={localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_NICK_NAME}
+            label="BENEFICIARY_OPTIONS.BENEFICIARY_NICK_NAME"
             text={nickName}
           />
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             large
-            btnText={localizationText.COMMON.DONE}
+            btnText="COMMON.DONE"
+            disabled={!nickName}
             btnIconsDisabled
-            onPress={handleChangeBeneficiaryName}
+            onPress={() => {
+              Keyboard.dismiss();
+              handleChangeBeneficiaryName();
+            }}
           />
         </IPayView>
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
+      <IPayPortalBottomSheet
+        heading={currentOptionText}
+        onCloseBottomSheet={closeActivateBeneficiary}
+        customSnapPoint={activateHeight}
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={showActivationSheet}
+        enablePanDownToClose
+      >
+        <IPayView style={styles.sheetContainerStyles}>{renderCurrentOption}</IPayView>
+      </IPayPortalBottomSheet>
       <IPayBeneficiariesSortSheet sortSheetRef={sortSheetRef} setSortByActive={setSortBy} sortByActive={sortBy} />
+      <IPayActionSheet
+        ref={actionSheetRef}
+        options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}
+        cancelButtonIndex={1}
+        showCancel
+        onPress={(index) => handleFinalAction(index, selectedNumber)}
+        bodyStyle={styles.bodyStyle}
+      />
     </IPaySafeAreaView>
   );
 };

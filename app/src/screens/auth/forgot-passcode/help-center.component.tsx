@@ -1,6 +1,4 @@
 import { IPayButton } from '@app/components/molecules';
-import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import {
@@ -17,11 +15,11 @@ import {
 import React, { useEffect, useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import getFAQ from '@app/network/services/core/faq/faq.service';
+import { buttonVariants } from '@app/utilities';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
-const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs }) => {
-  const localizationText = useLocalization();
+const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressContactUs, hideFAQError = false }) => {
   const { colors } = useTheme();
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
@@ -31,7 +29,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
   const [faqsItems, setFaqsItems] = useState([]);
 
   const fetchFaqItems = async () => {
-    const apiResponse: any = await getFAQ();
+    const apiResponse: any = await getFAQ(hideFAQError);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       setFaqsItems(apiResponse?.response?.faqs);
@@ -60,7 +58,7 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
         <>
           {item.answer.map((ques, answerIndex) => (
             <IPayCaption1Text
-              key={answerIndex}
+              key={`${`${answerIndex}IPayCaption1Text`}`}
               regular
               style={[
                 styles.faqItemAnswer,
@@ -82,8 +80,8 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
         <>
           <IPayView style={styles.titleContainer}>
             <icons.question width={scale(40)} height={verticalScale(40)} />
-            <IPayTitle2Text text={localizationText.FORGOT_PASSCODE.FAQ} style={styles.title} />
-            <IPayCaption1Text regular text={localizationText.FORGOT_PASSCODE.FAQ_DEFINITION} style={styles.subtitle} />
+            <IPayTitle2Text text="FORGOT_PASSCODE.FAQ" style={styles.title} />
+            <IPayCaption1Text regular text="FORGOT_PASSCODE.FAQ_DEFINITION" style={styles.subtitle} />
           </IPayView>
           <IPayFlatlist
             scrollEnabled={false}
@@ -92,16 +90,12 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
             keyExtractor={(item, index) => index.toString()}
           />
           <IPayView style={styles.contactUsContainer}>
-            <IPaySubHeadlineText regular style={styles.contactUsText}>
-              {localizationText.COMMON.ASSISTANCE}
-            </IPaySubHeadlineText>
-            <IPayCaption1Text regular style={styles.contactUsSubText}>
-              {localizationText.COMMON.CONTACT_SERVICE_TEAM}
-            </IPayCaption1Text>
+            <IPaySubHeadlineText regular style={styles.contactUsText} text="COMMON.ASSISTANCE" />
+            <IPayCaption1Text regular style={styles.contactUsSubText} text="COMMON.CONTACT_SERVICE_TEAM" />
             <IPayButton
-              btnType="primary"
+              btnType={buttonVariants.PRIMARY}
               rightIcon={<IPayIcon icon={icons.phone} size={20} color={colors.secondary.secondary800} />}
-              btnText={localizationText.COMMON.CONTACT_US}
+              btnText="COMMON.CONTACT_US"
               textColor={colors.secondary.secondary800}
               btnStyle={styles.buttonBg}
               large

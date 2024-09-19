@@ -1,6 +1,6 @@
 // permissionService.js
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
+import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
 import { PERMISSIONS, RESULTS, request } from 'react-native-permissions';
 import { useDispatch } from 'react-redux';
@@ -35,9 +35,9 @@ const checkLocationPermission = async () => {
 // Custom hook for permission check and alert handling
 export const useLocationPermission = () => {
   const dispatch = useDispatch();
-  const localizationText = useLocalization();
-  const title = localizationText.LOCATION.PERMISSION_REQUIRED;
-  const description = localizationText.LOCATION.LOCATION_PERMISSION_REQUIRED;
+  const { t } = useTranslation();
+  const title = t('LOCATION.PERMISSION_REQUIRED');
+  const description = t('LOCATION.LOCATION_PERMISSION_REQUIRED');
 
   const checkAndHandlePermission = async () => {
     const hasLocationPermission = await checkLocationPermission();

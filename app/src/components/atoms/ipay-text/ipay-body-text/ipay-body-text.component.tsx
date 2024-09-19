@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { JSX } from 'react';
 import IPayText from '../ipay-base-text/ipay-text.component';
 import { typography } from '../utilities/typography-helper.util';
 import { IPayBodyTextProps } from './ipay-body-text.interface';
@@ -17,6 +17,7 @@ const IPayBodyText: React.FC<IPayBodyTextProps> = ({
   numberOfLines,
   children,
   color,
+  shouldTranslate = true,
 }: IPayBodyTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -25,6 +26,7 @@ const IPayBodyText: React.FC<IPayBodyTextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>

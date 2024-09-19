@@ -11,6 +11,8 @@ const homeStyles = (theme: any) =>
     topNavCon: {
       marginTop: SCALE_16,
       marginHorizontal: moderateScale(24),
+      // TO KEEP BUTTONS PRESSABLE WHEN THE SHEET IS OPEN
+      zIndex: 2,
     },
     balanceCon: {
       marginTop: SCALE_16,
@@ -36,7 +38,7 @@ const homeStyles = (theme: any) =>
 
       borderRadius: moderateScale(10),
     },
-    ListView: {
+    listView: {
       borderBottomWidth: moderateScale(1),
 
       padding: moderateScale(1),

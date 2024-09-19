@@ -1,6 +1,6 @@
-import { fallbackVariants } from '@app/utilities/enums.util';
+import { FallbackVariants } from '@app/utilities/enums.util';
 
 export interface IPayFallBackImageProps {
-  variant?: fallbackVariants;
+  variant?: FallbackVariants;
   // variants of the fallback
 }

@@ -139,7 +139,14 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
 
     input: {
-      paddingVertical: moderateScale(12),
+      ...Platform.select({
+        android: {
+          paddingVertical: moderateScale(-5),
+        },
+        ios: {
+          paddingVertical: moderateScale(12),
+        },
+      }),
       marginVertical: moderateScale(2),
     },
     manualInput: {
@@ -208,8 +215,11 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     },
     inputStyle: {
       minWidth: scaleSize(65),
+      textAlign: 'right',
+      color: themeColors.primary.primary900,
     },
     inputActiveStyle: {
+      color: themeColors.primary.primary900,
       ...Platform.select({
         android: {
           marginBottom: moderateScale(5),

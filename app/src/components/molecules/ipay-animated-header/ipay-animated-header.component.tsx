@@ -1,6 +1,6 @@
 import { IPayAnimatedView } from '@app/components/atoms';
 import { animateValue } from '@app/ipay-animations/ipay-animations';
-import { OnboardingSteps } from '@app/screens/auth/onboarding/onboarding-enum.util';
+import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import React from 'react';
 import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { IPayAnimatedHeaderProps } from './ipay-animated-header.interface';

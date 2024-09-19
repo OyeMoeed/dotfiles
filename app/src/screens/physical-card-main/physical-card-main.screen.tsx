@@ -3,10 +3,9 @@ import { IPayButton, IPayCarousel, IPayHeader } from '@app/components/molecules'
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
-import { buttonVariants, CAROUSEL_MODES } from '@app/utilities/enums.util';
+import { buttonVariants, CarouselModes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import useCardsData from '@app/screens/cards/use-cards-data';
@@ -19,7 +18,6 @@ const PhysicalCardMainScreen: React.FC = () => {
   const { colors } = useTheme();
   const { CARD_DATA } = useCardsData();
   const styles = physicalCardMainStyles(colors);
-  const localizationText = useLocalization();
   const [currentCard, setCurrentCard] = useState<CardInterface>(CARD_DATA[0]); // #TODO will be replaced with API data
 
   const onChangeIndex = (index: number) => {
@@ -40,7 +38,7 @@ const PhysicalCardMainScreen: React.FC = () => {
             });
           }}
           btnIconsDisabled
-          btnText={localizationText.CARD_OPTIONS.PRINT_CARD}
+          btnText="CARD_OPTIONS.PRINT_CARD"
           large
           btnType={buttonVariants.PRIMARY}
           btnStyle={styles.btnStyle}
@@ -49,11 +47,7 @@ const PhysicalCardMainScreen: React.FC = () => {
         <IPayView style={styles.cardPrintedContainer}>
           <IPayView style={styles.cardPrintedChildContainer}>
             <IPayIcon icon={icons.card} size={16} color={colors.natural.natural930} />
-            <IPaySubHeadlineText
-              color={colors.natural.natural700}
-              regular
-              text={localizationText.PHYSICAL_CARD.CARD_PRINTED}
-            />
+            <IPaySubHeadlineText color={colors.natural.natural700} regular text="PHYSICAL_CARD.CARD_PRINTED" />
           </IPayView>
         </IPayView>
       )}
@@ -62,20 +56,20 @@ const PhysicalCardMainScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView testID="ipay-safearea">
-      <IPayHeader title={localizationText.CARD_OPTIONS.PHYSICAL_CARD} backBtn applyFlex />
+      <IPayHeader title="CARD_OPTIONS.PHYSICAL_CARD" backBtn applyFlex />
 
       <IPayFootnoteText
         style={styles.headerText}
         color={colors.primary.primary900}
         regular={false}
-        text={localizationText.PHYSICAL_CARD.CHOOSE_FROM_YOUR}
+        text="PHYSICAL_CARD.CHOOSE_FROM_YOUR"
       />
 
       <IPayView style={styles.cardsContainer}>
         <IPayCarousel
           data={CARD_DATA.slice(0, 3)}
           modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-          mode={CAROUSEL_MODES.PARALLAX}
+          mode={CarouselModes.PARALLAX}
           width={SCREEN_WIDTH}
           loop={false}
           height={verticalScale(CARD_CONTAINER_HEIGHT)}
@@ -89,13 +83,13 @@ const PhysicalCardMainScreen: React.FC = () => {
             style={styles.textCenter}
             regular
             color={colors.natural.natural500}
-            text={localizationText.PHYSICAL_CARD.CLICK_TO_ISSUE_YOUR}
+            text="PHYSICAL_CARD.CLICK_TO_ISSUE_YOUR"
           />
           <IPayFootnoteText
             style={styles.textCenter}
             regular
             color={colors.natural.natural500}
-            text={localizationText.PHYSICAL_CARD.ITS_DETAILS_WILL_BE}
+            text="PHYSICAL_CARD.ITS_DETAILS_WILL_BE"
           />
         </IPayView>
         <IPayButton
@@ -106,7 +100,7 @@ const PhysicalCardMainScreen: React.FC = () => {
           }
           btnType={buttonVariants.LINK_BUTTON}
           btnIconsDisabled
-          btnText={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD}
+          btnText="PHYSICAL_CARD.ISSUE_A_NEW_CARD"
         />
       </IPayView>
     </IPaySafeAreaView>

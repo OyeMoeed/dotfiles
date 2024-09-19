@@ -56,6 +56,10 @@ const atmDetailsStyle = (colors: typeof themeColors) =>
       borderRadius: moderateScale(16),
       overflow: 'hidden',
     },
+    marker: {
+      width: moderateScale(30),
+      height: moderateScale(30),
+    },
   });
 
 export default atmDetailsStyle;

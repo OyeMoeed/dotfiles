@@ -96,7 +96,7 @@ const images = {
   placeholderImage: require('./placholder.png'),
   mobilityLogo: require('./mobility-logo.png'),
   uberLogo: require('./uber-logo.png'),
-  playStatuon: require('./playstations.png'),
+  playStation: require('./playstations.png'),
   food: require('./food.png'),
   onlineGames: require('./online-games.png'),
   entertainment: require('./entertainment.png'),
@@ -105,11 +105,13 @@ const images = {
   itunes: require('./itunes.png'),
   googlePlay: require('./google-play.png'),
   onlineStore: require('./online-store.png'),
+  xbox: require('./xbox.png'),
   transportation: require('./transportation.png'),
   spotifyCard: require('./spotify-card.png'),
   offerPlaceholder: require('./offer-placeholder.png'),
   eidMubarak2: require('./eid-mubarak2.png'),
   masterIcon: require('./masterIcon.png'),
+  mastercardIcon: require('./mastercard-icon.png'),
   truckTime: require('./truck-time.png'),
 };
 

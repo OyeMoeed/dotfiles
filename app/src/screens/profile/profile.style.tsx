@@ -10,7 +10,7 @@ const profileStyles = (colors: any) =>
       alignItems: 'center',
       marginTop: scaleSize(30),
     },
-    SafeAreaView2: {
+    safeAreaView2: {
       flex: 1,
       marginBottom: moderateScale(20),
     },

@@ -70,12 +70,27 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
           </IPayView>
           <IPayView style={styles.iconsContainer}>
             {cardType === CardTypes.CLASSIC ? (
-              <IPayImage testID="madaIcon" style={styles.madaIcon} image={images.madaIcon} />
+              <IPayImage testID="madaIcon" resizeMode="contain" style={styles.madaIcon} image={images.madaIcon} />
             ) : (
-              <IPayImage style={[styles.cashbackImage, tintStyle]} testID="cashback" image={images.cashback} />
+              <IPayImage
+                style={[styles.cashbackImage, tintStyle]}
+                testID="cashback"
+                image={images.cashback}
+                resizeMode="contain"
+              />
             )}
-            <IPayImage style={[styles.visaIcon, tintStyle]} testID="visaIcon" image={images.visaIcon} />
-            <IPayImage style={[styles.logoIcon, tintStyle]} testID="logoIconGradient" image={images.logoIconGradient} />
+            <IPayImage
+              style={[styles.visaIcon, tintStyle]}
+              resizeMode="contain"
+              testID="visaIcon"
+              image={images.visaIcon}
+            />
+            <IPayImage
+              style={[styles.logoIcon, tintStyle]}
+              resizeMode="contain"
+              testID="logoIconGradient"
+              image={images.logoIconGradient}
+            />
           </IPayView>
         </IPayView>
       </ImageBackground>

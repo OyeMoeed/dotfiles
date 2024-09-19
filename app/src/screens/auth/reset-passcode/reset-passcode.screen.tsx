@@ -5,7 +5,6 @@ import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import colors from '@app/styles/colors.const';
 import { useNavigation } from '@react-navigation/native';
@@ -16,11 +15,22 @@ import resetPasscodeStyles from './reset-passcode.styles';
 const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassCode, passcodeError }, ref) => {
   const styles = resetPasscodeStyles();
   const navigation = useNavigation();
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
+
   useEffect(() => {
     setTopLevelNavigator(navigation);
   });
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg || 'ERROR.API_ERROR_RESPONSE',
+      subTitle: 'CHANGE_PIN.PLEASE_ENSURE_PASSCODE',
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      isBottomSheet: true,
+    });
+  };
 
   useImperativeHandle(ref, () => ({
     triggerToast: (toastMsg: string) => {
@@ -28,26 +38,13 @@ const IPayResetPasscode = forwardRef<{}, IPayResetPasscodeProps>(({ onEnterPassC
     },
   }));
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg || localizationText.ERROR.API_ERROR_RESPONSE,
-      subTitle: localizationText.CHANGE_PIN.PLEASE_ENSURE_PASSCODE,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-      isBottomSheet: true,
-    });
-  };
   return (
     <IPayView style={styles.container}>
       <IPayView style={styles.lockIconView}>
         <BulkLock />
       </IPayView>
       <IPayView style={styles.headingView}>
-        <IPayPageDescriptionText
-          heading={localizationText.SETTINGS.CURRENT_PASSCODE}
-          text={localizationText.SETTINGS.ENTER_CURRENT_PASSCODE}
-        />
+        <IPayPageDescriptionText heading="SETTINGS.CURRENT_PASSCODE" text="SETTINGS.ENTER_CURRENT_PASSCODE" />
       </IPayView>
       <IPayView style={styles.fill}>
         <IPayPasscode passcodeError={passcodeError} data={constants.DIALER_DATA} onEnterPassCode={onEnterPassCode} />

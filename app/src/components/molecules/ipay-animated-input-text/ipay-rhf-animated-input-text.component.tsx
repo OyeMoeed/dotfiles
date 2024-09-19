@@ -6,6 +6,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { UseControllerProps, useController, useFormContext } from 'react-hook-form';
 import { Animated, StyleProp, TextInput, ViewStyle } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import inputFieldStyles from './ipay-animated-input-text.styles';
 
@@ -42,6 +43,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
     },
     ref,
   ) => {
+    const { t } = useTranslation();
     const { colors } = useTheme();
     const styles = inputFieldStyles(colors);
     const {
@@ -91,7 +93,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
     };
 
     return (
-      <IPayView style={[mainContainerStyles]} testID={`${testID}-animated-input`}>
+      <IPayView style={mainContainerStyles} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
             styles.container,
@@ -105,7 +107,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
           <IPayView style={styles.iconAndInputStyles}>
             {rightIcon}
             <IPayView style={styles.outerView}>
-              <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
+              <Animated.Text style={[labelStyle, labelColor]}>{t(label)}</Animated.Text>
               <TextInput
                 ref={ref}
                 {...props}
@@ -130,7 +132,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
               style={styles.closeIcon}
               onPressIn={onClearInput}
             >
-              {customIcon ? customIcon : <IPayIcon icon={icons.close} />}
+              {customIcon || <IPayIcon icon={icons.close} />}
             </IPayPressable>
           )}
         </IPayView>

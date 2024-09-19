@@ -1,11 +1,11 @@
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { useTypedSelector } from '@app/store/store';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PasscodeChangeState, PasscodeTypes } from './settings.interface';
 
 const useSettings = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [currentPasscode, setCurrentPasscode] = useState<string>('');
   const [newPaasscode, setNewPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState(false);
@@ -14,18 +14,6 @@ const useSettings = () => {
   const openBottomSheet = useRef<bottomSheetTypes>(null);
   const { passCode } = useTypedSelector((state) => state.appDataReducer.appData);
   const [renderView, setRenderView] = useState(PasscodeTypes.ResetPasscode);
-  const onEnterPassCode = (currentCode: string) => {
-    if (currentCode.length === 4) {
-      if (currentCode == passCode) {
-        changeView({ currentCode, nextComponent: PasscodeTypes.NewPasscode });
-      } else {
-        setPasscodeError(true);
-        currentPasscodeRef.current?.triggerToast(localizationText.PROFILE.PASSCODE_ERROR);
-      }
-    } else {
-      setPasscodeError(false);
-    }
-  };
 
   const changeView = (data: PasscodeChangeState) => {
     if (data?.currentCode) setCurrentPasscode(data?.currentCode);
@@ -33,12 +21,23 @@ const useSettings = () => {
     setRenderView(data.nextComponent);
   };
 
-  //close passcode sheet
+  const onEnterPassCode = (currentCode: string) => {
+    if (currentCode.length === 4) {
+      if (currentCode === passCode) {
+        changeView({ currentCode, nextComponent: PasscodeTypes.NewPasscode });
+      } else {
+        setPasscodeError(true);
+        currentPasscodeRef.current?.triggerToast(t('PROFILE.PASSCODE_ERROR'));
+      }
+    } else {
+      setPasscodeError(false);
+    }
+  };
+
   const onCloseBottomSheet = () => {
     changePasscodeRef.current?.resetInterval();
     openBottomSheet.current?.close();
   };
-  //open passcode sheet
   const onOpenPasscodeSheet = () => {
     setRenderView(PasscodeTypes.ResetPasscode);
     setPasscodeError(false);

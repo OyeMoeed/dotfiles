@@ -18,6 +18,8 @@ const cardStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
+      // TO KEEP BUTTONS PRESSABLE WHEN THE SHEET IS OPEN
+      zIndex: 2,
     },
     noResultContainer: {
       flex: 1,
@@ -44,6 +46,9 @@ const cardStyles = (themeColors: typeof colors) =>
     sheetBackground: {
       backgroundColor: themeColors.primary.primary10,
       borderRadius: scaleFont(28),
+    },
+    actionSheetStyle: {
+      bottom: verticalScale(80),
     },
   });
 

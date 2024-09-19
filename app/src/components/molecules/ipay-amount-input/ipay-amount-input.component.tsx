@@ -1,12 +1,12 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayInput, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { formatCurrencyValue } from '@app/utilities/currency-helper.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
+
 const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   style,
   inputStyles,
@@ -17,15 +17,15 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   testID,
   currencyStyle,
   defaultValue = '0',
-  maxLength = 6,
+  maxLength = 7,
   isEditable,
   handleBlur,
   handleIconPress,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = amountInputStyles(colors);
-  const amountStr = amount ? formatCurrencyValue(amount) : '';
+  const { t } = useTranslation();
+  const amountStr = (amount as string) || '';
 
   return (
     <IPayView testID={`${testID}-amount-input`} style={[styles.inputContainer, style]}>
@@ -44,7 +44,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         caretHidden={carretHidden}
       />
       <IPayInput
-        text={localizationText.COMMON.SAR}
+        text={t('COMMON.SAR')}
         editable={false}
         style={[styles.currencyText, !amount && styles.darkStyle, currencyStyle]}
       />

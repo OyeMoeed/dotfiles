@@ -1,14 +1,14 @@
 import { IPayMonthYearPicker, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { forwardRef, useState } from 'react';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { IPayExpiryDateSheetProps } from './ipay-expirydate-sheet.interface';
 import IPayExpiryDateStyles from './ipay-expirydate-sheet.styles';
+
 const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
   ({ testID, selectedDate, closeExpiredBottomSheet, setSelectedDate }, ref) => {
-    const localizationText = useLocalization();
     const { colors } = useTheme();
     const styles = IPayExpiryDateStyles(colors);
     const [expiryDate, setExpiryDate] = useState('');
@@ -16,9 +16,11 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
       setSelectedDate(expiryDate);
       ref.current.close();
     };
+
     return (
       <IPayBottomSheet
-        heading={localizationText.TOP_UP.EXPIRY_DATE}
+        testID={testID}
+        heading="TOP_UP.EXPIRY_DATE"
         onCloseBottomSheet={closeExpiredBottomSheet}
         customSnapPoint={['10%', '55%', '85%']}
         enableDynamicSizing
@@ -35,9 +37,9 @@ const IPayExpiryDateSheet = forwardRef<any, IPayExpiryDateSheetProps>(
           <IPayView style={styles.innerContainer}>
             <IPayButton
               large
-              btnType="primary"
-              btnIconsDisabled={true}
-              btnText={localizationText.COMMON.SAVE}
+              btnType={buttonVariants.PRIMARY}
+              btnIconsDisabled
+              btnText="COMMON.SAVE"
               onPress={handleDateChanges}
               btnStyle={styles.buttonStyles}
             />

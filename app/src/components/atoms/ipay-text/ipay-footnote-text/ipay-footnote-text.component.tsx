@@ -1,6 +1,6 @@
+import React, { JSX } from 'react';
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IPayText } from '@components/atoms/index';
-import React from 'react';
 import { IPayFootnoteTextProps } from './ipay-footnote-text.interface';
 import styles from './ipay-footnote-text.styles';
 
@@ -18,6 +18,7 @@ const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
   children,
   color,
   fontWeight,
+  shouldTranslate = true,
 }: IPayFootnoteTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -27,6 +28,7 @@ const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>

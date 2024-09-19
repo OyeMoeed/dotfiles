@@ -4,7 +4,7 @@ import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayPrimaryButtonProps } from './ipay-primary-button.interface';
-import genratedStyles from './ipay-primary-button.style';
+import generatedStyles from './ipay-primary-button.style';
 
 const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   disabled,
@@ -23,15 +23,17 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   rightIcon,
   textColor,
   textStyle,
+  shouldTranslateBtnText,
 }) => {
   const { colors } = useTheme();
-  const styles = genratedStyles(colors);
+  const styles = generatedStyles();
 
   const buttonBackgroundColor = disabled ? colors.natural.natural200 : buttonColor || colors.primary.primary500;
   const btnStyle = useMemo(() => {
     if (small) return [styles.btnSmall, { width, backgroundColor: buttonBackgroundColor }];
     if (medium) return [styles.btnMedium, { width, backgroundColor: buttonBackgroundColor }];
     if (large) return [styles.btnLarge, { width, backgroundColor: buttonBackgroundColor }];
+    return {};
   }, [small, medium, large, width, buttonBackgroundColor]);
 
   const arrowColor = disabled ? colors.natural.natural300 : arrowIconColor || colors.natural.natural0;
@@ -39,9 +41,21 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   const ButtonText = useMemo(() => {
     const newTextColor = disabled ? colors.natural.natural300 : textColor || colors.natural.natural0;
     return large ? (
-      <IPayBodyText regular text={btnText} color={newTextColor} style={textStyle} />
+      <IPayBodyText
+        regular
+        text={btnText}
+        color={newTextColor}
+        style={textStyle}
+        shouldTranslate={shouldTranslateBtnText}
+      />
     ) : (
-      <IPaySubHeadlineText text={btnText} regular color={newTextColor} style={textStyle} />
+      <IPaySubHeadlineText
+        text={btnText}
+        regular
+        color={newTextColor}
+        style={textStyle}
+        shouldTranslate={shouldTranslateBtnText}
+      />
     );
   }, [btnText, disabled, large, colors, textColor]);
 

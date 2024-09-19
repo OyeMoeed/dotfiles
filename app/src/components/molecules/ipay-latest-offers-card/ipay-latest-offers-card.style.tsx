@@ -1,5 +1,5 @@
 import { scaleSize } from '@app/styles/mixins';
-import { SCALE_12, SCALE_16, SCALE_4, spacing } from '@app/styles/spacing.const';
+import { SCALE_1, SCALE_12, SCALE_16, spacing } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
 import { StyleSheet } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -10,10 +10,11 @@ const latestOfferCardStyle = (colors: typeof themeColors) =>
       color: colors.primary.primary800,
       fontSize: SCALE_12,
       fontWeight: '700',
-      marginLeft: SCALE_4,
+      marginLeft: SCALE_1,
     },
     captionsTextStyle: {
       marginTop: verticalScale(10),
+      width: moderateScale(130),
     },
     childContainer: {
       flexDirection: 'row',
@@ -52,8 +53,8 @@ const latestOfferCardStyle = (colors: typeof themeColors) =>
       alignSelf: 'center',
       height: '100%',
       marginHorizontal: scaleSize(16),
-      width: spacing.CUSTOME_SCALE(3),
       resizeMode: 'contain',
+      width: spacing.CUSTOME_SCALE(3),
     },
     percentageTextStyle: {
       color: colors.primary.primary800,

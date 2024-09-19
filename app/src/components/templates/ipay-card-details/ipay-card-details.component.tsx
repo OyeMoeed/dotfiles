@@ -2,22 +2,22 @@ import icons from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import CardDetailsKeys from '@app/enums/card-details-type.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
+import { copyText } from '@app/utilities';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { cardDetailsProps, FieldKeyMappingProps } from './ipay-card-details.interface';
 import cardDetailsStyle from './ipay-card-details.style';
 
-const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
+const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = cardDetailsStyle(colors);
   const { showToast } = useToastContext();
 
   const renderToast = (value: string) => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
+      title: 'TOP_UP.COPIED',
       subTitle: value,
       containerStyle: styles.toast,
       isShowRightIcon: false,
@@ -26,7 +26,8 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
     });
   };
 
-  const dummyCardDetails: FieldKeyMappingProps = {
+  const cardDetailsFields: FieldKeyMappingProps = {
+    [CardDetailsKeys.CARD_TYPE]: cardDetails?.cardType,
     [CardDetailsKeys.CARD_NUMBER]: cardDetails?.cardNumber,
     [CardDetailsKeys.CARD_HOLDER_NAME]: cardDetails?.cardHolderName,
     [CardDetailsKeys.CVV]: cardDetails?.cvv,
@@ -34,10 +35,11 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
   };
 
   const fieldKeyMapping: FieldKeyMappingProps = {
-    [CardDetailsKeys.CARD_NUMBER]: localizationText.CARDS[CardDetailsKeys.CARD_NUMBER],
-    [CardDetailsKeys.CARD_HOLDER_NAME]: localizationText.CARDS[CardDetailsKeys.CARD_HOLDER_NAME],
-    [CardDetailsKeys.CVV]: localizationText.CARDS[CardDetailsKeys.CVV],
-    [CardDetailsKeys.EXPIRY_DATE]: localizationText.CARDS[CardDetailsKeys.EXPIRY_DATE],
+    [CardDetailsKeys.CARD_TYPE]: t(`CARDS.${[CardDetailsKeys.CARD_TYPE]}`),
+    [CardDetailsKeys.CARD_NUMBER]: t(`CARDS.${[CardDetailsKeys.CARD_NUMBER]}`),
+    [CardDetailsKeys.CARD_HOLDER_NAME]: t(`CARDS.${[CardDetailsKeys.CARD_HOLDER_NAME]}`),
+    [CardDetailsKeys.CVV]: t(`CARDS.${[CardDetailsKeys.CVV]}`),
+    [CardDetailsKeys.EXPIRY_DATE]: t(`CARDS.${[CardDetailsKeys.EXPIRY_DATE]}`),
   };
 
   const copyRefNo = (value: string) => {
@@ -45,17 +47,17 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
     renderToast(value);
   };
 
-  const renderItem = (field: string) => (
-    <IPayView style={styles.cardStyle}>
+  const renderItem = (field: string, index: number) => (
+    <IPayView style={styles.cardStyle} key={index}>
       <IPayFootnoteText regular style={styles.headingStyles} color={colors.natural.natural900}>
         {fieldKeyMapping[field]}
       </IPayFootnoteText>
       <IPayView style={styles.actionWrapper}>
         <IPaySubHeadlineText regular color={colors.primary.primary800}>
-          {dummyCardDetails[field]}
+          {cardDetailsFields[field]}
         </IPaySubHeadlineText>
         {(field === CardDetailsKeys.CARD_NUMBER || field === CardDetailsKeys.CARD_HOLDER_NAME) && (
-          <IPayPressable onPress={() => copyRefNo(dummyCardDetails[field])}>
+          <IPayPressable onPress={() => copyRefNo(cardDetailsFields[field])}>
             <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
           </IPayPressable>
         )}
@@ -63,7 +65,11 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({cardDetails}) => {
     </IPayView>
   );
 
-  return <IPayView testID="copy-button">{Object.keys(dummyCardDetails).map(renderItem)}</IPayView>;
+  return (
+    <IPayView testID="copy-button">
+      {Object.keys(cardDetailsFields).map((field, index) => renderItem(field, index))}
+    </IPayView>
+  );
 };
 
 export default IPayCardDetails;
