@@ -81,7 +81,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     }
   };
 
-  const isQrBtnDisabled = topUpAmount <= 0 || topUpAmount === '' || !isMultipleOfHundred(topUpAmount);
+  const isQrBtnDisabled = +topUpAmount <= 0 || topUpAmount === '' || !isMultipleOfHundred(+topUpAmount);
   const onPressQR = () => {
     navigate(ScreenNames.ATM_WITHDRAW_QRCODE_SCANNER, { amount: topUpAmount, setTopUpAmount });
   };
@@ -89,7 +89,7 @@ const AtmWithdrawalsScreen: React.FC = ({ route }: any) => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
     const dailyRemaining = parseFloat(dailyRemainingOutgoingAmount);
     const currentBalance = parseFloat(availableBalance);
-    const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
+    const updatedTopUpAmount = parseFloat(topUpAmount?.replace(/,/g, ''));
     if (monthlyRemaining === 0) {
       setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining && updatedTopUpAmount < monthlyRemaining) {
