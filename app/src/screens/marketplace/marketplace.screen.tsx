@@ -165,7 +165,7 @@ const MarketPlace: React.FC = () => {
         <IPayFlatlist
           data={categories}
           renderItem={renderCategoryItem}
-          keyExtractor={(item) => `${'SHOP.SHOP_BY_CATEGORIES'}-${item?.title}-${item.id}`}
+          keyExtractor={(item, index) => `SHOP.SHOP_BY_CATEGORIES-${item?.desc}-${index}`}
           horizontal
           showsHorizontalScrollIndicator={false}
           style={styles.categoryListStyle}
@@ -184,10 +184,13 @@ const MarketPlace: React.FC = () => {
         <IPayFlatlist
           data={merchantData}
           renderItem={renderItem}
-          keyExtractor={(item) => `${'SHOP_BY_MERCHANTS'}-${item.id}`}
+          keyExtractor={(item, index) => `SHOP_BY_MERCHANTS-${item?.desc}-${index}`}
           style={styles.merchantList}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.containerWrapper}
+          horizontal={false}
+          numColumns={3}
+          columnWrapperStyle={styles.columnWrapperMerchant}
         />
       </IPayView>
     </IPaySafeAreaView>
