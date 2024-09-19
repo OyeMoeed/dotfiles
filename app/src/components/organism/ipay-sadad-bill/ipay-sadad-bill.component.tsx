@@ -54,11 +54,11 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   const billStatus = useMemo(() => {
     let key: string | undefined = '';
     switch (billStatusCode) {
-      case BillStatus.UNPAID:
+      case BillStatus.DEACTIVE:
         key = getEnumKeyByValue(BillStatus, BillStatus.DEACTIVE);
         return `BILL_PAYMENTS.${key}`;
-      case BillStatus.PAID:
-        key = getEnumKeyByValue(BillStatus, BillStatus.PAID);
+      case BillStatus.UNPAID:
+        key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
         return `BILL_PAYMENTS.${key}`;
       case BillStatus.PARTIALLY_PAID:
         key = getEnumKeyByValue(BillStatus, BillStatus.PARTIALLY_PAID);
@@ -67,7 +67,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
         key = getEnumKeyByValue(BillStatus, BillStatus.OVER_PAID);
         return `BILL_PAYMENTS.${key}`;
       default:
-        key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
+        key = getEnumKeyByValue(BillStatus, BillStatus.PAID);
         return `BILL_PAYMENTS.${key}`;
     }
   }, [billStatusCode]);
