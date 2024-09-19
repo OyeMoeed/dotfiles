@@ -24,7 +24,6 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -42,9 +41,9 @@ import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Flag from 'react-native-round-flags';
+import { useTranslation } from 'react-i18next';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
-import beneficiaryDummyData from '../international-transfer-info/international-transfer-info.constant';
 import internationalTransferStyles from './internation-transfer.style';
 import { tabOptions } from './international-transfer.constent';
 import { BeneficiaryDetailsProps } from './international-transfer.interface';
@@ -52,7 +51,7 @@ import { BeneficiaryDetailsProps } from './international-transfer.interface';
 const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTransferStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState<string>(TransferGatewayType.ALINMA_DIRECT);
   const [search, setSearch] = useState<string>('');
   const beneficiariesToShow = 4;
@@ -70,7 +69,7 @@ const InternationalTransferScreen: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const [, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
   const editBeneficiaryRef = useRef<any>(null);
   const [apiError, setAPIError] = useState<string>('');
   const [aeBeneficiaryData, setAEBeneficiaryData] = useState([]);
@@ -100,7 +99,7 @@ const InternationalTransferScreen: React.FC = () => {
           setAEBeneficiaryData(apiResponse?.response?.beneficiaries);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError('ERROR.API_ERROR_RESPONSE');
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -109,8 +108,8 @@ const InternationalTransferScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -122,7 +121,7 @@ const InternationalTransferScreen: React.FC = () => {
           setWUBeneficiaryData(apiResponse?.response?.beneficiaries);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError('ERROR.API_ERROR_RESPONSE');
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -131,8 +130,8 @@ const InternationalTransferScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -173,7 +172,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
     setNickName(item?.name ?? '');
-    setselectedBeneficiary(item);
+    setSelectedBeneficiary(item);
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
@@ -188,7 +187,7 @@ const InternationalTransferScreen: React.FC = () => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           showToast({
-            title: localizationText.BENEFICIARY_OPTIONS.BENEFICIARY_DELETED,
+            title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
             subTitle: `${selectedBeneficiary.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
             containerStyle: styles.toast,
             isShowRightIcon: false,
@@ -197,7 +196,7 @@ const InternationalTransferScreen: React.FC = () => {
           });
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError('ERROR.API_ERROR_RESPONSE');
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error);
@@ -206,8 +205,8 @@ const InternationalTransferScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
     setDeleteBeneficiary(false);
   };
@@ -217,13 +216,16 @@ const InternationalTransferScreen: React.FC = () => {
     const country = countryCode ? countryCode.toUpperCase() : '';
     const btnText =
       beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
-        ? localizationText.INTERNATIONAL_TRANSFER.TRANSFER
-        : localizationText.INTERNATIONAL_TRANSFER.ACTIVATE;
+        ? 'INTERNATIONAL_TRANSFER.TRANSFER'
+        : 'INTERNATIONAL_TRANSFER.ACTIVATE';
 
     const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
-      setselectedBeneficiary(beneficiary);
+      setSelectedBeneficiary(beneficiary);
       if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
-        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, { beneficiaryDummyData });
+        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
+          transferData: item,
+          transferGateway: activeTab,
+        });
       } else {
         handleActivateBeneficiary();
       }
@@ -231,6 +233,7 @@ const InternationalTransferScreen: React.FC = () => {
 
     return (
       <IPayList
+        shouldTranslateTitle={false}
         key={fullName?.toString()}
         style={styles.listItem}
         title={fullName}
@@ -284,15 +287,12 @@ const InternationalTransferScreen: React.FC = () => {
     filteredBeneficiaryData?.filter((item) => item?.beneficiaryStatus === status);
 
   const renderListHeader = (isActive: string, count: number, totalCount: number) => {
-    const statusText =
-      isActive === InternationalBeneficiaryStatus.ACTIVE
-        ? localizationText.COMMON.ACTIVE
-        : localizationText.COMMON.INACTIVE;
+    const statusText = isActive === InternationalBeneficiaryStatus.ACTIVE ? 'COMMON.ACTIVE' : 'COMMON.INACTIVE';
 
     return totalCount ? (
       <IPayView style={styles.listHeader}>
         <IPayFootnoteText text={statusText} />
-        <IPayFootnoteText text={`(${count} ${localizationText.HOME.OF} ${totalCount})`} />
+        <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} shouldTranslate={false} />
       </IPayView>
     ) : (
       <IPayView />
@@ -309,7 +309,7 @@ const InternationalTransferScreen: React.FC = () => {
           style={styles.capitalizeTitle}
           color={colors.primary.primary500}
           regular
-          text={viewAllState[statusKey] ? localizationText.COMMON.CLOSE : localizationText.COMMON.VIEW_ALL}
+          text={viewAllState[statusKey] ? 'COMMON.CLOSE' : 'COMMON.VIEW_ALL'}
         />
         <IPayIcon
           icon={viewAllState[statusKey] ? icons.arrowUp : icons.arrowDown}
@@ -379,8 +379,8 @@ const InternationalTransferScreen: React.FC = () => {
           return '';
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
       return '';
     }
   };
@@ -416,7 +416,7 @@ const InternationalTransferScreen: React.FC = () => {
   };
 
   const onPressCall = (value: string) => {
-    openPhoneNumber(value, colors, showToast, localizationText);
+    openPhoneNumber({ phoneNumber: value, colors, showToast });
     hideContactUs();
   };
 
@@ -439,22 +439,22 @@ const InternationalTransferScreen: React.FC = () => {
 
   const currentOptionText =
     currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-      ? localizationText.ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS
-      : localizationText.ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE;
+      ? 'ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS'
+      : 'ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE';
 
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="international-transfer"
         backBtn
-        title={localizationText.INTERNATIONAL_TRANSFER.INTERNATIONAL_TRANSFER}
+        title="INTERNATIONAL_TRANSFER.INTERNATIONAL_TRANSFER"
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
           <IPayPressable onPress={onPressHistory}>
             <IPayView style={styles.headerRightContent}>
               <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
-              <IPaySubHeadlineText regular color={colors.primary.primary500} text={localizationText.COMMON.HISTORY} />
+              <IPaySubHeadlineText regular color={colors.primary.primary500} text="COMMON.HISTORY" />
             </IPayView>
           </IPayPressable>
         }
@@ -464,8 +464,8 @@ const InternationalTransferScreen: React.FC = () => {
           onPress={onPressPriceCalculator}
           testID="price-calculator"
           leftIcon={<IPayIcon icon={icons.calculator1} size={24} color={colors.primary.primary500} />}
-          title={localizationText.INTERNATIONAL_TRANSFER.PRICE_CALCULATOR}
-          subTitle={localizationText.INTERNATIONAL_TRANSFER.CALCULATE_AND_DELIVERY}
+          title="INTERNATIONAL_TRANSFER.PRICE_CALCULATOR"
+          subTitle="INTERNATIONAL_TRANSFER.CALCULATE_AND_DELIVERY"
           rightIcon={<IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary500} />}
         />
       </IPayView>
@@ -483,7 +483,7 @@ const InternationalTransferScreen: React.FC = () => {
               <IPayTextInput
                 text={search}
                 onChangeText={handleSearchChange}
-                placeholder={localizationText.COMMON.SEARCH}
+                placeholder="COMMON.SEARCH"
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
                 showLeftIcon={search}
@@ -556,13 +556,13 @@ const InternationalTransferScreen: React.FC = () => {
                   icon={icons.user_search}
                   iconColor={colors.primary.primary800}
                   iconSize={40}
-                  message={localizationText.LOCAL_TRANSFER.NO_BENEFICIARIES}
+                  message="LOCAL_TRANSFER.NO_BENEFICIARIES"
                   containerStyle={styles.noResult}
                   testID="no-result"
                 />
                 <IPayButton
                   testID="add-new-beneficiary"
-                  btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+                  btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
                   medium
                   btnType={buttonVariants.PRIMARY}
                   btnStyle={styles.btnStyle}
@@ -576,7 +576,7 @@ const InternationalTransferScreen: React.FC = () => {
             <IPayButton
               onPress={handleAddNewBeneficiray}
               btnStyle={styles.addBeneficiaryBtn}
-              btnText={localizationText.LOCAL_TRANSFER.ADD_NEW_BENEFICIARY}
+              btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
               btnType={buttonVariants.OUTLINED}
               large
               leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
@@ -605,7 +605,7 @@ const InternationalTransferScreen: React.FC = () => {
       </IPayBottomSheet>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+        options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}
         cancelButtonIndex={1}
         showCancel
         onPress={(index) => handleFinalAction(index, selectedNumber)}
@@ -614,29 +614,25 @@ const InternationalTransferScreen: React.FC = () => {
       <IPayAlert
         visible={deleteBeneficiary}
         onClose={onDeleteCancel}
-        title={localizationText.BENEFICIARY_OPTIONS.DELETE_BENFICIARY}
-        message={localizationText.BENEFICIARY_OPTIONS.DELETION_CONFIRMATION}
+        title="BENEFICIARY_OPTIONS.DELETE_BENFICIARY"
+        message="BENEFICIARY_OPTIONS.DELETION_CONFIRMATION"
         type={alertType.SIDE_BY_SIDE}
         closeOnTouchOutside
         variant={alertVariant.DESTRUCTIVE}
         icon={<IPayIcon icon={icons.TRASH} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: localizationText.COMMON.CANCEL,
+          text: 'COMMON.CANCEL',
           onPress: onDeleteCancel,
         }}
         secondaryAction={{
-          text: localizationText.COMMON.DELETE,
+          text: 'COMMON.DELETE',
           onPress: handleDeleteBeneficiary,
         }}
       />
       <IPayActionSheet
         ref={editBeneficiaryRef}
-        options={[
-          localizationText.COMMON.CANCEL,
-          localizationText.BENEFICIARY_OPTIONS.REVIEW_AND_EDIT,
-          localizationText.BENEFICIARY_OPTIONS.DELETE,
-        ]}
+        options={['COMMON.CANCEL', 'BENEFICIARY_OPTIONS.REVIEW_AND_EDIT', 'BENEFICIARY_OPTIONS.DELETE']}
         cancelButtonIndex={0}
         destructiveButtonIndex={2}
         showIcon={false}

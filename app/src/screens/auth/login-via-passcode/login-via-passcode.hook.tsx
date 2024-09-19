@@ -1,5 +1,4 @@
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { setTopLevelNavigator } from '@app/navigation/navigation-service.navigation';
 import { DeviceInfoProps } from '@app/network/services/authentication/login/login.interface';
 import {
@@ -17,9 +16,11 @@ import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
 
 const useLogin = () => {
+  const { t } = useTranslation();
   const dispatch = useTypedDispatch();
   const [componentToRender, setComponentToRender] = useState<string>('');
   const [forgetPasswordFormData, setForgetPasswordFormData] = useState({
@@ -33,7 +34,6 @@ const useLogin = () => {
   });
   const navigation = useNavigation();
   const { checkAndHandlePermission } = useLocationPermission();
-  const localizationText = useLocalization();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [otpRef, setOtpRef] = useState<string>('');
   const [resendOtpPayload, setResendOtpPayload] = useState<PrepareForgetPasscodeProps>();
@@ -79,7 +79,7 @@ const useLogin = () => {
   const onConfirm = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       verifyOtp();
     }

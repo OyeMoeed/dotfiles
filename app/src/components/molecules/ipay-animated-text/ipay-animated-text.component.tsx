@@ -1,7 +1,6 @@
 import { IPayAnimatedView, IPaySubHeadlineText, IPayTitle1Text } from '@app/components/atoms';
 import constants from '@app/constants/constants';
 import { animateValue, fadeIn, fadeOut } from '@app/ipay-animations/ipay-animations';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import React, { useEffect, useRef } from 'react';
 import { Animated } from 'react-native';
@@ -10,7 +9,6 @@ import { IPayAnimatedTextProps } from './ipay-animated-text.interface';
 
 const IPayAnimatedText: React.FC<IPayAnimatedTextProps> = ({ type, styles, title, description, testID }) => {
   const translation = useSharedValue(-100);
-  const localizationText = useLocalization();
   const duration = constants.ANIMATION_DURATIONS;
 
   useEffect(() => {
@@ -46,8 +44,8 @@ const IPayAnimatedText: React.FC<IPayAnimatedTextProps> = ({ type, styles, title
             style={[styles.title, styles.lowOpacity]}
             text={
               type === OnboardingSteps.SendAndReceiveStep
-                ? localizationText.ONBOARDING.TITLE_ONBOARDING_ONE
-                : localizationText.ONBOARDING.TITLE_ONBOARDING_TWO
+                ? 'ONBOARDING.TITLE_ONBOARDING_ONE'
+                : 'ONBOARDING.TITLE_ONBOARDING_TWO'
             }
           />
         </Animated.View>

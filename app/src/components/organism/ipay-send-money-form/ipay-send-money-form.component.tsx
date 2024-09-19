@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { MAX_CONTACTS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -18,10 +17,9 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
   addForm,
   formInstances,
   setNotes,
-  showReason,
   setSelectedItem,
+  showReason = true,
 }) => {
-  const localizationText = useLocalization();
   const { colors } = useTheme();
   const styles = sendMoneyFormStyles(colors);
   const MAX_LENGTH = 500;
@@ -33,7 +31,7 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
       btnType={buttonVariants.LINK_BUTTON}
       btnStyle={styles.chipContainer}
       textColor={colors.secondary.secondary800}
-      btnText={localizationText.SEND_MONEY_FORM.ADD_MORE_RECIPIENTS}
+      btnText="SEND_MONEY_FORM.ADD_MORE_RECIPIENTS"
       hasLeftIcon
       leftIcon={<IPayIcon icon={icons.add_bold} size={14} color={colors.secondary.secondary800} />}
       onPress={addForm}

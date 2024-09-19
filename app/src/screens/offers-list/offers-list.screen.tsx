@@ -12,7 +12,6 @@ import {
 import icons from '@app/assets/icons';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -27,6 +26,7 @@ import { useTypedSelector } from '@app/store/store';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
+import { useTranslation } from 'react-i18next';
 import offersListStyles from './offers-list.style';
 
 const OffersListScreen: React.FC = () => {
@@ -37,7 +37,7 @@ const OffersListScreen: React.FC = () => {
   const [apiError, setAPIError] = useState<string>('');
   const [offersData, setOffersData] = useState<OfferItem[] | null>(null);
 
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const filterRef = useRef<bottomSheetTypes>(null);
 
   const styles = offersListStyles(colors);
@@ -64,13 +64,13 @@ const OffersListScreen: React.FC = () => {
       if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
         setOffersData(apiResponse?.response?.offers);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
       } else {
         setAPIError(apiResponse?.error);
       }
     } catch (error) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -81,7 +81,7 @@ const OffersListScreen: React.FC = () => {
   return (
     <IPaySafeAreaView style={styles.backgroundColor}>
       <IPayHeader
-        title={localizationText.OFFERS.OFFERS_TITLE}
+        title="OFFERS.OFFERS_TITLE"
         backBtn
         applyFlex
         rightComponent={
@@ -92,11 +92,11 @@ const OffersListScreen: React.FC = () => {
       />
       <IPayView style={styles.container}>
         <IPayView style={styles.topTextContainer}>
-          <IPayFootnoteText color={colors.natural.natural500} regular text={localizationText.OFFERS.AVAILABLE_OFFERS} />
+          <IPayFootnoteText color={colors.natural.natural500} regular text="OFFERS.AVAILABLE_OFFERS" />
           <IPayView style={styles.smallDOT} />
           <IPayCaption2Text
             regular
-            text={`${offersData?.length} ${localizationText.OFFERS.OFFERS_TITLE}`}
+            text={`${offersData?.length} ${t('OFFERS.OFFERS_TITLE')}`}
             color={colors.secondary.secondary500}
           />
         </IPayView>
@@ -123,13 +123,13 @@ const OffersListScreen: React.FC = () => {
         />
       </IPayView>
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={offerFilterDefaultValues}
         ref={filterRef}
         onSubmit={handleSubmit}
         filters={offerFilterData}
         inputStyle={styles.inputContainer}
-        doneText={localizationText.TRANSACTION_HISTORY.CLEAR_FILTER}
+        doneText="TRANSACTION_HISTORY.CLEAR_FILTER"
       />
     </IPaySafeAreaView>
   );

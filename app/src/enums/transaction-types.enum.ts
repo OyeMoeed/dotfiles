@@ -109,6 +109,7 @@ enum TransactionsStatus {
   REFUND = 'refund',
   REJECTED = 'rejected',
   PENDING = 'pending',
+  INITIATED = 'initiated',
 }
 
 enum TransactionMedium {

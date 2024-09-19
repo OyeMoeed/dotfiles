@@ -6,13 +6,9 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { ALINMA_TRANSFER_TYPES, CUSTOM_SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import {
-  AEBeneficiaryCountriesProps,
-  AlinmaExpressCountries,
-} from '@app/network/services/international-transfer/ae-beneficiary-countries/ae-beneficiary-countries.interface';
+import { AEBeneficiaryCountriesProps } from '@app/network/services/international-transfer/ae-beneficiary-countries/ae-beneficiary-countries.interface';
 import getAEBeneficiaryCountries from '@app/network/services/international-transfer/ae-beneficiary-countries/ae-beneficiary-countries.service';
 import { BeneficiariesFieldsProps } from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.interface';
 import getBeneficiariesDynamicFields from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.service';
@@ -30,16 +26,16 @@ import {
   WuRemittanceTypesProps,
 } from '@app/network/services/international-transfer/wu-remittance-types/wu-remittance-types.interface';
 import getWURemittanceTypes from '@app/network/services/international-transfer/wu-remittance-types/wu-remittance-types.service';
-import { getValidationSchemas } from '@app/services/validation-service';
+import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { TransferService } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import {
   AddBeneficiaryFields,
   AddBeneficiaryValues,
-  ServiceData,
   ServiceDataProps,
 } from './add-international-beneficiary.interface';
 import addBeneficiaryStyles from './add-international-beneficiary.style';
@@ -47,12 +43,10 @@ import addBeneficiaryStyles from './add-international-beneficiary.style';
 const AddInternationalBeneficiaryScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = addBeneficiaryStyles(colors);
-  const localizationText = useLocalization();
-  const { AlinmaDirectData, WesternUnionData } = useConstantData();
-  const [selectedService, setSelectedService] = useState<ServiceData>();
-  const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[] | AlinmaExpressCountries[]>(
-    [],
-  );
+  const { t } = useTranslation();
+  const { alinmaDirectData, westernUnionData } = useConstantData();
+  const [selectedService, setSelectedService] = useState<ServiceDataProps>();
+  const [beneficiaryMetaData, setBeneficiaryMetaData] = useState<WesternUnionCountries[]>([]);
   const [currenciesData, setCurrenciesData] = useState<Currencies[]>([]);
   const [remittanceTypeData, setRemittanceTypeData] = useState<RemittanceType[]>([]);
   const [apiError, setAPIError] = useState<string>('');
@@ -62,7 +56,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
 
   const { showToast } = useToastContext();
 
-  const { required } = getValidationSchemas(localizationText);
+  const { required } = getValidationSchemas(t);
   const validationSchema = Yup.object().shape({
     currency: required,
     transferType: required,
@@ -103,28 +97,28 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         {isCheck && (
           <>
             <IPayDropdown
-              dropdownType={localizationText.INTERNATIONAL_TRANSFER.COUNTRY}
+              dropdownType="INTERNATIONAL_TRANSFER.COUNTRY"
               data={getCountriesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.country}
-              label={localizationText.COMMON.BENEFECIARY_COUNTRY}
+              label="COMMON.BENEFECIARY_COUNTRY"
               isSearchable
               onSelectListItem={onSelectCountry}
             />
             <IPayDropdown
-              dropdownType={localizationText.NEW_BENEFICIARY.SELECT_DELIVERY_TYPE}
-              data={serviceName === AlinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : getRemittancTypeData()}
+              dropdownType="NEW_BENEFICIARY.SELECT_DELIVERY_TYPE"
+              data={serviceName === alinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : getRemittancTypeData()}
               size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
               name={AddBeneficiaryFields.transferType}
-              label={localizationText.COMMON.DELIVERY_TYPE}
+              label="COMMON.DELIVERY_TYPE"
               onSelectListItem={onSelectRemittanceType}
             />
             <IPayDropdown
-              dropdownType={localizationText.NEW_BENEFICIARY.CHOOSE_CURRENCY}
+              dropdownType="NEW_BENEFICIARY.CHOOSE_CURRENCY"
               data={getCurrenciesData()}
               size={SNAP_POINTS.MID_LARGE}
               name={AddBeneficiaryFields.currency}
-              label={localizationText.COMMON.CURRENCY}
+              label="COMMON.CURRENCY"
               onSelectListItem={onSelectCurrency}
             />
           </>
@@ -151,17 +145,17 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setBeneficiaryMetaData(apiResponse?.response?.westernUnionCountryList);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -176,22 +170,21 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setCurrenciesData(apiResponse?.response?.currencies);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const getWURemittanceTypesData = async () => {
-    renderSpinner(true);
     const payload = {
       countryCode,
       currencyCode,
@@ -203,24 +196,21 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setRemittanceTypeData(apiResponse?.response?.remittanceTypes);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const getAEBeneficiaryCountriesData = async () => {
-    renderSpinner(true);
     const payload = {};
     try {
       const apiResponse: AEBeneficiaryCountriesProps = await getAEBeneficiaryCountries(payload);
@@ -229,19 +219,17 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           setBeneficiaryMetaData(apiResponse?.response?.countries);
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -255,8 +243,15 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     }
   }, [selectedService]);
 
+  useEffect(() => {
+    getWUBeneficiaryCurrenciesData();
+  }, [countryCode]);
+
+  useEffect(() => {
+    getWURemittanceTypesData();
+  }, [currencyCode]);
+
   const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {
-    renderSpinner(true);
     const payload = {
       beneficiaryType: selectedService?.beneficiaryType,
       remittanceType,
@@ -273,19 +268,17 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
           });
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
           break;
         default:
           break;
       }
-      renderSpinner(false);
     } catch (error: any) {
-      renderSpinner(false);
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
@@ -306,19 +299,19 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     >
       {({ handleSubmit, formState: { isValid } }) => (
         <IPaySafeAreaView>
-          <IPayHeader backBtn title={localizationText.NEW_BENEFICIARY.NEW_BENEFICIARY} applyFlex />
+          <IPayHeader backBtn title="NEW_BENEFICIARY.NEW_BENEFICIARY" applyFlex />
           <IPayView style={styles.outerContainer}>
             <IPayFootnoteText
               color={colors.natural.natural500}
               style={styles.textStyle}
-              text={localizationText.NEW_BENEFICIARY.METHOD_OF_DELIVERY}
+              text="NEW_BENEFICIARY.METHOD_OF_DELIVERY"
             />
             <TransferMethods data={alinmaDirectData} />
             <TransferMethods data={westernUnionData} />
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.NEXT}
+              btnText="COMMON.NEXT"
               btnIconsDisabled
               onPress={handleSubmit(handleBeneficiaryTransfer)}
               btnStyle={styles.btnStyles}

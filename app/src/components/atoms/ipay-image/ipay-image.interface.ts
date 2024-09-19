@@ -11,11 +11,11 @@ export interface IPayImageProps {
   /**
    * Style for the image.
    */
-  style?: StyleProp<ImageStyle> | undefined;
+  style?: StyleProp<ImageStyle>;
   /**
    * Source of the image. It can be a local asset or a URL.
    */
-  image?: ImageSourcePropType;
+  image?: ImageSourcePropType | string;
 
   resizeMode?: ImageResizeMode | undefined;
 }

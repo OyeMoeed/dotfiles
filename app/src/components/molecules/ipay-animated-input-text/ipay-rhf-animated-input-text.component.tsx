@@ -6,6 +6,7 @@ import React, { forwardRef, useEffect, useRef, useState } from 'react';
 import { UseControllerProps, useController, useFormContext } from 'react-hook-form';
 import { Animated, StyleProp, TextInput, ViewStyle } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import inputFieldStyles from './ipay-animated-input-text.styles';
 
@@ -42,6 +43,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
     },
     ref,
   ) => {
+    const { t } = useTranslation();
     const { colors } = useTheme();
     const styles = inputFieldStyles(colors);
     const {
@@ -105,7 +107,7 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
           <IPayView style={styles.iconAndInputStyles}>
             {rightIcon}
             <IPayView style={styles.outerView}>
-              <Animated.Text style={[labelStyle, labelColor]}>{label}</Animated.Text>
+              <Animated.Text style={[labelStyle, labelColor]}>{t(label)}</Animated.Text>
               <TextInput
                 ref={ref}
                 {...props}

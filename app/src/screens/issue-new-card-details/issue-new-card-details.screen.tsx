@@ -5,12 +5,11 @@ import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card
 import { IPaySafeAreaView } from '@app/components/templates';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import { ANIMATION_DURATION } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useVirtualCardData from '@app/screens/virtual-card/use-virtual-card-data';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardOptions, CardTypes } from '@app/utilities/enums.util';
+import { buttonVariants, CardMapping, CardOptions, CardTypes } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
@@ -18,7 +17,6 @@ import { useRoute } from '@react-navigation/native';
 import issueNewCardDetailsStyles from './issue-new-card-details.style';
 
 const IssueNewCardDetailsScreen: React.FC = () => {
-  const localizationText = useLocalization();
   const { TAB_LABELS, CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
   const styles = issueNewCardDetailsStyles(colors);
@@ -48,7 +46,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
   const handleTabSelect = useCallback(
     (tab: CardTypes) => {
       const currentTab = tab.toLowerCase();
-      setSelectedCard(currentTab);
+      setSelectedCard(CardMapping[currentTab]);
     },
     [selectedCard],
   );
@@ -60,7 +58,7 @@ const IssueNewCardDetailsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader backBtn title={localizationText.PHYSICAL_CARD.ISSUE_A_NEW_CARD} applyFlex />
+      <IPayHeader backBtn title="PHYSICAL_CARD.ISSUE_A_NEW_CARD" applyFlex />
       <IPayTabs tabs={TAB_LABELS} onSelect={handleTabSelect} customStyles={styles.headerGap} />
       <IPayImage image={backgroundImage} style={styles.background} />
       <IPayAnimatedView
@@ -83,19 +81,17 @@ const IssueNewCardDetailsScreen: React.FC = () => {
         </IPayView>
         <IPayButton
           btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
-          btnType="link-button"
+          btnType={buttonVariants.LINK_BUTTON}
           onPress={toggleAnimation}
-          btnText={
-            isExpanded ? localizationText.VIRTUAL_CARD.CLOSE_DETAILS : localizationText.VIRTUAL_CARD.VIEW_DETAILS
-          }
+          btnText={isExpanded ? 'VIRTUAL_CARD.CLOSE_DETAILS' : 'VIRTUAL_CARD.VIEW_DETAILS'}
           btnIconsDisabled
         />
       </IPayAnimatedView>
       <IPayView style={styles.bottomContainer}>
         <IPayButton
-          btnType="primary"
+          btnType={buttonVariants.PRIMARY}
           large
-          btnText={localizationText.VIRTUAL_CARD.ISSUE_CARD}
+          btnText="VIRTUAL_CARD.ISSUE_CARD"
           btnIconsDisabled
           btnStyle={styles.marginStyles}
           onPress={onPressIsssueCard}

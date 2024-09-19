@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import { IPayCheckbox, IPayFootnoteText, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import termsAndConditionBannerStyle from './ipay-terms-and-condition-banner.style';
@@ -15,7 +14,6 @@ const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = 
   testId,
 }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = termsAndConditionBannerStyle(colors);
 
   return (
@@ -24,7 +22,7 @@ const IPayTermsAndConditionBanner: React.FC<IPayTermsAndConditionBannerProps> = 
         <IPayView style={styles.termsAndConditionsView}>
           <IPayView style={styles.checkContainer}>
             <IPayCheckbox onPress={onCheckPress} isCheck={isCheck} />
-            <IPayFootnoteText style={textStyle} text={text || localizationText.COMMON.TERMS_AND_CONDITIONS_TEXT} />
+            <IPayFootnoteText style={textStyle} text={text || 'COMMON.TERMS_AND_CONDITIONS_TEXT'} />
           </IPayView>
           <IPayIcon icon={icons.infoIcon} />
         </IPayView>

@@ -47,4 +47,5 @@ export interface IPayChipProps {
    * Flag for full width chip
    */
   fullWidth?: boolean;
+  shouldTranslatedText?: boolean;
 }

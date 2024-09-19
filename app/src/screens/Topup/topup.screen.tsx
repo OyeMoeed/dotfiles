@@ -67,7 +67,7 @@ const TopUpScreen = () => {
       />
 
       <IPayBottomSheet
-        heading={localizationText.TOP_UP.EXPIRY_DATE}
+        heading={"TOP_UP.EXPIRY_DATE"}
         onCloseBottomSheet={closeExpirationBottomSheet}
         customSnapPoint={['10%', '40%']}
         enableDynamicSizing
@@ -81,7 +81,7 @@ const TopUpScreen = () => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.COMMON.CVV}
+        heading={"COMMON.CVV"}
         onCloseBottomSheet={closeCvvBottomSheet}
         customSnapPoint={['10%', '40%']}
         enableDynamicSizing
@@ -94,7 +94,7 @@ const TopUpScreen = () => {
         <IPayExpBottomSheet type={InfoTypes.CVV} />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.MENU.ADD_CARD}
+        heading={"MENU.ADD_CARD"}
         cancelBnt
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['10%', '85%']}

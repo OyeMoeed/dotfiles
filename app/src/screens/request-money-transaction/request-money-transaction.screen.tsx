@@ -13,42 +13,36 @@ import { heightMapping } from '@app/components/templates/ipay-request-detail/ipa
 import useConstantData from '@app/constants/use-constants';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
-import getAllSentRequests from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
+import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FilterSelectedValue } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { formatDate } from '@app/utilities/date-helper.util';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = requestMoneyStyles(colors);
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
   const requestdetailRef = React.createRef<bottomSheetTypes>();
   const rejectRequestRef = React.createRef<bottomSheetTypes>();
+  const cancelRequestRef = React.createRef<bottomSheetTypes>();
   const [sentRequestsPage, setSentRequestsPage] = useState(1);
   const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
 
-  const {
-    REQUEST_MONEY: {
-      REQUEST_MONEY,
-      SEND_REQUESTS,
-      RECEIVED_REQUESTS,
-      YOU_HAVE_NO,
-      MONEY_REQUESTS,
-      CREATE_REQUEST,
-      MAKE_NEW_REQUEST,
-    },
-  } = localizationText;
+  const SEND_REQUESTS = 'REQUEST_MONEY.SEND_REQUESTS';
+  const RECEIVED_REQUESTS = 'REQUEST_MONEY.RECEIVED_REQUESTS';
   const SEND_REQUESTS_TABS = [SEND_REQUESTS, RECEIVED_REQUESTS];
 
   const [selectedTab, setSelectedTab] = useState<string>(SEND_REQUESTS_TABS[0]);
@@ -132,7 +126,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
         case 'apiResponseNotOk':
           renderToast({
-            title: localizationText.ERROR.API_ERROR_RESPONSE,
+            title: 'ERROR.API_ERROR_RESPONSE',
             toastType: 'WARNING',
           });
           break;
@@ -145,10 +139,62 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
 
     return { data: [], hasMore: false };
+  };
+
+  const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
+    try {
+      if (UpdateRequestType === UpdateRequestTypes.reject) {
+        rejectRequestRef.current?.hide();
+      } else {
+        cancelRequestRef.current?.hide();
+      }
+      const apiResponse = await cancelRejectRequestService(
+        walletInfo.walletNumber,
+        requestDetail?.id,
+        UpdateRequestType,
+      );
+
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          getRequestsData(1, 20);
+          break;
+        case 'apiResponseNotOk':
+          renderToast({
+            title: 'ERROR.API_ERROR_RESPONSE',
+            toastType: ToastTypes.WARNING,
+          });
+          break;
+
+        case ApiResponseStatusType.FAILURE:
+          renderToast(apiResponse?.error);
+          break;
+
+        default:
+          break;
+      }
+    } catch (error: any) {
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
+  const onPressRejectActionSheet = async (index: number) => {
+    if (index === 0) {
+      rejectRequestRef.current?.hide();
+    } else {
+      onCallCancelOrRejectRequest(UpdateRequestTypes.reject);
+    }
+  };
+
+  const onPressCancelActionSheet = async (index: number) => {
+    if (index === 0) {
+      cancelRequestRef.current?.hide();
+    } else {
+      onCallCancelOrRejectRequest(UpdateRequestTypes.cancel);
+    }
   };
 
   const handleSelectedTab = (tab: string) => {
@@ -177,20 +223,27 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     let filtersArray: string[] = [];
     if (Object.keys(data)?.length) {
       const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status } = data;
-      const amountRange = `${amountFrom} - ${amountTo} ${localizationText.COMMON.SAR}`;
+      const amountRange = `${amountFrom} - ${amountTo} ${t('COMMON.SAR')}`;
       const dateRange = `${dateFrom} - ${dateTo}`;
       filtersArray = [contactNumber, amountRange, dateRange, status];
     }
     setFilters(filtersArray);
   };
 
-  const closeBottomSheet = () => {
+  const closeRequestDetailsBottomSheet = () => {
     requestdetailRef.current?.forceClose();
   };
 
-  const showActionSheet = () => {
-    requestdetailRef.current?.forceClose();
+  // function to open reject action sheet
+  const showRejectActionSheet = () => {
+    closeRequestDetailsBottomSheet();
     rejectRequestRef.current?.show();
+  };
+
+  // function to open cancel action sheet
+  const showCancelActionSheet = () => {
+    closeRequestDetailsBottomSheet();
+    cancelRequestRef.current?.show();
   };
 
   const mapTransactionKeys = (item: any) => {
@@ -244,14 +297,11 @@ const RequestMoneyTransactionScreen: React.FC = () => {
 
     requestdetailRef.current?.present();
   };
-  const onPressActionSheet = () => {
-    rejectRequestRef.current?.hide();
-  };
 
   const createRequest = () => {
     navigate(ScreenNames.WALLET_TRANSFER, {
       from: TRANSFERTYPE.REQUEST_MONEY,
-      heading: CREATE_REQUEST,
+      heading: t('REQUEST_MONEY.CREATE_REQUEST'),
       showHistory: false,
     });
   };
@@ -266,6 +316,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           status={transactionState}
           amount={targetAmount}
           onPress={() => openBottomSheet(item)}
+          shouldTranslateTitle={false}
         />
       </IPayView>
     );
@@ -276,7 +327,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayNoResult
         textColor={colors.primary.primary800}
         iconColor={colors.primary.primary800}
-        message={`${YOU_HAVE_NO} ${selectedTab.split(' ')[0].toLowerCase()} ${MONEY_REQUESTS}`}
+        message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${selectedTab.split(' ')[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
         showIcon
         containerStyle={styles.noResultContent}
         iconSize={40}
@@ -308,7 +359,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayHeader
         testID="request-money-header"
         backBtn
-        title={REQUEST_MONEY}
+        title="REQUEST_MONEY.REQUEST_MONEY"
         applyFlex
         rightComponent={
           <IPayPressable onPress={handleFiltersShow}>
@@ -356,7 +407,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             onPress={createRequest}
-            btnText={CREATE_REQUEST}
+            btnText="REQUEST_MONEY.CREATE_REQUEST"
             btnStyle={styles.requestButton}
             leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
           />
@@ -365,7 +416,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             onPress={createRequest}
-            btnText={MAKE_NEW_REQUEST}
+            btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
             btnStyle={styles.requestButton}
             leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
           />
@@ -374,15 +425,26 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayActionSheet
         ref={rejectRequestRef}
         testID="reject-card-action-sheet"
-        options={[localizationText.COMMON.CANCEL, localizationText.REQUEST_MONEY.REJECT_THIS_REQUEST]}
+        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.REJECT_THIS_REQUEST')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel
-        onPress={onPressActionSheet}
+        buttonStyle={styles.rejectThisRequestBtn}
+        cancelButtonStyle={styles.rejectThisRequestCancelBtn}
+        onPress={onPressRejectActionSheet}
+      />
+      <IPayActionSheet
+        ref={cancelRequestRef}
+        testID="reject-card-action-sheet"
+        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.CANCEL_REQUEST')]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={1}
+        showCancel
+        onPress={onPressCancelActionSheet}
       />
       <IPayBottomSheet
-        heading={localizationText.REQUEST_MONEY.REQUEST_DETAILS}
-        onCloseBottomSheet={closeBottomSheet}
+        heading="REQUEST_MONEY.REQUEST_DETAILS"
+        onCloseBottomSheet={closeRequestDetailsBottomSheet}
         customSnapPoint={snapPoint}
         ref={requestdetailRef}
         simpleHeader
@@ -392,12 +454,13 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       >
         <IPayRequestDetails
           transaction={requestDetail}
-          onCloseBottomSheet={closeBottomSheet}
-          showActionSheet={showActionSheet}
+          onCloseBottomSheet={closeRequestDetailsBottomSheet}
+          showRejectActionSheet={showRejectActionSheet}
+          showCancelActionSheet={showCancelActionSheet}
         />
       </IPayBottomSheet>
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={requestMoneyFilterDefaultValues}
         filters={requestMoneyFilterData}
         bottomFilters={requestMoneyBottomFilterData}

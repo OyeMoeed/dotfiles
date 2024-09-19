@@ -4,7 +4,6 @@ import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/mol
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { REGEX } from '@app/constants/app-validations';
 import { ALINMA_BANK_CODE } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -26,6 +25,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import * as Yup from 'yup';
+import { useTranslation } from 'react-i18next';
 import {
   BankDetails,
   BeneficiaryBankDetails,
@@ -42,17 +42,16 @@ import createBeneficiaryStyles from './ipay-create-beneficiary.style';
  */
 const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = createBeneficiaryStyles(colors);
   const { showToast } = useToastContext();
-  const localizationText = useLocalization();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
   const [bankList, setBankList] = useState<LocalBank[]>([]);
   const [beneficiaryBankDetails, setBeneficiaryBankDetails] = useState<BeneficiaryBankDetails>();
   const countryCode = 'SA';
 
-  const { beneficiaryNameSchema, ibanSchema, beneficiaryNickNameSchema, bankNameSchema } =
-    getValidationSchemas(localizationText);
+  const { beneficiaryNameSchema, ibanSchema, beneficiaryNickNameSchema, bankNameSchema } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     beneficiaryName: beneficiaryNameSchema,
@@ -100,7 +99,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const renderToast = (toastMsg: string) => {
     showToast({
       title: toastMsg,
-      subTitle: localizationText.ERROR.SOMETHING_WENT_WRONG,
+      subTitle: t('ERROR.SOMETHING_WENT_WRONG'),
       containerStyle: styles.toast,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
@@ -188,7 +187,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       if (apiResponse?.bankCode) {
         getBankDetails(apiResponse.bankCode, ibanNumber);
       } else {
-        renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG);
+        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
     }
   };
@@ -206,7 +205,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             />
           </IPayView>
           <IPayButton
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText="COMMON.CONFIRM"
             btnType={buttonVariants.PRIMARY}
             large
             btnIconsDisabled
@@ -223,8 +222,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               control={control}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.NEW_BENEFICIARY.BENEFECIARY_NAME}
+                  label="NEW_BENEFICIARY.BENEFECIARY_NAME"
                   value={value}
+                  maxLength={50}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.beneficiaryName}
@@ -238,8 +238,8 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               control={control}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  maxLength={24}
-                  label={localizationText.COMMON.IBAN}
+                  maxLength={34}
+                  label="COMMON.IBAN"
                   value={value}
                   onChangeText={(text) => {
                     onChange(text);
@@ -254,7 +254,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
             />
             <IPayList
               containerStyle={watch(AddBeneficiary.IBAN).length > 9 ? styles.listContainerStyle : styles.inputVariant}
-              title={localizationText.COMMON.BANK_NAME}
+              title="COMMON.BANK_NAME"
               rightText={
                 <IPayView style={styles.rightTextStyle}>
                   {beneficiaryBankDetails?.bankName && (
@@ -273,8 +273,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
               control={control}
               render={({ field: { onChange, value } }) => (
                 <IPayAnimatedTextInput
-                  label={localizationText.NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL}
+                  label="NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL"
                   value={value}
+                  maxLength={50}
                   onChangeText={onChange}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.beneficiaryNickName}
@@ -286,7 +287,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
           <IPayButton
             onPress={handleSubmit(onPrepareData)}
             disabled={!watch(AddBeneficiary.BENEFICIARY_NAME) || !watch(AddBeneficiary.IBAN) || !isValid}
-            btnText={localizationText.NEW_BENEFICIARY.ADD_BENEFICIARY}
+            btnText="NEW_BENEFICIARY.ADD_BENEFICIARY"
             btnType={buttonVariants.PRIMARY}
             large
             btnStyle={styles.btnStyle}

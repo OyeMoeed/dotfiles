@@ -6,7 +6,7 @@ const billPaymentStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
-      paddingBottom: moderateScale(12),
+      paddingBottom: moderateScale(36),
     },
     listBottomView: {
       marginVertical: moderateScale(12),
@@ -15,6 +15,14 @@ const billPaymentStyles = () =>
     margins: {
       margin: moderateScale(24),
       marginVertical: moderateScale(0),
+    },
+    payBtn: {
+      height: moderateScale(50, 0.3),
+      paddingVertical: moderateScale(14, 0.3),
+    },
+    topUpButton: {
+      height: moderateScale(34, 0.3),
+      borderRadius: moderateScale(12, 0.3),
     },
     toastContainerStyle: {
       margin: 0,
@@ -35,6 +43,10 @@ const billPaymentStyles = () =>
     },
     otpInnerContainer: {
       paddingHorizontal: moderateScale(24),
+    },
+    footerContainer: {
+      paddingTop: moderateScale(12, 0.3),
+      marginBottom: moderateScale(6, 0.3),
     },
   });
 export default billPaymentStyles;

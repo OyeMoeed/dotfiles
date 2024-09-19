@@ -4,7 +4,6 @@ import { IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -17,16 +16,17 @@ import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TopupStatus } from '@app/utilities/enums.util';
+import { buttonVariants, TopupStatus } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { FC, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayPointRedemptionConfirmatonProps } from './ipay-points-redemption-confirmation.interface';
 import pointRedemptionConfirmation from './ipay-points-redemption-confirmation.style';
 
 const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> = ({ testID, params }) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -90,7 +90,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
       }
     } else if (apiResponse?.status?.code === 'E002961') {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       onConfirmOtpVerification({
         ...apiResponse?.response,
@@ -102,7 +102,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       verifyOtp();
     }
@@ -121,7 +121,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPaySafeAreaView style={styles.container}>
-        <IPayHeader title={localizationText.TOP_UP.REDEEM_POINTS} backBtn applyFlex />
+        <IPayHeader title="TOP_UP.REDEEM_POINTS" backBtn applyFlex />
 
         <IPayView style={styles.redemptionConfirmDetail}>
           <IPayPointRedemptionCard
@@ -138,11 +138,11 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           >
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.TOP_UP.POINTS_REDEEMED} color={colors.natural.natural900} />
+                <IPayFootnoteText text="TOP_UP.POINTS_REDEEMED" color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${params?.redeemPoints} ${localizationText.COMMON.POINTS}`}
+                    text={`${params?.redeemPoints} ${t('COMMON.POINTS')}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -150,12 +150,13 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
             </IPayView>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.TOP_UP.EQUIVALENT_BALANCE} color={colors.natural.natural900} />
+                <IPayFootnoteText text="TOP_UP.EQUIVALENT_BALANCE" color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${params?.redeemAmount} ${localizationText.COMMON.SAR}`}
+                    text={`${params?.redeemAmount} ${t('COMMON.SAR')}`}
                     style={styles.detailText}
+                    shouldTranslate={false}
                   />
                 </IPayView>
               </IPayView>
@@ -165,11 +166,11 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
           <IPayView style={styles.remainingDetails}>
             <IPayView style={styles.listContainer}>
               <IPayView style={styles.listView}>
-                <IPayFootnoteText text={localizationText.TOP_UP.REMAINING_POINTS} color={colors.natural.natural900} />
+                <IPayFootnoteText text="TOP_UP.REMAINING_POINTS" color={colors.natural.natural900} />
                 <IPayView style={styles.listDetails}>
                   <IPayFootnoteText
                     color={colors.primary.primary800}
-                    text={`${getRemainPoints()} ${localizationText.COMMON.POINTS}`}
+                    text={`${getRemainPoints()} ${t('COMMON.POINTS')}`}
                     style={styles.detailText}
                   />
                 </IPayView>
@@ -179,15 +180,15 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         </IPayView>
         <IPayButton
           onPress={onConfirm}
-          btnType="primary"
-          btnText={localizationText.COMMON.CONFIRM}
+          btnType={buttonVariants.PRIMARY}
+          btnText="COMMON.CONFIRM"
           btnIconsDisabled
           textColor={colors.natural.natural0}
           btnStyle={[styles.confirmButton]}
         />
       </IPaySafeAreaView>
       <IPayPortalBottomSheet
-        heading={localizationText.TOP_UP.REDEEM_POINTS}
+        heading="TOP_UP.REDEEM_POINTS"
         enablePanDownToClose
         simpleBar
         bold
@@ -212,7 +213,7 @@ const IPayPointsRedemptionConfirmation: FC<IPayPointRedemptionConfirmatonProps> 
         />
       </IPayPortalBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

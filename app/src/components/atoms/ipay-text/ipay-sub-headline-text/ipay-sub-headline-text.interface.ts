@@ -12,7 +12,7 @@ export interface IPaySubHeadlineTextProps {
   /**
    * The text content to be displayed.
    */
-  text?: string;
+  text?: string | null;
   /**
    * Regular font family for the text.
    */
@@ -34,4 +34,8 @@ export interface IPaySubHeadlineTextProps {
    * Color for the text.
    */
   color?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

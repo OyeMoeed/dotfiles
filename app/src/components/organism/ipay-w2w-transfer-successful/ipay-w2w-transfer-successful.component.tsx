@@ -14,7 +14,6 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayGradientText, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -22,79 +21,93 @@ import { copyText } from '@app/utilities';
 import React from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
 import ViewShot from 'react-native-view-shot';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useShareableImage from '@app/components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.hook';
+import { useTranslation } from 'react-i18next';
 import { IW2WTransferSuccessProps, PayData } from './ipay-w2w-transfer-successful.interface';
 import { TopUpSuccessStyles } from './ipay-w2w-transfer-successful.styles';
 
-const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
+const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDetails, totalAmount, variant }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = TopUpSuccessStyles(colors);
   const { viewShotRef, shareImage } = useShareableImage();
 
   const { showToast } = useToastContext();
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
-  const formattedTransfersDetails = transferDetails.formData.map((item, index) => {
-    if (item?.walletNumber) {
-      return [
-        {
-          id: '2',
-          label: localizationText.TOP_UP.TRANSFER_TO,
-          value: item.subtitle,
-          icon: null,
-          leftIcon: icons.user_square,
-          color: colors.primary.primary900,
-          isAlinma: false,
-        },
-        {
-          id: '3',
-          label: localizationText.TOP_UP.TRANSACTION_ID,
-          value: transferDetails.apiData[index].transactionId,
-          icon: icons.copy,
-          color: colors.primary.primary500,
-        },
-        { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: item.amount, icon: null },
-        { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: item.selectedItem.text },
-      ];
-    }
-    return [
-      {
-        id: '2',
-        label: localizationText.TOP_UP.TRANSFER_TO,
-        value: item.subtitle,
-        leftIcon: images.alinmaP,
-        isAlinma: true,
-      },
-      {
-        id: '3',
-        label: localizationText.TOP_UP.TRANSACTION_ID,
-        value: transferDetails.apiData?.[index]?.transactionId,
-        icon: icons.copy,
-        color: colors.primary.primary500,
-      },
-      { id: '4', label: localizationText.TRANSACTION_HISTORY.AMOUNT, value: item.amount, icon: null },
-      { id: '1', label: localizationText.TRANSACTION_HISTORY.TRANSFER_REASON, value: item?.selectedItem?.text },
-    ];
-  });
-
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: t('TOP_UP.COPIED'),
+      subTitle: t('TOP_UP.REF_NUMBER_COPIED'),
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
     });
   };
 
-  const handleClickOnCopy = (step: number, textToCopy: string) => {
+  const handleClickOnCopy = (textToCopy: string) => {
     copyText(textToCopy);
     renderToast();
   };
 
+  const infoLabel = variant === TransactionTypes.PAYMENT_REQUEST ? t('REQUEST_SUMMARY.FROM') : t('TOP_UP.TRANSFER_TO');
+
+  const formattedTransfersDetails = transferDetails.formData.map((item, index) => {
+    const summeryArray = [];
+    const titleObject = () => {
+      if (!item?.hasWallet) {
+        return {
+          id: '2',
+          label: infoLabel,
+          value: item.subtitle,
+          icon: null,
+          leftIcon: icons.user_square,
+          color: colors.primary.primary900,
+          isAlinma: false,
+        };
+      }
+      return {
+        id: '2',
+        label: infoLabel,
+        value: item.subtitle,
+        leftIcon: variant === TransactionTypes.PAYMENT_REQUEST ? icons.user_square : images.alinmaP,
+        isAlinma: true,
+      };
+    };
+
+    summeryArray.push(titleObject());
+    if (transferDetails?.apiData[index]?.transactionId) {
+      summeryArray.push({
+        id: '3',
+        label: t('TOP_UP.TRANSACTION_ID'),
+        value: transferDetails.apiData[index].transactionId,
+        icon: icons.copy,
+        color: colors.primary.primary500,
+      });
+    }
+    summeryArray.push({
+      id: '4',
+      label: t('TRANSACTION_HISTORY.AMOUNT'),
+      value: item.amount,
+      icon: null,
+    });
+
+    if (item.selectedItem) {
+      summeryArray.push({
+        id: '1',
+        label: t('TRANSACTION_HISTORY.TRANSFER_REASON'),
+        value: item.selectedItem.text,
+      });
+    }
+    if (item.notes) {
+      summeryArray.push({ id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: item.notes });
+    }
+    return summeryArray;
+  });
+
   const renderWallerPayItem = ({ item, index }: { item: PayData; index: number }) => {
-    const { isAlinma, icon, detailsText, leftIcon, label, value, color } = item;
+    const { isAlinma, icon, leftIcon, label, value, color } = item;
     const renderLeftIcon = () => {
       if (!leftIcon) {
         return null;
@@ -113,7 +126,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
       );
     };
 
-    const modifyValue = label === localizationText.COMMON.AMOUNT ? `${value} ${localizationText.COMMON.SAR}` : value;
+    const modifyValue = label === t('COMMON.AMOUNT') ? `${value} ${t('COMMON.SAR')}` : value;
     const isFirstItem = index === 0;
     return (
       <IPayView key={item.id}>
@@ -122,7 +135,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
               headingStyles={styles.chipColors}
             />
           </IPayView>
@@ -135,13 +148,18 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
               <IPayFootnoteText text={label} numberOfLines={2} />
             </IPayView>
             <IPayView style={styles.listDetails}>
-              <IPayFootnoteText text={modifyValue} style={styles.detailsText} numberOfLines={2} />
+              <IPayFootnoteText
+                text={modifyValue}
+                style={styles.detailsText}
+                numberOfLines={2}
+                shouldTranslate={false}
+              />
               {icon && (
                 <IPayPressable
                   style={styles.copyIcon}
                   onPress={() => {
                     if (icon === icons.copy) {
-                      handleClickOnCopy(3, detailsText);
+                      handleClickOnCopy(modifyValue);
                     }
                   }}
                 >
@@ -155,17 +173,26 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
     );
   };
 
-  const renderText = () => localizationText.TOP_UP.TRANSFER_SUCCESSFUL;
+  const renderText = () =>
+    variant === TransactionTypes.PAYMENT_REQUEST ? 'REQUEST_SUMMARY.REQUEST_SENT' : 'TOP_UP.TRANSFER_SUCCESSFUL';
 
   const renderActionLabel = () => (
     <IPayPressable
       style={styles.newTopup}
       onPress={() => {
-        navigate(screenNames.WALLET_TRANSFER);
+        if (variant === TransactionTypes.PAYMENT_REQUEST) {
+          navigate(screenNames.REQUEST_MONEY);
+        } else {
+          navigate(screenNames.WALLET_TRANSFER);
+        }
       }}
     >
       <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-      <IPaySubHeadlineText text={localizationText.TOP_UP.NEW_TRANSFER} style={styles.newTopupText} regular />
+      <IPaySubHeadlineText
+        text={variant === TransactionTypes.PAYMENT_REQUEST ? 'REQUEST_SUMMARY.NEW_REQUEST' : 'TOP_UP.NEW_TRANSFER'}
+        style={styles.newTopupText}
+        regular
+      />
     </IPayPressable>
   );
 
@@ -179,12 +206,15 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
       data={formattedTransfersDetails}
       style={styles.cardList}
       renderItem={({ item }) => (
-        <IPayView key={item[0].value} style={styles.walletBackground}>
+        <IPayView
+          key={item[0].value}
+          style={[styles.walletBackground, variant === TransactionTypes.PAYMENT_REQUEST && styles.margin20]}
+        >
           <IPayFlatlist style={styles.cardList} scrollEnabled={false} data={item} renderItem={renderWallerPayItem} />
           <IPayButton
-            btnType="link-button"
+            btnType={buttonVariants.LINK_BUTTON}
             onPress={viewShot}
-            btnText={localizationText.TOP_UP.SHARE}
+            text="TOP_UP.SHARE"
             leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
           />
         </IPayView>
@@ -210,11 +240,14 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
                 fontSize={styles.linearGradientText.fontSize}
                 fontFamily={styles.linearGradientText.fontFamily}
               />
-              <IPaySubHeadlineText
-                regular={false}
-                text={`${totalAmount} ${localizationText.COMMON.SAR}`}
-                style={styles.headlineText}
-              />
+              {variant !== TransactionTypes.PAYMENT_REQUEST && (
+                <IPaySubHeadlineText
+                  regular={false}
+                  text={`${totalAmount} ${t('COMMON.SAR')}`}
+                  style={styles.headlineText}
+                  shouldTranslate={false}
+                />
+              )}
             </IPayView>
           </IPayView>
           {renderCard()}
@@ -224,7 +257,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
             <IPayButton
               large
               btnType={buttonVariants.PRIMARY}
-              btnText={localizationText.COMMON.HOME}
+              btnText="COMMON.HOME"
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
               onPress={() => navigate(screenNames.HOME)}

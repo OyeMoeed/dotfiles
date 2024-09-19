@@ -22,14 +22,14 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName }
     navigate(screenNames.NOTIFICATION_CENTER);
   };
 
+  const onProfilePress = () => {
+    navigate(screenNames.PROFILE);
+  };
+
   return (
     <IPayView testID={`${testID}-topbar`} style={styles.topNavConStyle}>
       <IPayView style={styles.leftNavConStyle}>
-        <IPayPressable
-          onPress={() => {
-            navigate(screenNames.PROFILE);
-          }}
-        >
+        <IPayPressable onPress={onProfilePress}>
           <IPayView style={styles.topNavCon}>
             <IPayUserAvatar style={styles.imageStyle} name={userName} />
           </IPayView>
@@ -37,8 +37,8 @@ const IPayTopbar: React.FC<IPayTopbarProps> = ({ testID, captionText, userName }
 
         <IPayView>
           <IPayView style={styles.welcomeTextContainer}>
-            <IPayCaption2Text style={styles.welcomeText}>{captionText}</IPayCaption2Text>
-            <IPayCaption2Text style={styles.handWaveText}>{'  👋'}</IPayCaption2Text>
+            <IPayCaption2Text style={styles.welcomeText} text={captionText} />
+            <IPayCaption2Text style={styles.handWaveText} shouldTranslate={false} text="  👋" />
           </IPayView>
           <IPayHeadlineText style={styles.nameStyle}>{userName}</IPayHeadlineText>
         </IPayView>

@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 interface IPayOtpVerificationProps {
@@ -20,5 +21,7 @@ interface IPayOtpVerificationProps {
   containerStyle?: StyleProp<ViewStyle>;
   innerContainerStyle?: StyleProp<ViewStyle>;
   otp: string;
+  hasDisclaimerSection?: boolean;
+  disclaimerSection?: JSX;
 }
 export default IPayOtpVerificationProps;
