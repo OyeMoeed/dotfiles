@@ -28,13 +28,13 @@ const PhysicalCardMainScreen: React.FC = () => {
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
-        return localizationText.CARDS.PLATINUM_CASHBACK_PREPAID_CARD;
+        return 'CARDS.PLATINUM_CASHBACK_PREPAID_CARD';
 
       case CardTypes.SIGNATURE:
-        return localizationText.CARDS.SIGNATURE_PREPAID_CARD;
+        return 'CARDS.SIGNATURE_PREPAID_CARD';
 
       case CardTypes.CLASSIC:
-        return localizationText.CARDS.CLASSIC_DEBIT_CARD;
+        return 'CARDS.CLASSIC_DEBIT_CARD';
 
       default:
         return '';

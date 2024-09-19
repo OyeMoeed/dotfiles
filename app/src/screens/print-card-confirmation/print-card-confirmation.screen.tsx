@@ -31,6 +31,7 @@ import { PrintCardPreparePayloadTypes } from '@app/network/services/physical-car
 import { getDeviceInfo } from '@app/network/utilities';
 import printCardService from '@app/network/services/physical-card/print-card/print-card.service';
 import { PrintCardPayloadTypes } from '@app/network/services/physical-card/print-card/print-card.interface';
+import { IssueCardFeesRes } from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.interface';
 import { AddressInfoRefTypes, OTPVerificationRefTypes, RouteParams } from './print-card-confirmation.interface';
 import printCardConfirmationStyles from './print-card-confirmation.style';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -134,6 +135,12 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   const onResendCodePress = () => {};
 
+  const getTotalFees = (fees: IssueCardFeesRes) => {
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    const totalFees = +fees?.bankFeeAmount + +fees?.bankVatAmount + +fees?.feeAmount + +fees?.vatAmount;
+    return totalFees.toString();
+  };
+
   const onPressIsssueCard = async () => {
     const feesApiResponse = await getCardIssuanceFees(
       walletInfo?.walletNumber,
@@ -141,7 +148,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
       'CARD_VCB_ISSUE',
     );
     if (feesApiResponse?.successfulResponse === true) {
-      setShippingFee(feesApiResponse.response?.feeAmount);
+      setShippingFee(getTotalFees(feesApiResponse?.response));
     } else {
       setShippingFee('0');
     }
