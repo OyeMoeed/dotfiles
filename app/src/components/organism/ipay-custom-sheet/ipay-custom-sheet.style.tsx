@@ -11,6 +11,7 @@ const customSheetStyles = (theme: any) =>
       width: '100%',
       position: 'absolute',
       top: WINDOW_HEIGHT,
+      zIndex: 2,
     },
     innerStyle: {
       paddingBottom: verticalScale(380),
