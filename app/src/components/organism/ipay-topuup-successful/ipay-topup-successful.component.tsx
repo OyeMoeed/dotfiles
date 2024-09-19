@@ -282,7 +282,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const renderCard = () =>
     topupChannel === PayChannel.CARD && (
-      <IPayView style={[styles.cardButton, styles.actionButton]}>
+      <IPayView style={styles.cardsButton}>
         <IPayButton
           onPress={goBack}
           btnType={buttonVariants.LINK_BUTTON}

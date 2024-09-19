@@ -162,7 +162,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   }, [permissionStatus]);
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
-  const clearIcon = <IPayIcon icon={icons.CLOSE_SQUARE} size={20} color={colors.primary.primary500} />;
 
   const renderToast = () => {
     showToast({
@@ -353,11 +352,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           label="COMMON.SEARCH"
           placeholder="COMMON.SEARCH"
           rightIcon={searchIcon}
-          showLeftIcon={!!search}
-          leftIcon={clearIcon}
-          onClearInput={onClearSearchBox}
+          onPressCancle={onClearSearchBox}
           simpleInput
-          containerStyle={styles.searchInputStyle}
+          containerStyle={search ? styles.searchInputStyle : styles.searchInputStyle2}
+          showCancleButton={!!search}
           style={[styles.inputStyle, isIosOS && styles.topMargin, styles.textInputContainerStyle]}
         />
         <IPayView style={styles.unsavedAndQr}>
@@ -452,7 +450,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         simpleBar
         isVisible={unSavedVisible}
         ref={unsavedBottomSheetRef}
-        customSnapPoint={isKeyboardOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XS_SMALL}
+        customSnapPoint={isKeyboardOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XX_SMALL}
         bold
         cancelBnt
         onCloseBottomSheet={onCloseSaveContact}
@@ -470,9 +468,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                 maxLength={constants.UNSAVED_NUMBER_LENGTH}
               />
               <IPayButton
-                medium
+                btnStyle={styles.padding}
                 btnIconsDisabled
-                btnStyle={styles.unsavedButton}
                 btnText="COMMON.DONE"
                 onPress={handleSubmit(addUnsavedNumber)}
                 btnType={buttonVariants.PRIMARY}
