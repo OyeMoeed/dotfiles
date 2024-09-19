@@ -6,7 +6,7 @@ import INTERNATIONAL_TRANSFERS_URLS from '../international-transfer.urls';
 import { WURefundRequestResponse } from './western_union_refund_request.interface';
 import wuRefundRequestResponseData from './western_union_refund_request.mock';
 
-const wuRefundRequest = async (beneficiaryCode: string)=> {
+const wuRefundRequest = async (beneficiaryCode: string): Promise<WURefundRequestResponse | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return wuRefundRequestResponseData;
   }

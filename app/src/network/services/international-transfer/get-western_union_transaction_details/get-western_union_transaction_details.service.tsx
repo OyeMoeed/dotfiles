@@ -6,7 +6,9 @@ import INTERNATIONAL_TRANSFERS_URLS from '../international-transfer.urls';
 import { WUTransactionDetailsResponse } from './get-western_union_transaction_details.interface';
 import wuTransactiontResponseData from './get-western_union_transaction_details.mock';
 
-const getAUTransactionDetails = async (moneyTransferControlNumber: string) => {
+const getAUTransactionDetails = async (
+  moneyTransferControlNumber: string,
+): Promise<WUTransactionDetailsResponse | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return wuTransactiontResponseData;
   }
