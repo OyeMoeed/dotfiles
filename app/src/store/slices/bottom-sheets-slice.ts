@@ -1,26 +1,28 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 
-interface NafathVerificationState {
+interface BottomSheetState {
   isProfileSheetVisible: boolean;
   isNafathSheetVisible: boolean;
   isNafathTerms: boolean;
   isTermsConditionsVisible: boolean;
   termsAndConditionsURL: string | null;
   isVirtualCardTermsAndConditions: boolean;
+  isIdRenewalSheetVisible: boolean;
 }
 
-const initialState: NafathVerificationState = {
+const initialState: BottomSheetState = {
   isProfileSheetVisible: false,
   isNafathSheetVisible: false,
   isTermsConditionsVisible: false,
   isNafathTerms: false,
   termsAndConditionsURL: null,
   isVirtualCardTermsAndConditions: false,
+  isIdRenewalSheetVisible: false,
 };
 
-const nafathVerificationSlice = createSlice({
-  name: SLICE_NAMES.NAFAT_VERIFICATION_SLICE,
+const BottomSheetSlice = createSlice({
+  name: SLICE_NAMES.BOTTOM_SHEET_SLICE,
   initialState,
   reducers: {
     setProfileSheetVisibility: (state, action: PayloadAction<boolean>) => {
@@ -28,6 +30,9 @@ const nafathVerificationSlice = createSlice({
     },
     setNafathSheetVisibility: (state, action: PayloadAction<boolean>) => {
       state.isNafathSheetVisible = action.payload;
+    },
+    setIdRenewalSheetVisibility: (state, action: PayloadAction<boolean>) => {
+      state.isIdRenewalSheetVisible = action.payload;
     },
     setTermsConditionsVisibility: (
       state,
@@ -59,6 +64,10 @@ const nafathVerificationSlice = createSlice({
   },
 });
 
-export const { setProfileSheetVisibility, setNafathSheetVisibility, setTermsConditionsVisibility } =
-  nafathVerificationSlice.actions;
-export default nafathVerificationSlice.reducer;
+export const {
+  setProfileSheetVisibility,
+  setNafathSheetVisibility,
+  setTermsConditionsVisibility,
+  setIdRenewalSheetVisibility,
+} = BottomSheetSlice.actions;
+export default BottomSheetSlice.reducer;
