@@ -8,18 +8,18 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { AtmProps, NearestAtmListComponentProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
 
 const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testID, onPressAtmCard, nearestAtms }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = nearestAtmStyles(colors);
-  const localizationText = useLocalization();
-  const getDistance = (distance: string | number) => `${distance}  ${localizationText.COMMON.KM}`;
+  const getDistance = (distance: string | number) => `${distance}  ${t('COMMON.KM')}`;
 
   const renderAtms = ({ item }: AtmProps) => (
     <IPayPressable style={styles.atmCard} key={item.address} onPress={() => onPressAtmCard(item)}>

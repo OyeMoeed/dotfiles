@@ -6,11 +6,11 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       paddingHorizontal: moderateScale(24),
-      backgroundColor: colors.natural.natural100,
+      backgroundColor: colors.transparent,
     },
     flatlist: {
       flex: 0,
-      backgroundColor: colors.natural.natural100,
+      backgroundColor: colors.transparent,
     },
     textColor: { color: colors.primary.primary900 },
     detailTextColor: { color: colors.primary.primary800 },
@@ -21,6 +21,10 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
     },
     zeroPadding: {
       paddingLeft: 0,
+    },
+    cardContainer: {
+      marginBottom: moderateScale(2, 0.3),
+      paddingVertical: 0,
     },
     flatListContainer: {
       height: '61.5%',

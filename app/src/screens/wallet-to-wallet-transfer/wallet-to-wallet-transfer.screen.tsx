@@ -29,13 +29,12 @@ import { PermissionTypes, PermissionsStatus } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks';
 import usePermissions from '@app/hooks/permissions.hook';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
 import { getDeviceInfo } from '@app/network/utilities';
+import { DeviceInfoProps } from '@app/network/utilities/utilities.interface';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -45,13 +44,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
+import { useTranslation } from 'react-i18next';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
+import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
@@ -67,19 +67,34 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [currentOffset, setCurrentOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
   const styles = walletTransferStyles(colors, selectedContacts?.length > 0);
 
+  const getW2WActiveFriends = async () => {
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: selectedContacts.map((item) => item?.phoneNumbers[0]?.number),
+    };
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
+        navigate(ScreenNames.SEND_MONEY_FORM, {
+          activeFriends: apiResponse.response?.friends,
+          selectedContacts,
+          heading: t('HOME.SEND_MONEY'),
+          showReason: true,
+        });
+      }
+    }
+  };
+
   const handleSubmitTransfer = () => {
     switch (from) {
       case TRANSFERTYPE.SEND_MONEY:
-        navigate(ScreenNames.SEND_MONEY_FORM, {
-          selectedContacts,
-          heading: localizationText.HOME.SEND_MONEY,
-          showReason: true,
-        });
+        getW2WActiveFriends();
         break;
       case TRANSFERTYPE.SEND_GIFT:
         navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
@@ -94,7 +109,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       case TRANSFERTYPE.REQUEST_MONEY:
         navigate(ScreenNames.SEND_MONEY_REQUEST, {
           selectedContacts,
-          heading: localizationText.REQUEST_MONEY.CREATE_REQUEST,
+          heading: t('REQUEST_MONEY.CREATE_REQUEST'),
           from: TRANSFERTYPE.REQUEST_MONEY,
           showHistory: false,
         });
@@ -151,7 +166,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const renderToast = () => {
     showToast({
-      title: localizationText.WALLET_TO_WALLET.CONTACT_LIMIT,
+      title: 'WALLET_TO_WALLET.CONTACT_LIMIT',
       borderColor: colors.error.error25,
       leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
@@ -257,7 +272,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         recordID: mobileNumber,
         phoneNumbers: [
           {
-            label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
+            label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
             number: mobileNumber,
           },
         ],
@@ -291,14 +306,14 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         recordID: mobileNumber,
         phoneNumbers: [
           {
-            label: localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER,
+            label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
             number: mobileNumber,
           },
         ],
       } as Contact);
     }
   };
-  const { mobileNumberSchema } = getValidationSchemas(localizationText);
+  const { mobileNumberSchema } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
     mobileNumber: mobileNumberSchema,
@@ -318,17 +333,13 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         backBtn
-        title={heading || localizationText.HOME.SEND_MONEY}
+        title={heading || 'HOME.SEND_MONEY'}
         isRight
         rightComponent={
           showHistory && (
             <IPayPressable style={styles.history} onPress={history}>
               <IPayIcon icon={icons.clock_1} size={18} color={colors.primary.primary500} />
-              <IPaySubHeadlineText
-                text={localizationText.WALLET_TO_WALLET.HISTORY}
-                regular
-                color={colors.primary.primary500}
-              />
+              <IPaySubHeadlineText text="WALLET_TO_WALLET.HISTORY" regular color={colors.primary.primary500} />
             </IPayPressable>
           )
         }
@@ -339,8 +350,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           text={search}
           placeholderTextColor={colors.natural.natural500}
           onChangeText={setSearch}
-          label={localizationText.COMMON.SEARCH}
-          placeholder={localizationText.COMMON.SEARCH}
+          label="COMMON.SEARCH"
+          placeholder="COMMON.SEARCH"
           rightIcon={searchIcon}
           showLeftIcon={!!search}
           leftIcon={clearIcon}
@@ -353,7 +364,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
           <IPayPressable style={styles.unsaved} onPress={showUnsavedBottomSheet}>
             <IPayIcon icon={icons.mobile} size={18} />
             <IPaySubHeadlineText
-              text={localizationText.WALLET_TO_WALLET.SEND_TO_UNSAVED_NUMBER}
+              text="WALLET_TO_WALLET.SEND_TO_UNSAVED_NUMBER"
               regular
               color={colors.primary.primary500}
             />
@@ -369,7 +380,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayIcon icon={icons.scan_barcode} size={24} />
           </IPayPressable>
         </IPayView>
-        {getSearchedContacts().length === 0 && <IPayNoResult message={localizationText.COMMON.NO_RESULTS_FOUND} />}
+        {getSearchedContacts().length === 0 && <IPayNoResult message="COMMON.NO_RESULTS_FOUND" />}
         <IPayFlatlist
           data={getSearchedContacts()}
           extraData={contacts}
@@ -387,9 +398,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             {!!selectedContacts?.length && (
               <>
                 <IPayView style={styles.contactCount}>
-                  <IPayFootnoteText text={`${selectedContacts?.length} ${localizationText.HOME.OF}`} regular={false} />
+                  <IPayFootnoteText text={`${selectedContacts?.length} ${t('HOME.OF')}`} regular={false} />
                   <IPayFootnoteText
-                    text={`${MAX_CONTACTS} ${localizationText.WALLET_TO_WALLET.CONTACTS}`}
+                    text={`${MAX_CONTACTS} ${t('WALLET_TO_WALLET.CONTACTS')}`}
                     color={colors.natural.natural500}
                   />
                 </IPayView>
@@ -424,7 +435,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayButton
               medium
               btnIconsDisabled
-              btnText={localizationText.COMMON.DONE}
+              btnText="COMMON.DONE"
               disabled={!selectedContacts.length}
               onPress={handleSubmitTransfer}
               btnType={buttonVariants.PRIMARY}
@@ -436,7 +447,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       )}
 
       <IPayPortalBottomSheet
-        heading={localizationText.WALLET_TO_WALLET.UNSAVED_NUMBER}
+        heading="WALLET_TO_WALLET.UNSAVED_NUMBER"
         enablePanDownToClose
         simpleBar
         isVisible={unSavedVisible}
@@ -451,7 +462,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             <IPayView style={styles.unsavedBottomSheet}>
               <IPayRHFAnimatedTextInput
                 name="mobileNumber"
-                label={localizationText.WALLET_TO_WALLET.TYPE_MOBILE_NUMBER}
+                label="WALLET_TO_WALLET.TYPE_MOBILE_NUMBER"
                 keyboardType="phone-pad"
                 rightIcon={<IPayIcon icon={icons.mobile} size={20} />}
                 containerStyle={styles.phoneInputStyle}
@@ -462,7 +473,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                 medium
                 btnIconsDisabled
                 btnStyle={styles.unsavedButton}
-                btnText={localizationText.COMMON.DONE}
+                btnText="COMMON.DONE"
                 onPress={handleSubmit(addUnsavedNumber)}
                 btnType={buttonVariants.PRIMARY}
               />

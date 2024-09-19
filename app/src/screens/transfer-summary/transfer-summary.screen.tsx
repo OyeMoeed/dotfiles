@@ -10,11 +10,9 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader } from '@app/components/molecules';
-import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WResRequest } from '@app/network/services/cards-management/wallet-to-wallet-fees/wallet-to-wallet-fees.interface';
@@ -30,6 +28,7 @@ import { scaleSize } from '@app/styles/mixins';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { IW2WTransferSummaryItem, ParamsProps } from './transfer-summary-screen.interface';
@@ -37,7 +36,7 @@ import transferSummaryStyles from './transfer-summary.styles';
 
 const TransferSummaryScreen: React.FC = () => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const route = useRoute<
     RouteProp<{
       params: ParamsProps;
@@ -77,7 +76,7 @@ const TransferSummaryScreen: React.FC = () => {
       return [
         {
           id: '1',
-          label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+          label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
           value: transfersDetails.formInstances[index]?.subtitle,
           leftIcon: icons.user_square,
           color: colors.primary.primary900,
@@ -85,36 +84,37 @@ const TransferSummaryScreen: React.FC = () => {
         },
         {
           id: '2',
-          label: localizationText.TRANSFER_SUMMARY.AMOUNT,
-          value: `${item.amount} ${localizationText.COMMON.SAR}`,
+          label: t('TRANSFER_SUMMARY.AMOUNT'),
+          value: `${item.amount} ${t('COMMON.SAR')}`,
         },
         {
           id: '3',
-          label: localizationText.TRANSFER_SUMMARY.REASON,
+          label: t('TRANSFER_SUMMARY.REASON'),
           value: transfersDetails.formInstances[index]?.selectedItem?.text,
         },
-        { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
+        { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: item.note },
       ];
     }
 
     return [
       {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
         value: transfersDetails.formInstances[index]?.subtitle,
         leftIcon: images.alinmaP,
         isAlinma: true,
       },
       {
         id: '2',
-        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
-        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        label: t('TRANSFER_SUMMARY.AMOUNT'),
+        value: `${item.amount} ${t('COMMON.SAR')}`,
       },
       {
         id: '3',
+        label: t('TRANSFER_SUMMARY.REASON'),
         value: transfersDetails.formInstances[index]?.selectedItem?.text,
       },
-      { id: '4', label: localizationText.TRANSFER_SUMMARY.NOTE, value: item.note },
+      { id: '4', label: t('TRANSFER_SUMMARY.NOTE'), value: item.note },
     ];
   });
 
@@ -166,7 +166,7 @@ const TransferSummaryScreen: React.FC = () => {
             <IPayChip
               containerStyle={styles.chipColors}
               icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-              textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
               headingStyles={styles.chipColors}
             />
           </IPayView>
@@ -187,7 +187,6 @@ const TransferSummaryScreen: React.FC = () => {
 
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     try {
-
       setOtpSheetVisible(true);
 
       setIsLoading(true);
@@ -240,7 +239,7 @@ const TransferSummaryScreen: React.FC = () => {
       }
     } else {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     }
     setIsLoading(false);
   };
@@ -248,7 +247,7 @@ const TransferSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       verifyOtp();
     }
@@ -260,10 +259,6 @@ const TransferSummaryScreen: React.FC = () => {
 
   const onResendCodePress = () => {
     prepareOtp(false);
-  };
-
-  const onCloseHelpBottomSheet = () => {
-    helpCenterRef?.current?.close();
   };
 
   const TransactionList = () =>
@@ -291,7 +286,7 @@ const TransferSummaryScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
-      <IPayHeader backBtn title={localizationText.TRANSFER_SUMMARY.TITLE} applyFlex />
+      <IPayHeader backBtn title="TRANSFER_SUMMARY.TITLE" applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>
@@ -302,16 +297,16 @@ const TransferSummaryScreen: React.FC = () => {
           {/* Crashed inside wallet to wallet transfer */}
           {/* {transactionType === TransactionTypes.SEND_GIFT && (
             <IPayList
-              title={localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT}
+              title={"TRANSACTION_HISTORY.TOTAL_AMOUNT"}
               showDetail
               detailTextStyle={styles.listTextStyle}
-              detailText={`${amount} ${localizationText.COMMON.SAR}`}
+              detailText={`${amount} ${t("COMMON.SAR")}`}
             />
           )} */}
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             btnIconsDisabled
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText="COMMON.CONFIRM"
             btnColor={colors.primary.primary500}
             large
             onPress={onSubmit}
@@ -319,11 +314,7 @@ const TransferSummaryScreen: React.FC = () => {
         </IPayView>
       </IPayView>
       <IPayPortalBottomSheet
-        heading={
-          transactionType === TransactionTypes.SEND_GIFT
-            ? localizationText.HOME.SEND_GIFT
-            : localizationText.HOME.SEND_MONEY
-        }
+        heading={transactionType === TransactionTypes.SEND_GIFT ? 'HOME.SEND_GIFT' : 'HOME.SEND_MONEY'}
         enablePanDownToClose
         simpleBar
         bold
@@ -349,14 +340,14 @@ const TransferSummaryScreen: React.FC = () => {
         />
       </IPayPortalBottomSheet>
       <IPayPortalBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
         customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         ref={helpCenterRef}
         testID="transfer-details-help-center"
-        onCloseBottomSheet={()=> setHelpCenterVisible(false)}
+        onCloseBottomSheet={() => setHelpCenterVisible(false)}
         isVisible={isHelpCenterVisible}
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />

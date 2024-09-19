@@ -1,9 +1,11 @@
+import React from 'react';
+
+import { buttonVariants } from '@app/utilities';
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+
 import { IPayBottomSheetHandleProps } from './ipay-bottom-sheet.interface';
 import bottonSheetStyles from './ipay-bottom-sheet.style';
 
@@ -26,7 +28,6 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = bottonSheetStyles(colors);
-  const localizationText = useLocalization();
   const gradient = bgGradientColors || colors.bottomsheetGradient;
 
   return (
@@ -45,12 +46,12 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
           <IPayView style={[styles.cancelBtnView, cancelButtonStyle]}>
             {cancelBnt && (
               <IPayButton
-                btnType="link-button"
+                btnType={buttonVariants.LINK_BUTTON}
                 medium
                 textColor={colors.primary.primary500}
                 btnIconsDisabled
                 onPress={onPressCancel}
-                btnText={localizationText.COMMON.CANCEL}
+                btnText="COMMON.CANCEL"
               />
             )}
             {backBtn && (
@@ -58,8 +59,8 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
                 btnStyle={styles.backButtonStyle}
                 small
                 textColor={colors.primary.primary500}
-                btnType="link-button"
-                btnText={localizationText.COMMON.BACK}
+                btnType={buttonVariants.LINK_BUTTON}
+                btnText="COMMON.BACK"
                 onPress={onPressCancel}
                 leftIcon={<IPayIcon icon={icons.backBtnIcon} size={14} color={colors.primary.primary500} />}
               />
@@ -67,20 +68,22 @@ const IPayBottomSheetHandle: React.FC<IPayBottomSheetHandleProps> = ({
           </IPayView>
 
           {heading && (
-            <IPaySubHeadlineText style={[styles.titleText, bold && styles.boldStyle]} color={colors.primary.primary900}>
-              {heading || localizationText.COMMON.TITTLE}
-            </IPaySubHeadlineText>
+            <IPaySubHeadlineText
+              style={[styles.titleText, bold && styles.boldStyle]}
+              color={colors.primary.primary900}
+              text={heading || 'COMMON.TITTLE'}
+            />
           )}
 
           <IPayView style={[styles.doneBtnView, doneButtonStyle]}>
             {doneBtn && (
               <IPayButton
-                btnType="link-button"
+                btnType={buttonVariants.LINK_BUTTON}
                 medium
                 btnIconsDisabled
                 disabled={disabled}
                 onPress={onPressDone}
-                btnText={doneText || localizationText.COMMON.DONE}
+                btnText={doneText || 'COMMON.DONE'}
               />
             )}
           </IPayView>

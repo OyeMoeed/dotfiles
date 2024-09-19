@@ -91,6 +91,7 @@ const filtersStyles = (colors: typeof themeColors) =>
     valuesContainer: {
       flex: 1,
       minHeight: '100%',
+      marginHorizontal: moderateScale(24),
     },
     bankImage: {
       width: scaleSize(24),

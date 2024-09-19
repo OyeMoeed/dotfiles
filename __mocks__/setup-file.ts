@@ -16,6 +16,15 @@ jest.mock('react-native-reanimated', () => require('react-native-reanimated/mock
 
 jest.mock('@react-native-clipboard/clipboard');
 
+// Mock NetInfo
+jest.mock('@react-native-community/netinfo', () => ({
+  __esModule: true,
+  default: {
+    addEventListener: jest.fn(),
+    fetch: jest.fn(() => Promise.resolve({ isConnected: true })),
+  },
+}));
+
 jest.mock('react-native-share', () => ({
   open: jest.fn(),
   Social: {

@@ -1,7 +1,6 @@
 import icons from '@assets/icons/index';
 import useTheme from '@app/styles/hooks/theme.hook';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { IPayPasscode } from '@app/components/organism';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
@@ -14,7 +13,6 @@ import { CreateCardPinViewTypes, CreateCardPinProps } from './create-card-pin.in
 const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const { colors } = useTheme();
   const styles = createCardPinStyles();
-  const localizationText = useLocalization();
   const [passcodeError, setPasscodeError] = useState(false);
   const [currentView, setCurrentView] = useState<CreateCardPinViewTypes>(CreateCardPinViewTypes.NewPin);
   const [newPin, setNewPin] = useState<string>('');
@@ -23,9 +21,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getTitle = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.VIRTUAL_CARD.CREATE_CARD_PIN_PIN;
+        return 'VIRTUAL_CARD.CREATE_CARD_PIN_PIN';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.CONFIRM_NEW_PIN;
+        return 'CHANGE_PIN.CONFIRM_NEW_PIN';
       default:
         return '';
     }
@@ -34,9 +32,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getDescription = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.YOU_WILL_NEED_TO;
+        return 'CHANGE_PIN.YOU_WILL_NEED_TO';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENTER_PASS_AGAIN;
+        return 'CHANGE_PIN.ENTER_PASS_AGAIN';
       default:
         return '';
     }
@@ -45,9 +43,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getErrorTitle = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.INVALID_PIN;
+        return 'CHANGE_PIN.INVALID_PIN';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.PIN_NOT_MATCHING;
+        return 'CHANGE_PIN.PIN_NOT_MATCHING';
       default:
         return '';
     }
@@ -56,9 +54,9 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
   const getErrorDescription = () => {
     switch (currentView) {
       case CreateCardPinViewTypes.NewPin:
-        return localizationText.CHANGE_PIN.OLD_PIN;
+        return 'CHANGE_PIN.OLD_PIN';
       case CreateCardPinViewTypes.ConfirmNewPin:
-        return localizationText.CHANGE_PIN.ENSURE_YOU_WRITE;
+        return 'CHANGE_PIN.ENSURE_YOU_WRITE';
       default:
         return '';
     }

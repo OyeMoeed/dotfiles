@@ -9,7 +9,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { FilterFormDataProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactionTypes, getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
@@ -18,6 +17,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
@@ -38,11 +38,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { transactionHistoryFilterDefaultValues, w2WFilterData, w2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
-  const localizationText = useLocalization();
-  const TRANSACTION_TABS = [
-    localizationText.TRANSACTION_HISTORY.SEND_MONEY,
-    localizationText.TRANSACTION_HISTORY.RECEIVED_MONEY,
-  ];
+  const { t } = useTranslation();
+  const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
 
   const cardLastFourDigit = isShowCard && currentCard?.maskedCardNumber.slice(-4);
 
@@ -257,7 +254,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
     filtersData.push({
       id: '1',
-      label: localizationText.TRANSACTION_HISTORY.TRANSACTION_TYPE,
+      label: t('TRANSACTION_HISTORY.TRANSACTION_TYPE'),
       type: FiltersType.TRANSACTION_TYPE,
       filterValues: transactionTypesResMap,
     });
@@ -271,11 +268,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       const cardsFilterMap = cards.map((card: CardInterface) => ({
         id: card.cardIndex,
         key: card.cardIndex,
-        value: card?.maskedCardNumber,
+        value: card?.maskedCardNumber || '',
       }));
       filtersData.push({
         id: '2',
-        label: localizationText.TRANSACTION_HISTORY.CARD,
+        label: t('TRANSACTION_HISTORY.CARD'),
         type: FiltersType.CARD,
         filterValues: cardsFilterMap,
       });
@@ -321,7 +318,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       displayValue: item?.displayName,
       value: item?.phoneNumbers[0]?.number,
       description: item?.phoneNumbers[0]?.number,
-      heading: localizationText.WALLET_TO_WALLET.CONTACT_NAME,
+      heading: t('WALLET_TO_WALLET.CONTACT_NAME'),
     }));
 
   const selectedFilterData = isW2WTransactions ? w2WFilterData(onContactsList(contacts)) : transactionHistoryFilterData;
@@ -339,22 +336,17 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const renderNoResult = () =>
     noFilterResult ? (
-      <IPayNoResult
-        textColor={colors.primary.primary800}
-        message={localizationText.TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND}
-      />
+      <IPayNoResult textColor={colors.primary.primary800} message="TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND" />
     ) : (
       <IPayNoResult
         textColor={colors.primary.primary800}
-        message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
+        message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
       />
     );
 
   const renderLoadingWithNoResult = () => (isLoading ? <IPaySpinner hasBackgroundColor={false} /> : renderNoResult());
 
-  const headerTitle = currentCard
-    ? localizationText.CARDS.CARD_TRANSACTIONS_HISTORY
-    : localizationText.COMMON.TRANSACTIONS_HISTORY;
+  const headerTitle = currentCard ? 'CARDS.CARD_TRANSACTIONS_HISTORY' : 'COMMON.TRANSACTIONS_HISTORY';
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -418,7 +410,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         {filteredData && filteredData.length ? renderTrxsList() : renderLoadingWithNoResult()}
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={transactionRef}
@@ -431,7 +423,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       </IPayBottomSheet>
       {selectedFilterData && (
         <IPayFilterBottomSheet
-          heading={localizationText.TRANSACTION_HISTORY.FILTER}
+          heading="TRANSACTION_HISTORY.FILTER"
           defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
           showAmountFilter={isShowAmount}
           showDateFilter
@@ -447,13 +439,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         transparentOverlay={false}
         animationType="fade"
         showIcon={false}
-        title={localizationText.TRANSACTION_HISTORY.NO_RESULTS}
+        title="TRANSACTION_HISTORY.NO_RESULTS"
         onClose={() => {
           setNoFilterResult(false);
         }}
-        message={localizationText.TRANSACTION_HISTORY.NO_RESULTS_DETAIL}
+        message="TRANSACTION_HISTORY.NO_RESULTS_DETAIL"
         primaryAction={{
-          text: localizationText.TRANSACTION_HISTORY.GOT_IT,
+          text: t('TRANSACTION_HISTORY.GOT_IT'),
           onPress: () => {
             setNoFilterResult(false);
           },

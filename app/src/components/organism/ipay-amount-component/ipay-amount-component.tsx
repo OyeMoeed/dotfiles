@@ -1,8 +1,8 @@
+// TODO: Refactor this component
 import icons from '@app/assets/icons';
 import { IPayAmountHeader, IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { IPayAddCardBottomsheet } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { ApplePayCheckOutReq } from '@app/network/services/cards-management/apple-pay-add-balance/apple-pay-checkout/apple-pay-check-out.interface';
@@ -21,6 +21,7 @@ import { getErrorMessage } from '@rnw-community/shared';
 import { IosPaymentResponse, PaymentComplete, PaymentRequest } from '@rnw-community/react-native-payments';
 import { PaymentMethodNameEnum, SupportedNetworkEnum } from '@rnw-community/react-native-payments/src';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayRemainingAccountBalance from '../ipay-remaining-account-balance/ipay-remaining-account-balance.component';
 import IPayAmountProps from './ipay-amount-component.interface';
 import amountStyles from './ipay-amount-component.styles';
@@ -34,6 +35,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   openCvvBottomSheet,
   selectedDate,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const [currentState, setCurrentState] = useState(TopUpStates.INITAL_STATE);
   const [topUpAmount, setTopUpAmount] = useState('');
@@ -41,7 +43,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [isCardSaved, setIsCardSaved] = useState(true);
   const [chipValue, setChipValue] = useState('');
-  const localizationText = useLocalization();
   const styles = amountStyles(colors);
   const [, setError] = useState('');
   const [, setResponse] = useState<object>();
@@ -50,6 +51,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [, setAPIError] = useState<string>('');
   const [, setRedirectUrl] = useState<string>('');
+  const [selectedCardTypeId, setSelectedCardTypeId] = useState<string>('');
 
   const methodData: PaymentMethodData[] = [
     {
@@ -58,7 +60,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         merchantIdentifier: 'merchant.com.clickpay',
         supportedNetworks: [SupportedNetworkEnum.Visa, SupportedNetworkEnum.Mada, SupportedNetworkEnum.Mastercard],
         countryCode: 'SA',
-        currencyCode: localizationText.COMMON.SAR,
+        currencyCode: t('COMMON.SAR'),
       },
     },
   ];
@@ -66,10 +68,10 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const paymentDetails: PaymentDetailsInit = {
     total: {
       amount: {
-        currency: localizationText.COMMON.SAR,
+        currency: t('COMMON.SAR'),
         value: topUpAmount,
       },
-      label: localizationText.TRANSACTION_HISTORY.TOTAL_AMOUNT,
+      label: t('TRANSACTION_HISTORY.TOTAL_AMOUNT'),
     },
   };
 
@@ -139,7 +141,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     if (selectedCardObj?.cardBrand) {
       body.cardBrand = selectedCardObj?.cardBrand?.toLocaleLowerCase();
     } else {
-      body.cardBrand = 'mada';
+      body.cardBrand = selectedCardTypeId;
     }
 
     const payload: CheckOutProp = {
@@ -169,7 +171,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         break;
       }
       case apiResponse?.apiResponseNotOk:
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
         break;
       case ApiResponseStatusType.FAILURE:
         setAPIError(apiResponse?.error);
@@ -188,16 +190,16 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
     const monthlyRemaining = parseFloat(limitsDetails.monthlyRemainingIncomingAmount);
     const dailyRemaining = parseFloat(limitsDetails.dailyRemainingIncomingAmount);
     const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
-   
+
     if (monthlyRemaining === 0) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.TOP_UP.LIMIT_REACHED);
+      setChipValue(t('TOP_UP.LIMIT_REACHED'));
     } else if (updatedTopUpAmount > dailyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(`${localizationText.TOP_UP.DAILY_LIMIT} ${limitsDetails.dailyRemainingIncomingAmount} SAR`);
+      setChipValue(`${t('TOP_UP.DAILY_LIMIT')} ${limitsDetails.dailyRemainingIncomingAmount} ${t('COMMON.SAR')}`);
     } else if (updatedTopUpAmount > monthlyRemaining) {
       setIsTopUpNextEnable(false);
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else {
       if (topUpAmount === '' || topUpAmount === '0') {
         setIsTopUpNextEnable(false);
@@ -206,12 +208,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       }
       setChipValue('');
     }
-  }, [
-    topUpAmount,
-    limitsDetails.monthlyRemainingOutgoingAmount,
-    limitsDetails.dailyRemainingOutgoingAmount,
-    localizationText,
-  ]);
+  }, [topUpAmount, limitsDetails.monthlyRemainingOutgoingAmount, limitsDetails.dailyRemainingOutgoingAmount, t]);
 
   const handleNextPress = () => {
     if (isCardSaved) {
@@ -228,11 +225,14 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const handleCardObjSelect = (card: any) => {
     setSelectedCardObj(card);
   };
+  const onSelectCard = (selectedCardType: string) => {
+    setSelectedCardTypeId(selectedCardType);
+  };
   return (
     <IPayView style={styles.safeAreaView}>
       {currentState !== TopUpStates.NEW_CARD ? (
         <>
-          <IPayAmountHeader title={localizationText.TOP_UP.CARD_TITLE} channel={channel} />
+          <IPayAmountHeader title="TOP_UP.CARD_TITLE" channel={channel} />
           <IPayRemainingAccountBalance
             currentState={currentState}
             topUpAmount={topUpAmount}
@@ -247,8 +247,11 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
             isEditable={currentState === TopUpStates.INITAL_STATE}
             onPressIcon={handleIconPress}
             balanceType="Incoming"
+            channel={channel}
+            onSelectCard={onSelectCard}
           />
 
+          <IPayView style={styles.nextButton} />
           {channel === PayChannel.APPLE ? (
             <IPayButton
               large
@@ -266,9 +269,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               large
               btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
-              btnText={
-                currentState === TopUpStates.SAVED_CARD ? localizationText.TOP_UP.PAY : localizationText.COMMON.NEXT
-              }
+              btnText={currentState === TopUpStates.SAVED_CARD ? t('TOP_UP.PAY ') : t('COMMON.NEXT)')}
               onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
               disabled={!isTopUpNextEnable}
             />

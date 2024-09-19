@@ -18,6 +18,7 @@ const IPayChip: React.FC<IPayChipProps> = ({
   icon,
   textElement,
   fullWidth,
+  shouldTranslatedText = true,
 }: IPayChipProps): JSX.Element => {
   const { colors } = useTheme();
   const { textStyle, backgroundStyle } = getColorsStyle(colors, variant, headingStyles);
@@ -32,7 +33,9 @@ const IPayChip: React.FC<IPayChipProps> = ({
     <IPayView testID={`${testID}-view-chip`} style={[backgroundStyle, fullWidth && styles.width100, containerStyle]}>
       {imageSource && <IPayImage image={imageSource} style={styles.imageStyle} />}
       {renderIcon()}
-      {textElement || <IPaySubHeadlineText style={textStyle} regular text={textValue} />}
+      {textElement || (
+        <IPaySubHeadlineText style={textStyle} regular text={textValue} shouldTranslate={shouldTranslatedText} />
+      )}
     </IPayView>
   );
 };

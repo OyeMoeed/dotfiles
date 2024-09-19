@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import { IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import transactionDetailsCompStyles from './transaction-details-component.style';
@@ -20,7 +19,6 @@ const IPayInternationalTransferBeneficiries: React.FC<IPayInternationalTransferB
   const [beneficiariesData, setBeneficiariesData] = useState<BeneficiariesProps[]>([]);
   const { colors } = useTheme();
   const styles = transactionDetailsCompStyles(colors);
-  const localizationText = useLocalization();
   const selectedIcon = (text: string) => selectedListItem === text || false;
   const iconComponent = (text: string) =>
     selectedListItem && selectedListItem === text ? (
@@ -58,7 +56,7 @@ const IPayInternationalTransferBeneficiries: React.FC<IPayInternationalTransferB
         text={search}
         onChangeText={onSearchTextChange}
         style={styles.searchInput}
-        placeholder={localizationText.INTERNATIONAL_TRANSFER.SEARCH_FOR_BENEFICIARY}
+        placeholder="INTERNATIONAL_TRANSFER.SEARCH_FOR_BENEFICIARY"
         rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
         simpleInput
         containerStyle={styles.searchInputStyle}
