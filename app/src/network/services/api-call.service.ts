@@ -7,55 +7,6 @@ import { onResponseFulfilled, onResponseReject } from '../interceptors/response'
 import { handleAxiosError, isErrorResponse } from '../utilities/error-handling-helper';
 import { handleApiResponse } from './api-call.interceptors';
 import { ApiResponse } from './services.interface';
-import queryClient from '../queryClient';
-
-export interface QueryOptionsProps {
-  invalidateCache?: boolean;
-  reactQueryOptions?: {};
-  queryId?: string;
-}
-
-const getQueryData = async ({
-  config = {},
-  options = {
-    invalidateCache: false,
-    reactQueryOptions: {},
-    queryId: '',
-  },
-}: {
-  config: AxiosRequestConfig;
-  options: QueryOptionsProps;
-}): Promise<AxiosResponse<any, any>> => {
-  const { invalidateCache, reactQueryOptions, queryId } = options;
-  const MILLIE_SECOND = 60 * 1000;
-  const staleTime = 1000;
-
-  queryClient.setDefaultOptions({
-    queries: {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      staleTime: staleTime * MILLIE_SECOND,
-      ...reactQueryOptions,
-    },
-  });
-
-  if (invalidateCache) {
-    queryClient?.invalidateQueries({ queryKey: [queryId] });
-  }
-
-  try {
-    const response = await queryClient.fetchQuery({
-      queryKey: [queryId],
-      queryFn: async () => axiosClient(config),
-    });
-
-    return response;
-  } catch (resError: any) {
-    return resError;
-  }
-};
 
 interface ApiCallParams {
   endpoint: string;
@@ -63,7 +14,6 @@ interface ApiCallParams {
   payload?: any;
   headers?: any;
   baseURL?: string;
-  queryOptions: QueryOptionsProps;
 }
 
 /* register interceptors here to avoid cyclic import error */
@@ -76,7 +26,6 @@ const apiCall = async <T>({
   payload,
   headers = {},
   baseURL = undefined,
-  queryOptions: { invalidateCache, reactQueryOptions, queryId },
 }: ApiCallParams): Promise<ApiResponse<T> | undefined> => {
   const config: AxiosRequestConfig = {
     method,
@@ -99,20 +48,8 @@ const apiCall = async <T>({
     if (!headers?.hide_spinner_loading) {
       store.dispatch(showSpinner());
     }
-    let response: AxiosResponse<T>;
 
-    if (method === 'GET') {
-      response = await getQueryData({
-        config,
-        options: {
-          invalidateCache,
-          reactQueryOptions,
-          queryId,
-        },
-      });
-    } else {
-      response = await axiosClient(config);
-    }
+    const response: AxiosResponse<T> = await axiosClient(config);
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
       await handleAxiosError(response);

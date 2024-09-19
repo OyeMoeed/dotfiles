@@ -5,7 +5,7 @@
  * @format
  */
 import { JSX } from 'react';
-import { QueryClientProvider } from 'react-query';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { KeyboardAvoidingView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Host } from 'react-native-portalize';
@@ -17,9 +17,20 @@ import IPayBottomSheetProvider from '@app/components/organism/ipay-bottomsheet-p
 import MainNavigation from '@app/navigation/app-navigator.navigation';
 import { isIosOS } from '@app/utilities/constants';
 import { persistor, store } from '@store/store';
-import { queryClient } from '@app/network';
 
 import appStyles from './app.styles';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      cacheTime: 60 * 1000,
+    },
+  },
+});
 
 const App = (): JSX.Element => {
   const style = appStyles();
