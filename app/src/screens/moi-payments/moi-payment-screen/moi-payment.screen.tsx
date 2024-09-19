@@ -75,7 +75,7 @@ const MoiPaymentScreen: React.FC = () => {
       const updatedFields = [
         {
           index: MoiPaymentFormFields.SERVICE_PROVIDER,
-          integrationTagName: 'BeneficiaryId.ServiceProvider',
+          integrationTagName: MoiPaymentFormFields.SERVICE_PROVIDER,
           label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
           lovList: serviceProvider,
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
@@ -84,7 +84,7 @@ const MoiPaymentScreen: React.FC = () => {
         {
           index: MoiPaymentFormFields.SERVICE_TYPE,
           label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
-          integrationTagName: 'BeneficiaryId.ServiceType',
+          integrationTagName: MoiPaymentFormFields.SERVICE_TYPE,
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
           disable: true,
@@ -123,7 +123,9 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const onSubmit = (data: any) => {
-    const originalData = revertFlatKeys(data);
+
+    const originalData = revertFlatKeys(data)
+    
     if (selectedTab === MoiPaymentTypes.REFUND) {
       navigate(ScreenNames.MOI_PAYMENT_REFUND);
     } else {
