@@ -85,7 +85,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
         <IPaySuccess
           style={styles.minFlex}
           headingText={successMessage}
-          descriptionText={`${totalAmount} ${t('COMMON.SAR')}`}
+          descriptionText={isSaveOnly ? '' : `${totalAmount} ${t('COMMON.SAR')}`}
           descriptionStyle={[styles.boldStyles, styles.descriptionText]}
           headingStyle={styles.headingStyle}
         />
@@ -151,16 +151,6 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 isShowIcon={false}
                 style={styles.billContainer}
                 data={billPaymentData.slice(0, 2)}
-                optionsStyles={styles.optionsStyle}
-              />
-            </IPayView>
-          )}
-          {isSaveOnly && (
-            <IPayView style={[styles.conatinerStyles, isSaveOnly && styles.saveContainer]}>
-              <IPayBillDetailsOption
-                showHeader={false}
-                style={styles.billContainer}
-                data={billPaymentData.slice(2, 4)}
                 optionsStyles={styles.optionsStyle}
               />
               <IPayButton

@@ -1233,7 +1233,6 @@
     "NO_SERVICE_TYPE_FOUND": "No service type found with this name or code",
     "BENEFECIARY_DETAILS": "Beneficiary Details",
     "BILL_PAYMENTS": "Bill Payments",
-    "UNPAID": "Unpaid",
     "MOI_BILLS": " MOI Bills",
     "NO_BILLS_WERE_FOUND": "No Bill were found",
     "NO_BILLS_FOUND_ERROR_MESSAGE": "Please review and verify the desired service type and enter the correct ID number for it",
@@ -1243,7 +1242,12 @@
     "PAYMENT_REFUND_SUCCESS": "Your bill has been refunded successfully",
     "VIOLATION_NUBMER": "Violation Num",
     "BILL_TYPE": "Bill Type",
-    "TRAFFIC_NUMBER": "Traffic Num"
+    "TRAFFIC_NUMBER": "Traffic Num",
+    "UNPAID": "Unpaid",
+    "PAID": "Paid",
+    "PARTIALLY_PAID": "Partially paid",
+    "OVER_PAID": "Over paid",
+    "DEACTIVE": "Deactive"
   },
   "TRAFFIC_VIOLATION": {
     "PROCESS_TAKE_BUSINESS_HOURS": "Process may take 24 to 48 business hours",

@@ -228,8 +228,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       billerId: selectedBiller?.billerId,
       billNumOrBillingAcct: values.accountNumber,
       serviceType: values.serviceType,
-      totalAmount: '0',
-      dueDate: null,
       billIdType: selectedBiller?.billIdType,
       serviceDescription: selectedService?.serviceDesc,
       billerName: values.companyName,
@@ -247,16 +245,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         label: 'PAY_BILL.ACCOUNT_NUMBER',
         value: values.accountNumber,
       },
-      {
-        id: '3',
-        label: 'COMMON.AMOUNT',
-        value: `0 ${'COMMON.SAR'}`,
-      },
-      {
-        id: '4',
-        label: 'COMMON.DUE_DATE',
-        value: null,
-      },
     ];
 
     navigate(ScreenNames.PAY_BILL_SUCCESS, {
@@ -264,7 +252,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       billPaymentData,
       billPaymentInfos,
       headerAttributes,
-      totalAmount: '0',
       inquireBillPayload: payload,
     });
   };
