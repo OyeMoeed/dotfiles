@@ -46,7 +46,6 @@ const IPaySendMoneyForm: React.FC<IPaySendMoneyFormProps> = ({
     item: FormInstanceType;
   }) => (
     <IPayTransferInformation
-
       showReason={showReason}
       showCount={showCount}
       amount={amount}
