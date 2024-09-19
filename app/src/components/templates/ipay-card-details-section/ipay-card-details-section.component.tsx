@@ -166,7 +166,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false} shouldTranslate={false}>
-            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText text='"COMMON.SAR"' />
+            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText text="COMMON.SAR" />
           </IPaySubHeadlineText>
         }
       />
