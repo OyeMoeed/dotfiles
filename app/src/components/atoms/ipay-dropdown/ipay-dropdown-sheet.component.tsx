@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { setSelectedType } from '@app/store/slices/dropdown-slice';
 import { RootState } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -14,7 +13,6 @@ import dropdownStyles from './ipay-dropdown.styles';
 const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentSheetProps> = (_, ref) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
-  const localizationText = useLocalization();
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
   const [list, setList] = useState<ListItem[]>([]);
   const [selectedListItem, setSelectedListItem] = useState<string>('');
@@ -72,7 +70,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
   );
   const renderNoResults = () => (
     <IPayView style={styles.noResultsView}>
-      <IPayFootnoteText text={localizationText.COMMON.NO_RESULTS_FOUND} />
+      <IPayFootnoteText text="COMMON.NO_RESULTS_FOUND" />
     </IPayView>
   );
 
@@ -101,7 +99,7 @@ const IPayDropdownSheet: React.ForwardRefRenderFunction<IPayDropdownComponentShe
             <IPayInput
               onChangeText={onSearchChangeText}
               text={searchText}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder="COMMON.SEARCH"
               style={styles.searchInputText}
               selectionColor={undefined}
             />

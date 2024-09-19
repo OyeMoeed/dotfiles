@@ -2,7 +2,6 @@ import React from 'react';
 import { IPayCaption2Text, IPayFootnoteText, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import colors from '@app/styles/colors.const';
 import icons from '@app/assets/icons';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import IPayButton from '../ipay-button/ipay-button.component';
@@ -26,7 +25,6 @@ const statusStyles = {
 
 const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
   const { isPending, description, dateTime } = props;
-  const localization = useLocalization();
   const { colors: themeColors } = useTheme();
   const styles = getRequestCardStyles(themeColors);
 
@@ -37,7 +35,7 @@ const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
       <IPayView style={styles.requestInfo}>
         <IPayView style={styles.iconTextRow}>
           <IPayIcon size={20} icon={icons.money_request} color={themeColors.primary.primary900} />
-          <IPayFootnoteText regular={false} text={localization.NOTIFICATION_CENTER.REQUEST_MONEY} />
+          <IPayFootnoteText regular={false} text="NOTIFICATION_CENTER.REQUEST_MONEY" />
         </IPayView>
         <IPayCaption2Text color={themeColors.natural.natural900} text={description} />
       </IPayView>
@@ -45,7 +43,7 @@ const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
         {isPending ? (
           <IPayButton
             btnType={buttonVariants.PRIMARY}
-            btnText={localization.NOTIFICATION_CENTER.VIEW}
+            btnText="NOTIFICATION_CENTER.VIEW"
             small
             rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={16} color={themeColors.natural.natural0} />}
           />

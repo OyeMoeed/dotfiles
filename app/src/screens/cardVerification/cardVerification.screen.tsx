@@ -1,7 +1,6 @@
 import { IPayView, IPayWebView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -16,11 +15,12 @@ import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
 import { WebViewNavigation } from 'react-native-webview';
+import { useTranslation } from 'react-i18next';
 import cardVerificationStyles from './cardVerification.styles';
 
 const CardVerificationScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
-  const localizationText = useLocalization();
   const styles = cardVerificationStyles(colors);
 
   const route: any = useRoute();
@@ -50,21 +50,21 @@ const CardVerificationScreen: React.FC = () => {
     const details = [
       {
         id: '1',
-        label: localizationText.TOP_UP.TOPUP_TYPE,
-        value: localizationText.TOP_UP.CREDIT_CARD,
+        label: t('TOP_UP.TOPUP_TYPE'),
+        value: t('TOP_UP.CREDIT_CARD'),
         icon: icons.cards,
         color: colors.primary.primary800,
       },
       {
         id: '2',
-        label: localizationText.TOP_UP.REF_NUMBER,
+        label: t('TOP_UP.REF_NUMBER'),
         value: apiResponse?.response?.transactionId,
         icon: icons.copy,
         color: colors.primary.primary500,
       },
       {
         id: '3',
-        label: localizationText.TOP_UP.TOPUP_DATE,
+        label: t('TOP_UP.TOPUP_DATE'),
         value: formatDateAndTime(apiResponse?.response?.transactionTime, dateTimeFormat.DateAndTime),
         icon: null,
       },
@@ -103,7 +103,7 @@ const CardVerificationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={localizationText.TOP_UP.VERIFICATION_TITLE} applyFlex />
+      <IPayHeader backBtn title="TOP_UP.VERIFICATION_TITLE" applyFlex />
       <IPayView style={styles.container}>
         {redirectUrl && showWebView && (
           <IPayWebView source={{ uri: redirectUrl }} onNavigationStateChange={onNavigationStateChange} />

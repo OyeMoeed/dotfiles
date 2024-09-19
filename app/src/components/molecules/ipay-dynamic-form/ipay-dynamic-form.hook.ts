@@ -1,11 +1,12 @@
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
+
 import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import { t } from 'i18next';
 import { useMemo } from 'react';
 import * as Yup from 'yup';
 
 const useDynamicForm = (fetchedFields: DynamicField[]) => {
-  const localization = useLocalization(); // Get localized strings
+
 
   // Memoized function to create default values
   const defaultValues = useMemo(() => {
@@ -38,60 +39,60 @@ const useDynamicForm = (fetchedFields: DynamicField[]) => {
 
       switch (type) {
         case DYNAMIC_FIELDS_TYPES.NUMBER:
-          schema = Yup.string().typeError(localization.VALIDATION.MUST_BE_NUMBER.replace('{label}', label));
+          schema = Yup.string().typeError(t('VALIDATION.MUST_BE_NUMBER').replace('{label}', label));
           if (minWidth != null) {
             schema = schema.min(
               minWidth,
-              localization.VALIDATION.MIN_WIDTH.replace('{label}', label).replace('{min}', String(minWidth)),
+              t('VALIDATION.MIN_WIDTH').replace('{label}', label).replace('{min}', String(minWidth)),
             );
           }
           if (maxWidth != null) {
             schema = schema.max(
               maxWidth,
-              localization.VALIDATION.MAX_WIDTH.replace('{label}', label).replace('{max}', String(maxWidth)),
+              t('VALIDATION.MAX_WIDTH').replace('{label}', label).replace('{max}', String(maxWidth)),
             );
           }
           if (required) {
-            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
+            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
           }
           break;
 
         case DYNAMIC_FIELDS_TYPES.TEXT:
-          schema = Yup.string().typeError(localization.VALIDATION.MUST_BE_TEXT.replace('{label}', label));
+          schema = Yup.string().typeError(t('VALIDATION.MUST_BE_TEXT').replace('{label}', label));
           if (minWidth != null) {
             schema = schema.min(
               minWidth,
-              localization.VALIDATION.MIN_WIDTH.replace('{label}', label).replace('{min}', String(minWidth)),
+              t('VALIDATION.MIN_WIDTH').replace('{label}', label).replace('{min}', String(minWidth)),
             );
           }
           if (maxWidth != null) {
             schema = schema.max(
               maxWidth,
-              localization.VALIDATION.MAX_WIDTH.replace('{label}', label).replace('{max}', String(maxWidth)),
+              t('VALIDATION.MAX_WIDTH').replace('{label}', label).replace('{max}', String(maxWidth)),
             );
           }
           if (required) {
-            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
+            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
           }
           break;
 
         case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE:
-          schema = Yup.string().typeError(localization.VALIDATION.MUST_BE_SELECTED.replace('{label}', label));
+          schema = Yup.string().typeError(t('VALIDATION.MUST_BE_SELECTED').replace('{label}', label));
           if (required) {
-            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
+            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
           }
           break;
 
         default:
           if (required) {
-            schema = schema.required(localization.VALIDATION.REQUIRED.replace('{label}', label));
+            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
           }
           break;
       }
       shape[flatKey] = schema;
     });
     return Yup.object().shape(shape);
-  }, [fetchedFields, localization]);
+  }, [fetchedFields]);
 
   return {
     defaultValues,

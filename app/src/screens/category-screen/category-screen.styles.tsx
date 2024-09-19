@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const playStationStyles = (theme: typeof colors) =>
+const CategoryStyles = (theme: typeof colors) =>
   createStyleSheet({
     container: {
       marginTop: moderateScale(10),
@@ -31,4 +31,4 @@ const playStationStyles = (theme: typeof colors) =>
     },
   });
 
-export default playStationStyles;
+export default CategoryStyles;

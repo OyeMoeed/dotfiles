@@ -57,12 +57,23 @@ const formatDate = (dateStr: string): string => {
   return `${day}/${month}/${year} - ${hours}:${minutes}`;
 };
 
+const formatSlashDateTime = (tisoDate?: any): string => {
+  const date = new Date(tisoDate);
+  const hours = date?.getHours();
+  const minutes = date?.getMinutes();
+  let strMin: string | number = '';
+  strMin = minutes < 10 ? `0${minutes}` : minutes;
+  const strTime = `${hours}:${strMin}`;
+  return strTime;
+};
+
 export {
   FORMAT_1,
   checkDateValidation,
   formatCountdownTime,
   formatDate,
   formatDateAndTime,
+  formatSlashDateTime,
   formatTime,
   formatTimeAndDate,
   formatYearToLastTwoDigits,

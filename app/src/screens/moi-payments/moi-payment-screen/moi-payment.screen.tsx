@@ -6,7 +6,6 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
@@ -29,11 +28,11 @@ import moiPaymentStyles from './moi-payment.style';
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
-  const localizationText = useLocalization();
+
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [, setIsRefund] = useState<boolean>(false);
   const [fields, setFields] = useState<DynamicField[]>([]);
-  const tabs = [localizationText.BILL_PAYMENTS.PAYMENT, localizationText.BILL_PAYMENTS.REFUND];
+  const tabs = ['BILL_PAYMENTS.PAYMENT', 'BILL_PAYMENTS.REFUND'];
   const [selectedBiller, setSelectedBiller] = useState<string>();
   const [selectedServiceType, setSelectedServiceType] = useState<string>();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -76,14 +75,14 @@ const MoiPaymentScreen: React.FC = () => {
         {
           index: MoiPaymentFormFields.SERVICE_PROVIDER,
           integrationTagName: MoiPaymentFormFields.SERVICE_PROVIDER,
-          label: localizationText.BILL_PAYMENTS.SERVICE_PROVIDER,
+          label: 'BILL_PAYMENTS.SERVICE_PROVIDER',
           lovList: serviceProvider,
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
           dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
         },
         {
           index: MoiPaymentFormFields.SERVICE_TYPE,
-          label: localizationText.BILL_PAYMENTS.SERVICE_TYPE,
+          label: 'BILL_PAYMENTS.SERVICE_TYPE',
           integrationTagName: MoiPaymentFormFields.SERVICE_TYPE,
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
@@ -123,9 +122,8 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const onSubmit = (data: any) => {
+    const originalData = revertFlatKeys(data);
 
-    const originalData = revertFlatKeys(data)
-    
     if (selectedTab === MoiPaymentTypes.REFUND) {
       navigate(ScreenNames.MOI_PAYMENT_REFUND);
     } else {
@@ -178,7 +176,7 @@ const MoiPaymentScreen: React.FC = () => {
                 backBtn
                 onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
                 applyFlex
-                title={localizationText.BILL_PAYMENTS.MOI_PAYMENT}
+                title={'BILL_PAYMENTS.MOI_PAYMENT'}
                 titleStyle={styles.screenTitle}
               />
               <IPayView style={styles.container}>
@@ -186,12 +184,12 @@ const MoiPaymentScreen: React.FC = () => {
 
                 <IPayView style={styles.contentContainer}>
                   <IPayView style={styles.dynamicFieldContainer}>
-                    <IPayCaption2Text regular text={localizationText.BILL_PAYMENTS.BENEFECIARY_DETAILS} />
+                    <IPayCaption2Text regular text={'BILL_PAYMENTS.BENEFECIARY_DETAILS'} />
                     <DynamicFormComponent errors={errors} control={control} fields={fields} />
                   </IPayView>
 
                   <IPayButton
-                    btnText={localizationText.NEW_SADAD_BILLS.INQUIRY}
+                    btnText={'NEW_SADAD_BILLS.INQUIRY'}
                     btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onSubmit)}
                     btnStyle={styles.inquiryBtn}

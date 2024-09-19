@@ -1,6 +1,7 @@
 import { IPayCaption1Text, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { forwardRef } from 'react';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IPayBottomTabsProps } from './ipay-bottom-tabs-interface';
 import bottomTabStyles from './ipay-bottom-tabs.style';
 
@@ -36,6 +37,21 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(({ testID, 
           });
         };
 
+        const translatedTitle = () => {
+          switch (label) {
+            case ScreenNames.HOME:
+              return 'COMMON.HOME';
+            case ScreenNames.CARDS:
+              return 'HOME.CARDS';
+            case ScreenNames.MARKETPLACE:
+              return 'HOME.SHOP';
+            case ScreenNames.MORE:
+              return 'HOME.MORE';
+            default:
+              return '';
+          }
+        };
+
         return (
           <IPayPressable
             key={route.key}
@@ -53,9 +69,10 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(({ testID, 
               filled
             />
 
-            <IPayCaption1Text style={[styles.captionTextStyle, isFocused ? styles.focusedText : styles.blurText]}>
-              {label}
-            </IPayCaption1Text>
+            <IPayCaption1Text
+              style={[styles.captionTextStyle, isFocused ? styles.focusedText : styles.blurText]}
+              text={translatedTitle()}
+            />
           </IPayPressable>
         );
       })}

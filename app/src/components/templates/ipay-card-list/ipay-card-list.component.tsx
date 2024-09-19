@@ -26,7 +26,7 @@ const IPayCardList: React.FC<IPayCardListProps> = ({ selectedCardType, segmentTy
         detailText={item.fee}
         detailTextStyle={styles.detailTextColor}
         showDetail
-        containerStyle={isDescriptionAvailable && styles.zeroPadding}
+        containerStyle={[styles.cardContainer, isDescriptionAvailable && styles.zeroPadding]}
         leftIcon={
           !isDescriptionAvailable ? (
             <IPayIcon icon={icons.tick_circle} color={colors.primary.primary900} size={24} />

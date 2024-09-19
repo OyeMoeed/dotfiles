@@ -24,4 +24,5 @@ export interface SadadFooterComponentProps {
    * To display button only without gradient background
    */
   showButtonOnly?: boolean;
+  shouldTranslateBtnText?: boolean;
 }

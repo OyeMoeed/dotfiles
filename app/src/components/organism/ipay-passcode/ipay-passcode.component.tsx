@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayBodyText, IPayFlatlist, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useState } from 'react';
@@ -44,7 +43,6 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
       onEnterPassCode?.(newCode);
     }
   };
-  const localizationText = useLocalization();
   const handleBackPress = () => {
     setPin((prevPin) => prevPin.slice(0, -1));
   };
@@ -113,7 +111,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
         <IPayButton
           btnType={buttonVariants.LINK_BUTTON}
           btnIconsDisabled
-          btnText={localizationText.LOGIN.FORGOT_PASSCODE_QUESTION}
+          btnText="LOGIN.FORGOT_PASSCODE_QUESTION"
           small
           onPress={onPressForgetPassword}
           btnStyle={[styles.forgetPasscodeText, btnStyle]}

@@ -10,7 +10,6 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 
 import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic-payment.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficTabPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
@@ -19,13 +18,14 @@ import * as Yup from 'yup';
 
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useTranslation } from 'react-i18next';
 import TrafficFormValues from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficPaymentStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { idTypes } = useConstantData();
   const [, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
   const [sheetType, setSheetType] = useState<string>('');
@@ -34,10 +34,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
-  const tabs = [localizationText.TRAFFIC_VIOLATION.INQUIRE, localizationText.TRAFFIC_VIOLATION.REFUND];
+  const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND')];
 
-  const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } =
-    getValidationSchemas(localizationText);
+  const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } = getValidationSchemas(t);
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
   const validationSchema = Yup.object().shape({
     serviceProvider,
@@ -148,12 +147,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         return (
           <>
             <IPaySafeAreaView>
-              <IPayHeader
-                backBtn
-                applyFlex
-                title={localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS}
-                titleStyle={styles.screenTitle}
-              />
+              <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.TRAFFIC_VIOLATIONS" titleStyle={styles.screenTitle} />
               <IPayView style={styles.container}>
                 <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
                 <IPayView style={styles.contentContainer}>
@@ -170,9 +164,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     errorMessage={errorMessage}
                   />
                   <IPayButton
-                    btnText={
-                      isRefund ? localizationText.TRAFFIC_VIOLATION.REFUND : localizationText.NEW_SADAD_BILLS.INQUIRY
-                    }
+                    btnText={isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('NEW_SADAD_BILLS.INQUIRY')}
                     btnType={buttonVariants.PRIMARY}
                     onPress={onSubmit}
                     large
@@ -183,7 +175,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               </IPayView>
             </IPaySafeAreaView>
             <IPayBottomSheet
-              heading={localizationText.BILL_PAYMENTS.ID_TYPE}
+              heading="BILL_PAYMENTS.ID_TYPE"
               customSnapPoint={SNAP_POINTS.SMALL}
               onCloseBottomSheet={() => selectSheeRef.current.close()}
               ref={selectSheeRef}
@@ -199,7 +191,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
-              heading={localizationText.BILL_PAYMENTS.TRAFFIC_VIOLATIONS}
+              heading="BILL_PAYMENTS.TRAFFIC_VIOLATIONS"
               customSnapPoint={SNAP_POINTS.SMALL}
               onCloseBottomSheet={() => invoiceSheetRef.current.close()}
               ref={invoiceSheetRef}
@@ -211,9 +203,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayContentNotFound
-                title={localizationText.BILL_PAYMENTS.NO_BILLS_WERE_FOUND}
-                message={localizationText.BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE}
-                btnText={localizationText.COMMON.TRY_AGAIN}
+                title="BILL_PAYMENTS.NO_BILLS_WERE_FOUND"
+                message="BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE"
+                btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
                 onBtnPress={() => invoiceSheetRef.current.close()}

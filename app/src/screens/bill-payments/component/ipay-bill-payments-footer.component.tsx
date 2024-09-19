@@ -10,20 +10,20 @@ import {
 } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import constants from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import billPaymentsComponentsStyles from './ipay-bill-payment-components.style';
 import { IPayBillPaymentsFooterProps } from './ipay-bills-payment-components.interface';
 
 const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID, style, onPressBillPaymentOption }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
-  const localizationText = useLocalization();
   const otherBills = constants.OTHER_BILL_TYPES;
-  const unpaidCount = `(3 ${localizationText.BILL_PAYMENTS.UNPAID})`;
+  const unpaidCount = `(3 ${t('BILL_PAYMENTS.UNPAID')})`;
 
   const getIcon = (icon: string) => {
     const isImage = checkImage(icon);

@@ -7,11 +7,10 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { copyText } from '@app/utilities/clip-board.util';
-import { toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { ToastTypes } from '@app/utilities/enums.util';
 import IPayList from '../ipay-list/ipay-list.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
@@ -29,7 +28,6 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
-  const localizationText = useLocalization();
   const { showToast } = useToastContext();
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -48,9 +46,9 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   const onPressDefault = (item: OptionItem) => {
     copyText(item.value);
     renderToast({
-      title: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: 'TOP_UP.REF_NUMBER_COPIED',
       icon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
-      toastType: toastTypes.INFORMATION,
+      toastType: ToastTypes.INFORMATION,
     });
   };
 

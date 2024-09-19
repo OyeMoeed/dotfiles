@@ -4,7 +4,6 @@ import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SadadEditBillFields } from '@app/enums/edit-sadad-bill.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import { EditBillPayloadTypes } from '@app/network/services/bills-management/edit-bill/edit-bill.interface';
@@ -16,6 +15,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import { SadadEditBillsScreenProps } from './sadad-edit-bill.interface';
 import sadadEditBillsStyles from './sadad-edit-bill.style';
 
@@ -31,7 +31,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
   }: PaymentInfoProps = billData;
   const { colors } = useTheme();
   const styles = sadadEditBillsStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { getValues, control, setValue, watch } = useForm();
@@ -92,7 +92,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
         testID="sadad-edit-bill-header"
         backBtn
         onBackPress={onBackPress}
-        title={localizationText.SADAD.EDIT_BILL}
+        title="SADAD.EDIT_BILL"
         titleStyle={styles.headerText}
         applyFlex
       />
@@ -105,7 +105,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
                 testID="bill-nick-name-input"
-                label={localizationText.NEW_SADAD_BILLS.BILL_NICK_NAME}
+                label="NEW_SADAD_BILLS.BILL_NICK_NAME"
                 labelColor={colors.primary.primary500}
                 editable
                 value={value}
@@ -118,10 +118,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
             <IPayView style={styles.infoView}>
               <IPayImage image={getBillerImage()} style={styles.vendorIcon} />
               <IPayView>
-                <IPayCaption1Text
-                  text={localizationText.NEW_SADAD_BILLS.COMPANY_NAME}
-                  color={colors.natural.natural500}
-                />
+                <IPayCaption1Text text="NEW_SADAD_BILLS.COMPANY_NAME" color={colors.natural.natural500} />
                 <IPaySubHeadlineText regular text={billerName} style={styles.inputValueText} />
               </IPayView>
             </IPayView>
@@ -130,10 +127,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
 
           <IPayView style={styles.diabledCardView}>
             <IPayView>
-              <IPayCaption1Text
-                text={localizationText.NEW_SADAD_BILLS.SERVICE_TYPE}
-                color={colors.natural.natural500}
-              />
+              <IPayCaption1Text text="NEW_SADAD_BILLS.SERVICE_TYPE" color={colors.natural.natural500} />
               <IPaySubHeadlineText regular text={serviceDescription} style={styles.inputValueText} />
             </IPayView>
             <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.natural.natural500} />
@@ -141,10 +135,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
 
           <IPayView style={styles.diabledCardView}>
             <IPayView>
-              <IPayCaption1Text
-                text={localizationText.NEW_SADAD_BILLS.ACCOUNT_NUMBER}
-                color={colors.natural.natural500}
-              />
+              <IPayCaption1Text text="NEW_SADAD_BILLS.ACCOUNT_NUMBER" color={colors.natural.natural500} />
               <IPaySubHeadlineText regular text={billNumOrBillingAcct} style={styles.inputValueText} />
             </IPayView>
           </IPayView>
@@ -152,7 +143,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
       </IPayView>
 
       <IPayButton
-        btnText={localizationText.COMMON.SAVE}
+        btnText="COMMON.SAVE"
         btnType={buttonVariants.PRIMARY}
         onPress={onSubmit}
         large
@@ -166,18 +157,18 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
         closeOnTouchOutside
         animationType="fade"
         showIcon={false}
-        title={localizationText.SADAD.DISCARD_CHANGES}
+        title="SADAD.DISCARD_CHANGES"
         onClose={onCloseAlert}
-        message={localizationText.SADAD.EDIT_YOU_MADE_WILL_LOST}
+        message="SADAD.EDIT_YOU_MADE_WILL_LOST"
         primaryAction={{
-          text: localizationText.COMMON.YES,
+          text: t('COMMON.YES'),
           onPress: () => {
             setShowAlert(false);
             goBack();
           },
         }}
         tertiaryAction={{
-          text: localizationText.COMMON.CANCEL,
+          text: t('COMMON.CANCEL'),
           onPress: () => {
             setShowAlert(false);
           },
