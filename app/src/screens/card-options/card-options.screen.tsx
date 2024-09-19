@@ -7,6 +7,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayList } from '@app/components/molecules';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -51,6 +52,8 @@ const CardOptionsScreen: React.FC = () => {
   const {
     currentCard,
     currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
+    cards,
+    setCards,
   } = route.params;
 
   const cardLastFourDigit = maskedCardNumber?.slice(-4);
@@ -180,22 +183,14 @@ const CardOptionsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       },
     };
+
     const apiResponse: any = await changeStatus(payload);
     deleteCardSheetRef.current.hide();
-    switch (apiResponse?.status?.type) {
-      case ApiResponseStatusType.SUCCESS:
-        navigate(ScreenNames.CARDS);
-        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
-        break;
-      case apiResponse?.apiResponseNotOk:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
-      case ApiResponseStatusType.FAILURE:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
-      default:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
+
+    if (apiResponse) {
+      setCards(cards.filter((card: CardInterface) => card.cardIndex !== currentCard?.cardIndex));
+      navigate(ScreenNames.CARDS);
+      renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
     }
   };
 
