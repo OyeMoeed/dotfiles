@@ -41,21 +41,20 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { useTranslation } from 'react-i18next';
-import walletTransferStyles from './wallet-to-wallet-transfer.style';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
+import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
-  const { isKeyboardOpen } = useKeyboardStatus();
+  const { isKeyboardOpen, isKeyboardWillOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
-  const unsavedBottomSheetRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');
@@ -262,7 +261,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const addUnsavedNumber = ({ mobileNumber }: AddPhoneFormValues) => {
     if (selectedContacts.length === 5) {
-      unsavedBottomSheetRef.current.close();
+      requestAnimationFrame(() => {
+        setUnSavedVisible(false);
+      });
       Keyboard.dismiss();
       renderToast();
     } else {
@@ -449,8 +450,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         enablePanDownToClose
         simpleBar
         isVisible={unSavedVisible}
-        ref={unsavedBottomSheetRef}
-        customSnapPoint={isKeyboardOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XX_SMALL}
+        customSnapPoint={isKeyboardWillOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XX_SMALL}
         bold
         cancelBnt
         onCloseBottomSheet={onCloseSaveContact}
