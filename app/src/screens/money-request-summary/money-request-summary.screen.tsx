@@ -15,19 +15,8 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import { CUSTOM_SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import SummaryType from '@app/enums/summary-type';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { useTypedSelector } from '@app/store/store';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { States, TopupStatus, buttonVariants, payChannel, spinnerVariant } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute } from '@react-navigation/native';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { getDeviceInfo } from '@app/network/utilities/device-info-helper';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useSpinnerContext } from '@app/components/atoms/ipay-spinner/context/ipay-spinner-context';
 import {
   SendRequestedMoneyConfirmReq,
   SendRequestedMoneyConfirmRes,
@@ -37,11 +26,22 @@ import {
   sendRequestedMoneyConfirm,
   sendRequestedMoneyPrepare,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
+import { useTranslation } from 'react-i18next';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { PayChannel, States, TopupStatus, buttonVariants } from '@app/utilities/enums.util';
+import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { useRoute } from '@react-navigation/native';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import moneyRequestStyles from './money-request-summary.styles';
 import { PayData } from './money-request-summary.interface';
+import moneyRequestStyles from './money-request-summary.styles';
 
 const MoneyRequestSummaryScreen: React.FC = () => {
+  const { t } = useTranslation();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { currentBalance } = walletInfo; // TODO replace with orignal data
   const { colors } = useTheme();
@@ -49,7 +49,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const { heading, screen, receviedRequestSummaryData, transId } =
     (route.params as { heading: string; screen: string; receviedRequestSummaryData: any; transId: string }) || {};
   const styles = moneyRequestStyles(colors);
-  const localizationText = useLocalization();
   const { orderSummaryData } = useConstantData();
   const [chipValue, setChipValue] = useState('');
   const createRequestBottomSheetRef = useRef<bottomSheetTypes>(null);
@@ -65,23 +64,21 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const updatedTopUpAmount = parseFloat(topUpAmount.replace(/,/g, ''));
   const determineChipValue = useCallback(() => {
     if (monthlyRemaining === 0) {
-      return localizationText.REQUEST_SUMMARY.NO_REMAINING_AMOUNT;
+      return 'REQUEST_SUMMARY.NO_REMAINING_AMOUNT';
     }
     if (updatedTopUpAmount > monthlyRemaining) {
-      return localizationText.REQUEST_SUMMARY.INSUFFICIENT_BALANCE;
+      return 'REQUEST_SUMMARY.INSUFFICIENT_BALANCE';
     }
     return '';
-  }, [monthlyRemaining, updatedTopUpAmount, localizationText]);
+  }, [monthlyRemaining, updatedTopUpAmount]);
 
   const [otp, setOtp] = useState<string>('');
   const [otpRef, setOtpRef] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [apiError] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string | undefined>('');
 
   const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
-  const { showSpinner, hideSpinner } = useSpinnerContext();
   const { otpConfig } = useConstantData();
   const textValue =
     screen === SummaryType.MONEY_REQUEST_SUMMARY
@@ -92,20 +89,20 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const requestPaidSummaryData = (apiResponse: SendRequestedMoneyConfirmRes) => [
     {
       id: '1',
-      label: localizationText.REQUEST_SUMMARY.PAY_TO,
+      label: t('REQUEST_SUMMARY.PAY_TO'),
       value: receviedRequestSummaryData[0].detailsText,
       isAlinma: true,
       leftIcon: true,
     },
     {
       id: '2',
-      label: localizationText.REQUEST_SUMMARY.MOBILE_NUMBER,
+      label: t('REQUEST_SUMMARY.MOBILE_NUMBER'),
       value: receviedRequestSummaryData[1].detailsText,
     },
     {
       id: '3',
-      label: localizationText.COMMON.REF_NUM,
-      value: apiResponse?.response?.transctionRefNumber,
+      label: t('COMMON.REF_NUM'),
+      value: apiResponse?.response?.referenceNumber,
       icon: icons.copy,
     },
   ];
@@ -114,16 +111,11 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const prepareOtp = async (showOtpSheet: boolean = true) => {
     createRequestBottomSheetRef.current?.present();
 
-    showSpinner({
-      variant: spinnerVariant.DEFAULT,
-      hasBackgroundColor: true,
-    });
-    setIsLoading(true);
     const payload: SendRequestedMoneyPrepareReq = {
       deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
     };
     const apiResponse = await sendRequestedMoneyPrepare(walletInfo.walletNumber, transId, payload);
-    if (apiResponse.status.type === 'SUCCESS') {
+    if (apiResponse?.status?.type === 'SUCCESS') {
       setOtpRef(apiResponse?.response?.otpRef as string);
       setTransactionId(apiResponse?.authentication?.transactionId);
       if (showOtpSheet) {
@@ -131,8 +123,6 @@ const MoneyRequestSummaryScreen: React.FC = () => {
       }
     }
     otpVerificationRef?.current?.resetInterval();
-    setIsLoading(false);
-    hideSpinner();
   };
 
   // Verify OTP for sending requested money
@@ -151,19 +141,17 @@ const MoneyRequestSummaryScreen: React.FC = () => {
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       if (apiResponse?.response) {
-        hideSpinner();
-
         createRequestBottomSheetRef.current?.close();
         navigate(ScreenNames.TOP_UP_SUCCESS, {
-          topupChannel: payChannel.REQUEST_ACCEPT,
+          topupChannel: PayChannel.REQUEST_ACCEPT,
           topupStatus: TopupStatus.SUCCESS,
-          amount: apiResponse?.response?.totalTansactionAmount,
+          amount: topUpAmount,
           requestPaidSummaryData: requestPaidSummaryData(apiResponse),
         });
       }
     } else {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     }
     setIsLoading(false);
   };
@@ -172,7 +160,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       verifyOtp();
     }
@@ -209,7 +197,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           containerStyle={styles.chipContainer}
           icon={
             <IPayIcon
-              icon={chipValue === localizationText.TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross}
+              icon={chipValue === 'TOP_UP.LIMIT_REACHED' ? icons.warning : icons.shield_cross}
               color={colors.critical.critical800}
               size={16}
             />
@@ -217,43 +205,43 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       ) : (
         <IPayList
-          title={localizationText.REQUEST_SUMMARY.AMOUNT}
+          title="REQUEST_SUMMARY.TOTAL_AMOUNT"
           rightText={
-            <IPaySubHeadlineText
-              color={colors.primary.primary800}
-              regular
-              text={`${topUpAmount} ${localizationText.COMMON.SAR}`}
-            />
+            <IPaySubHeadlineText color={colors.primary.primary800} regular text={`${topUpAmount} ${t('COMMON.SAR')}`} />
           }
         />
       ),
-    [chipValue, localizationText, topUpAmount, colors, icons],
+    [chipValue, t(' topUpAmount'), colors, icons],
   );
 
-  const renderPayItem = useMemo(
-    () =>
-      ({ item }: { item: PayData }) => {
-        const { detailsText, leftIcon, label } = item;
-        return (
-          <IPayView style={styles.listContainer}>
-            <IPayView style={styles.listView}>
-              <IPayView style={styles.iconLabel}>
-                {leftIcon && (
-                  <IPayView style={styles.leftIcon}>
-                    <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
-                  </IPayView>
-                )}
-                <IPayFootnoteText color={colors.natural.natural900} text={label} />
+  const renderPayItem = ({ item }: { item: PayData }) => {
+    const { detailsText, leftIcon, label } = item;
+    return (
+      <IPayView style={styles.listContainer}>
+        <IPayView style={styles.listView}>
+          <IPayView style={styles.iconLabel}>
+            {leftIcon && (
+              <IPayView style={styles.leftIcon}>
+                <IPayImage image={images.alinmaP} style={styles.leftIconCard} resizeMode="contain" />
               </IPayView>
-              <IPayView style={styles.listDetails}>
-                <IPayFootnoteText text={detailsText} style={styles.detailsText} />
-              </IPayView>
-            </IPayView>
+            )}
+            <IPayFootnoteText color={colors.natural.natural900} text={label} />
           </IPayView>
-        );
-      },
-    [topUpAmount, localizationText, colors, images],
-  );
+          <IPayView style={styles.listDetails}>
+            {detailsText ? (
+              <IPayFootnoteText shouldTranslate={false} text={detailsText} style={styles.detailsText} />
+            ) : (
+              <IPayFootnoteText
+                shouldTranslate={false}
+                text={`${topUpAmount} ${t('COMMON.SAR')}`}
+                style={styles.detailsText}
+              />
+            )}
+          </IPayView>
+        </IPayView>
+      </IPayView>
+    );
+  };
 
   return (
     <IPaySafeAreaView>
@@ -287,15 +275,16 @@ const MoneyRequestSummaryScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             medium
             onPress={onPay}
-            btnText={localizationText.COMMON.CONFIRM}
+            btnText="COMMON.CONFIRM"
             btnIconsDisabled
             disabled={monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining}
+            btnStyle={styles.confirmButton}
           />
         </IPayLinearGradientView>
       </IPayView>
 
       <IPayBottomSheet
-        heading={localizationText.REQUEST_SUMMARY.TITLE}
+        heading="REQUEST_SUMMARY.PAY_PRODUCT"
         enablePanDownToClose
         simpleBar
         testID="request-money-otp-verification"
@@ -314,7 +303,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           setOtpError={setOtpError}
           otpError={otpError}
           isLoading={isLoading}
-          apiError={apiError}
+          otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           timeout={otpConfig.transaction.otpTimeout}
@@ -322,7 +311,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
         />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

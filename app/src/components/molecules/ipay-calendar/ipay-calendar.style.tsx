@@ -22,7 +22,7 @@ const CalendarStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
       top: moderateScale(100),
     },
-    DatePickerAndroidStyle: {
+    datePickerAndroidStyle: {
       backgroundColor: colors.natural.natural100,
       width: '100%',
     },

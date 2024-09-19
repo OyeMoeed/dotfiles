@@ -14,13 +14,13 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
 import { LabelKey, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities/clip-board.util';
-import { alertType, alertVariant, buttonVariants, toastTypes } from '@app/utilities/enums.util';
+import { copyText } from '@app/utilities';
+import { alertType, alertVariant, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { internationalTransferData } from '../international-transfer/international-transfer.constent';
 import { InternationalTransferData, OptionItem } from './international-transfer-success.interface';
 import internationalSuccessStyles from './international-transfer-success.style';
@@ -28,7 +28,7 @@ import internationalSuccessStyles from './international-transfer-success.style';
 const InternationalTransferSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalSuccessStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
   const [isVatInvoice, setIsVatInvoice] = useState<boolean>(false);
   const totalAmount = '50'; // TODO will be updated on the basis of api
@@ -49,7 +49,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   };
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
-    renderToast({ title: localizationText.TOP_UP.REF_NUMBER_COPIED, toastType: toastTypes.INFORMATION });
+    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
   // Function to check the condition dynamically
@@ -61,12 +61,12 @@ const InternationalTransferSuccessScreen: React.FC = () => {
   const renderOption = ({ item, index }: { item: OptionItem; index: number }) => {
     const { label, value, icon, image } = item;
     const localizationKey = LocalizationKeysMapping[label as keyof InternationalTransferData];
-    const localization = localizationText.INTERNATIONAL_TRANSFER[localizationKey] || label;
+    const localization = localizationKey ? t(`INTERNATIONAL_TRANSFER.${localizationKey}`) : label;
 
     const getTitleSuffix = (labelKeys: string) => {
       switch (labelKeys) {
         case LabelKey.AMOUNT_TO:
-          return `(${localizationText.COMMON.SAR})`;
+          return `(${t('COMMON.SAR')})`;
         case LabelKey.AMOUNT_FROM:
           return otherCountryName ? `(${otherCountryName})` : '';
         case LabelKey.VAT:
@@ -116,8 +116,8 @@ const InternationalTransferSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={localizationText.TOP_UP.TRANSFER_SUCCESSFUL}
-          descriptionText={`${totalAmount} ${localizationText.COMMON.SAR}`}
+          headingText="TOP_UP.TRANSFER_SUCCESSFUL"
+          descriptionText={`${totalAmount} ${t('COMMON.SAR')}`}
           descriptionStyle={styles.boldStyles}
         />
         <IPayFlatlist
@@ -132,13 +132,13 @@ const InternationalTransferSuccessScreen: React.FC = () => {
               medium
               btnType={buttonVariants.LINK_BUTTON}
               leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-              btnText={localizationText.COMMON.SHARE}
+              btnText="COMMON.SHARE"
             />
             <IPayButton
               medium
               btnType={buttonVariants.LINK_BUTTON}
               rightIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} size={16} />}
-              btnText={localizationText.TRANSACTION_HISTORY.VAT_INVOICE}
+              btnText="TRANSACTION_HISTORY.VAT_INVOICE"
               onPress={handleVatInvoice}
             />
           </IPayView>
@@ -146,7 +146,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
             large
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.natural.natural0} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText="COMMON.HOME"
             onPress={() => navigate(ScreenNames.HOME)}
           />
         </IPayView>
@@ -154,15 +154,15 @@ const InternationalTransferSuccessScreen: React.FC = () => {
       <IPayAlert
         visible={isVatInvoice}
         onClose={onVatInvoiceCancel}
-        title={localizationText.INTERNATIONAL_TRANSFER.VAT_INVOICE_WAS_NOT_CREATED}
-        message={localizationText.INTERNATIONAL_TRANSFER.PLEASE_TRY_AGAIN_LATER}
+        title="INTERNATIONAL_TRANSFER.VAT_INVOICE_WAS_NOT_CREATED"
+        message="INTERNATIONAL_TRANSFER.PLEASE_TRY_AGAIN_LATER"
         type={alertType.DEFAULT}
         closeOnTouchOutside
         variant={alertVariant.DEFAULT}
         icon={<IPayIcon icon={icons.note_remove} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: localizationText.COMMON.DONE,
+          text: t('COMMON.DONE'),
           onPress: onVatInvoiceCancel,
         }}
       />

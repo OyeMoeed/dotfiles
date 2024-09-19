@@ -60,5 +60,8 @@ const giftListStyles = (theme: typeof colors) =>
     newStyle: {
       backgroundColor: theme.secondary.secondary50,
     },
+    statusText: {
+      textTransform: 'capitalize',
+    },
   });
 export default giftListStyles;

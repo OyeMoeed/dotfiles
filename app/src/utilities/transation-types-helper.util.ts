@@ -1,11 +1,11 @@
 import icons from '@app/assets/icons';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
+import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 
-const getTransationIcon = (transaction: TransactionTypes) => {
-  switch (transaction) {
-    //type #1
+const getTransationIcon = (transactionRequestType: TransactionTypes, transactionType: TransactionOperations) => {
+  console.log(transactionRequestType);
+  switch (transactionRequestType) {
+    // type #1
     case TransactionTypes.COUT_MUSANED:
-    case TransactionTypes.PAY_WALLET:
     case TransactionTypes.PAY_MRCHNT_BILL:
     case TransactionTypes.COUT_MOBILE:
     case TransactionTypes.COUT_IPS:
@@ -14,11 +14,11 @@ const getTransationIcon = (transaction: TransactionTypes) => {
     case TransactionTypes.CARD_REISSUE:
     case TransactionTypes.CARD_REPLACE:
     case TransactionTypes.PAY_VCARD:
-    case TransactionTypes.BKF_TRANSFER:
     case TransactionTypes.PAY_VCARD_REFUND:
-      return icons.send_money;
-
-    //type #2
+    case TransactionTypes.BKF_TRANSFER:
+    case TransactionTypes.PAY_WALLET:
+      return transactionType === TransactionOperations.DEBIT ? icons.send_money : icons.money_request;
+    // type #2
     case TransactionTypes.CIN_MUSANED:
     case TransactionTypes.PAY_MRCHNT_IN:
     case TransactionTypes.PAY_MRCHNT_OUT:
@@ -36,8 +36,7 @@ const getTransationIcon = (transaction: TransactionTypes) => {
     case TransactionTypes.COUT_SWIFT_REV:
       return icons.money_request;
 
-    //type #3
-
+    // type #3
     case TransactionTypes.PAY_VCARD_POS:
     case TransactionTypes.PAY_VCARD_ECOM:
     case TransactionTypes.PAY_VCARD_SETTLE:
@@ -48,21 +47,19 @@ const getTransationIcon = (transaction: TransactionTypes) => {
     case TransactionTypes.PAY_VCARD_ECOM_VISA:
       return icons.receipt_item;
 
-    //type #5
-
+    // type #5
     case TransactionTypes.PAY_VCARD_POS_NAQD_MADA:
     case TransactionTypes.PAY_VCARD_POS_NAQD_VISA:
     case TransactionTypes.PAY_VCARD_POS_NAQD:
     case TransactionTypes.COUT_ATM:
       return icons.card;
 
-    //type #6
+    // type #6
     case TransactionTypes.CIN_SARIE:
     case TransactionTypes.COUT_SARIE:
       return icons.transType;
 
-    //type #7
-
+    // type #7
     case TransactionTypes.COUT_WU:
     case TransactionTypes.COUT_ALINMA:
     case TransactionTypes.CIN_ALINMA:
@@ -70,7 +67,7 @@ const getTransationIcon = (transaction: TransactionTypes) => {
     case TransactionTypes.CIN_EXPRESS_REV:
       return icons.global;
 
-    //type #8
+    // type #8
     case TransactionTypes.CIN_CARD:
     case TransactionTypes.CIN_CARD_MADA:
     case TransactionTypes.CIN_CARD_VISA:
@@ -80,14 +77,14 @@ const getTransationIcon = (transaction: TransactionTypes) => {
     case TransactionTypes.CIN_CARD_MASTER_APAY:
       return icons.wallet_add;
 
-    //type #9
+    // type #9
     case TransactionTypes.COUT_GIFT:
       return icons.gift;
-    //type #10
+    // type #10
     case TransactionTypes.PAY_ONECARD:
       return icons.shopping_cart;
 
-    //type #4
+    // type #4
     default:
       return icons.transType;
   }

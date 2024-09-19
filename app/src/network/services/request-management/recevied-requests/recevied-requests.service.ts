@@ -2,7 +2,8 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 
 import apiCall from '../../api-call.service';
-import { getAllRequestsMock, receivedRequestedMoneyConfirmMock } from './recevied-requests.mock';
+import { ApiResponse, IApiStatus } from '../../services.interface';
+import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
 import {
   SendRequestedMoneyConfirmReq,
   SendRequestedMoneyConfirmRes,
@@ -10,8 +11,7 @@ import {
   SendRequestedMoneyPrepareRes,
   WalletNumberProp,
 } from './recevied-requests.interface';
-import REQUEST_MANAGEMENT_URLS from '../request-management.urls';
-import { ApiResponse, IApiStatus } from '../../services.interface';
+import { getAllRequestsMock, receivedRequestedMoneyConfirmMock } from './recevied-requests.mock';
 
 /**
  * Fetches all received requests for a given wallet number.
@@ -25,14 +25,8 @@ const getAllRecivedRequests = async (payload: WalletNumberProp): Promise<unknown
   }
   try {
     const apiResponse: any = await apiCall({
-      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber),
+      endpoint: REQUEST_MANAGEMENT_URLS.getAllRequests(payload?.walletNumber, 'TO', payload.currentPage, 20),
       method: requestType.GET,
-      headers: {
-        mode: 'FROM',
-        offset: payload.currentPage,
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'max-record': 100,
-      },
     });
 
     if (apiResponse?.status?.type === 'SUCCESS') {
@@ -113,4 +107,4 @@ const sendRequestedMoneyConfirm = async (
   }
 };
 
-export { getAllRecivedRequests, sendRequestedMoneyPrepare, sendRequestedMoneyConfirm };
+export { getAllRecivedRequests, sendRequestedMoneyConfirm, sendRequestedMoneyPrepare };

@@ -20,9 +20,6 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
       marginRight: moderateScale(8),
       color: themeColors.natural.natural700,
     },
-    topUpButtonStyle: {
-      borderRadius: moderateScale(12),
-    },
     commonContainer: {
       flexDirection: 'row',
       alignItems: 'center',
@@ -30,6 +27,7 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
     },
     balanceContainer: {
       flexDirection: 'row',
+      marginTop: 3,
     },
     currencyStyle: {
       marginLeft: moderateScale(3),
@@ -60,6 +58,9 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(24),
     },
     topUpButtonStyle: {
+      height: moderateScale(34, 0.3),
+      justifyContent: 'center',
+      alignItems: 'center',
       borderWidth: 1,
       borderRadius: moderateScale(12),
       paddingVertical: moderateScale(7),

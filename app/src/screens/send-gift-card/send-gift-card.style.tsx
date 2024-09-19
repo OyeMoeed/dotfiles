@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+
 const sendGiftCard = (themseColors: typeof colors) =>
   createStyleSheet({
     container: {
@@ -37,4 +38,5 @@ const sendGiftCard = (themseColors: typeof colors) =>
       marginTop: moderateScale(30),
     },
   });
+
 export default sendGiftCard;

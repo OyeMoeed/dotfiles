@@ -2,9 +2,10 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import useFonts from '@app/styles/theming/fonts.hook';
 
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { JSX } from 'react';
 import { Text } from 'react-native';
+import { useTranslation } from 'react-i18next';
+import { isNumber, isUpperCase } from '@app/utilities';
 import { IPayTextProps } from './ipay-text.interface';
 import styles from './ipay-text.style';
 
@@ -23,6 +24,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   isAmount,
   varient = 'primary',
   fontWeight,
+  shouldTranslate = true,
 }: IPayTextProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -30,13 +32,20 @@ const IPayText: React.FC<IPayTextProps> = ({
   const getFontFamily: string | undefined = fontFamily !== undefined ? selectedFonts[fontFamily] : undefined;
   const baseTextStyles = styles(getFontFamily as string, colors);
 
+  const isChildrenString = typeof children === 'string' || typeof text === 'string';
+  const mainText = children ? String(children) : text || '';
+  const formattedText = isAmount ? formatNumberWithCommas(mainText || '') : mainText;
+  const isNeedTranslate =
+    !isNumber(formattedText) && isUpperCase(formattedText) && formattedText?.length !== 0 && formattedText?.length > 1;
+  const showText = isNeedTranslate && shouldTranslate ? t(formattedText) : formattedText;
+
   return (
     <Text
       testID={`${testID}-base-text`}
       numberOfLines={numberOfLines}
       style={[baseTextStyles.textStyle, baseTextStyles[varient], { fontFamily: getFontFamily }, { fontWeight }, style]}
     >
-      {text ? t(`${isAmount ? formatNumberWithCommas(text) : text}`) : children}
+      {isChildrenString ? showText : children}
     </Text>
   );
 };

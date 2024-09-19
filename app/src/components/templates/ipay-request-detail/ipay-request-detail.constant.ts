@@ -30,10 +30,10 @@ const getTypeFieldMapping = (status: MoneyRequestStatus, type: TransactionOperat
 };
 
 const heightMapping = {
-  [MoneyRequestStatus.PAID]: isAndroidOS ? '80%' : '87%',
-  [MoneyRequestStatus.PENDING]: isAndroidOS ? '80%' : '87%',
-  [MoneyRequestStatus.REJECTED]: isAndroidOS ? '75%' : '82%',
-  [MoneyRequestStatus.CANCEL]: isAndroidOS ? '70%' : '77%',
+  [MoneyRequestStatus.PAID]: isAndroidOS ? '98%' : '98%',
+  [MoneyRequestStatus.PENDING]: isAndroidOS ? '98%' : '98%',
+  [MoneyRequestStatus.REJECTED]: isAndroidOS ? '98%' : '98%',
+  [MoneyRequestStatus.CANCEL]: isAndroidOS ? '98%' : '98%',
 };
 
 export { heightMapping, getTypeFieldMapping };

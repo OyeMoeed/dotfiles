@@ -4,7 +4,7 @@ import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
 import trafficVoilationMock from './traffic-violation.mock';
 
-const getTrafficViolationData = async (): Promise<unknown> => {
+const getTrafficViolationData = async (): Promise<typeof trafficVoilationMock> => {
   if (constants.MOCK_API_RESPONSE) {
     return trafficVoilationMock;
   }

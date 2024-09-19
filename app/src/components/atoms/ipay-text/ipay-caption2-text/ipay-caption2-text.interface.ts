@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleProp, TextStyle } from 'react-native';
 
 /**
@@ -30,4 +31,8 @@ export interface IPayCaption2TextProps {
    */
   children?: React.ReactNode;
   color?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

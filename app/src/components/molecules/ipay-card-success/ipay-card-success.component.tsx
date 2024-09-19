@@ -12,35 +12,34 @@ import {
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientTextMasked, IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { isIosOS } from '@app/utilities/constants';
 import React from 'react';
-import IPayAppleWalletButton from '../ipay-apple-wallet-button/ipay-apple-wallet-button.component';
+import { CardInfo } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { buttonVariants } from '@app/utilities';
 import IPayPrintCard from '../ipay-print-card/ipay-print-card.component';
 import { IPayCardSuccessProps } from './ipay-card-success.interface';
 import topUpSuccessStyles from './ipay-card-success.style';
+import IPayAddAppleWalletButton from '../ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 
 const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
   testID,
   title,
   subTitle,
   animation = successIconAnimation,
-  isAddAppleWallet,
   showPrintCard = true,
   handleGoToCard,
 }) => {
+  const route = useRoute<RouteProps>();
+  type RouteProps = RouteProp<{ params: { cardInfo: CardInfo } }, 'params'>;
   const { colors } = useTheme();
-  const styles = topUpSuccessStyles(colors);
+  const styles = topUpSuccessStyles();
   const handleHomePress = () => {
     navigate(screenNames.HOME);
   };
-  const handleAddToAppleWallet = () => {
-    navigate(screenNames.WALLET);
-  };
-  const localizationText = useLocalization();
+
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const handlePrintCard = () => {
@@ -60,7 +59,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
       <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} />
       <IPayView style={styles.linearGradientView}>
         <IPayLinearGradientView
-          style={[styles.innerLinearGradientView]}
+          style={styles.innerLinearGradientView}
           gradientColors={[colors.primary.primary50, colors.secondary.secondary50]}
         >
           <IPayView style={[styles.flexStyle, styles.upperView]}>
@@ -70,7 +69,7 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
             </IPayGradientTextMasked>
 
             <IPayFootnoteText regular color={colors.primary.primary800} text={subTitle} style={styles.subTittleStyle} />
-            {isAddAppleWallet && isIosOS && <IPayAppleWalletButton onPress={handleAddToAppleWallet} />}
+            <IPayAddAppleWalletButton selectedCard={route?.params.cardInfo} />
           </IPayView>
           <IPayView style={[styles.flexStyle, styles.alignEnd]}>
             {showPrintCard && <IPayPrintCard handlePrintCard={handlePrintCard} />}
@@ -78,17 +77,17 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
               <IPayButton
                 onPress={handleGoToCard}
                 medium
-                btnType="outline"
+                btnType={buttonVariants.OUTLINED}
                 rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
-                btnText={localizationText.CARD_OPTIONS.GO_TO_CARD}
+                btnText="CARD_OPTIONS.GO_TO_CARD"
                 btnStyle={styles.flexStyle}
               />
               <IPayButton
                 medium
                 onPress={handleHomePress}
-                btnType="outline"
+                btnType={buttonVariants.OUTLINED}
                 leftIcon={<IPayIcon icon={icons.HOME_2} color={colors.primary.primary500} />}
-                btnText={localizationText.COMMON.HOME}
+                btnText="COMMON.HOME"
                 btnStyle={styles.flexStyle}
               />
             </IPayView>

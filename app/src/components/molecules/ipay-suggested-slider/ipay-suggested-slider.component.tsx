@@ -10,9 +10,8 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { JSX } from 'react';
 import { IPaySuggestedSliderProps } from './ipay-suggested-slider.interface';
 import genratedStyles from './ipay-suggested-slider.style';
 
@@ -21,14 +20,10 @@ import genratedStyles from './ipay-suggested-slider.style';
  * @param {RNSwitchProps} props - The props for the IPayText component.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
-  testID,
-  onPressUp,
-  onPressDown,
-}: IPaySuggestedSliderProps): JSX.Element => {
+const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({ testID }: IPaySuggestedSliderProps): JSX.Element => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
-  const localizationText = useLocalization();
+
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
       <IPayLinearGradientView
@@ -43,20 +38,17 @@ const IPaySuggestedSlider: React.FC<IPaySuggestedSliderProps> = ({
             <IPayView style={styles.commonConStyle}>
               {/* <icons.receiptIcon /> */}
               <IPayIcon icon={icons.receipt_item} size={18} color={colors.orange.orange500} />
-              <IPayFootnoteText style={styles.footnoteTextStyle}>
-                {localizationText.HOME.BILL_PAYMENTS}
-              </IPayFootnoteText>
+              <IPayFootnoteText style={styles.footnoteTextStyle} text="HOME.BILL_PAYMENTS" />
             </IPayView>
-            <IPayCaption2Text style={[styles.footnoteTextStyle, styles.captionTextStyle]}>
-              {localizationText.CARDS.WALLET_WITH_EVERY_BILL}
-            </IPayCaption2Text>
+            <IPayCaption2Text
+              style={[styles.footnoteTextStyle, styles.captionTextStyle]}
+              text="CARDS.WALLET_WITH_EVERY_BILL"
+            />
           </IPayView>
           {/* Right side Text */}
           <IPayView>
             <IPayLargeTitleText style={styles.largeTextStyle}>45%</IPayLargeTitleText>
-            <IPaySubHeadlineText style={styles.subHeadingTextStyle}>
-              {localizationText.COMMON.CASH_BACK}
-            </IPaySubHeadlineText>
+            <IPaySubHeadlineText style={styles.subHeadingTextStyle} text="COMMON.CASH_BACK" />
           </IPayView>
         </IPayView>
         <IPayView style={styles.imagContainer}>

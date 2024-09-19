@@ -1,4 +1,4 @@
-import { GetAllRequestsMockProps } from './sent-requests.interface';
+import { GetAllRequestsMockProps, CreateMoneyRequestResponseTypes } from './sent-requests.interface';
 
 const getAllRequestsMock: GetAllRequestsMockProps = {
   status: {
@@ -23,7 +23,7 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
         targetFullName: 'Mohammed recived',
         targetMobileNumber: '0583431010',
         targetAmount: '100.00',
-        transactionDescription: 'test',
+        transactionDescription: 'Hey Dear, I would like to send this amazing request',
         cancellation_date: '2008-04-08T16:00:00',
         realTransactionAmount: null,
         realTransactionTotalPaidAmount: null,
@@ -84,4 +84,27 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
   ok: true,
 };
 
-export default getAllRequestsMock;
+const createMoneyRequestMockResponse: CreateMoneyRequestResponseTypes = {
+  status: {
+    code: 'I000000',
+    type: 'SUCCESS',
+    desc: 'retail.msg.default.success',
+    sessionReference: 'SSPAYCe5830ecf0b854d7586686c2e5a857856',
+    requestReference: '06851820381011026683',
+  },
+  response: {
+    moneyRequestsResult: [
+      {
+        mobileNumber: '0583968704',
+        amount: '10.00',
+        note: 'labor send mony back to sponsor',
+        walletNumber: '10587983',
+        status: 'I000000',
+        statusDesc: '',
+      },
+    ],
+  },
+  successfulResponse: true,
+};
+
+export { getAllRequestsMock, createMoneyRequestMockResponse };

@@ -1,8 +1,7 @@
-import { constants } from '@app/components/atoms/ipay-text/constants.text';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { CUSTOME_SCALE } from '@app/styles/spacing.const';
-import { FONT_SIZE_17, FONT_SIZE_26 } from '@app/styles/typography.styles';
+import { FONT_SIZE_17, FONT_SIZE_26, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
 import { Platform } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -18,15 +17,15 @@ const transactionHistoryStyle = (colors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
       gap: 12,
-      marginBottom: moderateScale(16),
+      marginBottom: moderateScale(8),
     },
     footnoteBoldTitleTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_17,
       color: colors.primary.primary900,
     },
     footnoteBoldTextStyle: {
-      fontWeight: constants.FONT_WEIGHT_BOLD,
+      fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_26,
       color: colors.primary.primary900,
     },
@@ -57,6 +56,7 @@ const transactionHistoryStyle = (colors: any) =>
     button: {
       flex: 1,
       marginBottom: moderateScale(10),
+      borderRadius: moderateScale(16, 0.3),
     },
     rejectButton: {
       borderColor: colors.error.error500,

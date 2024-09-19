@@ -6,6 +6,10 @@ const shareableViewStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
+      justifyContent: 'space-between',
+    },
+    actionsWrapper: {
+      padding: verticalScale(6),
     },
     buttonsContainer: {
       flexDirection: 'row',

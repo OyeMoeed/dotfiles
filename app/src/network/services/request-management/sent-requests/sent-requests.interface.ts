@@ -1,5 +1,10 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
+import {
+  DeviceInfoProps,
+  MockAPIDataProps,
+  MockAPIOkProp,
+  MockAPIStatusProps,
+} from '@network/services/services.interface';
 
 interface WalletNumberProp {
   walletNumber: string;
@@ -51,4 +56,33 @@ interface GetAllRequestsMockProps extends MockAPIOkProp {
   status: MockAPIStatusProps; // Include status directly
 }
 
-export { WalletNumberProp, GetAllRequestsMockProps };
+interface CreateMoneyRequestContactItemTypes {
+  mobileNumber: string;
+  amount: string;
+  note: string;
+  inContactList: boolean;
+}
+
+interface CreateMoneyRequestContactResponseItemTypes {
+  mobileNumber: string;
+  amount: string;
+  note: string;
+  walletNumber: string;
+  status: string;
+  statusDesc: string;
+}
+
+interface CreateMoneyRequestPayloadTypes {
+  requests: CreateMoneyRequestContactItemTypes[];
+  deviceInfo: DeviceInfoProps;
+}
+
+interface CreateMoneyRequestResponseTypes {
+  status: MockAPIStatusProps;
+  response: {
+    moneyRequestsResult: CreateMoneyRequestContactResponseItemTypes[];
+  };
+  successfulResponse: boolean;
+}
+
+export { WalletNumberProp, GetAllRequestsMockProps, CreateMoneyRequestPayloadTypes, CreateMoneyRequestResponseTypes };

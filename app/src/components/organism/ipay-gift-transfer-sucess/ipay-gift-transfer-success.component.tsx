@@ -18,22 +18,22 @@ import {
 import { IPayButton, IPayChip, IPayGradientText, IPayHeader, IPayShareableImageView } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { SNAP_POINTS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
-import { copyText } from '@app/utilities/clip-board.util';
+import { buttonVariants, copyText } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
-import { IGiftTransferSuccessProps, WalletPaymentDetails } from './ipay-gift-transfer-success.interface';
+import { GiftDetails, IGiftTransferSuccessProps, WalletPaymentDetails } from './ipay-gift-transfer-success.interface';
 import { GiftTransferSuccessStyles } from './ipay-gift-transfer-success.styles';
 
 const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transferDetails, totalAmount }) => {
   const { colors } = useTheme();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const styles = GiftTransferSuccessStyles(colors);
   const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
 
@@ -43,8 +43,8 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
 
   const renderToast = () => {
     showToast({
-      title: localizationText.TOP_UP.COPIED,
-      subTitle: localizationText.TOP_UP.REF_NUMBER_COPIED,
+      title: 'TOP_UP.COPIED',
+      subTitle: 'TOP_UP.REF_NUMBER_COPIED',
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: styles.toastContainer,
@@ -69,7 +69,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     const commonDetails = [
       {
         id: '1',
-        label: localizationText.TRANSFER_SUMMARY.TRANSFER_TO,
+        label: t('TRANSFER_SUMMARY.TRANSFER_TO'),
         value: item?.name,
         leftIcon: item?.walletNumber ? images.alinmaP : icons.user_square,
         isAlinma: !!item?.walletNumber,
@@ -77,12 +77,12 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
       },
       {
         id: '2',
-        label: localizationText.TRANSFER_SUMMARY.AMOUNT,
-        value: `${item.amount} ${localizationText.COMMON.SAR}`,
+        label: t('TRANSFER_SUMMARY.AMOUNT'),
+        value: `${item.amount} ${t('COMMON.SAR')}`,
       },
       {
         id: '3',
-        label: localizationText.TOP_UP.OCCASION,
+        label: t('TOP_UP.OCCASION'),
         value: item.transferPurpose,
       },
     ];
@@ -123,20 +123,50 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     );
   };
 
-  const renderText = () => localizationText.TOP_UP.GIFT_SUCCESSFUL;
+  const renderText = 'TOP_UP.GIFT_SUCCESSFUL';
 
   const renderActionLabel = () => (
     <IPayView style={styles.giftText}>
       <IPayPressable style={styles.newTopup} onPress={onSendAnotherGift}>
         <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={localizationText.SEND_GIFT.SEND_ANOTHER} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text="SEND_GIFT.SEND_ANOTHER" style={styles.newTopupText} regular />
       </IPayPressable>
       <IPayPressable style={styles.newTopup} onPress={onPreview}>
         <IPayIcon icon={icons.play} size={14} color={colors.primary.primary500} />
-        <IPaySubHeadlineText text={localizationText.SEND_GIFT.PREVIEW} style={styles.newTopupText} regular />
+        <IPaySubHeadlineText text="SEND_GIFT.PREVIEW" style={styles.newTopupText} regular />
       </IPayPressable>
     </IPayView>
   );
+
+  const renderDetails = (item: GiftDetails[], index: number) => {
+    const { isAlinma, value } = item[0];
+    const isFirstItem = index === 0;
+    return (
+      <IPayView key={value} style={styles.walletBackground}>
+        {isFirstItem && !isAlinma && (
+          <IPayView style={styles.chipContainer}>
+            <IPayChip
+              containerStyle={styles.chipColors}
+              icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
+              textValue="TRANSFER_SUMMARY.CHIP_TITLE"
+              headingStyles={styles.chipColors}
+            />
+          </IPayView>
+        )}
+        <IPayShareableImageView
+          otherView={
+            <IPayButton
+              btnType={buttonVariants.LINK_BUTTON}
+              btnText="TOP_UP.SHARE"
+              leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
+            />
+          }
+        >
+          <IPayFlatlist style={styles.detailesFlex} data={item} renderItem={renderWallerPaymentItem} />
+        </IPayShareableImageView>
+      </IPayView>
+    );
+  };
 
   // to chnage text color on basis of card theme.
   const isDarkCard = darkCards.includes(transferDetails?.selectedCard?.id);
@@ -153,62 +183,34 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
           style={styles.innerLinearGradientView}
           gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
         >
-          <IPayShareableImageView>
-            <IPayView>
-              <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-              <IPayView style={styles.linearGradientTextView}>
-                <IPayGradientText
-                  text={renderText()}
-                  gradientColors={gradientColors}
-                  style={styles.gradientTextSvg}
-                  fontSize={styles.linearGradientText.fontSize}
-                  fontFamily={styles.linearGradientText.fontFamily}
-                />
-                <IPaySubHeadlineText
-                  regular={false}
-                  text={`${totalAmount} ${localizationText.COMMON.SAR}`}
-                  style={styles.headlineText}
-                />
-              </IPayView>
-              <IPayScrollView style={{ flex: 0 }} scrollEnabled>
-                {formattedTransferDetails.map((item, index) => {
-                  const { isAlinma, value } = item[0];
-                  const isFirstItem = index === 0;
-                  return (
-                    <IPayView key={value} style={styles.walletBackground}>
-                      {isFirstItem && !isAlinma && (
-                        <IPayView style={styles.chipContainer}>
-                          <IPayChip
-                            containerStyle={styles.chipColors}
-                            icon={<IPayIcon icon={icons.SHEILD} color={colors.secondary.secondary500} size={18} />}
-                            textValue={localizationText.TRANSFER_SUMMARY.CHIP_TITLE}
-                            headingStyles={styles.chipColors}
-                          />
-                        </IPayView>
-                      )}
-                      <IPayFlatlist
-                        style={styles.detailesFlex}
-                        scrollEnabled={true}
-                        data={item}
-                        renderItem={renderWallerPaymentItem}
-                      />
-                      <IPayPressable style={styles.newTopup}>
-                        <IPayIcon icon={icons.share} color={colors.primary.primary500} size={14} />
-                        <IPaySubHeadlineText text={localizationText.TOP_UP.SHARE} regular style={styles.newTopupText} />
-                      </IPayPressable>
-                    </IPayView>
-                  );
-                })}
-              </IPayScrollView>
+          <IPayView>
+            <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+            <IPayView style={styles.linearGradientTextView}>
+              <IPayGradientText
+                text={renderText}
+                gradientColors={gradientColors}
+                style={styles.gradientTextSvg}
+                fontSize={styles.linearGradientText.fontSize}
+                fontFamily={styles.linearGradientText.fontFamily}
+              />
+              <IPaySubHeadlineText
+                regular={false}
+                text={`${totalAmount} ${t('COMMON.SAR')}`}
+                style={styles.headlineText}
+                shouldTranslate={false}
+              />
             </IPayView>
-          </IPayShareableImageView>
+            <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
+              <IPayView>{formattedTransferDetails?.map((item, index) => renderDetails(item, index))}</IPayView>
+            </IPayScrollView>
+          </IPayView>
 
           <IPayView style={styles.btnBackground}>
             {renderActionLabel()}
             <IPayButton
               large
-              btnType="primary"
-              btnText={localizationText.COMMON.HOME}
+              btnType={buttonVariants.PRIMARY}
+              btnText="COMMON.HOME"
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
               onPress={onHome}
@@ -218,7 +220,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
         </IPayLinearGradientView>
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.SEND_GIFT.PREVIEW_GIFT}
+        heading="SEND_GIFT.PREVIEW_GIFT"
         ref={previewBottomSheetRef}
         customSnapPoint={SNAP_POINTS.MID_LARGE}
         enablePanDownToClose
@@ -231,7 +233,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayLottieAnimation source={transferDetails?.selectedCard?.path ?? ''} style={styles.image} loop />
             <IPayView style={styles.amount}>
               <IPayTitle1Text text={giftAmount} regular={false} style={{ color: colors.backgrounds.orange }} />
-              <IPayCaption1Text text={localizationText.COMMON.SAR} color={colors.backgrounds.orange} regular={false} />
+              <IPayCaption1Text text="COMMON.SAR" color={colors.backgrounds.orange} regular={false} />
             </IPayView>
             <IPayScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.messagePreview}>
               <IPayFootnoteText color={themeTextColor} style={styles.messagePreviewText} text={notes} />
@@ -239,7 +241,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayFootnoteText
               color={themeTextColor}
               style={styles.messagePreviewText}
-              text={`${localizationText.SEND_GIFT.FROM}: ${name}`}
+              text={`${t('SEND_GIFT.FROM')}: ${name}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
             />
           </IPayView>

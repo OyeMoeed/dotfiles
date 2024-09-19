@@ -6,9 +6,14 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-native';
 
-const useSplashScreenAnimations = () => {
+const useSplashAnimations = () => {
+  const { ready: isTranslationsLoaded } = useTranslation(undefined, {
+    useSuspense: false,
+  });
+
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.5)).current;
   const blurAnim = useRef(new Animated.Value(0)).current;
@@ -37,17 +42,17 @@ const useSplashScreenAnimations = () => {
 
       // prepareLogin(dispatch);
 
-      setTimeout(async () => {
-        await fadeIn(blurAnim, animationDurations.duration1000).start(async () => {
+      if (isTranslationsLoaded) {
+        await fadeIn(blurAnim, animationDurations.duration500).start(async () => {
           await handleNavigation();
         });
-      }, animationDurations.duration1000);
+      }
     };
 
     runAnimations();
-  }, [dispatch, isLinkedDevice, opacityAnim, scaleAnim, blurAnim, navigation]);
+  }, [dispatch, isLinkedDevice, opacityAnim, scaleAnim, blurAnim, navigation, isTranslationsLoaded]);
 
   return { opacityAnim, scaleAnim, blurAnim };
 };
 
-export default useSplashScreenAnimations;
+export default useSplashAnimations;

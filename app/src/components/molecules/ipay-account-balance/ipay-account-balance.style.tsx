@@ -29,6 +29,7 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
     },
     balanceContainer: {
       flexDirection: 'row',
+      gap: moderateScale(4, 0.3),
     },
     currencyStyle: {
       alignSelf: 'flex-end',

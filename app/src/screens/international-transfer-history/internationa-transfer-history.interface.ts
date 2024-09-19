@@ -9,4 +9,4 @@ interface TransactionDataFiltersProps {
   transactionType: string;
 }
 
-export { TransactionDataFiltersProps };
+export default TransactionDataFiltersProps;

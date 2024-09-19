@@ -1,19 +1,18 @@
 import { BillDetailsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getTrafficViolationData from '@app/network/services/core/traffic-violation/traffic-violation.service';
-import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { useEffect, useMemo, useState } from 'react';
 
 const useTrafficViolation = () => {
   const [billsData, setBillsData] = useState<BillDetailsProps[]>();
-  const [apiError, setAPIError] = useState<string>('');
-  const selectedBillsAmount = useMemo(() => {
-    return (billsData ?? [])
-      .filter(({ selected }) => selected)
-      .reduce((total, { amount }) => total + (amount ? parseFloat(amount) : 0), 0);
-  }, [billsData]);
+  const selectedBillsAmount = useMemo(
+    () =>
+      (billsData ?? [])
+        .filter(({ selected }) => selected)
+        .reduce((total, { amount }) => total + (amount ? parseFloat(amount) : 0), 0),
+    [billsData],
+  );
 
   const selectedBillsCount = useMemo(() => billsData?.filter(({ selected }) => selected).length ?? 0, [billsData]);
 
@@ -39,8 +38,6 @@ const useTrafficViolation = () => {
     deselectAllBills();
     navigate(ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN);
   };
-
-  const localizationText = useLocalization();
 
   const getTrafficVoilationData = async () => {
     const apiResponse: any = await getTrafficViolationData();

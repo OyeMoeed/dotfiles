@@ -14,9 +14,9 @@ import {
 } from '@app/components/atoms';
 import { IPayChip } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import CountryCurrencyBoxProps from './ipay-country-currency-box.interface';
 import countryCurrencyStyles from './ipay-country-currency-box.style';
 
@@ -41,7 +41,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = countryCurrencyStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const {
     transferMethodName,
     transferMethodLogo,
@@ -101,7 +101,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               textElement={
                 <IPayCaption2Text
                   color={colors.natural.natural700}
-                  text={`${localizationText.LOCAL_TRANSFER.FEES}: ${fee} ${remitterCurrency}`}
+                  text={`${t('LOCAL_TRANSFER.FEES')}: ${fee} ${remitterCurrency}`}
                 />
               }
             />
@@ -118,7 +118,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               <IPayView>
                 <IPayFootnoteText
                   color={colors.natural.natural700}
-                  text={localizationText.COMMON.YOU_SEND}
+                  text="COMMON.YOU_SEND"
                   style={styles.amountInputLabel}
                 />
                 <IPayView style={styles.amountInput}>
@@ -131,6 +131,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                     keyboardType="numeric"
                     editable
                     onChangeText={onRemitterAmountChange}
+                    maxLength={5}
                   />
                   <IPayHeadlineText style={[styles.currencyText, remitterCurrencyAmount ? styles.darkStyle : {}]}>
                     {remitterCurrency}
@@ -150,7 +151,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               <IPayView>
                 <IPayFootnoteText
                   color={colors.natural.natural700}
-                  text={localizationText.COMMON.THEY_RECEIVE}
+                  text="COMMON.THEY_RECEIVE"
                   style={styles.amountInputLabel}
                 />
                 <IPayView style={styles.amountInput}>
@@ -163,6 +164,7 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                     keyboardType="numeric"
                     editable
                     onChangeText={onBeneficiaryAmountChange}
+                    maxLength={5}
                   />
                   <IPayHeadlineText style={[styles.currencyText, beneficiaryCurrencyAmount ? styles.darkStyle : {}]}>
                     {beneficiaryCurrency}

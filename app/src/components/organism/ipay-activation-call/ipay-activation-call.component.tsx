@@ -10,7 +10,6 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayGradientTextMasked, IPayList } from '@app/components/molecules';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { ContactItem, GuideStep, IPayActivationCallProps } from './ipay-activation-call.interface';
@@ -19,19 +18,21 @@ import activationCallStyles from './ipay-activation-call.styles';
 const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contactList, guideStepsToCall, close }) => {
   const { colors } = useTheme();
   const styles = activationCallStyles(colors);
-  const localizationText = useLocalization();
-  const ContactItemComponent = ({ item }: ContactItem) => {
-    const { title, phone_number } = item;
+
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ContactItemComponent = ({ item }: { item: ContactItem }) => {
+    const { title, phone_number: phoneNumber } = item;
     return (
       <IPayList
         key={title}
         title={title}
         isShowSubTitle
-        subTitle={phone_number}
+        subTitle={phoneNumber}
         containerStyle={styles.listContainer}
         isShowIcon
         icon={
-          <IPayPressable style={styles.iconWrapper} onPress={() => close(phone_number)}>
+          <IPayPressable style={styles.iconWrapper} onPress={() => close(phoneNumber)}>
             <IPayIcon icon={icons.call_calling} size={18} color={colors.natural.natural0} />
           </IPayPressable>
         }
@@ -39,13 +40,13 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
     );
   };
 
-  const ContactListOptions = () => {
-    return (
-      <IPayView style={styles.childrenStyles}>
-        {contactList?.map((item: ContactItem) => <ContactItemComponent item={item} />)}
-      </IPayView>
-    );
-  };
+  // TODO: Fix nested components
+  // eslint-disable-next-line react/no-unstable-nested-components
+  const ContactListOptions = () => (
+    <IPayView style={styles.childrenStyles}>
+      {contactList?.map((item: ContactItem) => <ContactItemComponent key={`${item.title}`} item={item} />)}
+    </IPayView>
+  );
 
   const renderGuideStepItem = ({
     item: { title, pressNumber, extraText, stepNumber, isContactList },
@@ -74,15 +75,16 @@ const IPayActivationCall: React.FC<IPayActivationCallProps> = ({ testID, contact
       }
       style={isContactList && styles.containerStyle}
       containerStyle={styles.curveStyle}
-      children={isContactList && <ContactListOptions />}
-    />
+    >
+      {isContactList ? <ContactListOptions /> : <IPayView />}
+    </IPayList>
   );
 
   return (
     <IPayView testID={`${testID}-activation-call`} style={styles.container}>
       <CallOutgoing />
-      <IPayTitle2Text text={localizationText.ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE} />
-      <IPayCaption1Text style={styles.desStyle} text={localizationText.ACTIVATE_BENEFICIARY.ACTIVATION_STEPS} />
+      <IPayTitle2Text text="ACTIVATE_BENEFICIARY.CALL_ALINMA_TO_ACTIVATE" />
+      <IPayCaption1Text style={styles.desStyle} text="ACTIVATE_BENEFICIARY.ACTIVATION_STEPS" />
       <IPayFlatlist
         data={guideStepsToCall}
         keyExtractor={(_, index) => index.toString()}

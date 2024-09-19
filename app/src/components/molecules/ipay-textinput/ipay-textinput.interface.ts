@@ -9,6 +9,8 @@ export interface IPayTextInputProps {
    * testID for the flatlist to test the element.
    */
   testID?: string;
+  onPressCancle: () => void;
+  showCancleButton?: boolean;
   /**
    * Unique identifier for the input field.
    */
@@ -130,4 +132,5 @@ export interface IPayTextInputProps {
    * focus style of input
    */
   showFocusStyle?: boolean;
+  returnKeyLabel?: string;
 }

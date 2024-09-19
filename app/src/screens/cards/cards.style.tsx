@@ -45,6 +45,9 @@ const cardStyles = (themeColors: typeof colors) =>
       backgroundColor: themeColors.primary.primary10,
       borderRadius: scaleFont(28),
     },
+    actionSheetStyle: {
+      bottom: verticalScale(80),
+    },
   });
 
 export default cardStyles;

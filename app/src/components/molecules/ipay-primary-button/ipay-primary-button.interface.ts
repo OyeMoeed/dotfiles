@@ -1,3 +1,4 @@
+import { JSX } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 import { TextStyle } from 'react-native-size-matters';
 
@@ -18,4 +19,5 @@ export interface IPayPrimaryButtonProps {
   rightIcon?: JSX.Element;
   textColor?: string;
   textStyle?: StyleProp<TextStyle>;
+  shouldTranslateBtnText?: boolean;
 }

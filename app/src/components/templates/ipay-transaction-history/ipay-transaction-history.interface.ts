@@ -1,5 +1,12 @@
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 
+interface MultiTransactionsProps {
+  transaction: IPayTransactionItemProps | any;
+  isDebit: boolean;
+  isCountGift: boolean;
+  isCountWu: boolean;
+  isBeneficiaryHistory?: boolean;
+}
 interface IPayTransactionProps {
   testID?: string;
   transaction: IPayTransactionItemProps | any;
@@ -13,4 +20,4 @@ interface MappingType {
   [key: string]: string[];
 }
 
-export { IPayTransactionProps, MappingType };
+export { IPayTransactionProps, MappingType, MultiTransactionsProps };

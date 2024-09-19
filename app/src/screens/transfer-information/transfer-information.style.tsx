@@ -21,7 +21,9 @@ const transferInformationStyles = () =>
     buttonContainer: {
       paddingTop: moderateScale(32),
     },
-    transferContainer: { marginTop: moderateScale(4) },
+    transferContainer: {
+      marginTop: moderateScale(4),
+    },
     topUpBtnStyle: {
       paddingHorizontal: moderateScale(14),
       paddingVertical: moderateScale(7),
@@ -33,6 +35,9 @@ const transferInformationStyles = () =>
     },
     currency: {
       fontSize: FONT_SIZE_17,
+    },
+    input: {
+      paddingBottom: moderateScale(8),
     },
     inputActiveStyle: {
       ...Platform.select({

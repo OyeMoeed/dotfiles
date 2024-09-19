@@ -1,6 +1,6 @@
 import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { IPayText } from '@components/atoms/index';
-import React from 'react';
+import React, { JSX } from 'react';
 import { IPayCaption1TextProps } from './ipay-caption1-text.interface';
 import styles from './ipay-caption1-text.styles';
 
@@ -17,6 +17,7 @@ const IPayCaption1Text: React.FC<IPayCaption1TextProps> = ({
   numberOfLines,
   children,
   color,
+  shouldTranslate = true,
 }: IPayCaption1TextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -25,6 +26,7 @@ const IPayCaption1Text: React.FC<IPayCaption1TextProps> = ({
       fontFamily={regular ? typography.FONT_FAMILY.REGULAR : typography.FONT_FAMILY.BOLD}
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
+      shouldTranslate={shouldTranslate}
     >
       {text || children}
     </IPayText>

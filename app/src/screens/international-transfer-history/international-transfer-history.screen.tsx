@@ -7,16 +7,16 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import constants from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { LocalizationKeysMapping, TransactionsStatus } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import dateTimeFormat from '@app/utilities/date.const';
+import { dateTimeFormat } from '@app/utilities';
 import { FiltersType, States } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { RefreshControl } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import EditBeneficiary from './components/edit-beneficiary.component';
 import IPayInternationalTransferBeneficiries from './components/transaction-details-beneficiary.component';
@@ -25,15 +25,15 @@ import TransactionDetails from './components/transaction-details.component';
 import TransactionRefund from './components/transaction-refund.component';
 import IPayInternationalTransferDeliveryTypeComponent from './components/transcation-details-delivery-type.component';
 import { TransactionDataProps } from './components/transction-details-component.interface';
-import { TransactionDataFiltersProps } from './internationa-transfer-history.interface';
+import TransactionDataFiltersProps from './internationa-transfer-history.interface';
 import internationalTransferHistoryData from './international-transfer-history.data';
 import { InternationalTransferHistoryDataProps } from './international-transfer-history.interface';
 import internationalTrHistoryStyles from './international-transfer-history.style';
 
 const InternationalTransferHistory: React.FC = () => {
   const { colors } = useTheme();
-  const styles = internationalTrHistoryStyles(colors);
-  const localizationText = useLocalization();
+  const styles = internationalTrHistoryStyles();
+  const { t } = useTranslation();
   const [filteredData, setFilteredData] = useState<InternationalTransferHistoryDataProps[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [filters, setFilters] = useState<Array<string>>([]);
@@ -56,14 +56,7 @@ const InternationalTransferHistory: React.FC = () => {
   const filterTabs = constants.TRANSACTION_FILTERS;
   const { internationalTransferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
 
-  const {
-    getValues,
-    control,
-    handleSubmit,
-    setValue,
-    reset,
-    formState: { errors, isDirty },
-  } = useForm();
+  const { getValues, control, setValue } = useForm();
 
   const resetData = () => {
     setFilteredData(internationalTransferHistoryData);
@@ -117,10 +110,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       // Check transaction type match
       const isTransactionTypeMatch =
-        !transactionType ||
-        localizationText.TRANSACTION_HISTORY[
-          LocalizationKeysMapping[item?.transactionType] as keyof typeof localizationText.TRANSACTION_HISTORY
-        ] === deliveryType;
+        !transactionType || t(`TRANSACTION_HISTORY.${LocalizationKeysMapping[item?.transactionType]}`) === deliveryType;
 
       // Check beneficiary name match
       const isNameMatch = !beneficiaryNameList || beneficiaryNameList === item?.receiver;
@@ -128,9 +118,7 @@ const InternationalTransferHistory: React.FC = () => {
       // Check delivery type match
       const isTransactionMediumMatch =
         !deliveryType ||
-        localizationText.TRANSACTION_HISTORY[
-          LocalizationKeysMapping[item?.transactionMedium] as keyof typeof localizationText.TRANSACTION_HISTORY
-        ] === transactionType;
+        t(`TRANSACTION_HISTORY.${LocalizationKeysMapping[item?.transactionMedium]}`) === transactionType;
 
       // Return true if all conditions are met
       return isAmountInRange && isDateInRange && isTransactionTypeMatch && isNameMatch && isTransactionMediumMatch;
@@ -224,7 +212,7 @@ const InternationalTransferHistory: React.FC = () => {
   };
 
   const onPressApplyFilters = (filtersData: TransactionDataFiltersProps) => {
-    const sar = localizationText.COMMON.SAR;
+    const sar = t('COMMON.SAR');
     const filtersArray = Object.entries(filtersData)
       .filter(([key, value]) => value && (key.includes('amount') || key.includes('date') || value))
       .map(([key, value]) => {
@@ -320,18 +308,18 @@ const InternationalTransferHistory: React.FC = () => {
 
   const handleActionSheetPress = (index: number) => {
     if (index === 0) {
-      setEditBeneficiaryMessage(localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE);
+      setEditBeneficiaryMessage(t('INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_PENDING_MESSAGE'));
     }
     editBeneficiaryConfirmationActionSheet?.current?.hide();
     transactionDetailsBottomSheet.current?.present();
   };
 
   const editBeneficiaryConfirmationOptions = {
-    title: localizationText.INTERNATIONAL_TRANSFER.TRANSACTION_ONLY_UPDATE_MESSAGE,
+    title: 'INTERNATIONAL_TRANSFER.TRANSACTION_ONLY_UPDATE_MESSAGE',
     showIcon: true,
     customImage: <IPayIcon icon={icons.warning4} size={48} color={colors.warning.warning500} />,
-    message: localizationText.INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_MESSAGE,
-    options: [localizationText.COMMON.DONE, localizationText.COMMON.CANCEL],
+    message: 'INTERNATIONAL_TRANSFER.EDIT_BENEFICIARY_MESSAGE',
+    options: ['COMMON.DONE', 'COMMON.CANCEL'],
     bodyStyle: styles.actionSheetView,
     btnStyle: styles.actionSheetBtn,
     cancelButtonIndex: 1,
@@ -344,7 +332,7 @@ const InternationalTransferHistory: React.FC = () => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTION_HISTORY}
+        title="COMMON.TRANSACTION_HISTORY"
         applyFlex
         rightComponent={
           <IPayPressable onPress={onPressFilters}>
@@ -406,7 +394,7 @@ const InternationalTransferHistory: React.FC = () => {
             <IPayNoResult
               testID="no-results"
               textColor={colors.primary.primary800}
-              message={localizationText.TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY}
+              message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
               showEmptyBox
             />
           )}
@@ -414,7 +402,7 @@ const InternationalTransferHistory: React.FC = () => {
       </IPayView>
       <IPayFilterBottomSheet
         testID="filters-bottom-sheet"
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={transferHistoryFilterDefaultValues}
         showAmountFilter
         showDateFilter
@@ -429,7 +417,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testID="delivery-type"
-        heading={localizationText.INTERNATIONAL_TRANSFER.DELIVERY_TYPE}
+        heading="INTERNATIONAL_TRANSFER.DELIVERY_TYPE"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -460,7 +448,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testID="benficiary-name"
-        heading={localizationText.LOCAL_TRANSFER.BENEFICIARY_NAME}
+        heading="LOCAL_TRANSFER.BENEFICIARY_NAME"
         enablePanDownToClose
         simpleBar
         cancelBnt
@@ -488,7 +476,7 @@ const InternationalTransferHistory: React.FC = () => {
       </IPayBottomSheet>
       <IPayBottomSheet
         testId="transaction-details"
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '95%' : '100%']}
         ref={transactionDetailsBottomSheet}
@@ -510,7 +498,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testId="send-money"
-        heading={localizationText.TRANSACTION_HISTORY.SEND_MONEY}
+        heading="TRANSACTION_HISTORY.SEND_MONEY"
         onCloseBottomSheet={closeRefundBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '80%' : '90%']}
         ref={refundBottomSheetRef}
@@ -527,7 +515,7 @@ const InternationalTransferHistory: React.FC = () => {
 
       <IPayBottomSheet
         testId="edit-beneficiary"
-        heading={localizationText.TRANSACTION_HISTORY.EDIT_BENEFICIARY}
+        heading="TRANSACTION_HISTORY.EDIT_BENEFICIARY"
         onCloseBottomSheet={closeEditBeneficiaryBottomSheet}
         customSnapPoint={['1%', isAndroidOS ? '40%' : '50%']}
         ref={editBeneficiaryBottomSheetRef}

@@ -5,4 +5,4 @@ interface IPayBalanceProgressbarProps {
   monthlyRemainingOutgoingAmount?: string;
   monthlyOutgoingLimit?: string;
 }
-export { IPayBalanceProgressbarProps };
+export default IPayBalanceProgressbarProps;
