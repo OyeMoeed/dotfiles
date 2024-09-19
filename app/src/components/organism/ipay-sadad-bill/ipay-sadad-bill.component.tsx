@@ -30,17 +30,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   onPressMoreOptions,
   showMoreOption = true,
 }) => {
-  const {
-    billId,
-    billerId,
-    billerName,
-    amount,
-    billDesc,
-    dueDateTime,
-    billStatusDesc,
-    selected = false,
-    billStatusCode,
-  } = billDetails;
+  const { billId, billerId, billerName, amount, billDesc, dueDateTime, selected = false, billStatusCode } = billDetails;
 
   const { colors } = useTheme();
   const styles = sadadBillStyles(colors);
@@ -65,7 +55,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
     let key: string | undefined = '';
     switch (billStatusCode) {
       case BillStatus.UNPAID:
-        key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
+        key = getEnumKeyByValue(BillStatus, BillStatus.DEACTIVE);
         return `BILL_PAYMENTS.${key}`;
       case BillStatus.PAID:
         key = getEnumKeyByValue(BillStatus, BillStatus.PAID);
@@ -77,7 +67,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
         key = getEnumKeyByValue(BillStatus, BillStatus.OVER_PAID);
         return `BILL_PAYMENTS.${key}`;
       default:
-        key = getEnumKeyByValue(BillStatus, BillStatus.DEACTIVE);
+        key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
         return `BILL_PAYMENTS.${key}`;
     }
   }, [billStatusCode]);
