@@ -50,6 +50,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           availableBalance={availableBalance ?? 0}
           showRemainingAmount
           balance={balance ?? 0}
+          monthlyIncomingLimit={balance ?? 0}
           topUpBtnStyle={styles.topUpButton}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -61,15 +62,17 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           </>
         </IPayScrollView>
       </IPayView>
-      <SadadFooterComponent
-        onPressBtn={handleOTPVerify}
-        style={styles.margins}
-        totalAmount={calculatedBill ?? 0}
-        btnText="COMMON.PAY"
-        disableBtnIcons
-        btnStyle={styles.payBtn}
-        backgroundGradient={colors.appGradient.buttonBackground}
-      />
+      <IPayView style={styles.footerContainer}>
+        <SadadFooterComponent
+          onPressBtn={handleOTPVerify}
+          style={styles.margins}
+          totalAmount={calculatedBill ?? 0}
+          btnText="COMMON.PAY"
+          disableBtnIcons
+          btnStyle={styles.payBtn}
+          backgroundGradient={colors.appGradient.buttonBackground}
+        />
+      </IPayView>
       <IPayBottomSheet
         heading="PAY_BILL.HEADER"
         enablePanDownToClose

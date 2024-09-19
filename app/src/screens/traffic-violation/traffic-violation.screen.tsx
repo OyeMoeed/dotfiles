@@ -27,7 +27,7 @@ const TrafficViolationScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle" />
+      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE" titleStyle={styles.screenTitle} />
       <IPayView style={styles.rowStyles}>
         <IPayFootnoteText
           color={colors.primary.primary900}
