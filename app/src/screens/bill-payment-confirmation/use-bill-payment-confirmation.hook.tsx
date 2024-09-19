@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -12,6 +11,7 @@ import multiPaymentBillService from '@app/network/services/bills-management/mult
 import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 interface billPayDetail {
   id: string;
@@ -33,7 +33,7 @@ const useBillPaymentConfirmation = (
   isPayOnly?: boolean,
   billPaymentInfos?: BillPaymentInfosTypes[],
 ) => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -45,17 +45,17 @@ const useBillPaymentConfirmation = (
   const billPayDetailes: billPayDetail[] = [
     {
       id: '2',
-      label: localizationText.PAY_BILL.SERVICE_TYPE,
+      label: t('PAY_BILL.SERVICE_TYPE'),
       value: 'Electricity Bill',
     },
     {
       id: '3',
-      label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+      label: t('PAY_BILL.ACCOUNT_NUMBER'),
       value: 'AZ00876',
     },
     {
       id: '4',
-      label: localizationText.COMMON.DUE_DATE,
+      label: t('COMMON.DUE_DATE'),
       value: '14/03/2024',
     },
   ];
@@ -89,22 +89,22 @@ const useBillPaymentConfirmation = (
     const billPayDetailsArr = [
       {
         id: '1',
-        label: localizationText.PAY_BILL.SERVICE_TYPE,
+        label: t('PAY_BILL.SERVICE_TYPE'),
         value: shortString(billPaymentInfos?.[0].serviceDescription || ''),
       },
       {
         id: '2',
-        label: localizationText.PAY_BILL.ACCOUNT_NUMBER,
+        label: t('PAY_BILL.ACCOUNT_NUMBER'),
         value: billPaymentInfos?.[0].billNumOrBillingAcct,
       },
       {
         id: '3',
-        label: localizationText.COMMON.DUE_DATE,
+        label: t('COMMON.DUE_DATE'),
         value: billPaymentInfos?.[0].dueDateTime,
       },
       {
         id: '4',
-        label: localizationText.COMMON.REF_NUM,
+        label: t('COMMON.REF_NUM'),
         value: apiResponse.response.billPaymentResponses[0].transactionId,
         icon: icons.copy,
       },
@@ -126,21 +126,20 @@ const useBillPaymentConfirmation = (
         totalAmount: getTotalAmount,
       });
     } else {
-      setAPIError(apiResponse?.error || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const handlePay = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       onConfirm();
     }
   };
 
   return {
-    localizationText,
     billPayDetailes,
     headerData,
     balanceData,

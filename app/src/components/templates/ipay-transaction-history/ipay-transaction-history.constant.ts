@@ -103,6 +103,8 @@ const heightMapping = {
   [TransactionTypes.APPLE_PAY_TOP_UP]: isAndroidOS ? '53%' : '62%',
   [TransactionTypes.PAY_WALLET]: isAndroidOS ? '90%' : '96%',
   [TransactionTypes.CIN_SARIE_REV]: isAndroidOS ? '75%' : '77%',
+  [TransactionTypes.DR]: isAndroidOS ? '90%' : '92%',
+  [TransactionTypes.CR]: isAndroidOS ? '75%' : '77%',
 };
 
 export { heightMapping, typeFieldMapping };

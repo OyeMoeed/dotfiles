@@ -6,7 +6,6 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.interface';
@@ -20,21 +19,22 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import useMoiPaymentConfirmation from '../moi-payment-confirmation-screen/moi-payment-confirmation-details.hook';
 import { MOIItemProps } from './moi-payment-refund.interface';
 import moiPaymentRefundStyles from './moi-payment-refund.style';
 
 const MoiPaymentRefund: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const { moiBillData } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentRefundStyles(colors);
-  const localizationText = useLocalization();
   const [refundPaymentDetails, setRefundPaymentDetails] = useState<MOIItemProps[]>([]);
   const [otpRef, setOtpRef] = useState<string>('');
   const otpBottomSheetRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
   const { showToast } = useToastContext();
-  const { otp, setOtp, isLoading, otpError, setOtpError, setAPIError, otpVerificationRef, moiRefundBillSubList } =
+  const { otp, setOtp, isLoading, otpError, setOtpError, otpVerificationRef, moiRefundBillSubList } =
     useMoiPaymentConfirmation();
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.walletNumber);
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
@@ -91,7 +91,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
           break;
         }
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           renderToast(apiResponse?.error);
@@ -100,14 +100,14 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
           break;
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const redirectToSuccess = () => {
     navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
       moiPaymentDetailes: moiBillData,
-      successMessage: localizationText.BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE,
+      successMessage: t('BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE'),
       subDetails: moiRefundBillSubList,
       refund: false,
     });
@@ -139,18 +139,17 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
           redirectToSuccess();
         }
       } else {
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'));
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       verifyOtp();
     }
@@ -162,14 +161,15 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
 
   const totalAmount = useMemo(
     () =>
-      moiBillData?.find((item: { label: string }) => item.label === localizationText.BILL_PAYMENTS.DUE_AMOUNT)
+      moiBillData
+        .find((item: { label: string }) => item.label === t('BILL_PAYMENTS.DUE_AMOUNT'))
         ?.value.split(' ')[0] || null,
     [moiBillData],
   );
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.BILL_PAYMENTS.REFUND_BILLS} />
+      <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.REFUND_BILLS" />
       <IPayView style={styles.container}>
         <IPayBillDetailsOption
           data={refundPaymentDetails}
@@ -180,16 +180,16 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
-          btnText={localizationText.COMMON.CONFIRM}
+          btnText="COMMON.CONFIRM"
           totalAmount={totalAmount}
           btnRightIcon={<IPayIcon size={20} color={colors.natural.natural0} />}
-          totalAmountText={localizationText.LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND}
+          totalAmountText="LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND"
           backgroundGradient={[colors.transparent, colors.transparent]}
           gradientViewStyle={styles.sadadFooterGradient}
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.LOCAL_TRANSFER.TRANSFER}
+        heading="LOCAL_TRANSFER.TRANSFER"
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '97%']}
@@ -214,7 +214,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
       </IPayBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

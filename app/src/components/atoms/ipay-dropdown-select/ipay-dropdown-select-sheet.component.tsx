@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { IPayDropdownComponentSheetProps, ListItem } from './ipay-dropdown-select.interface';
@@ -20,7 +19,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
-  const localizationText = useLocalization();
+
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
   const [searchText, setSearchText] = useState<string>('');
   const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
@@ -52,7 +51,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
 
   const renderNoResults = () => (
     <IPayView style={styles.noResultsView}>
-      <IPayFootnoteText text={localizationText.COMMON.NO_RESULTS_FOUND} />
+      <IPayFootnoteText text={'COMMON.NO_RESULTS_FOUND'} />
     </IPayView>
   );
 
@@ -74,7 +73,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
             <IPayInput
               onChangeText={setSearchText}
               text={searchText}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder={'COMMON.SEARCH'}
               style={styles.searchInputText}
             />
           </IPayView>

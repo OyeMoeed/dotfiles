@@ -81,7 +81,7 @@ interface LocalTransferReqParams {
   fromDate?: string;
   toDate?: string;
   beneficiaryName?: string;
-  bankName?: string;
+  trxReqType?: string;
   fromAmount?: string;
   toAmount?: string;
 }

@@ -9,4 +9,5 @@ export interface IPayGradientTextProps {
   yScale?: number;
   xScale?: string;
   textAnchor?: 'middle' | 'end' | 'start';
+  shouldTranslate?: boolean;
 }

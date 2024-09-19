@@ -21,7 +21,9 @@ const transferInformationStyles = () =>
     buttonContainer: {
       paddingTop: moderateScale(32),
     },
-    transferContainer: { marginTop: moderateScale(4) },
+    transferContainer: {
+      marginTop: moderateScale(4),
+    },
     topUpBtnStyle: {
       paddingHorizontal: moderateScale(14),
       paddingVertical: moderateScale(7),

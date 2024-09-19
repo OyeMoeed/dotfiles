@@ -9,7 +9,12 @@ import { IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templa
 import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import useConstantData from '@app/constants/use-constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
-import useLocalization from '@app/localization/hooks/localization.hook';
+import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
+import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
+import LocalBeneficiaryMetaMockProps, {
+  LocalBank,
+} from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
+import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import {
   BeneficiaryTransaction,
   LocalTransferMockProps,
@@ -18,11 +23,15 @@ import {
 import getlocalTransaction from '@app/network/services/local-transfer/transfer-history-api/transfer-history.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dateTimeFormat } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { SNAP_POINT } from '@app/constants/constants';
+import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import {
   BeneficiaryData,
@@ -32,29 +41,31 @@ import {
 import transactionHistoryStyles from './beneficiary-transaction-history.style';
 
 const BeneficiaryTransactionHistoryScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = transactionHistoryStyles(colors);
-  const localizationText = useLocalization();
   const filterRef = useRef<bottomSheetTypes>(null);
-  const { transferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
+  const { transferHistoryFilterDefaultValues } = useConstantData();
 
-  const [activeTab, setActiveTab] = useState<string>(localizationText.COMMON.SENT);
+  const [activeTab, setActiveTab] = useState<string>(t('COMMON.SENT'));
   const transactionRef = React.createRef<any>();
   const [transaction, setTransaction] = useState<BeneficiaryTransactionItemProps | null>(null);
-  const [snapPoint, setSnapPoint] = useState<Array<string>>(['95%', isAndroidOS ? '95%' : '100%']);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['100%', isAndroidOS ? '95%' : '100%']);
   const [beneficiaryHistoryData, setBeneficiaryHistoryData] = useState<BeneficiaryTransaction[] | undefined>([]);
   const [apiError, setAPIError] = useState<string>('');
   const [showTransactionSheet, setShowTransactionSheet] = useState<boolean>(false);
   const [filters, setFilters] = useState<Array<string>>([]);
   const [appliedFilters, setAppliedFilters] = useState<BeneficiaryData>({});
+  const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
+  const [bankList, setBankList] = useState<LocalBank[]>([]);
 
   const { showToast } = useToastContext();
 
-  const tabOptions = [localizationText.COMMON.SENT, localizationText.COMMON.RECEIVED];
+  const tabOptions = [t('COMMON.SENT'), t('COMMON.RECEIVED')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
-    const calculatedSnapPoint = [heightMapping[item?.transactionRequestType], '100%'];
+    const calculatedSnapPoint = [heightMapping[item?.transactionType], '100%'];
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
     setShowTransactionSheet(true);
@@ -65,14 +76,18 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const transactionType: TransactionType = {
-    [localizationText.COMMON.SENT]: TransactionTypes.PAY_WALLET,
-    [localizationText.COMMON.RECEIVED]: TransactionTypes.CIN_SARIE_REV,
+    [t('COMMON.SENT')]: TransactionTypes.DR,
+    [t('COMMON.RECEIVED')]: TransactionTypes.CR,
   };
 
-  const generatedData = () =>
-    beneficiaryHistoryData?.filter(
-      (item) => item?.transactionRequestType === transactionType[activeTab as keyof TransactionType],
-    );
+  const generatedData = () => {
+    if (beneficiaryHistoryData?.length) {
+      return beneficiaryHistoryData
+        ?.filter((item) => item?.transactionType === transactionType[activeTab as keyof TransactionType])
+        ?.sort((a, b) => new Date(b?.transactionDateTime) - new Date(a?.transactionDateTime));
+    }
+    return [];
+  };
 
   const handleFiltersShow = () => {
     filterRef.current?.showFilters();
@@ -88,24 +103,86 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     });
   };
 
-  const getBeneficiariesHistory = async () => {
+  const getBankList = async () => {
+    const apiResponse: LocalBeneficiaryMetaMockProps = await getlocalBeneficiaryMetaData();
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      setBankList(apiResponse.response.localBanks);
+    }
+  };
+
+  const getBeneficiariesData = async () => {
+    try {
+      const apiResponse: LocalTransferBeneficiariesMockProps = await getlocalTransferBeneficiaries();
+      if (apiResponse?.successfulResponse) {
+        setBeneficiaryData(apiResponse?.response?.beneficiaries);
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
+  const getBeneficiryNamesList = () =>
+    beneficiaryData?.map((item) => ({
+      id: item.beneficiaryCode,
+      key: item.fullName,
+      value: item.fullName,
+    }));
+
+  const getLocalBankList = () =>
+    bankList?.map((item) => ({
+      id: item?.code,
+      key: item?.code,
+      value: item?.desc,
+      image: item?.code,
+    }));
+
+  const filtersList = [
+    {
+      id: '1',
+      label: t('LOCAL_TRANSFER.BENEFICIARY_NAME'),
+      type: FiltersType.BENEFICIARY_NAME,
+      icon: icons.user1,
+      filterValues: getBeneficiryNamesList(),
+    },
+    {
+      id: '2',
+      label: t('TRANSACTION_HISTORY.BANK_NAME'),
+      type: FiltersType.BANK_NAME_LIST,
+      filterValues: getLocalBankList(),
+    },
+  ];
+
+  const formatDate = (date: string) => {
+    const { DateMonthYearWithoutSpace, ShortDateWithDash } = dateTimeFormat;
+    if (date) {
+      return moment(date, DateMonthYearWithoutSpace).format(ShortDateWithDash);
+    }
+    return '';
+  };
+
+  const getBeneficiariesHistory = async (trxReqType: string, transferFilters: BeneficiaryData) => {
     const payload: LocalTransferReqParams = {
       walletNumber,
-      bankName: appliedFilters?.beneficiaryBankName,
-      beneficiaryName: appliedFilters?.beneficiaryName,
-      toDate: appliedFilters?.dateTo,
-      fromDate: appliedFilters?.dateFrom,
-      fromAmount: appliedFilters?.amountFrom,
-      toAmount: appliedFilters?.amountTo,
+      trxReqType,
+      beneficiaryName: transferFilters?.beneficiaryName ?? '',
+      toDate: formatDate(transferFilters?.dateTo) ?? '',
+      fromDate: formatDate(transferFilters?.dateFrom) ?? '',
+      fromAmount: transferFilters?.amountFrom ?? '',
+      toAmount: transferFilters?.amountTo ?? '',
     };
     try {
       const apiResponse: LocalTransferMockProps = await getlocalTransaction(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryHistoryData(apiResponse?.response?.transactions);
+          if (apiResponse.response?.transactions?.length) {
+            setBeneficiaryHistoryData((prevData) => [...prevData, ...apiResponse.response.transactions]);
+          } else {
+            setBeneficiaryHistoryData([]);
+          }
           break;
         case apiResponse?.apiResponseNotOk:
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           break;
         case ApiResponseStatusType.FAILURE:
           setAPIError(apiResponse?.error?.error ?? '');
@@ -114,13 +191,23 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
           break;
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 
+  const getLocalTransactionsData = async (beneficiaryFilters: BeneficiaryData) => {
+    await Promise.all([
+      getBeneficiariesHistory(TransactionTypes.COUT_ALINMA, beneficiaryFilters),
+      getBeneficiariesHistory(TransactionTypes.COUT_SARIE, beneficiaryFilters),
+      getBeneficiariesHistory(TransactionTypes.COUT_IPS, beneficiaryFilters),
+    ]);
+  };
+
   useEffect(() => {
-    getBeneficiariesHistory();
+    getLocalTransactionsData({});
+    getBeneficiariesData();
+    getBankList();
   }, []);
 
   const handleSubmit = (data: BeneficiaryData) => {
@@ -132,41 +219,54 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     const filterValues = filtersArray.filter((item) => item !== '');
     setAppliedFilters(data);
     setFilters(filterValues);
+    setBeneficiaryHistoryData([]);
+    getLocalTransactionsData(data);
   };
 
   const removeFilter = (filter: string, allFilters: any) => {
     let updatedFilters = { ...allFilters };
 
-    const isDateRange = filter.includes('-') && !filter.includes('SAR');
+    const [filterFrom, filterTo] = filter.split(' - ').map((s) => s.trim());
 
-    if (isDateRange) {
-      const [dateFrom, dateTo] = filter.split(' - ').map((s) => s.trim());
-
-      if (
-        moment(allFilters.dateFrom, 'DD/MM/YYYY').isSame(dateFrom, 'day') &&
-        moment(allFilters.dateTo, 'DD/MM/YYYY').isSame(dateTo, 'day')
-      ) {
-        updatedFilters = {
-          ...updatedFilters,
-          dateFrom: '',
-          dateTo: '',
-        };
-      }
-    } else if (allFilters.transaction_type === filter) {
+    if (allFilters.amountFrom === filterFrom && allFilters.amountTo === filterTo) {
       updatedFilters = {
         ...updatedFilters,
-        transaction_type: '',
+        amountFrom: '',
+        amountTo: '',
       };
     }
+
+    if (allFilters.dateFrom === filterFrom && allFilters.dateTo === filterTo) {
+      updatedFilters = {
+        ...updatedFilters,
+        dateFrom: '',
+        dateTo: '',
+      };
+    }
+
+    if (updatedFilters?.beneficiaryBankName === filter) {
+      updatedFilters = {
+        ...updatedFilters,
+        beneficiaryBankName: '',
+      };
+    }
+
+    if (updatedFilters?.beneficiaryName === filter) {
+      updatedFilters = {
+        ...updatedFilters,
+        beneficiaryName: '',
+      };
+    }
+
     setAppliedFilters(updatedFilters);
+    setBeneficiaryHistoryData([]);
+    getLocalTransactionsData(updatedFilters);
   };
 
   const onPressClose = (text: string) => {
     const deletedFilter = filters.filter((value) => value !== text);
     setFilters(deletedFilter);
-    if (deletedFilter.length > 0) {
-      removeFilter(text, appliedFilters);
-    }
+    removeFilter(text, appliedFilters);
   };
 
   return (
@@ -174,7 +274,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title={localizationText.COMMON.TRANSACTIONS_HISTORY}
+        title="COMMON.TRANSACTIONS_HISTORY"
         applyFlex
         titleStyle={styles.capitalizeTitle}
         rightComponent={
@@ -233,7 +333,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={snapPoint}
         ref={transactionRef}
@@ -245,9 +345,9 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         <IPayTransactionHistory isBeneficiaryHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
       <IPayPortalBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.TRANSACTION_DETAILS}
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={() => setShowTransactionSheet(false)}
-        customSnapPoint={snapPoint}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         simpleHeader
         simpleBar
         cancelBnt
@@ -262,12 +362,12 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         />
       </IPayPortalBottomSheet>
       <IPayFilterBottomSheet
-        heading={localizationText.TRANSACTION_HISTORY.FILTER}
+        heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={transferHistoryFilterDefaultValues}
         showAmountFilter
         showDateFilter
         ref={filterRef}
-        filters={transferHistoryFilterData}
+        filters={filtersList}
         applySearchOn={[FiltersType.BANK_NAME_LIST]}
         onSubmit={handleSubmit}
       />

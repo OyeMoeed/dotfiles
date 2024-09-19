@@ -5,6 +5,7 @@ interface DynamicFieldRendererProps {
   field: DynamicField;
   control: Control;
   errors: FieldErrors;
+  handleChange?: (index?: string, value?: string) => void;
 }
 
 export default DynamicFieldRendererProps;

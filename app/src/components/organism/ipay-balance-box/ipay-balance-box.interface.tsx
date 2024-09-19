@@ -29,20 +29,6 @@ export interface IPayBalanceBoxProps {
   monthlyOutgoingLimit: string;
 }
 
-// Define an interface for localization text
-export interface LocalizationText {
-  send_money: string;
-  request_money: string;
-  send_gift: string;
-  bill_Payments: string;
-  international_Tr: string;
-  ATM_Withdrawals: string;
-  Local_transfer: string;
-  Spending_limit: string;
-  QR_acceptance: string;
-  My_account: string;
-}
-
 export interface CarouselItem {
   text: string;
   icon: string;

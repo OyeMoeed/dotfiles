@@ -3,7 +3,6 @@ import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayTitle2Text, IPayView 
 import { IPayButton } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/services/core/id-renewal/id-renewal.interface';
 import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -21,7 +20,7 @@ import { useIdRenewal } from './ipay-id-renewal-sheet.hook';
 import styles from './ipay-id-renewal-sheet.style';
 
 const IPayIdRenewalSheet: React.FC = () => {
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const idRenewalState: IdRenewalState = IdRenewalState.EXPIRE_FLAG_REACHED;
   const [renewId, setRenewId] = useState(false);
   const [otpRef, setOTPRef] = useState<string>('');
@@ -40,7 +39,6 @@ const IPayIdRenewalSheet: React.FC = () => {
 
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
-  const { t } = useTranslation();
   const dispatch = useTypedDispatch();
   const isIdRenewalSheetVisible = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo.isIdRenewalSheetVisible,
@@ -69,7 +67,7 @@ const IPayIdRenewalSheet: React.FC = () => {
       if (apiResponse) {
         setOTPRef(apiResponse?.response?.otpRef);
         setRenewId(true);
-        setCustomSnapPoints(['95%', '95%']);
+        setCustomSnapPoints(['99%', '99%']);
       }
     }
   };
@@ -134,7 +132,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
     } else {
       getOtpData();
     }
@@ -163,21 +161,27 @@ const IPayIdRenewalSheet: React.FC = () => {
     <IPayView style={styles.verifyView}>
       <IPayView style={styles.verifyViewRow}>
         <IPayIcon icon={icons.info_circle} color={colors.primary.primary900} />
-        <IPayFootnoteText regular style={styles.verifyText} color={colors.primary.primary800}>
-          {localizationText.ID_RENEWAL.WHY_VERIFY_TITLE}
-        </IPayFootnoteText>
+        <IPayFootnoteText
+          regular
+          style={styles.verifyText}
+          color={colors.primary.primary800}
+          text="ID_RENEWAL.WHY_VERIFY_TITLE"
+        />
       </IPayView>
 
-      <IPayCaption1Text regular style={styles.verifyText} color={colors.natural.natural700}>
-        {localizationText.ID_RENEWAL.WHY_VERIFY}
-      </IPayCaption1Text>
+      <IPayCaption1Text
+        regular
+        style={styles.verifyText}
+        color={colors.natural.natural700}
+        text="ID_RENEWAL.WHY_VERIFY"
+      />
     </IPayView>
   );
 
   return (
     <>
       <IPayPortalBottomSheet
-        heading={localizationText.ID_RENEWAL.TITLE}
+        heading="ID_RENEWAL.TITLE"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={customSnapPoints}
         isVisible={isIdRenewalSheetVisible}
@@ -214,7 +218,7 @@ const IPayIdRenewalSheet: React.FC = () => {
               onPress={handleRenewalId}
               btnStyle={styles.buttonStyle}
               btnType={buttonVariants.PRIMARY}
-              btnText={isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.primaryButtonText : primaryButtonText}
+              btnText={primaryButtonText}
               textColor={colors.natural.natural0}
               rightIcon={
                 <IPayIcon
@@ -239,7 +243,7 @@ const IPayIdRenewalSheet: React.FC = () => {
       <IPayRenewalIdAlert visible={renewalAlertVisible} onClose={onCloseRenewalId} />
 
       <IPayPortalBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         onCloseBottomSheet={resetBottomSheet}
         customSnapPoint={['50%', '75%', '95%']}
         isVisible={isHelpBottomSheetVisible}
