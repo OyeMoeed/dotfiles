@@ -50,7 +50,7 @@ const IPayAccountBalance: React.FC<IPayAccountBalanceProps> = ({
               color={colors.primary.primary900}
               testID="balance-text"
               style={[styles.textColor, currentBalanceTextStyle]}
-              text={`${currentAvailableBalance} `}
+              text={`${currentAvailableBalance === '0' ? '0.00' : currentAvailableBalance}`}
               shouldTranslate={false}
             />
             <IPaySubHeadlineText
