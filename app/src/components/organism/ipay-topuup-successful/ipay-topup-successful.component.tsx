@@ -71,7 +71,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     {
       id: '4',
       label: t('TOP_UP.TOPUP_DATE'),
-      value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime),
+      value: formatDateAndTime(summaryData?.response?.transactionTime, dateTimeFormat.TimeAndDate),
       icon: null,
     },
   ]);
@@ -282,7 +282,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
 
   const renderCard = () =>
     topupChannel === PayChannel.CARD && (
-      <IPayView style={[styles.cardButton, styles.actionButton]}>
+      <IPayView style={styles.cardsButton}>
         <IPayButton
           onPress={goBack}
           btnType={buttonVariants.LINK_BUTTON}
