@@ -10,8 +10,8 @@ import {
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 import { AtmProps, NearestAtmListComponentProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
 
@@ -36,10 +36,7 @@ const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testI
         </IPayView>
       </IPayPressable>
       {index + 1 === nearestAtms?.length && (
-        <IPayFootnoteText
-          text={localizationText.ATM_WITHDRAWAL.NO_MORE_BRANCHES_OR_ATMS}
-          style={styles.noMoreNearestAtms}
-        />
+        <IPayFootnoteText text={t('ATM_WITHDRAWAL.NO_MORE_BRANCHES_OR_ATMS')} style={styles.noMoreNearestAtms} />
       )}
     </IPayView>
   );
