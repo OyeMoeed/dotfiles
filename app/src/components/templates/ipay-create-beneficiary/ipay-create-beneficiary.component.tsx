@@ -186,8 +186,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       const apiResponse = await validateIBAN(params);
       if (apiResponse?.bankCode) {
         getBankDetails(apiResponse.bankCode, ibanNumber);
-      } else {
-        renderToast(t('ERROR.INVALID_IBAN'));
       }
     }
   };
