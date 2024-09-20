@@ -152,10 +152,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       serviceId: selectedService?.serviceId,
       deviceInfo,
     };
-    console.debug('payload: ', JSON.stringify(payload, null, 2));
-
     const apiResponse = await inquireBillService(payload);
-    console.debug('apiResponse: ', JSON.stringify(apiResponse, null, 2));
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
@@ -163,8 +160,8 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
-        totalAmount: '0',
+        dueDate: apiResponse.response.dueDate,
+        totalAmount: apiResponse.response.dueAmount,
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,

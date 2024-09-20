@@ -1,12 +1,13 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayAccountBalance, IPayHeader, SadadFooterComponent } from '@app/components/molecules';
+import { IPayAccountBalance, IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPaySadadBillDetailsBox } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
@@ -131,13 +132,14 @@ const NewSadadBillScreen: React.FC = () => {
             />
           )}
         />
-        <SadadFooterComponent
-          btnDisbaled={warningMessage !== ''}
-          btnStyle={styles.footerBtn}
+        <IPayButton
+          large
+          btnType={buttonVariants.PRIMARY}
+          btnIconsDisabled
           btnText="TOP_UP.PAY"
-          disableBtnIcons
-          warning={warningMessage}
-          onPressBtn={onNavigateToConfirm}
+          disabled={Number(amount) === 0}
+          onPress={onNavigateToConfirm}
+          btnStyle={styles.payBtn}
         />
       </IPayView>
     </IPaySafeAreaView>

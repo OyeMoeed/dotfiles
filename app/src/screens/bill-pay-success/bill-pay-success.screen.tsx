@@ -74,6 +74,8 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         ...billPaymentInfos,
+        dueDate: apiResponse?.response?.dueDate,
+        totalAmount: apiResponse?.response?.dueAmount,
         isSaveOnly,
       });
     }

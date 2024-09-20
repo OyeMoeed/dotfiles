@@ -17,7 +17,7 @@ import getBalancePercentage from '@app/utilities/calculate-balance-percentage.ut
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
@@ -61,6 +61,8 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     helpCenterRef?.current?.present();
   };
 
+  const getTotalAmountToBePiad = () => billPaymentInfos.reduce((sum, item) => sum + item.amount, 0);
+
   const onMultiPaymentPrepareBill = async () => {
     const deviceInfo = await getDeviceInfo();
     const payload: MultiPaymentPrepareBillPayloadTypes = {
@@ -92,6 +94,24 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
       value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
     },
   ];
+
+  const totalAmount = useMemo(() => getTotalAmountToBePiad() || '0', [billPaymentInfos]);
+
+  const checkLimit = useMemo(() => {
+    const totalBillingAmount = Number(getTotalAmountToBePiad());
+    let warningMsg = '';
+    let disabled = false;
+    if (totalBillingAmount > Number(availableBalance)) {
+      warningMsg = 'NEW_SADAD_BILLS.INSUFFICIENT_BALANCE';
+      disabled = true;
+    }
+    if (totalBillingAmount > Number(monthlyRemainingOutgoingAmount)) {
+      warningMsg = 'COMMON.MONTHLY_REMAINING_OUTGOING_AMOUNT';
+      disabled = true;
+    }
+
+    return { warningMsg, disabled };
+  }, [billPaymentInfos]);
 
   return (
     <>
@@ -130,10 +150,12 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           />
         </IPayView>
         <SadadFooterComponent
-          style={styles.margins}
-          totalAmount={billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) || '0'}
+          style={[styles.margins, checkLimit.disabled && styles.consditioanlFooterStyle]}
+          totalAmount={totalAmount}
           btnText="COMMON.CONFIRM"
           disableBtnIcons
+          warning={checkLimit.warningMsg}
+          btnDisbaled={checkLimit.disabled}
           onPressBtn={onMultiPaymentPrepareBill}
         />
 
