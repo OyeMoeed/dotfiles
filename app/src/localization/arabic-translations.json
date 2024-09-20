@@ -90,6 +90,8 @@
     "TERMS_AND_CONDITIONS_HEADING": "الشروط والأحكام ومتى تكون مطلوبة",
     "TERMS_AND_CONDITIONS": "الشروط والأحكام",
     "INCORRECT_MOBILE_NUMBER": "رقم الجوال غير صحيح",
+    "INCORRECT_IQAMA_NUMBER": "رقم الهوية / رقم الإقامة غير صحيح",
+    "VERIFY_NUMBER_ACCURACY": "الرجاء التأكد من صحة الرقم.",
     "TERMS_AND_CONDITIONS_TEXT": "الموافقة على الشروط والأحكام الخاصة بنا",
     "ENTER_VALID_ID_OR_IQAMA": "يرجى إدخال رقم هويتك أو إقامتك، حتى نتمكن من التحقق من حسابك.",
     "ENTER_INFORMATION": "أدخل معلوماتك",
