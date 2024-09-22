@@ -11,7 +11,6 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
-import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import {
   CardListItem,
@@ -93,7 +92,7 @@ const Home: React.FC = () => {
 
   const getOffersData = async () => {
     try {
-      const payload: HomeOffersProp = {
+      const payload: any = {
         walletNumber,
         isHome: 'true',
       };
@@ -106,7 +105,7 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-    } catch (error) {
+    } catch (error: any) {
       setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
@@ -157,13 +156,13 @@ const Home: React.FC = () => {
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
-        return localizationText.CARDS.PLATINUM_CASHBACK_PREPAID_CARD;
+        return t('CARDS.PLATINUM_CASHBACK_PREPAID_CARD');
 
       case CardTypes.SIGNATURE:
-        return localizationText.CARDS.SIGNATURE_PREPAID_CARD;
+        return t('CARDS.SIGNATURE_PREPAID_CARD');
 
       case CardTypes.CLASSIC:
-        return localizationText.CARDS.CLASSIC_DEBIT_CARD;
+        return t('CARDS.CLASSIC_DEBIT_CARD');
 
       default:
         return '';
@@ -171,8 +170,10 @@ const Home: React.FC = () => {
   };
 
   const mapCardData = (cards: CardListItem[]) => {
+    try{
+      console.log(cards);
     let mappedCards = [];
-    mappedCards = cards.map((card: any) => ({
+    mappedCards = cards?.map((card: any) => ({
       name: card?.linkedName?.embossingName,
       cardType: card?.cardTypeId,
       cardHeaderText: getCardDesc(card?.cardTypeId),
@@ -187,7 +188,12 @@ const Home: React.FC = () => {
       totalCashbackAmt: card.totalCashbackAmt,
       ...card,
     }));
+    
+
     return mappedCards;
+  }catch(err){
+    
+  }
   };
 
   const getCardsData = async () => {
@@ -205,8 +211,10 @@ const Home: React.FC = () => {
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
           card.cardStatus === CardStatusNumber.Freezed,
       );
+      
       if (availableCardsForSearch?.length) {
         setCardsData(mapCardData(availableCardsForSearch));
+
       }
     }
   };

@@ -162,7 +162,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       filterSheetRef?.current?.present();
     };
     const closeFilter = () => {
-      filterSheetRef?.current?.dismiss();
+      filterSheetRef?.current?.close();
     };
 
     const onSubmitEvent = (data: SubmitEvent) => {
@@ -175,8 +175,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         setAmountError(t('ERROR.AMOUNT_ERROR'));
         return;
       }
+      
       filterSheetRef.current?.close();
-      filterSheetRef.current?.dismiss();
+
       if (onSubmit) onSubmit(data);
       setDateError('');
       setAmountError('');

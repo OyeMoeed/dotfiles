@@ -43,12 +43,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const cardLastFourDigit = isShowCard && currentCard?.maskedCardNumber.slice(-4);
 
-  const [filters, setFilters] = useState<Array<string>>([]);
+  const [filters, setFilters] = useState<[]>([]);
   const transactionRef = React.createRef<any>();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
-  const [appliedFilters, setAppliedFilters] = useState<SubmitEvent | null>(null);
+  const [appliedFilters, setAppliedFilters] = useState<any>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -143,8 +143,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       trxType,
       fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
       toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-      fromAmount: filterData?.amountFrom,
-      toAmount: filterData?.amountTo,
+      fromAmount: filterData?.amountFrom? filterData?.amountFrom : '',
+      toAmount: filterData?.amountTo? filterData?.amountTo : '',
     };
     const apiResponse: any = await getTransactions(payload);
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
@@ -156,7 +156,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const handleWatch = (data:any , name: string, type: string) => {
-   
+   console.log(data,name,type);
     const CARD_TYPES = [
       'CIN_VISA_CASHBACK',
       'PAY_VCARD_POS_MADA',
@@ -181,15 +181,23 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         if(foundCardFilter){
           setSelectedFilterData(selectedFilterData);
         }else{
+          
           setSelectedFilterData(selectedFilterData?.concat(mapCardsFilter()))
         }
         
       } else {
+        setSelectedCard(false);
+
         setSelectedFilterData(
           selectedFilterData?.filter((filterItem: any) => {
             return filterItem?.id != '2';
           }),
         );
+      }
+    }else if(name == FiltersType.CARD){
+      const cardInfo = getCardInfo(data?.card?.title);
+      if (cardInfo) {
+        setSelectedCard(cardInfo);
       }
     }
 
@@ -217,14 +225,15 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }
 
   const handleSubmit = (data: any) => {
-    let filtersArray: any[] | ((prevState: string[]) => string[]) = [];
+    
+    let filtersArray: any = [];
     if (isW2WTransactions) {
       getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR', data);
     } else if (Object.keys(data)?.length) {
       const transactionType = data?.transactionType?.title;
       const dateRange = data?.dateFrom || data?.dateTo ? `${data?.dateFrom} - ${data?.dateTo}` : '';
       const card = data?.card?.title;
-      const amountRange = data?.amount_from || data?.amount_to ? `${data?.amount_from} - ${data?.amount_to}` : '';
+      const amountRange = data?.amountFrom || data?.amountTo ? `${data?.amountFrom} - ${data?.amountTo}` : '';
 
       if (amountRange) filtersArray.push(amountRange);
 
@@ -233,10 +242,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       if (dateRange) filtersArray.push(dateRange);
 
       if (card) {
-        const cardInfo = getCardInfo(card);
-        if (cardInfo) {
-          setSelectedCard(cardInfo);
-        }
+     
         filtersArray.push(card);
       }
     } else {
@@ -366,6 +372,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }, [selectedTab]);
 
   useEffect(() => {
+    
     setNoFilterResult(false);
     if (isW2WTransactions) {
       setTransactionHistoryFilterData([]);
@@ -437,13 +444,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {currentCard && isShowCard && (
+      {selectedCard && (
         <IPayView style={styles.cardContainerStyleParent}>
           <IPayCardDetailsBannerComponent
-            cardType={currentCard.cardType}
-            cardTypeName={currentCard.cardHeaderText}
-            carHolderName={currentCard.name}
-            cardLastFourDigit={cardLastFourDigit}
+            cardType={selectedCard?.cardType}
+            cardTypeName={selectedCard?.cardHeaderText}
+            carHolderName={selectedCard?.name}
+            cardLastFourDigit={selectedCard?.maskedCardNumber}
           />
         </IPayView>
       )}
