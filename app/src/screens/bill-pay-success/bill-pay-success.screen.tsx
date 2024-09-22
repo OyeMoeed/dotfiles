@@ -58,7 +58,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     },
     {
       id: '3',
-      label: t('COMMON.DUE_DATE'),
+      label: t('COMMON.DATE'),
       value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
     },
     {

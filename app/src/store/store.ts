@@ -7,15 +7,15 @@ import persistReducer from 'redux-persist/es/persistReducer';
 import reactotron from '../../../ReactotronConfig';
 import { WHITELISTED_DATA } from './constants.store';
 import alertReducer from './slices/alert-slice';
-import spinnerReducer from './slices/spinner.slice';
 import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
+import bottomSheetReducer from './slices/bottom-sheets-slice';
 import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
-import nafathVerificationReducer from './slices/nafath-verification';
 import permissionAlertReducer from './slices/permission-alert-slice';
 import rearrangementReducer from './slices/rearrangement-slice';
 import ResetStateSlice from './slices/reset-state-slice';
+import spinnerReducer from './slices/spinner.slice';
 import themeReducer from './slices/theme-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
 
@@ -34,7 +34,7 @@ const reducers = {
   dropdownReducer,
   permissionAlertReducer,
   resetStateSlice: ResetStateSlice,
-  nafathVerificationReducer,
+  bottomSheetReducer,
 };
 
 /**

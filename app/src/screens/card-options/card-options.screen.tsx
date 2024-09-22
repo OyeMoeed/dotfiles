@@ -24,7 +24,6 @@ import {
   resetPinCode,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useTranslation } from 'react-i18next';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
@@ -32,6 +31,7 @@ import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
@@ -180,22 +180,13 @@ const CardOptionsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       },
     };
+
     const apiResponse: any = await changeStatus(payload);
     deleteCardSheetRef.current.hide();
-    switch (apiResponse?.status?.type) {
-      case ApiResponseStatusType.SUCCESS:
-        navigate(ScreenNames.CARDS);
-        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
-        break;
-      case apiResponse?.apiResponseNotOk:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
-      case ApiResponseStatusType.FAILURE:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
-      default:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
+
+    if (apiResponse) {
+      navigate(ScreenNames.CARDS);
+      renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
     }
   };
 

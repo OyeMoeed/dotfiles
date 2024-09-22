@@ -9,7 +9,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { CardActiveStatus, CardStatusNumber, ToastTypes } from '@app/utilities';
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SheetVariants, ToastVariants } from '../ipay-card-details-section/ipay-card-details-section.interface';
 import {
@@ -19,13 +19,13 @@ import {
 import freezeConfirmationSheetStyles from './ipay-freeze-confirmation-sheet.styles';
 
 const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle, IPayFreezeConfirmationSheetProps>(
-  ({ currentCard, cards, setCards }, ref) => {
+  ({ currentCard, cards, setCards, setActiveCardStatus }, ref) => {
     const { t } = useTranslation();
     const { showToast } = useToastContext();
     const styles = freezeConfirmationSheetStyles();
 
     const actionSheetRef = useRef<any>(null);
-    const actionTypeRef = useRef(CardActiveStatus.FREEZE);
+    const [cardStatus, setCardStatus] = useState(CardActiveStatus.FREEZE);
 
     useImperativeHandle(ref, () => ({
       show: () => {
@@ -54,11 +54,8 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
     };
 
     useEffect(() => {
-      if (currentCard?.frozen) {
-        actionTypeRef.current = CardActiveStatus.UNFREEZE;
-      } else {
-        actionTypeRef.current = CardActiveStatus.FREEZE;
-      }
+      setCardStatus(currentCard?.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
+      setActiveCardStatus?.(currentCard?.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
     }, [currentCard]);
 
     const renderToast = (toastMsg: string, type: string) => {
@@ -87,21 +84,23 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
     };
 
     const onFreezeCard = (type: string) => {
-      // console.log('type', type);
       if (CardActiveStatus.FREEZE === type) {
-        actionTypeRef.current = CardActiveStatus.UNFREEZE;
+        setCardStatus(CardActiveStatus.UNFREEZE);
+        setActiveCardStatus?.(CardActiveStatus.UNFREEZE);
       } else {
-        actionTypeRef.current = CardActiveStatus.FREEZE;
+        setCardStatus(CardActiveStatus.FREEZE);
+        setActiveCardStatus?.(CardActiveStatus.FREEZE);
       }
     };
 
     const onFreeze = async (type: string) => {
+      const cardIndex = currentCard?.cardIndex ?? cards[0].cardIndex;
       const cardStatusPayload: CardStatusReq = {
         status:
           type.toLowerCase() === CardActiveStatus.UNFREEZE
             ? CardStatusNumber.ActiveWithOnlinePurchase
             : CardStatusNumber.Freezed,
-        cardIndex: currentCard?.cardIndex,
+        cardIndex,
         deviceInfo: await getDeviceInfo(),
       };
 
@@ -117,11 +116,12 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
         });
 
         setCards(newCards);
-
-        actionTypeRef.current =
+        setCardStatus(
           apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed
             ? CardActiveStatus.UNFREEZE
-            : CardActiveStatus.FREEZE;
+            : CardActiveStatus.FREEZE,
+        );
+
         setTimeout(() => {
           renderToast(`${currentCard?.cardHeaderText} - ${currentCard?.maskedCardNumber}`, type.toLowerCase());
         }, 500);
@@ -135,32 +135,27 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
       actionSheetRef.current.hide();
     };
 
-    const handleFinalAction = useCallback((index: number, type: string) => {
-      switch (index) {
-        case 0:
-          onFreeze(type);
-          break;
-        case 1:
-          hideActionSheet();
-          break;
-        default:
-          break;
+    const handleFinalAction = (index: number, type: string) => {
+      if (index === 0) {
+        onFreeze(type);
       }
-    }, []);
+
+      hideActionSheet();
+    };
 
     return (
       <IPayActionSheet
         ref={actionSheetRef}
         bodyStyle={styles.actionSheetStyle}
-        options={[sheetVariant[actionTypeRef.current as keyof SheetVariants].option, 'COMMON.CANCEL']}
+        options={[sheetVariant[cardStatus as keyof SheetVariants].option, 'COMMON.CANCEL']}
         cancelButtonIndex={1}
-        onPress={(index) => handleFinalAction(index, sheetVariant[actionTypeRef.current as keyof SheetVariants].option)}
+        onPress={(index) => handleFinalAction(index, sheetVariant[cardStatus as keyof SheetVariants].option)}
         showCancel
         testID="action-sheet"
         showIcon
-        customImage={<IPayIcon size={48} icon={sheetVariant[actionTypeRef.current as keyof SheetVariants].icon} />}
-        title={sheetVariant[actionTypeRef.current as keyof SheetVariants].title}
-        message={sheetVariant[actionTypeRef.current as keyof SheetVariants].subtitle}
+        customImage={<IPayIcon size={48} icon={sheetVariant[cardStatus as keyof SheetVariants].icon} />}
+        title={sheetVariant[cardStatus as keyof SheetVariants].title}
+        message={sheetVariant[cardStatus as keyof SheetVariants].subtitle}
       />
     );
   },

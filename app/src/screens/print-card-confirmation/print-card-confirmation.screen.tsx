@@ -17,12 +17,12 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
+import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 

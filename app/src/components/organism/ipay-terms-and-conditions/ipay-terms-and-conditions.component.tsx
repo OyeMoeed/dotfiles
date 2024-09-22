@@ -1,7 +1,7 @@
 import IPayPdfViewer from '@app/components/atoms/ipay-pdf-viewer/ipay-pdf-viewer.component';
 import { SNAP_POINT, TERMS_AND_CONDITIONS_URLS } from '@app/constants/constants';
+import { setNafathSheetVisibility, setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { LanguageState } from '@app/store/slices/language-slice.interface';
-import { setNafathSheetVisibility, setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { useTypedDispatch } from '@app/store/store';
 import { LanguageCode } from '@app/utilities/enums.util';
 import React from 'react';

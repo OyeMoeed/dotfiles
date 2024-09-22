@@ -1,5 +1,6 @@
 // actionSheetProps.ts
 
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { OfferItem } from '@app/network/services/core/offers/offers.interface';
 
 export interface IPayLatestSectionProps {
@@ -16,4 +17,6 @@ export interface IPayLatestSectionProps {
    * User Profile Function
    */
   openProfileBottomSheet?: () => void;
+
+  cards: CardInterface[];
 }
