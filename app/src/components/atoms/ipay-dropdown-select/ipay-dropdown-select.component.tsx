@@ -24,7 +24,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   const styles = dropdownStyles(colors);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    data.find((item) => item[valueKey] === selectedValue)?.[labelKey] ?? '',
+    data?.find((item) => item[valueKey] === selectedValue)?.[labelKey] ?? '',
   );
 
   const listCheckIcon = (
