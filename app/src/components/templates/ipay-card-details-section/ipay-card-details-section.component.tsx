@@ -219,6 +219,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           medium
           textColor={colors.primary.primary600}
           btnText="COMMON.VIEW_ALL"
+          btnStyle={styles.viewAllButtonStyle}
         />
       </IPayView>
       <IPayFlatlist

@@ -18,6 +18,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
@@ -175,12 +176,13 @@ const CardIssuanceConfirmationScreen = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="CARDS.VIRTUAL_CARD"
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        isVisible
+        customSnapPoint={['93%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
@@ -192,7 +194,7 @@ const CardIssuanceConfirmationScreen = () => {
             navigate(screenNames.VIRTUAL_CARD_SUCCESS, { cardInfo });
           }}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose

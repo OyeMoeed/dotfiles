@@ -163,6 +163,9 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
     );
   };
 
+  const showMinusSign = () =>
+    transaction?.type === TransactionOperations.DEBIT && transaction?.status === MoneyRequestStatus.PAID;
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView>
@@ -174,17 +177,19 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                   ? t('REQUEST_MONEY.RECEIVED_REQUEST_FROM')
                   : t('REQUEST_MONEY.SEND_REQUEST_TO')}
               </IPayCaption1Text>
-              <IPayTitle3Text style={styles.footnoteBoldTitleTextStyle} regular={false}>
+              <IPayTitle3Text style={styles.footnoteBoldTitleTextStyle} numberOfLines={2} regular={false}>
                 {transaction.title}
               </IPayTitle3Text>
               <IPayTitle3Text style={styles.footnoteBoldTextStyle} regular={false}>
-                {`${transaction?.type === TransactionOperations.DEBIT ? '-' : ''}${transaction?.amount} ${t('COMMON.SAR')}`}
+                {`${showMinusSign() ? '-' : ''}${transaction?.amount} ${t('COMMON.SAR')}`}
               </IPayTitle3Text>
             </IPayView>
-            {transaction &&
-              Object.keys(transaction)
-                .filter((key) => getTypeFieldMapping(transaction.status, transaction.type).includes(key))
-                .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
+            <IPayView style={styles.fieldsSection}>
+              {transaction &&
+                Object.keys(transaction)
+                  .filter((key) => getTypeFieldMapping(transaction.status, transaction.type).includes(key))
+                  .map((field: string, index: number) => renderItem(field as keyof IPayTransactionItemProps, index))}
+            </IPayView>
           </IPayView>
           <IPayView style={styles.buttonWrapper}>
             {isTransactionCredit && (
@@ -192,7 +197,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
                 btnType={buttonVariants.OUTLINED}
                 onPress={showCancelActionSheet}
                 btnText="REQUEST_MONEY.CANCEL_REQUEST"
-                medium
+                large
                 btnStyle={[styles.button]}
                 leftIcon={<IPayIcon icon={icons.remove} size={18} color={colors.primary.primary500} />}
               />

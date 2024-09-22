@@ -307,7 +307,7 @@ const CardsScreen: React.FC = () => {
       );
     }
 
-    if (CardScreenCurrentState.HAS_DATA) {
+    if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
       return (
         <>
           <IPayView style={styles.cardsContainer}>
