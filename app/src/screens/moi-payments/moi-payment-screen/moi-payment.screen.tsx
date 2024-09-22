@@ -110,7 +110,7 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillersServices(selectedBiller);
   }, [selectedBiller]);
 
-  const fetchFields = async () => {
+  const fetchFields = async (selectedBiller: string, selectedServiceType: string) => {
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
@@ -165,7 +165,7 @@ const MoiPaymentScreen: React.FC = () => {
 
         useEffect(() => {
           if (serviceTypeValue) {
-            fetchFields();
+            fetchFields(serviceProviderValue, serviceTypeValue);
           }
         }, [serviceTypeValue]);
 
