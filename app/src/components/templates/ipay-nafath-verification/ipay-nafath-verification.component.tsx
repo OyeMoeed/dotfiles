@@ -28,7 +28,7 @@ import {
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
 import { getDeviceInfo } from '@app/network/utilities';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
