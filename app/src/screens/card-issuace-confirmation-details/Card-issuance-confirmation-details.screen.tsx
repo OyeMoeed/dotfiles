@@ -8,16 +8,17 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePinRefTypes } from '@app/screens/card-options/card-options.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 
-import { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { CardInfo } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
 import { ICardIssuanceDetails } from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useTypedSelector } from '@app/store/store';
 import { buttonVariants } from '@app/utilities';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
@@ -175,12 +176,13 @@ const CardIssuanceConfirmationScreen = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="CARDS.VIRTUAL_CARD"
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        isVisible
+        customSnapPoint={['93%']}
         onCloseBottomSheet={onCloseBottomSheet}
         ref={openBottomSheet}
       >
@@ -192,7 +194,7 @@ const CardIssuanceConfirmationScreen = () => {
             navigate(screenNames.VIRTUAL_CARD_SUCCESS, { cardInfo });
           }}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose

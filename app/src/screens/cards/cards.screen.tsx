@@ -9,7 +9,7 @@ import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from 
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
 import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
-import { SNAP_POINT } from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -35,6 +35,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
+import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
+import { isAndroidOS } from '@app/utilities/constants';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
 
@@ -105,22 +107,34 @@ const CardsScreen: React.FC = () => {
   );
 
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
-    const payload: prepareShowDetailsProp = {
-      walletNumber,
-      body: {
-        cardIndex: currentCard?.cardIndex,
-        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      },
-    };
-    const apiResponse: any = await prepareShowCardDetails(payload);
-    if (apiResponse) {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      if (constants.MOCK_API_RESPONSE) {
+        setOtpRef('1111');
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
+        otpVerificationRef?.current?.resetInterval();
+        return;
       }
+      const payload: prepareShowDetailsProp = {
+        walletNumber,
+        body: {
+          cardIndex: currentCard?.cardIndex,
+          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        },
+      };
+      const apiResponse: any = await prepareShowCardDetails(payload);
+      if (apiResponse) {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
+      }
+      otpVerificationRef?.current?.resetInterval();
     }
-    otpVerificationRef?.current?.resetInterval();
   };
 
   const onPinCodeSheet = () => {
@@ -219,6 +233,14 @@ const CardsScreen: React.FC = () => {
   };
 
   const getCardDetails = async () => {
+    if (constants.MOCK_API_RESPONSE) {
+      otpVerificationRef?.current?.resetInterval();
+      setOtpSheetVisible(false);
+      prepareCardInfoData(cardsListMock.response.cards[0]);
+      setIsCardDetailsSheetVisible(true);
+      cardDetailsSheetRef?.current?.present();
+      return;
+    }
     const payload: getCardDetailsProp = {
       walletNumber,
       body: {
@@ -285,7 +307,7 @@ const CardsScreen: React.FC = () => {
       );
     }
 
-    if (CardScreenCurrentState.HAS_DATA) {
+    if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
       return (
         <>
           <IPayView style={styles.cardsContainer}>
@@ -365,7 +387,7 @@ const CardsScreen: React.FC = () => {
         isVisible={isCardDetailsSheetVisible}
         ref={cardDetailsSheetRef}
         heading="CARDS.CARD_DETAILS"
-        customSnapPoint={['50%', '60%']}
+        customSnapPoint={isAndroidOS ? ['56%'] : ['51%']}
         onCloseBottomSheet={onCloseCardSheet}
         simpleBar
         cancelBnt

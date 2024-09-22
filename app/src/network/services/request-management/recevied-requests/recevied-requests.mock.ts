@@ -62,6 +62,7 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
         realTransactionAmount: null,
         realTransactionTotalPaidAmount: null,
         realTransactionNumberOfPaymentRequests: null,
+        realTransactionRefNumber: 'FTA35346',
         targetProfileImage: null,
       },
 
@@ -98,7 +99,7 @@ const receivedRequestedMoneyConfirmMock: ApiResponse<SendRequestedMoneyConfirmRe
     requestReference: '06851820381011026625',
   },
   response: {
-    transctionRefNumber: 'EPY23358VMLJ3',
+    referenceNumber: 'EPY23358VMLJ3',
     transactionId: 'EPY23358VMLJ3',
     totalTansactionAmount: '15.00',
     beneficiaryName: ' ',

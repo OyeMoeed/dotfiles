@@ -18,6 +18,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
@@ -36,6 +37,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const [otpRefState, setOtpRefState] = useState<string>('');
   const [isSheetVisible, setIsSheetVisible] = useState(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
+  const { t } = useTranslation();
   const { variant, payOnly } = route?.params;
 
   const { showToast } = useToastContext();
@@ -90,10 +92,10 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !payOnly });
         }
       } else {
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'));
       }
     } catch (error: any) {
-      renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
 

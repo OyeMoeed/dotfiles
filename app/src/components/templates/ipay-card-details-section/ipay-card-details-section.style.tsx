@@ -126,6 +126,9 @@ const cardBalanceSectionStyles = (themeColors: typeof colors) =>
       marginTop: verticalScale(12),
       width: '100%',
     },
+    viewAllButtonStyle: {
+      paddingEnd: 0,
+    },
     listText: {
       color: themeColors.natural.natural900,
     },

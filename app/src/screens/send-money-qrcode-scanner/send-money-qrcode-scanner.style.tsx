@@ -1,4 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { typography } from '@app/styles/typography.styles';
 
 const qrCodeScannerStyles = () =>
   createStyleSheet({
@@ -6,7 +7,8 @@ const qrCodeScannerStyles = () =>
       flex: 1,
     },
     headerTitle: {
-      textTransform: 'normal',
+      fontSize: typography.FONT_SIZE_15,
+      fontWeight: '700',
     },
   });
 
