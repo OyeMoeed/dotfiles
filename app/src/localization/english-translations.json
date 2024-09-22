@@ -101,6 +101,8 @@
     "TERMS_AND_CONDITIONS_HEADING": "The Terms and Conditions and When Are They Needed",
     "TERMS_AND_CONDITIONS": "Terms and Conditions",
     "INCORRECT_MOBILE_NUMBER": "Incorrect mobile number",
+    "INCORRECT_IQAMA_NUMBER": "Incorrect ID / Iqama Number",
+    "VERIFY_NUMBER_ACCURACY": "Please verify the accuracy of the  number.",
     "TERMS_AND_CONDITIONS_TEXT": "Agree to our Terms & Conditions",
     "ENTER_VALID_ID_OR_IQAMA": "Please enter your ID or Iqama number, so we can authenticate your account.",
     "ENTER_INFORMATION": "Enter your information",
