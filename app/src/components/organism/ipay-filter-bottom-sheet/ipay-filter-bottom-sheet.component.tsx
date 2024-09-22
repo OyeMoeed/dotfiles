@@ -11,7 +11,7 @@ import renderFilterInputImage from '@app/utilities/filter-sheet-helper.utils';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayBottomSheet } from '@components/organism/index';
 import moment from 'moment';
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -119,6 +119,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       doneText,
       customFiltersValue,
       handleCallback,
+      onWatch,
+      onReset
     },
     ref,
   ) => {
@@ -140,17 +142,27 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       control,
       handleSubmit,
       setValue,
+      watch,
       reset,
       formState: { errors, isDirty },
     } = useForm({
       defaultValues,
     });
 
+
+    useEffect(() => {
+      const subscription = watch((value, { name, type }) =>{
+        
+        if(onWatch) onWatch(value, name, type )
+      })
+      return () => subscription.unsubscribe();
+    }, [watch])
+
     const showFilters = () => {
       filterSheetRef?.current?.present();
     };
     const closeFilter = () => {
-      filterSheetRef?.current?.dismiss();
+      filterSheetRef?.current?.close();
     };
 
     const onSubmitEvent = (data: SubmitEvent) => {
@@ -163,8 +175,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         setAmountError(t('ERROR.AMOUNT_ERROR'));
         return;
       }
+      
       filterSheetRef.current?.close();
-      filterSheetRef.current?.dismiss();
+
       if (onSubmit) onSubmit(data);
       setDateError('');
       setAmountError('');
@@ -201,6 +214,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       reset();
       setShowFromDatePicker(false);
       setShowToDatePicker(false);
+      onReset(true);
     };
 
     const scrollToBottom = () => {
@@ -279,7 +293,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 <IPayAnimatedTextInput
                   label={label}
                   editable={editable}
-                  value={extractTitleByValue(value)}
+                  value={(value?.title)? extractTitleByValue(value?.title):extractTitleByValue(value)}
                   containerStyle={[styles.inputContainerStyle, inputStyle]}
                   inputStyle={styles.input}
                   showRightIcon
@@ -449,9 +463,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                     scrollEnabled={false}
                     data={getFilteredData(currentFilter.filterValues)}
                     keyExtractor={(item: FilterValueTypes) => item.key}
-                    renderItem={({ item: { value: title, description, image, displayValue } }) => (
+                    renderItem={({ item: { value: title, description, image, displayValue, key } }) => (
                       <IPayList
-                        isShowIcon={value === title}
+                        isShowIcon={value?.title === title}
                         title={displayValue || title}
                         icon={checkMark}
                         isShowSubTitle={!!description}
@@ -460,7 +474,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                         style={styles.listStyle}
                         containerStyle={styles.input}
                         onPress={() => {
-                          onChange(title);
+                          onChange(key?{title,key}: title);
                           setCurrentView(CurrentViewTypes.FILTERS);
                           setSearch('');
                         }}
