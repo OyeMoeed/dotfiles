@@ -49,6 +49,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [trafficServiceType, setTrafficServiceType] = useState([]);
   const [myIdValue, setMyIdValue] = useState<string>('');
+  const paymentOrRefund = isRefund ? 'REFUND' : 'PAYMENT';
 
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
 
@@ -147,7 +148,8 @@ const TrafficVoilationCasesScreen: React.FC = () => {
 
     if (apiResponse) {
       const fetchedFields = apiResponse.response.dynamicFields;
-      setFields(fetchedFields);
+      const filteredFields = fetchedFields.filter((field) => field.requiredInPaymentOrRefund === paymentOrRefund);
+      setFields(filteredFields);
       setMyIdValue(apiResponse?.response?.customerIdNumber?.value);
     }
   };
@@ -156,7 +158,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     if (trafficService?.serviceId) {
       fetchFields();
     }
-  }, [trafficService]);
+  }, [trafficService, isRefund]);
 
   useEffect(() => {
     onGetBillers();
@@ -191,9 +193,8 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         const onCheckboxAction = () => {
           const currentCheck = !getValues(TrafficPaymentFormFields.MY_ID_CHECK);
 
-          /// TODO will change this
           if (currentCheck) {
-            setValue(TrafficPaymentFormFields.MY_ID, '1243425454'); // Set MY_ID if checkbox is checked
+            setValue('BeneficiaryId_OfficialId', myIdValue); // Set MY_ID if checkbox is checked
           } else {
             setValue(TrafficPaymentFormFields.MY_ID, ''); // Clear MY_ID if checkbox is unchecked
           }

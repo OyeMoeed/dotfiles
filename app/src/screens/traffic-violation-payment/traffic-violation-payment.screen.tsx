@@ -15,6 +15,7 @@ import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-b
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -25,9 +26,11 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const { billPayDetailes, balanceData, setOtp, isLoading, otpError, setOtpError, otp, otpVerificationRef } =
     useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
-  const { availableBalance, balance, calculatedBill } = balanceData;
+  const { calculatedBill } = balanceData;
   const { colors } = useTheme();
-  const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber, mobileNumber, currentBalance, availableBalance, limitsDetails } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
+  );
   const styles = billPaymentStyles();
   const route = useRoute();
   const [otpRefState, setOtpRefState] = useState<string>('');
@@ -115,9 +118,10 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <IPayAccountBalance
           availableBalance={availableBalance ?? 0}
           showRemainingAmount
-          balance={balance ?? 0}
-          monthlyIncomingLimit={balance ?? 0}
+          balance={currentBalance ?? 0}
+          monthlyIncomingLimit={limitsDetails?.monthlyIncomingLimit ?? 0}
           topUpBtnStyle={styles.topUpButton}
+          gradientWidth={`${getBalancePercentage(currentBalance, availableBalance)}%`}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
