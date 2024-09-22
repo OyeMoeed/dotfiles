@@ -22,6 +22,7 @@ import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
+import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { useWatch } from 'react-hook-form';
 import moiPaymentStyles from './moi-payment.style';
 
@@ -121,8 +122,51 @@ const MoiPaymentScreen: React.FC = () => {
     }
   };
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
     const originalData = revertFlatKeys(data);
+
+    const payLoad = {
+      dynamicFields: [
+        {
+          label: 'Violator ID',
+          index: 'BeneficiaryId.OfficialId',
+          value: '1092103737',
+          description: '1092103737',
+          isFormValid: 'false',
+        },
+        {
+          label: 'ID Type',
+          index: 'BeneficiaryId.OfficialIdType',
+          value: 'IQA',
+          description: 'Iqama ID',
+          isFormValid: 'false',
+        },
+        {
+          label: 'Issuing Entity',
+          index: 'ViolationsByCategory.IssuingEntityID',
+          value: '00000002',
+          description: 'Ministry of Interior',
+          isFormValid: 'false',
+        },
+        {
+          label: 'Category',
+          index: 'ViolationsByCategory.ViolationCategoryId',
+          value: '0006',
+          description: 'Deportation Sentences',
+          isFormValid: 'false',
+        },
+      ],
+      walletNumber: walletNumber,
+      refund: false,
+    };
+    const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
+    if (apiResponse?.successfulResponse) {
+      if (selectedTab === MoiPaymentTypes.REFUND) {
+        navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: apiResponse.response });
+      } else {
+        navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { billData: apiResponse.response });
+      }
+    }
 
     if (selectedTab === MoiPaymentTypes.REFUND) {
       navigate(ScreenNames.MOI_PAYMENT_REFUND);
