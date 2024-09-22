@@ -204,7 +204,9 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  useGetCards({ payload: getCardPayload, onSuccess: getCardsData });
+  const getCardsError = () => setCardsCurrentState(CardScreenCurrentState.NO_DATA);
+
+  useGetCards({ payload: getCardPayload, onSuccess: getCardsData, onError: getCardsError });
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();

@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { useMutation } from 'react-query';
 
 const useCustomMutation = ({
@@ -11,20 +10,10 @@ const useCustomMutation = ({
 }) => {
   const { data, error, isSuccess, isError, ...useMutationParams } = useMutation({
     retry: false,
+    onSuccess,
+    onError,
     ...mutationKeys,
   });
-
-  useEffect(() => {
-    if (data && onSuccess && isSuccess) {
-      onSuccess(data);
-    }
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (error && onError && isError) {
-      onError(error);
-    }
-  }, [isError]);
 
   return {
     data: (data as any)?.data,

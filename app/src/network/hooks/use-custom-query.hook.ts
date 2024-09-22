@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { QueryFunction, QueryKey, useQuery } from 'react-query';
 
 const useCustomQuery = <TQueryFnData>({
@@ -17,19 +16,10 @@ const useCustomQuery = <TQueryFnData>({
     queryFn,
     queryKey,
     retry: false,
+    onSuccess,
+    onError,
     ...queyKeys,
   });
-  useEffect(() => {
-    if (data && isSuccess) {
-      onSuccess?.(data);
-    }
-  }, [isSuccess]);
-
-  useEffect(() => {
-    if (error && isError) {
-      onError?.(error);
-    }
-  }, [isError]);
 
   return {
     data: (data as any)?.data,

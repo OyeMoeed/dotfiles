@@ -4,7 +4,7 @@
  *
  * @format
  */
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayBottomSheetProvider from '@app/components/organism/ipay-bottomsheet-provider/ipay-bottomsheet-provider.component';
 import MainNavigation from '@app/navigation/app-navigator.navigation';
@@ -16,19 +16,8 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Host } from 'react-native-portalize';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+import { queryClient } from '@app/network';
 import appStyles from './app.styles';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      cacheTime: 60 * 1000,
-    },
-  },
-});
 
 const App = (): JSX.Element => {
   const style = appStyles();

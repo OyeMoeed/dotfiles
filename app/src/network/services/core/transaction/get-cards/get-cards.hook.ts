@@ -1,9 +1,10 @@
 import { useCustomQuery } from '@app/network/hooks';
 import getCards from './get-cards.service';
 import TRANSACTION_QUERY_KEYS from '../transaction.query-keys';
+import { CardsProp } from '../transaction.interface';
 
 interface UseCardProps {
-  payload: any;
+  payload: CardsProp;
   onSuccess?: ((data?: object | undefined) => void) | undefined;
   onError?: ((data?: object | undefined) => void) | undefined;
 }
