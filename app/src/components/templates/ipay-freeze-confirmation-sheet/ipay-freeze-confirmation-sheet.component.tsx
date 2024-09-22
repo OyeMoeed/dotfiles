@@ -9,7 +9,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { CardActiveStatus, CardStatusNumber, ToastTypes } from '@app/utilities';
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SheetVariants, ToastVariants } from '../ipay-card-details-section/ipay-card-details-section.interface';
 import {
@@ -94,12 +94,13 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
     };
 
     const onFreeze = async (type: string) => {
+      const cardIndex = currentCard?.cardIndex ?? cards[0].cardIndex;
       const cardStatusPayload: CardStatusReq = {
         status:
           type.toLowerCase() === CardActiveStatus.UNFREEZE
             ? CardStatusNumber.ActiveWithOnlinePurchase
             : CardStatusNumber.Freezed,
-        cardIndex: currentCard?.cardIndex,
+        cardIndex,
         deviceInfo: await getDeviceInfo(),
       };
 
@@ -134,18 +135,13 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
       actionSheetRef.current.hide();
     };
 
-    const handleFinalAction = useCallback((index: number, type: string) => {
-      switch (index) {
-        case 0:
-          onFreeze(type);
-          break;
-        case 1:
-          hideActionSheet();
-          break;
-        default:
-          break;
+    const handleFinalAction = (index: number, type: string) => {
+      if (index === 0) {
+        onFreeze(type);
       }
-    }, []);
+
+      hideActionSheet();
+    };
 
     return (
       <IPayActionSheet
