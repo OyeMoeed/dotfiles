@@ -9,8 +9,8 @@ import {
 } from '@app/components/atoms/index';
 import { IPayButton, IPayCounterButton, IPayToggleButton } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
 import { buttonVariants } from '@app/utilities';
+import React from 'react';
 import { IPayListProps } from './ipay-list.interface';
 import styles from './ipay-list.style';
 
@@ -86,7 +86,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 numberOfLines={titleLines}
                 style={[dynamicStyles.font, textStyle]}
                 regular={regularTitle}
-                text={String(title)}
+                text={title}
                 shouldTranslate={shouldTranslateTitle}
               />
               {adjacentTitle && (

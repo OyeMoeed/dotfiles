@@ -72,7 +72,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
     <IPayView testID={`${testID}-receive-call`} style={styles.container}>
       <CallIncoming />
 
-      <IPayTitle2Text text="ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE" />
+      <IPayTitle2Text style={styles.titleStyle} text="ACTIVATE_BENEFICIARY.RECEIVE_A_CALL_TO_ACTIVATE" />
       <IPayCaption1Text style={styles.desStyle} text="ACTIVATE_BENEFICIARY.RECEIVE_CALL_STEPS" />
 
       <IPayProgressBar
@@ -86,7 +86,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
         text={
           expired
             ? t('ACTIVATE_BENEFICIARY.REQUEST_EXPIRED')
-            : `${t('ACTIVATE_BENEFICIARY.REQUEST_EXPIRE_IN')} ${formatCountdownTime(timeLeft)}`
+            : `${t('ACTIVATE_BENEFICIARY.REQUEST_EXPIRE_IN')}${formatCountdownTime(timeLeft)}`
         }
       />
 
@@ -103,6 +103,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
         </>
       ) : (
         <IPayFlatlist
+          shouldFlexGrow={false}
           data={guideToReceiveCall}
           keyExtractor={(_, index) => index.toString()}
           renderItem={renderGuideStepItem}
