@@ -171,7 +171,7 @@ const LocalTransferScreen: React.FC = () => {
         selectedBeneficiaryRef?.current?.beneficiaryCode || '',
         activateBeneficiaryPayload,
       );
-
+      setShowEditSheet(false);
       showUpdateBeneficiaryToast();
       getBeneficiariesData();
     } catch (error: any) {

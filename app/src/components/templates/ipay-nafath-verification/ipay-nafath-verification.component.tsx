@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images/index';
+import { RefreshIcon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
@@ -318,7 +319,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
                   large
                   style={styles.resendButton}
                   onPress={() => getNafathRandomNumber()}
-                  rightIcon={<icons.dottedRefresh />}
+                  rightIcon={<RefreshIcon style={styles.refreshIcon} color={colors.natural.natural0} />}
                 />
               ) : (
                 <IPayPressable style={styles.codeWrapper}>

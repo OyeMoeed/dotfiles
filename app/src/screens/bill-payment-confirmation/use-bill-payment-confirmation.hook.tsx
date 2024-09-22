@@ -3,8 +3,8 @@ import images from '@app/assets/images';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
-  MultiPaymentBillPayloadTypes,
   BillPaymentInfosTypes,
+  MultiPaymentBillPayloadTypes,
   MultiPaymentBillResponseTypes,
 } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import multiPaymentBillService from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.service';
@@ -118,12 +118,12 @@ const useBillPaymentConfirmation = (
         isPayOnly,
         isPayPartially,
         billPayDetailes: billPayDetailsArr,
-        totalAmount: billPaymentInfos?.[0].amount,
+        // totalAmount: billPaymentInfos?.[0].amount,
         billPaymentInfos: billPaymentInfos?.map((el, index) => ({
           ...el,
           transactionId: getTransactionIds(apiResponse, index),
         })),
-        totalAmount: getTotalAmount,
+        totalAmount: getTotalAmount(),
       });
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));

@@ -124,6 +124,10 @@ const nafathVerificationStyles = (colors: any) =>
     btnStyle: {
       marginHorizontal: scaleSize(24),
     },
+    refreshIcon: {
+      width: moderateScale(20),
+      height: moderateScale(20),
+    },
   });
 
 export default nafathVerificationStyles;

@@ -31,7 +31,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       timeout = 60,
       containerStyle,
       innerContainerStyle,
-      onResendCodePress,
+      onResendCodePress = () => {},
       toastContainerStyle,
       headingContainerStyle,
       otp = '',
