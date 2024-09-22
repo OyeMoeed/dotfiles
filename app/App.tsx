@@ -4,6 +4,7 @@
  *
  * @format
  */
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayBottomSheetProvider from '@app/components/organism/ipay-bottomsheet-provider/ipay-bottomsheet-provider.component';
 import MainNavigation from '@app/navigation/app-navigator.navigation';
@@ -17,22 +18,36 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import appStyles from './app.styles';
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      cacheTime: 60 * 1000,
+    },
+  },
+});
+
 const App = (): JSX.Element => {
   const style = appStyles();
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
-          <GestureHandlerRootView style={style.rootView}>
-            <Host>
-              <ToastProvider>
-                <IPayBottomSheetProvider>
-                  <MainNavigation />
-                </IPayBottomSheetProvider>
-              </ToastProvider>
-            </Host>
-          </GestureHandlerRootView>
-        </KeyboardAvoidingView>
+        <QueryClientProvider client={queryClient}>
+          <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
+            <GestureHandlerRootView style={style.rootView}>
+              <Host>
+                <ToastProvider>
+                  <IPayBottomSheetProvider>
+                    <MainNavigation />
+                  </IPayBottomSheetProvider>
+                </ToastProvider>
+              </Host>
+            </GestureHandlerRootView>
+          </KeyboardAvoidingView>
+        </QueryClientProvider>
       </PersistGate>
     </Provider>
   );
