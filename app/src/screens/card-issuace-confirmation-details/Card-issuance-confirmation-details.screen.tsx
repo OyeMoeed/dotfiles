@@ -182,8 +182,8 @@ const CardIssuanceConfirmationScreen = () => {
         enablePanDownToClose
         simpleHeader
         cancelBnt
+        customSnapPoint={['93%']}
         onCloseBottomSheet={onCloseBottomSheet}
-        customSnapPoint={['92%']}
       >
         <IssueCardPinCreation
           handleOnPressHelp={handleOnPressHelp}

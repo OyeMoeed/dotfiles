@@ -35,10 +35,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import CardScreenCurrentState from './cards.screen.interface';
-import cardScreenStyles from './cards.style';
 import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
 import { isAndroidOS } from '@app/utilities/constants';
+import CardScreenCurrentState from './cards.screen.interface';
+import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -107,31 +107,34 @@ const CardsScreen: React.FC = () => {
   );
 
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
-    if (constants.MOCK_API_RESPONSE) {
-      setOtpRef('1111');
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      if (constants.MOCK_API_RESPONSE) {
+        setOtpRef('1111');
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
+        otpVerificationRef?.current?.resetInterval();
+        return;
+      }
+      const payload: prepareShowDetailsProp = {
+        walletNumber,
+        body: {
+          cardIndex: currentCard?.cardIndex,
+          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        },
+      };
+      const apiResponse: any = await prepareShowCardDetails(payload);
+      if (apiResponse) {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
       }
       otpVerificationRef?.current?.resetInterval();
-      return;
     }
-    const payload: prepareShowDetailsProp = {
-      walletNumber,
-      body: {
-        cardIndex: currentCard?.cardIndex,
-        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      },
-    };
-    const apiResponse: any = await prepareShowCardDetails(payload);
-    if (apiResponse) {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present();
-      }
-    }
-    otpVerificationRef?.current?.resetInterval();
   };
 
   const onPinCodeSheet = () => {
@@ -304,7 +307,7 @@ const CardsScreen: React.FC = () => {
       );
     }
 
-    if (CardScreenCurrentState.HAS_DATA) {
+    if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
       return (
         <>
           <IPayView style={styles.cardsContainer}>

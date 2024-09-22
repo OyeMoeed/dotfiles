@@ -36,7 +36,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const { t } = useTranslation();
   const styles = requestMoneyStyles(colors);
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
-  const requestdetailRef = React.createRef<bottomSheetTypes>();
   const rejectRequestRef = React.createRef<bottomSheetTypes>();
   const cancelRequestRef = React.createRef<bottomSheetTypes>();
   const [sentRequestsPage, setSentRequestsPage] = useState(1);
@@ -326,7 +325,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayNoResult
         textColor={colors.primary.primary800}
         iconColor={colors.primary.primary800}
-        message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${selectedTab.split(' ')[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
+        message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${t(selectedTab).split(' ')?.[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
         showIcon
         containerStyle={styles.noResultContent}
         iconSize={40}
