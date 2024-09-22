@@ -174,7 +174,6 @@ react-native-screens: React Native library for managing screens.
 react-navigation: Routing and navigation library for React Native apps.
 react-redux: Official React bindings for Redux.
 redux-persist: Library for persisting and rehydrating a Redux store.
-react-query: Library for caching api
 yarn: Package manager for JavaScript.
 
 DevDependencies:

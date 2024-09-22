@@ -5,7 +5,6 @@
  * @format
  */
 import { JSX } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import { KeyboardAvoidingView } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { Host } from 'react-native-portalize';
@@ -20,36 +19,22 @@ import { persistor, store } from '@store/store';
 
 import appStyles from './app.styles';
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      retry: false,
-      cacheTime: 60 * 1000,
-    },
-  },
-});
-
 const App = (): JSX.Element => {
   const style = appStyles();
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
-            <GestureHandlerRootView style={style.rootView}>
-              <Host>
-                <ToastProvider>
-                  <IPayBottomSheetProvider>
-                    <MainNavigation />
-                  </IPayBottomSheetProvider>
-                </ToastProvider>
-              </Host>
-            </GestureHandlerRootView>
-          </KeyboardAvoidingView>
-        </QueryClientProvider>
+        <KeyboardAvoidingView behavior={isIosOS ? 'padding' : 'height'} style={style.kavStyle}>
+          <GestureHandlerRootView style={style.rootView}>
+            <Host>
+              <ToastProvider>
+                <IPayBottomSheetProvider>
+                  <MainNavigation />
+                </IPayBottomSheetProvider>
+              </ToastProvider>
+            </Host>
+          </GestureHandlerRootView>
+        </KeyboardAvoidingView>
       </PersistGate>
     </Provider>
   );
