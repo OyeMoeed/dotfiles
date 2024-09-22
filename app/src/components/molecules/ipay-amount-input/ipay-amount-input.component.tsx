@@ -22,6 +22,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   handleBlur,
   handleIconPress,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = amountInputStyles(colors);
   const { t } = useTranslation();

@@ -26,7 +26,6 @@ import {
   sendRequestedMoneyConfirm,
   sendRequestedMoneyPrepare,
 } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
-import { useTranslation } from 'react-i18next';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
@@ -36,6 +35,7 @@ import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { PayData } from './money-request-summary.interface';
 import moneyRequestStyles from './money-request-summary.styles';
@@ -43,7 +43,7 @@ import moneyRequestStyles from './money-request-summary.styles';
 const MoneyRequestSummaryScreen: React.FC = () => {
   const { t } = useTranslation();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; // TODO replace with orignal data
+  const { availableBalance } = walletInfo; // TODO replace with orignal data
   const { colors } = useTheme();
   const route = useRoute();
   const { heading, screen, receviedRequestSummaryData, transId } =
@@ -251,7 +251,7 @@ const MoneyRequestSummaryScreen: React.FC = () => {
           <IPayView>
             <IPayView>
               <IPayTopUpBox
-                availableBalance={formatNumberWithCommas(currentBalance)}
+                availableBalance={formatNumberWithCommas(availableBalance)}
                 isShowTopup
                 isShowRemaining
                 isShowProgressBar
