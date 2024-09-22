@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
@@ -10,6 +11,7 @@ import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import {
@@ -19,10 +21,11 @@ import {
 } from '@app/network/services/core/transaction/transaction.interface';
 import { getCards, getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
-import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
+import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { CardStatusNumber, CardTypes } from '@app/utilities';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
@@ -30,9 +33,6 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import { CardStatusNumber, CardTypes } from '@app/utilities';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -156,13 +156,13 @@ const Home: React.FC = () => {
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
-        return t('CARDS.PLATINUM_CASHBACK_PREPAID_CARD');
+        return 'CARDS.PLATINUM_CASHBACK_PREPAID_CARD';
 
       case CardTypes.SIGNATURE:
-        return t('CARDS.SIGNATURE_PREPAID_CARD');
+        return 'CARDS.SIGNATURE_PREPAID_CARD';
 
       case CardTypes.CLASSIC:
-        return t('CARDS.CLASSIC_DEBIT_CARD');
+        return 'CARDS.CLASSIC_DEBIT_CARD';
 
       default:
         return '';

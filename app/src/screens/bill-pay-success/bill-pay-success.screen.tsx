@@ -6,13 +6,13 @@ import { IPayPageWrapper } from '@app/components/templates';
 import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { States, buttonVariants } from '@app/utilities/enums.util';
-import React from 'react';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { shortString } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { shortString } from '@app/utilities';
+import { States, buttonVariants } from '@app/utilities/enums.util';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
 import usePayBillSuccess from './bill-pay-success.hook';
 import { BillPaySuccessProps } from './bill-pay-success.interface';
@@ -56,7 +56,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     },
     {
       id: '3',
-      label: t('COMMON.DUE_DATE'),
+      label: t('COMMON.DATE'),
       value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
     },
     {

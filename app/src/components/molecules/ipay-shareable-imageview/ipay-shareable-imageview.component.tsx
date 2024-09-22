@@ -46,7 +46,7 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
       <ViewShot ref={viewShotRef} options={{ format: 'jpg', quality: 0.9 }}>
         {children}
       </ViewShot>
-      {attachShareHandler(otherView)}
+      <IPayView style={styles.actionsWrapper}>{attachShareHandler(otherView)}</IPayView>
     </IPayView>
   );
 };

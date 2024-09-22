@@ -1,5 +1,5 @@
-import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
-import { isBasicTierSelector, openIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
+import { setIdRenewalSheetVisibility, setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
+import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { store } from '@store/store';
 
 const checkUserAccess = (fromHome = false) => {
@@ -15,12 +15,12 @@ const checkUserAccess = (fromHome = false) => {
   }
 
   if (idExpired) {
-    dispatch(openIdRenewalSheet());
+    dispatch(setIdRenewalSheetVisibility(true));
     return false;
   }
 
   if (fromHome && aboutToExpire) {
-    dispatch(openIdRenewalSheet());
+    dispatch(setIdRenewalSheetVisibility(true));
     return false;
   }
 

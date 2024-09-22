@@ -9,7 +9,7 @@ import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from 
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
 import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
-import { SNAP_POINT } from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -32,11 +32,13 @@ import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import { useTranslation } from 'react-i18next';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
+import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
+import { isAndroidOS } from '@app/utilities/constants';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -59,7 +61,6 @@ const CardsScreen: React.FC = () => {
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
-  const [isCardIssueSheetVisible, setIsCardIssueSheetVisible] = useState(false);
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isCardsSheetVisible, setIsCardSheetVisible] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
@@ -75,7 +76,7 @@ const CardsScreen: React.FC = () => {
   const openCardSheet = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
-      setIsCardIssueSheetVisible(true);
+      setIsCardSheetVisible(true);
       cardSheetRef.current.present();
     }
   };
@@ -106,6 +107,15 @@ const CardsScreen: React.FC = () => {
   );
 
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
+    if (constants.MOCK_API_RESPONSE) {
+      setOtpRef('1111');
+      if (showOtpSheet) {
+        setOtpSheetVisible(true);
+        otpVerificationRef?.current?.present();
+      }
+      otpVerificationRef?.current?.resetInterval();
+      return;
+    }
     const payload: prepareShowDetailsProp = {
       walletNumber,
       body: {
@@ -220,6 +230,14 @@ const CardsScreen: React.FC = () => {
   };
 
   const getCardDetails = async () => {
+    if (constants.MOCK_API_RESPONSE) {
+      otpVerificationRef?.current?.resetInterval();
+      setOtpSheetVisible(false);
+      prepareCardInfoData(cardsListMock.response.cards[0]);
+      setIsCardDetailsSheetVisible(true);
+      cardDetailsSheetRef?.current?.present();
+      return;
+    }
     const payload: getCardDetailsProp = {
       walletNumber,
       body: {
@@ -366,7 +384,7 @@ const CardsScreen: React.FC = () => {
         isVisible={isCardDetailsSheetVisible}
         ref={cardDetailsSheetRef}
         heading="CARDS.CARD_DETAILS"
-        customSnapPoint={['50%', '60%']}
+        customSnapPoint={isAndroidOS ? ['56%'] : ['51%']}
         onCloseBottomSheet={onCloseCardSheet}
         simpleBar
         cancelBnt
@@ -378,7 +396,6 @@ const CardsScreen: React.FC = () => {
         <IPayCardDetails cardDetails={cardDetails} />
       </IPayPortalBottomSheet>
       <IPayPortalBottomSheet
-        isVisible={isCardIssueSheetVisible}
         heading="CARD_ISSUE.ISSUE_NEW_CARD"
         onCloseBottomSheet={closeCardSheet}
         customSnapPoint={['55%', '60%']}

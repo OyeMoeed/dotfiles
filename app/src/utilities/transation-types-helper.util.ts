@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { TransactionOperations, TransactionTypes } from '@app/enums/transaction-types.enum';
 
 const getTransationIcon = (transactionRequestType: TransactionTypes, transactionType: TransactionOperations) => {
-  
   switch (transactionRequestType) {
     // type #1
     case TransactionTypes.COUT_MUSANED:

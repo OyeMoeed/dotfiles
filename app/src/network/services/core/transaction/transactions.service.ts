@@ -1,9 +1,10 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import transactionMock from '@app/network/services/core/transaction/transaction.mock';
-import apiCall from '@network/services/api-call.service';
 import { APIResponseType } from '@app/utilities/enums.util';
+import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
+import cardsListMock from './cards-list.mock';
 import {
   CardsProp,
   TransactionsProp,
@@ -14,7 +15,6 @@ import {
   renewCardProp,
   resetPinCodeProp,
 } from './transaction.interface';
-import cardsListMock from './cards-list.mock';
 
 const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
@@ -24,6 +24,9 @@ const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
     method: requestType.GET,
+    headers: {
+      hide_spinner_loading: !!payload?.cardIndex,
+    },
   });
   return apiResponse;
 };
@@ -74,19 +77,12 @@ const resetPinCode = async (payload: resetPinCodeProp): Promise<any> => {
 };
 
 const changeStatus = async (payload: changeStatusProp): Promise<any> => {
-  try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.ACTIVATE_ONLINE_PURCHASE(payload?.walletNumber),
-      method: requestType.POST,
-      payload: payload?.body,
-    });
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: CORE_URLS.ACTIVATE_ONLINE_PURCHASE(payload?.walletNumber),
+    method: requestType.POST,
+    payload: payload?.body,
+  });
+  return apiResponse;
 };
 
 const prepareResetCardPinCode = async (payload: resetPinCodeProp): Promise<any> => {
@@ -158,14 +154,14 @@ const prepareRenewCard = async (payload: prepareRenewCardProp): Promise<any> => 
 };
 
 export {
+  changeStatus,
   getCards,
   getTransactionTypes,
   getTransactions,
-  resetPinCode,
-  changeStatus,
+  otpGetCardDetails,
+  otpRenewCard,
+  prepareRenewCard,
   prepareResetCardPinCode,
   prepareShowCardDetails,
-  otpGetCardDetails,
-  prepareRenewCard,
-  otpRenewCard,
+  resetPinCode,
 };
