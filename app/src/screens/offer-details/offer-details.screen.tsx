@@ -232,7 +232,11 @@ const OfferDetailsScreen: React.FC = () => {
                   color={colors.natural.natural900}
                   text="COMMON.TERMS_AND_CONDITIONS"
                 />
-                <IPayCaption1Text color={colors.natural.natural500} text={`\u2022 ${offersData[0]?.termsDetailsEn}`} />
+                <IPayCaption1Text
+                  shouldTranslate={false}
+                  color={colors.natural.natural500}
+                  text={`\u2022 ${offersData[0]?.termsDetailsEn}`}
+                />
               </IPayView>
             </>
           </IPayScrollView>
