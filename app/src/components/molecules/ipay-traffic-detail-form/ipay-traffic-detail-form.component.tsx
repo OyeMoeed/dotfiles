@@ -1,15 +1,14 @@
-import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayFootnoteText, IPayView } from '@app/components/atoms';
 
 import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useCallback } from 'react';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 
-import icons from '@app/assets/icons';
-import { TrafficVoilationTypes } from '@app/utilities';
 import { Controller } from 'react-hook-form';
-import IPayRHFAnimatedTextInput from '../ipay-animated-input-text/ipay-rhf-animated-input-text.component';
+import { useTranslation } from 'react-i18next';
 import IPayCheckboxTitle from '../ipay-checkbox-title/ipay-chekbox-title.component';
+import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
 import trafficDetailStyles from './ipay-traffic-detail-form.style';
 
@@ -42,18 +41,19 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   serviceId,
   walletNumber,
   errorMessage,
+  fields,
+  errors,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
   const styles = trafficDetailStyles(colors);
+  const { t } = useTranslation();
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
     const additionalStyle = (errorMessage && styles.errorStyle) || (myIdCheck && styles.greyInputStyle);
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
-  const tabs = ['TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER', 'TRAFFIC_VIOLATION.BY_VIOLATION_ID'];
-
-  // console.log('formSelectedTab in form details', formSelectedTab);
+  const tabs = [t('TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER'), t('TRAFFIC_VIOLATION.BY_VIOLATION_ID')];
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
@@ -76,8 +76,8 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
           />
         )}
       />
-
-      <Controller
+      <DynamicFormComponent errors={errors} control={control} fields={fields} handleChange={handleChange} />
+      {/* <Controller
         name={TrafficPaymentFormFields.MY_ID}
         control={control}
         render={() => (
@@ -138,7 +138,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
             />
           )}
         />
-      )}
+      )} */}
     </IPayView>
   );
 };

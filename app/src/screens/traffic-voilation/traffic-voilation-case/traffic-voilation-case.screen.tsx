@@ -3,7 +3,6 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayContentNotFound, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import IPayTrafficDetailForm from '@app/components/molecules/ipay-traffic-detail-form/ipay-traffic-detail-form.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
@@ -12,12 +11,20 @@ import useConstantData from '@app/constants/use-constants';
 import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic-payment.enum';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TrafficTabPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
+import {
+  BillPaymentOptions,
+  TrafficTabPaymentTypes,
+  TrafficVoilationTypes,
+  buttonVariants,
+} from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import * as Yup from 'yup';
 
+import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
+import IPayTrafficDetailForm from '@app/components/molecules/ipay-traffic-detail-form/ipay-traffic-detail-form.component';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { DynamicField } from '@app/network/services/bill-managment/moi/get-dynamic-feilds/get-dynamic-fields.interface';
+import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
@@ -32,30 +39,31 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const styles = trafficPaymentStyles(colors);
   const { t } = useTranslation();
   const { idTypes } = useConstantData();
-  const [, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
+  const [selectedTab, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
   const [sheetType, setSheetType] = useState<string>('');
   const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [isRefund, setIsRefund] = useState<boolean>(false);
-  const [trafficViolationsData, setTrafficViolationsData] = useState([]);
-  const [trafficService, setTrafficService] = useState([]);
+  const [trafficViolationsData, setTrafficViolationsData] = useState({});
+  const [trafficService, setTrafficService] = useState({});
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
+  const [fields, setFields] = useState<DynamicField[]>([]);
   const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [trafficServiceType, setTrafficServiceType] = useState([]);
 
   const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } = getValidationSchemas(t);
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
-  const validationSchema = Yup.object().shape({
-    serviceProvider,
-    serviceType,
-    idType,
-    duration,
-    beneficiaryId,
-    myIdInput,
-    myId,
-  });
+  // const validationSchema = Yup.object().shape({
+  //   serviceProvider,
+  //   serviceType,
+  //   idType,
+  //   duration,
+  //   beneficiaryId,
+  //   myIdInput,
+  //   myId,
+  // });
 
   useEffect(() => {
     if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM) {
@@ -137,10 +145,33 @@ const TrafficVoilationCasesScreen: React.FC = () => {
 
     const apiResponse = await getBillersService(payload);
     if (apiResponse.successfulResponse) {
-      const trafficViolationObject = apiResponse?.response?.billersList?.find((item) => item?.billerId === '093');
+      const trafficViolationObject = apiResponse?.response?.billersList?.find(
+        (item) => item?.billerDesc === BillPaymentOptions.TRAFFIC_VIOLATION,
+      );
       setTrafficViolationsData(trafficViolationObject);
     }
   };
+
+  const fetchFields = async () => {
+    const response = await getDynamicFieldsService(
+      trafficViolationsData?.billerId,
+      trafficService?.serviceId,
+      walletNumber,
+      formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM,
+    );
+
+    if (response) {
+      const fetchedFields = response.response.dynamicFields;
+
+      setFields(fetchedFields);
+    }
+  };
+
+  useEffect(() => {
+    if (trafficService?.serviceId) {
+      fetchFields();
+    }
+  }, [trafficService]);
 
   useEffect(() => {
     onGetBillers();
@@ -158,18 +189,11 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     onGetBillersServices(trafficViolationsData?.billerId);
   }, [trafficViolationsData?.billerId]);
 
+  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+
   return (
-    <IPayFormProvider<TrafficFormValues>
-      validationSchema={validationSchema}
-      defaultValues={{
-        idType: '',
-        beneficiaryId: '',
-        voilationNumber: '',
-        myIdInput: '',
-        myId: '',
-      }}
-    >
-      {({ setValue, getValues, control, watch }) => {
+    <IPayFormProvider<TrafficFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
+      {({ setValue, getValues, control, formState: { errors }, watch, handleSubmit }) => {
         const myIdChecked = watch(TrafficPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
 
         const onSelectValue = (item: { id: number; text: string }) => {
@@ -215,16 +239,16 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     onCheckboxAction={onCheckboxAction}
                     myIdCheck={myIdChecked}
                     control={control}
-                    // onChangeText={onChangeText}
                     errorMessage={errorMessage}
+                    fields={fields}
+                    errors={errors}
                   />
                   <IPayButton
                     btnText={isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('NEW_SADAD_BILLS.INQUIRY')}
                     btnType={buttonVariants.PRIMARY}
-                    onPress={onValidateBills}
+                    onPress={handleSubmit(onValidateBills)}
                     large
                     btnIconsDisabled
-                    disabled={!isBtnEnabled}
                   />
                 </IPayView>
               </IPayView>

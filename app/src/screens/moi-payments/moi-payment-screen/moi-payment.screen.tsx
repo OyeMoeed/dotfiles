@@ -169,36 +169,34 @@ const MoiPaymentScreen: React.FC = () => {
         }, [serviceTypeValue]);
 
         return (
-          <>
-            <IPaySafeAreaView>
-              <IPayHeader
-                backBtn
-                onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
-                applyFlex
-                title={'BILL_PAYMENTS.MOI_PAYMENT'}
-                titleStyle={styles.screenTitle}
-              />
-              <IPayView style={styles.container}>
-                <IPayTabs tabs={tabs} onSelect={handleTabSelect} />
+          <IPaySafeAreaView>
+            <IPayHeader
+              backBtn
+              onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
+              applyFlex
+              title={'BILL_PAYMENTS.MOI_PAYMENT'}
+              titleStyle={styles.screenTitle}
+            />
+            <IPayView style={styles.container}>
+              <IPayTabs tabs={tabs} onSelect={handleTabSelect} />
 
-                <IPayView style={styles.contentContainer}>
-                  <IPayView style={styles.dynamicFieldContainer}>
-                    <IPayCaption2Text regular text={'BILL_PAYMENTS.BENEFECIARY_DETAILS'} />
-                    <DynamicFormComponent errors={errors} control={control} fields={fields} />
-                  </IPayView>
-
-                  <IPayButton
-                    btnText={'NEW_SADAD_BILLS.INQUIRY'}
-                    btnType={buttonVariants.PRIMARY}
-                    onPress={handleSubmit(onSubmit)}
-                    btnStyle={styles.inquiryBtn}
-                    large
-                    btnIconsDisabled
-                  />
+              <IPayView style={styles.contentContainer}>
+                <IPayView style={styles.dynamicFieldContainer}>
+                  <IPayCaption2Text regular text={'BILL_PAYMENTS.BENEFECIARY_DETAILS'} />
+                  <DynamicFormComponent errors={errors} control={control} fields={fields} />
                 </IPayView>
+
+                <IPayButton
+                  btnText={'NEW_SADAD_BILLS.INQUIRY'}
+                  btnType={buttonVariants.PRIMARY}
+                  onPress={handleSubmit(onSubmit)}
+                  btnStyle={styles.inquiryBtn}
+                  large
+                  btnIconsDisabled
+                />
               </IPayView>
-            </IPaySafeAreaView>
-          </>
+            </IPayView>
+          </IPaySafeAreaView>
         );
       }}
     </IPayFormProvider>

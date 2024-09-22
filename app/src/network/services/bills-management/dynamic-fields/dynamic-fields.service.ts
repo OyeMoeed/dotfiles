@@ -10,6 +10,7 @@ const getDynamicFieldsService = async (
   billerId: string,
   serviceId: string,
   walletNumber: string,
+  payload,
 ): Promise<GetDynamicFieldsResponseTypes | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     if (payload) {
