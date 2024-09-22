@@ -20,9 +20,9 @@ import {
   prepareShowDetailsProp,
 } from '@app/network/services/core/transaction/transaction.interface';
 import {
-  getCards,
   otpGetCardDetails,
   prepareShowCardDetails,
+  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -31,14 +31,14 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import CardScreenCurrentState from './cards.screen.interface';
-import cardScreenStyles from './cards.style';
 import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
 import { isAndroidOS } from '@app/utilities/constants';
+import CardScreenCurrentState from './cards.screen.interface';
+import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -181,14 +181,13 @@ const CardsScreen: React.FC = () => {
     }));
     return mappedCards;
   };
-  const getCardsData = async () => {
-    const payload: CardsProp = {
-      walletNumber,
-    };
-    const apiResponse: any = await getCards(payload);
+  const getCardPayload: CardsProp = {
+    walletNumber,
+  };
 
-    if (apiResponse) {
-      const availableCards = apiResponse?.response?.cards.filter(
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = cardApiResponse?.response?.cards.filter(
         (card: any) =>
           card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
@@ -204,6 +203,8 @@ const CardsScreen: React.FC = () => {
       }
     }
   };
+
+  useGetCards({ payload: getCardPayload, onSuccess: getCardsData });
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
@@ -238,7 +239,7 @@ const CardsScreen: React.FC = () => {
       cardDetailsSheetRef?.current?.present();
       return;
     }
-    const payload: getCardDetailsProp = {
+    const cardDetailsPayload: getCardDetailsProp = {
       walletNumber,
       body: {
         cardIndex: currentCard?.cardIndex,
@@ -247,7 +248,7 @@ const CardsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       },
     };
-    const apiResponse: any = await otpGetCardDetails(payload);
+    const apiResponse: any = await otpGetCardDetails(cardDetailsPayload);
     if (apiResponse.status.type === 'SUCCESS') {
       otpVerificationRef?.current?.resetInterval();
       setOtpSheetVisible(false);
@@ -277,10 +278,6 @@ const CardsScreen: React.FC = () => {
   const onATMLongPress = () => {
     actionSheetRef.current.show();
   };
-
-  useEffect(() => {
-    getCardsData();
-  }, []);
 
   const renderCardsCurrentState = () => {
     if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
