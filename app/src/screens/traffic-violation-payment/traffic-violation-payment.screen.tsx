@@ -3,9 +3,9 @@ import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent, useToastContext } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
-import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -22,28 +22,18 @@ import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
-  const {
-    billPayDetailes,
-    balanceData,
-    helpCenterRef,
-    otpRef,
-    handleOtpVerification,
-    handleOnPressHelp,
-    setOtp,
-    isLoading,
-    otpError,
-    setOtpError,
-    otp,
-    otpVerificationRef,
-  } = useBillPaymentConfirmation();
+  const { billPayDetailes, balanceData, setOtp, isLoading, otpError, setOtpError, otp, otpVerificationRef } =
+    useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
   const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
   const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const styles = billPaymentStyles();
   const route = useRoute();
-  const { variant, payOnly } = route?.params;
   const [otpRefState, setOtpRefState] = useState<string>('');
+  const [isSheetVisible, setIsSheetVisible] = useState(false);
+  const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
+  const { variant, payOnly } = route?.params;
 
   const { showToast } = useToastContext();
 
@@ -66,7 +56,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     const apiResponse = await prepareMoiBill('', payLoad);
     if (apiResponse?.successfulResponse) {
       setOtpRefState(apiResponse?.response?.otpRef);
-      handleOtpVerification();
+      setIsSheetVisible(true);
       setOtpError(false);
     }
   };
@@ -93,7 +83,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
 
       if (apiResponse?.status?.type === 'SUCCESS') {
         if (apiResponse?.response) {
-          otpRef?.current?.close();
+          setIsSheetVisible(false);
           navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !payOnly });
         }
       } else {
@@ -103,6 +93,20 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
     }
   };
+
+  const onCloseBottomSheet = () => {
+    setIsSheetVisible(false);
+  };
+
+  const handleOnPressHelp = () => {
+    setHelpCenterVisible(true);
+  };
+
+  const onCloseHelpCenter = () => {
+    setHelpCenterVisible(false);
+  };
+
+  const onResendCodePress = () => otpVerificationRef?.current?.resetInterval();
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -135,13 +139,15 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           backgroundGradient={colors.appGradient.buttonBackground}
         />
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
-        backBtn
-        customSnapPoint={SNAP_POINTS.LARGE}
-        ref={otpRef}
+        bold
+        cancelBnt
+        customSnapPoint={SNAP_POINT.LARGE}
+        onCloseBottomSheet={onCloseBottomSheet}
+        isVisible={isSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
@@ -159,18 +165,20 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           innerContainerStyle={styles.otpInnerContainer}
           toastContainerStyle={styles.toastContainerStyle}
           headingContainerStyle={styles.headingContainerStyle}
+          onResendCodePress={onResendCodePress}
         />
-      </IPayBottomSheet>
-      <IPayBottomSheet
+      </IPayPortalBottomSheet>
+      <IPayPortalBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={SNAP_POINTS.LARGE}
-        ref={helpCenterRef}
+        customSnapPoint={SNAP_POINT.LARGE}
+        isVisible={isHelpCenterVisible}
+        onCloseBottomSheet={onCloseHelpCenter}
       >
         <HelpCenterComponent />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

@@ -9,6 +9,8 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
   errors,
   containerStyle,
   handleChange,
+  myIdValue,
+  myIdCheck,
 }) => {
   if (!fields.length) {
     return null;
@@ -23,6 +25,8 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
             control={control}
             errors={errors}
             handleChange={handleChange}
+            myIdValue={myIdValue}
+            myIdCheck={field?.label === 'Violator ID' && myIdCheck}
           />
         </IPayView>
       ))}

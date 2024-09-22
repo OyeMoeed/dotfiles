@@ -11,7 +11,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
   control,
   handleChange,
   myIdCheck,
-  customerIdValue,
+  myIdValue,
 }) => {
   const renderField = () => {
     // Replace "." with "_" to flatten the name
@@ -30,7 +30,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
               return (
                 <IPayAnimatedTextInput
                   label={field.label}
-                  value={myIdCheck ? customerIdValue : value}
+                  value={myIdCheck ? myIdValue : value}
                   maxLength={field.maxWidth}
                   onChangeText={onChange}
                   keyboardType={field.type === DYNAMIC_FIELDS_TYPES.NUMBER ? 'number-pad' : 'default'}

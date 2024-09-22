@@ -8,8 +8,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 
-import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic-payment.enum';
-import { getValidationSchemas } from '@app/services';
+import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   BillPaymentOptions,
@@ -39,9 +38,6 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const styles = trafficPaymentStyles(colors);
   const { t } = useTranslation();
   const { idTypes } = useConstantData();
-  const [selectedTab, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
-  const [sheetType, setSheetType] = useState<string>('');
-  const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [isRefund, setIsRefund] = useState<boolean>(false);
   const [trafficViolationsData, setTrafficViolationsData] = useState({});
   const [trafficService, setTrafficService] = useState({});
@@ -52,18 +48,9 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [trafficServiceType, setTrafficServiceType] = useState([]);
+  const [myIdValue, setMyIdValue] = useState<string>('');
 
-  const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } = getValidationSchemas(t);
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
-  // const validationSchema = Yup.object().shape({
-  //   serviceProvider,
-  //   serviceType,
-  //   idType,
-  //   duration,
-  //   beneficiaryId,
-  //   myIdInput,
-  //   myId,
-  // });
 
   useEffect(() => {
     if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM) {
@@ -79,8 +66,6 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     } else {
       setIsRefund(false);
     }
-
-    setSelectedTab(tab);
   }, []);
 
   const handleFormTabSelect = useCallback((tab: string) => {
@@ -93,8 +78,8 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         ? {
             label: 'Violation Number',
             index: 'BeneficiaryId.OfficialNumber',
-            value: data['BeneficiaryId.OfficialNumber'],
-            description: data['BeneficiaryId.OfficialNumber'],
+            value: data['BeneficiaryId_OfficialNumber'],
+            description: data['BeneficiaryId_OfficialNumber'],
             isFormValid: 'false',
           }
         : null;
@@ -103,15 +88,15 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         {
           label: 'Violator ID',
           index: 'BeneficiaryId.OfficialId',
-          value: data['BeneficiaryId.OfficialId'],
-          description: data['BeneficiaryId.OfficialId'],
+          value: data['BeneficiaryId_OfficialId'],
+          description: data['BeneficiaryId_OfficialId'],
           isFormValid: 'false',
         },
         {
           label: 'ID Type',
           index: 'BeneficiaryId.OfficialIdType',
-          value: data['BeneficiaryId.OfficialIdType'],
-          description: data['BeneficiaryId.OfficialIdType'],
+          value: data['BeneficiaryId_OfficialIdType'],
+          description: data['BeneficiaryId_OfficialIdType'],
           isFormValid: 'false',
         },
         ...(appendField ? [appendField] : []),
@@ -129,7 +114,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
       } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {
         navigate(ScreenNames.TRAFFIC_VOILATION_ID);
       } else {
-        navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
+        navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, payOnly: false });
       }
     }
   };
@@ -153,17 +138,17 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   };
 
   const fetchFields = async () => {
-    const response = await getDynamicFieldsService(
+    const apiResponse = await getDynamicFieldsService(
       trafficViolationsData?.billerId,
       trafficService?.serviceId,
       walletNumber,
       formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM,
     );
 
-    if (response) {
-      const fetchedFields = response.response.dynamicFields;
-
+    if (apiResponse) {
+      const fetchedFields = apiResponse.response.dynamicFields;
       setFields(fetchedFields);
+      setMyIdValue(apiResponse?.response?.customerIdNumber?.value);
     }
   };
 
@@ -189,11 +174,11 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     onGetBillersServices(trafficViolationsData?.billerId);
   }, [trafficViolationsData?.billerId]);
 
-  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+  const { defaultValues, validationSchema } = useDynamicForm(fields);
 
   return (
     <IPayFormProvider<TrafficFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
-      {({ setValue, getValues, control, formState: { errors }, watch, handleSubmit }) => {
+      {({ setValue, getValues, control, formState: { errors, isValid }, watch, handleSubmit }) => {
         const myIdChecked = watch(TrafficPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
 
         const onSelectValue = (item: { id: number; text: string }) => {
@@ -217,15 +202,6 @@ const TrafficVoilationCasesScreen: React.FC = () => {
           setErrorMessage('');
         };
 
-        const getSelectedValue = () => {
-          switch (sheetType) {
-            case TrafficPaymentType.ID_TYPE:
-              return getValues(TrafficPaymentFormFields.ID_TYPE);
-            default:
-              return getValues(TrafficPaymentFormFields.VOILATION_NUMBER);
-          }
-        };
-
         return (
           <>
             <IPaySafeAreaView>
@@ -242,6 +218,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     errorMessage={errorMessage}
                     fields={fields}
                     errors={errors}
+                    myIdValue={myIdValue}
                   />
                   <IPayButton
                     btnText={isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('NEW_SADAD_BILLS.INQUIRY')}
@@ -249,6 +226,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     onPress={handleSubmit(onValidateBills)}
                     large
                     btnIconsDisabled
+                    disabled={!isValid}
                   />
                 </IPayView>
               </IPayView>
@@ -266,7 +244,11 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayView style={styles.bottomSheetView}>
-                <IPayListView list={idTypes} onPressListItem={onSelectValue} selectedListItem={getSelectedValue()} />
+                <IPayListView
+                  list={idTypes}
+                  onPressListItem={onSelectValue}
+                  selectedListItem={getValues(TrafficPaymentFormFields.VOILATION_NUMBER)}
+                />
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
