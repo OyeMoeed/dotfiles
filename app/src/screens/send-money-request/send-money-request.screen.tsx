@@ -7,6 +7,7 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useKeyboardStatus from '@app/hooks/use-keyboard-status';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { IW2WActiveFriends } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
 import getTotalAmount from '@app/utilities/total-amount-utils';
@@ -23,21 +24,31 @@ const SendMoneyRequest: React.FC = () => {
   const { t } = useTranslation();
   const MAX_CONTACT = 5;
   const route = useRoute();
-  const { selectedContacts, heading } = route.params as any;
+  const { selectedContacts, heading, setSelectedContacts, activeFriends } = route.params as any;
   const [selectedId, setSelectedId] = useState<number | string>('');
   const [warningStatus] = useState<string>('');
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
+
+  const isItemHasWallet = (mobile: string): boolean => {
+    const walletNumber = activeFriends?.filter(
+      (activeFriend: IW2WActiveFriends) => activeFriend?.mobileNumber === mobile,
+    )[0]?.walletNumber;
+
+    if (walletNumber == null || !walletNumber) {
+      return false;
+    }
+    return true;
+  };
   const [formInstances, setFormInstances] = useState<SendMoneyFormType[]>(
-    selectedContacts?.map(
-      (contact: { givenName: string; phoneNumbers: { number: string | number }[] }, index: number) => ({
-        id: index + 1,
-        subtitle: contact.givenName,
-        amount: '',
-        notes: '',
-        mobileNumber: contact.phoneNumbers[0].number,
-      }),
-    ),
+    selectedContacts?.map((contact: any, index: number) => ({
+      id: index + 1,
+      subtitle: contact.givenName,
+      amount: '',
+      notes: '',
+      mobileNumber: contact.phoneNumbers[0].number,
+      hasWallet: isItemHasWallet(contact.phoneNumbers[0].number),
+    })),
   );
 
   useEffect(() => {
@@ -69,6 +80,7 @@ const SendMoneyRequest: React.FC = () => {
     if (index === 0) {
       if (selectedId !== '') {
         setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
+        setSelectedContacts(() => selectedContacts.filter((_: string, index: number) => index + 1 !== selectedId));
       }
     }
     removeFormRef?.current?.hide();
