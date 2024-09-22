@@ -150,7 +150,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           />
         </IPayView>
         <SadadFooterComponent
-          style={[styles.margins, checkLimit.disabled && styles.consditioanlFooterStyle]}
+          style={[styles.margins, checkLimit.disabled ? styles.consditioanlFooterStyle : {}]}
           totalAmount={totalAmount}
           btnText="COMMON.CONFIRM"
           disableBtnIcons

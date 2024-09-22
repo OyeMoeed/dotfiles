@@ -127,10 +127,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
-  // useEffect(() => {
-  //   onGetBillersServices(walletNumber);
-  // }, [selectedBiller]);
-
   useEffect(() => {
     onGetBillersCategory();
     onGetBillers();

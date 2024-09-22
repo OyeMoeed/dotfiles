@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayAccountBalance, IPayButton, IPayHeader } from '@app/components/molecules';
+import { IPayAccountBalance, IPayButton, IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import { IPaySadadBillDetailsBox } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -132,15 +132,26 @@ const NewSadadBillScreen: React.FC = () => {
             />
           )}
         />
-        <IPayButton
-          large
-          btnType={buttonVariants.PRIMARY}
-          btnIconsDisabled
-          btnText="TOP_UP.PAY"
-          disabled={Number(amount) === 0}
-          onPress={onNavigateToConfirm}
-          btnStyle={styles.payBtn}
-        />
+        {warningMessage ? (
+          <SadadFooterComponent
+            btnDisbaled={warningMessage !== ''}
+            btnStyle={styles.footerBtn}
+            btnText="TOP_UP.PAY"
+            disableBtnIcons
+            warning={warningMessage}
+            onPressBtn={onNavigateToConfirm}
+          />
+        ) : (
+          <IPayButton
+            large
+            btnType={buttonVariants.PRIMARY}
+            btnIconsDisabled
+            btnText="TOP_UP.PAY"
+            disabled={Number(amount) === 0}
+            onPress={onNavigateToConfirm}
+            btnStyle={styles.payBtn}
+          />
+        )}
       </IPayView>
     </IPaySafeAreaView>
   );

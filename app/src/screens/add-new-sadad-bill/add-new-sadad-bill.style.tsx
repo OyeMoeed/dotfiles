@@ -83,7 +83,6 @@ const addSadadBillStyles = (themeColors: typeof colors) =>
     bottomSheetContainer: {
       paddingBottom: verticalScale(80),
     },
-
     categoryTabView: {
       height: verticalScale(24),
       paddingHorizontal: moderateScale(12, 0.3),

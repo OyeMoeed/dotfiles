@@ -116,6 +116,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
 
               <IPayFlatlist
                 data={billPaymentInfos}
+                keyExtractor={(item, index) => `${item.billNickname}-${index}-bill-info`}
                 renderItem={({ item }: BillPaymentItemProps) => (
                   <IPayBillDetailsOption
                     headerData={{

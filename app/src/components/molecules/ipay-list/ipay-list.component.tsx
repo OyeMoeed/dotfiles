@@ -70,6 +70,7 @@ const IPayList: React.FC<IPayListProps> = ({
   const hasRightComponent = () =>
     isShowIcon || isShowDate || isShowTime || isShowIPayToggleButton || isShowCounterButton;
 
+  const isDetailsMoreThan30 = detailText && detailText.length > 30;
   return (
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
@@ -132,7 +133,7 @@ const IPayList: React.FC<IPayListProps> = ({
           <IPayView
             style={[
               dynamicStyles.rightIconWrapper,
-              detailText && detailText.length > 30 ? dynamicStyles.detailTextConditionalStyle : {},
+              isDetailsMoreThan30 ? dynamicStyles.detailTextConditionalStyle : {},
             ]}
           >
             {isShowIcon ? (
@@ -159,7 +160,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 regular
                 style={[dynamicStyles.copyText, detailTextStyle]}
                 text={detailText}
-                numberOfLines={detailText && detailText.length > 30 ? 1 : 2}
+                numberOfLines={isDetailsMoreThan30 ? 1 : 2}
               />
             )}
           </IPayView>

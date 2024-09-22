@@ -123,7 +123,6 @@ const useBillPaymentConfirmation = (
           ...el,
           transactionId: getTransactionIds(apiResponse, index),
         })),
-        // totalAmount: getTotalAmount,
       });
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));
