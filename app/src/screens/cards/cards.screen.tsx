@@ -9,7 +9,7 @@ import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from 
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
 import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
-import { SNAP_POINT } from '@app/constants/constants';
+import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -20,9 +20,9 @@ import {
   prepareShowDetailsProp,
 } from '@app/network/services/core/transaction/transaction.interface';
 import {
+  getCards,
   otpGetCardDetails,
   prepareShowCardDetails,
-  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -31,10 +31,12 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
+import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
+import { isAndroidOS } from '@app/utilities/constants';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
 
@@ -44,13 +46,9 @@ const CardsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = cardScreenStyles(colors);
-
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
-
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
 
@@ -59,6 +57,7 @@ const CardsScreen: React.FC = () => {
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
@@ -108,6 +107,15 @@ const CardsScreen: React.FC = () => {
   );
 
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
+    if (constants.MOCK_API_RESPONSE) {
+      setOtpRef('1111');
+      if (showOtpSheet) {
+        setOtpSheetVisible(true);
+        otpVerificationRef?.current?.present();
+      }
+      otpVerificationRef?.current?.resetInterval();
+      return;
+    }
     const payload: prepareShowDetailsProp = {
       walletNumber,
       body: {
@@ -173,10 +181,14 @@ const CardsScreen: React.FC = () => {
     }));
     return mappedCards;
   };
+  const getCardsData = async () => {
+    const payload: CardsProp = {
+      walletNumber,
+    };
+    const apiResponse: any = await getCards(payload);
 
-  const getCardsData = async (cardApiResponse: any) => {
-    if (cardApiResponse) {
-      const availableCards = cardApiResponse?.response?.cards.filter(
+    if (apiResponse) {
+      const availableCards = apiResponse?.response?.cards.filter(
         (card: any) =>
           card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
@@ -192,12 +204,6 @@ const CardsScreen: React.FC = () => {
       }
     }
   };
-
-  const getCardPayload: CardsProp = {
-    walletNumber,
-  };
-
-  useGetCards({ payload: getCardPayload, onSuccess: getCardsData });
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
@@ -224,7 +230,15 @@ const CardsScreen: React.FC = () => {
   };
 
   const getCardDetails = async () => {
-    const cardDetailsPayload: getCardDetailsProp = {
+    if (constants.MOCK_API_RESPONSE) {
+      otpVerificationRef?.current?.resetInterval();
+      setOtpSheetVisible(false);
+      prepareCardInfoData(cardsListMock.response.cards[0]);
+      setIsCardDetailsSheetVisible(true);
+      cardDetailsSheetRef?.current?.present();
+      return;
+    }
+    const payload: getCardDetailsProp = {
       walletNumber,
       body: {
         cardIndex: currentCard?.cardIndex,
@@ -233,7 +247,7 @@ const CardsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       },
     };
-    const apiResponse: any = await otpGetCardDetails(cardDetailsPayload);
+    const apiResponse: any = await otpGetCardDetails(payload);
     if (apiResponse.status.type === 'SUCCESS') {
       otpVerificationRef?.current?.resetInterval();
       setOtpSheetVisible(false);
@@ -263,6 +277,10 @@ const CardsScreen: React.FC = () => {
   const onATMLongPress = () => {
     actionSheetRef.current.show();
   };
+
+  useEffect(() => {
+    getCardsData();
+  }, []);
 
   const renderCardsCurrentState = () => {
     if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
@@ -366,7 +384,7 @@ const CardsScreen: React.FC = () => {
         isVisible={isCardDetailsSheetVisible}
         ref={cardDetailsSheetRef}
         heading="CARDS.CARD_DETAILS"
-        customSnapPoint={['50%', '60%']}
+        customSnapPoint={isAndroidOS ? ['56%'] : ['51%']}
         onCloseBottomSheet={onCloseCardSheet}
         simpleBar
         cancelBnt

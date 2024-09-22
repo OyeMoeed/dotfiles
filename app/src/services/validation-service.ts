@@ -6,6 +6,10 @@ const getValidationSchemas = (t: any) => ({
     .required(t('COMMON.INCORRECT_MOBILE_NUMBER'))
     .matches(REGEX.saudiMobileNumber, t('COMMON.INVALID_NUMBER')),
 
+  unsavedMobileNumberSchema: Yup.string()
+    .required(t('COMMON.INCORRECT_MOBILE_NUMBER'))
+    .matches(REGEX.combinedSaudiMobileNumber, t('COMMON.INVALID_NUMBER')),
+
   iqamaIdSchema: Yup.string()
     .required(t('COMMON.INCORRECT_IQAMA'))
     .matches(REGEX.nationalID, t('COMMON.INCORRECT_IQAMA'))

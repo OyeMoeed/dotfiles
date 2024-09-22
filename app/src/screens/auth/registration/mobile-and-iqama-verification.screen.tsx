@@ -12,6 +12,7 @@ import {
   IPayButton,
   IPayHeader,
   IPayPageDescriptionText,
+  useToastContext,
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -21,12 +22,13 @@ import useConstantData from '@app/constants/use-constants';
 import { useKeyboardStatus } from '@app/hooks';
 import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
 import React, { useRef } from 'react';
 import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { FieldValues, UseFormHandleSubmit } from 'react-hook-form';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook';
 import { FormValues } from './mobile-and-iqama-verification.interface';
@@ -66,6 +68,28 @@ const MobileAndIqamaVerification: React.FC = () => {
     mobileNumber: mobileNumberSchema,
     iqamaId: iqamaIdSchema,
   });
+
+  const { showToast } = useToastContext();
+
+  const onInvalidFormValues = (formValues: FieldValues) => {
+    const title = formValues.mobileNumber?.message
+      ? t('COMMON.INCORRECT_MOBILE_NUMBER')
+      : t('COMMON.INCORRECT_IQAMA_NUMBER');
+    showToast(
+      {
+        title,
+        subTitle: t('COMMON.VERIFY_NUMBER_ACCURACY'),
+        toastType: ToastTypes.WARNING,
+        isShowRightIcon: false,
+        leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
+      },
+      5000,
+    );
+  };
+
+  const handleSubmitMethod = async (handleSubmit: UseFormHandleSubmit<FormValues, undefined>) => {
+    await handleSubmit(onSubmit, onInvalidFormValues)();
+  };
 
   return (
     <IPayFormProvider<FormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '', iqamaId: '' }}>
@@ -112,7 +136,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                     </IPayView>
                   </IPayPressable>
                   <IPayButton
-                    onPress={handleSubmit(onSubmit)}
+                    onPress={() => handleSubmitMethod(handleSubmit)}
                     btnType={buttonVariants.PRIMARY}
                     btnText="COMMON.NEXT"
                     large

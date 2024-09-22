@@ -276,7 +276,7 @@ const TransferSummaryScreen: React.FC = () => {
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
       <IPayHeader backBtn title="TRANSFER_SUMMARY.TITLE" applyFlex />
       <IPayView style={styles.reasonContainer}>
-        <IPayList title="SEND_GIFT_SUMMARY.OCCASION} showDetail detailText={giftDetails?.occasion" />
+        <IPayList title="SEND_GIFT_SUMMARY.OCCASION" showDetail detailText={giftDetails?.occasion} />
         {giftMessage()}
       </IPayView>
       <IPayView style={styles.container}>

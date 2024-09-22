@@ -137,7 +137,7 @@ const MarketPlace: React.FC = () => {
           text={search}
           onChangeText={setSearch}
           placeholder="COMMON.SEARCH"
-          rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
+          rightIcon={<IPayIcon icon={icons.search2} size={20} color={colors.primary.primary500} />}
           simpleInput
           containerStyle={styles.searchInputStyle}
         />

@@ -27,8 +27,8 @@ import { regex } from '@app/styles/typography.styles';
 import { alertType, alertVariant, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
-import { Contact } from 'react-native-contacts';
 import { useTranslation } from 'react-i18next';
+import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
 const defaultValue = '0.00';
@@ -48,7 +48,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const { colors } = useTheme();
   const styles = sendGiftAmountStyles(colors);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; // TODO replace with original data
+  const { availableBalance } = walletInfo;
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
   const [chipValue, setChipValue] = useState('');
   const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
@@ -362,7 +362,7 @@ const SendGiftAmountScreen = ({ route }) => {
         <IPayView style={styles.container}>
           <IPayView>
             <IPayTopUpBox
-              availableBalance={formatNumberWithCommas(currentBalance)}
+              availableBalance={formatNumberWithCommas(availableBalance)}
               isShowTopup
               isShowRemaining
               isShowProgressBar
