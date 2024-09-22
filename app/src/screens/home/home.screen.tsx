@@ -170,30 +170,27 @@ const Home: React.FC = () => {
   };
 
   const mapCardData = (cards: CardListItem[]) => {
-    try{
-      console.log(cards);
-    let mappedCards = [];
-    mappedCards = cards?.map((card: any) => ({
-      name: card?.linkedName?.embossingName,
-      cardType: card?.cardTypeId,
-      cardHeaderText: getCardDesc(card?.cardTypeId),
-      expired: card?.reissueDue,
-      frozen: card.cardStatus === CardStatusNumber.Freezed,
-      suspended: false,
-      maskedCardNumber: card?.maskedCardNumber,
-      cardNumber: card.lastDigits,
-      creditCardDetails: {
-        availableBalance: '5200.40',
-      },
-      totalCashbackAmt: card.totalCashbackAmt,
-      ...card,
-    }));
-    
-
-    return mappedCards;
-  }catch(err){
-    
-  }
+    try {
+      let mappedCards = [];
+      mappedCards = cards?.map((card: any) => ({
+        name: card?.linkedName?.embossingName,
+        cardType: card?.cardTypeId,
+        cardHeaderText: getCardDesc(card?.cardTypeId),
+        expired: card?.reissueDue,
+        frozen: card.cardStatus === CardStatusNumber.Freezed,
+        suspended: false,
+        maskedCardNumber: card?.maskedCardNumber,
+        cardNumber: card.lastDigits,
+        creditCardDetails: {
+          availableBalance: '5200.40',
+        },
+        totalCashbackAmt: card.totalCashbackAmt,
+        ...card,
+      }));
+      return mappedCards;
+    } catch (err) {
+      return [];
+    }
   };
 
   const getCardsData = async () => {
@@ -211,10 +208,9 @@ const Home: React.FC = () => {
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
           card.cardStatus === CardStatusNumber.Freezed,
       );
-      
+
       if (availableCardsForSearch?.length) {
         setCardsData(mapCardData(availableCardsForSearch));
-
       }
     }
   };
