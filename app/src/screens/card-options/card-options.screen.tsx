@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
@@ -182,7 +182,6 @@ const CardOptionsScreen: React.FC = () => {
     };
 
     const apiResponse: any = await changeStatus(payload);
-    deleteCardSheetRef.current.hide();
 
     if (apiResponse) {
       navigate(ScreenNames.CARDS);
@@ -191,24 +190,25 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   const onConfirmDeleteCard = () => {
-    stopCard();
+    deleteCardSheetRef.current.hide();
+
+    setTimeout(() => {
+      stopCard();
+    }, 500);
   };
+
   const showDeleteCardSheet = () => {
     deleteCardSheetRef.current.show();
   };
 
-  const onClickDeleteCardSheet = useCallback((index: number) => {
-    switch (index) {
-      case 0:
-        deleteCardSheetRef.current.hide();
-        break;
-      case 1:
-        onConfirmDeleteCard();
-        break;
-      default:
-        break;
+  const onClickDeleteCardSheet = (index: number) => {
+    if (index === 1) {
+      onConfirmDeleteCard();
+      return;
     }
-  }, []);
+
+    deleteCardSheetRef.current.hide();
+  };
 
   const onNavigateToChooseAddress = () => {
     navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });

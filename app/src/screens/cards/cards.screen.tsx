@@ -35,10 +35,10 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Dimensions } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import CardScreenCurrentState from './cards.screen.interface';
-import cardScreenStyles from './cards.style';
 import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
 import { isAndroidOS } from '@app/utilities/constants';
+import CardScreenCurrentState from './cards.screen.interface';
+import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -304,7 +304,7 @@ const CardsScreen: React.FC = () => {
       );
     }
 
-    if (CardScreenCurrentState.HAS_DATA) {
+    if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
       return (
         <>
           <IPayView style={styles.cardsContainer}>
