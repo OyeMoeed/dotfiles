@@ -24,6 +24,7 @@ export interface OnBoardInterface {
 const UserOnBoarding: React.FC = () => {
   const { colors } = useTheme();
   const listRef = useRef<FlatList>(null);
+  const { handleNext, skip, currentStep } = useStepper({ listRef });
 
   const listData: OnBoardInterface[] = useMemo(
     () => [
@@ -64,8 +65,6 @@ const UserOnBoarding: React.FC = () => {
       colors.appGradient.gradientSecondary30,
     ],
   );
-
-  const { handleNext, skip, currentStep } = useStepper({ listRef, length: listData?.length });
 
   const renderItem = useCallback(
     (info: { item: OnBoardInterface; index: number }) => (
@@ -114,6 +113,7 @@ const UserOnBoarding: React.FC = () => {
       showsHorizontalScrollIndicator={false}
       isGHFlatlist={false}
       onMomentumScrollEnd={handleMomentumScrollEnd}
+      bounces={false}
     />
   );
 };
