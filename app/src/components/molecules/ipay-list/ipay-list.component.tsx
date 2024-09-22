@@ -63,6 +63,7 @@ const IPayList: React.FC<IPayListProps> = ({
   regularTitle = true,
   shouldTranslateTitle = true,
   shouldTranslateSubTitle = true,
+  shouldDetailsTranslate = true,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(colors);
@@ -161,6 +162,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 style={[dynamicStyles.copyText, detailTextStyle]}
                 text={detailText}
                 numberOfLines={isDetailsMoreThan30 ? 1 : 2}
+                shouldTranslate={shouldDetailsTranslate}
               />
             )}
           </IPayView>

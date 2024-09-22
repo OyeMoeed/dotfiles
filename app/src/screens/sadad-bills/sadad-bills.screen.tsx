@@ -107,7 +107,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
   };
 
-  /// TODO
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  /// TODO there is API dependency for this and that is in progress, this will be update as soon as the API issue gets resolved.
   const onPressPartialPay = () => navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true });
 
   const renderButtonRightIcon = () =>
