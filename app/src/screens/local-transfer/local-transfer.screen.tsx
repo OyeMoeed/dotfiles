@@ -184,7 +184,7 @@ const LocalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
     showToast({
       title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
-      subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+      subTitle: `${selectedBeneficiary?.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
