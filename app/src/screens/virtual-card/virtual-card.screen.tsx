@@ -54,13 +54,13 @@ const VirtualCardScreen: React.FC = () => {
 
   const mapSelectedCardType = (tab: string): CardType | '' => {
     switch (tab) {
-      case t('VIRTUAL_CARD.CLASSIC'):
+      case 'VIRTUAL_CARD.CLASSIC':
         setSelectedCardType('IPMC');
         return 'IPMC';
-      case t('VIRTUAL_CARD.PLATINUM'):
+      case 'VIRTUAL_CARD.PLATINUM':
         setSelectedCardType('VPPC');
         return 'VPPC';
-      case t('VIRTUAL_CARD.SIGNATURE'):
+      case 'VIRTUAL_CARD.SIGNATURE':
         setSelectedCardType('VSCC');
         return 'VSCC';
       default:
@@ -107,7 +107,7 @@ const VirtualCardScreen: React.FC = () => {
     getCardsTypes();
   }, []);
 
-  const onPressIsssueCard = async () => {
+  const onPressIssueCard = async () => {
     const apiResponse = await issueCardInquire(walletInfo?.walletNumber, selectedCardType as CardType);
     if (apiResponse?.status?.type === 'SUCCESS') {
       const feesApiResponse = await getCardIssuanceFees(
@@ -171,7 +171,7 @@ const VirtualCardScreen: React.FC = () => {
           btnText="VIRTUAL_CARD.ISSUE_CARD"
           btnIconsDisabled
           btnStyle={styles.marginStyles}
-          onPress={onPressIsssueCard}
+          onPress={onPressIssueCard}
         />
       </IPayView>
     </IPaySafeAreaView>
