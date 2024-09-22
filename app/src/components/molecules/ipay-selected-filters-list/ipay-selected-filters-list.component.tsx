@@ -12,9 +12,9 @@ const IPaySelectedFilters: React.FC<IPaySelectedFiltersProps> = ({ testID, filte
 
   const renderFilters = () => (
     <IPayView>
-      {filters?.map((text) => (
+      {filters?.map((text, index) => (
         <IPayChip
-          key={`${text}-`}
+          key={`${`${index}`}-ipay-chip`}
           containerStyle={styles.chipContainer}
           headingStyles={styles.chipHeading}
           textValue={text}
