@@ -4,13 +4,13 @@ import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import IPayAppleButton from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import IPayPrintCard from '@app/components/molecules/ipay-print-card/ipay-print-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import ApplePayButtonProps from './card-renewal-success.interface';
 import cardRenewalSuccessStyles from './card-renewal-success.style';
 
@@ -24,7 +24,7 @@ const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress }) => {
 const CardRenewalSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = cardRenewalSuccessStyles(colors);
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const [isAdded, setIsAdded] = React.useState(false); // TODO will be handle on the basis of api
 
   const togleIsAdded = () => {
@@ -36,17 +36,15 @@ const CardRenewalSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.ipaySuccessContainer}
-          headingText={localizationText.CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED}
-          descriptionText={isIosOS ? localizationText.CARD_OPTIONS.ADD_TO_APPLE_PAY : ' '}
+          headingText="CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED"
+          descriptionText={isIosOS ? t('CARD_OPTIONS.ADD_TO_APPLE_PAY') : ' '}
         />
         <IPayView style={styles.appleButtonContainer}>
           {isAdded ? (
             <IPayPressable onPress={togleIsAdded} style={styles.addedAppleWalletWrapper}>
               <IPayView style={styles.appleWalletTextWrapper}>
-                <IPayCaption2Text style={styles.addedText} regular>
-                  {localizationText.CARDS.ADDED_TO}
-                </IPayCaption2Text>
-                <IPayCaption2Text regular={false}>{localizationText.CARDS.APPLE_WALLET}</IPayCaption2Text>
+                <IPayCaption2Text style={styles.addedText} regular text="CARDS.ADDED_TO" />
+                <IPayCaption2Text regular={false} text="CARDS.APPLE_WALLET" />
               </IPayView>
               <IPayView style={styles.applePay}>
                 <IPayIcon icon={icons.apple_pay} size={28} color={colors.natural.natural900} />
@@ -65,7 +63,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.primary.primary500} />}
-            btnText={localizationText.CARD_OPTIONS.GO_TO_CARD}
+            btnText="CARD_OPTIONS.GO_TO_CARD"
             btnStyle={styles.flexStyle}
           />
           <IPayButton
@@ -73,7 +71,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
             medium
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.HOME} color={colors.primary.primary500} />}
-            btnText={localizationText.COMMON.HOME}
+            btnText="COMMON.HOME"
             btnStyle={styles.flexStyle}
           />
         </IPayView>

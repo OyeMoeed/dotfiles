@@ -53,21 +53,6 @@ jest.mock('@app/localization/hooks/localization.hook', () => () => ({
 }));
 
 describe('TransferSuccessScreen', () => {
-  const localizationTextMock = {
-    TOP_UP: {
-      TRANSFER_SUCCESSFUL: 'Transfer Successful',
-      REF_NUMBER_COPIED: 'Reference Number Copied',
-      SHARE: 'Share',
-    },
-    COMMON: {
-      HOME: 'Home',
-      SAR: 'SAR',
-    },
-    TRANSACTION_HISTORY: {
-      VAT_INVOICE: 'VAT Invoice',
-    },
-  };
-
   const bankDetailsMock = {
     icon: 'bank-icon.png',
     title: 'Bank Title',
@@ -108,14 +93,14 @@ describe('TransferSuccessScreen', () => {
 
   it('updates state to shareable when share button is pressed', () => {
     const { getByText } = render(<TransferSuccessScreen />);
-    const shareButton = getByText(localizationTextMock.TOP_UP.SHARE);
+    const shareButton = getByText('TOP_UP.SHARE');
     fireEvent.press(shareButton);
     expect(shareButton).toBeTruthy();
   });
 
   it('navigates to home when home button is pressed', () => {
     const { getByText } = render(<TransferSuccessScreen />);
-    const homeButton = getByText(localizationTextMock.COMMON.HOME);
+    const homeButton = getByText('COMMON.HOME');
     fireEvent.press(homeButton);
     expect(resetNavigation).toHaveBeenCalledWith(ScreenNames.HOME_BASE);
   });

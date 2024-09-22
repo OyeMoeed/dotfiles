@@ -290,6 +290,9 @@ enum GiftCardStatus {
 enum GiftCardDetailsKey {
   AMOUNT = 'amount',
   REF_NUMBER = 'refNumber',
+  STATUS = 'status',
+  RECIEVER_NAME = 'receiverName',
+  RECIEVER_MOBILE = 'receiverMobile',
 }
 
 enum ApiResponseStatusType {

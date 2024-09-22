@@ -60,7 +60,7 @@ const customerKnowledgeStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
     },
     buttonWrapper: {
-      paddingTop: moderateScale(16),
+      paddingTop: moderateScale(20),
       marginBottom: spacing.CUSTOME_SCALE(90),
     },
     listStyle: {
@@ -72,6 +72,7 @@ const customerKnowledgeStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
     },
     inputStyle: {
+      paddingVertical: moderateScale(1),
       marginVertical: scaleSize(-12),
     },
   });

@@ -13,22 +13,15 @@ import useBillPaymentConfirmation from './traffic-violation-num-payment.hook';
 import billPaymentStyles from './traffic-violation-num-payment.styles';
 
 const TrafficViolationNumPaymentScreen: React.FC = () => {
-  const {
-    localizationText,
-    billPayDetailes,
-    balanceData,
-    handlePay,
-    helpCenterRef,
-    otpRef,
-    handleOtpVerification,
-    handleOnPressHelp,
-  } = useBillPaymentConfirmation();
+  const { billPayDetailes, balanceData, handlePay, helpCenterRef, otpRef, handleOtpVerification, handleOnPressHelp } =
+    useBillPaymentConfirmation();
   const { calculatedBill } = balanceData;
   const { colors } = useTheme();
   const styles = billPaymentStyles();
+
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.TRAFFIC_VIOLATION.REFUND_VIOLATION} backBtn applyFlex />
+      <IPayHeader title="TRAFFIC_VIOLATION.REFUND_VIOLATION" backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
@@ -38,13 +31,13 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
         onPressBtn={handleOtpVerification}
         style={styles.margins}
         totalAmount={calculatedBill ?? 0}
-        btnText={localizationText.COMMON.CONFIRM}
+        btnText="COMMON.CONFIRM"
         disableBtnIcons
-        totalAmountText={localizationText.TRAFFIC_VIOLATION.AMOUNT_REFUND}
+        totalAmountText="TRAFFIC_VIOLATION.AMOUNT_REFUND"
         backgroundGradient={colors.appGradient.buttonBackground}
       />
       <IPayBottomSheet
-        heading={localizationText.PAY_BILL.HEADER}
+        heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         backBtn
@@ -54,7 +47,7 @@ const TrafficViolationNumPaymentScreen: React.FC = () => {
         <OtpVerificationComponent onConfirmPress={handlePay} onPressHelp={handleOnPressHelp} />
       </IPayBottomSheet>
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

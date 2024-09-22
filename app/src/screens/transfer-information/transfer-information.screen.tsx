@@ -7,9 +7,11 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { useKeyboardStatus } from '@app/hooks';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useTypedSelector } from '@app/store/store';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import getSarieTransferFees from '@app/network/services/cards-management/get-sarie-transfer-fees/get-sarie-transfer-fees.service';
 import { IGetCoreLovPayload } from '@app/network/services/core/lov/get-lov.interface';
 import { getCoreLov } from '@app/network/services/core/lov/get-lov.service';
@@ -17,18 +19,16 @@ import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-tr
 import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
-import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { ApiResponseStatusType, APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import React, { useEffect, useRef, useState } from 'react';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import transferInformationStyles from './transfer-information.style';
 import { ReasonListItem } from './trasnfer-information.interface';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const [chipValue, setChipValue] = useState<string>('');
@@ -79,9 +79,9 @@ const TransferInformation: React.FC = () => {
     const updatedTopUpAmount = parseFloat(transferAmount.replace(/,/g, ''));
 
     if (monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(localizationText.TOP_UP.AMOUNT_EXCEEDS_CURRENT);
+      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
     } else if (updatedTopUpAmount > monthlyTotalRemainingLimit) {
-      setChipValue(localizationText.TOP_UP.MONTHLY_SPENDING_LIMIT_REACHED);
+      setChipValue(t('TOP_UP.MONTHLY_SPENDING_LIMIT_REACHED'));
     } else {
       setChipValue('');
     }
@@ -127,14 +127,14 @@ const TransferInformation: React.FC = () => {
           return apiResponse?.response;
         }
         if (apiResponse?.apiResponseNotOk) {
-          setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           return null;
         }
         setAPIError(apiResponse?.error);
         return null;
       } catch (error) {
-        setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-        renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+        setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+        renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
         return null;
       }
     } else {
@@ -177,7 +177,7 @@ const TransferInformation: React.FC = () => {
               amount: transferAmount,
               beneficiaryNickName,
               transferPurpose: selectedReason?.text,
-              instantTransferType: localizationText.TRANSFER_SUMMARY.SARIE,
+              instantTransferType: t('TRANSFER_SUMMARY.SARIE'),
               note: notes,
               otpRef: apiResponse.response.otpRef,
               feesAmount: transferFees.feeAmount,
@@ -187,13 +187,13 @@ const TransferInformation: React.FC = () => {
               bankDetails,
             });
           } else if (apiResponse?.apiResponseNotOk) {
-            setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+            setAPIError(t('ERROR.API_ERROR_RESPONSE'));
           } else {
             setAPIError(apiResponse?.error);
           }
         } catch (error) {
-          setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
-          renderToast(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+          setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+          renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
         }
       }
     }
@@ -225,7 +225,7 @@ const TransferInformation: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={localizationText.TRANSFER.TRANSFER_INFRORMATION} />
+      <IPayHeader backBtn applyFlex title="TRANSFER.TRANSFER_INFRORMATION" />
       <IPayScrollView>
         <IPayView style={styles.container}>
           <IPayAccountBalance
@@ -262,7 +262,7 @@ const TransferInformation: React.FC = () => {
             large
             disabled={isTransferButtonDisabled() || Boolean(chipValue)}
             btnIconsDisabled
-            btnText={localizationText.COMMON.NEXT}
+            btnText="COMMON.NEXT"
             btnStyle={styles.nextBtn}
           />
         </IPayView>
@@ -270,7 +270,7 @@ const TransferInformation: React.FC = () => {
         <IPayView />
       )}
       <IPayBottomSheet
-        heading={localizationText.COMMON.REASON_OF_TRANSFER}
+        heading="COMMON.REASON_OF_TRANSFER"
         onCloseBottomSheet={onCloseSheet}
         customSnapPoint={['20%', '65%']}
         ref={reasonsBottomSheetRef}

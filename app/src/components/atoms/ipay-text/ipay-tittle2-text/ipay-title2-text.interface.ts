@@ -31,4 +31,8 @@ export interface IPayTitle2TextProps {
    */
   children?: React.ReactNode;
   color?: string;
+  /**
+   * Need translate the text.
+   */
+  shouldTranslate?: boolean;
 }

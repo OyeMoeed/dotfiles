@@ -3,7 +3,6 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
@@ -25,6 +24,7 @@ import {
   resetPinCode,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { useTranslation } from 'react-i18next';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
@@ -62,7 +62,7 @@ const CardOptionsScreen: React.FC = () => {
     show() {},
   });
 
-  const localizationText = useLocalization();
+  const { t } = useTranslation();
   const { showToast } = useToastContext();
 
   const styles = cardOptionsStyles(colors);
@@ -97,7 +97,7 @@ const CardOptionsScreen: React.FC = () => {
     initOnlinePurchase();
   }, []);
 
-  const getToastSubTitle = () => `${cardHeaderText}  - ${maskedCardNumber}`;
+  const getToastSubTitle = () => `${cardHeaderText}  - **** ${cardLastFourDigit}`;
 
   const renderToast = (title: string, isOn: boolean, icon: string, isFromDelete: boolean) => {
     showToast({
@@ -123,22 +123,20 @@ const CardOptionsScreen: React.FC = () => {
       case ApiResponseStatusType.SUCCESS:
         setIsOnlinePurchase((prev) => !prev);
         renderToast(
-          isOn
-            ? localizationText.CARD_OPTIONS.ONLINE_PURCHASE_ENABLED
-            : localizationText.CARD_OPTIONS.ONLINE_PURCHASE_DISABLED,
+          isOn ? t('CARD_OPTIONS.ONLINE_PURCHASE_ENABLED') : t('CARD_OPTIONS.ONLINE_PURCHASE_DISABLED'),
           true,
           icons.receipt_item,
           false,
         );
         break;
       case apiResponse?.apiResponseNotOk:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       case ApiResponseStatusType.FAILURE:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       default:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
     }
   };
@@ -161,7 +159,7 @@ const CardOptionsScreen: React.FC = () => {
 
     setIsATMWithDraw(isOn);
     renderToast(
-      isOn ? localizationText.CARD_OPTIONS.ATM_WITHDRAW_ENABLED : localizationText.CARD_OPTIONS.ATM_WITHDRAW_DISABLED,
+      isOn ? t('CARD_OPTIONS.ATM_WITHDRAW_ENABLED') : t('CARD_OPTIONS.ATM_WITHDRAW_DISABLED'),
       true,
       icons.moneys,
       false,
@@ -187,16 +185,16 @@ const CardOptionsScreen: React.FC = () => {
     switch (apiResponse?.status?.type) {
       case ApiResponseStatusType.SUCCESS:
         navigate(ScreenNames.CARDS);
-        renderToast(localizationText.CARD_OPTIONS.CARD_HAS_BEEN_DELETED, true, icons.trash, true);
+        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
         break;
       case apiResponse?.apiResponseNotOk:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       case ApiResponseStatusType.FAILURE:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
       default:
-        renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
         break;
     }
   };
@@ -251,17 +249,17 @@ const CardOptionsScreen: React.FC = () => {
           navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
           break;
         case ApiResponseStatusType.FAILURE:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
           break;
         default:
-          renderToast(localizationText.ERROR.API_ERROR_RESPONSE, false, icons.warning, false);
+          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
           break;
       }
     } catch (error: any) {
-      renderToast(localizationText.ERROR.SOMETHING_WENT_WRONG, false, icons.warning, false);
+      renderToast(t('ERROR.SOMETHING_WENT_WRONG'), false, icons.warning, false);
     }
   };
 
@@ -273,7 +271,7 @@ const CardOptionsScreen: React.FC = () => {
   const onConfirmOtp = (): void => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
-      otpVerificationRef.current?.triggerToast(localizationText.COMMON.INCORRECT_CODE, false);
+      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
     } else {
       resetPassCode();
     }
@@ -321,7 +319,7 @@ const CardOptionsScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title={localizationText.CARD_OPTIONS.CARD_OPTIONS} backBtn applyFlex />
+      <IPayHeader title="CARD_OPTIONS.CARD_OPTIONS" backBtn applyFlex />
       <IPayScrollView style={styles.scrollView}>
         <IPayView>
           <IPayCardDetails
@@ -331,14 +329,14 @@ const CardOptionsScreen: React.FC = () => {
             cardLastFourDigit={cardLastFourDigit || ''}
           />
 
-          <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_SERVICES} />
+          <IPayFootnoteText style={styles.listTitleText} text="CARD_OPTIONS.CARD_SERVICES" />
 
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.LOCK}
             rightIcon={icons.edit_2}
-            title={localizationText.CARD_OPTIONS.PIN_CODE}
-            subTitle={localizationText.CARD_OPTIONS.FOUR_DIGIT_PIN}
-            detailText={localizationText.CARD_OPTIONS.CHANGE}
+            title="CARD_OPTIONS.PIN_CODE"
+            subTitle="CARD_OPTIONS.FOUR_DIGIT_PIN"
+            detailText="CARD_OPTIONS.CHANGE"
             onPress={() => {
               openBottomSheet.current?.present();
             }}
@@ -346,27 +344,27 @@ const CardOptionsScreen: React.FC = () => {
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.task}
             rightIcon={icons.arrow_right_1}
-            title={localizationText.CARD_OPTIONS.CARD_FEATURES}
-            subTitle={localizationText.CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE}
+            title="CARD_OPTIONS.CARD_FEATURES"
+            subTitle="CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE"
             onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
           />
 
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}
-            title={localizationText.CARD_OPTIONS.REPLACE_THE_CARD}
-            subTitle={localizationText.CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES}
+            title="CARD_OPTIONS.REPLACE_THE_CARD"
+            subTitle="CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES"
             onPress={onNavigateToChooseAddress}
           />
 
-          <IPayFootnoteText style={styles.listTitleText} text={localizationText.CARD_OPTIONS.CARD_CONTROLS} />
+          <IPayFootnoteText style={styles.listTitleText} text="CARD_OPTIONS.CARD_CONTROLS" />
           {currentCard?.cardStatus !== '850' && (
             <IPayCardOptionsIPayListToggle
               leftIcon={icons.receipt_item}
               title={
                 isOnlinePurchase
-                  ? localizationText.CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE
-                  : localizationText.CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE
+                  ? t('CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE')
+                  : t('CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE')
               }
               onToggleChange={toggleOnlinePurchase}
               toggleState={isOnlinePurchase}
@@ -375,7 +373,7 @@ const CardOptionsScreen: React.FC = () => {
 
           <IPayCardOptionsIPayListToggle
             leftIcon={icons.moneys}
-            title={localizationText.CARD_OPTIONS.WITHDRAW_CASH_FROM}
+            title="CARD_OPTIONS.WITHDRAW_CASH_FROM"
             onToggleChange={toggleATMWithdraw}
             toggleState={isATMWithDraw}
           />
@@ -384,14 +382,14 @@ const CardOptionsScreen: React.FC = () => {
               onPress={showDeleteCardSheet}
               isShowLeftIcon
               leftIcon={<IPayIcon icon={icons.trash} size={24} color={colors.natural.natural700} />}
-              title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
+              title="CARD_OPTIONS.DELETE_THE_CARD"
             />
           </IPayView>
         </IPayView>
       </IPayScrollView>
       <IPayBottomSheet
         simpleBar
-        heading={localizationText.CHANGE_PIN.CHANGE_PIN_CODE}
+        heading="CHANGE_PIN.CHANGE_PIN_CODE"
         enablePanDownToClose
         simpleHeader
         cancelBnt
@@ -404,9 +402,9 @@ const CardOptionsScreen: React.FC = () => {
       <IPayActionSheet
         ref={deleteCardSheetRef}
         testID="delete-card-action-sheet"
-        title={localizationText.CARD_OPTIONS.DELETE_THE_CARD}
-        message={localizationText.CARD_OPTIONS.YOU_WONT_BE_ABLE_TO_USE}
-        options={[localizationText.COMMON.CANCEL, localizationText.CARD_OPTIONS.DELETE]}
+        title="CARD_OPTIONS.DELETE_THE_CARD"
+        message="CARD_OPTIONS.YOU_WONT_BE_ABLE_TO_USE"
+        options={[t('COMMON.CANCEL'), t('CARD_OPTIONS.DELETE')]}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showIcon
@@ -417,7 +415,7 @@ const CardOptionsScreen: React.FC = () => {
       />
 
       <IPayPortalBottomSheet
-        heading={localizationText.CARD_OPTIONS.CHANGE_PIN}
+        heading="CARD_OPTIONS.CHANGE_PIN"
         enablePanDownToClose
         simpleBar
         bold
@@ -442,7 +440,7 @@ const CardOptionsScreen: React.FC = () => {
       </IPayPortalBottomSheet>
 
       <IPayBottomSheet
-        heading={localizationText.FORGOT_PASSCODE.HELP_CENTER}
+        heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn

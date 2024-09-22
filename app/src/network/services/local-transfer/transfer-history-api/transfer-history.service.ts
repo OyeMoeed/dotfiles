@@ -7,16 +7,16 @@ import { LocalTransferMockProps, LocalTransferReqParams } from './transfer-histo
 import localTransferMock from './transfer-history.mock';
 
 const getlocalTransaction = async (params: LocalTransferReqParams): Promise<LocalTransferMockProps> => {
-  const { walletNumber, fromDate, toDate, beneficiaryName, bankName, fromAmount, toAmount } = params;
+  const { walletNumber, fromDate, toDate, beneficiaryName, trxReqType, fromAmount, toAmount } = params;
   if (constants.MOCK_API_RESPONSE) {
     return localTransferMock;
   }
   try {
     const apiResponse: ApiResponse<LocalTransferMockProps> = await apiCall({
       endpoint:
-        `${LOCAL_TRANSFERS_URLS.get_transaction(walletNumber)}` +
-        `${beneficiaryName ? `&beneficiary-name=${beneficiaryName}` : ''}` +
-        `${bankName ? `&bank-name=${bankName}` : ''}` +
+        `${LOCAL_TRANSFERS_URLS.get_transaction(walletNumber ?? '')}?max-records=300` +
+        `${beneficiaryName ? `&ben-name=${beneficiaryName}` : ''}` +
+        `${trxReqType ? `&trx-req-type=${trxReqType}` : ''}` +
         `${fromAmount ? `&from-amount=${fromAmount}` : ''}` +
         `${toAmount ? `&to-amount=${toAmount}` : ''}` +
         `${fromDate ? `&from-date=${fromDate}` : ''}` +
@@ -24,8 +24,8 @@ const getlocalTransaction = async (params: LocalTransferReqParams): Promise<Loca
       method: requestType.GET,
     });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
+    if (apiResponse?.status) {
+      return apiResponse;
     }
     return { ...apiResponse?.response, apiResponseNotOk: true };
   } catch (error) {

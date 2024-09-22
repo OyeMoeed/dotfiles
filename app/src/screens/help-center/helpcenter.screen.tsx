@@ -4,7 +4,6 @@ import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-sectio
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/index';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
-import useLocalization from '@app/localization/hooks/localization.hook';
 import getFAQ from '@app/network/services/core/faq/faq.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
@@ -21,16 +20,18 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { useTranslation } from 'react-i18next';
+import { buttonVariants } from '@app/utilities';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const contactUsRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
   const [currentSection, setCurrentSection] = useState<number | null>(null);
   const styles = helpCenterStyles(colors);
-  const localizationText = useLocalization();
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const insideSaPhone = '(+966)8004339000'; // need to replace with API
   const outsideSaPhone = '(+966)920000670'; // need to replace with API
@@ -62,7 +63,7 @@ const HelpCenter: React.FC = () => {
           {
             id: 1,
             title: '',
-            data: apiResponse?.response?.faq.map((question) => ({
+            data: apiResponse?.response?.faqs.map((question) => ({
               id: 1,
               question: question.question,
               answer: question.answer,
@@ -72,12 +73,12 @@ const HelpCenter: React.FC = () => {
         setAllFaqItems(itemsWithCategories);
         setFaqData(itemsWithCategories);
       } else if (apiResponse?.apiResponseNotOk) {
-        setAPIError(localizationText.ERROR.API_ERROR_RESPONSE);
+        setAPIError('ERROR.API_ERROR_RESPONSE');
       } else {
         setAPIError(apiResponse?.error);
       }
     } catch (error: any) {
-      setAPIError(error?.message || localizationText.ERROR.SOMETHING_WENT_WRONG);
+      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
     }
   };
 
@@ -149,8 +150,8 @@ const HelpCenter: React.FC = () => {
   };
 
   const contactList = [
-    { title: localizationText.MENU.CALL_WITHIN_SA, phone_number: insideSaPhone },
-    { title: localizationText.MENU.CALL_OUTSIDE_SA, phone_number: outsideSaPhone },
+    { title: 'MENU.CALL_WITHIN_SA', phone_number: insideSaPhone },
+    { title: 'MENU.CALL_OUTSIDE_SA', phone_number: outsideSaPhone },
   ];
 
   const openBottomSheet = () => {
@@ -251,13 +252,7 @@ const HelpCenter: React.FC = () => {
   return (
     <>
       <IPaySafeAreaView style={styles.safeAreaView}>
-        <IPayHeader
-          title={localizationText.MENU.SUPPORT_AND_HELP}
-          backBtn
-          onPress={openBottomSheet}
-          applyFlex
-          contactUs
-        />
+        <IPayHeader title="MENU.SUPPORT_AND_HELP" backBtn onPress={openBottomSheet} applyFlex contactUs />
         <IPayView style={styles.container}>
           {/* TODO: remove categories untill implement it from back end */}
           {/* <IPayView style={styles.headerTabView}>
@@ -276,7 +271,7 @@ const HelpCenter: React.FC = () => {
             <IPayInput
               onChangeText={onSearchChangeText}
               text={searchText}
-              placeholder={localizationText.COMMON.SEARCH}
+              placeholder="COMMON.SEARCH"
               style={styles.searchInputText}
             />
             <IPayPressable onPress={onClearInput}>
@@ -303,16 +298,12 @@ const HelpCenter: React.FC = () => {
               showsVerticalScrollIndicator={false}
             />
             <IPayView style={styles.contactUsContainer}>
-              <IPaySubHeadlineText regular style={styles.contactUsText}>
-                {localizationText.COMMON.ASSISTANCE}
-              </IPaySubHeadlineText>
-              <IPayCaption1Text regular style={styles.contactUsSubText}>
-                {localizationText.COMMON.CONTACT_SERVICE_TEAM}
-              </IPayCaption1Text>
+              <IPaySubHeadlineText regular style={styles.contactUsText} text="COMMON.ASSISTANCE" />
+              <IPayCaption1Text regular style={styles.contactUsSubText} text="COMMON.CONTACT_SERVICE_TEAM" />
               <IPayButton
-                btnType="primary"
+                btnType={buttonVariants.PRIMARY}
                 rightIcon={<IPayIcon icon={icons.PHONE} color={colors.secondary.secondary800} size={20} />}
-                btnText={localizationText.COMMON.NEED_ASSISTANCE}
+                btnText="COMMON.NEED_ASSISTANCE"
                 textColor={colors.secondary.secondary800}
                 textStyle={styles.buttonText}
                 btnStyle={styles.buttonBg}
@@ -324,7 +315,7 @@ const HelpCenter: React.FC = () => {
         </IPayView>
         <IPayActionSheet
           ref={actionSheetRef}
-          options={[`${localizationText.MENU.CALL} ${selectedNumber}`, localizationText.COMMON.CANCEL]}
+          options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}
           cancelButtonIndex={1}
           showCancel
           onPress={(index) => handleFinalAction(index, selectedNumber)}
@@ -332,7 +323,7 @@ const HelpCenter: React.FC = () => {
         />
       </IPaySafeAreaView>
       <IPayBottomSheet
-        heading={localizationText.COMMON.CONTACT_US}
+        heading="COMMON.CONTACT_US"
         onCloseBottomSheet={closeBottomSheet}
         customSnapPoint={['1%', '40%']}
         ref={contactUsRef}
@@ -342,12 +333,8 @@ const HelpCenter: React.FC = () => {
         cancelBnt
       >
         <IPayView style={styles.contactWrapper}>
-          <IPayFootnoteText
-            style={styles.headerStyle}
-            text={localizationText.COMMON.ASSISTANCE}
-            color={colors.primary.primary900}
-          />
-          <IPayCaption1Text text={localizationText.COMMON.CONTACT_SERVICE_TEAM} color={colors.natural.natural700} />
+          <IPayFootnoteText style={styles.headerStyle} text="COMMON.ASSISTANCE" color={colors.primary.primary900} />
+          <IPayCaption1Text text="COMMON.CONTACT_SERVICE_TEAM" color={colors.natural.natural700} />
         </IPayView>
         <IPayView style={styles.contentContainer}>
           {contactList.map((item) => (
