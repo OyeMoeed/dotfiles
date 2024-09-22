@@ -24,8 +24,8 @@ import { AddBeneficiary, AddBeneficiaryKey, ApiResponseStatusType, buttonVariant
 import { yupResolver } from '@hookform/resolvers/yup';
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
 import {
   BankDetails,
   BeneficiaryBankDetails,
@@ -186,8 +186,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       const apiResponse = await validateIBAN(params);
       if (apiResponse?.bankCode) {
         getBankDetails(apiResponse.bankCode, ibanNumber);
-      } else {
-        renderToast(t('ERROR.SOMETHING_WENT_WRONG'));
       }
     }
   };
