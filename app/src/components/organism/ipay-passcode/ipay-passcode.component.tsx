@@ -122,7 +122,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
         numColumns={3}
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item, index) => `${item}-${index}-i-pay-pressable`}
+        keyExtractor={(_, index) => `${index}-i-pay-pressable`}
         ItemSeparatorComponent={ItemSeparatorComponent}
       />
     </IPayView>
