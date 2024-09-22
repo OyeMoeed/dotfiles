@@ -29,6 +29,7 @@ import {
 } from '@components/atoms';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import checkUserAccess from '@app/utilities/check-user-access';
 import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
@@ -140,7 +141,10 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         <IPayCardStatusIndication
           currentCard={currentCard}
           onPress={() => {
-            navigate(ScreenNames.CARD_RENEWAL, { currentCard, statusIndication });
+            const hasAccess = checkUserAccess();
+            if (hasAccess) {
+              navigate(ScreenNames.CARD_RENEWAL, { currentCard, statusIndication });
+            }
           }}
           cardStatusType={cardStatusType}
           statusIndication={statusIndication}
@@ -182,13 +186,16 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         {!isCardPrinted && (
           <IPayButton
             onPress={() => {
-              setIsCardPrinted((prevState: any) => ({
-                ...prevState,
-                [currentCard.id]: true,
-              }));
-              navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-                currentCard,
-              });
+              const hasAccess = checkUserAccess();
+              if (hasAccess) {
+                setIsCardPrinted((prevState: any) => ({
+                  ...prevState,
+                  [currentCard?.id]: true,
+                }));
+                navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+                  currentCard,
+                });
+              }
             }}
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}

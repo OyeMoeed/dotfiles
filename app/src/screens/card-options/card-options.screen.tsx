@@ -33,6 +33,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import checkUserAccess from '@app/utilities/check-user-access';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -211,7 +212,10 @@ const CardOptionsScreen: React.FC = () => {
   }, []);
 
   const onNavigateToChooseAddress = () => {
-    navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+    }
   };
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
@@ -329,7 +333,10 @@ const CardOptionsScreen: React.FC = () => {
             subTitle="CARD_OPTIONS.FOUR_DIGIT_PIN"
             detailText="CARD_OPTIONS.CHANGE"
             onPress={() => {
-              openBottomSheet.current?.present();
+              const hasAccess = checkUserAccess();
+              if (hasAccess) {
+                openBottomSheet.current?.present();
+              }
             }}
           />
           <IPayCardOptionsIPayListDescription
