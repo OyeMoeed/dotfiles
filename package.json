@@ -14,7 +14,7 @@
     "ios:dev": "yarn react-native run-ios --mode=Debug --scheme \"AlinmaPayDev\" ",
     "ios:prod": "yarn react-native run-ios --mode=Debug --scheme \"AlinmaPayProd\" ",
     "ios:preprod": "yarn react-native run-ios --mode=Debug --scheme \"AlinmaPayPreProd\" ",
-    "ios:uat": "yarn react-native run-ios --mode=Debug --scheme \"AlinmaPayUat\" ",
+    "ios:uat": "yarn react-native run-ios --mode=Debug --simulator='iPhone 15 Plus' --scheme \"AlinmaPayUat\" ",
     "ios:sit": "yarn react-native run-ios --mode=Debug --scheme \"AlinmaPaySit\" ",
     "android:prod": "react-native run-android --mode=proddebug --appId=com.alinmapay.consumer.mobile",
     "android:preprod": "react-native run-android --mode=preproddebug --appId=com.alinmapay.consumer.mobile.preprod",
