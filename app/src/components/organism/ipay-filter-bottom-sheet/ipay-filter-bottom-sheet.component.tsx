@@ -297,35 +297,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             />
           )}
         />
-        {showAmountFilter && (
-          <IPayView style={styles.amountCard}>
-            <IPayView style={styles.rowInputHeading}>
-              <IPayIcon icon={icons.amount} />
-              <IPayCaption1Text text="TRANSACTION_HISTORY.BY_AMOUNT" style={styles.rowInputHeadingText} />
-            </IPayView>
-
-            <IPayView style={styles.rowInput}>
-              <IPayControlledInput
-                label="TRANSACTION_HISTORY.FROM"
-                control={control}
-                suffix="COMMON.SAR"
-                isError={!!errors?.amountFrom}
-                message="COMMON.REQUIRED_FIELD"
-                name={FiltersType.AMOUNT_FROM}
-                required={!!getValues(FiltersType.AMOUNT_FROM)}
-              />
-              <IPayControlledInput
-                label="TRANSACTION_HISTORY.TO_INPUT"
-                control={control}
-                suffix="COMMON.SAR"
-                isError={!!amountError || !!errors?.amountTo}
-                message={amountError || t('COMMON.REQUIRED_FIELD')}
-                name={FiltersType.AMOUNT_TO}
-                required={!!getValues(FiltersType.AMOUNT_FROM)}
-              />
-            </IPayView>
-          </IPayView>
-        )}
 
         {showDateFilter && (
           <IPayView style={styles.dateHeading}>
@@ -383,6 +354,36 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   androidStyle={styles.datePickerAndroidStyle}
                 />
               )}
+            </IPayView>
+          </IPayView>
+        )}
+
+        {showAmountFilter && (
+          <IPayView style={styles.amountCard}>
+            <IPayView style={styles.rowInputHeading}>
+              <IPayIcon icon={icons.amount} />
+              <IPayCaption1Text text="TRANSACTION_HISTORY.BY_AMOUNT" style={styles.rowInputHeadingText} />
+            </IPayView>
+
+            <IPayView style={styles.rowInput}>
+              <IPayControlledInput
+                label="TRANSACTION_HISTORY.FROM"
+                control={control}
+                suffix="COMMON.SAR"
+                isError={!!errors?.amountFrom}
+                message="COMMON.REQUIRED_FIELD"
+                name={FiltersType.AMOUNT_FROM}
+                required={!!getValues(FiltersType.AMOUNT_FROM)}
+              />
+              <IPayControlledInput
+                label="TRANSACTION_HISTORY.TO_INPUT"
+                control={control}
+                suffix="COMMON.SAR"
+                isError={!!amountError || !!errors?.amountTo}
+                message={amountError || t('COMMON.REQUIRED_FIELD')}
+                name={FiltersType.AMOUNT_TO}
+                required={!!getValues(FiltersType.AMOUNT_FROM)}
+              />
             </IPayView>
           </IPayView>
         )}
