@@ -313,10 +313,10 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       } as Contact);
     }
   };
-  const { mobileNumberSchema } = getValidationSchemas(t);
+  const { unsavedMobileNumberSchema } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
-    mobileNumber: mobileNumberSchema,
+    mobileNumber: unsavedMobileNumberSchema,
   });
 
   const onCloseSaveContact = () => {
