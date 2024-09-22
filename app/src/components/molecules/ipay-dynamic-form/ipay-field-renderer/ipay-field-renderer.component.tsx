@@ -55,12 +55,13 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                     onChange(selectedItem);
                     if (handleChange) handleChange(field.dependsOn, selectedItem);
                   }}
-                  isSearchable={false}
+                  isSearchable={true}
                   testID={`${flatKey}-dropdown`}
                   labelKey="desc"
                   valueKey="code"
                   disabled={field.disable}
                   errorMessage={errorMessage as string}
+              
                 />
               );
             }}

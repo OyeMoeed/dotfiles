@@ -1,6 +1,7 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
+import { SNAP_POINT } from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
 import IPayDropdownSheet from './ipay-dropdown-select-sheet.component';
@@ -67,7 +68,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         isSearchable={isSearchable}
         onSelectItem={handleSelectItem}
         selectedItem={selectedItem || ''}
-        snapPoints={['60%', '90%']}
+        snapPoints={SNAP_POINT.MEDIUM_LARGE}
         heading={label}
         isVisible={isVisible}
         labelKey={labelKey}

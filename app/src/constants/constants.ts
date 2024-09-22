@@ -664,7 +664,7 @@ const SNAP_POINT = {
   MID_SMALL: ['55%', '63%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '95%'],
+  MEDIUM_LARGE: ['93%', '95%'],
   LARGE: ['100%', '100%'],
 };
 const ALINMA_BANK_CODE = '999999';
