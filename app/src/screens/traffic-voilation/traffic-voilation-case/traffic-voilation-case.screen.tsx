@@ -173,8 +173,10 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    onGetBillersServices(trafficViolationsData?.billerId);
-  }, [trafficViolationsData?.billerId]);
+    if (trafficViolationsData?.billerId) {
+      onGetBillersServices(trafficViolationsData?.billerId);
+    }
+  }, [trafficViolationsData]);
 
   const { defaultValues, validationSchema } = useDynamicForm(fields);
 
