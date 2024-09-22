@@ -31,15 +31,15 @@ import { prepareRenewCardProp, renewCardProp } from '@app/network/services/core/
 import { otpRenewCard, prepareRenewCard } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { hideSpinner, showSpinner } from '@app/store/slices/spinner.slice';
 import { useTypedSelector } from '@app/store/store';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
+import { OTPVerificationRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 import { RouteParams } from './card-renewal.screen.interface';
 import cardRenewalStyles from './card-renewal.style';
-import { OTPVerificationRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 
 const DUMMY_DATA = {
   balance: '5,200.40',
