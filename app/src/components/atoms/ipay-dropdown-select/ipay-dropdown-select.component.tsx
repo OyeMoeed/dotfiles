@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IPayDropdownSheet from './ipay-dropdown-select-sheet.component';
 import { IPayDropdownSelectProps, ListItem } from './ipay-dropdown-select.interface';
 import dropdownStyles from './ipay-dropdown-select.styles';
@@ -25,6 +25,10 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
     data.find((item) => item[valueKey] === selectedValue)?.[labelKey] ?? '',
   );
+
+  useEffect(() => {
+    if (!selectedValue) setSelectedItem('');
+  }, [selectedValue]);
 
   const listCheckIcon = (
     <IPayIcon

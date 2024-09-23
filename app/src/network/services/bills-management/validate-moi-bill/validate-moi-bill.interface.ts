@@ -10,6 +10,12 @@ interface ValidateBillResponse {
     previousUnusedBalance: string;
     totalFeeAmount: string;
     referenceNumber: string;
+    amount: number | string;
+    serviceProvider: string;
+    serviceType: string;
+    serviceId: string;
+    violationNo: string;
+    violationDate: string;
   };
   successfulResponse: boolean;
   status: MockAPIStatusProps;

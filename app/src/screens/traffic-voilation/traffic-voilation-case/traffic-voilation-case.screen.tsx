@@ -61,16 +61,18 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     }
   }, [formSelectedTab, trafficServiceType]);
 
-  const handleTabSelect = useCallback((tab: string) => {
+  const handleTabSelect = useCallback((tab: string, reset) => {
     if (tab === TrafficTabPaymentTypes.REFUND) {
       setIsRefund(true);
     } else {
       setIsRefund(false);
     }
+    reset();
   }, []);
 
-  const handleFormTabSelect = useCallback((tab: string) => {
+  const handleFormTabSelect = useCallback((tab: string, reset) => {
     setFormSelectedTab(tab);
+    reset();
   }, []);
 
   const onValidateBills = async (data: any) => {
@@ -182,7 +184,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
 
   return (
     <IPayFormProvider<TrafficFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
-      {({ setValue, getValues, control, formState: { errors, isValid }, watch, handleSubmit }) => {
+      {({ setValue, getValues, control, formState: { errors, isValid }, watch, handleSubmit, reset }) => {
         const myIdChecked = watch(TrafficPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
 
         const onSelectValue = (item: { id: number; text: string }) => {
@@ -198,7 +200,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
           if (currentCheck) {
             setValue('BeneficiaryId_OfficialId', myIdValue); // Set MY_ID if checkbox is checked
           } else {
-            setValue(TrafficPaymentFormFields.MY_ID, ''); // Clear MY_ID if checkbox is unchecked
+            setValue('BeneficiaryId_OfficialId', ''); // Clear MY_ID if checkbox is unchecked
           }
           setValue(TrafficPaymentFormFields.MY_ID_CHECK, currentCheck); // Toggle the checkbox value
 
@@ -210,11 +212,11 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             <IPaySafeAreaView>
               <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.TRAFFIC_VIOLATIONS" titleStyle={styles.screenTitle} />
               <IPayView style={styles.container}>
-                <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
+                <IPayTabs tabs={tabs} onSelect={(tab) => handleTabSelect(tab, reset)} />
                 <IPayView style={styles.contentContainer}>
                   <IPayTrafficDetailForm
                     formSelectedTab={formSelectedTab}
-                    handleFormTabSelect={handleFormTabSelect}
+                    handleFormTabSelect={(tab) => handleFormTabSelect(tab, reset)}
                     onCheckboxAction={onCheckboxAction}
                     myIdCheck={myIdChecked}
                     control={control}

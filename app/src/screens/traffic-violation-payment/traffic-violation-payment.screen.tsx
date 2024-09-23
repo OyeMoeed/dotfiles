@@ -15,6 +15,7 @@ import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-b
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { dateTimeFormat, formatDateAndTime } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
@@ -24,10 +25,8 @@ import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
-  const { billPayDetailes, balanceData, setOtp, isLoading, otpError, setOtpError, otp, otpVerificationRef } =
-    useBillPaymentConfirmation();
+  const { setOtp, isLoading, otpError, setOtpError, otp, otpVerificationRef } = useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
-  const { calculatedBill } = balanceData;
   const { colors } = useTheme();
   const { walletNumber, mobileNumber, currentBalance, availableBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
@@ -37,8 +36,9 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const [otpRefState, setOtpRefState] = useState<string>('');
   const [isSheetVisible, setIsSheetVisible] = useState(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
+
   const { t } = useTranslation();
-  const { variant, payOnly } = route?.params;
+  const { variant, payOnly, trafficDetails, isRefund } = route.params;
 
   const { showToast } = useToastContext();
 
@@ -57,8 +57,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       deviceInfo,
       walletNumber,
     };
-
-    const apiResponse = await prepareMoiBill('', payLoad);
+    const paymentType = isRefund ? 'moi-refund' : 'moi';
+    const apiResponse = await prepareMoiBill(paymentType, payLoad);
     if (apiResponse?.successfulResponse) {
       setOtpRefState(apiResponse?.response?.otpRef);
       setIsSheetVisible(true);
@@ -89,7 +89,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       if (apiResponse?.status?.type === 'SUCCESS') {
         if (apiResponse?.response) {
           setIsSheetVisible(false);
-          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !payOnly });
+          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !payOnly, trafficDetails });
         }
       } else {
         renderToast(t('ERROR.API_ERROR_RESPONSE'));
@@ -113,6 +113,41 @@ const TrafficViolationPaymentScreen: React.FC = () => {
 
   const onResendCodePress = () => otpVerificationRef?.current?.resetInterval();
 
+  const billPayDetailsData = [
+    {
+      id: '1',
+      label: t('TRAFFIC_VIOLATION.AMOUNT'),
+      value: trafficDetails?.amount ? `${trafficDetails?.amount} ${t('COMMON.SAR')}` : '',
+    },
+    {
+      id: '2',
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
+      value: trafficDetails?.serviceProvider ?? '',
+    },
+    {
+      id: '3',
+      label: t('TRAFFIC_VIOLATION.SERVICE_TYPE'),
+      value: trafficDetails?.serviceType ?? '',
+    },
+    {
+      id: '4',
+      label: t('TRAFFIC_VIOLATION.VIOLATOR_ID'),
+      value: trafficDetails?.serviceId ?? '',
+    },
+    {
+      id: '5',
+      label: t('TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'),
+      value: trafficDetails?.violationNo ?? '',
+    },
+    {
+      id: '6',
+      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
+      value: trafficDetails?.violationDate
+        ? formatDateAndTime(new Date(trafficDetails?.violationDate), dateTimeFormat.DateAndTime)
+        : '',
+    },
+  ];
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
@@ -127,9 +162,9 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
-            <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
+            <IPayBillDetailsOption showHeader={false} data={billPayDetailsData} />
             {!variant && (
-              <IPayBillDetailsOption showHeader={false} data={billPayDetailes} style={styles.listBottomView} />
+              <IPayBillDetailsOption showHeader={false} data={billPayDetailsData} style={styles.listBottomView} />
             )}
           </>
         </IPayScrollView>
@@ -138,7 +173,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <SadadFooterComponent
           onPressBtn={handleOTPVerify}
           style={styles.margins}
-          totalAmount={calculatedBill ?? 0}
+          totalAmount={trafficDetails?.amount ?? 0}
           btnText="COMMON.PAY"
           disableBtnIcons
           btnStyle={styles.payBtn}
