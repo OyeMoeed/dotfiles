@@ -310,7 +310,7 @@ const CARD_DATA = {
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'supports Apple Pay & Mada Pay.',
     ],
     fees: [
       { description: 'Annual fee', fee: '0 SAR' },
@@ -353,12 +353,12 @@ const CARD_DATA = {
 };
 
 const CARD_DATA_PHYSICAL_CARD = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'support Apple Pay & Mada Pay.',
       'Annual fee: 0 SAR.',
       'Replacement fee: 0 SAR.',
       'International transaction fee: 2.2%.',
@@ -372,7 +372,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'International transaction Fee', fee: '9 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -388,7 +388,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',

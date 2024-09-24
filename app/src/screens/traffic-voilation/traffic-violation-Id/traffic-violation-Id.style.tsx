@@ -13,6 +13,9 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(30),
       marginBottom: moderateScale(5),
     },
+    foundViolationContainer: {
+      marginBottom: 0,
+    },
     detailsText: {
       color: themeColors.primary.primary800,
     },
@@ -25,7 +28,7 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
     },
     listView: {
       flex: 1,
-      marginTop: moderateScale(16, 0.3),
+      marginTop: moderateScale(14, 0.3),
     },
     footerView: {
       position: 'absolute',
@@ -59,6 +62,11 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
     addNewBillBtn: {
       marginTop: moderateScale(24, 0.3),
       width: moderateScale(175, 0.35),
+    },
+    btnStyle: {
+      borderRadius: moderateScale(16),
+      paddingVertical: 0,
+      height: moderateScale(50),
     },
   });
 

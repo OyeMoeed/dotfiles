@@ -80,12 +80,28 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
-        navigate(ScreenNames.SEND_MONEY_FORM, {
-          activeFriends: apiResponse.response?.friends,
-          selectedContacts,
-          heading: t('HOME.SEND_MONEY'),
-          showReason: true,
-        });
+        switch (from) {
+          case TRANSFERTYPE.SEND_MONEY:
+            navigate(ScreenNames.SEND_MONEY_FORM, {
+              activeFriends: apiResponse.response?.friends,
+              selectedContacts,
+              setSelectedContacts,
+              heading: t('HOME.SEND_MONEY'),
+              showReason: true,
+            });
+            break;
+          case TRANSFERTYPE.REQUEST_MONEY:
+            navigate(ScreenNames.SEND_MONEY_REQUEST, {
+              selectedContacts,
+              setSelectedContacts,
+              heading: t('REQUEST_MONEY.CREATE_REQUEST'),
+              from: TRANSFERTYPE.REQUEST_MONEY,
+              showHistory: false,
+            });
+            break;
+          default:
+            break;
+        }
       }
     }
   };
@@ -104,14 +120,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       case ScreenNames.SEND_GIFT_AMOUNT:
         setSelectedContacts([]);
         break;
-
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(ScreenNames.SEND_MONEY_REQUEST, {
-          selectedContacts,
-          heading: t('REQUEST_MONEY.CREATE_REQUEST'),
-          from: TRANSFERTYPE.REQUEST_MONEY,
-          showHistory: false,
-        });
+        getW2WActiveFriends();
         break;
       default:
         break;

@@ -6,9 +6,9 @@ import React from 'react';
 
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 import IPayCheckboxTitle from '../ipay-checkbox-title/ipay-chekbox-title.component';
 import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
+import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
 import trafficDetailStyles from './ipay-traffic-detail-form.style';
 
