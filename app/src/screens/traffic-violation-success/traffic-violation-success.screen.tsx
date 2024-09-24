@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import { IPayButton, IPayShareableImageView, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import IPayDeclinedCard from '@app/components/molecules/ipay-declined-card/ipay-declined-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
@@ -79,49 +79,54 @@ const TrafficViolationSuccessScreen: React.FC = () => {
                 paidViolation={paidBilled}
               />
             )}
-            <IPayBillDetailsOption
-              showHeader={false}
-              data={billPayDetailsData}
-              style={styles.conatinerStyles}
-              optionsStyles={styles.optionsStyle}
-            />
+            <IPayShareableImageView
+              otherView={
+                <IPayView style={styles.bottomView}>
+                  {payOnly ? (
+                    <IPayView style={styles.rowStyles}>
+                      <IPayButton
+                        medium
+                        onPress={payOtherViolation}
+                        btnType={buttonVariants.LINK_BUTTON}
+                        leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
+                        btnText="TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION"
+                      />
+
+                      <IPayButton
+                        medium
+                        btnType={buttonVariants.LINK_BUTTON}
+                        leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
+                        btnText={t('TOP_UP.SHARE')}
+                      />
+                    </IPayView>
+                  ) : (
+                    <IPayButton
+                      medium
+                      onPress={payOtherViolation}
+                      btnType={buttonVariants.LINK_BUTTON}
+                      leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
+                      btnText="TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION"
+                    />
+                  )}
+                  <IPayButton
+                    onPress={goToHome}
+                    large
+                    btnType={buttonVariants.PRIMARY}
+                    leftIcon={<IPayIcon icon={icons.HOME} color={colors.natural.natural0} />}
+                    btnText="COMMON.HOME"
+                  />
+                </IPayView>
+              }
+            >
+              <IPayBillDetailsOption
+                showHeader={false}
+                data={billPayDetailsData}
+                style={styles.conatinerStyles}
+                optionsStyles={styles.optionsStyle}
+              />
+            </IPayShareableImageView>
           </>
         </IPayScrollView>
-        <IPayView style={styles.bottomView}>
-          {payOnly ? (
-            <IPayView style={styles.rowStyles}>
-              <IPayButton
-                medium
-                onPress={payOtherViolation}
-                btnType={buttonVariants.LINK_BUTTON}
-                leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText="TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION"
-              />
-
-              <IPayButton
-                medium
-                btnType={buttonVariants.LINK_BUTTON}
-                leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                btnText="COMMON.SHARE"
-              />
-            </IPayView>
-          ) : (
-            <IPayButton
-              medium
-              onPress={payOtherViolation}
-              btnType={buttonVariants.LINK_BUTTON}
-              leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-              btnText="TRAFFIC_VIOLATION.PAY_ANOTHER_VIOLATION"
-            />
-          )}
-          <IPayButton
-            onPress={goToHome}
-            large
-            btnType={buttonVariants.PRIMARY}
-            leftIcon={<IPayIcon icon={icons.HOME} color={colors.natural.natural0} />}
-            btnText="COMMON.HOME"
-          />
-        </IPayView>
       </IPayView>
     </IPayPageWrapper>
   );

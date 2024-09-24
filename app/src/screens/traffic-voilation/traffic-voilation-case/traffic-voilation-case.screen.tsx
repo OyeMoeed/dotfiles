@@ -26,7 +26,7 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { BillersService } from '@app/network/services/bill-managment/get-billers-services/get-billers-services.interface';
 import { BillersTypes } from '@app/network/services/bill-managment/get-billers/get-billers.interface';
-import { DynamicField } from '@app/network/services/bill-managment/moi/get-dynamic-feilds/get-dynamic-fields.interface';
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
 import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
@@ -113,7 +113,14 @@ const TrafficVoilationCasesScreen: React.FC = () => {
       refund: isRefund,
     };
 
-    const apiResponse = await validateBill(trafficViolationsData?.billerId, trafficService?.serviceId, payLoad);
+    const apiResponse = await validateBill(
+      trafficViolationsData?.billerId ?? '',
+      trafficService?.serviceId ?? '',
+      payLoad,
+    );
+    if (apiResponse?.status.code === 'ERR_E700885') {
+      return invoiceSheetRef.current?.present();
+    }
     if (apiResponse?.successfulResponse) {
       const violationDetails = {
         serviceId: trafficService?.serviceId,
@@ -126,6 +133,8 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         violationNo: data.BeneficiaryId_OfficialNumber ?? '',
         serviceProvider: BillPaymentOptions.TRAFFIC_VIOLATION,
         serviceType: formSelectedTab,
+        groupPaymentId: apiResponse?.response?.groupPaymentId,
+        paymentId: apiResponse?.response?.paymentId,
       };
       if (isViolationID) {
         navigate(ScreenNames.TRAFFIC_VOILATION_ID, { isRefund, violationDetails, isViolationID });
@@ -162,7 +171,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     if (apiResponse) {
       const fetchedFields = apiResponse.response.dynamicFields;
       const filteredFields: DynamicField[] = fetchedFields.filter(
-        (field) => field.requiredInPaymentOrRefund === paymentOrRefund,
+        (field) => field.requiredInPaymentOrRefund === paymentOrRefund.toUpperCase(),
       );
       setFields(filteredFields);
       setMyIdValue(apiResponse?.response?.customerIdNumber?.value);
