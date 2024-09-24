@@ -501,11 +501,12 @@ const useConstantData = () => {
         { id: '1', key: 'paid', value: 'Paid' },
         { id: '2', key: 'cancelled', value: 'Cancelled' },
         { id: '3', key: 'rejected', value: 'Rejected' },
+        { id: '4', key: 'all', value: 'All' },
       ],
     },
     {
       id: '2',
-      label: 'Beneficiary',
+      label: 'Sender Name',
       type: FiltersType.BENEFICIARY_NAME,
       filterValues: [
         { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },

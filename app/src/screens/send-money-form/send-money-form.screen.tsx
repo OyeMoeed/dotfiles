@@ -37,8 +37,9 @@ import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { regex } from '@app/styles/typography.styles';
 import { buttonVariants, PayChannel, TopupStatus } from '@app/utilities/enums.util';
-import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
+import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -53,7 +54,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const { t } = useTranslation();
 
   const route = useRoute();
-  const { selectedContacts, from, heading, showHistory, activeFriends } = route.params as any;
+  const { selectedContacts, from, heading, setSelectedContacts, showHistory, activeFriends } = route.params as any;
 
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
@@ -132,10 +133,19 @@ const SendMoneyFormScreen: React.FC = () => {
     }
   }, []);
 
-  const handleAmountChange = (id: number, value: string) => {
-    setFormInstances((prevInstances) =>
-      prevInstances.map((instance) => (instance.id === id ? { ...instance, amount: value } : instance)),
-    );
+  const handleAmountChange = (id: number, value: string | number) => {
+    const newFormInstances = formInstances.map((instance) => {
+      if (instance.id === id) {
+        return { ...instance, amount: value as string };
+      }
+      return instance;
+    });
+
+    const newAmount = removeCommas(value.toString());
+    const reg = regex.AMOUNT;
+    if (reg.test(newAmount.toString()) || newAmount === '') {
+      setFormInstances(newFormInstances);
+    }
   };
 
   const handleNotesChange = (id: number, value: string) => {
@@ -148,6 +158,7 @@ const SendMoneyFormScreen: React.FC = () => {
     if (index === 0) {
       if (selectedId !== '') {
         setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
+        setSelectedContacts(() => selectedContacts.filter((_: string, index: number) => index + 1 !== selectedId));
       }
     }
     removeFormRef?.current?.hide();

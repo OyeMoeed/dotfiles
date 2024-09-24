@@ -115,6 +115,12 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     actionButton: {
       top: verticalScale(80),
     },
+    cardsButton: {
+      flexDirection: 'row',
+      width: '100%',
+      justifyContent: 'space-between',
+      marginBottom: verticalScale(2),
+    },
     margins: {
       marginTop: verticalScale(58),
     },
@@ -193,7 +199,10 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       backgroundColor: themeColors.natural.natural0,
       paddingTop: moderateScale(12),
       borderRadius:
-        topupChannel === PayChannel.WALLET || topupChannel === PayChannel.REQUEST || topupChannel === PayChannel.CARD
+        topupChannel === PayChannel.WALLET ||
+        topupChannel === PayChannel.REQUEST ||
+        topupChannel === PayChannel.CARD ||
+        topupChannel === PayChannel.REQUEST_ACCEPT
           ? moderateScale(22)
           : 0,
       borderTopLeftRadius: moderateScale(22),
@@ -215,7 +224,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       borderTopRightRadius: moderateScale(0),
       borderTopLeftRadius: moderateScale(0),
       backgroundColor: themeColors.natural.natural0,
-      paddingBottom: moderateScale(12),
+      // paddingBottom: moderateScale(12),
       borderRadius: moderateScale(22),
     },
     walletListBackground: {

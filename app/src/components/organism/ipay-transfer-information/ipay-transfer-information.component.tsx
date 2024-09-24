@@ -35,6 +35,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   transferInfo,
   chipValue,
   transferInfoData,
+  showCount = true,
   maxLength = 70,
   subtitle,
   hasWallet,
@@ -150,7 +151,9 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
         maxLength={maxLength}
         onChangeText={setNotes}
       />
-      <IPayCaption1Text text={getLetterCount()} style={styles.letterCount} />
+
+      {showCount && <IPayCaption1Text text={getLetterCount()} style={styles.letterCount} />}
+
       {showRemoveBtn && (
         <IPayView style={styles.btn}>
           <IPayButton

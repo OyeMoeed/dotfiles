@@ -137,8 +137,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       trxType,
       fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
       toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-      fromAmount: filterData?.amountFrom,
-      toAmount: filterData?.amountTo,
+      fromAmount: filterData?.amountFrom ? filterData?.amountFrom : '',
+      toAmount: filterData?.amountTo ? filterData?.amountTo : '',
     };
     const apiResponse: any = await getTransactions(payload);
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
@@ -281,12 +281,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         }
       />
 
-      {currentCard && isShowCard && (
+      {currentCard && (
         <IPayView style={styles.cardContainerStyleParent}>
           <IPayCardDetailsBannerComponent
-            cardType={currentCard.cardType}
-            cardTypeName={currentCard.cardHeaderText}
-            carHolderName={currentCard.name}
+            cardType={currentCard?.cardType}
+            cardTypeName={currentCard?.cardHeaderText}
+            carHolderName={currentCard?.name}
             cardLastFourDigit={cardLastFourDigit}
           />
         </IPayView>
@@ -352,7 +352,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
             heading="TRANSACTION_HISTORY.FILTER"
             showAmountFilter={isShowAmount}
             showDateFilter
-            showCardFilter={!isW2WTransactions && !isShowCard}
+            showCardFilter={!isW2WTransactions}
             cards={mappedCards ?? []}
             showContactsFilter={isW2WTransactions}
             contacts={mappedContacts ?? []}

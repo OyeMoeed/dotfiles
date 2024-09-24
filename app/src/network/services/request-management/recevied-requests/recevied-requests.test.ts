@@ -1,3 +1,4 @@
+import constantsNetwork from '@app/network/constants';
 import requestType from '@app/network/request-types.network';
 import constants from '@app/constants/constants';
 import apiCall from '../../api-call.service';
@@ -45,8 +46,7 @@ describe('Request Service', () => {
         headers: {
           mode: 'FROM',
           offset: payload.currentPage,
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'max-record': 100,
+          [constantsNetwork.MAX_RECORD]: 100,
         },
       });
     });

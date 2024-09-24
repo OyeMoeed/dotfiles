@@ -120,7 +120,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       .catch((err: unknown) => setError(getErrorMessage(err)));
   };
 
-  const handlePressPay = async () => {
+  const handlePressPay = async (forAddCard = false) => {
     if (channel === PayChannel.APPLE) {
       try {
         handlePay();
@@ -129,16 +129,19 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
         return;
       }
     }
+
     const deviceInfo = await getDeviceInfo();
     const body: any = {
       amount: topUpAmount,
       deviceInfo,
       paymentDescription: 'nothing',
     };
-    if (selectedCardObj.registrationId) {
+
+    if (!!selectedCardObj.registrationId && !forAddCard) {
       body.cardRegistrationId = selectedCardObj.registrationId;
     }
-    if (selectedCardObj?.cardBrand) {
+
+    if (selectedCardObj?.cardBrand && !forAddCard) {
       body.cardBrand = selectedCardObj?.cardBrand?.toLocaleLowerCase();
     } else {
       body.cardBrand = selectedCardTypeId;
@@ -182,7 +185,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   };
 
   const addCard = () => {
-    handlePressPay();
+    handlePressPay(true);
   };
 
   const { limitsDetails } = walletInfo;
@@ -261,7 +264,9 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               ]}
               btnType={buttonVariants.PRIMARY}
               leftIcon={<IPayIcon icon={icons.apple_pay} size={48} color={colors.natural.natural0} />}
-              onPress={handlePressPay}
+              onPress={() => {
+                handlePressPay(false);
+              }}
               disabled={!isTopUpNextEnable}
             />
           ) : (
@@ -269,8 +274,14 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               large
               btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
-              btnText={currentState === TopUpStates.SAVED_CARD ? t('TOP_UP.PAY ') : t('COMMON.NEXT)')}
-              onPress={currentState === TopUpStates.SAVED_CARD ? handlePressPay : handleNextPress}
+              btnText={currentState === TopUpStates.SAVED_CARD ? t('TOP_UP.PAY') : t('COMMON.NEXT')}
+              onPress={() => {
+                if (currentState === TopUpStates.SAVED_CARD) {
+                  handlePressPay(false);
+                } else {
+                  handleNextPress();
+                }
+              }}
               disabled={!isTopUpNextEnable}
             />
           )}
@@ -280,7 +291,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
           containerStyles={styles.outerCOntainerStyles}
           closeBottomSheet={() => {
             setIsCardSaved(true);
-            handlePressPay();
+            handlePressPay(false);
           }}
           expiryOnPress={openExpirationBottomSheet}
           openExpiredDateBottomSheet={openExpiredDateBottomSheet}

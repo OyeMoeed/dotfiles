@@ -29,6 +29,7 @@ import {
 } from '@components/atoms';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import checkUserAccess from '@app/utilities/check-user-access';
 import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
@@ -44,7 +45,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
   const { colors } = useTheme();
   const styles = cardBalanceSectionStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const actionTypeRef = useRef(CardActiveStatus.FREEZE); // TODO will be updated on the basis of api
+  const [activeCardStatus, setActiveCardStatus] = useState(CardActiveStatus.FREEZE);
   const [statusIndication, setStatusIndication] = useState<CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY>();
   const [cardStatusType, setCardStatusType] = useState<CardStatusType.ALERT | CardStatusType.WARNING>(
     CardStatusType.WARNING,
@@ -84,7 +85,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     // TODO will be handle on the basis of api
     {
       icon: icons.freeze_icon,
-      text: actionTypeRef.current === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
+      text: activeCardStatus === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
       key: '1',
       onPress: showActionSheet,
     },
@@ -120,7 +121,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
 
   useEffect(() => {
     getTransactionsData();
-    actionTypeRef.current = currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE;
+    setActiveCardStatus(currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
   }, [currentCard]);
 
   const renderItem = (item: Option) => (
@@ -140,7 +141,10 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         <IPayCardStatusIndication
           currentCard={currentCard}
           onPress={() => {
-            navigate(ScreenNames.CARD_RENEWAL, { currentCard, statusIndication });
+            const hasAccess = checkUserAccess();
+            if (hasAccess) {
+              navigate(ScreenNames.CARD_RENEWAL, { currentCard, statusIndication });
+            }
           }}
           cardStatusType={cardStatusType}
           statusIndication={statusIndication}
@@ -166,7 +170,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false} shouldTranslate={false}>
-            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText text='"COMMON.SAR"' />
+            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText text="COMMON.SAR" />
           </IPaySubHeadlineText>
         }
       />
@@ -182,13 +186,16 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         {!isCardPrinted && (
           <IPayButton
             onPress={() => {
-              setIsCardPrinted((prevState: any) => ({
-                ...prevState,
-                [currentCard.id]: true,
-              }));
-              navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-                currentCard,
-              });
+              const hasAccess = checkUserAccess();
+              if (hasAccess) {
+                setIsCardPrinted((prevState: any) => ({
+                  ...prevState,
+                  [currentCard?.id]: true,
+                }));
+                navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+                  currentCard,
+                });
+              }
             }}
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
@@ -212,6 +219,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           medium
           textColor={colors.primary.primary600}
           btnText="COMMON.VIEW_ALL"
+          btnStyle={styles.viewAllButtonStyle}
         />
       </IPayView>
       <IPayFlatlist
@@ -221,7 +229,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
       />
-      <IPayFreezeConfirmationSheet currentCard={currentCard} cards={cards} setCards={setCards} ref={actionSheetRef} />
+      <IPayFreezeConfirmationSheet
+        currentCard={currentCard}
+        cards={cards}
+        setCards={setCards}
+        ref={actionSheetRef}
+        setActiveCardStatus={setActiveCardStatus}
+      />
     </IPayView>
   );
 };

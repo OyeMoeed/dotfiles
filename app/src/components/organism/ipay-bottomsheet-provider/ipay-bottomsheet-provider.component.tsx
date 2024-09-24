@@ -1,7 +1,7 @@
 import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile-sheet/ipay-profile-verification-sheet.component';
 import { IPayNafathVerification } from '@app/components/templates';
 import IPayIdRenewalSheet from '@app/components/templates/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
-import { setNafathSheetVisibility, setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
+import { setNafathSheetVisibility, setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { AppDispatch, RootState, useTypedSelector } from '@store/store';
 import React from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,13 +11,11 @@ import IPayBottomSheetProviderProps from './ipay-bottomsheet-provider.interface'
 
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const isProfileSheetVisible = useTypedSelector(
-    (state: RootState) => state.nafathVerificationReducer.isProfileSheetVisible,
-  );
-  const isNafathSheetVisible = useTypedSelector((state) => state.nafathVerificationReducer.isNafathSheetVisible);
+  const isProfileSheetVisible = useTypedSelector((state: RootState) => state.bottomSheetReducer.isProfileSheetVisible);
+  const isNafathSheetVisible = useTypedSelector((state) => state.bottomSheetReducer.isNafathSheetVisible);
 
   const { isTermsConditionsVisible, termsAndConditionsURL, isVirtualCardTermsAndConditions, isNafathTerms } =
-    useTypedSelector((state: RootState) => state.nafathVerificationReducer);
+    useTypedSelector((state: RootState) => state.bottomSheetReducer);
 
   const onCloseProfileSheet = () => {
     dispatch(setProfileSheetVisibility(false));

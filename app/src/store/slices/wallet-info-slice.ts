@@ -91,7 +91,6 @@ const initialState: WalletInformationProps = {
       hasMoneyRequests: false,
     },
     viban: '',
-    isIdRenewalSheetVisible: false,
     mobileNumber: '',
     nickName: '',
     poiNumber: '',
@@ -128,13 +127,6 @@ const walletInfoSlice = createSlice({
       };
     },
 
-    openIdRenewalSheet: (state) => {
-      state.walletInfo.isIdRenewalSheetVisible = true;
-    },
-    closeIdRenewalSheet: (state) => {
-      state.walletInfo.isIdRenewalSheetVisible = false;
-    },
-
     resetWalletInfo(state) {
       state.walletInfo = initialState.walletInfo;
     },
@@ -152,8 +144,7 @@ const walletInfoSlice = createSlice({
 /**
  * Action creators for setting the wallet info and login data.
  */
-export const { setWalletInfo, openIdRenewalSheet, closeIdRenewalSheet, resetWalletInfo, setCashWithdrawalCardsList } =
-  walletInfoSlice.actions;
+export const { setWalletInfo, resetWalletInfo, setCashWithdrawalCardsList } = walletInfoSlice.actions;
 
 /**
  * Selectors for setting the user info and login data.

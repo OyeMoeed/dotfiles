@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { verticalScale } from 'react-native-size-matters';
 
 const newsadadBillStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -23,6 +24,9 @@ const newsadadBillStyles = (themeColors: typeof colors) =>
     },
     footerBtn: {
       justifyContent: 'center',
+    },
+    payBtn: {
+      marginBottom: verticalScale(12),
     },
   });
 

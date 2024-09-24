@@ -13,6 +13,7 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
       gap: scaleSize(8),
       marginBottom: moderateScale(24),
       marginTop: moderateScale(14),
+      borderWidth: moderateScale(0),
     },
     unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
     noResult: { flex: 1, alignItems: 'center', justifyContent: 'center' },
