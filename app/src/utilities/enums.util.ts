@@ -326,6 +326,12 @@ enum BillingStatus {
   ENABLED = 'ENABLED',
   NOT_ENABLED = 'NOT_ENABLED',
 }
+enum DateFieldTypes {
+  Hijri = 'hijri',
+  Future = 'Future',
+  Past = 'Past',
+  Other = 'other',
+}
 
 // Export all enums
 export {
@@ -351,8 +357,7 @@ export {
   CardTypes,
   CardTypesCodes,
   CarouselModes,
-  DashboardOptions,
-  DayPeriod,
+  DashboardOptions, DateFieldTypes, DayPeriod,
   FallbackVariants,
   Filter,
   FilterValue,
@@ -377,5 +382,6 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant,
+  spinnerVariant
 };
+
