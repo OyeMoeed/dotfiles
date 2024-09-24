@@ -300,6 +300,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     navigate(ScreenNames.WALLET_TRANSFER, {
       from: TRANSFERTYPE.REQUEST_MONEY,
       heading: t('REQUEST_MONEY.CREATE_REQUEST'),
+      qrErrorMessage: t('ERROR.INVALID_QRCODE'),
       showHistory: false,
     });
   };
