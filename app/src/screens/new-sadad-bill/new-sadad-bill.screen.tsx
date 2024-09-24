@@ -1,30 +1,30 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayAccountBalance, IPayHeader, SadadFooterComponent } from '@app/components/molecules';
+import { IPayAccountBalance, IPayButton, IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import { IPaySadadBillDetailsBox } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useEffect, useState } from 'react';
-import { RouteProp, useRoute } from '@react-navigation/native';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
+import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import newsadadBillStyles from './new-sadad-bill.style';
 import { NewSadadBillProps } from './new-sadad-bill.interface';
+import newsadadBillStyles from './new-sadad-bill.style';
 
 const NewSadadBillScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = newsadadBillStyles(colors);
-  // TODO will update on basis of API
-  const dummyData = {
-    balance: '5200',
-    availableBalance: '300',
-    totalAmount: '550',
-  };
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const {
+    walletNumber,
+    availableBalance,
+    limitsDetails: { monthlyRemainingOutgoingAmount, monthlyOutgoingLimit },
+  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<
@@ -50,9 +50,9 @@ const NewSadadBillScreen: React.FC = () => {
   const [warningMessage, setWarningMessage] = useState('');
 
   const getAmountWarning = () => {
-    if (Number(dummyData.availableBalance) <= 0) {
+    if (Number(availableBalance) <= 0) {
       setWarningMessage(t('NEW_SADAD_BILLS.NO_REMAINING_AMOUNT'));
-    } else if (Number(dummyData.availableBalance) < Number(amount)) {
+    } else if (Number(availableBalance) < Number(amount)) {
       setWarningMessage(t('NEW_SADAD_BILLS.INSUFFICIENT_BALANCE'));
     } else {
       setWarningMessage('');
@@ -64,25 +64,26 @@ const NewSadadBillScreen: React.FC = () => {
   }, [amount]);
 
   const onNavigateToConfirm = () => {
+    const billPaymentInfos = [
+      {
+        billerId,
+        billNumOrBillingAcct,
+        amount: Number(amount),
+        dueDateTime: dueDate,
+        billIdType,
+        billingCycle: '', // TODO: need to confirm where can I get this value
+        billIndex: '0',
+        serviceDescription,
+        billerName,
+        walletNumber,
+        billNickname,
+        billerIcon,
+      },
+    ];
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: false,
-      billPaymentInfos: [
-        {
-          billerId,
-          billNumOrBillingAcct,
-          amount: Number(amount),
-          dueDateTime: dueDate,
-          billIdType,
-          billingCycle: '', // TODO: need to confirm where can I get this value
-          billIndex: '0',
-          serviceDescription,
-          billerName,
-          walletNumber,
-          billNickname,
-          billerIcon,
-        },
-      ],
+      billPaymentInfos,
     });
   };
 
@@ -109,12 +110,13 @@ const NewSadadBillScreen: React.FC = () => {
           currentBalanceTextStyle={styles.darkStyle}
           currencyTextStyle={styles.darkStyle}
           remainingAmountTextStyle={styles.remainingText}
-          gradientWidth="50%"
           currentAvailableTextStyle={styles.currencyTextStyle}
-          balance={dummyData.balance}
-          availableBalance={dummyData.availableBalance}
           showRemainingAmount
           onPressTopup={() => {}}
+          balance={availableBalance}
+          gradientWidth={`${getBalancePercentage(Number(monthlyOutgoingLimit), Number(monthlyRemainingOutgoingAmount))}%`}
+          monthlyIncomingLimit={monthlyRemainingOutgoingAmount}
+          availableBalance={monthlyOutgoingLimit}
         />
         <IPayFlatlist
           showsVerticalScrollIndicator={false}
@@ -130,14 +132,26 @@ const NewSadadBillScreen: React.FC = () => {
             />
           )}
         />
-        <SadadFooterComponent
-          btnDisbaled={warningMessage !== ''}
-          btnStyle={styles.footerBtn}
-          btnText="TOP_UP.PAY"
-          disableBtnIcons
-          warning={warningMessage}
-          onPressBtn={onNavigateToConfirm}
-        />
+        {warningMessage ? (
+          <SadadFooterComponent
+            btnDisbaled={warningMessage !== ''}
+            btnStyle={styles.footerBtn}
+            btnText="TOP_UP.PAY"
+            disableBtnIcons
+            warning={warningMessage}
+            onPressBtn={onNavigateToConfirm}
+          />
+        ) : (
+          <IPayButton
+            large
+            btnType={buttonVariants.PRIMARY}
+            btnIconsDisabled
+            btnText="TOP_UP.PAY"
+            disabled={Number(amount) === 0}
+            onPress={onNavigateToConfirm}
+            btnStyle={styles.payBtn}
+          />
+        )}
       </IPayView>
     </IPaySafeAreaView>
   );

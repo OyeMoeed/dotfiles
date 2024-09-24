@@ -1,6 +1,13 @@
 import icons from '@app/assets/icons';
-import images from '@app/assets/images';
-import { IPayIcon, IPayImage, IPayScrollView, IPayView } from '@app/components/atoms';
+import {
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayPressable,
+  IPayScrollView,
+  IPayView,
+} from '@app/components/atoms';
 import {
   IPayButton,
   IPayContentNotFound,
@@ -12,7 +19,6 @@ import {
 } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
-import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
@@ -25,18 +31,20 @@ import getBillersCategoriesService from '@app/network/services/bills-management/
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
-import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
-import { InquireBillPayloadTypes } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
+import getBillers from '@app/network/services/bills-management/get-billers/get-billers.service';
+import { InquireBillPayloadProps } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
+import { SaveBillPayloadTypes } from '@app/network/services/bills-management/save-bill/save-bill.interface';
+import saveBillService from '@app/network/services/bills-management/save-bill/save-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { APIResponseType, buttonVariants, LanguageCode } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { FC, useEffect, useRef, useState } from 'react';
-import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
-import { buttonVariants } from '@app/utilities';
+import * as Yup from 'yup';
 import { FormValues, NewSadadBillProps, SelectedValue } from './add-new-sadad-bill.interface';
 import addSadadBillStyles from './add-new-sadad-bill.style';
 
@@ -54,8 +62,10 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [tabOption, setTabOption] = useState<BillersCategoryType[]>();
   const [billers, setBillers] = useState<BillersTypes[]>();
   const [selectedBiller, setSelectedBiller] = useState<BillersTypes>();
+  const [selectedCategory, setSelectedCategory] = useState<string>('0');
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
 
-  const [services, setServices] = useState<BillersService[]>();
+  const [services, setServices] = useState<BillersService[]>([]);
   const [selectedService, setSelectedService] = useState<BillersService>();
   const { showToast } = useToastContext();
 
@@ -80,20 +90,14 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   const onGetBillersCategory = async () => {
-    const apiResponse = await getBillersCategoriesService();
-    if (apiResponse.successfulResponse) {
-      setTabOption(apiResponse.response.billerCategoryList.map((el) => ({ ...el, text: el.desc })));
+    const apiResponse: any = await getBillersCategoriesService();
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      setTabOption(apiResponse.response.billerCategoryList);
     }
   };
 
   const onGetBillers = async () => {
-    const deviceInfo = await getDeviceInfo();
-    const payload = {
-      includeBillerDetails: 'false',
-      deviceInfo,
-      billerStatus: 'E',
-    };
-    const apiResponse = await getBillersService(payload);
+    const apiResponse = await getBillers();
     if (apiResponse.successfulResponse) {
       setBillers(
         apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
@@ -124,10 +128,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   useEffect(() => {
-    onGetBillersServices(walletNumber);
-  }, [selectedBiller]);
-
-  useEffect(() => {
     onGetBillersCategory();
     onGetBillers();
   }, []);
@@ -142,26 +142,22 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const onInquireBill = async (values: FormValues) => {
     const deviceInfo = await getDeviceInfo();
-    const payload: InquireBillPayloadTypes = {
+    const payload: InquireBillPayloadProps = {
       billerId: selectedBiller?.billerId,
-      billNumOrBillingAcct: values.accountNumber,
-      billIdType: selectedBiller?.billIdType,
-      billerName: values.companyName,
+      billAccountNumber: values.accountNumber,
+      serviceId: selectedService?.serviceId,
       deviceInfo,
-      billNickname: values.billName,
-      walletNumber,
     };
-
     const apiResponse = await inquireBillService(payload);
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
         billerName: values.companyName,
-        billerIcon: images.saudi_electricity_co, // TODO: No Biller Icon is coming from api response for get billers once receive from response will update it
+        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: '2024-07-21T12:00:00Z', // TODO: No Due Date is coming from api response once receive from response will update it
-        totalAmount: '200', // TODO: No Amount is coming from api response once receive from response will update it
+        dueDate: apiResponse.response.dueDate,
+        totalAmount: apiResponse.response.dueAmount,
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,
@@ -176,7 +172,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     selectSheeRef.current.present();
   };
 
-  const onSelect = (value: string, tabObject: BillersCategoryType) => {
+  const onSelect = (tabObject: BillersCategoryType) => {
     const billersValue = billers || [];
 
     if (billersValue?.length > 0) {
@@ -187,6 +183,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         setFilterData(filterWithTab);
       }
     }
+    setSelectedCategory(tabObject?.code);
   };
 
   const dataToRenderCompany = filterData?.filter((item) =>
@@ -205,6 +202,86 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const listViewData = sheetType === NewSadadBillType.COMPANY_NAME ? dataToRenderCompany : dataToRenderService;
 
+  const getCategoryText = (caategory: BillersCategoryType) => {
+    switch (selectedLanguage) {
+      case LanguageCode.AR:
+        return caategory.addtionalAttribute1;
+      default:
+        return caategory.desc;
+    }
+  };
+
+  const onPressSaveOnly = (values: FormValues, payload: SaveBillPayloadTypes) => {
+    const headerAttributes = {
+      billNickname: values.billName,
+      billerName: values.companyName,
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+    };
+    const billPaymentInfos = {
+      billerId: selectedBiller?.billerId,
+      billNumOrBillingAcct: values.accountNumber,
+      serviceType: values.serviceType,
+      billIdType: selectedBiller?.billIdType,
+      serviceDescription: selectedService?.serviceDesc,
+      billerName: values.companyName,
+      billNickname: values.billName,
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+    };
+    const billPaymentData = [
+      {
+        id: '1',
+        label: 'PAY_BILL.SERVICE_TYPE',
+        value: values.serviceType,
+      },
+      {
+        id: '2',
+        label: 'PAY_BILL.ACCOUNT_NUMBER',
+        value: values.accountNumber,
+      },
+    ];
+
+    navigate(ScreenNames.PAY_BILL_SUCCESS, {
+      isSaveOnly: true,
+      billPaymentData,
+      billPaymentInfos,
+      headerAttributes,
+      inquireBillPayload: payload,
+    });
+  };
+
+  const onSaveBill = async (values: FormValues) => {
+    const deviceInfo = await getDeviceInfo();
+    const payload: SaveBillPayloadTypes = {
+      billerId: selectedBiller?.billerId,
+      billNumOrBillingAcct: values.accountNumber,
+      billIdType: selectedBiller?.billerType,
+      billerName: values.companyName,
+      deviceInfo,
+      billNickname: values.billName,
+      walletNumber,
+    };
+
+    const apiResponse = await saveBillService(payload);
+    if (apiResponse.successfulResponse) {
+      onPressSaveOnly(values, payload);
+      return;
+      navigate(ScreenNames.NEW_SADAD_BILL, {
+        billNickname: values.billName,
+        billerName: values.companyName,
+        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+        serviceType: values.serviceType,
+        billNumOrBillingAcct: values.accountNumber,
+        dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
+        totalAmount: '0',
+        billerId: selectedBiller?.billerId,
+        billIdType: selectedBiller?.billIdType,
+        serviceDescription: selectedService?.serviceDesc,
+      });
+    } else {
+      invoiceSheetRef.current.present();
+    }
+  };
+
   return (
     <IPayFormProvider<FormValues>
       validationSchema={validationSchema}
@@ -222,12 +299,15 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             setValue(FormFields.COMPANY_NAME, item.text);
             setSelectedImage(item.image);
             setSelectedBiller(item);
+            onGetBillersServices(item?.id);
           } else {
             setValue(FormFields.SERVICE_TYPE, item.text);
             setSelectedService(item);
           }
           setSearch('');
-          selectSheeRef.current.close();
+          requestAnimationFrame(() => {
+            selectSheeRef.current.close();
+          });
         };
 
         const onPressServiceAction = () => {
@@ -289,7 +369,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayButton
                       btnText="NEW_SADAD_BILLS.SAVE_ONLY"
                       btnType={buttonVariants.OUTLINED}
-                      onPress={() => navigate(ScreenNames.PAY_BILL_SUCCESS, { isSaveOnly: true })}
+                      onPress={handleSubmit(onSaveBill)}
                       large
                       disabled={!watch(FormFields.BILL_NAME)}
                       btnIconsDisabled
@@ -318,7 +398,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     <IPayTextInput
                       text={search}
                       onChangeText={setSearch}
-                      placeholder="LOCAL_TRANSFER.SEARCH_FOR_NAME"
+                      placeholder={t('LOCAL_TRANSFER.SEARCH_FOR_NAME')}
                       rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                       simpleInput
                       style={styles.inputStyle}
@@ -335,7 +415,27 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                     )}
                   </IPayView>
                   {sheetType === NewSadadBillType.COMPANY_NAME && (
-                    <IPayTabs scrollable tabs={tabOption} onSelect={onSelect} />
+                    <IPayFlatlist
+                      horizontal
+                      data={tabOption}
+                      showsHorizontalScrollIndicator={false}
+                      itemSeparatorStyle={styles.categoryItemSeparatorStyle}
+                      renderItem={({ item }) => (
+                        <IPayPressable
+                          style={[
+                            styles.categoryTabView,
+                            selectedCategory === item.code && styles.categoryTabCViewConditional,
+                          ]}
+                          onPress={() => onSelect(item)}
+                        >
+                          <IPayFootnoteText
+                            regular={selectedCategory !== item.code}
+                            text={getCategoryText(item)}
+                            color={selectedCategory === item.code ? colors.natural.natural0 : colors.natural.natural500}
+                          />
+                        </IPayPressable>
+                      )}
+                    />
                   )}
                 </IPayView>
                 {getLength() ? (

@@ -61,9 +61,9 @@ const IPayList: React.FC<IPayListProps> = ({
   titleLines,
   subTitleLines,
   regularTitle = true,
-  shouldDetailsTranslate = true,
   shouldTranslateTitle = true,
   shouldTranslateSubTitle = true,
+  shouldDetailsTranslate = true,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(colors);
@@ -71,6 +71,7 @@ const IPayList: React.FC<IPayListProps> = ({
   const hasRightComponent = () =>
     isShowIcon || isShowDate || isShowTime || isShowIPayToggleButton || isShowCounterButton;
 
+  const isDetailsMoreThan30 = detailText && detailText.length > 30;
   return (
     <IPayPressable testID={testID} onPress={onPress} style={[dynamicStyles.mainContiner, style]}>
       <IPayView style={[dynamicStyles.container, containerStyle]}>
@@ -130,7 +131,12 @@ const IPayList: React.FC<IPayListProps> = ({
             hasRightComponent() && dynamicStyles.rightIconContainerMargin,
           ]}
         >
-          <IPayView style={dynamicStyles.rightIconWrapper}>
+          <IPayView
+            style={[
+              dynamicStyles.rightIconWrapper,
+              isDetailsMoreThan30 ? dynamicStyles.detailTextConditionalStyle : {},
+            ]}
+          >
             {isShowIcon ? (
               (icon && (
                 <IPayButton
@@ -152,10 +158,11 @@ const IPayList: React.FC<IPayListProps> = ({
             {rightText && rightText}
             {showDetail && (
               <IPaySubHeadlineText
-                shouldTranslate={shouldDetailsTranslate}
                 regular
                 style={[dynamicStyles.copyText, detailTextStyle]}
                 text={detailText}
+                numberOfLines={isDetailsMoreThan30 ? 1 : 2}
+                shouldTranslate={shouldDetailsTranslate}
               />
             )}
           </IPayView>

@@ -53,7 +53,7 @@ const BillPaymentsScreen: React.FC = () => {
       ...element,
       selected: false,
     }));
-    setUnpaidBillsCount(newBills.filter((bill) => bill.billStatusDesc === BillStatus.UNPAID).length);
+    setUnpaidBillsCount(newBills.filter((bill) => bill.billStatusCode === BillStatus.UNPAID).length);
     return newData;
   };
 
@@ -118,7 +118,7 @@ const BillPaymentsScreen: React.FC = () => {
             />
           </IPayView>
         ) : (
-          <IPayBillPaymentNoResultsComponent onPressViewAll={onPressViewAll} />
+          <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />
         )}
       </IPayView>
       <IPayBillPaymentsFooter onPressBillPaymentOption={onPressBillPaymentOption} />
