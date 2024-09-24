@@ -691,7 +691,6 @@ export enum DYNAMIC_FIELDS_TYPES {
   HIJRI_DATE_FUTURE = 'hijriDateFuture',
   BOOLEAN_TYPE = 'booleanType',
   DATE = 'date',
-  ENUMERATION = 'enumeration',
   LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
   TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
   ALPHA_NO_DIGITS = 'alphaNoDigits',
