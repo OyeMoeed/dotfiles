@@ -254,7 +254,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(transaction?.senderName, t('TRANSACTION_HISTORY.ALINMA_TRANSFER'));
     }
     if (REFUND) {
-      return trxTitleAndSubTile('[Merchant or Service Name]', t('TRANSACTION_HISTORY.REFUND'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.REFUND'));
     }
     if (CIN_CARD) {
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), t('TRANSACTION_HISTORY.CARD'));
@@ -308,19 +308,19 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.CARD_REPLACEMENT'), t('TRANSACTION_HISTORY.FEES'));
     }
     if (PAY_VCARD) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.CARD_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.CARD_PURCHASE'));
     }
     if (PAY_VCARD_POS) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.POS_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.POS_PURCHASE'));
     }
     if (PAY_VCARD_ECOM) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (PAY_VCARD_SETTLE) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (PAY_MOI) {
-      return trxTitleAndSubTile('[MOI service Name]', t('TRANSACTION_HISTORY.MOI_PAYMENT'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.MOI_PAYMENT'));
     }
     if (BKF_TRANSFER) {
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.WALLET_CREDIT'), t('TRANSACTION_HISTORY.INTERNAL_TRANSFER'));
@@ -347,7 +347,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.ALINMAPAY_DIRECT'));
     }
     if (PAY_VCARD_REFUND) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE_OR_POS_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE_OR_POS_PURCHASE'));
     }
     if (COUT_GIFT) {
       return trxTitleAndSubTile(
@@ -356,16 +356,16 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       );
     }
     if (PAY_VCARD_POS_MADA) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.POS_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.POS_PURCHASE'));
     }
     if (PAY_VCARD_POS_VISA) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.POS_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.POS_PURCHASE'));
     }
     if (PAY_VCARD_ECOM_MADA) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (PAY_VCARD_ECOM_VISA) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (COUT_ALINMA_REV) {
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.ALINMA_TRANSFER'));
@@ -392,12 +392,17 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), 'Apple Pay');
     }
     if (PAY_ONECARD) {
-      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.MARKETPLACE_PURCHASE'));
+      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.MARKETPLACE_PURCHASE'));
     }
     if (PAYMENT_REQUEST) {
       return trxTitleAndSubTile(
         transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
         t('TRANSACTION_HISTORY.MONEY_REQUEST'),
+      );
+    }else{
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc ,
+        '',
       );
     }
   };
