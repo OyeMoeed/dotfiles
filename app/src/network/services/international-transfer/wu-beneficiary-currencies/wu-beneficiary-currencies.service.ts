@@ -7,7 +7,7 @@ import { BeneficiaryCurrenciesReq, WUBeneficiaryCurrenciesProps } from './wu-ben
 import wuBeneficiaryCurrenciesMock from './wu-beneficiary-currencies.mock';
 
 const getWUBeneficiaryCurrencies = async (payload: BeneficiaryCurrenciesReq): Promise<WUBeneficiaryCurrenciesProps> => {
-  const { countryCode = 'SA' } = payload;
+  const { countryCode } = payload;
   if (constants.MOCK_API_RESPONSE) {
     return wuBeneficiaryCurrenciesMock;
   }

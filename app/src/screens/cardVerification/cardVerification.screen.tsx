@@ -26,19 +26,8 @@ const CardVerificationScreen: React.FC = () => {
   const route: any = useRoute();
   const { redirectUrl, transactionRefNumber } = route.params;
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
-  // const [trials, setTrials] = useState<number>(0);
   const [showWebView, setShowWebView] = useState<boolean>(true);
   let trial = 0;
-
-  // const handlePressPay = () => {
-  //   setProcessToast(false);
-  //   if (channel === PayChannel.APPLE) {
-  //     setTopUpAmount('');
-  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: PayChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
-  //   } else {
-  //     navigate(screenNames.CARD_VERIFICATION);
-  //   }
-  // };
 
   const checkStatus = async () => {
     const payload: CheckStatusProp = {

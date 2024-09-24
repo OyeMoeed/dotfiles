@@ -38,7 +38,7 @@ import checkUserAccess from '@app/utilities/check-user-access';
 import { queryClient } from '@app/network';
 import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
+import IPayChangeCardPin from '../change-card-pin';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
 import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
