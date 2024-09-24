@@ -11,7 +11,21 @@ import styles from './ipay-flatlist.style';
  * @template T - The type of data items in the flatlist.
  */
 const IPayFlatlist = forwardRef<FlatList, IPayFlatlistProps>(
-  ({ testID, style, data, renderItem, refreshControl, horizontal, itemSeparatorStyle, isGHFlatlist, ...rest }, ref) => {
+  (
+    {
+      testID,
+      style,
+      data,
+      renderItem,
+      refreshControl,
+      horizontal,
+      itemSeparatorStyle,
+      isGHFlatlist,
+      shouldFlexGrow = true,
+      ...rest
+    },
+    ref,
+  ) => {
     const itemSeparator = useCallback(
       () => <IPayItemSeparator itemSeparatorStyle={itemSeparatorStyle} />,
       [itemSeparatorStyle],
@@ -20,7 +34,7 @@ const IPayFlatlist = forwardRef<FlatList, IPayFlatlistProps>(
       return (
         <GHFlatList
           testID={`${testID}-GHFlatlist`}
-          style={[styles.mainContainer, style]}
+          style={[shouldFlexGrow ? styles.mainContainer : {}, style]}
           data={data}
           renderItem={renderItem} // Pass the item to the renderItem function
           ItemSeparatorComponent={() => itemSeparator()}
@@ -34,7 +48,7 @@ const IPayFlatlist = forwardRef<FlatList, IPayFlatlistProps>(
     return (
       <FlatList
         testID={`${testID}-flatlist`}
-        style={[styles.mainContainer, style]}
+        style={[shouldFlexGrow ? styles.mainContainer : {}, style]}
         data={data}
         ref={ref}
         renderItem={renderItem} // Pass the item to the renderItem function
