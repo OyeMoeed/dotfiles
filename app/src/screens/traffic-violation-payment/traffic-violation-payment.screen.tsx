@@ -45,9 +45,12 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const route = useRoute();
   const variant = route?.params?.variant;
 
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+
   const [chipValue, setChipValue] = useState('');
 
   const handleOTPVerify = () => {
+    setOtpSheetVisible(true);
     handleOtpVerification();
     setOtpError(false);
   };
@@ -158,7 +161,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
 
         <IPayButton
           btnType={buttonVariants.PRIMARY}
-          disabled={chipValue}
+          // Disabled for now as QA is blocked to test this
+          // disabled={chipValue}
           medium
           onPress={handleOTPVerify}
           btnText="COMMON.PAY"
@@ -172,8 +176,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         simpleBar
         cancelBnt
         customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
-        onCloseBottomSheet={() => otpRef?.current?.close()}
-        isVisible
+        onCloseBottomSheet={() => setOtpSheetVisible(false)}
+        isVisible={isOtpSheetVisible}
         ref={otpRef}
       >
         <IPayOtpVerification
