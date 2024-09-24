@@ -204,7 +204,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         </IPayView>
         <IPayButton
           onPress={() =>
-            navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, cards, isShowAmount: false })
+            navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, cards, isShowAmount: true })
           }
           btnType={buttonVariants.LINK_BUTTON}
           hasRightIcon

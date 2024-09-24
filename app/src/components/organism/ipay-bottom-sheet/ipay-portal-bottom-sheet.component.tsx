@@ -39,6 +39,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
       headerContainerStyles,
       noGradient,
       isVisible = false,
+      onDone,
     },
     ref,
   ) => {
@@ -93,7 +94,10 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
         cancelButtonStyle={cancelButtonStyle}
         doneText={doneText}
         onPressCancel={closeBottomSheet}
-        onPressDone={closeBottomSheet}
+        onPressDone={() => {
+          onDone && onDone();
+          closeBottomSheet && closeBottomSheet();
+        }}
         bold={bold}
         bgGradientColors={
           noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : bgGradientColors
