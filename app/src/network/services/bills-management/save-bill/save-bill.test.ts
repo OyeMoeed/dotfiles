@@ -1,15 +1,15 @@
-import apiCall from '@network/services/api-call.service';
 import constants from '@app/constants/constants';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
-import getBillersService from './inquire-bill.service';
-import inquireBillMockResponse from './inquire-bill.mock';
-import { InquireBillResponseTypes, InquireBillPayloadTypes } from './inquire-bill.interface';
+import apiCall from '@network/services/api-call.service';
+import { SaveBillPayloadTypes, SaveBillResponseTypes } from './save-bill.interface';
+import inquireBillMockResponse from './save-bill.mock';
+import getBillersService from './save-bill.service';
 
 // Mock the apiCall function
 jest.mock('@network/services/api-call.service');
 
 describe('getBillersService', () => {
-  const payload: InquireBillPayloadTypes = {
+  const payload: SaveBillPayloadTypes = {
     billerId: '001',
     billNumOrBillingAcct: '05221651245',
     billIdType: '0',
@@ -40,7 +40,7 @@ describe('getBillersService', () => {
   it('should return API response on successful API call', async () => {
     constants.MOCK_API_RESPONSE = false;
 
-    const apiResponse: InquireBillResponseTypes = inquireBillMockResponse;
+    const apiResponse: SaveBillResponseTypes = inquireBillMockResponse;
 
     (apiCall as jest.Mock).mockResolvedValue(apiResponse);
 

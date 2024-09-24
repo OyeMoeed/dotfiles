@@ -41,8 +41,8 @@ const textInputStyles = (themeColors: typeof colors) =>
     focusedContainer: {
       borderColor: themeColors.primary.primary500,
     },
+    backgroundColor: themeColors.natural.natural200,
     disabledContainer: {
-      backgroundColor: themeColors.natural.natural200,
       borderColor: themeColors.natural.natural200,
     },
     outerWrapper: {
@@ -58,6 +58,9 @@ const textInputStyles = (themeColors: typeof colors) =>
     assistiveText: {
       color: themeColors.natural.natural500,
     },
+
+    container2: { flexDirection: 'row', gap: moderateScale(4), justifyContent: 'space-between' },
+    cancleButton: { marginHorizontal: moderateScale(12) },
 
     closeIcon: {},
   });

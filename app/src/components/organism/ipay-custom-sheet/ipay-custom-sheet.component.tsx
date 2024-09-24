@@ -1,14 +1,22 @@
+import React, { useCallback, useEffect } from 'react';
+import { TouchableWithoutFeedback, View } from 'react-native';
 import icons from '@app/assets/icons';
 import { LogoIcon } from '@app/assets/svgs';
-import { IPayAnimatedView, IPayIcon, IPayLinearGradientView, IPayScrollView, IPayView } from '@app/components/atoms';
+import {
+  IPayAnimatedView,
+  IPayIcon,
+  IPayLinearGradientView,
+  IPayPressable,
+  IPayScrollView,
+  IPayView,
+} from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
 import { getCustomSheetThreshold } from '@app/utilities';
 import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
-import React, { useEffect } from 'react';
 import { Gesture } from 'react-native-gesture-handler';
-import { runOnJS, useAnimatedStyle, useSharedValue, withSpring } from 'react-native-reanimated';
+import { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
 import { IPayCustomSheetProps } from './ipay-custom-sheet.interface';
 import customSheetStyles from './ipay-custom-sheet.style';
@@ -17,6 +25,9 @@ import customSheetStyles from './ipay-custom-sheet.style';
  * calculated top header value for ios and android devices
  */
 const TOP_SCALE = verticalScale(isIosOS ? 100 : 60);
+const ANIMATION_CONFIG = {
+  duration: 150,
+};
 
 /**
  * A home page gragable sheet
@@ -39,34 +50,42 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
   const THRESHOLD = getCustomSheetThreshold();
   const TOP_TRANSLATE_Y = -WINDOW_HEIGHT + (boxHeight + THRESHOLD);
   const MAX_TRANSLATE_Y = -WINDOW_HEIGHT + topScale;
-  const MID_POINT = WINDOW_HEIGHT / 2;
 
   const translateY = useSharedValue(TOP_TRANSLATE_Y);
   const styles = customSheetStyles(colors);
 
   const [isSheetOpen, setIsSheetOpen] = React.useState<boolean>(false);
 
+  const closeSheet = useCallback(() => {
+    translateY.value = withTiming(TOP_TRANSLATE_Y, ANIMATION_CONFIG);
+    runOnJS(setIsSheetOpen)(false);
+  }, [TOP_TRANSLATE_Y, translateY]);
+
+  const openSheet = useCallback(() => {
+    translateY.value = withTiming(MAX_TRANSLATE_Y, ANIMATION_CONFIG);
+    runOnJS(setIsSheetOpen)(true);
+  }, [MAX_TRANSLATE_Y, translateY]);
+
   const panGestureHandler = Gesture.Pan()
-    .onChange((event) => {
+    .onUpdate((event) => {
       const newTranslateY = translateY.value + event.translationY;
 
-      if (newTranslateY <= 0 && newTranslateY >= MAX_TRANSLATE_Y) {
-        if (newTranslateY < -MID_POINT) {
-          translateY.value = withSpring(newTranslateY);
-          runOnJS(setIsSheetOpen)(true);
-        } else {
-          translateY.value = withSpring(newTranslateY);
-          runOnJS(setIsSheetOpen)(false);
-        }
+      // THIS CONDITION IS TO KEEP THE SHEET POSITION BETWEEN TWO BORDERS
+      if (newTranslateY <= 0 && newTranslateY >= MAX_TRANSLATE_Y && newTranslateY <= TOP_TRANSLATE_Y) {
+        translateY.value = withSpring(newTranslateY);
       }
     })
     .onEnd(() => {
-      if (translateY.value > -MID_POINT) {
-        translateY.value = withSpring(TOP_TRANSLATE_Y);
-        runOnJS(setIsSheetOpen)(false);
+      if (isSheetOpen && translateY.value > MAX_TRANSLATE_Y + 10) {
+        runOnJS(closeSheet)();
+      } else if (!isSheetOpen && translateY.value < TOP_TRANSLATE_Y - 10) {
+        runOnJS(openSheet)();
+      } else if (isSheetOpen) {
+        // THIS CONDITION IS TO KEEP SHEET SAME POSITION IF THE USER DID NOT MOVE IT 25 pixel
+        runOnJS(openSheet)();
       } else {
-        translateY.value = withSpring(MAX_TRANSLATE_Y);
-        runOnJS(setIsSheetOpen)(true);
+        // THIS CONDITION IS TO KEEP SHEET SAME POSITION IF THE USER DID NOT MOVE IT 25 pixel
+        runOnJS(closeSheet)();
       }
     });
 
@@ -74,48 +93,65 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
     transform: [{ translateY: translateY.value }],
   }));
 
+  const toggleSheet = useCallback(() => {
+    if (translateY.value === MAX_TRANSLATE_Y) {
+      closeSheet();
+    } else {
+      openSheet();
+    }
+  }, [MAX_TRANSLATE_Y, closeSheet, openSheet, translateY.value]);
+
   useEffect(() => {
-    translateY.value = withSpring(TOP_TRANSLATE_Y);
-  }, []);
+    translateY.value = withTiming(TOP_TRANSLATE_Y, ANIMATION_CONFIG);
+  }, [TOP_TRANSLATE_Y, translateY]);
 
   return (
-    <IPayAnimatedView
-      gesture={panGestureHandler}
-      isGestureDetector
-      testID={`${testID}-animated`}
-      style={styles.bottomSheetContainer}
-      animationStyles={animatedStyles}
-    >
-      {gradientHandler && (
-        <IPayLinearGradientView
-          testID={`${testID}-gradient`}
-          gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
-          style={styles.logoContainer}
-        >
-          <LogoIcon width={scaleSize(28)} height={verticalScale(28)} />
+    <>
+      <TouchableWithoutFeedback onPress={closeSheet} disabled={!isSheetOpen}>
+        <View style={isSheetOpen && styles.touchableWithoutFeedbackViewStyle} />
+      </TouchableWithoutFeedback>
+      <IPayAnimatedView
+        gesture={panGestureHandler}
+        isGestureDetector
+        testID={`${testID}-animated`}
+        style={styles.bottomSheetContainer}
+        animationStyles={animatedStyles}
+      >
+        {gradientHandler && (
+          <IPayLinearGradientView
+            testID={`${testID}-gradient`}
+            gradientColors={[colors.secondary.secondary300, colors.primary.primary500]}
+            style={styles.logoContainer}
+          >
+            <LogoIcon width={scaleSize(28)} height={verticalScale(28)} onPress={toggleSheet} />
+            <IPayView testID={testID} style={styles.childContainer}>
+              <IPayScrollView
+                contentContainerStyle={[styles.innerStyle, isSheetOpen && styles.innerStyleOpen]}
+                testID={testID}
+                isGHScrollView
+                pinchGestureEnabled
+                scrollEnabled={isSheetOpen}
+              >
+                {children}
+              </IPayScrollView>
+            </IPayView>
+          </IPayLinearGradientView>
+        )}
+        {simpleHandler && (
           <IPayView testID={testID} style={styles.childContainer}>
-            <IPayScrollView
-              contentContainerStyle={[styles.innerStyle, isSheetOpen && styles.innerStyleOpen]}
-              testID={testID}
-              isGHScrollView
-            >
+            <IPayPressable onPress={toggleSheet}>
+              <IPayView style={[styles.arrowIcon, isSheetOpen && styles.rotateIcon]}>
+                <IPayIcon icon={icons.arrow_up_double} height={24} width={18} color={colors.primary.primary500} />
+              </IPayView>
+            </IPayPressable>
+            <IPayScrollView testID={testID} isGHScrollView scrollEnabled={isSheetOpen}>
               {children}
             </IPayScrollView>
           </IPayView>
-        </IPayLinearGradientView>
-      )}
-      {simpleHandler && (
-        <IPayView testID={testID} style={styles.childContainer}>
-          <IPayView style={[styles.arrowIcon, isSheetOpen && styles.rotateIcon]}>
-            <IPayIcon icon={icons.arrow_up_double} height={24} width={18} color={colors.primary.primary500} />
-          </IPayView>
-          <IPayScrollView testID={testID} isGHScrollView>
-            {children}
-          </IPayScrollView>
-        </IPayView>
-      )}
-      {customHandler && customHandler}
-    </IPayAnimatedView>
+        )}
+        {customHandler && customHandler}
+      </IPayAnimatedView>
+    </>
   );
 };
 

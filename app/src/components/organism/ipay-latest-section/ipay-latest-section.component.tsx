@@ -33,6 +33,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   offersData,
   openBottomSheet,
   openProfileBottomSheet,
+  cards,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -44,12 +45,14 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
 
   const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
 
-  const moveToTransactionHistory = () =>
+  const moveToTransactionHistory = () =>{
+    console.log(cards,'cards navigation')
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
-      isShowCard: false,
+      cards,
+      isShowCard: true,
       isShowAmount: true,
-    });
+    })};
 
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {

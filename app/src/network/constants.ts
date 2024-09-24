@@ -9,6 +9,8 @@ const constants = {
     UNAUTHORIZED: 401,
     FORBIDDEN: 403,
   },
+  API_VERSION_NAME: 'api-version',
+  MAX_RECORD: 'max-record',
 };
 
 export default constants;
