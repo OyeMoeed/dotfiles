@@ -33,15 +33,9 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
       setFilteredListItems(filtered);
     }
   };
-  useEffect(() => {
-    filterListItems();
-  }, []);
 
   useEffect(() => {
-    if (searchText.length > 3) {
-      filterListItems();
-    }
-    if (searchText.length == 0) {
+    if (searchText.length === 0 || searchText.length > 3) {
       filterListItems();
     }
   }, [data, searchText]);
