@@ -28,4 +28,5 @@ export interface IPayFlatlistProps extends FlatListProps<any> {
    * this fixed nested scroll not working issue inside flatlist
    */
   isGHFlatlist?: boolean;
+  shouldFlexGrow?: boolean;
 }

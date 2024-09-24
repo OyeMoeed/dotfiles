@@ -1,3 +1,4 @@
+import constantsNetwork from '@app/network/constants';
 import requestType from '@app/network/request-types.network';
 import constants from '@app/constants/constants';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
@@ -44,8 +45,7 @@ describe('Request Service', () => {
         method: requestType.GET,
         headers: {
           mode: 'TO',
-          // eslint-disable-next-line @typescript-eslint/naming-convention
-          'max-record': 100,
+          [constantsNetwork.MAX_RECORD]: 100,
         },
       });
     });

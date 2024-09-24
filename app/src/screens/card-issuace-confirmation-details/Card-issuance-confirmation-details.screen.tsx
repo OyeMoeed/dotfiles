@@ -18,6 +18,10 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { queryClient } from '@app/network';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
+import { useGetCards } from '@app/network/services/core/transaction/get-cards';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
@@ -33,12 +37,21 @@ const CardIssuanceConfirmationScreen = () => {
   type RouteProps = RouteProp<{ params: { issuanceDetails: ICardIssuanceDetails } }, 'params'>;
   const { issuanceDetails } = route.params;
   const { fullName, availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [isOtpVisbile, setIsOtpVisbile] = useState<boolean>(false);
   const styles = cardIssuaceConfirmationStyles(colors);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
-  const openBottomSheet = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const dispatch = useDispatch();
+
+  const { refetch } = useGetCards({
+    payload: {
+      walletNumber,
+    },
+    refetchOnWindowFocus: false,
+    enabled: false,
+  });
 
   const renderToast = () => {
     showToast({
@@ -117,7 +130,7 @@ const CardIssuanceConfirmationScreen = () => {
     if (!isCheckTermsAndCondition) {
       renderToast();
     } else if (checkAvailableBalance(+getTotalFees())) {
-      openBottomSheet.current?.present();
+      setIsOtpVisbile(true);
     }
   };
   const handleOnCheckPress = () => {
@@ -127,7 +140,7 @@ const CardIssuanceConfirmationScreen = () => {
   const balance = formatNumberWithCommas(availableBalance);
   const onCloseBottomSheet = () => {
     changePinRef.current?.resetInterval();
-    openBottomSheet.current?.close();
+    setIsOtpVisbile(false);
   };
 
   const renderItem = ({ item }: IPayListItemProps) => (
@@ -175,24 +188,27 @@ const CardIssuanceConfirmationScreen = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
+        isVisible={isOtpVisbile}
         heading="CARDS.VIRTUAL_CARD"
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['93%']}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={openBottomSheet}
       >
         <IssueCardPinCreation
           handleOnPressHelp={handleOnPressHelp}
           issuanceDetails={issuanceDetails}
           onSuccess={(cardInfo?: CardInfo) => {
+            queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
+
             onCloseBottomSheet();
+            refetch();
             navigate(screenNames.VIRTUAL_CARD_SUCCESS, { cardInfo });
           }}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose

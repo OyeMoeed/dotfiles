@@ -25,7 +25,6 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = amountInputStyles(colors);
-  const { t } = useTranslation();
   const amountStr = (amount as string) || '';
 
   return (

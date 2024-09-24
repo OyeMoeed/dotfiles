@@ -8,9 +8,9 @@ import { SadadBillItemProps } from '@app/components/organism/ipay-sadad-bill-det
 import { AccountBalanceStatus, FormFields } from '@app/enums/bill-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
-import { useTypedSelector } from '@app/store/store';
 import { useTranslation } from 'react-i18next';
 import { BalanceStatusVariants, IPayBillBalanceProps } from './ipay-bill-balance.interface';
 import onBillBalanceStyles from './ipay-bill-balance.style';
@@ -45,10 +45,10 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
         selectedBills?.map((el) => ({
           billInfoItem: el,
           currency: t('COMMON.SAR'),
-          billTitle: el.nickName,
-          vendor: el.biller.billerDesc,
-          vendorIcon: el.biller.imageURL,
-          billAmount: el.dueAmount,
+          billTitle: el?.nickName,
+          vendor: el?.biller?.billerDesc,
+          vendorIcon: el?.biller?.imageURL,
+          billAmount: el?.dueAmount,
         })),
       );
     }
@@ -104,18 +104,18 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
   );
 
   const billPaymentInfosObject = billsData?.map((el) => ({
-    billerId: el.billInfoItem.biller.billerId,
-    billNumOrBillingAcct: el.billInfoItem.billAccountNumber,
-    amount: Number(el.billAmount),
-    dueDateTime: el.billInfoItem.dueDateTime,
+    billerId: el?.billInfoItem?.biller?.billerId,
+    billNumOrBillingAcct: el?.billInfoItem?.billAccountNumber,
+    amount: Number(el?.billAmount),
+    dueDateTime: el?.billInfoItem?.dueDateTime,
     billIdType: '1', // TODO: not receiving this value from response
     billingCycle: '1', // TODO: need to confirm where can I get this value
-    billIndex: el.billInfoItem.billIndex,
-    serviceDescription: el.billInfoItem.biller.billerCategoryDesc,
-    billerName: el.billInfoItem.biller.billerDesc,
+    billIndex: el?.billInfoItem?.billIndex,
+    serviceDescription: el?.billInfoItem?.biller?.billerCategoryDesc,
+    billerName: el?.billInfoItem?.biller?.billerDesc,
     walletNumber,
-    billNickname: el.billInfoItem.nickName,
-    billerIcon: el.billInfoItem.biller.categoryImageURL,
+    billNickname: el?.billInfoItem?.nickName,
+    billerIcon: el?.billInfoItem?.biller?.categoryImageURL,
   }));
 
   const onPressPay = () => {

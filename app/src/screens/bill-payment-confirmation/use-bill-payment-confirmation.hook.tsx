@@ -3,8 +3,8 @@ import images from '@app/assets/images';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
-  MultiPaymentBillPayloadTypes,
   BillPaymentInfosTypes,
+  MultiPaymentBillPayloadTypes,
   MultiPaymentBillResponseTypes,
 } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import multiPaymentBillService from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.service';
@@ -123,7 +123,6 @@ const useBillPaymentConfirmation = (
           ...el,
           transactionId: getTransactionIds(apiResponse, index),
         })),
-        totalAmount: getTotalAmount,
       });
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));
