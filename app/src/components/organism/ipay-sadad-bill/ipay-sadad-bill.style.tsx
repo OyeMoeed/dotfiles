@@ -45,6 +45,12 @@ const sadadBillStyles = (colors: any) =>
     dueDateText: {
       marginTop: moderateScale(4, 0.3),
     },
+    billSubHeading: {
+      color: colors.natural.natural900,
+    },
+    condtionalWidthSubtitle: {
+      width: '50%',
+    },
   });
 
 export default sadadBillStyles;

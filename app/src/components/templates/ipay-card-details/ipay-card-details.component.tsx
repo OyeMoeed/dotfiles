@@ -30,7 +30,7 @@ const IPayCardDetails: React.FC<cardDetailsProps> = ({ cardDetails }) => {
     [CardDetailsKeys.CARD_TYPE]: cardDetails?.cardType,
     [CardDetailsKeys.CARD_NUMBER]: cardDetails?.cardNumber,
     [CardDetailsKeys.CARD_HOLDER_NAME]: cardDetails?.cardHolderName,
-    [CardDetailsKeys.CVV]: cardDetails?.cvv,
+    [CardDetailsKeys.CVV]: cardDetails?.cvv ?? cardDetails?.cvv2,
     [CardDetailsKeys.EXPIRY_DATE]: cardDetails?.expiryDate,
   };
 

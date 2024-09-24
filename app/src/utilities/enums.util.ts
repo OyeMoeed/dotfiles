@@ -263,8 +263,11 @@ enum BillsStatusTypes {
 }
 
 enum BillStatus {
-  UNPAID = 'Unpaid',
-  PAID = 'Paid',
+  UNPAID = 'BillUnpaid',
+  PAID = 'BillPaid',
+  PARTIALLY_PAID = 'BillPartialPd',
+  OVER_PAID = 'BillOverPd',
+  DEACTIVE = 'BillDeactive',
 }
 interface FilterValue {
   id: string;

@@ -109,7 +109,7 @@ const constants = {
   ],
   HELP_CENTER_TABS: ['All FAQ', 'Account', 'Top-up', 'Money Transfer', 'Others'],
   MOBILE_NUMBER_LENGTH: 10,
-  UNSAVED_NUMBER_LENGTH: 16,
+  UNSAVED_NUMBER_LENGTH: 14,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
@@ -659,6 +659,7 @@ const COUNTRIES = [
   { id: 10, title: 'Iraq' },
 ];
 const SNAP_POINT = {
+  XX_SMALL: ['30%', '90%'],
   X_SMALL: ['35%', '90%'],
   XS_SMALL: ['40%', '90%'],
   MID_SMALL: ['55%', '63%'],
@@ -717,6 +718,13 @@ const TERMS_AND_CONDITIONS_URLS_PROD = {
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const TERMS_AND_CONDITIONS_URLS = IS_PRODUCTION ? TERMS_AND_CONDITIONS_URLS_PROD : TERMS_AND_CONDITIONS_URLS_NON_PROD;
+const BILL_STATUS_CODE = ['BillPaid', 'BillPartialPd', 'BillOverPd', 'BillUnpaid', 'BillDeactive'];
+
+const NAFATH_APP = {
+  ANDROID: 'sa.gov.nic.myid',
+  IOS: 'nafath://home',
+  IOS_ID: 'id1598909871',
+};
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -725,6 +733,7 @@ export {
   ALINMA_TRANSFER_TYPES,
   ANIMATION_DURATION,
   BANKS,
+  BILL_STATUS_CODE,
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
@@ -737,6 +746,7 @@ export {
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   MAX_CONTACTS,
+  NAFATH_APP,
   NO_INVOICE_ACCOUNT_NUMBER,
   PROGRESS_INCREMENT_FACTOR,
   RELATIONSHIPS,

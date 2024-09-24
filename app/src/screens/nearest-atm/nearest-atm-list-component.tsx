@@ -10,8 +10,8 @@ import {
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
-import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 import { AtmProps, NearestAtmListComponentProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
 
@@ -21,19 +21,24 @@ const NearestAtmListComponent: React.FC<NearestAtmListComponentProps> = ({ testI
   const styles = nearestAtmStyles(colors);
   const getDistance = (distance: string | number) => `${distance}  ${t('COMMON.KM')}`;
 
-  const renderAtms = ({ item }: AtmProps) => (
-    <IPayPressable style={styles.atmCard} key={item.address} onPress={() => onPressAtmCard(item)}>
-      <IPayView style={styles.titleView}>
-        <IPayCaption1Text text={item.type} style={styles.typeText} color={colors.natural.natural700} />
-        <IPayView style={styles.fill}>
-          <IPayFootnoteText text={item.title} style={styles.titleText} numberOfLines={2} />
+  const renderAtms = ({ item, index }: AtmProps) => (
+    <IPayView>
+      <IPayPressable style={styles.atmCard} key={item.address} onPress={() => onPressAtmCard(item)}>
+        <IPayView style={styles.titleView}>
+          <IPayCaption1Text text={item.type} style={styles.typeText} color={colors.natural.natural700} />
+          <IPayView style={styles.fill}>
+            <IPayFootnoteText text={item.title} style={styles.titleText} numberOfLines={2} />
+          </IPayView>
         </IPayView>
-      </IPayView>
-      <IPayView style={styles.distanceView}>
-        <IPaySubHeadlineText regular text={getDistance(item?.distance)} style={styles.distanceText} />
-        <IPayIcon icon={icons.infoIcon} />
-      </IPayView>
-    </IPayPressable>
+        <IPayView style={styles.distanceView}>
+          <IPaySubHeadlineText regular text={getDistance(item?.distance)} style={styles.distanceText} />
+          <IPayIcon icon={icons.infoIcon} />
+        </IPayView>
+      </IPayPressable>
+      {index + 1 === nearestAtms?.length && (
+        <IPayFootnoteText text="ATM_WITHDRAWAL.NO_MORE_BRANCHES_OR_ATMS" style={styles.noMoreNearestAtms} />
+      )}
+    </IPayView>
   );
   return (
     <IPayView style={styles.atmListContainer} testID={`${testID}-atm-list`}>

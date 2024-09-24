@@ -1,8 +1,10 @@
 import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import { IPayCaption1Text, IPayIcon, IPayInput, IPayPressable, IPayView } from '@components/atoms/index';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import IPayButton from '../ipay-button/ipay-button.component';
 import { IPayTextInputProps } from './ipay-textinput.interface';
 import textInputStyles from './ipay-textinput.style';
 /**
@@ -31,6 +33,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   assistiveText,
   editable = true,
   rightIcon,
+  onPressCancle,
   leftIcon,
   closeIconStyle,
   showLeftIcon,
@@ -40,6 +43,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   simpleInput = false,
   assistiveTextStyle,
   showFocusStyle,
+  showCancleButton = false,
 }: IPayTextInputProps): React.JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -71,45 +75,58 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
           containerStyle,
         ]}
       >
-        <IPayView style={styles.iconAndInputStyles}>
-          {rightIcon}
-          <IPayView style={styles.outerView}>
-            {!simpleInput && shouldRenderLabel && (
-              <IPayCaption1Text
-                text={label}
-                style={[styles.label, !editable && styles.disableLabel, headingStyles]}
-                regular
+        <IPayView style={styles.container2}>
+          <IPayView style={styles.iconAndInputStyles}>
+            {rightIcon}
+            <IPayView style={styles.outerView}>
+              {!simpleInput && shouldRenderLabel && (
+                <IPayCaption1Text
+                  text={label}
+                  style={[styles.label, !editable && styles.disableLabel, headingStyles]}
+                  regular
+                />
+              )}
+              <IPayInput
+                isFocused={isFocused}
+                returnKeyLabel={returnKeyLabel}
+                handleFocus={handleFocus}
+                handleBlur={handleBlur}
+                testID={testID}
+                text={t(`${text}`)}
+                style={style}
+                caretHidden={caretHidden}
+                placeholder={isFocused || simpleInput ? placeholder : label}
+                placeholderTextColor={placeholderTextColor}
+                autoCapitalize={autoCapitalize}
+                maxLength={maxLength}
+                multiline={multiline}
+                keyboardType={keyboardType}
+                onBlur={onBlur}
+                onFocus={onFocus}
+                onChangeText={onChangeText}
+                onSubmitEditing={onSubmitEditing}
+                editable={editable}
               />
-            )}
-            <IPayInput
-              isFocused={isFocused}
-              returnKeyLabel={returnKeyLabel}
-              handleFocus={handleFocus}
-              handleBlur={handleBlur}
-              testID={testID}
-              text={t(`${text}`)}
-              style={style}
-              caretHidden={caretHidden}
-              placeholder={isFocused || simpleInput ? placeholder : label}
-              placeholderTextColor={placeholderTextColor}
-              autoCapitalize={autoCapitalize}
-              maxLength={maxLength}
-              multiline={multiline}
-              keyboardType={keyboardType}
-              onBlur={onBlur}
-              onFocus={onFocus}
-              onChangeText={onChangeText}
-              onSubmitEditing={onSubmitEditing}
-              editable={editable}
-            />
+            </IPayView>
           </IPayView>
+          {showLeftIcon && (
+            <IPayPressable activeOpacity={1} style={[styles.closeIcon, closeIconStyle]} onPressIn={onClearInput}>
+              {leftIcon || <IPayIcon icon={icons.close} size={18} color={colors.natural.natural500} />}
+            </IPayPressable>
+          )}
         </IPayView>
-        {showLeftIcon && (
-          <IPayPressable activeOpacity={1} style={[styles.closeIcon, closeIconStyle]} onPressIn={onClearInput}>
-            {leftIcon || <IPayIcon icon={icons.close} size={18} color={colors.natural.natural500} />}
-          </IPayPressable>
+        {showCancleButton && (
+          <IPayButton
+            btnText="COMMON.CANCEL"
+            onPress={onPressCancle}
+            btnStyle={styles.cancleButton}
+            textColor={colors.primary.primary600}
+            btnType={buttonVariants.LINK_BUTTON}
+            btnIconsDisabled
+          />
         )}
       </IPayView>
+
       {assistiveText && (
         <IPayCaption1Text
           style={[isError ? styles.errorAssistiveTextText : styles.assistiveText, assistiveTextStyle]}

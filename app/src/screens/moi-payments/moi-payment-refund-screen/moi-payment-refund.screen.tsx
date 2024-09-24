@@ -189,7 +189,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading="LOCAL_TRANSFER.TRANSFER"
+        heading="BILL_PAYMENTS.NEW_MOI_BILL"
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '97%']}

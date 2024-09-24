@@ -1,7 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const addSadadBillStyles = (themeColors: typeof colors) =>
   createStyleSheet({
@@ -82,6 +82,21 @@ const addSadadBillStyles = (themeColors: typeof colors) =>
     },
     bottomSheetContainer: {
       paddingBottom: verticalScale(80),
+    },
+    categoryTabView: {
+      height: verticalScale(24),
+      paddingHorizontal: moderateScale(12, 0.3),
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderRadius: moderateScale(8),
+      backgroundColor: themeColors.natural.natural0,
+      marginTop: verticalScale(8),
+    },
+    categoryTabCViewConditional: {
+      backgroundColor: themeColors.primary.primary500,
+    },
+    categoryItemSeparatorStyle: {
+      width: moderateScale(8, 0.3),
     },
   });
 

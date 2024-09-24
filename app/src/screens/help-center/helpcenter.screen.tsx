@@ -4,8 +4,10 @@ import IPaySectionList from '@app/components/atoms/ipay-section-list/ipay-sectio
 import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules/index';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates/index';
+import constants from '@app/constants/constants';
 import getFAQ from '@app/network/services/core/faq/faq.service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
@@ -17,11 +19,10 @@ import {
   IPayView,
 } from '@components/atoms/index';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Linking, ScrollView, SectionList } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
-import { useTranslation } from 'react-i18next';
-import { buttonVariants } from '@app/utilities';
 import helpCenterStyles from './helpcenter.styles';
 
 const HelpCenter: React.FC = () => {
@@ -55,6 +56,11 @@ const HelpCenter: React.FC = () => {
   // Fetch data from the mock API
 
   const fetchFaqItems = async () => {
+    if (constants.MOCK_API_RESPONSE) {
+      setAllFaqItems(helpCenterMockData);
+      setFaqData(helpCenterMockData);
+      return;
+    }
     try {
       const apiResponse: any = await getFAQ();
 

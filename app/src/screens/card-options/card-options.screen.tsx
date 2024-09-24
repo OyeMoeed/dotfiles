@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
@@ -24,7 +24,6 @@ import {
   resetPinCode,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
-import { useTranslation } from 'react-i18next';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
@@ -32,7 +31,9 @@ import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import checkUserAccess from '@app/utilities/check-user-access';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -180,47 +181,41 @@ const CardOptionsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       },
     };
+
     const apiResponse: any = await changeStatus(payload);
-    deleteCardSheetRef.current.hide();
-    switch (apiResponse?.status?.type) {
-      case ApiResponseStatusType.SUCCESS:
-        navigate(ScreenNames.CARDS);
-        renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
-        break;
-      case apiResponse?.apiResponseNotOk:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
-      case ApiResponseStatusType.FAILURE:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
-      default:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
-        break;
+
+    if (apiResponse) {
+      navigate(ScreenNames.CARDS);
+      renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
     }
   };
 
   const onConfirmDeleteCard = () => {
-    stopCard();
+    deleteCardSheetRef.current.hide();
+
+    setTimeout(() => {
+      stopCard();
+    }, 500);
   };
+
   const showDeleteCardSheet = () => {
     deleteCardSheetRef.current.show();
   };
 
-  const onClickDeleteCardSheet = useCallback((index: number) => {
-    switch (index) {
-      case 0:
-        deleteCardSheetRef.current.hide();
-        break;
-      case 1:
-        onConfirmDeleteCard();
-        break;
-      default:
-        break;
+  const onClickDeleteCardSheet = (index: number) => {
+    if (index === 1) {
+      onConfirmDeleteCard();
+      return;
     }
-  }, []);
+
+    deleteCardSheetRef.current.hide();
+  };
 
   const onNavigateToChooseAddress = () => {
-    navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+    }
   };
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
@@ -338,7 +333,10 @@ const CardOptionsScreen: React.FC = () => {
             subTitle="CARD_OPTIONS.FOUR_DIGIT_PIN"
             detailText="CARD_OPTIONS.CHANGE"
             onPress={() => {
-              openBottomSheet.current?.present();
+              const hasAccess = checkUserAccess();
+              if (hasAccess) {
+                openBottomSheet.current?.present();
+              }
             }}
           />
           <IPayCardOptionsIPayListDescription
