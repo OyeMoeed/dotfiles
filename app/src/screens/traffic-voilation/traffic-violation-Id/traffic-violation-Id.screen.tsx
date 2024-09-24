@@ -27,7 +27,7 @@ const TrafficViolationIDScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle" />
+      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE" titleStyle={styles.screenTitle} />
       <IPayView style={styles.rowStyles}>
         <IPayList
           title="TRAFFIC_VIOLATION.VIOLATOR_ID"
@@ -38,7 +38,7 @@ const TrafficViolationIDScreen: React.FC = () => {
           detailTextStyle={styles.detailsText}
         />
       </IPayView>
-      <IPayView style={styles.rowStyles}>
+      <IPayView style={[styles.rowStyles, styles.foundViolationContainer]}>
         <IPayFootnoteText color={colors.primary.primary900} regular={false} text="TRAFFIC_VIOLATION.FOUND_VIOLATION" />
         <IPayButton
           btnIconsDisabled
@@ -75,6 +75,7 @@ const TrafficViolationIDScreen: React.FC = () => {
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
                 shouldTranslateBtnText={false}
+                btnStyle={styles.btnStyle}
               />
             </IPayView>
           )}

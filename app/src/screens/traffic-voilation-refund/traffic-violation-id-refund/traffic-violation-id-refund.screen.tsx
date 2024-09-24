@@ -27,7 +27,7 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle" />
+      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE" titleStyle={styles.screenTitle} />
       <IPayView style={styles.rowStyles}>
         <IPayList
           title="TRAFFIC_VIOLATION.VIOLATOR_ID"

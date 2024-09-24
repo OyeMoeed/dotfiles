@@ -9,6 +9,7 @@ import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 
+import { t } from 'i18next';
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
 import trafficDetailStyles from './ipay-traffic-detail-form.style';
 
@@ -49,7 +50,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
-  const tabs = ['TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER', 'TRAFFIC_VIOLATION.BY_VIOLATION_ID'];
+  const tabs = [t('TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER'), t('TRAFFIC_VIOLATION.BY_VIOLATION_ID')];
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
