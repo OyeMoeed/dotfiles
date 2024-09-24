@@ -158,7 +158,9 @@ const SendMoneyFormScreen: React.FC = () => {
     if (index === 0) {
       if (selectedId !== '') {
         setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
-        setSelectedContacts(() => selectedContacts.filter((_: string, index: number) => index + 1 !== selectedId));
+        setSelectedContacts(() =>
+          selectedContacts.filter((_: string, selectedIndex: number) => selectedIndex + 1 !== selectedId),
+        );
       }
     }
     removeFormRef?.current?.hide();
