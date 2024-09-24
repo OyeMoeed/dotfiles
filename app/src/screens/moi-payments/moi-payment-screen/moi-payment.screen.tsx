@@ -126,53 +126,52 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const onSubmit = async (data: any) => {
-    console.log('data', data);
+    const dynamicFields = fields
+      .map((item) => {
+        const { label, index, value } = item;
+        const fieldValueFromData = data[index.replace(/\./g, '_')]; // Matching the index from data with its flat key form
 
-    const dynamicFields = fields.map((item) => {
-      const { label, index, value } = item;
-      return {
-        label: label,
-        index: index,
-        value: value,
-        description: label,
-        isFormValid: false,
-      };
-    });
-    console.log('extractedFields', dynamicFields);
-
-    const originalData = revertFlatKeys(data);
-
+        return {
+          label: label,
+          index: index,
+          value: fieldValueFromData !== undefined ? fieldValueFromData : value, // Use value from data if available
+          description: label,
+          isFormValid: !!fieldValueFromData, // Set form validation flag based on field value availability
+        };
+      })
+      .filter((field) => field.value !== undefined);
     const payLoad = {
-      dynamicFields: [
-        {
-          label: 'Violator ID',
-          index: 'BeneficiaryId.OfficialId',
-          value: '1092103737',
-          description: '1092103737',
-          isFormValid: 'false',
-        },
-        {
-          label: 'ID Type',
-          index: 'BeneficiaryId.OfficialIdType',
-          value: 'IQA',
-          description: 'Iqama ID',
-          isFormValid: 'false',
-        },
-        {
-          label: 'Issuing Entity',
-          index: 'ViolationsByCategory.IssuingEntityID',
-          value: '00000002',
-          description: 'Ministry of Interior',
-          isFormValid: 'false',
-        },
-        {
-          label: 'Category',
-          index: 'ViolationsByCategory.ViolationCategoryId',
-          value: '0006',
-          description: 'Deportation Sentences',
-          isFormValid: 'false',
-        },
-      ],
+      dynamicFields: dynamicFields,
+      //  [
+      //   {
+      //     label: 'Violator ID',
+      //     index: 'BeneficiaryId.OfficialId',
+      //     value: '1092103737',
+      //     description: '1092103737',
+      //     isFormValid: 'false',
+      //   },
+      //   {
+      //     label: 'ID Type',
+      //     index: 'BeneficiaryId.OfficialIdType',
+      //     value: 'IQA',
+      //     description: 'Iqama ID',
+      //     isFormValid: 'false',
+      //   },
+      //   {
+      //     label: 'Issuing Entity',
+      //     index: 'ViolationsByCategory.IssuingEntityID',
+      //     value: '00000002',
+      //     description: 'Ministry of Interior',
+      //     isFormValid: 'false',
+      //   },
+      //   {
+      //     label: 'Category',
+      //     index: 'ViolationsByCategory.ViolationCategoryId',
+      //     value: '0006',
+      //     description: 'Deportation Sentences',
+      //     isFormValid: 'false',
+      //   },
+      // ],
       walletNumber: walletNumber,
       refund: false,
     };
