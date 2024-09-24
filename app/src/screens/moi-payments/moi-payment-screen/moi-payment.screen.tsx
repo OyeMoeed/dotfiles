@@ -28,7 +28,8 @@ import moiPaymentStyles from './moi-payment.style';
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
-
+  const [serviceProviderValue, setServiceProviderValue] = useState(null);
+  const [serviceTypeValue, setServiceTypeValue] = useState(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [, setIsRefund] = useState<boolean>(false);
   const [fields, setFields] = useState<DynamicField[]>([]);
@@ -151,6 +152,16 @@ const MoiPaymentScreen: React.FC = () => {
       setFields(updatedFields);
     }
   };
+
+  useEffect(() => {
+    if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
+  }, [serviceProviderValue]);
+
+  useEffect(() => {
+    if (serviceTypeValue) {
+      fetchFields(serviceProviderValue, serviceTypeValue);
+    }
+  }, [serviceTypeValue]);
   return (
     <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
       {({ control, formState: { errors }, handleSubmit }) => {
@@ -158,16 +169,8 @@ const MoiPaymentScreen: React.FC = () => {
           [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
           [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
         } = useWatch({ control });
-
-        useEffect(() => {
-          if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
-        }, [serviceProviderValue]);
-
-        useEffect(() => {
-          if (serviceTypeValue) {
-            fetchFields(serviceProviderValue, serviceTypeValue);
-          }
-        }, [serviceTypeValue]);
+        setServiceProviderValue(serviceProviderValue);
+        setServiceTypeValue(serviceTypeValue);
 
         return (
           <>
