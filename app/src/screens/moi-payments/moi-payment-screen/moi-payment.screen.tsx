@@ -5,6 +5,7 @@ import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dyn
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -14,15 +15,12 @@ import { BillersService } from '@app/network/services/bills-management/get-bille
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-
 import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
-
-import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
-import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import moiPaymentStyles from './moi-payment.style';
@@ -36,8 +34,6 @@ const MoiPaymentScreen: React.FC = () => {
   const [fields, setFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
-  const [selectedBiller, setSelectedBiller] = useState<string>();
-  const [selectedServiceType, setSelectedServiceType] = useState<string>();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const handleTabSelect = useCallback(
@@ -103,10 +99,6 @@ const MoiPaymentScreen: React.FC = () => {
       return serviceList;
     }
   };
-
-  useEffect(() => {
-    onGetBillersServices(selectedBiller);
-  }, [selectedBiller]);
 
   const fetchFields = async (selectedBiller: string, selectedServiceType: string) => {
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
