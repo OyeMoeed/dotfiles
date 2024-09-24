@@ -32,6 +32,8 @@ const MoiPaymentScreen: React.FC = () => {
   const [serviceProviderValue, setServiceProviderValue] = useState(null);
   const [serviceTypeValue, setServiceTypeValue] = useState(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
+  const [selectedBiller, setSelectedBiller] = useState<string>('');
+  const [selectedServiceType, setSelectedServiceType] = useState<string>('');
   const [fields, setFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
@@ -102,6 +104,8 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const fetchFields = async (selectedBiller: string, selectedServiceType: string) => {
+    setSelectedBiller(selectedBiller);
+    setSelectedServiceType(selectedServiceType);
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
