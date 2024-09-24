@@ -2,11 +2,11 @@ import { IPayFootnoteText, IPayView } from '@app/components/atoms';
 
 import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useCallback } from 'react';
-import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
+import React from 'react';
 
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 import IPayCheckboxTitle from '../ipay-checkbox-title/ipay-chekbox-title.component';
 import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
@@ -35,7 +35,6 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   control,
   formSelectedTab,
   handleFormTabSelect,
-  errorMessage,
   fields,
   errors,
   myIdValue,
@@ -43,13 +42,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = trafficDetailStyles(colors);
-  const { t } = useTranslation();
-  const getInputStyles = useCallback(() => {
-    const baseStyle = styles.inputContainerStyle;
-    const additionalStyle = (errorMessage && styles.errorStyle) || (myIdCheck && styles.greyInputStyle);
 
-    return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
-  }, [errorMessage, myIdCheck]);
   const tabs = [t('TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER'), t('TRAFFIC_VIOLATION.BY_VIOLATION_ID')];
 
   return (

@@ -33,7 +33,7 @@ const useTrafficViolation = () => {
   };
 
   const handlePayButton = () => {
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT);
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true });
   };
 
   const getTrafficVoilationData = async () => {

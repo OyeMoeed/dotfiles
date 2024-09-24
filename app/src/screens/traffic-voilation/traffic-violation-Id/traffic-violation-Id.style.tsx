@@ -30,8 +30,9 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
     footerView: {
       position: 'absolute',
       bottom: 0,
-      width: isTablet ? scale(322) : moderateScale(330, 0.35),
       marginBottom: moderateScale(24, 0.3),
+      width: '100%',
+      alignSelf: 'center',
     },
 
     footerViewSecondary: {

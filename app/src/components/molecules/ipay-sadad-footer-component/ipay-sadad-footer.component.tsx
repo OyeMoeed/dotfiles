@@ -86,7 +86,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
         </IPayView>
-        {!warningStatus ? (
+        {!warningStatus && totalAmount ? (
           <IPayView style={styles.totalAmountView}>
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText
