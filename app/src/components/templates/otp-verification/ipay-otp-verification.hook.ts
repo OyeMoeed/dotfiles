@@ -8,6 +8,7 @@ const useOtpVerification = (
   setOtp: (otp: string) => void,
   setOtpError: (error: boolean) => void,
   timeout: number,
+  otp: string,
   onConfirmOtp?: () => void,
 ) => {
   const INITIAL_TIMER = timeout || constants.INITIAL_TIMER;
@@ -55,9 +56,6 @@ const useOtpVerification = (
   const onChangeText = (text: string) => {
     setOtp(text);
     setOtpError(false);
-    if (text?.length === 4) {
-      onConfirmOtp?.();
-    }
   };
 
   useEffect(() => {
@@ -80,6 +78,12 @@ const useOtpVerification = (
       smsListener?.remove?.();
     };
   }, [setOtp]);
+
+  useEffect(() => {
+    if (otp?.length === 4) {
+      onConfirmOtp?.();
+    }
+  }, [otp]);
 
   return { counter, handleRestart, onChangeText, startTimer, clearTimer };
 };

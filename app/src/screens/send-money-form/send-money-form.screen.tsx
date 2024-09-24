@@ -54,7 +54,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const { t } = useTranslation();
 
   const route = useRoute();
-  const { selectedContacts, from, heading, showHistory, activeFriends } = route.params as any;
+  const { selectedContacts, from, heading, setSelectedContacts, showHistory, activeFriends } = route.params as any;
 
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
@@ -158,6 +158,7 @@ const SendMoneyFormScreen: React.FC = () => {
     if (index === 0) {
       if (selectedId !== '') {
         setFormInstances((prevFormInstances) => prevFormInstances.filter((form) => form.id !== selectedId));
+        setSelectedContacts(() => selectedContacts.filter((_: string, index: number) => index + 1 !== selectedId));
       }
     }
     removeFormRef?.current?.hide();
