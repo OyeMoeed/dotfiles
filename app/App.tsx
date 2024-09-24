@@ -17,10 +17,12 @@ import { Host } from 'react-native-portalize';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { queryClient } from '@app/network';
+import usePushNotifications from '@app/hooks/use-push-notifications';
 import appStyles from './app.styles';
 
 const App = (): JSX.Element => {
   const style = appStyles();
+  usePushNotifications();
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
