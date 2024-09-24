@@ -10,7 +10,7 @@ const IPayCategoryCard: FC<IPayCategoryProps> = ({ testID, item, onPressCategory
   const { colors } = useTheme();
   const styles = categoryCardStyle(colors);
   const { image, desc, addtionalAttribute1 } = item;
-  const { selectedLanguage } = useTypedSelector((state) => state.languageReducer);
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
 
   const getTitle = useMemo(() => {
     switch (selectedLanguage) {

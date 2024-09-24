@@ -13,13 +13,19 @@ import dropdownStyles from './ipay-dropdown.styles';
 const IPayDropdownSheet = forwardRef<{}, IPayDropdownComponentSheetProps>((_, ref) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
+  const dispatch = useDispatch();
+  const dropdownData = useTypedSelector((state) => state.dropdownReducer.data);
+  const isSearchable = useTypedSelector((state) => state.dropdownReducer.isSearchable);
+  const size = useTypedSelector((state) => state.dropdownReducer.size);
+  const heading = useTypedSelector((state) => state.dropdownReducer.heading);
+
+  const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
+
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
   const [list, setList] = useState<ListItem[]>([]);
   const [selectedListItem, setSelectedListItem] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
-  const dispatch = useDispatch();
-  const { data: dropdownData, isSearchable, size, heading } = useTypedSelector((state) => state.dropdownReducer);
-  const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
+
   const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();

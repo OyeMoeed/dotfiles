@@ -24,7 +24,7 @@ const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((
   const sheetStyles = styles(colors);
 
   const handleLanguagePress = useLanguageChange(handleClosePress);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const changeMainLanguage = async (language: string, isRTL: boolean, code: LanguageCode) => {
     const deviceInfo = await getDeviceInfo();

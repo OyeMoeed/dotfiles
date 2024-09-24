@@ -54,7 +54,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
   const styles = genratedStyles(colors);
   const { t } = useTranslation();
   const dispatch = useTypedDispatch();
-  const { allowEyeIconFunctionality } = useTypedSelector((state) => state.appDataReducer.appData);
+  const allowEyeIconFunctionality = useTypedSelector((state) => state.appDataReducer.appData.allowEyeIconFunctionality);
   const gradientLocations = [0, 0.8];
 
   const onPressOption = (option: string) => {

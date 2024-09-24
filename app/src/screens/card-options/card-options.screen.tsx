@@ -79,8 +79,8 @@ const CardOptionsScreen: React.FC = () => {
   const { otpConfig } = useConstantData();
   const helpCenterRef = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [pin, setPin] = useState('');
 
   const initOnlinePurchase = () => {

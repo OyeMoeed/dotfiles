@@ -25,7 +25,7 @@ const CardVerificationScreen: React.FC = () => {
 
   const route: any = useRoute();
   const { redirectUrl, transactionRefNumber } = route.params;
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   // const [trials, setTrials] = useState<number>(0);
   const [showWebView, setShowWebView] = useState<boolean>(true);
   let trial = 0;

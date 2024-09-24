@@ -43,8 +43,8 @@ const TransferConfirmation: React.FC = () => {
   const { t } = useTranslation();
   const { showToast } = useToastContext();
   const otpBottomSheetRef = useRef<any>(null);
-  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { userContactInfo } = walletInfo;
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { userContactInfo, walletNumber } = walletInfo;
   const { mobileNumber } = userContactInfo;
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const [beneficiaryData, setBeneficiaryData] = useState();
@@ -57,8 +57,6 @@ const TransferConfirmation: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
-
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     amount,

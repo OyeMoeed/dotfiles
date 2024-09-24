@@ -27,7 +27,7 @@ import useSettings from './use-settings.hook';
 const Settings: React.FC = () => {
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const { allowEyeIconFunctionality, notificationSettings } = appData;
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
   const styles = settingStyles(colors);

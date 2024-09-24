@@ -12,7 +12,7 @@ const useSettings = () => {
   const currentPasscodeRef = useRef<bottomSheetTypes>(null);
   const changePasscodeRef = useRef<bottomSheetTypes>(null);
   const openBottomSheet = useRef<bottomSheetTypes>(null);
-  const { passCode } = useTypedSelector((state) => state.appDataReducer.appData);
+  const passCode = useTypedSelector((state) => state.appDataReducer.appData.passCode);
   const [renderView, setRenderView] = useState(PasscodeTypes.ResetPasscode);
 
   const changeView = (data: PasscodeChangeState) => {

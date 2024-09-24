@@ -48,7 +48,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const [selectedBillsCount, setSelectedBillsCount] = useState<number>(0);
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const { showToast } = useToastContext();
   const tabs = ['SADAD.ACTIVE_BILLS', 'SADAD.INACTIVE_BILLS'];
 

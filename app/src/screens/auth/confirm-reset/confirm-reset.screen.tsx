@@ -24,7 +24,7 @@ const ConfirmPasscode = (props) => {
   const styles = ConfirmPasscodeStyles();
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const { mobileNumber, walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {

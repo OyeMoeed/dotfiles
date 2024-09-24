@@ -12,14 +12,14 @@ import IPayBottomSheetProviderProps from './ipay-bottomsheet-provider.interface'
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const {
-    isTermsConditionsVisible,
-    termsAndConditionsURL,
-    isVirtualCardTermsAndConditions,
-    isNafathTerms,
-    isProfileSheetVisible,
-    isNafathSheetVisible,
-  } = useTypedSelector((state) => state.bottomSheetReducer);
+  const isTermsConditionsVisible = useTypedSelector((state) => state.bottomSheetReducer.isTermsConditionsVisible);
+  const termsAndConditionsURL = useTypedSelector((state) => state.bottomSheetReducer.termsAndConditionsURL);
+  const isNafathTerms = useTypedSelector((state) => state.bottomSheetReducer.isNafathTerms);
+  const isProfileSheetVisible = useTypedSelector((state) => state.bottomSheetReducer.isProfileSheetVisible);
+  const isNafathSheetVisible = useTypedSelector((state) => state.bottomSheetReducer.isNafathSheetVisible);
+  const isVirtualCardTermsAndConditions = useTypedSelector(
+    (state) => state.bottomSheetReducer.isVirtualCardTermsAndConditions,
+  );
 
   const onCloseProfileSheet = () => {
     dispatch(setProfileSheetVisibility(false));

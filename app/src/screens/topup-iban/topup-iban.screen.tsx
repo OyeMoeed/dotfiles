@@ -19,7 +19,7 @@ const TopUpIBAN = () => {
   const styles = topupIbanStyles(colors);
   const { showToast } = useToastContext();
   const [toast, setShowToast] = React.useState<number>(0);
-  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const username = walletInfo?.fullName;
   const iban = walletInfo?.viban;
 

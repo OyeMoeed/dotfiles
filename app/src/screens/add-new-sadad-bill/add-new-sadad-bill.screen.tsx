@@ -69,7 +69,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [selectedService, setSelectedService] = useState<BillersService>();
   const { showToast } = useToastContext();
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(t);
 
