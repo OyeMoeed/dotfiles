@@ -16,7 +16,7 @@ const tabStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'flex-start',
       gap: scaleSize(8),
-      paddingVertical: scaleSize(8),
+      paddingVertical: scaleSize(6),
     },
     tab: {
       height: scaleSize(28),

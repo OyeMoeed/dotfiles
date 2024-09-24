@@ -71,8 +71,7 @@ const IPaySadadBillDetailsBox: React.FC<IPaySadadBillDetailBoxProps> = ({
     const billValue = Number(value);
     const overPaid = billValue - billAmount;
     setAmount(billValue);
-
-    if (billValue > amount && overPaid > 0) {
+    if (overPaid > 0) {
       setOverPayBill(true);
       setOverPayingValue(overPaid);
     } else {

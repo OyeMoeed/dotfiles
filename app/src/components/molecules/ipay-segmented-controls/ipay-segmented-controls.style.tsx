@@ -6,22 +6,31 @@ const tabStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     selectedTab: {
       backgroundColor: colors.primary.primary500,
-      flex: 1,
       borderRadius: moderateScale(10),
+      height: '100%',
+      width: '50%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     unSelectedTab: {
       backgroundColor: colors.backgrounds.transparent,
-      flex: 1,
+      height: '100%',
+      width: '50%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     selected: {
       color: colors.natural.natural0,
     },
     unselected: {
       color: colors.natural.natural500,
+      alignSelf: 'center',
     },
     tabBaseStyles: {
       textAlign: 'center',
-      paddingHorizontal: moderateScale(20),
+      paddingHorizontal: moderateScale(8),
       paddingVertical: moderateScale(6),
       textTransform: 'none',
     },

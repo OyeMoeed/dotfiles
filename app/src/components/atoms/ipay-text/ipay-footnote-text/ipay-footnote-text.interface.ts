@@ -12,7 +12,7 @@ export interface IPayFootnoteTextProps {
   /**
    * The text content to be displayed.
    */
-  text?: string;
+  text?: React.ReactNode | string;
   /**
    * Regular font family for the text.
    */

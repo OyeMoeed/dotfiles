@@ -6,9 +6,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const receiveCallStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
-      flex: 1,
       width: '100%',
-      gap: verticalScale(16),
       alignItems: 'center',
       paddingTop: scaleSize(20),
     },
@@ -25,7 +23,8 @@ const receiveCallStyles = (colors: typeof themeColors) =>
     desStyle: {
       color: colors.primary.primary800,
       textAlign: 'center',
-      marginBottom: moderateScale(8),
+      marginBottom: moderateScale(32),
+      marginTop: verticalScale(16),
     },
     stepStyle: {
       color: colors.primary.primary800,
@@ -43,14 +42,15 @@ const receiveCallStyles = (colors: typeof themeColors) =>
     },
     newCallStyles: {
       color: colors.natural.natural500,
+      marginBottom: verticalScale(12),
     },
     expiredTimerStyle: {
       color: colors.error.error500,
-      bottom: verticalScale(8),
+      marginBottom: verticalScale(32),
     },
     timerStyle: {
       color: colors.natural.natural900,
-      bottom: verticalScale(8),
+      marginBottom: verticalScale(32),
     },
     refreshIcon: {
       height: moderateScale(22),
@@ -58,6 +58,10 @@ const receiveCallStyles = (colors: typeof themeColors) =>
     },
     progressBar: {
       height: verticalScale(4),
+      marginBottom: verticalScale(8),
+    },
+    titleStyle: {
+      marginTop: verticalScale(16),
     },
   });
 
