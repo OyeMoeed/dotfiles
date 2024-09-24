@@ -125,6 +125,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
       otp,
       otpRef,
       deviceInfo: await getDeviceInfo(),
+      cardIndex: currentCard.cardIndex,
     };
     const apiResponse = await printCardService(walletInfo.walletNumber, payload);
     if (apiResponse.successfulResponse) {

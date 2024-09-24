@@ -6,6 +6,7 @@ export interface PrintCardPayloadTypes {
   otp: string; // as per old code
   otpRef: string; // as per old code
   deviceInfo: DeviceInfoProps; // as per old code
+  cardIndex: string;
 }
 
 export interface PrintCardResponseTypes {
