@@ -15,7 +15,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
   }
   return (
     <>
-      {fields.map((field) => (
+      {fields?.map((field) => (
         <IPayView key={field.index} style={[containerStyle]}>
           <DynamicFieldRenderer
             key={field.index}

@@ -176,6 +176,7 @@ react-navigation: Routing and navigation library for React Native apps.
 react-redux: Official React bindings for Redux.
 redux-persist: Library for persisting and rehydrating a Redux store.
 yarn: Package manager for JavaScript.
+react-query: Library for caching api
 
 DevDependencies:
 @babel/core: Core Babel functionality for transpiling JavaScript.

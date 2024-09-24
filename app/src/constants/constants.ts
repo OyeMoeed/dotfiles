@@ -310,7 +310,7 @@ const CARD_DATA = {
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'supports Apple Pay & Mada Pay.',
     ],
     fees: [
       { description: 'Annual fee', fee: '0 SAR' },
@@ -353,12 +353,12 @@ const CARD_DATA = {
 };
 
 const CARD_DATA_PHYSICAL_CARD = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'support Apple Pay & Mada Pay.',
       'Annual fee: 0 SAR.',
       'Replacement fee: 0 SAR.',
       'International transaction fee: 2.2%.',
@@ -372,7 +372,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'International transaction Fee', fee: '9 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -388,7 +388,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -680,23 +680,9 @@ const DASHBOARD_ITEMS = [
 ];
 
 export enum DYNAMIC_FIELDS_TYPES {
-  TEXT = 'text',
-  ALPHA_NO_DIGITS = 'alphaNoDigits',
-  ENGLISH_CHARACTERS = 'englishCharacters',
-  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+  TEXT = 'TEXT',
   LIST_OF_VALUE = 'LIST_OF_VALUE',
-  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
-  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
   NUMBER = 'NUMBER',
-  DATE = 'date',
-  GREGORIAN_DATE = 'gregorianDate',
-  GREGORIAN_DATE_PAST = 'gregorianDatePast',
-  GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
-  HIJRI_DATE = 'hijriDate',
-  HIJRI_DATE_PAST = 'hijriDatePast',
-  HIJRI_DATE_FUTURE = 'hijriDateFuture',
-  BOOLEAN_TYPE = 'booleanType',
-  ENUMERATION = 'enumeration',
 }
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:
