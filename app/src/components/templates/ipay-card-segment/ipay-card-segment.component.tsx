@@ -1,4 +1,4 @@
-import { IPayView } from '@app/components/atoms';
+import { IPayScrollView, IPayView } from '@app/components/atoms';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import useVirtualCardData from '@app/screens/virtual-card/use-virtual-card-data';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -26,9 +26,9 @@ const IPayCardSegment: React.FC<IPayCardSegmentProps> = ({ testID, selectedCardT
         onSelect={handleSelectedTab}
       />
 
-      <IPayView style={styles.flatListContainer}>
+      <IPayScrollView style={styles.flatListContainer}>
         <IPayCardList segmentType={selectedTab} selectedCardType={selectedCardType} cardOption={cardOption} />
-      </IPayView>
+      </IPayScrollView>
     </IPayView>
   );
 };

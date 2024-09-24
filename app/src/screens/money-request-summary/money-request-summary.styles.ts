@@ -47,6 +47,7 @@ const moneyRequestStyles = (theme: typeof colors) =>
       backgroundColor: theme.appGradient.buttonBackground,
       flex: 0,
       padding: moderateScale(16),
+      marginHorizontal: moderateScale(24, 0.3),
       gap: moderateScale(16),
       borderRadius: moderateScale(22),
       marginBottom: moderateScale(8),
