@@ -49,6 +49,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
     setBoxHeight,
     monthlyRemainingOutgoingAmount,
     monthlyOutgoingLimit,
+    ehsanPress,
   }) => {
     const carouselData = useCarouselData();
     const { colors } = useTheme();
@@ -84,7 +85,9 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
           case DashboardOptions.REQUEST_MONEY:
             navigate(screenNames.REQUEST_MONEY);
             break;
-
+          case 'ehsan':
+            ehsanPress();
+            break;
           default:
             break;
         }
@@ -97,7 +100,7 @@ const IPayBalanceBox: React.FC = forwardRef<{}, IPayBalanceBoxProps>(
       <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
         <IPayView style={styles.subContainer}>
           <IPayView style={styles.iconConStyle}>
-            {item.transfer_type === t('HOME.LOCAL_TRANSFER') ? (
+            {item.transfer_type === t('HOME.LOCAL_TRANSFER') || item?.text === t('HOME.EHSAN') ? (
               item?.icon
             ) : (
               <IPayGradientIcon

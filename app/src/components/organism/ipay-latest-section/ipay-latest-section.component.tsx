@@ -45,14 +45,14 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
 
   const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
 
-  const moveToTransactionHistory = () =>{
-    console.log(cards,'cards navigation')
+  const moveToTransactionHistory = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
       cards,
       isShowCard: true,
       isShowAmount: true,
-    })};
+    });
+  };
 
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {

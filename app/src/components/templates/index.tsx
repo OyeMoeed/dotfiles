@@ -14,6 +14,8 @@ import IPayCountryCurrencyBox from './ipay-country-currency-box/ipay-country-cur
 import IPayExpBottomSheet from './ipay-cvv-bottomsheet/ipay-exp-bottomsheet.component';
 import IPayTopUpSelection from './ipay-topup-selection/ipay-topup-selection.component';
 
+export { default as IPayEhsanBottomSheet } from './ipay-ehsan-bottomsheet';
+
 export {
   IPayAddCardBottomsheet,
   IPayBillBalance,
