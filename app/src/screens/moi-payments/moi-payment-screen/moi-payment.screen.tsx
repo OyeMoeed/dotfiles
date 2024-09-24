@@ -24,6 +24,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
@@ -34,7 +35,8 @@ const MoiPaymentScreen: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [, setIsRefund] = useState<boolean>(false);
   const [fields, setFields] = useState<DynamicField[]>([]);
-  const tabs = ['BILL_PAYMENTS.PAYMENT', 'BILL_PAYMENTS.REFUND'];
+  const { t } = useTranslation();
+  const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
   const [selectedBiller, setSelectedBiller] = useState<string>();
   const [selectedServiceType, setSelectedServiceType] = useState<string>();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -124,6 +126,18 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const onSubmit = async (data: any) => {
+    const dynamicFields = fields.map((item) => {
+      const { label, index, value } = item;
+      return {
+        label: label,
+        index: index,
+        value: value,
+        description: label,
+        isFormValid: false,
+      };
+    });
+    console.log('extractedFields', dynamicFields);
+
     const originalData = revertFlatKeys(data);
 
     const payLoad = {
