@@ -15,11 +15,12 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
-import { IPayTransactionItem, IPayTransactionItemProps } from './component/ipay-transaction.interface';
+import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 import { BeneficiaryTransactionItemProps } from '../beneficiary-transaction-history/beneficiary-transaction-history.interface';
@@ -42,7 +43,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [, setIsLoadingW2W] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
@@ -50,7 +50,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const [selectedCard, setSelectedCard] = useState<any>(currentCard);
 
-  const openBottomSheet = (item: IPayTransactionItem | BeneficiaryTransactionItemProps) => {
+  const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
     let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
     const heightMappingType = heightMapping[item.transactionRequestType];
 
@@ -106,8 +106,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     const apiResponse: any = await getTransactions(payload);
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      if (apiResponse?.response?.transactions?.length) {
-        setTransactionsData(apiResponse?.response?.transactions);
+      const transactionsResponse = apiResponse?.response?.transactions || [];
+      if (transactionsResponse?.length) {
+        setTransactionsData(transactionsResponse);
       } else {
         setTransactionsData([]);
         setNoFilterResult(true);
@@ -122,7 +123,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
-    setIsLoadingW2W(true);
     setTransactionsData([]);
     setFilteredData([]);
 
@@ -142,8 +142,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       setTransactionsData(apiResponse?.response?.transactions);
       setFilteredData(apiResponse?.response?.transactions);
     }
-
-    setIsLoadingW2W(false);
   };
 
   const handleReset = () => {
@@ -452,7 +450,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         />
       )}
       <IPayView style={styles.listContainer}>
-        {filteredData && filteredData.length ? renderTrxsList() : renderLoadingWithNoResult()}
+        {filteredData?.length ? renderTrxsList() : renderLoadingWithNoResult()}
       </IPayView>
       <IPayBottomSheet
         heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"

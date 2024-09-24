@@ -7,13 +7,13 @@ import { BeneficiaryCurrenciesReq, WUBeneficiaryCurrenciesProps } from './wu-ben
 import wuBeneficiaryCurrenciesMock from './wu-beneficiary-currencies.mock';
 
 const getWUBeneficiaryCurrencies = async (payload: BeneficiaryCurrenciesReq): Promise<WUBeneficiaryCurrenciesProps> => {
-  const { countryCode } = payload;
+  const { countryCode = 'SA' } = payload;
   if (constants.MOCK_API_RESPONSE) {
     return wuBeneficiaryCurrenciesMock;
   }
   try {
     const apiResponse: ApiResponse<WUBeneficiaryCurrenciesProps> = await apiCall({
-      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.get_western_union_beneficiaries_countries()}/${countryCode}/currencies`,
+      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.get_western_union_beneficiaries_countries()}/${countryCode || 'SA'}/currencies`,
       method: requestType.GET,
     });
 
