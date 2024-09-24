@@ -201,944 +201,203 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   // case 54
   const PAY_ONECARD = transactionRequestType === TransactionTypes.PAY_ONECARD ?? false;
 
+  // case 55
   const PAYMENT_REQUEST = transactionRequestType === TransactionTypes.PAYMENT_REQUEST ?? false;
 
+  const trxTitleAndSubTile = (title: string, subtitle: string) => {
+    return (
+      <>
+        <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
+          {title}
+        </IPayFootnoteText>
+        <IPayCaption1Text
+          numberOfLines={CAPTION_LINES}
+          style={styles.trasnactionTypeText}
+          color={colors.natural.natural900}
+          shouldTranslate={false}
+        >
+          {subtitle}
+        </IPayCaption1Text>
+      </>
+    );
+  };
+
   const renderTrxsItemTitleAndDesc = () => {
-    // view case 1
     if (COUT_MUSANED) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.SALARY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.MUSANED')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.SALARY'), t('TRANSACTION_HISTORY.MUSANED'));
     }
     if (CIN_MUSANED) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.SALARY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.MUSANED')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.SALARY'), t('TRANSACTION_HISTORY.MUSANED'));
     }
     if (PAY_WALLET) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.WALLET_TRANSFER')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.WALLET_TRANSFER'),
       );
     }
     if (COUT_ATM) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.QR_WITHDRAWAL')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.ATM')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.QR_WITHDRAWAL'), t('TRANSACTION_HISTORY.ATM'));
     }
     if (COUT_WU) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.WU_TRANSFER')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.WU_TRANSFER'),
       );
     }
     if (COUT_ALINMA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.ALINMA_TRANSFER')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.ALINMA_TRANSFER'),
       );
     }
     if (CIN_ALINMA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.senderName}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.ALINMA_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(transaction?.senderName, t('TRANSACTION_HISTORY.ALINMA_TRANSFER'));
     }
-    // if (PAY_MRCHNT_IN) {
-    //   return (
-    //     <>
-    //     <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-    //       pending
-    //     </IPayFootnoteText>
-    //     <IPayCaption1Text
-    //       numberOfLines={CAPTION_LINES}
-    //       style={styles.trasnactionTypeText}
-    //       color={colors.natural.natural900}
-    //       shouldTranslate={false}
-    //     >
-    //       pending
-    //     </IPayCaption1Text>
-    //     </>
-    //   );
-    // }
-    // if (PAY_MRCHNT_OUT) {
-    //   return (
-    //     <>
-    //     <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-    //     pending
-    //     </IPayFootnoteText>
-    //     <IPayCaption1Text
-    //       numberOfLines={CAPTION_LINES}
-    //       style={styles.trasnactionTypeText}
-    //       color={colors.natural.natural900}
-    //       shouldTranslate={false}
-    //     >
-    //       pending
-    //     </IPayCaption1Text>
-    //     </>
-    //   );
-    // }
-    // if (PAY_MRCHNT_BILL) {
-    //   return (
-    //     <>
-    //     <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-    //     pending
-    //     </IPayFootnoteText>
-    //     <IPayCaption1Text
-    //       numberOfLines={CAPTION_LINES}
-    //       style={styles.trasnactionTypeText}
-    //       color={colors.natural.natural900}
-    //       shouldTranslate={false}
-    //     >
-    //       dd
-    //     </IPayCaption1Text>
-    //     </>
-    //   );
-    // }
     if (REFUND) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant or Service Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.REFUND')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant or Service Name]', t('TRANSACTION_HISTORY.REFUND'));
     }
     if (CIN_CARD) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.ADD_MONEY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.CARD')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), t('TRANSACTION_HISTORY.CARD'));
     }
     if (CIN_CARD_MADA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.ADD_MONEY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.MADA_CARD')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), t('TRANSACTION_HISTORY.MADA_CARD'));
     }
     if (CIN_CARD_VISA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.ADD_MONEY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.VISA_CARD')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), t('TRANSACTION_HISTORY.VISA_CARD'));
     }
     if (CIN_CARD_VISA_APAY) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.ADD_MONEY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            Apple Pay
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), 'Apple Pay');
     }
     if (CIN_CARD_MASTER) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.ADD_MONEY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.MASTER_CARD')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), t('TRANSACTION_HISTORY.MASTER_CARD'));
     }
     if (CIN_WU_REV) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            Transfer Reversal
-            {t('TRANSACTION_HISTORY.TRANSFER_REVERSAL')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.WU_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.WU_TRANSFER'));
     }
     if (COUT_MOBILE) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.WALLET_TRANSFER')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.WALLET_TRANSFER'),
       );
     }
     if (CIN_SARIE) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.senderName}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.LOCAL_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(transaction?.senderName, t('TRANSACTION_HISTORY.LOCAL_TRANSFER'));
     }
     if (COUT_SARIE) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.LOCAL_TRANSFER')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.LOCAL_TRANSFER'),
       );
     }
     if (COUT_IPS) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.LOCAL_TRANSFER')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.LOCAL_TRANSFER'),
       );
     }
     if (PAY_BILL) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.BILL_PAYMENT')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.SADAD')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.BILL_PAYMENT'), t('TRANSACTION_HISTORY.SADAD'));
     }
     if (CARD_ISSUE) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.CARD_ISSUANCE')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.FEES')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.CARD_ISSUANCE'), t('TRANSACTION_HISTORY.FEES'));
     }
     if (CARD_REISSUE) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.CARD_REISSUANCE')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.FEES')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.CARD_REISSUANCE'), t('TRANSACTION_HISTORY.FEES'));
     }
     if (CARD_REPLACE) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.CARD_REPLACEMENT')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.FEES')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.CARD_REPLACEMENT'), t('TRANSACTION_HISTORY.FEES'));
     }
     if (PAY_VCARD) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.CARD_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.CARD_PURCHASE'));
     }
     if (PAY_VCARD_POS) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.POS_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.POS_PURCHASE'));
     }
     if (PAY_VCARD_ECOM) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.INTERNET_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (PAY_VCARD_SETTLE) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.INTERNET_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (PAY_MOI) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [MOI service Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.MOI_PAYMENT')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[MOI service Name]', t('TRANSACTION_HISTORY.MOI_PAYMENT'));
     }
     if (BKF_TRANSFER) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.WALLET_CREDIT')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.INTERNAL_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.WALLET_CREDIT'), t('TRANSACTION_HISTORY.INTERNAL_TRANSFER'));
     }
     if (CIN_SARIE_REV) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.LOCAL_TRANSFER_REVERSAL')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.LOCAL_TRANSFER_REVERSAL'),
       );
     }
     if (CIN_WALLET) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.senderName}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.ALINMA_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(transaction?.senderName, t('TRANSACTION_HISTORY.ALINMA_TRANSFER'));
     }
     if (CIN_CASH_BACK) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.CASH_BACK')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {/* empty desc */}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.CASH_BACK'), '');
     }
     if (COUT_EXPRESS) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.ALINMA_DIRECT_TRANSFER')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.ALINMA_DIRECT_TRANSFER'),
       );
     }
     if (CIN_EXPRESS_REV) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.TRANSFER_REVERSAL')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.ALINMAPAY_DIRECT')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.ALINMAPAY_DIRECT'));
     }
     if (PAY_VCARD_REFUND) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.INTERNET_PURCHASE_OR_POS_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE_OR_POS_PURCHASE'));
     }
     if (COUT_GIFT) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.GIFT')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.GIFT'),
       );
     }
     if (PAY_VCARD_POS_MADA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.POS_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.POS_PURCHASE'));
     }
     if (PAY_VCARD_POS_VISA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.POS_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.POS_PURCHASE'));
     }
-    // if (PAY_VCARD_POS_NAQD_MADA) {
-    //   return (
-    //     <>
-    //     <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-    //       s
-    //     </IPayFootnoteText>
-    //     <IPayCaption1Text
-    //       numberOfLines={CAPTION_LINES}
-    //       style={styles.trasnactionTypeText}
-    //       color={colors.natural.natural900}
-    //       shouldTranslate={false}
-    //     >
-    //       dd
-    //     </IPayCaption1Text>
-    //     </>
-    //   );
-    // }
-    // if (PAY_VCARD_POS_NAQD_VISA) {
-    //   return (
-    //     <>
-    //     <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-    //       s
-    //     </IPayFootnoteText>
-    //     <IPayCaption1Text
-    //       numberOfLines={CAPTION_LINES}
-    //       style={styles.trasnactionTypeText}
-    //       color={colors.natural.natural900}
-    //       shouldTranslate={false}
-    //     >
-    //       dd
-    //     </IPayCaption1Text>
-    //     </>
-    //   );
-    // }
-    // if (PAY_VCARD_POS_NAQD) {
-    //   return (
-    //     <>
-    //     <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-    //       s
-    //     </IPayFootnoteText>
-    //     <IPayCaption1Text
-    //       numberOfLines={CAPTION_LINES}
-    //       style={styles.trasnactionTypeText}
-    //       color={colors.natural.natural900}
-    //       shouldTranslate={false}
-    //     >
-    //       dd
-    //     </IPayCaption1Text>
-    //     </>
-    //   );
-    // }
     if (PAY_VCARD_ECOM_MADA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.INTERNET_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (PAY_VCARD_ECOM_VISA) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.INTERNET_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
     }
     if (COUT_ALINMA_REV) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.TRANSFER_REVERSAL')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.ALINMA_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.ALINMA_TRANSFER'));
     }
     if (COUT_SARIE_REV) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.TRANSFER_REVERSAL')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.LOCAL_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.LOCAL_TRANSFER'));
     }
     if (COUT_SWIFT_REV) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.REVERSE_INCOMING_TRANSFER')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.SWIFT_TRANSFER')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.REVERSE_INCOMING_TRANSFER'), t('TRANSACTION_HISTORY.SWIFT_TRANSFER'));
     }
     if (REFUND_SADAD_REV) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.BILL_REFUND_REVERSAL')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.SADAD')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.BILL_REFUND_REVERSAL'), t('TRANSACTION_HISTORY.SADAD'));
     }
     if (CASHBACK) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.PROMO_CASHBACK')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.CASHBACK')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.PROMO_CASHBACK'), t('TRANSACTION_HISTORY.CASHBACK'));
     }
     if (CIN_VISA_CASHBACK) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.CARD_CASHBACK')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.CASHBACK')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.CARD_CASHBACK'), t('TRANSACTION_HISTORY.CASHBACK'));
     }
     if (CIN_CARD_MADA_APAY) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.ADD_MONEY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            Apple Pay
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), 'Apple Pay');
     }
     if (CIN_CARD_MASTER_APAY) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {t('TRANSACTION_HISTORY.ADD_MONEY')}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            Apple Pay
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), 'Apple Pay');
     }
     if (PAY_ONECARD) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            [Merchant Name]
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.MARKETPLACE_PURCHASE')}
-          </IPayCaption1Text>
-        </>
-      );
+      return trxTitleAndSubTile('[Merchant Name]', t('TRANSACTION_HISTORY.MARKETPLACE_PURCHASE'));
     }
     if (PAYMENT_REQUEST) {
-      return (
-        <>
-          <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-            {transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber}
-          </IPayFootnoteText>
-          <IPayCaption1Text
-            numberOfLines={CAPTION_LINES}
-            style={styles.trasnactionTypeText}
-            color={colors.natural.natural900}
-            shouldTranslate={false}
-          >
-            {t('TRANSACTION_HISTORY.MONEY_REQUEST')}
-          </IPayCaption1Text>
-        </>
+      return trxTitleAndSubTile(
+        transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
+        t('TRANSACTION_HISTORY.MONEY_REQUEST'),
       );
     }
   };
