@@ -19,7 +19,7 @@ const IPayTitle2Text: React.FC<IPayTitle2TextProps> = ({
   color,
   shouldTranslate = true,
 }: IPayTitle2TextProps) => {
-  const textColor = { color };
+  const textColor = color ? { color } : {};
   return (
     <IPayText
       testID={`${testID}-title2-text`}

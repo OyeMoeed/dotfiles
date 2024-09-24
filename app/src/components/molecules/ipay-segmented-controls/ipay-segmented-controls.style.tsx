@@ -30,7 +30,7 @@ const tabStyles = (colors: typeof themeColors) =>
     },
     tabBaseStyles: {
       textAlign: 'center',
-      paddingHorizontal: moderateScale(20),
+      paddingHorizontal: moderateScale(8),
       paddingVertical: moderateScale(6),
       textTransform: 'none',
     },
