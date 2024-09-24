@@ -5,7 +5,9 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-bill/prepare-moi-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -27,6 +29,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
   const { billData } = route?.params || {};
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
 
   const {
     otpBottomSheetRef,
@@ -57,7 +60,8 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   };
 
   const onCloseBottomSheet = () => {
-    otpBottomSheetRef?.current?.close();
+    setOtpSheetVisible(false);
+    setOtpError(false);
   };
 
   const onPressHelp = () => {
@@ -74,7 +78,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
 
     const apiResponse = await prepareMoiBill(PaymentType.MOI, payLoad);
     if (apiResponse?.successfulResponse) {
-      otpBottomSheetRef?.current?.present();
+      setOtpSheetVisible(true);
     }
   };
 
@@ -112,13 +116,13 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
           disableBtnIcons
         />
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="BILL_PAYMENTS.NEW_MOI_BILL"
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '97%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={otpBottomSheetRef}
+        isVisible={isOtpSheetVisible}
         bold
         cancelBnt
       >
@@ -134,8 +138,9 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}
+          toastContainerStyle={styles.toastContainerStyle}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
 
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"

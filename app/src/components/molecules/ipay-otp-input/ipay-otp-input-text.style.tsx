@@ -18,7 +18,6 @@ const genratedStyles = (colors: any) =>
       padding: moderateVerticalScale(11, 0.3),
       alignItems: 'center',
       justifyContent: 'center',
-      marginHorizontal: 6,
     },
     underlineStyleHighLighted: {
       backgroundColor: colors.natural.natural0,
@@ -36,7 +35,9 @@ const genratedStyles = (colors: any) =>
       width: '90%',
       textAlign: 'left',
     },
-    codeFieldRoot: {},
+    codeFieldRoot: {
+      gap: moderateScale(12),
+    },
   });
 
 export default genratedStyles;

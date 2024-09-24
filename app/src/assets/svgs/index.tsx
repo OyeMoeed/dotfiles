@@ -34,16 +34,16 @@ import PointRedemptionPlus from './point-redemption-plus.svg';
 import ProfileIcon from './profile-circle.svg';
 import ReceiptIcon from './receipt-item1.svg';
 import Refresh2Icon from './refresh-2.svg';
+import DottedRefresh from './refresh-dotted.svg';
 import RefreshIcon from './refresh.svg';
+import SearchNormalIcon from './search-normal.svg';
 import Send2Icon from './send-2.svg';
 import ShoppingCartIcon from './shopping-cart.svg';
 import TrashIcon from './trash.svg';
-import DottedRefresh from './refresh-dotted.svg';
 
 export {
   AlimapayLogo,
   Alinma,
-  DottedRefresh,
   AlinmaLogo,
   ArrangeSquare2,
   ArrowSquareRightIcon,
@@ -53,6 +53,7 @@ export {
   CallOutgoing,
   CallOutgoingIcon,
   CardIcon,
+  DottedRefresh,
   ExportIcon,
   FaceId,
   FallbackImage,
@@ -79,6 +80,7 @@ export {
   ReceiptIcon,
   Refresh2Icon,
   RefreshIcon,
+  SearchNormalIcon,
   Send2Icon,
   ShoppingCartIcon,
   TrashIcon,
