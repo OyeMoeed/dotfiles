@@ -683,6 +683,20 @@ export enum DYNAMIC_FIELDS_TYPES {
   TEXT = 'TEXT',
   LIST_OF_VALUE = 'LIST_OF_VALUE',
   NUMBER = 'NUMBER',
+  GREGORIAN_DATE = 'gregorianDate',
+  GREGORIAN_DATE_PAST = 'gregorianDatePast',
+  GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
+  HIJRI_DATE = 'hijriDate',
+  HIJRI_DATE_PAST = 'hijriDatePast',
+  HIJRI_DATE_FUTURE = 'hijriDateFuture',
+  BOOLEAN_TYPE = 'booleanType',
+  DATE = 'date',
+  ENUMERATION = 'enumeration',
+  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
+  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
+  ALPHA_NO_DIGITS = 'alphaNoDigits',
+  ENGLISH_CHARACTERS = 'englishCharacters',
+  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
 }
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:
