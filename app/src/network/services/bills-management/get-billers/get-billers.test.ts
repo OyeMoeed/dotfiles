@@ -1,15 +1,15 @@
-import apiCall from '@network/services/api-call.service';
 import constants from '@app/constants/constants';
-import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import requestType from '@app/network/request-types.network';
-import getBillersService from './get-billers.service';
+import { ApiResponseStatusType } from '@app/utilities/enums.util';
+import apiCall from '@network/services/api-call.service';
+import { GetBillersPayloadTypes, GetBillersResponseTypes } from './get-billers.interface';
 import getBillersMockResponse from './get-billers.mock';
-import { GetBillersResponseTypes, GetBillersPayloadTypes } from './get-billers.interface';
+import getBillers from './get-billers.service';
 
 // Mock the apiCall function
 jest.mock('@network/services/api-call.service');
 
-describe('getBillersService', () => {
+describe('getBillers', () => {
   const payload: GetBillersPayloadTypes = {
     includeBillerDetails: 'false',
     deviceInfo: {
@@ -28,7 +28,7 @@ describe('getBillersService', () => {
   it('should return mock data when MOCK_API_RESPONSE is true', async () => {
     constants.MOCK_API_RESPONSE = true;
 
-    const response = await getBillersService(payload);
+    const response = await getBillers(payload);
 
     expect(response).toEqual(getBillersMockResponse);
   });
@@ -40,7 +40,7 @@ describe('getBillersService', () => {
 
     (apiCall as jest.Mock).mockResolvedValue(apiResponse);
 
-    const response = await getBillersService(payload);
+    const response = await getBillers(payload);
 
     expect(apiCall).toHaveBeenCalledWith({
       endpoint: expect.any(String),
@@ -68,7 +68,7 @@ describe('getBillersService', () => {
 
     (apiCall as jest.Mock).mockResolvedValue(apiResponse);
 
-    const response = await getBillersService(payload);
+    const response = await getBillers(payload);
 
     expect(response).toEqual({ apiResponseNotOk: true, apiResponse });
   });
@@ -80,7 +80,7 @@ describe('getBillersService', () => {
 
     (apiCall as jest.Mock).mockRejectedValue(new Error(errorMessage));
 
-    const response = await getBillersService(payload);
+    const response = await getBillers(payload);
 
     expect(response).toEqual({ error: errorMessage });
   });
@@ -90,7 +90,7 @@ describe('getBillersService', () => {
 
     (apiCall as jest.Mock).mockRejectedValue(new Error());
 
-    const response = await getBillersService(payload);
+    const response = await getBillers(payload);
 
     expect(response).toEqual({ error: 'Unknown error' });
   });

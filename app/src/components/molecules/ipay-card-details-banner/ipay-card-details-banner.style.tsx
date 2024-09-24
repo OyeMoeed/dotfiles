@@ -52,7 +52,7 @@ const styles = createStyleSheet({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingVertical: scaleSize(16),
-    paddingHorizontal: moderateScale(24),
+    paddingHorizontal: moderateScale(20),
   },
 });
 export default styles;

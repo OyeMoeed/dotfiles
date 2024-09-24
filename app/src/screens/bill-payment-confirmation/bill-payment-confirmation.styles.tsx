@@ -13,6 +13,9 @@ const billPaymentStyles = (themeColors: typeof colors) =>
       margin: moderateScale(24),
       marginVertical: moderateScale(0),
     },
+    consditioanlFooterStyle: {
+      height: verticalScale(162),
+    },
     darkBlueText: {
       color: themeColors.primary.primary900,
     },

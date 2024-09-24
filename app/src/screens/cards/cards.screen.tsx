@@ -107,31 +107,34 @@ const CardsScreen: React.FC = () => {
   );
 
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
-    if (constants.MOCK_API_RESPONSE) {
-      setOtpRef('1111');
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      if (constants.MOCK_API_RESPONSE) {
+        setOtpRef('1111');
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
+        otpVerificationRef?.current?.resetInterval();
+        return;
+      }
+      const payload: prepareShowDetailsProp = {
+        walletNumber,
+        body: {
+          cardIndex: currentCard?.cardIndex,
+          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        },
+      };
+      const apiResponse: any = await prepareShowCardDetails(payload);
+      if (apiResponse) {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
       }
       otpVerificationRef?.current?.resetInterval();
-      return;
     }
-    const payload: prepareShowDetailsProp = {
-      walletNumber,
-      body: {
-        cardIndex: currentCard?.cardIndex,
-        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      },
-    };
-    const apiResponse: any = await prepareShowCardDetails(payload);
-    if (apiResponse) {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present();
-      }
-    }
-    otpVerificationRef?.current?.resetInterval();
   };
 
   const onPinCodeSheet = () => {
@@ -303,7 +306,7 @@ const CardsScreen: React.FC = () => {
       );
     }
 
-    if (CardScreenCurrentState.HAS_DATA) {
+    if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
       return (
         <>
           <IPayView style={styles.cardsContainer}>
