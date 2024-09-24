@@ -22,6 +22,7 @@ import {
   changeStatus,
   prepareResetCardPinCode,
   resetPinCode,
+  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
@@ -34,6 +35,8 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import checkUserAccess from '@app/utilities/check-user-access';
+import { queryClient } from '@app/network';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -82,6 +85,14 @@ const CardOptionsScreen: React.FC = () => {
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [pin, setPin] = useState('');
+
+  const { refetch } = useGetCards({
+    payload: {
+      walletNumber,
+    },
+    refetchOnWindowFocus: false,
+    enabled: false,
+  });
 
   const initOnlinePurchase = () => {
     if (currentCard.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
@@ -185,6 +196,8 @@ const CardOptionsScreen: React.FC = () => {
     const apiResponse: any = await changeStatus(payload);
 
     if (apiResponse) {
+      queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
+      refetch();
       navigate(ScreenNames.CARDS);
       renderToast('CARD_OPTIONS.CARD_HAS_BEEN_DELETED', true, icons.trash, true);
     }
