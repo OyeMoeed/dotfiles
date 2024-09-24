@@ -10,7 +10,10 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
   const renderField = () => {
     // Replace "." with "_" to flatten the name
     const flatKey = field.index.replace(/\./g, '_');
-    let errorMessage;
+    // let errorMessage
+    // Fetch the error message before the switch statement
+    const errorMessage = get(control?._formState?.errors, `${flatKey}.message`, '');
+
     switch (field.type) {
       case DYNAMIC_FIELDS_TYPES.TEXT:
       case DYNAMIC_FIELDS_TYPES.NUMBER:
@@ -20,7 +23,6 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             control={control}
             defaultValue={field.value}
             render={({ field: { onChange, value }, formState: { errors } }) => {
-              errorMessage = get(errors, `${flatKey}.message`, '');
               return (
                 <IPayAnimatedTextInput
                   label={field.label}
@@ -44,8 +46,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             name={flatKey}
             control={control}
             defaultValue={field.value}
-            render={({ field: { value, onChange }, formState: { errors } }) => {
-              errorMessage = get(errors, `${flatKey}.message`, '');
+            render={({ field: { value, onChange } }) => {
               return (
                 <IPayDropdownSelect
                   data={field.lovList}
@@ -61,7 +62,6 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                   valueKey="code"
                   disabled={field.disable}
                   errorMessage={errorMessage as string}
-              
                 />
               );
             }}
