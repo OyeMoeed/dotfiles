@@ -1,5 +1,7 @@
+import { IPayDatePicker } from '@app/components/atoms';
 import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
+import { DateFieldTypes } from '@app/utilities';
 import get from 'lodash/get';
 import React from 'react';
 import { Controller } from 'react-hook-form';
@@ -87,6 +89,34 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                   valueKey="code"
                   disabled={field.disable}
                   errorMessage={errorMessage as string}
+                />
+              );
+            }}
+          />
+        );
+      case DYNAMIC_FIELDS_TYPES.DATE:
+      case DYNAMIC_FIELDS_TYPES.GREGORIAN_DATE:
+      case DYNAMIC_FIELDS_TYPES.GREGORIAN_DATE_PAST:
+      case DYNAMIC_FIELDS_TYPES.GREGORIAN_DATE_FUTURE:
+      case DYNAMIC_FIELDS_TYPES.HIJRI_DATE:
+      case DYNAMIC_FIELDS_TYPES.HIJRI_DATE_PAST:
+      case DYNAMIC_FIELDS_TYPES.HIJRI_DATE_FUTURE:
+        return (
+          <Controller
+            name={flatKey}
+            control={control}
+            defaultValue={field.value}
+            render={({ field: { onChange, value }, formState: { errors } }) => {
+              const maximumDate = field?.type.includes(DateFieldTypes.Past) ? new Date() : null;
+              const minimumDate = field?.type.includes(DateFieldTypes.Future) ? new Date() : null;
+              return (
+                <IPayDatePicker
+                  maximumDate={maximumDate}
+                  minimumDate={minimumDate}
+                  value={value}
+                  isError={!!get(errors, flatKey)}
+                  onDateChange={onChange}
+                  assistiveText={errorMessage as string}
                 />
               );
             }}
