@@ -23,6 +23,7 @@ import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import { RequiredInPaymentOrRefund } from './moi-payment.interface';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
@@ -104,8 +105,21 @@ const MoiPaymentScreen: React.FC = () => {
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
+      const filteredFields = fetchedFields.filter((field) => {
+        if (selectedTab === MoiPaymentTypes.REFUND) {
+          return (
+            field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.REFUND ||
+            field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.BOTH
+          );
+        } else {
+          return (
+            field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.PAYMENT ||
+            field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.BOTH
+          );
+        }
+      });
 
-      const updatedFields = [...fields, ...fetchedFields];
+      const updatedFields = [...fields, ...filteredFields];
 
       setFields(updatedFields);
     }

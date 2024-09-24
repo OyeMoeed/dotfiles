@@ -8,5 +8,11 @@ interface MoiFormFormValues {
   myIdInput: string;
   myIdCheck?: boolean;
 }
+const RequiredInPaymentOrRefund = {
+  PAYMENT: 'PAYMENT',
+  REFUND: 'REFUND',
+  BOTH: 'BOTH',
+};
+export { RequiredInPaymentOrRefund };
 
 export default MoiFormFormValues;
