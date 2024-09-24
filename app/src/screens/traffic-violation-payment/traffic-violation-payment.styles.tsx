@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale } from 'react-native-size-matters';
 
-const billPaymentStyles = (colors: typeof colors) =>
+const billPaymentStyles = () =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -14,7 +14,6 @@ const billPaymentStyles = (colors: typeof colors) =>
       borderRadius: moderateScale(22),
       marginHorizontal: moderateScale(24),
     },
-
     listBottomView: {
       marginVertical: moderateScale(12),
     },
@@ -52,7 +51,6 @@ const billPaymentStyles = (colors: typeof colors) =>
       justifyContent: 'center',
       alignItems: 'center',
     },
-
     footerContainer: {
       paddingTop: moderateScale(12, 0.3),
       marginBottom: moderateScale(6, 0.3),
