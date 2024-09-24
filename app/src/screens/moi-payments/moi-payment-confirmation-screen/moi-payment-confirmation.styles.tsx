@@ -38,6 +38,9 @@ const moiPaymentConfirmationStyls = () =>
       height: moderateScale(34, 0.3),
       borderRadius: moderateScale(12, 0.3),
     },
+    toastContainerStyle: {
+      bottom: moderateScale(45),
+    },
   });
 
 export default moiPaymentConfirmationStyls;
