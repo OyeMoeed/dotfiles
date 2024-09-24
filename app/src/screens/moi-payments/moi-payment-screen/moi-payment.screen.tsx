@@ -130,6 +130,7 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const onSubmit = async (data: any) => {
+    const excludedIndices = [MoiPaymentFormFields.SERVICE_TYPE, MoiPaymentFormFields.SERVICE_PROVIDER];
     const dynamicFields = fields
       .map((item) => {
         const { label, index, value } = item;
@@ -143,39 +144,12 @@ const MoiPaymentScreen: React.FC = () => {
           isFormValid: !!fieldValueFromData, // Set form validation flag based on field value availability
         };
       })
-      .filter((field) => field.value !== undefined);
+      .filter((field) => {
+        return field.value !== undefined && !excludedIndices.includes(field.index);
+      });
+
     const payLoad = {
       dynamicFields: dynamicFields,
-      //  [
-      //   {
-      //     label: 'Violator ID',
-      //     index: 'BeneficiaryId.OfficialId',
-      //     value: '1092103737',
-      //     description: '1092103737',
-      //     isFormValid: 'false',
-      //   },
-      //   {
-      //     label: 'ID Type',
-      //     index: 'BeneficiaryId.OfficialIdType',
-      //     value: 'IQA',
-      //     description: 'Iqama ID',
-      //     isFormValid: 'false',
-      //   },
-      //   {
-      //     label: 'Issuing Entity',
-      //     index: 'ViolationsByCategory.IssuingEntityID',
-      //     value: '00000002',
-      //     description: 'Ministry of Interior',
-      //     isFormValid: 'false',
-      //   },
-      //   {
-      //     label: 'Category',
-      //     index: 'ViolationsByCategory.ViolationCategoryId',
-      //     value: '0006',
-      //     description: 'Deportation Sentences',
-      //     isFormValid: 'false',
-      //   },
-      // ],
       walletNumber: walletNumber,
       refund: false,
     };
