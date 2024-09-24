@@ -3,16 +3,16 @@ import requestType from '@app/network/request-types.network';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import apiCall from '@network/services/api-call.service';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
-import { InquireBillPayloadProps } from './inquire-bill.interface';
-import saveBillMock from './inquire-bill.mock';
+import { SaveBillPayloadTypes } from './save-bill.interface';
+import saveBillMockResponse from './save-bill.mock';
 
-const inquireBillService = async (payload: InquireBillPayloadProps): Promise<unknown> => {
+const saveBillService = async (payload: SaveBillPayloadTypes): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
-    return saveBillMock;
+    return saveBillMockResponse;
   }
   try {
     const apiResponse: any = await apiCall({
-      endpoint: BILLS_MANAGEMENT_URLS.IQUIRE_BILL(payload),
+      endpoint: BILLS_MANAGEMENT_URLS.SAVE_BILL(),
       method: requestType.POST,
       payload,
     });
@@ -27,4 +27,4 @@ const inquireBillService = async (payload: InquireBillPayloadProps): Promise<unk
   }
 };
 
-export default inquireBillService;
+export default saveBillService;

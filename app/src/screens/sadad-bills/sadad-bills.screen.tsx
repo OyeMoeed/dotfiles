@@ -57,7 +57,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     setSelectedBillsCount(count);
   };
 
-  const multipleBillsSelected = selectedBillsCount > 1;
+  const multipleBillsSelected = selectedBillsCount >= 1;
 
   const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -93,17 +93,23 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   useEffect(() => {
-    setActiveBillsData(sadadBills);
-    getSelectedBillsCount(sadadBills);
+    if (sadadBills) {
+      setActiveBillsData(sadadBills);
+      getSelectedBillsCount(sadadBills);
+    } else {
+      getBills(BillsStatusTypes.ACTIVE_BILLS);
+    }
   }, []);
 
   const renderButtonText = () => {
-    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount), 0);
+    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
 
     return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
   };
 
-  const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
+  /// TODO there is API dependency for this and that is in progress, this will be update as soon as the API issue gets resolved.
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const onPressPartialPay = () => navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true });
 
   const renderButtonRightIcon = () =>
     !multipleBillsSelected ? (
@@ -131,17 +137,13 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
     const apiResponse: any = await deleteBill(prepareLoginPayload);
     if (apiResponse.status.type === APIResponseType.SUCCESS) {
-      setActiveBillsData((prevBillsData) => {
-        const billToDelete = prevBillsData.find((bill) => bill.billId === selectedBillsId);
-        const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
-
+      const billToDelete = activeBillsData.find((bill) => bill.billId === selectedBillsId);
+      getBills(selectedTab).then(() => {
         renderToast({
           title: 'SADAD.BILL_HAS_BEEN_DELETED',
           subTitle: billToDelete?.billDesc,
           toastType: ToastTypes.SUCCESS,
         });
-
-        return updatedBillsData;
       });
     }
   };
@@ -241,10 +243,10 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     const billPaymentDetails = selectedBills?.map((bill) => ({
       billerId: bill.billerId,
       billNumOrBillingAcct: bill.billNumOrBillingAcct,
-      amount: Number(bill.amount),
+      amount: Number(bill.amount || 0),
       dueDateTime: bill.dueDateTime,
-      billIdType: bill.billIdType, // TODO: not receiving this value from response
-      billingCycle: bill.billCycle, // TODO: need to confirm where can I get this value
+      billIdType: bill.billIdType,
+      billingCycle: bill.billCycle,
       billIndex: bill.billId,
       serviceDescription: bill.serviceDescription,
       billerName: bill.billerName,
@@ -255,7 +257,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
-      showBalanceBox: false,
+      showBalanceBox: true,
       billPaymentInfos: billPaymentDetails,
     });
   };
@@ -351,8 +353,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}
-                partialPay={multipleBillsSelected}
-                onPressPartialPay={onPressPartialPay}
+                // partialPay={multipleBillsSelected}    TODO
+                // onPressPartialPay={onPressPartialPay}  TODO
               />
             </IPayView>
           )}

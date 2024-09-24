@@ -12,7 +12,6 @@ import { buttonVariants, CardOptions, CardTypes } from '@app/utilities/enums.uti
 import React, { useCallback, useEffect, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
-import { useTranslation } from 'react-i18next';
 import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
 import { useTypedSelector } from '@app/store/store';
 import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
@@ -27,7 +26,6 @@ import virtualCardStyles from './virtual-card.style';
 import useVirtualCardData from './use-virtual-card-data';
 
 const VirtualCardScreen: React.FC = () => {
-  const { t } = useTranslation();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const [tabs, setTabs] = useState<string[]>([]);
   const { colors } = useTheme();
@@ -54,13 +52,13 @@ const VirtualCardScreen: React.FC = () => {
 
   const mapSelectedCardType = (tab: string): CardType | '' => {
     switch (tab) {
-      case t('VIRTUAL_CARD.CLASSIC'):
+      case 'VIRTUAL_CARD.CLASSIC':
         setSelectedCardType('IPMC');
         return 'IPMC';
-      case t('VIRTUAL_CARD.PLATINUM'):
+      case 'VIRTUAL_CARD.PLATINUM':
         setSelectedCardType('VPPC');
         return 'VPPC';
-      case t('VIRTUAL_CARD.SIGNATURE'):
+      case 'VIRTUAL_CARD.SIGNATURE':
         setSelectedCardType('VSCC');
         return 'VSCC';
       default:
@@ -107,7 +105,7 @@ const VirtualCardScreen: React.FC = () => {
     getCardsTypes();
   }, []);
 
-  const onPressIsssueCard = async () => {
+  const onPressIssueCard = async () => {
     const apiResponse = await issueCardInquire(walletInfo?.walletNumber, selectedCardType as CardType);
     if (apiResponse?.status?.type === 'SUCCESS') {
       const feesApiResponse = await getCardIssuanceFees(
@@ -171,7 +169,7 @@ const VirtualCardScreen: React.FC = () => {
           btnText="VIRTUAL_CARD.ISSUE_CARD"
           btnIconsDisabled
           btnStyle={styles.marginStyles}
-          onPress={onPressIsssueCard}
+          onPress={onPressIssueCard}
         />
       </IPayView>
     </IPaySafeAreaView>

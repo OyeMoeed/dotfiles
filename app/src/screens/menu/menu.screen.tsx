@@ -13,15 +13,13 @@ import { IPayActionSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
-import { DelinkPayload } from '@app/network/services/core/delink/delink-device.interface';
-import deviceDelink from '@app/network/services/core/delink/delink.service';
 import logOut from '@app/network/services/core/logout/logout.service';
-import { getDeviceInfo } from '@app/network/utilities';
 import clearSession from '@app/network/utilities/network-session-helper';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FC, useCallback, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import useDelinkDevice from '@app/hooks/useDeviceDelink';
 import useActionSheetOptions from '../delink/use-delink-options';
 import menuStyles from './menu.style';
 
@@ -29,9 +27,10 @@ const MenuScreen: FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = menuStyles(colors);
-  const { walletNumber, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const actionSheetRef = useRef<any>(null);
   const logoutConfirmationSheet = useRef<any>(null);
+  const { delinkDevice } = useDelinkDevice({});
 
   const onPressSettings = () => {
     navigate(screenNames.SETTINGS);
@@ -53,22 +52,6 @@ const MenuScreen: FC = () => {
     }
   };
 
-  const delinkSuccessfullyDone = () => {
-    clearSession(true);
-  };
-
-  const delinkDevice = async () => {
-    const delinkReqBody = await getDeviceInfo();
-    const payload: DelinkPayload = {
-      delinkReq: delinkReqBody,
-      walletNumber,
-    };
-
-    await deviceDelink(payload);
-
-    delinkSuccessfullyDone();
-  };
-
   const handleDelink = () => {
     actionSheetRef.current.show();
   };
@@ -78,10 +61,10 @@ const MenuScreen: FC = () => {
   };
 
   const delinkSuccessfully = useCallback((index?: number) => {
+    hideDelink();
     if (index === 1) {
       delinkDevice();
     }
-    hideDelink();
   }, []);
 
   const onConfirmLogout = useCallback((index: number) => {
