@@ -33,7 +33,6 @@ const MoiPaymentScreen: React.FC = () => {
   const [serviceProviderValue, setServiceProviderValue] = useState(null);
   const [serviceTypeValue, setServiceTypeValue] = useState(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
-  const [, setIsRefund] = useState<boolean>(false);
   const [fields, setFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
@@ -43,11 +42,6 @@ const MoiPaymentScreen: React.FC = () => {
 
   const handleTabSelect = useCallback(
     (tab: string) => {
-      if (tab === MoiPaymentTypes.REFUND) {
-        setIsRefund(true);
-      } else {
-        setIsRefund(false);
-      }
       setSelectedTab(tab);
     },
     [selectedTab],
@@ -126,6 +120,8 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const onSubmit = async (data: any) => {
+    console.log('data', data);
+
     const dynamicFields = fields.map((item) => {
       const { label, index, value } = item;
       return {
