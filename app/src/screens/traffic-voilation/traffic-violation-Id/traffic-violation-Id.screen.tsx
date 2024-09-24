@@ -40,7 +40,7 @@ const TrafficViolationIDScreen: React.FC = () => {
           detailTextStyle={styles.detailsText}
         />
       </IPayView>
-      <IPayView style={styles.rowStyles}>
+      <IPayView style={[styles.rowStyles, styles.foundViolationContainer]}>
         <IPayFootnoteText color={colors.primary.primary900} regular={false} text="TRAFFIC_VIOLATION.FOUND_VIOLATION" />
         <IPayButton
           btnIconsDisabled
@@ -77,6 +77,7 @@ const TrafficViolationIDScreen: React.FC = () => {
                 selectedItemsCount={selectedBillsCount}
                 disableBtnIcons
                 shouldTranslateBtnText={false}
+                btnStyle={styles.btnStyle}
               />
             </IPayView>
           )}
