@@ -1,4 +1,5 @@
 import { IPayView } from '@app/components/atoms';
+import { TrafficViolationFields } from '@app/utilities';
 import React from 'react';
 import DynamicFormComponentProps from './ipay-dynamic-form.interface';
 import DynamicFieldRenderer from './ipay-field-renderer/ipay-field-renderer.component';
@@ -18,7 +19,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
   return (
     <>
       {fields.map((field) => (
-        <IPayView key={field.index} style={[containerStyle]}>
+        <IPayView key={field.index} style={containerStyle}>
           <DynamicFieldRenderer
             key={field.index}
             field={field}
@@ -26,7 +27,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
             errors={errors}
             handleChange={handleChange}
             myIdValue={myIdValue}
-            myIdCheck={field?.label === 'Violator ID' && myIdCheck}
+            myIdCheck={field?.label === TrafficViolationFields.VIOLATOR_ID && myIdCheck}
           />
         </IPayView>
       ))}

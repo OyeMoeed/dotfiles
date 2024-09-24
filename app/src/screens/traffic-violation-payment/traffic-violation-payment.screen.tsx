@@ -15,7 +15,7 @@ import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-b
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { dateTimeFormat, formatDateAndTime } from '@app/utilities';
+import { APIResponseType } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
@@ -38,7 +38,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
 
   const { t } = useTranslation();
-  const { variant, payOnly, trafficDetails, isRefund } = route.params;
+  const { variant, payOnly, violationDetails, isRefund, isViolationID } = route.params;
 
   const { showToast } = useToastContext();
 
@@ -75,24 +75,32 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         otp,
         otpRef: otpRefState,
         walletNumber,
-        moiBillPaymentType: '',
-        billerId: '',
-        billNumOrBillingAcct: '',
-        dueDateTime: '',
         billIdType: '',
-        billingCycle: '',
-        serviceDescription: '',
+        moiBillPaymentType: violationDetails?.moiBillPaymentType ?? '',
+        amount: violationDetails?.amount ?? '',
+        billerId: violationDetails?.billerId ?? '',
+        serviceDescription: violationDetails?.serviceDescription ?? '',
+        applyTax: violationDetails?.applyTax ?? '',
+        serviceId: violationDetails?.serviceId ?? '',
+        groupPaymentId: violationDetails?.groupPaymentId ?? '',
+        paymentId: violationDetails?.paymentId ?? '',
       };
 
       const apiResponse: any = await moiBillPayment(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         if (apiResponse?.response) {
           setIsSheetVisible(false);
-          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, { payOnly: !payOnly, trafficDetails });
+          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, {
+            payOnly: !payOnly,
+            violationDetails,
+            isRefund,
+            isViolationID,
+          });
         }
       } else {
         renderToast(t('ERROR.API_ERROR_RESPONSE'));
+        navigate(ScreenNames.BILL_PAYMENT_FAILED, { isRefund });
       }
     } catch (error: any) {
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
@@ -117,49 +125,53 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     {
       id: '1',
       label: t('TRAFFIC_VIOLATION.AMOUNT'),
-      value: trafficDetails?.amount ? `${trafficDetails?.amount} ${t('COMMON.SAR')}` : '',
+      value: violationDetails?.amount ? `${violationDetails?.amount} ${t('COMMON.SAR')}` : '',
     },
     {
       id: '2',
       label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
-      value: trafficDetails?.serviceProvider ?? '',
+      value: violationDetails?.serviceProvider ?? '',
     },
     {
       id: '3',
       label: t('TRAFFIC_VIOLATION.SERVICE_TYPE'),
-      value: trafficDetails?.serviceType ?? '',
+      value: violationDetails?.serviceType ?? '',
     },
     {
       id: '4',
       label: t('TRAFFIC_VIOLATION.VIOLATOR_ID'),
-      value: trafficDetails?.serviceId ?? '',
+      value: violationDetails?.violatorId ?? '',
     },
     {
       id: '5',
       label: t('TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'),
-      value: trafficDetails?.violationNo ?? '',
+      value: violationDetails?.violationNo ?? '',
     },
     {
       id: '6',
       label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
-      value: trafficDetails?.violationDate
-        ? formatDateAndTime(new Date(trafficDetails?.violationDate), dateTimeFormat.DateAndTime)
-        : '',
+      value: '',
     },
   ];
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
+      <IPayHeader
+        title={isRefund ? 'TRAFFIC_VIOLATION.REFUND_VIOLATION' : 'TRAFFIC_VIOLATION.TITLE'}
+        backBtn
+        applyFlex
+      />
       <IPayView style={styles.innerContainer}>
-        <IPayAccountBalance
-          availableBalance={availableBalance ?? 0}
-          showRemainingAmount
-          balance={currentBalance ?? 0}
-          monthlyIncomingLimit={limitsDetails?.monthlyIncomingLimit ?? 0}
-          topUpBtnStyle={styles.topUpButton}
-          gradientWidth={`${getBalancePercentage(currentBalance, availableBalance)}%`}
-        />
+        {!isRefund && (
+          <IPayAccountBalance
+            availableBalance={availableBalance ?? 0}
+            showRemainingAmount
+            balance={currentBalance ?? 0}
+            monthlyIncomingLimit={limitsDetails?.monthlyIncomingLimit ?? 0}
+            topUpBtnStyle={styles.topUpButton}
+            gradientWidth={`${getBalancePercentage(currentBalance, availableBalance)}%`}
+          />
+        )}
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailsData} />
@@ -173,11 +185,12 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <SadadFooterComponent
           onPressBtn={handleOTPVerify}
           style={styles.margins}
-          totalAmount={trafficDetails?.amount ?? 0}
-          btnText="COMMON.PAY"
+          totalAmount={violationDetails?.amount ?? 0}
+          btnText={isRefund ? 'TRAFFIC_VIOLATION.REFUND' : 'COMMON.PAY'}
           disableBtnIcons
           btnStyle={styles.payBtn}
           backgroundGradient={colors.appGradient.buttonBackground}
+          totalAmountText={isRefund && !isViolationID && 'TRAFFIC_VIOLATION.AMOUNT_REFUND'}
         />
       </IPayView>
       <IPayPortalBottomSheet

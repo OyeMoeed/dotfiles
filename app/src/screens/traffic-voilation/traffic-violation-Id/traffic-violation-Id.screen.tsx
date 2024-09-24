@@ -3,8 +3,11 @@ import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayView } from '@app/compone
 import { IPayButton, IPayHeader, IPayList, IPayNoResult, SadadFooterComponent } from '@app/components/molecules';
 import IPayTrafficViolationCard from '@app/components/organism/ipay-traffic-violation-card/ipay-traffic-violation-card.component';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { useRoute } from '@react-navigation/core';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import useTrafficViolation from './traffic-violation-Id.hook';
@@ -14,27 +17,30 @@ const TrafficViolationIDScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficViolationStyles(colors);
   const { t } = useTranslation();
-  const {
-    billsData,
-    selectedBillsCount,
-    onSelectBill,
-    selectAllBills,
-    deselectAllBills,
-    selectedBillsAmount,
-    handlePayButton,
-    voilatorID,
-  } = useTrafficViolation();
+  const route = useRoute();
+  const { violationDetails, isRefund } = route.params;
+  const { billsData, selectedBillsCount, onSelectBill, selectAllBills, deselectAllBills } = useTrafficViolation();
 
-  const violations = billsData?.length === 1 ? t('TRAFFIC_VIOLATION.VIOLATION') : t('TRAFFIC_VIOLATION.VIOLATIONS');
+  const violations =
+    billsData?.length === 1 || isRefund ? t('TRAFFIC_VIOLATION.VIOLATION') : t('TRAFFIC_VIOLATION.VIOLATIONS');
+
+  const onHandlePayButton = () => {
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, violationDetails, isRefund });
+  };
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title={t('TRAFFIC_VIOLATION.TITLE')} titleStyle={styles.screenTitle} />
+      <IPayHeader
+        backBtn
+        applyFlex
+        title={isRefund ? 'TRAFFIC_VIOLATION.REFUND_VIOLATION' : 'TRAFFIC_VIOLATION.TITLE'}
+        titleStyle={styles.screenTitle}
+      />
       <IPayView style={styles.rowStyles}>
         <IPayList
           title="TRAFFIC_VIOLATION.VIOLATOR_ID"
-          detailText={`${billsData?.length} ${violations}`}
-          subTitle={voilatorID}
+          detailText={`${1} ${violations}`}
+          subTitle={violationDetails?.violatorId}
           isShowSubTitle
           showDetail
           detailTextStyle={styles.detailsText}
@@ -50,11 +56,11 @@ const TrafficViolationIDScreen: React.FC = () => {
         />
       </IPayView>
 
-      {billsData && billsData?.length > 0 ? (
+      {violationDetails ? (
         <IPayView style={styles.container}>
           <IPayView style={styles.listView}>
             <IPayFlatlist
-              data={billsData}
+              data={[violationDetails]}
               keyExtractor={(_, index) => index.toString()}
               itemSeparatorStyle={styles.itemSeparatorStyle}
               showsVerticalScrollIndicator={false}
@@ -68,13 +74,13 @@ const TrafficViolationIDScreen: React.FC = () => {
               )}
             />
           </IPayView>
-          {selectedBillsCount > 0 && (
+          {violationDetails && (
             <IPayView style={styles.footerView}>
               <SadadFooterComponent
                 textColor={colors.natural.natural500}
-                onPressBtn={handlePayButton}
-                btnText={`${t('COMMON.PAY')} : ${selectedBillsAmount} ${t('COMMON.SAR')}`}
-                selectedItemsCount={selectedBillsCount}
+                onPressBtn={onHandlePayButton}
+                btnText={`${isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('COMMON.PAY')} : ${violationDetails?.amount ?? 0} ${t('COMMON.SAR')}`}
+                selectedItemsCount={1}
                 disableBtnIcons
                 shouldTranslateBtnText={false}
               />

@@ -9,4 +9,15 @@ interface TrafficFormValues {
   myIdCheck?: boolean;
   voilationNumber: string;
 }
-export default TrafficFormValues;
+
+interface ViolationDetails {
+  serviceId?: string;
+  serviceDescription?: string;
+  applyTax?: string;
+  billerId?: string;
+  groupPaymentId?: string;
+  paymentId?: string;
+  moiBillPaymentType?: string;
+  amount?: string;
+}
+export { TrafficFormValues, ViolationDetails };

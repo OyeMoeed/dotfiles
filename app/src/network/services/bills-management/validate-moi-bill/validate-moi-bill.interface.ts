@@ -16,6 +16,8 @@ interface ValidateBillResponse {
     serviceId: string;
     violationNo: string;
     violationDate: string;
+    groupPaymentId: string;
+    paymentId: string;
   };
   successfulResponse: boolean;
   status: MockAPIStatusProps;

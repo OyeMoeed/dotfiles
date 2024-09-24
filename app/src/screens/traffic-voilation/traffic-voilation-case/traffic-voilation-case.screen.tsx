@@ -12,7 +12,9 @@ import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   BillPaymentOptions,
+  MoiPaymentTypes,
   TrafficTabPaymentTypes,
+  TrafficViolationFields,
   TrafficVoilationTypes,
   buttonVariants,
 } from '@app/utilities/enums.util';
@@ -22,15 +24,18 @@ import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dyn
 import IPayTrafficDetailForm from '@app/components/molecules/ipay-traffic-detail-form/ipay-traffic-detail-form.component';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { BillersService } from '@app/network/services/bill-managment/get-billers-services/get-billers-services.interface';
+import { BillersTypes } from '@app/network/services/bill-managment/get-billers/get-billers.interface';
 import { DynamicField } from '@app/network/services/bill-managment/moi/get-dynamic-feilds/get-dynamic-fields.interface';
 import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
-import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { UseFormReset } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import TrafficFormValues from './traffic-voilation-case.interface';
+import { TrafficFormValues } from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
@@ -39,17 +44,18 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const { t } = useTranslation();
   const { idTypes } = useConstantData();
   const [isRefund, setIsRefund] = useState<boolean>(false);
-  const [trafficViolationsData, setTrafficViolationsData] = useState({});
-  const [trafficService, setTrafficService] = useState({});
+  const [trafficViolationsData, setTrafficViolationsData] = useState<BillersTypes | undefined>({} as BillersTypes);
+  const [trafficService, setTrafficService] = useState<BillersService>({} as BillersService);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const selectSheeRef = useRef<any>(null);
-  const invoiceSheetRef = useRef<any>(null);
+  const selectSheeRef = useRef<bottomSheetTypes>(null);
+  const invoiceSheetRef = useRef<bottomSheetTypes>(null);
   const [fields, setFields] = useState<DynamicField[]>([]);
   const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [trafficServiceType, setTrafficServiceType] = useState([]);
+  const [trafficServiceType, setTrafficServiceType] = useState<BillersService[]>([]);
   const [myIdValue, setMyIdValue] = useState<string>('');
-  const paymentOrRefund = isRefund ? 'REFUND' : 'PAYMENT';
+
+  const paymentOrRefund = isRefund ? MoiPaymentTypes.REFUND : MoiPaymentTypes.PAYMENT;
 
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
 
@@ -61,7 +67,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     }
   }, [formSelectedTab, trafficServiceType]);
 
-  const handleTabSelect = useCallback((tab: string, reset) => {
+  const handleTabSelect = useCallback((tab: string, reset: UseFormReset<TrafficFormValues>) => {
     if (tab === TrafficTabPaymentTypes.REFUND) {
       setIsRefund(true);
     } else {
@@ -76,30 +82,29 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   }, []);
 
   const onValidateBills = async (data: any) => {
-    const appendField =
-      formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM
-        ? {
-            label: 'Violation Number',
-            index: 'BeneficiaryId.OfficialNumber',
-            value: data['BeneficiaryId_OfficialNumber'],
-            description: data['BeneficiaryId_OfficialNumber'],
-            isFormValid: 'false',
-          }
-        : null;
+    const isViolationID = formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID;
+    const violationNumberData = {
+      label: TrafficViolationFields.VIOLATION_NUMBER,
+      index: 'BeneficiaryId.OfficialNumber',
+      value: data.BeneficiaryId_OfficialNumber,
+      description: data.BeneficiaryId_OfficialNumber,
+      isFormValid: 'false',
+    };
+    const appendField = formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM ? violationNumberData : null;
     const payLoad = {
       dynamicFields: [
         {
           label: 'Violator ID',
           index: 'BeneficiaryId.OfficialId',
-          value: data['BeneficiaryId_OfficialId'],
-          description: data['BeneficiaryId_OfficialId'],
+          value: data.BeneficiaryId_OfficialId ?? '',
+          description: data.BeneficiaryId_OfficialId ?? '',
           isFormValid: 'false',
         },
         {
           label: 'ID Type',
           index: 'BeneficiaryId.OfficialIdType',
-          value: data['BeneficiaryId_OfficialIdType'],
-          description: data['BeneficiaryId_OfficialIdType'],
+          value: data.BeneficiaryId_OfficialIdType ?? '',
+          description: data.BeneficiaryId_OfficialIdType ?? '',
           isFormValid: 'false',
         },
         ...(appendField ? [appendField] : []),
@@ -110,28 +115,34 @@ const TrafficVoilationCasesScreen: React.FC = () => {
 
     const apiResponse = await validateBill(trafficViolationsData?.billerId, trafficService?.serviceId, payLoad);
     if (apiResponse?.successfulResponse) {
-      if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM && isRefund) {
-        navigate(ScreenNames.TRAFFIC_VOILATION_NUM_REFUND);
-      } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && isRefund) {
-        navigate(ScreenNames.TRAFFIC_VOILATION_ID_REFUND);
-      } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {
-        navigate(ScreenNames.TRAFFIC_VOILATION_ID);
+      const violationDetails = {
+        serviceId: trafficService?.serviceId,
+        serviceDescription: trafficService?.serviceDesc,
+        applyTax: trafficService?.applyTax,
+        billerId: trafficViolationsData?.billerId,
+        moiBillPaymentType: fields[0]?.requiredInPaymentOrRefund,
+        amount: apiResponse?.response?.totalFeeAmount,
+        violatorId: data.BeneficiaryId_OfficialId ?? '',
+        violationNo: data.BeneficiaryId_OfficialNumber ?? '',
+        serviceProvider: BillPaymentOptions.TRAFFIC_VIOLATION,
+        serviceType: formSelectedTab,
+      };
+      if (isViolationID) {
+        navigate(ScreenNames.TRAFFIC_VOILATION_ID, { isRefund, violationDetails, isViolationID });
       } else {
-        navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, payOnly: false });
+        navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, {
+          variant: true,
+          payOnly: false,
+          isRefund,
+          violationDetails,
+          isViolationID,
+        });
       }
     }
   };
 
   const onGetBillers = async () => {
-    const deviceInfo = await getDeviceInfo();
-    const payload = {
-      includeBillerDetails: 'false',
-      deviceInfo,
-      billerStatus: 'E',
-      billerType: '7',
-    };
-
-    const apiResponse = await getBillersService(payload);
+    const apiResponse = await getBillersService();
     if (apiResponse.successfulResponse) {
       const trafficViolationObject = apiResponse?.response?.billersList?.find(
         (item) => item?.billerDesc === BillPaymentOptions.TRAFFIC_VIOLATION,
@@ -142,15 +153,17 @@ const TrafficVoilationCasesScreen: React.FC = () => {
 
   const fetchFields = async () => {
     const apiResponse = await getDynamicFieldsService(
-      trafficViolationsData?.billerId,
-      trafficService?.serviceId,
-      walletNumber,
+      trafficViolationsData?.billerId ?? '',
+      trafficService?.serviceId ?? '',
+      walletNumber ?? '',
       formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM,
     );
 
     if (apiResponse) {
       const fetchedFields = apiResponse.response.dynamicFields;
-      const filteredFields = fetchedFields.filter((field) => field.requiredInPaymentOrRefund === paymentOrRefund);
+      const filteredFields: DynamicField[] = fetchedFields.filter(
+        (field) => field.requiredInPaymentOrRefund === paymentOrRefund,
+      );
       setFields(filteredFields);
       setMyIdValue(apiResponse?.response?.customerIdNumber?.value);
     }
@@ -166,7 +179,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     onGetBillers();
   }, []);
 
-  const onGetBillersServices = async (billerID?: string) => {
+  const onGetBillersServices = async (billerID: string) => {
     const apiResponse = await getBillersServiceProvider(billerID);
 
     if (apiResponse.successfulResponse) {
@@ -191,7 +204,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
           const { text } = item;
 
           setValue(TrafficPaymentFormFields.ID_TYPE, text);
-          selectSheeRef.current.close();
+          selectSheeRef.current?.close();
         };
 
         const onCheckboxAction = () => {
@@ -239,7 +252,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             <IPayBottomSheet
               heading="BILL_PAYMENTS.ID_TYPE"
               customSnapPoint={SNAP_POINTS.SMALL}
-              onCloseBottomSheet={() => selectSheeRef.current.close()}
+              onCloseBottomSheet={() => selectSheeRef.current?.close()}
               ref={selectSheeRef}
               simpleBar
               cancelBnt
@@ -259,7 +272,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             <IPayBottomSheet
               heading="BILL_PAYMENTS.TRAFFIC_VIOLATIONS"
               customSnapPoint={SNAP_POINTS.SMALL}
-              onCloseBottomSheet={() => invoiceSheetRef.current.close()}
+              onCloseBottomSheet={() => invoiceSheetRef.current?.close()}
               ref={invoiceSheetRef}
               simpleBar
               cancelBnt
@@ -274,7 +287,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                 btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
-                onBtnPress={() => invoiceSheetRef.current.close()}
+                onBtnPress={() => invoiceSheetRef.current?.close()}
               />
             </IPayBottomSheet>
           </>

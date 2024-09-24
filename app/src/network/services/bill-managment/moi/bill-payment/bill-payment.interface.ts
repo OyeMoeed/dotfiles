@@ -33,6 +33,11 @@ interface MOIBillPaymentPayloadProps {
   billingCycle?: string; // e.g., "002_2019"
   serviceDescription?: string; // e.g., "ELCT"
   deviceInfo?: DeviceInfoProps; // Nested object containing device information
+  amount?: string; // e.g., "100.0"
+  applyTax?: string; // e.g., "N"
+  serviceId?: string; // e.g., "002"
+  groupPaymentId?: string; // e.g., "10694728"
+  paymentId?: string; // e.g., "3000612224"
 }
 
 // Export the interface

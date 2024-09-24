@@ -4,9 +4,7 @@ import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import IPayDeclinedCard from '@app/components/molecules/ipay-declined-card/ipay-declined-card.component';
 import { IPayPageWrapper } from '@app/components/templates';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { dateTimeFormat, formatDateAndTime } from '@app/utilities';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 import React from 'react';
@@ -21,46 +19,45 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const { goToHome, declinedBillPayDetails, paidBilled, paymentDeclined, payOtherViolation } =
     useTrafficViolationSuccess();
   const route = useRoute();
-  const payOnly = route?.params?.payOnly;
-  const variant = route?.params?.variant;
-  const trafficDetails = route?.params?.trafficDetails;
-  const headingText =
-    variant === ScreenNames.TRAFFIC_VOILATION_NUM_REFUND
-      ? 'TRAFFIC_VIOLATION.VIOLATION_SUCCESS'
-      : 'TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS';
+  const { payOnly, violationDetails, isRefund, isViolationID } = route.params;
+
+  const headingText = () => {
+    if (isRefund) {
+      return isViolationID ? 'TRAFFIC_VIOLATION.VIOLATION_SUCCESS' : 'TRAFFIC_VIOLATION.REFUND_SUCCESS';
+    }
+    return 'TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS';
+  };
 
   const billPayDetailsData = [
     {
       id: '1',
       label: t('TRAFFIC_VIOLATION.AMOUNT'),
-      value: trafficDetails?.amount ? `${trafficDetails?.amount} ${t('COMMON.SAR')}` : '',
+      value: violationDetails?.amount ? `${violationDetails?.amount} ${t('COMMON.SAR')}` : '',
     },
     {
       id: '2',
       label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
-      value: trafficDetails?.serviceProvider ?? '',
+      value: violationDetails?.serviceProvider ?? '',
     },
     {
       id: '3',
       label: t('TRAFFIC_VIOLATION.SERVICE_TYPE'),
-      value: trafficDetails?.serviceType ?? '',
+      value: violationDetails?.serviceType ?? '',
     },
     {
       id: '4',
       label: t('TRAFFIC_VIOLATION.VIOLATOR_ID'),
-      value: trafficDetails?.serviceId ?? '',
+      value: violationDetails?.serviceId ?? '',
     },
     {
       id: '5',
       label: t('TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'),
-      value: trafficDetails?.violationNo ?? '',
+      value: violationDetails?.violationNo ?? '',
     },
     {
       id: '6',
       label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
-      value: trafficDetails?.violationDate
-        ? formatDateAndTime(new Date(trafficDetails?.violationDate), dateTimeFormat.DateAndTime)
-        : '',
+      value: '',
     },
   ];
 
@@ -69,8 +66,8 @@ const TrafficViolationSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={headingText}
-          descriptionText={`${trafficDetails?.amount ?? 0} ${t('COMMON.SAR')}`}
+          headingText={headingText()}
+          descriptionText={`${violationDetails?.amount ?? 0} ${t('COMMON.SAR')}`}
           descriptionStyle={[styles.boldStyles, styles.descriptionText]}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -91,7 +88,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
           </>
         </IPayScrollView>
         <IPayView style={styles.bottomView}>
-          {!payOnly ? (
+          {payOnly ? (
             <IPayView style={styles.rowStyles}>
               <IPayButton
                 medium
