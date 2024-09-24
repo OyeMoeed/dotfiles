@@ -2,10 +2,10 @@ import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import AUTHENTICATION_URLS from '../authentication.urls';
-import { LoginViaPasscodeProps } from './login-via-passcode.interface';
 import loginViaPasscodeMock from './login-via-passcode.mock';
+import { OtpVerificationProps } from '../otp-verification/otp-verification.interface';
 
-const loginViaPasscode = async (payload: LoginViaPasscodeProps): Promise<object | undefined> => {
+const loginViaPasscode = async (payload: OtpVerificationProps): Promise<object | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return loginViaPasscodeMock;
   }

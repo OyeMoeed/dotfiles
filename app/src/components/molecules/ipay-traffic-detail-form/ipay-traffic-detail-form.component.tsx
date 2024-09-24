@@ -41,6 +41,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   myIdValue,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = trafficDetailStyles(colors);
   const { t } = useTranslation();
   const getInputStyles = useCallback(() => {
@@ -53,13 +54,16 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
-      <IPayFootnoteText regular text="TRAFFIC_VIOLATION.SERVICE_TYPE" color={colors.primary.primary600} />
-      <IPaySegmentedControls
-        customStyles={styles.segmentStyles}
-        selectedTab={formSelectedTab}
-        tabs={tabs}
-        onSelect={handleFormTabSelect}
-      />
+      <IPayView style={styles.tabWrapper}>
+        <IPayFootnoteText regular text="TRAFFIC_VIOLATION.SERVICE_TYPE" color={colors.primary.primary600} />
+        <IPaySegmentedControls
+          customStyles={styles.segmentStyles}
+          selectedTab={formSelectedTab}
+          tabs={tabs}
+          onSelect={handleFormTabSelect}
+        />
+      </IPayView>
+
       <Controller
         name={TrafficPaymentFormFields.MY_ID_CHECK}
         control={control}

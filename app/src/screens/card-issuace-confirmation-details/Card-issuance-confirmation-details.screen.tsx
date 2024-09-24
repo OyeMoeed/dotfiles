@@ -34,10 +34,10 @@ const CardIssuanceConfirmationScreen = () => {
   type RouteProps = RouteProp<{ params: { issuanceDetails: ICardIssuanceDetails } }, 'params'>;
   const { issuanceDetails } = route.params;
   const { fullName, availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [isOtpVisbile, setIsOtpVisbile] = useState<boolean>(false);
   const styles = cardIssuaceConfirmationStyles(colors);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
-  const openBottomSheet = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const dispatch = useDispatch();
 
@@ -118,7 +118,7 @@ const CardIssuanceConfirmationScreen = () => {
     if (!isCheckTermsAndCondition) {
       renderToast();
     } else if (checkAvailableBalance(+getTotalFees())) {
-      openBottomSheet.current?.present();
+      setIsOtpVisbile(true);
     }
   };
   const handleOnCheckPress = () => {
@@ -128,7 +128,7 @@ const CardIssuanceConfirmationScreen = () => {
   const balance = formatNumberWithCommas(availableBalance);
   const onCloseBottomSheet = () => {
     changePinRef.current?.resetInterval();
-    openBottomSheet.current?.close();
+    setIsOtpVisbile(false);
   };
 
   const renderItem = ({ item }: IPayListItemProps) => (
@@ -177,14 +177,13 @@ const CardIssuanceConfirmationScreen = () => {
         </IPayView>
       </IPayView>
       <IPayPortalBottomSheet
+        isVisible={isOtpVisbile}
         heading="CARDS.VIRTUAL_CARD"
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        isVisible
         customSnapPoint={['93%']}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={openBottomSheet}
       >
         <IssueCardPinCreation
           handleOnPressHelp={handleOnPressHelp}

@@ -118,12 +118,11 @@ const useBillPaymentConfirmation = (
         isPayOnly,
         isPayPartially,
         billPayDetailes: billPayDetailsArr,
-        // totalAmount: billPaymentInfos?.[0].amount,
+        totalAmount: billPaymentInfos?.[0].amount,
         billPaymentInfos: billPaymentInfos?.map((el, index) => ({
           ...el,
           transactionId: getTransactionIds(apiResponse, index),
         })),
-        totalAmount: getTotalAmount(),
       });
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));

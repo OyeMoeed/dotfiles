@@ -36,7 +36,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const { t } = useTranslation();
   const styles = requestMoneyStyles(colors);
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
-  const requestdetailRef = React.createRef<bottomSheetTypes>();
   const rejectRequestRef = React.createRef<bottomSheetTypes>();
   const cancelRequestRef = React.createRef<bottomSheetTypes>();
   const [sentRequestsPage, setSentRequestsPage] = useState(1);
