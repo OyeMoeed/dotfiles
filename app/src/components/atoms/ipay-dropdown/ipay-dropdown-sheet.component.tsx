@@ -2,11 +2,11 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
 import { setSelectedType } from '@app/store/slices/dropdown-slice';
-import { RootState } from '@app/store/store';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { IPayDropdownComponentSheetProps, ListItem } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
@@ -18,10 +18,7 @@ const IPayDropdownSheet = forwardRef<{}, IPayDropdownComponentSheetProps>((_, re
   const [selectedListItem, setSelectedListItem] = useState<string>('');
   const [searchText, setSearchText] = useState<string>('');
   const dispatch = useDispatch();
-  const dropdownData = useSelector((state: RootState) => state.dropdownReducer.data);
-  const isSearchable = useSelector((state: RootState) => state.dropdownReducer.isSearchable);
-  const size = useSelector((state: RootState) => state.dropdownReducer.size);
-  const heading = useSelector((state: RootState) => state.dropdownReducer.heading);
+  const { data: dropdownData, isSearchable, size, heading } = useTypedSelector((state) => state.dropdownReducer);
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
   const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
   const handlePresentModalPress = useCallback(() => {

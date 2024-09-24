@@ -32,7 +32,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import checkUserAccess from '@app/utilities/check-user-access';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
@@ -47,7 +47,7 @@ const CardOptionsScreen: React.FC = () => {
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
-  const { cashWithdrawalCardsList } = useSelector((state) => state.walletInfoReducer);
+  const { cashWithdrawalCardsList } = useTypedSelector((state) => state.walletInfoReducer);
 
   const {
     currentCard,
