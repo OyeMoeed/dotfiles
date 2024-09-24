@@ -46,7 +46,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setOtp,
       setOtpError,
       timeout,
-      onPressConfirm,
+      // onPressConfirm,
     );
 
     const isCounterEnds = counter <= 0;
