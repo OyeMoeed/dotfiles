@@ -27,8 +27,6 @@ export interface IPayBalanceBoxProps {
   monthlyRemainingOutgoingAmount: string;
 
   monthlyOutgoingLimit: string;
-
-  ehsanPress: () => void;
 }
 
 export interface CarouselItem {

@@ -6,7 +6,7 @@ import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.compon
 import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components/organism/index';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
-import { IPayEhsanBottomSheet, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
+import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -38,7 +38,6 @@ import homeStyles from './home.style';
 const Home: React.FC = () => {
   const { colors } = useTheme();
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
-  const [ehsanVisible, setEhsanVisible] = useState<boolean>(false);
 
   const styles = homeStyles(colors);
   const { t } = useTranslation();
@@ -49,7 +48,6 @@ const Home: React.FC = () => {
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
-  const ehsanRef = React.createRef<any>();
 
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
@@ -127,15 +125,6 @@ const Home: React.FC = () => {
 
   const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
-  };
-
-  const ehsanBottomSheet = () => {
-    dispatch(setProfileSheetVisibility(false));
-    setEhsanVisible(true);
-  };
-
-  const closeBottomSheetEhsan = () => {
-    setEhsanVisible(false);
   };
 
   const navigateTOAktharPoints = async () => {
@@ -293,7 +282,6 @@ const Home: React.FC = () => {
             setBoxHeight={setBalanceBoxHeight}
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
             monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
-            ehsanPress={ehsanBottomSheet}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}
@@ -342,22 +330,6 @@ const Home: React.FC = () => {
             closeBottomSheet={closeBottomSheetTopUp}
             topupItemSelected={topupItemSelected}
           />
-        </IPayPortalBottomSheet>
-
-        <IPayPortalBottomSheet
-          noGradient
-          heading="TOP_UP.ADD_MONEY_USING"
-          onCloseBottomSheet={closeBottomSheetEhsan}
-          customSnapPoint={SNAP_POINT.XS_SMALL}
-          ref={ehsanRef}
-          enablePanDownToClose
-          simpleHeader
-          simpleBar
-          bold
-          cancelBnt
-          isVisible={ehsanVisible}
-        >
-          <IPayEhsanBottomSheet closeBottomSheetEhsan={closeBottomSheetEhsan} />
         </IPayPortalBottomSheet>
       </>
     </IPaySafeAreaView>

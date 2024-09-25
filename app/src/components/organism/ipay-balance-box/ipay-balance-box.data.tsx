@@ -50,7 +50,11 @@ const useCarouselData = () => {
         { text: t('HOME.QR_ACCEPTANCE'), icon: icons.scanner, isNew: true },
         { text: t('HOME.SPENDING_LIMIT'), icon: icons.calculator },
         { text: t('HOME.MY_ACCOUNT'), icon: icons.user_tag },
-        { text: t('HOME.EHSAN'), icon: <EhsanIcon size={28} angle={125} />, navigate: 'ehsan' },
+        {
+          text: t('HOME.EHSAN'),
+          icon: <EhsanIcon />,
+          navigate: 'ehsan',
+        },
       ],
     },
   ];

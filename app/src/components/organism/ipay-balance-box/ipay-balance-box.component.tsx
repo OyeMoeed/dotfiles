@@ -20,9 +20,10 @@ import checkUserAccess from '@app/utilities/check-user-access';
 import { buttonVariants, DashboardOptions } from '@app/utilities';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
+import { openBrowser } from '@swan-io/react-native-browser';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
@@ -48,7 +49,6 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
   setBoxHeight,
   monthlyRemainingOutgoingAmount,
   monthlyOutgoingLimit,
-  ehsanPress,
 }) => {
   const carouselData = useCarouselData();
   const { colors } = useTheme();
@@ -57,6 +57,12 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
   const dispatch = useTypedDispatch();
   const allowEyeIconFunctionality = useTypedSelector((state) => state.appDataReducer.appData.allowEyeIconFunctionality);
   const gradientLocations = [0, 0.8];
+
+  const handleOnPress = useCallback(() => {
+    openBrowser('https://ehsan.sa/', {
+      onClose: () => {},
+    });
+  }, []);
 
   const onPressOption = (option: string) => {
     if (quickAction) quickAction();
@@ -85,7 +91,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
           navigate(screenNames.REQUEST_MONEY);
           break;
         case 'ehsan':
-          ehsanPress();
+          handleOnPress();
           break;
         default:
           break;
