@@ -10,6 +10,8 @@ import { BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { InActivateBillProps } from '@app/network/services/bills-management/activate-bill/activate-bill.interface';
+import activateBill from '@app/network/services/bills-management/activate-bill/activate-bill.service';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import deleteBill from '@app/network/services/bills-management/delete-bill/delete-bill.service';
 import {
@@ -148,10 +150,85 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     }
   };
 
+  const redirectToBillActivation = (selectedBill: PaymentInfoProps) => {
+    const {
+      billNumOrBillingAcct,
+      billerName,
+      billIdType,
+      billerId,
+      billDesc,
+      serviceDescription,
+      svcType,
+      dueDateTime,
+      amount,
+    } = selectedBill;
+    const headerAttributes = {
+      title: billDesc,
+      companyDetails: billerName,
+      companyImage: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId),
+    };
+    const billPaymentInfos = {
+      billerId,
+      billNumOrBillingAcct,
+      serviceType: svcType,
+      billIdType,
+      serviceDescription,
+      billerName,
+      billNickname: billDesc,
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId),
+    };
+    const billPaymentData = [
+      {
+        id: '1',
+        label: 'PAY_BILL.SERVICE_TYPE',
+        value: svcType,
+      },
+      {
+        id: '2',
+        label: 'PAY_BILL.ACCOUNT_NUMBER',
+        value: billNumOrBillingAcct,
+      },
+      {
+        id: '3',
+        label: 'COMMON.DUE_DATE',
+        value: dueDateTime,
+      },
+      {
+        id: '4',
+        label: 'PAY_BILL.AMOUNT',
+        value: amount,
+      },
+    ];
+
+    sadadActionSheetRef?.current?.hide();
+    navigate(ScreenNames.BILL_ACTIVATION, {
+      headerAttributes,
+      billPaymentInfos,
+      billPaymentData,
+    });
+  };
+
+  const activeteSelectedBill = async (selectedBill: PaymentInfoProps) => {
+    const { billNumOrBillingAcct, billerName, billIdType, billerId, billDesc } = selectedBill;
+    const deviceInfo = await getDeviceInfo();
+    const payload: InActivateBillProps = {
+      deviceInfo,
+      billNumOrBillingAcct,
+      billIdType,
+      billerId,
+      billerName,
+      walletNumber,
+      billNickname: billDesc,
+    };
+    const apiResponse: any = await activateBill(payload);
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+      redirectToBillActivation(selectedBill);
+    }
+  };
+
   const handleActionSheetPress = (index: number) => {
-    if (index === 0 && selectedTab === BillsStatusTypes.INACTIVE_BILLS) {
-      sadadActionSheetRef?.current?.hide();
-      navigate(ScreenNames.BILL_ACTIVATION);
+    if (index === 0 && t(selectedTab) === BillsStatusTypes.INACTIVE_BILLS) {
+      activeteSelectedBill(billToEditRef.current);
       return;
     }
     if (index === 0) {

@@ -264,19 +264,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     const apiResponse = await saveBillService(payload);
     if (apiResponse.successfulResponse) {
       onPressSaveOnly(values, payload);
-      return;
-      navigate(ScreenNames.NEW_SADAD_BILL, {
-        billNickname: values.billName,
-        billerName: values.companyName,
-        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
-        serviceType: values.serviceType,
-        billNumOrBillingAcct: values.accountNumber,
-        dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
-        totalAmount: '0',
-        billerId: selectedBiller?.billerId,
-        billIdType: selectedBiller?.billIdType,
-        serviceDescription: selectedService?.serviceDesc,
-      });
     } else {
       invoiceSheetRef.current.present();
     }
