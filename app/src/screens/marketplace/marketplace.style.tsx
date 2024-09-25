@@ -51,10 +51,12 @@ const marketplaceStyles = (colors: typeof themeColors) =>
       flex: 0,
     },
     containerWrapper: {
-      flexDirection: 'row',
+      flex: 0,
       gap: scaleSize(12),
-      flexWrap: 'wrap',
-      justifyContent: 'flex-start',
+      justifyContent: 'space-between',
+    },
+    columnWrapperMerchant: {
+      gap: scaleSize(12),
     },
   });
 
