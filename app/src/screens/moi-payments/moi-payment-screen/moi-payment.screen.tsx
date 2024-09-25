@@ -14,7 +14,8 @@ import getDynamicFieldsService from '@app/network/services/bills-management/dyna
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
-import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+
+import getBillersService from '@app/network/services/bill-managment/get-billers/get-billers.service';
 import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
