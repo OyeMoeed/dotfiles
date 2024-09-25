@@ -24,6 +24,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { FeatureSections } from '@app/enums';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
@@ -39,6 +41,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   openBottomSheet,
   openProfileBottomSheet,
   cards,
+  isLoading,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -69,7 +72,6 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   };
 
   const moveToTransactionHistory = () => {
-    console.log(cards, 'cards navigation');
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
       cards,
@@ -138,31 +140,31 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>
             </IPayView>
-            {transactionsData?.length ? (
-              <IPayView style={styles.listContainer}>
-                <IPayFlatlist
-                  data={transactionsData}
-                  scrollEnabled={false}
-                  keyExtractor={(_, index) => index.toString()}
-                  renderItem={({ item, index }) => (
-                    <IPayTransactionItem
-                      key={`transaction-${index + 1}`}
-                      transaction={item || []}
-                      onPressTransaction={openTransactionHistoryDetails}
-                    />
-                  )}
-                />
-              </IPayView>
-            ) : (
-              <IPayView style={styles.noRecordWrapper}>
-                <IPayNoResult
-                  textColor={colors.natural.natural500}
-                  message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
-                  showIcon
-                  displayInRow
-                />
-              </IPayView>
-            )}
+            <IPayView style={styles.listContainer}>
+              <IPayFlatlist
+                data={transactionsData}
+                scrollEnabled={false}
+                keyExtractor={(_, index) => index.toString()}
+                ListEmptyComponent={
+                  isLoading ? (
+                    <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />
+                  ) : (
+                    <IPayView style={styles.noRecordWrapper}>
+                      <IPayNoResult
+                        textColor={colors.natural.natural500}
+                        message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
+                        showIcon
+                        displayInRow
+                      />
+                    </IPayView>
+                  )
+                }
+                renderItem={({ item, index }) => (
+                  <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} 
+                    onPressTransaction={openTransactionHistoryDetails}/>
+                )}
+              />
+            </IPayView>
           </React.Fragment>
         );
       case FeatureSections.LATEST_OFFERS:

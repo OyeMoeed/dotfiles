@@ -14,12 +14,8 @@ import getAktharPoints from '@app/network/services/cards-management/mazaya-topup
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import getOffers from '@app/network/services/core/offers/offers.service';
-import {
-  CardListItem,
-  CardsProp,
-  TransactionsProp,
-} from '@app/network/services/core/transaction/transaction.interface';
-import { getCards, getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { CardListItem, CardsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getCards } from '@app/network/services/core/transaction/transactions.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
@@ -31,6 +27,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import homeStyles from './home.style';
@@ -44,7 +41,6 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
-  const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
@@ -53,7 +49,7 @@ const Home: React.FC = () => {
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
   );
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
@@ -78,17 +74,13 @@ const Home: React.FC = () => {
     });
   };
 
-  const getTransactionsData = async () => {
-    const payload: TransactionsProp = {
+  const { transactionsData, isLoadingTransactions } = useGetTransactions({
+    payload: {
       walletNumber,
       maxRecords: '3',
       offset: '1',
-    };
-
-    const apiResponse: any = await getTransactions(payload);
-
-    setTransactionsData(apiResponse?.response?.transactions);
-  };
+    },
+  });
 
   const getOffersData = async () => {
     try {
@@ -113,7 +105,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Dispatch the setItems action on initial render
-    getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
 
@@ -170,30 +161,27 @@ const Home: React.FC = () => {
   };
 
   const mapCardData = (cards: CardListItem[]) => {
-    try{
-      console.log(cards);
-    let mappedCards = [];
-    mappedCards = cards?.map((card: any) => ({
-      name: card?.linkedName?.embossingName,
-      cardType: card?.cardTypeId,
-      cardHeaderText: getCardDesc(card?.cardTypeId),
-      expired: card?.reissueDue,
-      frozen: card.cardStatus === CardStatusNumber.Freezed,
-      suspended: false,
-      maskedCardNumber: card?.maskedCardNumber,
-      cardNumber: card.lastDigits,
-      creditCardDetails: {
-        availableBalance: '5200.40',
-      },
-      totalCashbackAmt: card.totalCashbackAmt,
-      ...card,
-    }));
-    
-
-    return mappedCards;
-  }catch(err){
-    
-  }
+    try {
+      let mappedCards = [];
+      mappedCards = cards?.map((card: any) => ({
+        name: card?.linkedName?.embossingName,
+        cardType: card?.cardTypeId,
+        cardHeaderText: getCardDesc(card?.cardTypeId),
+        expired: card?.reissueDue,
+        frozen: card.cardStatus === CardStatusNumber.Freezed,
+        suspended: false,
+        maskedCardNumber: card?.maskedCardNumber,
+        cardNumber: card.lastDigits,
+        creditCardDetails: {
+          availableBalance: '5200.40',
+        },
+        totalCashbackAmt: card.totalCashbackAmt,
+        ...card,
+      }));
+      return mappedCards;
+    } catch (err) {
+      return [];
+    }
   };
 
   const getCardsData = async () => {
@@ -211,10 +199,9 @@ const Home: React.FC = () => {
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
           card.cardStatus === CardStatusNumber.Freezed,
       );
-      
+
       if (availableCardsForSearch?.length) {
         setCardsData(mapCardData(availableCardsForSearch));
-
       }
     }
   };
@@ -295,6 +282,7 @@ const Home: React.FC = () => {
               openBottomSheet={openBottomSheet}
               openProfileBottomSheet={openProfileBottomSheet}
               cards={cardsData}
+              isLoading={isLoadingTransactions}
             />
           </IPayCustomSheet>
         )}

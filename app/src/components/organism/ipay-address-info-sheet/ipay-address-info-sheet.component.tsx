@@ -1,14 +1,14 @@
 import { IPayCaption1Text, IPayHeadlineText, IPayImage, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayBottomSheet } from '@components/organism/index';
-import React, { forwardRef, useImperativeHandle, useRef } from 'react';
+import { forwardRef, useImperativeHandle, useRef } from 'react';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { isIosOS } from '@app/utilities/constants';
 import images from '@app/assets/images';
 import ipayAddressInfoSheetStyles from './ipay-address-info-sheet.style';
 import { IPayAddressInfoSheetProps } from './ipay-address-info-sheet.interface';
 
-const IPayAddressInfoSheet: React.FC<IPayAddressInfoSheetProps> = forwardRef((_, ref) => {
+const IPayAddressInfoSheet = forwardRef<{}, IPayAddressInfoSheetProps>((_, ref) => {
   const { colors } = useTheme();
   const styles = ipayAddressInfoSheetStyles();
   const ipayAddressInfoSheetRef = useRef<BottomSheetModal>(null);

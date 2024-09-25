@@ -10,8 +10,6 @@ const internationalTrHistoryStyles = () =>
     },
     listContainer: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
       paddingTop: moderateScale(8, 0.3),
       paddingBottom: moderateScale(30),
     },

@@ -57,7 +57,7 @@ const CardsScreen: React.FC = () => {
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);

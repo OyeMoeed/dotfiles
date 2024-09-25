@@ -10,7 +10,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { LanguageCode } from '@app/utilities/enums.util';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import React, { JSX, forwardRef } from 'react';
+import { JSX, forwardRef } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import styles from './ipay-language-sheet.styles';
@@ -18,13 +18,13 @@ import { IPayLanguageSheetProps } from './ipay-language.interface';
 import { languagesAll } from './languagesData';
 import { useLanguageChange, useModalActions } from './useLanguageChange';
 
-const IPayLanguageSheet: React.FC = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((_, ref) => {
+const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((_, ref) => {
   const { bottomSheetModalRef, handleClosePress } = useModalActions(ref);
   const { colors } = useTheme();
   const sheetStyles = styles(colors);
 
   const handleLanguagePress = useLanguageChange(handleClosePress);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const changeMainLanguage = async (language: string, isRTL: boolean, code: LanguageCode) => {
     const deviceInfo = await getDeviceInfo();

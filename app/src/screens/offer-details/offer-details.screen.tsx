@@ -48,7 +48,7 @@ const OfferDetailsScreen: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: { id: string } }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const { showToast } = useToastContext();
   const [apiError, setAPIError] = useState<string>('');
