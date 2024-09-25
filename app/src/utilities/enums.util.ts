@@ -52,7 +52,7 @@ enum alertType {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-enum spinnerVariant {
+enum SpinnerVariant {
   TEXT = 'text',
   DEFAULT = 'default',
 }
@@ -377,6 +377,7 @@ export {
   PayChannel,
   PaymentType,
   PickerVariant,
+  SpinnerVariant,
   States,
   TabBase,
   ToastTypes,
@@ -389,5 +390,4 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant,
 };

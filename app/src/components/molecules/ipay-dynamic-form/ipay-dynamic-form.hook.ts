@@ -36,7 +36,9 @@ const useDynamicForm = (fetchedFields: DynamicField[]) => {
       const { type, required, minWidth, maxWidth, label, integrationTagName } = field;
       const flatKey = integrationTagName.replace(/\./g, '_');
       let schema = Yup.string();
-
+      if (required) {
+        schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
+      }
       switch (type) {
         case DYNAMIC_FIELDS_TYPES.NUMBER:
           schema = Yup.string().typeError(t('VALIDATION.MUST_BE_NUMBER').replace('{label}', label));
@@ -52,9 +54,7 @@ const useDynamicForm = (fetchedFields: DynamicField[]) => {
               t('VALIDATION.MAX_WIDTH').replace('{label}', label).replace('{max}', String(maxWidth)),
             );
           }
-          if (required) {
-            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
-          }
+
           break;
 
         case DYNAMIC_FIELDS_TYPES.TEXT:
@@ -71,24 +71,13 @@ const useDynamicForm = (fetchedFields: DynamicField[]) => {
               t('VALIDATION.MAX_WIDTH').replace('{label}', label).replace('{max}', String(maxWidth)),
             );
           }
-          if (required) {
-            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
-          }
-          break;
 
-        case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE:
-          schema = Yup.string().typeError(t('VALIDATION.MUST_BE_SELECTED').replace('{label}', label));
-          if (required) {
-            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
-          }
           break;
 
         default:
-          if (required) {
-            schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
-          }
           break;
       }
+
       shape[flatKey] = schema;
     });
     return Yup.object().shape(shape);

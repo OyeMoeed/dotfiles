@@ -665,7 +665,7 @@ const SNAP_POINT = {
   MID_SMALL: ['55%', '63%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '95%'],
+  MEDIUM_LARGE: ['93%', '95%'],
   LARGE: ['100%', '100%'],
 };
 const ALINMA_BANK_CODE = '999999';
@@ -680,15 +680,9 @@ const DASHBOARD_ITEMS = [
 ];
 
 export enum DYNAMIC_FIELDS_TYPES {
-  TEXT = 'text',
-  ALPHA_NO_DIGITS = 'alphaNoDigits',
-  ENGLISH_CHARACTERS = 'englishCharacters',
-  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+  TEXT = 'TEXT',
   LIST_OF_VALUE = 'LIST_OF_VALUE',
-  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
-  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
   NUMBER = 'NUMBER',
-  DATE = 'date',
   GREGORIAN_DATE = 'gregorianDate',
   GREGORIAN_DATE_PAST = 'gregorianDatePast',
   GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
@@ -696,7 +690,12 @@ export enum DYNAMIC_FIELDS_TYPES {
   HIJRI_DATE_PAST = 'hijriDatePast',
   HIJRI_DATE_FUTURE = 'hijriDateFuture',
   BOOLEAN_TYPE = 'booleanType',
-  ENUMERATION = 'enumeration',
+  DATE = 'date',
+  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
+  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
+  ALPHA_NO_DIGITS = 'alphaNoDigits',
+  ENGLISH_CHARACTERS = 'englishCharacters',
+  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
 }
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:

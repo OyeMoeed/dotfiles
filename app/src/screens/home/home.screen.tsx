@@ -44,6 +44,7 @@ const Home: React.FC = () => {
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
+
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
@@ -112,6 +113,7 @@ const Home: React.FC = () => {
     dispatch(setProfileSheetVisibility(false));
     setTopUpOptionsVisible(true);
   };
+
   const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };

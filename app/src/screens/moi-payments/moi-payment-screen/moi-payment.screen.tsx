@@ -5,44 +5,38 @@ import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dyn
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
+import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import getBillersService from '@app/network/services/bill-managment/get-billers/get-billers.service';
 import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
 import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
 import { BillersService } from '@app/network/services/bills-management/get-billers-services/get-billers-services.interface';
 import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
 import { BillersTypes } from '@app/network/services/bills-management/get-billers/get-billers.interface';
-import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-
 import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useState } from 'react';
-
-import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import { useWatch } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import moiPaymentStyles from './moi-payment.style';
 
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
+  const [serviceProviderValue, setServiceProviderValue] = useState(null);
+  const [serviceTypeValue, setServiceTypeValue] = useState(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
-  const [, setIsRefund] = useState<boolean>(false);
   const [fields, setFields] = useState<DynamicField[]>([]);
-  const tabs = ['BILL_PAYMENTS.PAYMENT', 'BILL_PAYMENTS.REFUND'];
-  const [selectedBiller, setSelectedBiller] = useState<string>();
-  const [selectedServiceType, setSelectedServiceType] = useState<string>();
+  const { t } = useTranslation();
+  const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const handleTabSelect = useCallback(
     (tab: string) => {
-      if (tab === MoiPaymentTypes.REFUND) {
-        setIsRefund(true);
-      } else {
-        setIsRefund(false);
-      }
       setSelectedTab(tab);
     },
     [selectedTab],
@@ -64,8 +58,8 @@ const MoiPaymentScreen: React.FC = () => {
     };
 
     const apiResponse = await getBillersService(payload);
-    if (apiResponse.successfulResponse) {
-      const serviceProvider = apiResponse.response.billersList.map((billerItem: BillersTypes) => ({
+    if (apiResponse?.successfulResponse) {
+      const serviceProvider = apiResponse?.response?.billersList?.map((billerItem: BillersTypes) => ({
         ...billerItem,
         code: billerItem.billerId,
         desc: billerItem.billerDesc,
@@ -95,8 +89,8 @@ const MoiPaymentScreen: React.FC = () => {
   const onGetBillersServices = async (billerID?: string) => {
     const apiResponse = await getBillersServiceProvider(billerID);
 
-    if (apiResponse.successfulResponse) {
-      const serviceList = apiResponse.response.servicesList.map((serviceItem: BillersService) => ({
+    if (apiResponse?.successfulResponse) {
+      const serviceList = apiResponse?.response?.servicesList?.map((serviceItem: BillersService) => ({
         ...serviceItem,
         code: serviceItem.serviceId,
         desc: serviceItem.serviceDesc,
@@ -105,11 +99,7 @@ const MoiPaymentScreen: React.FC = () => {
     }
   };
 
-  useEffect(() => {
-    onGetBillersServices(selectedBiller);
-  }, [selectedBiller]);
-
-  const fetchFields = async () => {
+  const fetchFields = async (selectedBiller: string, selectedServiceType: string) => {
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
@@ -150,6 +140,16 @@ const MoiPaymentScreen: React.FC = () => {
       setFields(updatedFields);
     }
   };
+
+  useEffect(() => {
+    if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
+  }, [serviceProviderValue]);
+
+  useEffect(() => {
+    if (serviceTypeValue) {
+      fetchFields(serviceProviderValue, serviceTypeValue);
+    }
+  }, [serviceTypeValue]);
   return (
     <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
       {({ control, formState: { errors }, handleSubmit }) => {
@@ -157,16 +157,8 @@ const MoiPaymentScreen: React.FC = () => {
           [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
           [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
         } = useWatch({ control });
-
-        useEffect(() => {
-          if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
-        }, [serviceProviderValue]);
-
-        useEffect(() => {
-          if (serviceTypeValue) {
-            fetchFields();
-          }
-        }, [serviceTypeValue]);
+        setServiceProviderValue(serviceProviderValue);
+        setServiceTypeValue(serviceTypeValue);
 
         return (
           <IPaySafeAreaView>
