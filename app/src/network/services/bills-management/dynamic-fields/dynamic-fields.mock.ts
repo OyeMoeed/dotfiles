@@ -1,3 +1,5 @@
+import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
+
 const getDynamicFieldsMockResponse = {
   response: {
     billNumberLabel: 'Iqama ID',
@@ -80,6 +82,18 @@ const getDynamicFieldsMockResponse = {
         requiredInPaymentOrRefund: 'REFUND',
         type: 'LIST_OF_VALUE',
         value: '1',
+      },
+      {
+        index: 'TermsAndConditions',
+        integrationTagName: 'TermsAndConditions',
+        label: 'Accept Terms and Conditions',
+        maxWidth: 10,
+        minWidth: 1,
+        orderIndex: '1',
+        required: false,
+        requiredInPaymentOrRefund: 'PAYMENT',
+        type: DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE,
+        value: false,
       },
     ],
     showbillNumbertHint: false,
