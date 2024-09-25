@@ -1,5 +1,4 @@
-import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
@@ -41,23 +40,11 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     otpError,
     setOtpError,
     otpVerificationRef,
+    setOtpRef,
   } = useMoiPaymentConfirmation();
   const { otpConfig } = useConstantData();
 
   const helpCenterRef = useRef<any>(null);
-  const [otpRef, setOtpRef] = useState<string>('');
-
-  // temporary TODO
-  // const totalAmount = '500';
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const onCloseBottomSheet = () => {
     setOtpSheetVisible(false);
@@ -78,6 +65,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
 
     const apiResponse = await prepareMoiBill(PaymentType.MOI, payLoad);
     if (apiResponse?.successfulResponse) {
+      setOtpRef(apiResponse?.response.otpRef);
       setOtpSheetVisible(true);
     }
   };

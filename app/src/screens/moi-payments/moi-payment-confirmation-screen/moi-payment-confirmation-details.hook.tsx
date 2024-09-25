@@ -19,11 +19,12 @@ interface MoiPaymentDetail {
 // TODO will be replaced by API
 const useMoiPaymentConfirmation = () => {
   const { t } = useTranslation();
-  const otpRef = useRef<bottomSheetTypes>(null);
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
+  const [otpRef, setOtpRef] = useState<string>('');
   const [apiError] = useState<string>('');
   const otpBottomSheetRef = useRef<any>(null);
+
   const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -130,7 +131,7 @@ const useMoiPaymentConfirmation = () => {
       walletNumber: walletNumber,
       moiBillPaymentType: 'PAYMENT',
       otp: otp,
-      otpRef: 'OTP2335924H0K',
+      otpRef: otpRef,
       billerId: '002',
       billNumOrBillingAcct: '002245820000',
       dueDateTime: '24-11-2014',
@@ -172,6 +173,7 @@ const useMoiPaymentConfirmation = () => {
     setOtpError,
     apiError,
     otpVerificationRef,
+    setOtpRef,
   };
 };
 
