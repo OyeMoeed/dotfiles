@@ -1,4 +1,5 @@
 import colors from '@app/styles/colors.const';
+import { SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
@@ -13,6 +14,9 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
       marginTop: moderateScale(30),
       marginBottom: moderateScale(5),
     },
+    foundViolationContainer: {
+      marginBottom: 0,
+    },
     detailsText: {
       color: themeColors.primary.primary800,
     },
@@ -25,13 +29,13 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
     },
     listView: {
       flex: 1,
-      marginTop: moderateScale(16, 0.3),
+      marginTop: moderateScale(14, 0.3),
     },
     footerView: {
       position: 'absolute',
       bottom: 0,
-      width: isTablet ? scale(322) : moderateScale(330, 0.35),
-      marginBottom: moderateScale(24, 0.3),
+      width: SCREEN_WIDTH - moderateScale(48, 0.3),
+      marginBottom: moderateScale(33, 0.3),
     },
 
     footerViewSecondary: {
@@ -58,6 +62,11 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
     addNewBillBtn: {
       marginTop: moderateScale(24, 0.3),
       width: moderateScale(175, 0.35),
+    },
+    btnStyle: {
+      borderRadius: moderateScale(16),
+      paddingVertical: 0,
+      height: moderateScale(50),
     },
   });
 

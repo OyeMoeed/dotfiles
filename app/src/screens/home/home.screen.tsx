@@ -49,7 +49,7 @@ const Home: React.FC = () => {
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
   );
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
@@ -162,7 +162,8 @@ const Home: React.FC = () => {
 
   const mapCardData = (cards: CardListItem[]) => {
     try {
-      return cards?.map((card: any) => ({
+      let mappedCards = [];
+      mappedCards = cards?.map((card: any) => ({
         name: card?.linkedName?.embossingName,
         cardType: card?.cardTypeId,
         cardHeaderText: getCardDesc(card?.cardTypeId),
@@ -177,6 +178,7 @@ const Home: React.FC = () => {
         totalCashbackAmt: card.totalCashbackAmt,
         ...card,
       }));
+      return mappedCards;
     } catch (err) {
       return [];
     }

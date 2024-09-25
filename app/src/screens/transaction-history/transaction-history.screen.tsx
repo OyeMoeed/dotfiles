@@ -15,16 +15,17 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
-import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
+import { BeneficiaryTransactionItemProps } from '../beneficiary-transaction-history/beneficiary-transaction-history.interface';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { isW2WTransactions, isShowTabs = false, currentCard, cards, contacts, isShowAmount = true } = route.params;
@@ -34,7 +35,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { t } = useTranslation();
   const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
 
-  const [filters, setFilters] = useState<[]>([]);
+  const [filters, setFilters] = useState<Array<any>>([]);
   const transactionRef = React.createRef<any>();
   const filterRef = useRef<bottomSheetTypes>(null);
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
@@ -42,7 +43,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [appliedFilters, setAppliedFilters] = useState<any>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
@@ -51,10 +52,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const [selectedCard, setSelectedCard] = useState<any>(currentCard);
 
-  const openBottomSheet = (item: IPayTransactionItemProps) => {
+  const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
     let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
-    if (heightMapping[item.transactionRequestType]) {
-      calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
+    const heightMappingType = heightMapping[item.transactionRequestType];
+
+    if (heightMappingType) {
+      calculatedSnapPoint = ['1%', heightMappingType, isAndroidOS ? '95%' : '100%'];
     }
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
@@ -105,8 +108,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     const apiResponse: any = await getTransactions(payload);
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      if (apiResponse?.response?.transactions?.length) {
-        setTransactionsData(apiResponse?.response?.transactions);
+      const transactionsResponse = apiResponse?.response?.transactions || [];
+      if (transactionsResponse?.length) {
+        setTransactionsData(transactionsResponse);
       } else {
         setTransactionsData([]);
         setNoFilterResult(true);
@@ -393,6 +397,21 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const headerTitle = currentCard ? 'CARDS.CARD_TRANSACTIONS_HISTORY' : 'COMMON.TRANSACTIONS_HISTORY';
 
+  const renderFilter = () =>
+    filters.map((text, index) => (
+      <IPayChip
+        key={`${text}-${`${index}`}-ipay-chip`}
+        containerStyle={styles.chipContainer}
+        headingStyles={styles.chipHeading}
+        textValue={text}
+        icon={
+          <IPayPressable onPress={() => onPressClose(text)}>
+            <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+          </IPayPressable>
+        }
+      />
+    ));
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader
@@ -426,19 +445,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       {!!filters.length && (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {filters.map((text) => (
-              <IPayChip
-                key={text}
-                containerStyle={styles.chipContainer}
-                headingStyles={styles.chipHeading}
-                textValue={text}
-                icon={
-                  <IPayPressable onPress={() => onPressClose(text)}>
-                    <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                  </IPayPressable>
-                }
-              />
-            ))}
+            {renderFilter()}
           </IPayScrollView>
         </IPayView>
       )}

@@ -30,7 +30,7 @@ const useMobileAndIqamaVerification = () => {
   const dispatch = useTypedDispatch();
   const { showToast } = useToastContext();
   const { t } = useTranslation();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
