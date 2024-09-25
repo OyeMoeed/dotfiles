@@ -54,7 +54,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   // // states
   const [sentRequestsData, setSentRequestsData] = useState([]);
   const [recivedRequestsData, setRecivedRequestsData] = useState([]);
-  const dataForPaginatedFLatlist = [];
+  const dataForPaginatedFLatlist = selectedTab === SEND_REQUESTS ? sentRequestsData : recivedRequestsData;
 
   // // selectors
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
