@@ -19,7 +19,6 @@ import MainNavigation from '@app/navigation/app-navigator.navigation';
 import { ToastProvider } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayBottomSheetProvider from '@app/components/organism/ipay-bottomsheet-provider/ipay-bottomsheet-provider.component';
 
-import usePushNotifications from '@app/hooks/use-push-notifications';
 import appStyles from './app.styles';
 
 const App = (): JSX.Element => {

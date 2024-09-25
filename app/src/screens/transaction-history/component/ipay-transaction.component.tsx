@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -61,12 +62,15 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const CIN_ALINMA = transactionRequestType === TransactionTypes.CIN_ALINMA ?? false;
 
   // case 8
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_MRCHNT_IN = transactionRequestType === TransactionTypes.PAY_MRCHNT_IN ?? false;
 
   // case 9
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_MRCHNT_OUT = transactionRequestType === TransactionTypes.PAY_MRCHNT_OUT ?? false;
 
   // case 10
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_MRCHNT_BILL = transactionRequestType === TransactionTypes.PAY_MRCHNT_BILL ?? false;
 
   // case 11
@@ -160,12 +164,15 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const PAY_VCARD_POS_VISA = transactionRequestType === TransactionTypes.PAY_VCARD_POS_VISA ?? false;
 
   // case 41
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_VCARD_POS_NAQD_MADA = transactionRequestType === TransactionTypes.PAY_VCARD_POS_NAQD_MADA ?? false;
 
   // case 42
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_VCARD_POS_NAQD_VISA = transactionRequestType === TransactionTypes.PAY_VCARD_POS_NAQD_VISA ?? false;
 
   // case 43
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_VCARD_POS_NAQD = transactionRequestType === TransactionTypes.PAY_VCARD_POS_NAQD ?? false;
 
   // case 44
@@ -204,23 +211,21 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   // case 55
   const PAYMENT_REQUEST = transactionRequestType === TransactionTypes.PAYMENT_REQUEST ?? false;
 
-  const trxTitleAndSubTile = (title: string, subtitle: string) => {
-    return (
-      <>
-        <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-          {title}
-        </IPayFootnoteText>
-        <IPayCaption1Text
-          numberOfLines={CAPTION_LINES}
-          style={styles.trasnactionTypeText}
-          color={colors.natural.natural900}
-          shouldTranslate={false}
-        >
-          {subtitle}
-        </IPayCaption1Text>
-      </>
-    );
-  };
+  const trxTitleAndSubTile = (title: string, subtitle: string) => (
+    <>
+      <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
+        {title}
+      </IPayFootnoteText>
+      <IPayCaption1Text
+        numberOfLines={CAPTION_LINES}
+        style={styles.trasnactionTypeText}
+        color={colors.natural.natural900}
+        shouldTranslate={false}
+      >
+        {subtitle}
+      </IPayCaption1Text>
+    </>
+  );
 
   const renderTrxsItemTitleAndDesc = () => {
     if (COUT_MUSANED) {
@@ -254,7 +259,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(transaction?.senderName, t('TRANSACTION_HISTORY.ALINMA_TRANSFER'));
     }
     if (REFUND) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.REFUND'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.REFUND'),
+      );
     }
     if (CIN_CARD) {
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), t('TRANSACTION_HISTORY.CARD'));
@@ -308,19 +316,34 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.CARD_REPLACEMENT'), t('TRANSACTION_HISTORY.FEES'));
     }
     if (PAY_VCARD) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.CARD_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.CARD_PURCHASE'),
+      );
     }
     if (PAY_VCARD_POS) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.POS_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.POS_PURCHASE'),
+      );
     }
     if (PAY_VCARD_ECOM) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.INTERNET_PURCHASE'),
+      );
     }
     if (PAY_VCARD_SETTLE) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.INTERNET_PURCHASE'),
+      );
     }
     if (PAY_MOI) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.MOI_PAYMENT'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.MOI_PAYMENT'),
+      );
     }
     if (BKF_TRANSFER) {
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.WALLET_CREDIT'), t('TRANSACTION_HISTORY.INTERNAL_TRANSFER'));
@@ -347,7 +370,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.ALINMAPAY_DIRECT'));
     }
     if (PAY_VCARD_REFUND) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE_OR_POS_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.INTERNET_PURCHASE_OR_POS_PURCHASE'),
+      );
     }
     if (COUT_GIFT) {
       return trxTitleAndSubTile(
@@ -356,16 +382,28 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       );
     }
     if (PAY_VCARD_POS_MADA) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.POS_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.POS_PURCHASE'),
+      );
     }
     if (PAY_VCARD_POS_VISA) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.POS_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.POS_PURCHASE'),
+      );
     }
     if (PAY_VCARD_ECOM_MADA) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.INTERNET_PURCHASE'),
+      );
     }
     if (PAY_VCARD_ECOM_VISA) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.INTERNET_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.INTERNET_PURCHASE'),
+      );
     }
     if (COUT_ALINMA_REV) {
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.ALINMA_TRANSFER'));
@@ -374,7 +412,10 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.TRANSFER_REVERSAL'), t('TRANSACTION_HISTORY.LOCAL_TRANSFER'));
     }
     if (COUT_SWIFT_REV) {
-      return trxTitleAndSubTile(t('TRANSACTION_HISTORY.REVERSE_INCOMING_TRANSFER'), t('TRANSACTION_HISTORY.SWIFT_TRANSFER'));
+      return trxTitleAndSubTile(
+        t('TRANSACTION_HISTORY.REVERSE_INCOMING_TRANSFER'),
+        t('TRANSACTION_HISTORY.SWIFT_TRANSFER'),
+      );
     }
     if (REFUND_SADAD_REV) {
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.BILL_REFUND_REVERSAL'), t('TRANSACTION_HISTORY.SADAD'));
@@ -392,19 +433,18 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
       return trxTitleAndSubTile(t('TRANSACTION_HISTORY.ADD_MONEY'), 'Apple Pay');
     }
     if (PAY_ONECARD) {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc , t('TRANSACTION_HISTORY.MARKETPLACE_PURCHASE'));
+      return trxTitleAndSubTile(
+        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc,
+        t('TRANSACTION_HISTORY.MARKETPLACE_PURCHASE'),
+      );
     }
     if (PAYMENT_REQUEST) {
       return trxTitleAndSubTile(
         transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
         t('TRANSACTION_HISTORY.MONEY_REQUEST'),
       );
-    }else{
-      return trxTitleAndSubTile(
-        transaction?.transactionDescription || transaction?.transactionRequestTypeDesc ,
-        '',
-      );
     }
+    return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc, '');
   };
 
   const renderLeftIcon = () => {
@@ -423,6 +463,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     );
   };
 
+  // TODO: remove unused function
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const renderTrxsItemTitle = () => {
     if (transaction?.transactionRequestType === TransactionTypes.PAY_WALLET || isBeneficiaryHistory) {
       return (
@@ -454,6 +496,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const renderTrxsSecondTitle = () => {
     if (transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV) {
       return (
@@ -686,6 +729,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     return <></>;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const renderTrxsTopTitle = () => {
     if (
       transaction?.walletTransactionStatus &&
@@ -751,7 +795,6 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
           {renderTrxsItemTitle()}
           {renderTrxsSecondTitle()} */}
           {renderTrxsItemTitleAndDesc()}
-
         </IPayView>
       </IPayView>
       {!internationalTransfer && transaction?.status ? (

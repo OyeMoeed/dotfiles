@@ -37,8 +37,9 @@ import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Linking } from 'react-native';
 import { useDispatch } from 'react-redux';
+import { openAppOrStore } from '@app/utilities/linking-utils';
+
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
@@ -240,15 +241,6 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
   const onTimerCompete = () => {
     setIsExpired(true);
     setStartInqiryInterval(false);
-  };
-
-  const openAppOrStore = async (appUrl: string, storeUrl: string): Promise<void> => {
-    const supported = await Linking.canOpenURL(appUrl);
-    if (supported) {
-      await Linking.openURL(appUrl);
-    } else {
-      await Linking.openURL(storeUrl);
-    }
   };
 
   const goToNafathApp = async (): Promise<void> => {

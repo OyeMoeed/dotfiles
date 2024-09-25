@@ -7,6 +7,7 @@ import React from 'react';
 import { Controller } from 'react-hook-form';
 import IPayAnimatedTextInput from '../../ipay-animated-input-text/ipay-animated-input-text.component';
 import DynamicFieldRendererProps from './ipay-field-renderer.interface';
+
 const DYNAMIC_FIELDS_CONFIGS = {
   [DYNAMIC_FIELDS_TYPES.TEXT]: {
     regex: /^[\s_a-z\u0621-\u064A@.\s0-9٠-٩]*$/i,
@@ -35,6 +36,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
     const flatKey = field.index.replace(/\./g, '_');
     // let errorMessage
     // Fetch the error message before the switch statement
+    // eslint-disable-next-line no-underscore-dangle
     const errorMessage = get(control?._formState?.errors, `${flatKey}.message`, '');
 
     switch (field.type) {
@@ -48,21 +50,19 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             name={flatKey} // Use the flattened key
             control={control}
             defaultValue={field.value}
-            render={({ field: { onChange, value }, formState: { errors } }) => {
-              return (
-                <IPayAnimatedTextInput
-                  label={field.label}
-                  value={value}
-                  maxLength={field.maxWidth}
-                  onChangeText={onChange}
-                  keyboardType={DYNAMIC_FIELDS_CONFIGS[field.type]?.keyboardType}
-                  isError={!!get(errors, flatKey)}
-                  editable
-                  assistiveText={errorMessage as string}
-                  testID={`${flatKey}-text-input`}
-                />
-              );
-            }}
+            render={({ field: { onChange, value }, formState: { errors } }) => (
+              <IPayAnimatedTextInput
+                label={field.label}
+                value={value}
+                maxLength={field.maxWidth}
+                onChangeText={onChange}
+                keyboardType={DYNAMIC_FIELDS_CONFIGS[field.type]?.keyboardType}
+                isError={!!get(errors, flatKey)}
+                editable
+                assistiveText={errorMessage as string}
+                testID={`${flatKey}-text-input`}
+              />
+            )}
           />
         );
 
@@ -73,25 +73,23 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             name={flatKey}
             control={control}
             defaultValue={field.value}
-            render={({ field: { value, onChange } }) => {
-              return (
-                <IPayDropdownSelect
-                  data={field.lovList}
-                  selectedValue={value}
-                  label={field.label}
-                  onSelectListItem={(selectedItem: string) => {
-                    onChange(selectedItem);
-                    if (handleChange) handleChange(field.dependsOn, selectedItem);
-                  }}
-                  isSearchable={true}
-                  testID={`${flatKey}-dropdown`}
-                  labelKey="desc"
-                  valueKey="code"
-                  disabled={field.disable}
-                  errorMessage={errorMessage as string}
-                />
-              );
-            }}
+            render={({ field: { value, onChange } }) => (
+              <IPayDropdownSelect
+                data={field.lovList}
+                selectedValue={value}
+                label={field.label}
+                onSelectListItem={(selectedItem: string) => {
+                  onChange(selectedItem);
+                  if (handleChange) handleChange(field.dependsOn, selectedItem);
+                }}
+                isSearchable
+                testID={`${flatKey}-dropdown`}
+                labelKey="desc"
+                valueKey="code"
+                disabled={field.disable}
+                errorMessage={errorMessage as string}
+              />
+            )}
           />
         );
       case DYNAMIC_FIELDS_TYPES.DATE:

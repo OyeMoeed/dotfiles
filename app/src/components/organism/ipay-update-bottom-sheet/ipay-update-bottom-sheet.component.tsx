@@ -8,6 +8,8 @@ import { IPayButton } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayIcon, IPayText, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { openAppOrStore } from '@app/utilities/linking-utils';
+import { MAIN_APP_STORE_LINKS } from '@app/constants/constants';
 
 import { IPayUpdateComponentSheetProps } from './ipay-update-bottom-sheet.interface';
 import forceUpdateStyle from './ipay-update-bottom-sheet.style';
@@ -36,8 +38,8 @@ const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, 
     handlePresentModalPress();
   }, []);
 
-  const onPressAppUpdate = () => {
-    handleClosePress();
+  const onPressAppUpdate = async () => {
+    await openAppOrStore(MAIN_APP_STORE_LINKS);
   };
 
   return (
