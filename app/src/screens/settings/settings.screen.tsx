@@ -262,7 +262,7 @@ const Settings: React.FC = () => {
       </IPayView>
 
       <IPayBottomSheet
-        heading="Change Passcode"
+        heading="SETTINGS.CHANGE_PASSCODE"
         enablePanDownToClose
         simpleHeader
         cancelBnt
