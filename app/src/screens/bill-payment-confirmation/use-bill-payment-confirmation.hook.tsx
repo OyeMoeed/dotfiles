@@ -76,8 +76,6 @@ const useBillPaymentConfirmation = (
   const getTransactionIds = (apiResponse: MultiPaymentBillResponseTypes, index: number) =>
     apiResponse.response.billPaymentResponses[index].transactionId;
 
-  const getTotalAmount = () => (billPaymentInfos ? billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) : 0);
-
   const onConfirm = async () => {
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,

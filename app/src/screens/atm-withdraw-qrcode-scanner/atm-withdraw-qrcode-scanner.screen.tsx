@@ -27,7 +27,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannedCode] = useState('');
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const { showToast } = useToastContext();
 
   const styles = qrCodeScannerStyles();

@@ -5,7 +5,7 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { useTypedSelector } from '@app/store/store';
@@ -17,6 +17,9 @@ import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
 import { t } from 'i18next';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
   const {
@@ -42,9 +45,12 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const route = useRoute();
   const variant = route?.params?.variant;
 
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+
   const [chipValue, setChipValue] = useState('');
 
   const handleOTPVerify = () => {
+    setOtpSheetVisible(true);
     handleOtpVerification();
     setOtpError(false);
   };
@@ -85,6 +91,41 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     setChipValue(determineChipValue());
   }, [determineChipValue]);
 
+  const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
+
+  const closeBottomSheetTopUp = () => {
+    setTopUpOptionsVisible(false);
+  };
+
+  const topUpSelectionRef = React.createRef<any>();
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
+  };
+
+  const navigateTOAktharPoints = async () => {
+    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+
+  const topUpSelectionBottomSheet = () => {
+    // dispatch(setProfileSheetVisibility(false));
+    setTopUpOptionsVisible(true);
+  };
+
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
@@ -95,7 +136,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           balance={balance ?? 0}
           monthlyIncomingLimit={balance ?? 0}
           topUpBtnStyle={styles.topUpButton}
-        />
+          onPressTopup={topUpSelectionBottomSheet}
+          />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
@@ -119,7 +161,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
 
         <IPayButton
           btnType={buttonVariants.PRIMARY}
-          disabled={chipValue}
+          // Disabled for now as QA is blocked to test this
+          // disabled={chipValue}
           medium
           onPress={handleOTPVerify}
           btnText="COMMON.PAY"
@@ -133,8 +176,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         simpleBar
         cancelBnt
         customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
-        onCloseBottomSheet={() => otpRef?.current?.close()}
-        isVisible
+        onCloseBottomSheet={() => setOtpSheetVisible(false)}
+        isVisible={isOtpSheetVisible}
         ref={otpRef}
       >
         <IPayOtpVerification
@@ -165,6 +208,26 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       >
         <HelpCenterComponent />
       </IPayBottomSheet>
+
+      <IPayPortalBottomSheet
+          noGradient
+          heading="TOP_UP.ADD_MONEY_USING"
+          onCloseBottomSheet={closeBottomSheetTopUp}
+          customSnapPoint={SNAP_POINT.XS_SMALL}
+          ref={topUpSelectionRef}
+          enablePanDownToClose
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+          isVisible={topUpOptionsVisible}
+        >
+          <IPayTopUpSelection
+            testID="topUp-selection"
+            closeBottomSheet={closeBottomSheetTopUp}
+            topupItemSelected={topupItemSelected}
+          />
+        </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

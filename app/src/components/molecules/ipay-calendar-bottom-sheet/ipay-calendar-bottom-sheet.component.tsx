@@ -1,5 +1,6 @@
 import { IPayBottomSheet } from '@app/components/organism';
 import { FC, forwardRef, useImperativeHandle, useRef } from 'react';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import IPayView from '../../atoms/ipay-view/ipay-view.component';
 import IPayCalendar from '../ipay-calendar/ipay-calendar.component';
 import { IPayCalendarBottomSheetHandle, IPayCalendarBottomSheetProps } from './ipay-calendar-bottom-sheet.interface';
@@ -13,7 +14,7 @@ const IPayCalendarBottomSheet: FC<IPayCalendarBottomSheetProps> = forwardRef<
   IPayCalendarBottomSheetHandle,
   IPayCalendarBottomSheetProps
 >(({ onDateSelected, heading }, ref) => {
-  const calendarBottomSheetRef = useRef(null);
+  const calendarBottomSheetRef = useRef<bottomSheetTypes>(null);
 
   useImperativeHandle(ref, () => ({
     present: () => {

@@ -55,7 +55,7 @@ const IPayRemainingAccountBalance: React.FC<IPayRemainingBalanceProps> = ({
     <IPayView testID={`${testID}-remaining-balance`} style={styles.cardContainer}>
       <IPayView style={styles.centerAlign}>
         <IPayFootnoteText
-          text={currentState === TopUpStates.SAVED_CARD ? t('TRANSACTION_HISTORY.AMOUNT') : t('TOP_UP.ENTER_AMOUNT')}
+          text={currentState === TopUpStates.SAVED_CARD ? 'TRANSACTION_HISTORY.AMOUNT' : 'TOP_UP.ENTER_AMOUNT'}
           color={colors.natural.natural700}
         />
         <IPayAmountInput
