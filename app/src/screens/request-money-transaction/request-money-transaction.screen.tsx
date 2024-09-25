@@ -320,20 +320,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     );
   };
 
-  const noResult = () => (
-    <IPayView style={styles.noResult}>
-      <IPayNoResult
-        textColor={colors.primary.primary800}
-        iconColor={colors.primary.primary800}
-        message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${t(selectedTab).split(' ')?.[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
-        showIcon
-        containerStyle={styles.noResultContent}
-        iconSize={40}
-        icon={icons.money_time}
-      />
-    </IPayView>
-  );
-
   const renderChip = (): React.JSX.Element => (
     <IPayView>
       {filters?.map((text) => (
@@ -386,38 +372,65 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         unselectedTabStyle={styles.unselectedTab}
       />
       <IPayView style={styles.listContainer}>
-        <IPayPaginatedFlatlist
-          showsVerticalScrollIndicator={false}
-          externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
-          keyExtractor={(index: number) => {
-            index.toString(); // Convert the index to a string
-          }}
-          renderItem={renderItem}
-          fetchData={(page, pageSize) =>
-            getRequestsData(selectedTab === SEND_REQUESTS ? sentRequestsPage : receivedRequestsPage, pageSize)
-          } // Pass fetchData for pagination
-          pageSize={10} // Optional: Set page size for pagination
-          data={dataForPaginatedFLatlist}
-          ListEmptyComponent={noResult}
-        />
-        {selectedTab === SEND_REQUESTS ? (
-          <IPayButton
-            btnType={buttonVariants.PRIMARY}
-            large
-            onPress={createRequest}
-            btnText="REQUEST_MONEY.CREATE_REQUEST"
-            btnStyle={styles.requestButton}
-            leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
+        {dataForPaginatedFLatlist?.length > 0 ? (
+          <IPayPaginatedFlatlist
+            showsVerticalScrollIndicator={false}
+            externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
+            keyExtractor={(index: number) => {
+              index.toString(); // Convert the index to a string
+            }}
+            renderItem={renderItem}
+            fetchData={(page, pageSize) =>
+              getRequestsData(selectedTab === SEND_REQUESTS ? sentRequestsPage : receivedRequestsPage, pageSize)
+            } // Pass fetchData for pagination
+            pageSize={10} // Optional: Set page size for pagination
+            data={dataForPaginatedFLatlist}
           />
         ) : (
-          <IPayButton
-            btnType={buttonVariants.PRIMARY}
-            large
-            onPress={createRequest}
-            btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
-            btnStyle={styles.requestButton}
-            leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
-          />
+          <IPayView style={styles.noResult}>
+            <IPayNoResult
+              textColor={colors.primary.primary800}
+              iconColor={colors.primary.primary800}
+              message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${t(selectedTab).split(' ')?.[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
+              showIcon
+              containerStyle={styles.noResultContent}
+              iconSize={40}
+              icon={icons.money_time}
+            />
+            {selectedTab === SEND_REQUESTS && (
+              <IPayButton
+                btnType={buttonVariants.PRIMARY}
+                small
+                onPress={createRequest}
+                btnText="REQUEST_MONEY.CREATE_REQUEST"
+                btnStyle={styles.requestNoResultButton}
+                leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
+              />
+            )}
+          </IPayView>
+        )}
+        {dataForPaginatedFLatlist?.length > 0 && (
+          <>
+            {selectedTab === SEND_REQUESTS ? (
+              <IPayButton
+                btnType={buttonVariants.PRIMARY}
+                large
+                onPress={createRequest}
+                btnText="REQUEST_MONEY.CREATE_REQUEST"
+                btnStyle={styles.requestButton}
+                leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
+              />
+            ) : (
+              <IPayButton
+                btnType={buttonVariants.PRIMARY}
+                large
+                onPress={createRequest}
+                btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
+                btnStyle={styles.requestButton}
+                leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
+              />
+            )}
+          </>
         )}
       </IPayView>
       <IPayActionSheet
