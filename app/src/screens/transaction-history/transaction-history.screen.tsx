@@ -29,7 +29,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     isW2WTransactions,
     isShowTabs = false,
     currentCard,
-    cards,
     contacts,
     isShowCard = false,
     isShowAmount = true,
@@ -39,6 +38,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const styles = transactionsStyles(colors);
   const { t } = useTranslation();
   const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
+  const { cards } = useTypedSelector((state) => state.cardsReducer.cards);
 
   const cardLastFourDigit = isShowCard && currentCard?.maskedCardNumber.slice(-4);
 
@@ -107,7 +107,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       offset: '1',
       fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
       toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
-      cardIndex: filtersData? getCardInfo(filtersData?.card?.title)?.cardIndex : selectedCard ? selectedCard?.cardIndex : '',
+      cardIndex: filtersData
+        ? getCardInfo(filtersData?.card?.title)?.cardIndex
+        : selectedCard
+          ? selectedCard?.cardIndex
+          : '',
       trxReqType: filtersData ? getTrxReqTypeCode(filtersData.transactionType?.title) : '',
     };
 
@@ -142,8 +146,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       trxType,
       fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
       toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
-      fromAmount: filterData?.amountFrom? filterData?.amountFrom : '',
-      toAmount: filterData?.amountTo? filterData?.amountTo : '',
+      fromAmount: filterData?.amountFrom ? filterData?.amountFrom : '',
+      toAmount: filterData?.amountTo ? filterData?.amountTo : '',
     };
     const apiResponse: any = await getTransactions(payload);
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
@@ -154,8 +158,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     setIsLoadingW2W(false);
   };
 
-  const handleWatch = (data:any , name: string, type: string) => {
-   console.log(data,name,type);
+  const handleWatch = (data: any, name: string, type: string) => {
+    console.log(data, name, type);
     const CARD_TYPES = [
       'CIN_VISA_CASHBACK',
       'PAY_VCARD_POS_MADA',
@@ -171,19 +175,17 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         return cardType == data?.transactionType?.key;
       }) || null;
 
-    const foundCardFilter = selectedFilterData?.find((filter:any) =>{
-      return filter?.id  == '2';
-    })  
-      
+    const foundCardFilter = selectedFilterData?.find((filter: any) => {
+      return filter?.id == '2';
+    });
+
     if (name == FiltersType.TRANSACTION_TYPE) {
       if (foundItem) {
-        if(foundCardFilter){
+        if (foundCardFilter) {
           setSelectedFilterData(selectedFilterData);
-        }else{
-          
-          setSelectedFilterData(selectedFilterData?.concat(mapCardsFilter()))
+        } else {
+          setSelectedFilterData(selectedFilterData?.concat(mapCardsFilter()));
         }
-        
       } else {
         setSelectedCard(false);
 
@@ -193,14 +195,13 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           }),
         );
       }
-    }else if(name == FiltersType.CARD){
+    } else if (name == FiltersType.CARD) {
       const cardInfo = getCardInfo(data?.card?.title);
       if (cardInfo) {
         setSelectedCard(cardInfo);
       }
     }
-
-  }
+  };
 
   const handleReset = () => {
     const updatedFilters = {
@@ -209,8 +210,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       dateTo: '',
       amountFrom: '',
       amountTo: '',
-      card: null
-    }
+      card: null,
+    };
 
     setAppliedFilters(updatedFilters);
     applyFilters(updatedFilters);
@@ -221,10 +222,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         return filterItem?.id != '2';
       }),
     );
-  }
+  };
 
   const handleSubmit = (data: any) => {
-    
     let filtersArray: any = [];
     if (isW2WTransactions) {
       getW2WTransactionsData(selectedTab === TRANSACTION_TABS[0] ? 'DR' : 'CR', data);
@@ -241,7 +241,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       if (dateRange) filtersArray.push(dateRange);
 
       if (card) {
-     
         filtersArray.push(card);
       }
     } else {
@@ -265,10 +264,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
     let updatedFilters = { ...allFilters };
 
-
     const isDateRange = filter.includes('-') && !filter.includes('SAR');
 
-    
     if (isDateRange) {
       updatedFilters = {
         ...updatedFilters,
@@ -289,7 +286,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     } else if (allFilters.card?.title === filter) {
       updatedFilters = {
         ...updatedFilters,
-        card: null
+        card: null,
       };
     }
 
@@ -357,8 +354,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     }
     const cardsFilter = mapCardsFilter();
     setTransactionHistoryFilterData([...transactionTypesFilter]);
-    if(!isW2WTransactions){
-      setSelectedFilterData([...transactionTypesFilter])
+    if (!isW2WTransactions) {
+      setSelectedFilterData([...transactionTypesFilter]);
     }
   };
 
@@ -371,7 +368,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   }, [selectedTab]);
 
   useEffect(() => {
-    
     setNoFilterResult(false);
     if (isW2WTransactions) {
       setTransactionHistoryFilterData([]);
@@ -381,8 +377,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       getTransactionTypesData();
       getTransactionsData();
     }
-
-
 
     return () => setNoFilterResult(false);
   }, []);
@@ -396,8 +390,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       description: item?.phoneNumbers[0]?.number,
       heading: t('WALLET_TO_WALLET.CONTACT_NAME'),
     }));
-
-    
 
   const renderTrxsList = () => (
     <IPayView>

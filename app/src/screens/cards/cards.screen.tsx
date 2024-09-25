@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
+import { IPayButton, IPayCarousel, IPayNoResult, useToastContext } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -13,8 +13,8 @@ import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
 import {
-  CardListItem,
   CardsProp,
   getCardDetailsProp,
   prepareShowDetailsProp,
@@ -26,29 +26,34 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
+import { setCards } from '@app/store/slices/cards-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
+import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Dimensions } from 'react-native';
-import { verticalScale } from 'react-native-size-matters';
-import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
 import { isAndroidOS } from '@app/utilities/constants';
+import { buttonVariants, CardOptions, CarouselModes, ToastTypes } from '@app/utilities/enums.util';
+import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { verticalScale } from 'react-native-size-matters';
+import { useDispatch } from 'react-redux';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
-
-const SCREEN_WIDTH = Dimensions.get('screen').width;
 
 const CardsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
+  const { showToast } = useToastContext();
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
   const actionSheetRef = useRef<any>(null);
+
+  const dispatch = useDispatch();
+  const cardsData = useTypedSelector((state) => state.cardsReducer.cards);
+  console.log('cardsData outside', cardsData);
+
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
 
@@ -58,7 +63,6 @@ const CardsScreen: React.FC = () => {
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -95,16 +99,6 @@ const CardsScreen: React.FC = () => {
   const handleCardSelection = (cardType: CardOptions) => {
     setSelectedCard(cardType);
   };
-  const newCard = (
-    <IPayView style={styles.newCardWrapper}>
-      <IPayButton
-        onPress={openCardSheet}
-        btnType={buttonVariants.OUTLINED}
-        btnText="CARDS.NEW_CARD"
-        rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
-      />
-    </IPayView>
-  );
 
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
     const hasAccess = checkUserAccess();
@@ -146,59 +140,20 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
+    console.log('index', index, 'cardsData', cardsData);
     setCurrentCard(cardsData[index]);
   };
 
-  const getCardDesc = (cardType: CardTypes) => {
-    switch (cardType) {
-      case CardTypes.PLATINUM:
-        return t('CARDS.PLATINUM_CASHBACK_PREPAID_CARD');
-
-      case CardTypes.SIGNATURE:
-        return t('CARDS.SIGNATURE_PREPAID_CARD');
-
-      case CardTypes.CLASSIC:
-        return t('CARDS.CLASSIC_DEBIT_CARD');
-
-      default:
-        return '';
-    }
-  };
-
-  const mapCardData = (cards: CardListItem[]) => {
-    let mappedCards = [];
-    mappedCards = cards.map((card: any) => ({
-      name: card?.linkedName?.embossingName,
-      cardType: card?.cardTypeId,
-      cardHeaderText: getCardDesc(card?.cardTypeId),
-      expired: card?.reissueDue,
-      frozen: card.cardStatus === CardStatusNumber.Freezed,
-      suspended: false,
-      maskedCardNumber: card?.maskedCardNumber,
-      cardNumber: card.lastDigits,
-      creditCardDetails: {
-        availableBalance: '5200.40',
-      },
-      totalCashbackAmt: card.totalCashbackAmt,
-      ...card,
-    }));
-    return mappedCards;
-  };
   const getCardPayload: CardsProp = {
     walletNumber,
   };
 
   const getCardsData = async (cardApiResponse: any) => {
     if (cardApiResponse) {
-      const availableCards = cardApiResponse?.response?.cards.filter(
-        (card: any) =>
-          card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
-          card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
-          card.cardStatus === CardStatusNumber.Freezed,
-      );
+      const availableCards = filterCards(cardApiResponse?.response?.cards);
 
       if (availableCards?.length) {
-        setCardsData(mapCardData(availableCards));
+        dispatch(setCards(mapCardData(availableCards)));
         setCurrentCard(mapCardData(availableCards)[0]);
         setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
       } else {
@@ -207,7 +162,15 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const getCardsError = () => setCardsCurrentState(CardScreenCurrentState.NO_DATA);
+  const getCardsError = () => {
+    setCardsCurrentState(CardScreenCurrentState.NO_DATA);
+
+    showToast({
+      title: t('ERROR.API_ERROR_RESPONSE'),
+      subTitle: t('COMMON.PLEASE_TRY_AGAIN'),
+      toastType: ToastTypes.WARNING,
+    });
+  };
 
   useGetCards({ payload: getCardPayload, onSuccess: getCardsData, onError: getCardsError });
 
@@ -284,6 +247,15 @@ const CardsScreen: React.FC = () => {
     actionSheetRef.current.show();
   };
 
+  useEffect(() => {
+    if (cardsData.length) {
+      setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
+      setCurrentCard(cardsData[0]);
+    } else {
+      setCardsCurrentState(CardScreenCurrentState.NO_DATA);
+    }
+  }, [cardsData]);
+
   const renderCardsCurrentState = () => {
     if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
       return (
@@ -307,11 +279,13 @@ const CardsScreen: React.FC = () => {
     }
 
     if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
+      console.log('cardsData inside', cardsData);
+      const data = [...cardsData, { newCard: true }];
       return (
         <>
           <IPayView style={styles.cardsContainer}>
             <IPayCarousel
-              data={[...cardsData, { newCard: true }]}
+              data={cardsData}
               modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
               mode={CarouselModes.PARALLAX}
               width={SCREEN_WIDTH}
@@ -320,7 +294,14 @@ const CardsScreen: React.FC = () => {
               onChangeIndex={onChangeIndex}
               renderItem={({ item }) =>
                 (item as { newCard?: boolean }).newCard ? (
-                  newCard
+                  <IPayView style={styles.newCardWrapper}>
+                    <IPayButton
+                      onPress={openCardSheet}
+                      btnType={buttonVariants.OUTLINED}
+                      btnText="CARDS.NEW_CARD"
+                      rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
+                    />
+                  </IPayView>
                 ) : (
                   <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} onLongPress={onATMLongPress} />
                 )
@@ -329,12 +310,7 @@ const CardsScreen: React.FC = () => {
           </IPayView>
           {boxHeight > 0 && currentCard && (
             <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-              <IPayCardSection
-                currentCard={currentCard}
-                setCards={setCardsData}
-                onOpenOTPSheet={onPinCodeSheet}
-                cards={cardsData}
-              />
+              <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
             </IPayCustomSheet>
           )}
         </>
@@ -415,12 +391,7 @@ const CardsScreen: React.FC = () => {
           onNextPress={handleNext}
         />
       </IPayPortalBottomSheet>
-      <IPayFreezeConfirmationSheet
-        currentCard={currentCard}
-        cards={cardsData}
-        setCards={setCardsData}
-        ref={actionSheetRef}
-      />
+      <IPayFreezeConfirmationSheet currentCard={currentCard} ref={actionSheetRef} />
     </IPaySafeAreaView>
   );
 };

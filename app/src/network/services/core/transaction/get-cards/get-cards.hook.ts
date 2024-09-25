@@ -1,12 +1,11 @@
 import { useCustomQuery } from '@app/network/hooks';
-import getCards from './get-cards.service';
-import TRANSACTION_QUERY_KEYS from '../transaction.query-keys';
+import { UseQueryOptions } from 'react-query';
 import { CardsProp } from '../transaction.interface';
+import TRANSACTION_QUERY_KEYS from '../transaction.query-keys';
+import getCards from './get-cards.service';
 
-interface UseCardProps {
+interface UseCardProps extends UseQueryOptions {
   payload: CardsProp;
-  onSuccess?: ((data?: object | undefined) => void) | undefined;
-  onError?: ((data?: object | undefined) => void) | undefined;
 }
 
 const useGetCards = ({ payload, onSuccess, onError }: UseCardProps) =>

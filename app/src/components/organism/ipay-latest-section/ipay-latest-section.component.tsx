@@ -15,13 +15,13 @@ import { IPayNoResult } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import constants from '@app/constants/constants';
+import { FeatureSections } from '@app/enums';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { FeatureSections } from '@app/enums';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
@@ -33,7 +33,6 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   offersData,
   openBottomSheet,
   openProfileBottomSheet,
-  cards,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -45,14 +44,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
 
   const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
 
-  const moveToTransactionHistory = () =>{
-    console.log(cards,'cards navigation')
+  const moveToTransactionHistory = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
-      cards,
       isShowCard: true,
       isShowAmount: true,
-    })};
+    });
+  };
 
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {

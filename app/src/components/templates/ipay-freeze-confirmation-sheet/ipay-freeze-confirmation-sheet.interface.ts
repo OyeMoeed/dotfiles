@@ -8,8 +8,6 @@ export interface IPayFreezeConfirmationSheetHandle {
 }
 
 export interface IPayFreezeConfirmationSheetProps {
-  currentCard: CardInterface;
-  cards: CardInterface[];
-  setCards: Dispatch<SetStateAction<CardInterface[]>>;
+  currentCard?: CardInterface;
   setActiveCardStatus?: Dispatch<SetStateAction<CardActiveStatus>>;
 }

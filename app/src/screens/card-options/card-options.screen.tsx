@@ -13,11 +13,13 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { queryClient } from '@app/network';
 import {
   CardStatus,
   changeStatusProp,
   resetPinCodeProp,
 } from '@app/network/services/core/transaction/transaction.interface';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import {
   changeStatus,
   prepareResetCardPinCode,
@@ -26,17 +28,17 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
+import { setCards } from '@app/store/slices/cards-slice';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
+import { filterCards, mapCardData } from '@app/utilities/cards.utils';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import checkUserAccess from '@app/utilities/check-user-access';
-import { queryClient } from '@app/network';
-import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -86,10 +88,21 @@ const CardOptionsScreen: React.FC = () => {
   const { appData } = useTypedSelector((state) => state.appDataReducer);
   const [pin, setPin] = useState('');
 
-  const { refetch } = useGetCards({
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = filterCards(cardApiResponse?.response?.cards);
+
+      if (availableCards?.length) {
+        dispatch(setCards(mapCardData(availableCards)));
+      }
+    }
+  };
+
+  useGetCards({
     payload: {
       walletNumber,
     },
+    onSuccess: getCardsData,
     refetchOnWindowFocus: false,
     enabled: false,
   });
@@ -197,7 +210,6 @@ const CardOptionsScreen: React.FC = () => {
 
     if (apiResponse) {
       queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
-      refetch();
       navigate(ScreenNames.CARDS);
       renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
     }

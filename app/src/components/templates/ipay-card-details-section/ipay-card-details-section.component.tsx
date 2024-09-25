@@ -10,6 +10,7 @@ import IPayTransactionItem from '@app/screens/transaction-history/component/ipay
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import checkUserAccess from '@app/utilities/check-user-access';
 import {
   buttonVariants,
   CardActiveStatus,
@@ -29,18 +30,11 @@ import {
 } from '@components/atoms';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import checkUserAccess from '@app/utilities/check-user-access';
 import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
-  testID,
-  onOpenOTPSheet,
-  currentCard,
-  cards,
-  setCards,
-}) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet, currentCard }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = cardBalanceSectionStyles(colors);
@@ -211,7 +205,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         </IPayView>
         <IPayButton
           onPress={() =>
-            navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, cards, isShowAmount: false })
+            navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, isShowAmount: false })
           }
           btnType={buttonVariants.LINK_BUTTON}
           hasRightIcon
@@ -231,8 +225,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       />
       <IPayFreezeConfirmationSheet
         currentCard={currentCard}
-        cards={cards}
-        setCards={setCards}
         ref={actionSheetRef}
         setActiveCardStatus={setActiveCardStatus}
       />
