@@ -53,6 +53,16 @@ const menuStyles = (theme: any) =>
       flex: 1,
       marginStart: moderateScale(12),
     },
+    termsAndConditionsView: {
+      paddingHorizontal: moderateScale(18, 0.3),
+      paddingVertical: moderateScale(10, 0.3),
+      borderRadius: moderateScale(50),
+      height: verticalScale(50),
+      backgroundColor: theme.backgrounds.grayButtonBackground,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: moderateScale(16),
+    },
     separatorBar: {
       width: '100%',
       height: verticalScale(1),

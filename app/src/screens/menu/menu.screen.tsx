@@ -82,6 +82,10 @@ const MenuScreen: FC = () => {
     navigate(screenNames.CARD_MANAGEMENT);
   };
 
+  const onNavigateToTermsAndConditions = () => {
+    navigate(screenNames.TERMS_AND_CONDITIONS);
+  };
+
   return (
     <IPaySafeAreaView>
       <>
@@ -142,6 +146,16 @@ const MenuScreen: FC = () => {
               color={colors.primary.primary800}
             />
             <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
+          </IPayPressable>
+
+          <IPayPressable onPress={onNavigateToTermsAndConditions} style={styles.termsAndConditionsView}>
+            <IPaySubHeadlineText
+              regular
+              text="MENU.APP_TERMS_AND_CONDITIONS"
+              style={styles.menuItemText}
+              color={colors.natural.natural700}
+            />
+            <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.natural.natural700} />
           </IPayPressable>
 
           <IPayView style={styles.separatorBar} />
