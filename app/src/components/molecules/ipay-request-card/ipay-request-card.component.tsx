@@ -58,7 +58,13 @@ const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
             </IPayView>
           )
         )}
-        <IPayCaption2Text color={themeColors.natural.natural500} style={styles.dateStyle} regular text={dateTime} />
+        <IPayCaption2Text
+          color={themeColors.natural.natural500}
+          style={styles.dateStyle}
+          regular
+          text={dateTime}
+          shouldTranslate={false}
+        />
       </IPayView>
     </IPayView>
   );

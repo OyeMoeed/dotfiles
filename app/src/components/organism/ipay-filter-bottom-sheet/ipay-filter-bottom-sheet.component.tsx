@@ -120,7 +120,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       customFiltersValue,
       handleCallback,
       onWatch,
-      onReset
+      onReset,
     },
     ref,
   ) => {
@@ -149,14 +149,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       defaultValues,
     });
 
-
     useEffect(() => {
-      const subscription = watch((value, { name, type }) =>{
-        
-        if(onWatch) onWatch(value, name, type )
-      })
+      const subscription = watch((value, { name, type }) => {
+        if (onWatch) onWatch(value, name, type);
+      });
       return () => subscription.unsubscribe();
-    }, [watch])
+    }, [watch]);
 
     const showFilters = () => {
       filterSheetRef?.current?.present();
@@ -175,7 +173,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         setAmountError(t('ERROR.AMOUNT_ERROR'));
         return;
       }
-      
+
       filterSheetRef.current?.close();
 
       if (onSubmit) onSubmit(data);
@@ -293,7 +291,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 <IPayAnimatedTextInput
                   label={label}
                   editable={editable}
-                  value={(value?.title)? extractTitleByValue(value?.title):extractTitleByValue(value)}
+                  value={value?.title ? extractTitleByValue(value?.title) : extractTitleByValue(value)}
                   containerStyle={[styles.inputContainerStyle, inputStyle]}
                   inputStyle={styles.input}
                   showRightIcon
@@ -474,7 +472,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                         style={styles.listStyle}
                         containerStyle={styles.input}
                         onPress={() => {
-                          onChange(key?{title,key}: title);
+                          onChange(key ? { title, key } : title);
                           setCurrentView(CurrentViewTypes.FILTERS);
                           setSearch('');
                         }}

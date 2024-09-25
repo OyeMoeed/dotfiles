@@ -24,11 +24,9 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Animated } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 import { buttonVariants } from '@app/utilities';
-import { useTranslation } from 'react-i18next';
 import genratedStyles from './registration-successful.style';
 
 const RegistrationSuccessful: React.FC = () => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
   const languageSheetRef = useRef(null);
@@ -127,7 +125,7 @@ const RegistrationSuccessful: React.FC = () => {
               <IPayGradientIcon icon={isAndroidOS ? icons.finger_scan : icons.FACE_ID} size={60} />
               <IPayFootnoteText text="REGISTRATION.ADDITIONAL_FEATURE" style={styles.additionalFeatureText} />
               <IPayTitle3Text
-                text={isAndroidOS ? t('REGISTRATION.ACTIVATE_TOUCH_ID') : t('REGISTRATION.ACTIVATE_FACE_ID')}
+                text={isAndroidOS ? 'REGISTRATION.ACTIVATE_TOUCH_ID' : 'REGISTRATION.ACTIVATE_FACE_ID'}
                 style={styles.activateFaceIDText}
               />
 

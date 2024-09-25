@@ -28,6 +28,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [isHelpBottomSheetVisible, setIsHelpBottomSheetVisible] = useState(false);
   const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const {
     aboutToExpire: isAboutToExpire,
     remainingNumberOfDaysToExpire,
@@ -35,7 +36,7 @@ const IPayIdRenewalSheet: React.FC = () => {
     idExpired,
     walletNumber,
     mobileNumber,
-  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  } = walletInfo;
   const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
 
   const [otp, setOtp] = useState<string>('');
@@ -211,7 +212,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             <IPayTitle2Text style={styles.titleTextStyle}>
               {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
-            <IPayCaption1Text style={styles.captionTextStyle}>{formattedSubtitle}</IPayCaption1Text>
+            <IPayCaption1Text style={styles.captionTextStyle} text={formattedSubtitle} />
             <IPayButton
               large
               onPress={handleRenewalId}

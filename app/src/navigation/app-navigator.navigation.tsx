@@ -22,19 +22,17 @@ import { useDispatch } from 'react-redux';
 import { setTopLevelNavigator } from './navigation-service.navigation';
 
 const MainNavigation: React.FC = () => {
-  const { selectedLanguage, isAuthorized } = useTypedSelector((state) => ({
-    selectedLanguage: state.languageReducer.selectedLanguage,
-    appData: state.appDataReducer.appData,
-    isAuthorized: state.auth.isAuthorized,
-  }));
-
+  const isAuthorized = useTypedSelector((state) => state.auth.isAuthorized);
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
   const isSessionTimeout = useTypedSelector((state) => state.alertReducer.sessionTimeout);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const isDropdownVisible = useTypedSelector((state) => state.dropdownReducer.isDropdownVisible);
   const isPermissionVisible = useTypedSelector((state) => state.permissionAlertReducer.visible);
   const { visible: isSpinnerVisible, spinnerProps } = useTypedSelector((state) => state.spinnerReducer);
+
   const { i18n } = useTranslation();
+
   const languageSheetRef = useRef<any>();
   const navigationRef = useRef<any>();
   const dispatch = useDispatch();

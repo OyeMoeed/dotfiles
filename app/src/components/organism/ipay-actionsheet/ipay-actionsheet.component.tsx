@@ -121,13 +121,14 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
       );
     };
 
-    const createButton = (buttonText: string, index: number) => {
+    const createButton = (key: string, buttonText: string, index: number) => {
       const btnTextColor = destructiveButtonIndex === index ? colors.error.error500 : colors.primary.primary500;
       const btnBackground = cancelButtonIndex === index ? colors.backgrounds.greyOverlay : colors.natural.natural0;
       const btnStyle = cancelButtonIndex === index ? sheetStyles.cancelSpacing : sheetStyles.innerSpacing;
 
       return (
         <IPayButton
+          key={key}
           onPress={() => onPress(index)}
           btnType={buttonVariants.PRIMARY}
           btnText={buttonText}
@@ -143,11 +144,13 @@ const IPayActionSheet = forwardRef<{}, IPayActionSheetProps>(
 
     const renderCancelButton = () => {
       if (!isset(cancelButtonIndex) || !showCancel) return null;
-      return createButton(options?.[cancelButtonIndex] || '', cancelButtonIndex);
+      return createButton('cancel-button', options?.[cancelButtonIndex] || '', cancelButtonIndex);
     };
 
     const renderOptions = () =>
-      options?.map((optionsTitle, index) => (cancelButtonIndex === index ? null : createButton(optionsTitle, index)));
+      options?.map((optionsTitle, index) =>
+        cancelButtonIndex === index ? null : createButton(`${index}-button`, optionsTitle, index),
+      );
 
     return (
       <Modal

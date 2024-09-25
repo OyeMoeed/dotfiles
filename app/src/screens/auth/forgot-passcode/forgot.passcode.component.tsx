@@ -8,12 +8,12 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons';
 import { useNavigation } from '@react-navigation/native';
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { buttonVariants } from '@app/utilities';
 import ForgotPasscodeStyles from './forgot.passcode.styles';
 
-const ForgotPasscodeBottomSheet = forwardRef(() => {
+const ForgotPasscodeBottomSheet = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const [passcode, setPasscode] = useState<string>('');
@@ -105,6 +105,6 @@ const ForgotPasscodeBottomSheet = forwardRef(() => {
       </>
     </IPaySafeAreaView>
   );
-});
+};
 
 export default ForgotPasscodeBottomSheet;

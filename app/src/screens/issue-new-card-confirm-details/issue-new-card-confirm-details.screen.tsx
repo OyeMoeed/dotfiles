@@ -25,7 +25,7 @@ import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import IPayCreateCardPin from '../create-card-pin/create-card-pin.screen';
+import IPayCreateCardPin from '../create-card-pin';
 import { AddressInfoRefTypes, RouteParams } from './issue-new-card-confirm-details.interface';
 import issueNewCardConfirmDetailsStyles from './issue-new-card-confirm-details.style';
 

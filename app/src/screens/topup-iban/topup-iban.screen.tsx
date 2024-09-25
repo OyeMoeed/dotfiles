@@ -19,7 +19,7 @@ const TopUpIBAN = () => {
   const styles = topupIbanStyles(colors);
   const { showToast } = useToastContext();
   const [toast, setShowToast] = React.useState<number>(0);
-  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const username = walletInfo?.fullName;
   const iban = walletInfo?.viban;
 
@@ -45,7 +45,7 @@ const TopUpIBAN = () => {
   const renderToast = (toastTitleType: number) => {
     showToast({
       toastType: ToastTypes.SUCCESS,
-      title: toastTitleType === 1 ? t('HOME.NAME_COPIED') : t('HOME.IBAN_NUMBER'),
+      title: toastTitleType === 1 ? 'HOME.NAME_COPIED' : 'HOME.IBAN_NUMBER',
       containerStyle: styles.toastContainer,
       leftIcon: <IPayIcon icon={icons.copy_success} size={moderateScale(18)} color={colors.natural.natural0} />,
     });

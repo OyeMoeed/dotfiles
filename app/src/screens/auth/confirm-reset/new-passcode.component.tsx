@@ -7,11 +7,11 @@ import { IPayPasscode } from '@app/components/organism';
 import constants from '@app/constants/constants';
 import { PasscodeTypes } from '@app/screens/settings/settings.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import newPasscodeStyles from './new-passcode.styles';
 
-const NewPasscode = forwardRef((props) => {
+const NewPasscode = (props) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = newPasscodeStyles();
@@ -37,7 +37,7 @@ const NewPasscode = forwardRef((props) => {
         setPasscodeError(true);
         renderToast(t('CHANGE_PIN.MATCH_NEW_OLD_PASSCODE'));
       } else {
-        props.changeView({ newCode, nextComponent: PasscodeTypes.ConfirmPasscode });
+        props?.changeView?.({ newCode, nextComponent: PasscodeTypes.ConfirmPasscode });
       }
     }
   };
@@ -55,6 +55,6 @@ const NewPasscode = forwardRef((props) => {
       </IPayView>
     </IPayView>
   );
-});
+};
 
 export default NewPasscode;

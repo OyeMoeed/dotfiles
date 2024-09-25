@@ -28,11 +28,11 @@ import React, { useRef } from 'react';
 import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
+import { FieldValues, UseFormHandleSubmit } from 'react-hook-form';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook';
 import { FormValues } from './mobile-and-iqama-verification.interface';
 import mobileAndIqamaStyles from './mobile-and-iqama-verification.style';
-import { FieldValues, UseFormHandleSubmit } from 'react-hook-form';
 
 const MobileAndIqamaVerification: React.FC = () => {
   const {

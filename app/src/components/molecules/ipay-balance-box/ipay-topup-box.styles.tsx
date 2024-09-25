@@ -1,6 +1,6 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { typography } from '@app/styles/typography.styles';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const topUpBoxStyles = (themeColors: typeof colors) =>
@@ -49,7 +49,7 @@ const topUpBoxStyles = (themeColors: typeof colors) =>
       marginVertical: verticalScale(16),
     },
     balanceTextStyle: {
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     remainingBalanceView: {
       flexDirection: 'row',
