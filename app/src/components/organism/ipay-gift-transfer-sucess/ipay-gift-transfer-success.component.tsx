@@ -176,48 +176,50 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
   const themeTextColor = isDarkCard ? colors.backgrounds.orange : colors.primary.primary950;
 
   return (
-    <IPayView style={styles.container}>
-      <IPayView style={styles.contentContainer}>
-        <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
-        <IPayLinearGradientView
-          style={styles.innerLinearGradientView}
-          gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
-        >
-          <IPayView>
-            <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
-            <IPayView style={styles.linearGradientTextView}>
-              <IPayGradientText
-                text={renderText}
-                gradientColors={gradientColors}
-                style={styles.gradientTextSvg}
-                fontSize={styles.linearGradientText.fontSize}
-                fontFamily={styles.linearGradientText.fontFamily}
-              />
-              <IPaySubHeadlineText
-                regular={false}
-                text={`${totalAmount} ${t('COMMON.SAR')}`}
-                style={styles.headlineText}
-                shouldTranslate={false}
+    <>
+      <IPayView style={styles.container}>
+        <IPayView style={styles.contentContainer}>
+          <IPayHeader centerIcon={<IPayImage image={images.logo} style={styles.logoStyles} />} applyFlex />
+          <IPayLinearGradientView
+            style={styles.innerLinearGradientView}
+            gradientColors={[colors.backgrounds.successBackground, colors.backgrounds.successBackground]}
+          >
+            <IPayView>
+              <IPayLottieAnimation source={successIconAnimation} style={styles.successIcon} />
+              <IPayView style={styles.linearGradientTextView}>
+                <IPayGradientText
+                  text={renderText}
+                  gradientColors={gradientColors}
+                  style={styles.gradientTextSvg}
+                  fontSize={styles.linearGradientText.fontSize}
+                  fontFamily={styles.linearGradientText.fontFamily}
+                />
+                <IPaySubHeadlineText
+                  regular={false}
+                  text={`${totalAmount} ${t('COMMON.SAR')}`}
+                  style={styles.headlineText}
+                  shouldTranslate={false}
+                />
+              </IPayView>
+              <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
+                <IPayView>{formattedTransferDetails?.map((item, index) => renderDetails(item, index))}</IPayView>
+              </IPayScrollView>
+            </IPayView>
+
+            <IPayView style={styles.btnBackground}>
+              {renderActionLabel()}
+              <IPayButton
+                large
+                btnType={buttonVariants.PRIMARY}
+                btnText="COMMON.HOME"
+                hasLeftIcon
+                leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
+                onPress={onHome}
+                textStyle={styles.btnStyle}
               />
             </IPayView>
-            <IPayScrollView style={styles.scrollViewStyle} scrollEnabled>
-              <IPayView>{formattedTransferDetails?.map((item, index) => renderDetails(item, index))}</IPayView>
-            </IPayScrollView>
-          </IPayView>
-
-          <IPayView style={styles.btnBackground}>
-            {renderActionLabel()}
-            <IPayButton
-              large
-              btnType={buttonVariants.PRIMARY}
-              btnText="COMMON.HOME"
-              hasLeftIcon
-              leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
-              onPress={onHome}
-              textStyle={styles.btnStyle}
-            />
-          </IPayView>
-        </IPayLinearGradientView>
+          </IPayLinearGradientView>
+        </IPayView>
       </IPayView>
       <IPayBottomSheet
         heading="SEND_GIFT.PREVIEW_GIFT"
@@ -247,7 +249,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
           </IPayView>
         </IPayView>
       </IPayBottomSheet>
-    </IPayView>
+    </>
   );
 };
 
