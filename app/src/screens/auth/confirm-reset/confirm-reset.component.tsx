@@ -82,6 +82,7 @@ const ConfirmPasscode = (props) => {
     }
     if (newCode.length === 4) {
       if (newCode === props?.newPasscode) {
+        closeBottomSheet();
         changePasscode(newCode);
       } else {
         setPasscodeError(true);
