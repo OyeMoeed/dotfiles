@@ -18,8 +18,8 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useTranslation } from 'react-i18next';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import useMoiPaymentConfirmation from '../moi-payment-confirmation-screen/moi-payment-confirmation-details.hook';
 import { MOIItemProps } from './moi-payment-refund.interface';
 import moiPaymentRefundStyles from './moi-payment-refund.style';
@@ -189,7 +189,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
         />
       </IPayView>
       <IPayBottomSheet
-        heading="LOCAL_TRANSFER.TRANSFER"
+        heading="BILL_PAYMENTS.NEW_MOI_BILL"
         enablePanDownToClose
         simpleBar
         customSnapPoint={['1%', '97%']}

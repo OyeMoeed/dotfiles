@@ -10,7 +10,7 @@ const OTPInputView = (props) => {
     <View testID="otp-input-view">
       {[...Array(pinCount)].map((_, index) => (
         <TextInput
-          key={index}
+          key={`otp-input-${index}`}
           value={code[index] || ''}
           onChangeText={(text) => {
             const newCode = code.split('');

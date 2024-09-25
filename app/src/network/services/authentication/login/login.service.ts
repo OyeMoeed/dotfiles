@@ -1,3 +1,4 @@
+import constantsNetwork from '@app/network/constants';
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
@@ -18,8 +19,7 @@ const loginUser = async (payload: LoginUserPayloadProps): Promise<LoginUserRespo
     method: requestType.POST,
     payload,
     headers: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      'Api-Version': 'v2',
+      [constantsNetwork.API_VERSION_NAME]: 'v2',
     },
   });
   return apiResponse;

@@ -13,18 +13,18 @@ import changePasscodeReq from '@app/network/services/core/change-passcode/change
 import { encryptData } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ConfirmPasscodeStyles from './confirm-reset.styles';
 
-const ConfirmPasscode = forwardRef((props) => {
+const ConfirmPasscode = (props) => {
   const { closeBottomSheet } = props;
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = ConfirmPasscodeStyles();
   const [passcodeError, setPasscodeError] = useState(false);
   const { showToast } = useToastContext();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const { mobileNumber, walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const renderToast = (toastMsg: string) => {
@@ -103,6 +103,6 @@ const ConfirmPasscode = forwardRef((props) => {
       </IPayView>
     </IPayView>
   );
-});
+};
 
 export default ConfirmPasscode;

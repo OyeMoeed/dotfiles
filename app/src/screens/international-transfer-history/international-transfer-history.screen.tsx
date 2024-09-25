@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayPressable, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayActionSheet, IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
@@ -13,10 +13,12 @@ import { dateTimeFormat } from '@app/utilities';
 import { FiltersType, States } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { RefreshControl } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import EditBeneficiary from './components/edit-beneficiary.component';
 import IPayInternationalTransferBeneficiries from './components/transaction-details-beneficiary.component';
@@ -327,6 +329,20 @@ const InternationalTransferHistory: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
+  const ListEmptyComponent = useCallback(() => {
+    if (isLoading) {
+      return <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />;
+    }
+    return (
+      <IPayNoResult
+        testID="no-results"
+        textColor={colors.primary.primary800}
+        message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
+        showEmptyBox
+      />
+    );
+  }, [colors.primary.primary800, isLoading]);
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -368,36 +384,25 @@ const InternationalTransferHistory: React.FC = () => {
             />
           </IPayView>
         )}
-        {isLoading && <IPaySpinner testID="spinner" />}
 
         <IPayView style={styles.listContainer}>
-          {filteredData && filteredData.length ? (
-            <IPayView>
-              <IPayFlatlist
-                testID="flatlist"
-                refreshing={isLoading}
-                refreshControl={<RefreshControl refreshing={isLoading} onRefresh={onRefresh} />}
-                data={filteredData}
-                keyExtractor={(_, index) => index.toString()}
-                renderItem={({ item }) => (
-                  <IPayTransactionItem
-                    transaction={item}
-                    onPressTransaction={openBottomSheet}
-                    style={styles.transactionTab}
-                    internationalTransfer
-                  />
-                )}
-                showsVerticalScrollIndicator={false}
+          <IPayFlatlist
+            testID="flatlist"
+            refreshing={false}
+            refreshControl={<RefreshControl refreshing={false} onRefresh={onRefresh} />}
+            data={filteredData}
+            keyExtractor={(_, index) => index.toString()}
+            renderItem={({ item }) => (
+              <IPayTransactionItem
+                transaction={item}
+                onPressTransaction={openBottomSheet}
+                style={styles.transactionTab}
+                internationalTransfer
               />
-            </IPayView>
-          ) : (
-            <IPayNoResult
-              testID="no-results"
-              textColor={colors.primary.primary800}
-              message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
-              showEmptyBox
-            />
-          )}
+            )}
+            showsVerticalScrollIndicator={false}
+            ListEmptyComponent={ListEmptyComponent}
+          />
         </IPayView>
       </IPayView>
       <IPayFilterBottomSheet

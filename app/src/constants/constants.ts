@@ -109,7 +109,7 @@ const constants = {
   ],
   HELP_CENTER_TABS: ['All FAQ', 'Account', 'Top-up', 'Money Transfer', 'Others'],
   MOBILE_NUMBER_LENGTH: 10,
-  UNSAVED_NUMBER_LENGTH: 16,
+  UNSAVED_NUMBER_LENGTH: 14,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
@@ -310,7 +310,7 @@ const CARD_DATA = {
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'supports Apple Pay & Mada Pay.',
     ],
     fees: [
       { description: 'Annual fee', fee: '0 SAR' },
@@ -353,12 +353,12 @@ const CARD_DATA = {
 };
 
 const CARD_DATA_PHYSICAL_CARD = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'support Apple Pay & Mada Pay.',
       'Annual fee: 0 SAR.',
       'Replacement fee: 0 SAR.',
       'International transaction fee: 2.2%.',
@@ -372,7 +372,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'International transaction Fee', fee: '9 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -388,7 +388,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -665,7 +665,7 @@ const SNAP_POINT = {
   MID_SMALL: ['55%', '63%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '95%'],
+  MEDIUM_LARGE: ['93%', '95%'],
   LARGE: ['100%', '100%'],
 };
 const ALINMA_BANK_CODE = '999999';
@@ -679,6 +679,24 @@ const DASHBOARD_ITEMS = [
   FeatureSections.LATEST_OFFERS,
 ];
 
+export enum DYNAMIC_FIELDS_TYPES {
+  TEXT = 'TEXT',
+  LIST_OF_VALUE = 'LIST_OF_VALUE',
+  NUMBER = 'NUMBER',
+  GREGORIAN_DATE = 'gregorianDate',
+  GREGORIAN_DATE_PAST = 'gregorianDatePast',
+  GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
+  HIJRI_DATE = 'hijriDate',
+  HIJRI_DATE_PAST = 'hijriDatePast',
+  HIJRI_DATE_FUTURE = 'hijriDateFuture',
+  BOOLEAN_TYPE = 'booleanType',
+  DATE = 'date',
+  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
+  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
+  ALPHA_NO_DIGITS = 'alphaNoDigits',
+  ENGLISH_CHARACTERS = 'englishCharacters',
+  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+}
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:
     'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/RegistrationTerms_ar.pdf?alt=media&token=3b50f05b-3f96-4d33-9065-b4a5951230f8',
@@ -699,6 +717,13 @@ const TERMS_AND_CONDITIONS_URLS_PROD = {
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 const TERMS_AND_CONDITIONS_URLS = IS_PRODUCTION ? TERMS_AND_CONDITIONS_URLS_PROD : TERMS_AND_CONDITIONS_URLS_NON_PROD;
+const BILL_STATUS_CODE = ['BillPaid', 'BillPartialPd', 'BillOverPd', 'BillUnpaid', 'BillDeactive'];
+
+const NAFATH_APP = {
+  ANDROID: 'sa.gov.nic.myid',
+  IOS: 'nafath://home',
+  IOS_ID: 'id1598909871',
+};
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -707,6 +732,7 @@ export {
   ALINMA_TRANSFER_TYPES,
   ANIMATION_DURATION,
   BANKS,
+  BILL_STATUS_CODE,
   CARD_DATA,
   CARD_DATA_PHYSICAL_CARD,
   CONTACT_NUMBER,
@@ -719,6 +745,7 @@ export {
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
   MAX_CONTACTS,
+  NAFATH_APP,
   NO_INVOICE_ACCOUNT_NUMBER,
   PROGRESS_INCREMENT_FACTOR,
   RELATIONSHIPS,
@@ -729,7 +756,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES,
+  WU_TRANSFER_TYPES
 };
 
 export default constants;

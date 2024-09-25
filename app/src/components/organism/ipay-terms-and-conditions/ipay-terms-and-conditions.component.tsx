@@ -1,11 +1,9 @@
 import IPayPdfViewer from '@app/components/atoms/ipay-pdf-viewer/ipay-pdf-viewer.component';
 import { SNAP_POINT, TERMS_AND_CONDITIONS_URLS } from '@app/constants/constants';
-import { LanguageState } from '@app/store/slices/language-slice.interface';
-import { setNafathSheetVisibility, setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
-import { useTypedDispatch } from '@app/store/store';
+import { setNafathSheetVisibility, setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { LanguageCode } from '@app/utilities/enums.util';
 import React from 'react';
-import { useSelector } from 'react-redux';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayTermsAndConditionsProps } from './ipay-terms-and-conditions.interface';
 
@@ -15,9 +13,7 @@ const IPayTermsAndConditions: React.FC<IPayTermsAndConditionsProps> = ({
   isNafathTerms,
   isVirtualCardTermsAndConditions = false,
 }) => {
-  const selectedLanguage =
-    useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
-    LanguageCode.EN;
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
 
   const dispatch = useTypedDispatch();
 

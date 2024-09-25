@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
@@ -10,30 +11,25 @@ import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
-import { HomeOffersProp } from '@app/network/services/core/offers/offers.interface';
 import getOffers from '@app/network/services/core/offers/offers.service';
-import {
-  CardListItem,
-  CardsProp,
-  TransactionsProp,
-} from '@app/network/services/core/transaction/transaction.interface';
-import { getCards, getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { CardListItem, CardsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getCards } from '@app/network/services/core/transaction/transactions.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
-import { setProfileSheetVisibility } from '@app/store/slices/nafath-verification';
+import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { CardStatusNumber, CardTypes } from '@app/utilities';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import { CardStatusNumber, CardTypes } from '@app/utilities';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -45,16 +41,16 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
-  const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
+
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
   );
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
@@ -79,21 +75,17 @@ const Home: React.FC = () => {
     });
   };
 
-  const getTransactionsData = async () => {
-    const payload: TransactionsProp = {
+  const { transactionsData, isLoadingTransactions } = useGetTransactions({
+    payload: {
       walletNumber,
       maxRecords: '3',
       offset: '1',
-    };
-
-    const apiResponse: any = await getTransactions(payload);
-
-    setTransactionsData(apiResponse?.response?.transactions);
-  };
+    },
+  });
 
   const getOffersData = async () => {
     try {
-      const payload: HomeOffersProp = {
+      const payload: any = {
         walletNumber,
         isHome: 'true',
       };
@@ -106,7 +98,7 @@ const Home: React.FC = () => {
       } else {
         setAPIError(apiResponse?.error);
       }
-    } catch (error) {
+    } catch (error: any) {
       setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
@@ -114,7 +106,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Dispatch the setItems action on initial render
-    getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
 
@@ -122,6 +113,7 @@ const Home: React.FC = () => {
     dispatch(setProfileSheetVisibility(false));
     setTopUpOptionsVisible(true);
   };
+
   const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };
@@ -171,23 +163,27 @@ const Home: React.FC = () => {
   };
 
   const mapCardData = (cards: CardListItem[]) => {
-    let mappedCards = [];
-    mappedCards = cards.map((card: any) => ({
-      name: card?.linkedName?.embossingName,
-      cardType: card?.cardTypeId,
-      cardHeaderText: getCardDesc(card?.cardTypeId),
-      expired: card?.reissueDue,
-      frozen: card.cardStatus === CardStatusNumber.Freezed,
-      suspended: false,
-      maskedCardNumber: card?.maskedCardNumber,
-      cardNumber: card.lastDigits,
-      creditCardDetails: {
-        availableBalance: '5200.40',
-      },
-      totalCashbackAmt: card.totalCashbackAmt,
-      ...card,
-    }));
-    return mappedCards;
+    try {
+      let mappedCards = [];
+      mappedCards = cards?.map((card: any) => ({
+        name: card?.linkedName?.embossingName,
+        cardType: card?.cardTypeId,
+        cardHeaderText: getCardDesc(card?.cardTypeId),
+        expired: card?.reissueDue,
+        frozen: card.cardStatus === CardStatusNumber.Freezed,
+        suspended: false,
+        maskedCardNumber: card?.maskedCardNumber,
+        cardNumber: card.lastDigits,
+        creditCardDetails: {
+          availableBalance: '5200.40',
+        },
+        totalCashbackAmt: card.totalCashbackAmt,
+        ...card,
+      }));
+      return mappedCards;
+    } catch (err) {
+      return [];
+    }
   };
 
   const getCardsData = async () => {
@@ -205,6 +201,7 @@ const Home: React.FC = () => {
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
           card.cardStatus === CardStatusNumber.Freezed,
       );
+
       if (availableCardsForSearch?.length) {
         setCardsData(mapCardData(availableCardsForSearch));
       }
@@ -287,6 +284,7 @@ const Home: React.FC = () => {
               openBottomSheet={openBottomSheet}
               openProfileBottomSheet={openProfileBottomSheet}
               cards={cardsData}
+              isLoading={isLoadingTransactions}
             />
           </IPayCustomSheet>
         )}

@@ -15,7 +15,7 @@ const sadadBillsByStatusMock: SadadBillsByStatusMockProps = {
   response: {
     paymentInfoList: [
       {
-        amount: '-5850.00',
+        amount: '700.00',
         dueDateTime: '09-07-2020',
         billCycle: '4253001',
         billId: 'BILL23352CW03ZYZ',
@@ -33,7 +33,7 @@ const sadadBillsByStatusMock: SadadBillsByStatusMockProps = {
         svcType: 'GOVT',
       },
       {
-        amount: '-195.00',
+        amount: '750.00',
         dueDateTime: '09-07-2020',
         billCycle: '512325',
         billId: 'BILL2335253RFTP3',

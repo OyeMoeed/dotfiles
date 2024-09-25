@@ -1,10 +1,17 @@
 import colors from '@app/styles/colors.const';
 import { scaleFont } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isAndroidOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const moiPaymentStyles = (themeColors: typeof colors) =>
   createStyleSheet({
+    dynamicFieldContainer: {
+      gap: scaleFont(6),
+      backgroundColor: themeColors.natural.natural0,
+      padding: scaleFont(24),
+      borderRadius: scaleFont(28),
+    },
     screenTitle: {
       textTransform: 'none',
     },
@@ -51,7 +58,7 @@ const moiPaymentStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(12, 0.3),
     },
     bottomSheetView: {
-      paddingBottom: moderateScale(24, 0.3),
+      paddingBottom: moderateScale(isAndroidOS ? 35 : 50, 0.3),
     },
     listStyles: {
       marginHorizontal: moderateScale(24, 0.3),

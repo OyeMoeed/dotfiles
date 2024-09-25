@@ -1,6 +1,6 @@
 // ipaySpinner.tsx
 import useTheme from '@app/styles/hooks/theme.hook';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { SpinnerVariant } from '@app/utilities/enums.util';
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
 import { Portal } from 'react-native-portalize';
@@ -27,7 +27,7 @@ const IPaySpinner: React.FC<IPaySpinnerProps> = ({
     <Portal>
       <IPayView style={styles.container}>
         <ActivityIndicator size="large" color={color || colors.primary.primary500} testID={`${testID}-spinner`} />
-        {variant === spinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
+        {variant === SpinnerVariant.TEXT && text && <IPayText style={styles.text}>{text}</IPayText>}
       </IPayView>
     </Portal>
   );

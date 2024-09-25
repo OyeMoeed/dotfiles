@@ -1,6 +1,12 @@
 import moment from 'moment';
 import dateTimeFormat from './date.const';
 
+enum DateFieldTypes {
+  Hijri = 'hijri',
+  Future = 'Future',
+  Past = 'Past',
+  Other = 'other',
+}
 const FORMAT_1 = 'DD/MM/YYYY';
 
 const formatDateAndTime = (date?: Date, format?: dateTimeFormat): string => {
@@ -68,6 +74,7 @@ const formatSlashDateTime = (tisoDate?: any): string => {
 };
 
 export {
+  DateFieldTypes,
   FORMAT_1,
   checkDateValidation,
   formatCountdownTime,
@@ -78,5 +85,6 @@ export {
   formatTimeAndDate,
   formatYearToLastTwoDigits,
   getDateFormate,
-  minutesToSeconds,
+  minutesToSeconds
 };
+

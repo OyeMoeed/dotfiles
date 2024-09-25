@@ -1,7 +1,7 @@
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
-import { verticalScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const headerStyles = (colors: any) =>
   createStyleSheet({
@@ -15,7 +15,7 @@ const headerStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      paddingHorizontal: scaleSize(24),
+      paddingHorizontal: moderateScale(24, 0.3),
     },
     iconContainer: {
       flexDirection: 'row',

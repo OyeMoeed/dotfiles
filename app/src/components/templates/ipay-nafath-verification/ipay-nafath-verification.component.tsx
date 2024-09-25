@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images/index';
+import { RefreshIcon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
@@ -13,6 +14,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayPageDescriptionText, IPayPrimaryButton } from '@app/components/molecules';
+import { NAFATH_APP } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -27,13 +29,15 @@ import {
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
 import { getDeviceInfo } from '@app/network/utilities';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useTranslation } from 'react-i18next';
+import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { Linking } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
@@ -46,7 +50,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
   const { t } = useTranslation();
 
   const styles = nafathVerificationStyles(colors);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [nafathNumber, setNafathNumber] = useState<number>();
   const [duration, setDuration] = useState<number>();
   const [waitngScnds] = useState<number>(20);
@@ -238,6 +242,31 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     setStartInqiryInterval(false);
   };
 
+  const openAppOrStore = async (appUrl: string, storeUrl: string): Promise<void> => {
+    const supported = await Linking.canOpenURL(appUrl);
+    if (supported) {
+      await Linking.openURL(appUrl);
+    } else {
+      await Linking.openURL(storeUrl);
+    }
+  };
+
+  const goToNafathApp = async (): Promise<void> => {
+    try {
+      if (isIosOS) {
+        await openAppOrStore(NAFATH_APP.IOS, `https://apps.apple.com/app/id${NAFATH_APP.IOS_ID}`);
+      } else if (isAndroidOS) {
+        await openAppOrStore(
+          `market://details?id=${NAFATH_APP.ANDROID}`,
+          `https://play.google.com/store/apps/details?id=${NAFATH_APP.ANDROID}`,
+        );
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to open Nafath app:', error);
+    }
+  };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayView style={styles.logoWrapper}>
@@ -246,7 +275,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
       {step === 1 ? (
         <>
           <IPayPageDescriptionText heading="PROFILE.NAFATH_VALIDATION" text="SETTINGS.NAFATH_VALIDATION_DESCRIPTION" />
-          <IPayPressable style={styles.downloadSection}>
+          <IPayPressable onPress={goToNafathApp} style={styles.downloadSection}>
             <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.DOWNLOAD_NAFATH_ACCOUNT" />
             <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
           </IPayPressable>
@@ -290,7 +319,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
                   large
                   style={styles.resendButton}
                   onPress={() => getNafathRandomNumber()}
-                  rightIcon={<icons.dottedRefresh />}
+                  rightIcon={<RefreshIcon style={styles.refreshIcon} color={colors.natural.natural0} />}
                 />
               ) : (
                 <IPayPressable style={styles.codeWrapper}>

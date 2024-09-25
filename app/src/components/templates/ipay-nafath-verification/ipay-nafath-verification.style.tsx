@@ -1,7 +1,7 @@
-import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_13, spacing } from '@app/styles/spacing.const';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const nafathVerificationStyles = (colors: any) =>
@@ -68,7 +68,7 @@ const nafathVerificationStyles = (colors: any) =>
     },
     sectionText: {
       fontSize: SCALE_13,
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
       color: colors.primary.primary800,
     },
     stepIndicator: {
@@ -82,7 +82,7 @@ const nafathVerificationStyles = (colors: any) =>
     },
     stepNoText: {
       fontSize: SCALE_13,
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     verifiedCodeContainer: {
       flex: 1,
@@ -101,7 +101,7 @@ const nafathVerificationStyles = (colors: any) =>
     },
     linearGradientText: {
       fontSize: spacing.SCALE_50,
-      fontFamily: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontFamily: FONT_WEIGHT_BOLD,
     },
     gradientTextSvg: {
       width: '100%',
@@ -123,6 +123,10 @@ const nafathVerificationStyles = (colors: any) =>
     },
     btnStyle: {
       marginHorizontal: scaleSize(24),
+    },
+    refreshIcon: {
+      width: moderateScale(20),
+      height: moderateScale(20),
     },
   });
 

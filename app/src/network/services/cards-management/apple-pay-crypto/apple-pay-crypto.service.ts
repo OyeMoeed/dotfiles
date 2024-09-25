@@ -1,3 +1,4 @@
+import constantsNetwork from '@app/network/constants';
 import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse, IApiStatus } from '@app/network/services/services.interface';
@@ -11,8 +12,7 @@ const applePayCrypto = async (walletNumber: string, body: IAPPLECRYPTOREQ): Prom
       method: requestType.POST,
       payload: body,
       headers: {
-        // eslint-disable-next-line @typescript-eslint/naming-convention
-        'Api-Version': 'v2',
+        [constantsNetwork.API_VERSION_NAME]: 'v2',
       },
     });
     return apiResponse as ApiResponse<any>;
@@ -22,6 +22,7 @@ const applePayCrypto = async (walletNumber: string, body: IAPPLECRYPTOREQ): Prom
       type: 'ERROR',
       desc: error.message || 'Unknown network error',
     };
+
     return {
       status,
       successfulResponse: false,

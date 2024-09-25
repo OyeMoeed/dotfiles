@@ -44,7 +44,11 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
       flex: 1,
     },
     flexStyle: {
-      flex: 1,
+      // flex: 1,
+      height: verticalScale(22),
+      borderRadius: moderateScale(16),
+      paddingHorizontal: moderateScale(20),
+      // paddingVertical: moderateScale(14),
     },
     lineImageStyle: {
       height: '85%',
