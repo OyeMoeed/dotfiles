@@ -378,6 +378,6 @@ export {
   TransactionHistoryFilter,
   alertType,
   alertVariant,
-  buttonVariants
+  buttonVariants,
 };
 
