@@ -155,17 +155,15 @@ const MoiPaymentScreen: React.FC = () => {
     };
     const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
     if (apiResponse?.successfulResponse) {
+      const serviceTypeField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_TYPE);
+      const serviceTypeFromLOV = serviceTypeField?.lovList.find((lov) => lov.code === selectedServiceType);
       if (selectedTab === MoiPaymentTypes.REFUND) {
         navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: apiResponse.response });
       } else {
-        navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, { billData: apiResponse.response });
+        navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
+          billData: { ...apiResponse.response, dynamicFields, serviceTypeFromLOV },
+        });
       }
-    }
-
-    if (selectedTab === MoiPaymentTypes.REFUND) {
-      navigate(ScreenNames.MOI_PAYMENT_REFUND);
-    } else {
-      navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION);
     }
   };
 

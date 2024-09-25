@@ -3,15 +3,19 @@ import { MockAPIStatusProps } from '../../services.interface';
 interface ValidateBillResponsesPayload {
   walletNumber: string;
 }
+interface ValidateBillRes {
+  previousUnusedBalance: string;
+  totalFeeAmount: string;
+  groupPaymentId: string;
+  paymentId: string;
+  paymentMethod: string;
+  billerId: string;
+  feeList: any;
+}
 
 interface ValidateBillResponse {
-  response: {
-    beneficiaryName: string;
-    previousUnusedBalance: string;
-    totalFeeAmount: string;
-    referenceNumber: string;
-  };
+  response: ValidateBillRes;
   successfulResponse: boolean;
   status: MockAPIStatusProps;
 }
-export { ValidateBillResponse, ValidateBillResponsesPayload };
+export { ValidateBillRes, ValidateBillResponse, ValidateBillResponsesPayload };

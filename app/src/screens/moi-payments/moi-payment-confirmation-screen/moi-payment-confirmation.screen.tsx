@@ -2,7 +2,6 @@ import { IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -23,15 +22,12 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { showToast } = useToastContext();
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
   const { billData } = route?.params || {};
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-
   const {
-    otpBottomSheetRef,
     moiPaymentDetailes,
     handlePay,
     setOtp,
@@ -41,7 +37,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     setOtpError,
     otpVerificationRef,
     setOtpRef,
-  } = useMoiPaymentConfirmation();
+  } = useMoiPaymentConfirmation(billData);
   const { otpConfig } = useConstantData();
 
   const helpCenterRef = useRef<any>(null);

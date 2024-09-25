@@ -2,11 +2,13 @@ import icons from '@app/assets/icons';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
-import { getDeviceInfo } from '@app/network/utilities';
+
 import { useTypedSelector } from '@app/store/store';
+import { MoiPaymentTypes } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ValidateBillRes } from '../moi-payment-screen/moi-payment.interface';
 
 interface MoiPaymentDetail {
   id: string;
@@ -17,17 +19,16 @@ interface MoiPaymentDetail {
 }
 
 // TODO will be replaced by API
-const useMoiPaymentConfirmation = () => {
+const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otpRef, setOtpRef] = useState<string>('');
   const [apiError] = useState<string>('');
   const otpBottomSheetRef = useRef<any>(null);
-
   const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const moiPaymentDetailes: MoiPaymentDetail[] = [
     {
       id: '1',
@@ -123,21 +124,22 @@ const useMoiPaymentConfirmation = () => {
       icon: icons.copy,
     },
   ];
-
   const onConfirm = async () => {
-    const deviceInfo = await getDeviceInfo();
     const payLoad = {
-      deviceInfo: deviceInfo,
+      billIdType: '',
+      moiBillPaymentType: MoiPaymentTypes.PAYMENT,
+      amount: billData.totalFeeAmount,
+      billerId: billData.billerId,
+      serviceDescription: billData.serviceTypeFromLOV.desc,
+      applyTax: 'N',
+      serviceId: billData.serviceTypeFromLOV.code,
+      groupPaymentId: billData.groupPaymentId,
+      paymentId: billData.paymentId,
+      dynamicFields: billData.dynamicFields,
       walletNumber: walletNumber,
-      moiBillPaymentType: 'PAYMENT',
+      mobileNo: mobileNumber,
       otp: otp,
       otpRef: otpRef,
-      billerId: '002',
-      billNumOrBillingAcct: '002245820000',
-      dueDateTime: '24-11-2014',
-      billIdType: '0',
-      billingCycle: '002_2019',
-      serviceDescription: 'ELCT',
     };
 
     const apiResponse = await moiBillPayment(payLoad);

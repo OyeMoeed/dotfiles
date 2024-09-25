@@ -13,6 +13,17 @@ const RequiredInPaymentOrRefund = {
   REFUND: 'REFUND',
   BOTH: 'BOTH',
 };
-export { RequiredInPaymentOrRefund };
+interface ValidateBillRes {
+  previousUnusedBalance: string;
+  totalFeeAmount: string;
+  groupPaymentId: string;
+  paymentId: string;
+  paymentMethod: string;
+  billerId: string;
+  feeList: any;
+  dynamicFields: any;
+  serviceTypeFromLOV: any;
+}
+export { RequiredInPaymentOrRefund, ValidateBillRes };
 
 export default MoiFormFormValues;
