@@ -1515,5 +1515,13 @@
   "BILL_ACTIVATION": {
     "ACTIVATION_MESSAGE": "The Bill has been activated",
     "PAY_BILL": "Pay Bill"
+  },
+  "VALIDATION": {
+    "MUST_BE_NUMBER": "{label} must be a valid number",
+    "MIN_WIDTH": "{label} must be at least {min}",
+    "MAX_WIDTH": "{label} must be no more than {max}",
+    "REQUIRED": "{label} is required",
+    "MUST_BE_TEXT": "{label} must be valid text",
+    "MUST_BE_SELECTED": "{label} must be selected"
   }
 }
