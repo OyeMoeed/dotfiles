@@ -54,6 +54,22 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
 
   const getLetterCount = () => `${notes?.length}/${maxLength}`;
 
+  const validateAmountInput = (value: string) => {
+    // Split the value by the decimal point
+    const [integerPart, decimalPart] = value.split('.');
+
+    if (integerPart?.length > 5) {
+      return amount;
+    }
+
+    if (decimalPart?.length > 2) {
+      return amount;
+    }
+
+    // If both checks pass, return the new value
+    return value;
+  };
+
   return (
     <IPayView testID={`${testID}-transfer-information`} style={[styles.gradientView, style]}>
       {!hasWallet && (
@@ -102,7 +118,8 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           currencyStyle={[styles.currencyStyle, currencyStyle]}
           defaultValue={defaultValue}
           amount={amount}
-          onAmountChange={setAmount}
+          maxLength={null}
+          onAmountChange={(value) => setAmount(validateAmountInput(value))}
           isEditable={isEditable}
         />
         {chipValue && (
