@@ -16,7 +16,7 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
       borderWidth: moderateScale(0),
     },
     unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
-    noResult: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+    noResult: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', marginTop: moderateScale(200, 0.3) },
     noResultContent: { gap: 12 },
     requestButton: {
       backgroundColor: colors.primary.primary500,
@@ -26,6 +26,14 @@ const requestMoneyStyles = (colors: typeof themeColors) =>
       paddingVertical: verticalScale(10),
       height: scaleSize(50),
       borderRadius: scaleSize(16),
+    },
+    requestNoResultButton: {
+      backgroundColor: colors.primary.primary500,
+      marginTop: moderateScale(21, 0.3),
+      justifyContent: 'center',
+      paddingHorizontal: moderateScale(33.5, 0.3),
+      paddingVertical: moderateScale(7, 0.3),
+      borderRadius: moderateScale(12, 0.3),
     },
     flatList: {
       flex: 0,
