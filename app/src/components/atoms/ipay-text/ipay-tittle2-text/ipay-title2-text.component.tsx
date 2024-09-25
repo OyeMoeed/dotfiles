@@ -18,6 +18,7 @@ const IPayTitle2Text: React.FC<IPayTitle2TextProps> = ({
   children,
   color,
   shouldTranslate = true,
+  isLoading,
 }: IPayTitle2TextProps) => {
   const textColor = color ? { color } : {};
   return (
@@ -27,6 +28,7 @@ const IPayTitle2Text: React.FC<IPayTitle2TextProps> = ({
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
       shouldTranslate={shouldTranslate}
+      isLoading={isLoading}
     >
       {text || children}
     </IPayText>

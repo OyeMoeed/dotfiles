@@ -1,0 +1,26 @@
+import { useCustomQuery } from '@app/network/hooks';
+import { useTypedDispatch } from '@app/store/store';
+import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
+import WALLET_QUERY_KEYS from './get-wallet.query-keys';
+import getWalletInfo from './get-wallet.service';
+import { WalletNumberProp } from './get-wallet.interface';
+
+const useGetWalletInfo = ({ payload }: { payload: WalletNumberProp }) => {
+  const dispatch = useTypedDispatch();
+  const { isLoading, res, error, refetch } = useCustomQuery({
+    queryKey: WALLET_QUERY_KEYS.GET_WALLET_INFO,
+    queryFn: () => getWalletInfo(payload),
+    onSuccess: (data) => dispatch(setWalletInfo(data?.response)),
+    refetchOnMount: true,
+    enabled: !!payload?.walletNumber,
+  });
+
+  return {
+    isLoadingWalletInfo: isLoading,
+    walletInfo: res?.response,
+    errorWalletInfo: error,
+    refetchWalletInfo: refetch,
+  };
+};
+
+export default useGetWalletInfo;

@@ -19,6 +19,7 @@ const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
   color,
   fontWeight,
   shouldTranslate = true,
+  isLoading,
 }: IPayFootnoteTextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -29,6 +30,7 @@ const IPayFootnoteText: React.FC<IPayFootnoteTextProps> = ({
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
       shouldTranslate={shouldTranslate}
+      isLoading={isLoading}
     >
       {text || children}
     </IPayText>

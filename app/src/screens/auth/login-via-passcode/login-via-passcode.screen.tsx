@@ -26,8 +26,6 @@ import prepareLogin from '@app/network/services/authentication/prepare-login/pre
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
-import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
@@ -169,20 +167,6 @@ const LoginViaPasscode: React.FC = () => {
     }
   };
 
-  const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
-    const payload: WalletNumberProp = {
-      walletNumber: resWalletNumber as string,
-    };
-
-    const apiResponse: any = await getWalletInfo(payload);
-
-    if (apiResponse) {
-      dispatch(setWalletInfo(apiResponse?.response));
-      saveProfileImage(apiResponse?.response);
-      redirectToHome();
-    }
-  };
-
   const loginUsingPasscode = async (
     prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>,
     passcode: string,
@@ -212,7 +196,7 @@ const LoginViaPasscode: React.FC = () => {
         }),
       );
       saveProfileImage(loginApiResponse?.response);
-      await getWalletInformation(loginApiResponse?.response?.idExpired, loginApiResponse?.response?.walletNumber);
+      redirectToHome();
     }
   };
 
