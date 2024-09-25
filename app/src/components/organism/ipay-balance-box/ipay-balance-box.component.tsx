@@ -20,9 +20,10 @@ import checkUserAccess from '@app/utilities/check-user-access';
 import { buttonVariants, DashboardOptions } from '@app/utilities';
 import { balancePercentage, formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
+import { openBrowser } from '@swan-io/react-native-browser';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
@@ -57,6 +58,12 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
   const allowEyeIconFunctionality = useTypedSelector((state) => state.appDataReducer.appData.allowEyeIconFunctionality);
   const gradientLocations = [0, 0.8];
 
+  const handleOnPress = useCallback(() => {
+    openBrowser('https://ehsan.sa/', {
+      onClose: () => {},
+    });
+  }, []);
+
   const onPressOption = (option: string) => {
     if (quickAction) quickAction();
     const hasAccess = checkUserAccess();
@@ -83,7 +90,9 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
         case DashboardOptions.REQUEST_MONEY:
           navigate(screenNames.REQUEST_MONEY);
           break;
-
+        case 'ehsan':
+          handleOnPress();
+          break;
         default:
           break;
       }
@@ -96,7 +105,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
     <IPayPressable onPress={() => onPressOption(item?.navigate as string)}>
       <IPayView style={styles.subContainer}>
         <IPayView style={styles.iconConStyle}>
-          {item.transfer_type === t('HOME.LOCAL_TRANSFER') ? (
+          {item.transfer_type === t('HOME.LOCAL_TRANSFER') || item?.text === t('HOME.EHSAN') ? (
             item?.icon
           ) : (
             <IPayGradientIcon icon={item?.icon} size={28} angle={125} gradientLocations={gradientLocations} useAngle />

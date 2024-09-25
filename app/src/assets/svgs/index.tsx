@@ -17,6 +17,7 @@ import CallIncomingIcon from './call-incomingicon.svg';
 import CallOutgoing from './call-outgoing.svg';
 import CallOutgoingIcon from './call-outgoingicon.svg';
 import CardIcon from './card.svg';
+import EhsanIcon from './ehsan-icon.svg';
 import ExportIcon from './export.svg';
 import GradientCard from './gradient.card.svg';
 import GradientCvv from './gradient.cvv.svg';
@@ -53,8 +54,7 @@ export {
   CallOutgoing,
   CallOutgoingIcon,
   CardIcon,
-  DottedRefresh,
-  ExportIcon,
+  DottedRefresh, EhsanIcon, ExportIcon,
   FaceId,
   FallbackImage,
   FallbackLoader,
@@ -84,5 +84,6 @@ export {
   Send2Icon,
   ShoppingCartIcon,
   TrashIcon,
-  UserTick,
+  UserTick
 };
+

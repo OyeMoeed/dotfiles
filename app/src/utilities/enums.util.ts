@@ -52,7 +52,7 @@ enum alertType {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-enum spinnerVariant {
+enum SpinnerVariant {
   TEXT = 'text',
   DEFAULT = 'default',
 }
@@ -330,12 +330,7 @@ enum BillingStatus {
   ENABLED = 'ENABLED',
   NOT_ENABLED = 'NOT_ENABLED',
 }
-enum DateFieldTypes {
-  Hijri = 'hijri',
-  Future = 'Future',
-  Past = 'Past',
-  Other = 'other',
-}
+
 
 // Export all enums
 export {
@@ -361,7 +356,8 @@ export {
   CardTypes,
   CardTypesCodes,
   CarouselModes,
-  DashboardOptions, DateFieldTypes, DayPeriod,
+  DashboardOptions,
+  DayPeriod,
   FallbackVariants,
   Filter,
   FilterValue,
@@ -376,6 +372,7 @@ export {
   PayChannel,
   PaymentType,
   PickerVariant,
+  SpinnerVariant,
   States,
   TabBase,
   ToastTypes,
@@ -387,6 +384,5 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant
 };
 
