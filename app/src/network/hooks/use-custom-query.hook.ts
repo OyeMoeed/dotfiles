@@ -9,7 +9,7 @@ const useCustomQuery = <TQueryFnData>({
 }: {
   queryFn?: QueryFunction<TQueryFnData, QueryKey>;
   queryKey?: QueryKey;
-  onSuccess?: (data?: object) => void;
+  onSuccess?: (data?: TQueryFnData) => void;
   onError?: (error?: object) => void;
 }) => {
   const { data, error, isSuccess, isError, status, isFetched, ...useQueryParams } = useQuery({

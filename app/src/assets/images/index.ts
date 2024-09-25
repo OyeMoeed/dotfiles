@@ -113,6 +113,7 @@ const images = {
   masterIcon: require('./masterIcon.png'),
   mastercardIcon: require('./mastercard-icon.png'),
   truckTime: require('./truck-time.png'),
+  imagePlaceholder: require('./image-placeholder.png'),
 };
 
 export default images;

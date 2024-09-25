@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
@@ -19,6 +19,8 @@ import IPayTransactionItem from '@app/screens/transaction-history/component/ipay
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
@@ -122,7 +124,26 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     getTransactionsData(filtersArray);
   };
 
+  const mapCardsFilter = () => {
+    const filtersData = [];
+    if (cards && cards?.length) {
+      const cardsFilterMap = cards.map((card: CardInterface) => ({
+        id: card.cardIndex,
+        key: card.cardIndex,
+        value: card?.maskedCardNumber || '',
+      }));
+      filtersData.push({
+        id: '2',
+        label: t('TRANSACTION_HISTORY.CARD'),
+        type: FiltersType.CARD,
+        filterValues: cardsFilterMap,
+      });
+    }
+    return filtersData;
+  };
+
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
+    setIsLoading(true);
     setTransactionsData([]);
     setFilteredData([]);
 
@@ -141,6 +162,43 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       setTransactionsData(apiResponse?.response?.transactions);
       setFilteredData(apiResponse?.response?.transactions);
+    }
+
+    setIsLoading(false);
+  };
+
+  const handleWatch = (data: any, name: string) => {
+    const CARD_TYPES = [
+      'CIN_VISA_CASHBACK',
+      'PAY_VCARD_POS_MADA',
+      'PAY_VCARD_POS_VISA',
+      'PAY_VCARD_POS_NAQD_MADA',
+      'PAY_VCARD_POS_NAQD_VISA',
+      'PAY_VCARD_POS_NAQD',
+      'PAY_VCARD_ECOM_MADA',
+      'PAY_VCARD_ECOM_VISA',
+    ];
+    const foundItem: any = CARD_TYPES.find((cardType: string) => cardType === data?.transactionType?.key) || null;
+
+    const foundCardFilter = selectedFilterData?.find((filter: any) => filter?.id === '2');
+
+    if (name === FiltersType.TRANSACTION_TYPE) {
+      if (foundItem) {
+        if (foundCardFilter) {
+          setSelectedFilterData(selectedFilterData);
+        } else {
+          setSelectedFilterData(selectedFilterData?.concat(mapCardsFilter()));
+        }
+      } else {
+        setSelectedCard(false);
+
+        setSelectedFilterData(selectedFilterData?.filter((filterItem: any) => filterItem?.id !== '2'));
+      }
+    } else if (name === FiltersType.CARD) {
+      const cardInfo = getCardInfo(data?.card?.title);
+      if (cardInfo) {
+        setSelectedCard(cardInfo);
+      }
     }
   };
 
@@ -265,66 +323,12 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     return filtersData;
   };
 
-  const mapCardsFilter = () => {
-    const filtersData = [];
-    if (cards && cards?.length) {
-      const cardsFilterMap = cards.map((card: CardInterface) => ({
-        id: card.cardIndex,
-        key: card.cardIndex,
-        value: card?.maskedCardNumber || '',
-      }));
-      filtersData.push({
-        id: '2',
-        label: t('TRANSACTION_HISTORY.CARD'),
-        type: FiltersType.CARD,
-        filterValues: cardsFilterMap,
-      });
-    }
-    return filtersData;
-  };
-
-  const handleWatch = (data: any, name: string) => {
-    const CARD_TYPES = [
-      'CIN_VISA_CASHBACK',
-      'PAY_VCARD_POS_MADA',
-      'PAY_VCARD_POS_VISA',
-      'PAY_VCARD_POS_NAQD_MADA',
-      'PAY_VCARD_POS_NAQD_VISA',
-      'PAY_VCARD_POS_NAQD',
-      'PAY_VCARD_ECOM_MADA',
-      'PAY_VCARD_ECOM_VISA',
-    ];
-    const foundItem: any = CARD_TYPES.find((cardType: string) => cardType === data?.transactionType?.key) || null;
-
-    const foundCardFilter = selectedFilterData?.find((filter: any) => filter?.id === '2');
-
-    if (name === FiltersType.TRANSACTION_TYPE) {
-      if (foundItem) {
-        if (foundCardFilter) {
-          setSelectedFilterData(selectedFilterData);
-        } else {
-          setSelectedFilterData(selectedFilterData?.concat(mapCardsFilter()));
-        }
-      } else {
-        setSelectedCard(false);
-
-        setSelectedFilterData(selectedFilterData?.filter((filterItem: any) => filterItem?.id !== '2'));
-      }
-    } else if (name === FiltersType.CARD) {
-      const cardInfo = getCardInfo(data?.card?.title);
-      if (cardInfo) {
-        setSelectedCard(cardInfo);
-      }
-    }
-  };
-
   const getTransactionTypesData = async () => {
     const apiResponse: any = await getTransactionTypes();
     let transactionTypesFilter: { id: string; label: string; type: FiltersType; filterValues: any }[] = [];
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       transactionTypesFilter = mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs);
     }
-
     setTransactionHistoryFilterData([...transactionTypesFilter]);
     if (!isW2WTransactions) {
       setSelectedFilterData([...transactionTypesFilter]);
@@ -363,17 +367,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     return () => setNoFilterResult(false);
   }, []);
 
-  const renderTrxsList = () => (
-    <IPayView>
-      <IPayFlatlist
-        data={filteredData}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
-      />
-    </IPayView>
-  );
-
   const renderNoResult = () =>
     noFilterResult ? (
       <IPayNoResult textColor={colors.primary.primary800} message="TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND" />
@@ -384,7 +377,23 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       />
     );
 
-  const renderLoadingWithNoResult = () => (isLoading ? <IPaySpinner hasBackgroundColor={false} /> : renderNoResult());
+  const renderTrxsList = () => (
+    <IPayView style={styles.listContainer}>
+      <IPayFlatlist
+        data={filteredData}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
+        ListEmptyComponent={
+          isLoading ? (
+            <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />
+          ) : (
+            renderNoResult()
+          )
+        }
+      />
+    </IPayView>
+  );
 
   const headerTitle = currentCard ? 'CARDS.CARD_TRANSACTIONS_HISTORY' : 'COMMON.TRANSACTIONS_HISTORY';
 
@@ -449,9 +458,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           unselectedTabStyle={styles.unselectedTab}
         />
       )}
-      <IPayView style={styles.listContainer}>
-        {filteredData?.length ? renderTrxsList() : renderLoadingWithNoResult()}
-      </IPayView>
+      {renderTrxsList()}
       <IPayBottomSheet
         heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={closeBottomSheet}
