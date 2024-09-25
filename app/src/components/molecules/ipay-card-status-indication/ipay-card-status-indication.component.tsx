@@ -1,23 +1,20 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, CardStatusIndication, CardStatusType } from '@app/utilities/enums.util';
-import { TextStyle, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { TextStyle, ViewStyle } from 'react-native';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayList from '../ipay-list/ipay-list.component';
 import { IPayCardStatusIndicationProps } from './ipay-card-status-indication.interface';
 import cardStatusIndicationStyles from './ipay-card-status-indication.style';
 
-const IPayCardStatusIndication = ({
-  cardStatusType,
-  statusIndication,
-  onPress,
-  currentCard,
-}: IPayCardStatusIndicationProps) => {
+const IPayCardStatusIndication = ({ cardStatusType, statusIndication, onPress }: IPayCardStatusIndicationProps) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const fee = 100; // TODO will be updated on the basis of api
+  const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
 
   const styles = cardStatusIndicationStyles(colors);
   const alertSubTitle = `${t('CARDS.ANNUAL_FEE_FAILED_MESSAGE')} 

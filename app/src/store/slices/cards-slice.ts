@@ -4,10 +4,12 @@ import { SLICE_NAMES } from '../constants.store';
 
 interface CardsInitialState {
   cards: CardInterface[];
+  currentCard?: CardInterface;
 }
 
 const initialState: CardsInitialState = {
   cards: [],
+  currentCard: undefined,
 };
 
 const cardsSlice = createSlice({
@@ -19,6 +21,9 @@ const cardsSlice = createSlice({
     },
     resetCards(state) {
       state.cards = initialState.cards;
+    },
+    setCurrentCard(state, action) {
+      state.currentCard = action.payload;
     },
     setCardAtmWithdrawal(state, action) {
       state.cards = state.cards.map((card) => {
@@ -45,6 +50,6 @@ const cardsSlice = createSlice({
   },
 });
 
-export const { setCards, resetCards, setCardAtmWithdrawal, setCardFrozen } = cardsSlice.actions;
+export const { setCards, resetCards, setCardAtmWithdrawal, setCardFrozen, setCurrentCard } = cardsSlice.actions;
 
 export default cardsSlice.reducer;

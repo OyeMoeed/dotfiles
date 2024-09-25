@@ -1,13 +1,10 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayCarousel, IPayNoResult, useToastContext } from '@app/components/molecules';
-import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import { IPayIcon, IPaySpinner, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayButton, useToastContext } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
+import IPayCardsCarousel from '@app/components/templates/ipay-cards-carousel/IpayCardsCarosel.component';
 import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
@@ -26,17 +23,15 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
-import { setCards } from '@app/store/slices/cards-slice';
+import { setCards, setCurrentCard } from '@app/store/slices/cards-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import { buttonVariants, CardOptions, CarouselModes, ToastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, CardOptions, ToastTypes } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { verticalScale } from 'react-native-size-matters';
 import { useDispatch } from 'react-redux';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
@@ -51,13 +46,11 @@ const CardsScreen: React.FC = () => {
   const actionSheetRef = useRef<any>(null);
 
   const dispatch = useDispatch();
-  const cardsData = useTypedSelector((state) => state.cardsReducer.cards);
+  const { cards: cardsData, currentCard } = useTypedSelector((state) => state.cardsReducer);
 
   const [boxHeight, setBoxHeight] = useState<number>(0);
-  const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
+  const [refresh, setRefresh] = useState(false);
 
-  const THRESHOLD = verticalScale(20);
-  const HEIGHT = boxHeight - THRESHOLD;
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
@@ -139,7 +132,7 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
-    setCurrentCard(cardsData[index]);
+    dispatch(setCurrentCard(cardsData[index]));
   };
 
   const getCardPayload: CardsProp = {
@@ -152,7 +145,7 @@ const CardsScreen: React.FC = () => {
 
       if (availableCards?.length) {
         dispatch(setCards(mapCardData(availableCards)));
-        setCurrentCard(mapCardData(availableCards)[0]);
+        dispatch(setCurrentCard(mapCardData(availableCards)[0]));
         setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
       } else {
         setCardsCurrentState(CardScreenCurrentState.NO_DATA);
@@ -246,75 +239,21 @@ const CardsScreen: React.FC = () => {
   };
 
   useEffect(() => {
+    setRefresh(true);
     if (cardsData.length) {
       setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
-      setCurrentCard(cardsData[0]);
+      dispatch(setCurrentCard(cardsData[0]));
     } else {
       setCardsCurrentState(CardScreenCurrentState.NO_DATA);
+      dispatch(setCurrentCard(undefined));
     }
+    setRefresh(false);
   }, [cardsData]);
 
-  const renderCardsCurrentState = () => {
-    if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
-      return (
-        <IPayView style={styles.noResultContainer}>
-          <IPayNoResult
-            testID="no-result"
-            textColor={colors.primary.primary800}
-            message="CARDS.YOU_DO_NOT_HAVE_CARD"
-            showEmptyBox
-          />
-          <IPayButton
-            btnStyle={styles.buttonStyle}
-            btnText="CARDS.CREATE_NEW_CARD"
-            btnType={buttonVariants.PRIMARY}
-            large
-            onPress={openCardSheet}
-            leftIcon={<IPayIcon icon={icons.add} size={20} color={colors.natural.natural0} />}
-          />
-        </IPayView>
-      );
-    }
-
-    if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
-      return (
-        <>
-          <IPayView style={styles.cardsContainer}>
-            <IPayCarousel
-              data={cardsData}
-              modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
-              mode={CarouselModes.PARALLAX}
-              width={SCREEN_WIDTH}
-              loop={false}
-              height={verticalScale(350)}
-              onChangeIndex={onChangeIndex}
-              renderItem={({ item }) =>
-                (item as { newCard?: boolean }).newCard ? (
-                  <IPayView style={styles.newCardWrapper}>
-                    <IPayButton
-                      onPress={openCardSheet}
-                      btnType={buttonVariants.OUTLINED}
-                      btnText="CARDS.NEW_CARD"
-                      rightIcon={<IPayIcon icon={icons.add_square} size={20} color={colors.primary.primary500} />}
-                    />
-                  </IPayView>
-                ) : (
-                  <IPayATMCard card={item as CardInterface} setBoxHeight={setBoxHeight} onLongPress={onATMLongPress} />
-                )
-              }
-            />
-          </IPayView>
-          {boxHeight > 0 && currentCard && (
-            <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
-              <IPayCardSection currentCard={currentCard} onOpenOTPSheet={onPinCodeSheet} />
-            </IPayCustomSheet>
-          )}
-        </>
-      );
-    }
-
-    return <IPayView />;
-  };
+  // TODO: will be updated with the actual loader
+  if (refresh) {
+    return <IPaySpinner />;
+  }
 
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
@@ -328,7 +267,17 @@ const CardsScreen: React.FC = () => {
           rightIcon={<IPayIcon icon={icons.addSquare2} size={20} color={colors.primary.primary500} />}
         />
       </IPayView>
-      {renderCardsCurrentState()}
+      <IPayCardsCarousel
+        cardsCurrentState={cardsCurrentState}
+        cardsData={cardsData}
+        styles={styles}
+        onChangeIndex={onChangeIndex}
+        openCardSheet={openCardSheet}
+        setBoxHeight={setBoxHeight}
+        onATMLongPress={onATMLongPress}
+        boxHeight={boxHeight}
+        onPinCodeSheet={onPinCodeSheet}
+      />
       <IPayPortalBottomSheet
         heading="CARD_OPTIONS.CARD_DETAILS"
         enablePanDownToClose
@@ -387,7 +336,7 @@ const CardsScreen: React.FC = () => {
           onNextPress={handleNext}
         />
       </IPayPortalBottomSheet>
-      <IPayFreezeConfirmationSheet currentCard={currentCard} ref={actionSheetRef} />
+      <IPayFreezeConfirmationSheet ref={actionSheetRef} />
     </IPaySafeAreaView>
   );
 };

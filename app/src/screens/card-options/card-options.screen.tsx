@@ -7,6 +7,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayList } from '@app/components/molecules';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -36,28 +37,22 @@ import checkUserAccess from '@app/utilities/check-user-access';
 import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
-import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
+import { ChangePinRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
 import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
   const dispatch = useDispatch();
-  const route = useRoute<RouteProps>();
-  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const { cashWithdrawalCardsList } = useTypedSelector((state) => state.walletInfoReducer);
-
-  const {
-    currentCard,
-    currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
-  } = route.params;
+  const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+  const { cardType, cardHeaderText, name, maskedCardNumber } = currentCard as CardInterface;
 
   const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
@@ -369,7 +364,7 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title="CARD_OPTIONS.CARD_FEATURES"
             subTitle="CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE"
-            onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
+            onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
 
           <IPayCardOptionsIPayListDescription

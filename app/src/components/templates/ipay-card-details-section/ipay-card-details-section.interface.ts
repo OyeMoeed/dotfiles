@@ -1,10 +1,7 @@
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
-
 interface IPayCardDetailsSectionProps {
   testID?: string;
   isCardPrinted?: boolean;
   onOpenOTPSheet?: () => void;
-  currentCard: CardInterface;
 }
 
 interface Option {

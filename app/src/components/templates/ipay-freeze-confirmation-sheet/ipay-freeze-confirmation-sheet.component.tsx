@@ -20,13 +20,13 @@ import {
 import freezeConfirmationSheetStyles from './ipay-freeze-confirmation-sheet.styles';
 
 const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle, IPayFreezeConfirmationSheetProps>(
-  ({ currentCard, setActiveCardStatus }, ref) => {
+  ({ setActiveCardStatus }, ref) => {
     const { t } = useTranslation();
     const { showToast } = useToastContext();
     const styles = freezeConfirmationSheetStyles();
 
     const dispatch = useDispatch();
-    const cards = useTypedSelector((state) => state.cardsReducer.cards);
+    const { cards, currentCard } = useTypedSelector((state) => state.cardsReducer);
 
     const actionSheetRef = useRef<any>(null);
     const [cardStatus, setCardStatus] = useState(CardActiveStatus.FREEZE);
