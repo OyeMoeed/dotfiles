@@ -13,8 +13,9 @@ import getAktharPoints from '@app/network/services/cards-management/mazaya-topup
 import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
 import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import getOffers from '@app/network/services/core/offers/offers.service';
-import { CardsProp, TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { getTransactions, useGetCards } from '@app/network/services/core/transaction/transactions.service';
+import { CardsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { useGetCards } from '@app/network/services/core/transaction/transactions.service';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setCards } from '@app/store/slices/cards-slice';
@@ -40,7 +41,6 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
-  const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
@@ -48,7 +48,7 @@ const Home: React.FC = () => {
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
   );
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
@@ -58,7 +58,6 @@ const Home: React.FC = () => {
   };
 
   const getCardsData = async (cardApiResponse: any) => {
-    console.log('Home', cardApiResponse);
     if (cardApiResponse) {
       const availableCards = filterCards(cardApiResponse?.response?.cards);
 
@@ -90,17 +89,13 @@ const Home: React.FC = () => {
     });
   };
 
-  const getTransactionsData = async () => {
-    const payload: TransactionsProp = {
+  const { transactionsData } = useGetTransactions({
+    payload: {
       walletNumber,
       maxRecords: '3',
       offset: '1',
-    };
-
-    const apiResponse: any = await getTransactions(payload);
-
-    setTransactionsData(apiResponse?.response?.transactions);
-  };
+    },
+  });
 
   const getOffersData = async () => {
     try {
@@ -125,7 +120,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Dispatch the setItems action on initial render
-    getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
 

@@ -52,7 +52,6 @@ const CardsScreen: React.FC = () => {
 
   const dispatch = useDispatch();
   const cardsData = useTypedSelector((state) => state.cardsReducer.cards);
-  console.log('cardsData outside', cardsData);
 
   const [boxHeight, setBoxHeight] = useState<number>(0);
   const [currentCard, setCurrentCard] = useState<CardInterface>(); // #TODO will be replaced with API data
@@ -62,7 +61,7 @@ const CardsScreen: React.FC = () => {
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -140,7 +139,6 @@ const CardsScreen: React.FC = () => {
   };
 
   const onChangeIndex = (index: number) => {
-    console.log('index', index, 'cardsData', cardsData);
     setCurrentCard(cardsData[index]);
   };
 
@@ -279,8 +277,6 @@ const CardsScreen: React.FC = () => {
     }
 
     if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
-      console.log('cardsData inside', cardsData);
-      const data = [...cardsData, { newCard: true }];
       return (
         <>
           <IPayView style={styles.cardsContainer}>

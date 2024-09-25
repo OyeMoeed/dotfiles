@@ -12,9 +12,10 @@ import {
   prepareShowDetailsProp,
   renewCardProp,
   resetPinCodeProp,
+  TransactionsMockProps,
 } from './transaction.interface';
 
-const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
+const getTransactions = async (payload: TransactionsProp): Promise<TransactionsMockProps> => {
   if (constants.MOCK_API_RESPONSE) {
     return transactionMock;
   }
@@ -23,7 +24,7 @@ const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
     endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
     method: requestType.GET,
     headers: {
-      hide_spinner_loading: !!payload?.cardIndex,
+      hide_spinner_loading: true,
     },
   });
   return apiResponse;

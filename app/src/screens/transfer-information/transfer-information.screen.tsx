@@ -31,8 +31,10 @@ import { ReasonListItem } from './trasnfer-information.interface';
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
   const { t } = useTranslation();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
-  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { walletNumber } = walletInfo;
+
   const [chipValue, setChipValue] = useState<string>('');
   const [transferAmount, setTransferAmount] = useState<string>('');
   const [selectedReason, setSelectedReason] = useState<ReasonListItem>({});
@@ -42,7 +44,6 @@ const TransferInformation: React.FC = () => {
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
 
   const { showToast } = useToastContext();
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   type RouteProps = RouteProp<
     {

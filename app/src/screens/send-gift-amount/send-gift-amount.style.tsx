@@ -8,10 +8,11 @@ import {
   FONT_SIZE_34,
   FONT_WEIGHT_BOLD,
 } from '@app/styles/typography.styles';
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const sendGiftAmountStyles = (themeColors: typeof colors) =>
+const sendGiftAmountStyles = (themeColors: typeof colors, tabsLength: number) =>
   createStyleSheet({
     recipientsContainer: {
       backgroundColor: colors.secondary.secondary100,
@@ -69,7 +70,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
       marginBottom: moderateScale(18),
       borderRadius: moderateScale(28),
       flex: 0,
-      backgroundColor: themeColors.appGradient.buttonBackground,
+      backgroundColor: themeColors.appGradient.buttonBackground[0],
       padding: moderateScale(16),
     },
     buttonContainerNormal: {
@@ -137,7 +138,7 @@ const sendGiftAmountStyles = (themeColors: typeof colors) =>
     remove: {
       marginTop: moderateScale(6),
     },
-
+    tabs: { width: (SCREEN_WIDTH - moderateScale(96)) / tabsLength },
     input: {
       ...Platform.select({
         android: {

@@ -490,6 +490,12 @@ const useConstantData = () => {
       label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
       value: '14/03/2024 - 15:30',
     },
+    {
+      id: '5',
+      label: t('TRAFFIC_VIOLATION.REF_NUMBER'),
+      value: 'FTA35346',
+      icon: icons.copy,
+    },
   ];
 
   const notificationRequestFilters: FilterTypes[] = [

@@ -50,7 +50,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
   const { t } = useTranslation();
 
   const styles = nafathVerificationStyles(colors);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [nafathNumber, setNafathNumber] = useState<number>();
   const [duration, setDuration] = useState<number>();
   const [waitngScnds] = useState<number>(20);
@@ -262,6 +262,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
         );
       }
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.error('Failed to open Nafath app:', error);
     }
   };

@@ -79,7 +79,7 @@ const LoginViaPasscode: React.FC = () => {
   const { handleFaceID } = useBiometricService();
   const { delinkDevice } = useDelinkDevice({ shouldNavigate: true });
 
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const { mobileNumber, firstName, fatherName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();

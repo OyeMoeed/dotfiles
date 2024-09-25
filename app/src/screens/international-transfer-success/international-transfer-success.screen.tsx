@@ -162,7 +162,7 @@ const InternationalTransferSuccessScreen: React.FC = () => {
         icon={<IPayIcon icon={icons.note_remove} size={64} />}
         showIcon={false}
         primaryAction={{
-          text: t('COMMON.DONE'),
+          text: 'COMMON.DONE',
           onPress: onVatInvoiceCancel,
         }}
       />

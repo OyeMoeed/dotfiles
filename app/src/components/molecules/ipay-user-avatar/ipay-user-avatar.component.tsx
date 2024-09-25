@@ -8,7 +8,9 @@ import userAvatarStyles from './ipay-user-avatar.styles';
 import { IPayGradientTextMasked } from '..';
 
 const IPayUserAvatar: React.FC<UserProfileImageProps> = ({ image, name, style }) => {
-  const { profileImage, fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { profileImage, fullName } = walletInfo;
+
   const styles = userAvatarStyles(colors);
 
   const getInitialLetterOfName = useCallback(() => {

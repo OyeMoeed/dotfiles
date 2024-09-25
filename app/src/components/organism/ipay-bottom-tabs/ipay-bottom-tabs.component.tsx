@@ -1,11 +1,11 @@
 import { IPayCaption1Text, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { forwardRef } from 'react';
+import React from 'react';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IPayBottomTabsProps } from './ipay-bottom-tabs-interface';
 import bottomTabStyles from './ipay-bottom-tabs.style';
 
-const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(({ testID, state, descriptors, navigation }) => {
+const IPayBottomTabs: React.FC<IPayBottomTabsProps> = ({ testID, state, descriptors, navigation }) => {
   const { colors } = useTheme();
   const styles = bottomTabStyles(colors);
 
@@ -78,6 +78,6 @@ const IPayBottomTabs: React.FC = forwardRef<{}, IPayBottomTabsProps>(({ testID, 
       })}
     </IPayView>
   );
-});
+};
 
 export default IPayBottomTabs;

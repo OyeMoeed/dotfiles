@@ -2,7 +2,7 @@ import IPayProfileVerificationSheet from '@app/components/molecules/ipay-profile
 import { IPayNafathVerification } from '@app/components/templates';
 import IPayIdRenewalSheet from '@app/components/templates/ipay-id-renewal-sheet/ipay-id-renewal-sheet.component';
 import { setNafathSheetVisibility, setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
-import { AppDispatch, RootState, useTypedSelector } from '@store/store';
+import { AppDispatch, useTypedSelector } from '@store/store';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import IPayPortalBottomSheet from '../ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -11,11 +11,15 @@ import IPayBottomSheetProviderProps from './ipay-bottomsheet-provider.interface'
 
 const IPayBottomSheetProvider: React.FC<IPayBottomSheetProviderProps> = ({ children }) => {
   const dispatch = useDispatch<AppDispatch>();
-  const isProfileSheetVisible = useTypedSelector((state: RootState) => state.bottomSheetReducer.isProfileSheetVisible);
-  const isNafathSheetVisible = useTypedSelector((state) => state.bottomSheetReducer.isNafathSheetVisible);
 
-  const { isTermsConditionsVisible, termsAndConditionsURL, isVirtualCardTermsAndConditions, isNafathTerms } =
-    useTypedSelector((state: RootState) => state.bottomSheetReducer);
+  const isTermsConditionsVisible = useTypedSelector((state) => state.bottomSheetReducer.isTermsConditionsVisible);
+  const termsAndConditionsURL = useTypedSelector((state) => state.bottomSheetReducer.termsAndConditionsURL);
+  const isNafathTerms = useTypedSelector((state) => state.bottomSheetReducer.isNafathTerms);
+  const isProfileSheetVisible = useTypedSelector((state) => state.bottomSheetReducer.isProfileSheetVisible);
+  const isNafathSheetVisible = useTypedSelector((state) => state.bottomSheetReducer.isNafathSheetVisible);
+  const isVirtualCardTermsAndConditions = useTypedSelector(
+    (state) => state.bottomSheetReducer.isVirtualCardTermsAndConditions,
+  );
 
   const onCloseProfileSheet = () => {
     dispatch(setProfileSheetVisibility(false));

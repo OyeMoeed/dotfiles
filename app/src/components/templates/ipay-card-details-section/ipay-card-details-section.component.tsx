@@ -2,12 +2,12 @@ import icons from '@app/assets/icons';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import checkUserAccess from '@app/utilities/check-user-access';
@@ -28,7 +28,7 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
@@ -69,7 +69,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
 
   const [isCardPrinted, setIsCardPrinted] = useState();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -97,24 +96,18 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     },
   ];
 
-  const getTransactionsData = async () => {
-    const payload: TransactionsProp = {
+  const { isLoadingTransactions, transactionsData } = useGetTransactions({
+    payload: {
       walletNumber: walletInfo.walletNumber,
       maxRecords: '10',
       offset: '1',
       cardIndex: currentCard?.cardIndex,
       fromDate: '',
       toDate: '',
-    };
-    const apiResponse: any = await getTransactions(payload);
-
-    if (apiResponse) {
-      setTransactionsData(apiResponse?.response?.transactions);
-    }
-  };
+    },
+  });
 
   useEffect(() => {
-    getTransactionsData();
     setActiveCardStatus(currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
   }, [currentCard]);
 
@@ -128,6 +121,13 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       </IPayView>
     </IPayPressable>
   );
+
+  const ListEmptyComponent = useCallback(() => {
+    if (isLoadingTransactions) {
+      return <IPaySkeletonBuilder variation={IPaySkeletonEnums.TRANSACTION_LIST} isLoading={isLoadingTransactions} />;
+    }
+    return null;
+  }, [isLoadingTransactions]);
 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
@@ -222,6 +222,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
         scrollEnabled={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
+        ListEmptyComponent={ListEmptyComponent}
       />
       <IPayFreezeConfirmationSheet
         currentCard={currentCard}

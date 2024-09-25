@@ -2,21 +2,19 @@
 import icon from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
-import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { showLanguageSheet } from '@app/store/slices/language-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, LanguageCode } from '@app/utilities/enums.util';
 import { getFlagComponent, getSelectedLanguage } from '@app/utilities/language.utils';
 import throttle from '@app/utilities/throttle-onPress.util';
 import { FC, useCallback, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useTypedSelector } from '@app/store/store';
 import { IPayLanguageSelectorButtonProps } from '../ipay-header.interface';
 
 const IPayLanguageSelectorButton: FC<IPayLanguageSelectorButtonProps> = ({ color, showFlag = true, textColor }) => {
   const dispatch = useDispatch();
-  const selectedLanguage =
-    useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
-    LanguageCode.EN;
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
 
   const [isDisabled, setIsDisabled] = useState(false);
 

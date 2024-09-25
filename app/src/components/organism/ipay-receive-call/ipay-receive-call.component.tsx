@@ -88,6 +88,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
             ? t('ACTIVATE_BENEFICIARY.REQUEST_EXPIRED')
             : `${t('ACTIVATE_BENEFICIARY.REQUEST_EXPIRE_IN')}${formatCountdownTime(timeLeft)}`
         }
+        shouldTranslate={false}
       />
 
       {expired ? (

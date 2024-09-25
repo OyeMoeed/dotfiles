@@ -1,9 +1,8 @@
-import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_10 } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
-import { FONT_SIZE_10, fonts } from '@app/styles/typography.styles';
+import { FONT_SIZE_10, FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
@@ -50,7 +49,7 @@ const genratedStyles = (colors: typeof themeColors) =>
       justifyContent: 'space-between',
     },
     textBold: {
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
       color: colors.natural.natural1000,
     },
     textRegular: {
@@ -113,7 +112,7 @@ const genratedStyles = (colors: typeof themeColors) =>
     paginationStyle: {
       width: moderateScale(30),
       height: moderateScale(4),
-      top: isTablet && verticalScale(10),
+      top: isTablet ? verticalScale(10) : 0,
     },
     iconTextStyle: {
       fontSize: FONT_SIZE_10,
