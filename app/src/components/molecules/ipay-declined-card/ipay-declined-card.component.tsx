@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import IPayList from '../ipay-list/ipay-list.component';
+import IPayShareableImageView from '../ipay-shareable-imageview/ipay-shareable-imageview.component';
 import { BillData, IPayBillDetailsOptionProps } from './ipay-declined-card.interface';
 import sadadFooterComponentStyles from './ipay-declined-card.style';
 
@@ -57,31 +58,35 @@ const IPayDeclinedCard: React.FC<IPayBillDetailsOptionProps> = ({
         />
       </IPayView>
       <IPayView style={[styles.gradientView, style]}>
-        <IPayList
-          containerStyle={styles.backgroudStyle}
-          title="COMMON.DECLINED_TRANSACTION"
-          subTitle="TRAFFIC_VIOLATION.NO_PARTIAL_PAYMENT"
-          subTextStyle={styles.subText}
-          isShowSubTitle
-          textStyle={styles.erroText}
-          isShowLeftIcon
-          leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
-        />
-        <IPayFlatlist
-          style={[styles.detailsFlex, listStyles]}
-          scrollEnabled
-          data={declinedTrasactionData}
-          showsVerticalScrollIndicator={false}
-          renderItem={renderOption}
-        />
-
-        <IPayButton
-          small
-          btnStyle={styles.shareStyles}
-          btnType={buttonVariants.LINK_BUTTON}
-          leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-          btnText="TOP_UP.SHARE"
-        />
+        <IPayShareableImageView
+          otherView={
+            <IPayButton
+              small
+              btnStyle={styles.shareStyles}
+              btnType={buttonVariants.LINK_BUTTON}
+              leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
+              btnText={t('TOP_UP.SHARE')}
+            />
+          }
+        >
+          <IPayList
+            containerStyle={styles.backgroudStyle}
+            title="COMMON.DECLINED_TRANSACTION"
+            subTitle="TRAFFIC_VIOLATION.NO_PARTIAL_PAYMENT"
+            subTextStyle={styles.subText}
+            isShowSubTitle
+            textStyle={styles.erroText}
+            isShowLeftIcon
+            leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
+          />
+          <IPayFlatlist
+            style={[styles.detailsFlex, listStyles]}
+            scrollEnabled
+            data={declinedTrasactionData}
+            showsVerticalScrollIndicator={false}
+            renderItem={renderOption}
+          />
+        </IPayShareableImageView>
       </IPayView>
     </IPayView>
   );
