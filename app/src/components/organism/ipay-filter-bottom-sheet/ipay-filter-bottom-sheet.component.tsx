@@ -41,6 +41,12 @@ const IPayControlledInput = ({ control, label, message, isError, name, required,
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
 
+  const handleTextChange = (text: string, onChange: (value: string) => void) => {
+    // Allow only digits and decimal point on pasting
+    const filteredText = text.replace(/[^0-9.]/g, '');
+    onChange(filteredText);
+  };
+
   return (
     <Controller
       control={control}
@@ -49,10 +55,10 @@ const IPayControlledInput = ({ control, label, message, isError, name, required,
         <IPayAnimatedTextInput
           label={label}
           editable
-          inputMode="numeric"
+          inputMode="decimal"
           value={value}
           suffix={suffix}
-          onChangeText={onChange}
+          onChangeText={(text) => handleTextChange(text, onChange)}
           containerStyle={styles.amount}
           isError={isError}
           assistiveText={isError ? message : ''}
