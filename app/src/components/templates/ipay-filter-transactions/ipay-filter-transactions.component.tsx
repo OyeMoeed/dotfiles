@@ -14,6 +14,10 @@ import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-
 import { SNAP_POINT } from '@app/constants/constants';
 import { getTransactionTypes } from '@app/network/services/core/transaction/transactions.service';
 import { ListItem } from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.interface';
+import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
+import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
+import LocalBeneficiaryMetaMockProps from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
+import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import IPayFilterTransactionsStyles from './ipay-filter-transactions.styles';
 import { IPayFilterTransactionsProps } from './ipay-filter-transactions.interface';
 
@@ -91,6 +95,7 @@ const IPayFilterTransactions = ({
   showCardFilter,
   showAmountFilter,
   showDateFilter,
+  showBeneficiaryFilter = false,
   onSubmit,
   defaultValues,
   heading,
@@ -107,7 +112,9 @@ const IPayFilterTransactions = ({
   const [dateError, setDateError] = useState<string>('');
   const scrollViewRef = useRef<ScrollView>(null);
   const [transactionTypes, setTransactionTypes] = useState<ListItem[]>([]);
-  // const [contacts, setContacts] = useState<ListItem[]>([]);
+  const [beneficiaryData, setBeneficiaryData] = useState<ListItem[]>([]);
+  const [bankList, setBankList] = useState<ListItem[]>([]);
+
   const [isCardFilterVisible, setIsCardFilterVisible] = useState<boolean | undefined>(false);
 
   const {
@@ -134,6 +141,34 @@ const IPayFilterTransactions = ({
         }));
         setTransactionTypes(types);
       }
+    }
+  };
+
+  const getBeneficiariesData = async () => {
+    const apiResponse: LocalTransferBeneficiariesMockProps | undefined = await getlocalTransferBeneficiaries();
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      const beneficiaries = apiResponse?.response?.beneficiaries;
+      if (beneficiaries?.length) {
+        const beneficiariesData: ListItem[] = beneficiaries?.map((beneficiary: any) => ({
+          id: beneficiary?.beneficiaryCode,
+          key: beneficiary?.fullName,
+          value: beneficiary?.fullName,
+        }));
+        setBeneficiaryData(beneficiariesData);
+      }
+    }
+  };
+
+  const getBankList = async () => {
+    const apiResponse: LocalBeneficiaryMetaMockProps | undefined = await getlocalBeneficiaryMetaData();
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      const banksList = apiResponse?.response?.localBanks;
+      const banksData: ListItem[] = banksList?.map((bank: any) => ({
+        key: bank?.code,
+        value: bank?.desc,
+        image: bank?.code,
+      }));
+      setBankList(banksData);
     }
   };
 
@@ -172,13 +207,20 @@ const IPayFilterTransactions = ({
   const getFilterTags = (data: any) => {
     const mapFilterTags = new Map();
     if (Object.keys(data)?.length) {
-      const transactionType = transactionTypes.find((type: ListItem) => type?.key === data?.transactionType)?.value;
-      const dateRange = data?.dateFrom || data?.dateTo ? `${data?.dateFrom} - ${data?.dateTo}` : '';
-      const amountRange = data?.amountFrom || data?.amountTo ? `${data?.amountFrom} - ${data?.amountTo}` : '';
+      const beneficiaryName = data?.beneficiaryName;
+      if (beneficiaryName) mapFilterTags.set(beneficiaryName, { beneficiaryName: '' });
 
-      if (amountRange) mapFilterTags.set(amountRange, { amountFrom: '', amountTo: '' });
+      const bankName = bankList?.find((bank: ListItem) => bank?.key === data?.beneficiaryBankName)?.value;
+      if (bankName) mapFilterTags.set(bankName, { beneficiaryBankName: '' });
+
+      const transactionType = transactionTypes?.find((type: ListItem) => type?.key === data?.transactionType)?.value;
       if (transactionType) mapFilterTags.set(transactionType, { transactionType: '' });
-      if (dateRange) mapFilterTags.set(dateRange, { dateFrom: '', dateTo: '' });
+
+      const dateRange = data?.dateFrom || data?.dateTo ? `${data?.dateFrom} - ${data?.dateTo}` : '';
+      if (dateRange && dateRange.length > 0) mapFilterTags.set(dateRange, { dateFrom: '', dateTo: '' });
+
+      const amountRange = data?.amountFrom || data?.amountTo ? `${data?.amountFrom} - ${data?.amountTo}` : '';
+      if (amountRange && amountRange.length > 0) mapFilterTags.set(amountRange, { amountFrom: '', amountTo: '' });
 
       const card = data?.card;
       if (card) {
@@ -311,8 +353,53 @@ const IPayFilterTransactions = ({
     </IPayView>
   );
 
+  const rendeBeneficiaryFilters = () => (
+    <>
+      <Controller
+        control={control}
+        name={FiltersType.BENEFICIARY_NAME}
+        render={({ field: { onChange, value } }) => (
+          <IPayDropdownSelect
+            data={beneficiaryData as ListItem[]}
+            selectedValue={value}
+            label="TRANSACTION_HISTORY.BENEFICIARY_NAME"
+            onSelectListItem={(selectedItem: string) => {
+              onChange(selectedItem);
+            }}
+            isSearchable
+            testID="beneficiary-name-dropdown"
+            labelKey="value"
+            valueKey="key"
+            containerStyle={styles.inputContainerStyle}
+            customSnapPoints={SNAP_POINT.MEDIUM_LARGE}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name={FiltersType.BANK_NAME_LIST}
+        render={({ field: { onChange, value } }) => (
+          <IPayDropdownSelect
+            data={bankList as ListItem[]}
+            selectedValue={value}
+            label="TRANSACTION_HISTORY.BANK_NAME"
+            onSelectListItem={(selectedItem: string) => {
+              onChange(selectedItem);
+            }}
+            testID="beneficiary-banks-dropdown"
+            labelKey="value"
+            valueKey="key"
+            containerStyle={styles.inputContainerStyle}
+            customSnapPoints={SNAP_POINT.MEDIUM_LARGE}
+          />
+        )}
+      />
+    </>
+  );
+
   const renderFilters = () => (
     <IPayView style={styles.inputContainer}>
+      {showBeneficiaryFilter && rendeBeneficiaryFilters()}
       {showTypeFilter && (
         <Controller
           control={control}
@@ -396,11 +483,15 @@ const IPayFilterTransactions = ({
 
   const prepareData = async () => {
     if (showTypeFilter) await getTransactionTypesData();
+    if (showBeneficiaryFilter) {
+      await getBeneficiariesData();
+      await getBankList();
+    }
   };
 
   useEffect(() => {
     prepareData();
-  }, [showTypeFilter]);
+  }, []);
 
   return (
     <IPayPortalBottomSheet

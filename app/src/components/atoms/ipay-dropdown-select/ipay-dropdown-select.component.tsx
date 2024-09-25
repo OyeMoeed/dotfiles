@@ -23,6 +23,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   editable,
   containerStyle,
   customSnapPoints,
+  rightIcon,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -68,6 +69,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         isError={!!errorMessage}
         placeholderTextColor={colors.natural.natural500}
         placeholder={placeholder ?? ''}
+        rightIcon={rightIcon}
       />
       <IPayDropdownSheet
         data={data}

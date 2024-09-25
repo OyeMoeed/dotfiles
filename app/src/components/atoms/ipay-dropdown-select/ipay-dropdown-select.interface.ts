@@ -24,6 +24,7 @@ export interface IPayDropdownSelectProps {
   editable?: boolean;
   customSnapPoints?: any[];
   containerStyle?: any;
+  rightIcon?: any;
 }
 
 export interface ListItem {

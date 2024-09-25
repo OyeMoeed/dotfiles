@@ -1,4 +1,4 @@
-import { CardInterface } from "@app/components/molecules/ipay-atm-card/ipay-atm-card.interface";
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 
 export interface IPayFilterTransactionsProps {
   /**
@@ -23,6 +23,8 @@ export interface IPayFilterTransactionsProps {
    * props for showing date filter
    */
   showTypeFilter?: boolean;
+
+  showBeneficiaryFilter?: boolean;
 
   transactionTypes?: any[] | undefined;
 
