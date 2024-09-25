@@ -34,7 +34,7 @@ const useLogin = () => {
   });
   const navigation = useNavigation();
   const { checkAndHandlePermission } = useLocationPermission();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [otpRef, setOtpRef] = useState<string>('');
   const [resendOtpPayload, setResendOtpPayload] = useState<PrepareForgetPasscodeProps>();
   const [apiError] = useState<string>('');

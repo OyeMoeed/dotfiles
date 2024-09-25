@@ -38,7 +38,7 @@ const SendGiftPreview: FC = ({ route }) => {
   const AMOUNT = '100';
   const [message, setMessage] = useState<string>('');
   const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
-  const { firstName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const firstName = useTypedSelector((state) => state.walletInfoReducer.walletInfo.firstName);
 
   const onChangeText = (value: string) => {
     setMessage(value);

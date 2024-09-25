@@ -248,7 +248,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     myIdValue={myIdValue}
                   />
                   <IPayButton
-                    btnText={isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('NEW_SADAD_BILLS.INQUIRE')}
+                    btnText={isRefund ? 'TRAFFIC_VIOLATION.REFUND' : 'NEW_SADAD_BILLS.INQUIRE'}
                     btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onValidateBills)}
                     large

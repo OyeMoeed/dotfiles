@@ -13,7 +13,7 @@ const getWUBeneficiaryCurrencies = async (payload: BeneficiaryCurrenciesReq): Pr
   }
   try {
     const apiResponse: ApiResponse<WUBeneficiaryCurrenciesProps> = await apiCall({
-      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.get_western_union_beneficiaries_countries()}/${countryCode}/currencies`,
+      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.get_western_union_beneficiaries_countries()}/${countryCode || 'SA'}/currencies`,
       method: requestType.GET,
     });
 

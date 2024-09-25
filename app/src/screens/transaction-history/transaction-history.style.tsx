@@ -9,10 +9,8 @@ const transactionsStyles = (colors: any) =>
       flex: 1,
     },
     listContainer: {
-      marginHorizontal: moderateScale(24, 0.3),
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
+      marginHorizontal: moderateScale(24),
       paddingBottom: moderateScale(25),
       marginTop: moderateScale(15, 0.3),
     },

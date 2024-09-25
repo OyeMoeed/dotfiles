@@ -37,7 +37,7 @@ const SendGiftListScreen: React.FC = () => {
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const { showToast } = useToastContext();
 

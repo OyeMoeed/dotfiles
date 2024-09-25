@@ -10,22 +10,28 @@ const IPaySelectedFilters: React.FC<IPaySelectedFiltersProps> = ({ testID, filte
   const { colors } = useTheme();
   const styles = getSelectedFilterListStyles(colors);
 
+  const renderFilters = () => (
+    <IPayView>
+      {filters?.map((text, index) => (
+        <IPayChip
+          key={`${`${index}`}-ipay-chip`}
+          containerStyle={styles.chipContainer}
+          headingStyles={styles.chipHeading}
+          textValue={text}
+          icon={
+            <IPayPressable onPress={() => onRemoveFilter(text)}>
+              <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={styles.chipHeading.color} />
+            </IPayPressable>
+          }
+        />
+      ))}
+    </IPayView>
+  );
+
   return (
     <IPayView testID={`${testID}-selected-filters-list`} style={styles.filterWrapper}>
       <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-        {filters?.map((text) => (
-          <IPayChip
-            key={`${text}`}
-            containerStyle={styles.chipContainer}
-            headingStyles={styles.chipHeading}
-            textValue={text}
-            icon={
-              <IPayPressable onPress={() => onRemoveFilter(text)}>
-                <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={styles.chipHeading.color} />
-              </IPayPressable>
-            }
-          />
-        ))}
+        {renderFilters()}
       </IPayScrollView>
     </IPayView>
   );

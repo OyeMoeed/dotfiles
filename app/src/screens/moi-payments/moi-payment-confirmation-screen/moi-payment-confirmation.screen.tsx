@@ -14,6 +14,8 @@ import prepareBill from '@app/network/services/bill-managment/moi/prepare-bill/p
 import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
+import useTheme from '@app/styles/hooks/theme.hook';
+import { ApiResponseStatusType } from '@app/utilities';
 import React, { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
@@ -22,32 +24,21 @@ import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { moiBillData } = route.params || {};
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { showToast } = useToastContext();
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
-  const { billData } = route?.params || {};
-
-  const {
-    otpBottomSheetRef,
-    moiPaymentDetailes,
-    handlePay,
-    setOtp,
-    otp,
-    isLoading,
-    otpError,
-    setOtpError,
-    otpVerificationRef,
-  } = useMoiPaymentConfirmation();
+  const { moiPaymentDetailes, otp, setOtp, isLoading, otpError, setOtpError, setAPIError, otpVerificationRef } =
+    useMoiPaymentConfirmation();
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const { otpConfig } = useConstantData();
 
   const helpCenterRef = useRef<any>(null);
-  const [otpRef, setOtpRef] = useState<string>('');
+  const otpBottomSheetRef = useRef<any>(null);
 
-  // temporary TODO
-  // const totalAmount = '500';
+  const [otpRef, setOtpRef] = useState<string>('');
 
   const renderToast = (toastMsg: string) => {
     showToast({
@@ -59,7 +50,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   };
 
   const onCloseBottomSheet = () => {
-    otpBottomSheetRef?.current?.close();
+    otpBottomSheetRef.current?.close();
   };
 
   const onPressHelp = () => {
@@ -79,7 +70,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS: {
           setOtpRef(apiResponse?.response?.otpRef);
-          openOptModal();
           break;
         }
         case apiResponse?.apiResponseNotOk:
@@ -118,7 +108,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       if (apiResponse?.status?.type === 'SUCCESS') {
         if (apiResponse?.response) {
           onCloseBottomSheet();
-          // redirectToSuccess();
         }
       } else {
         renderToast(t('ERROR.API_ERROR_RESPONSE'));
@@ -184,7 +173,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
-          onPressConfirm={handlePay}
+          onPressConfirm={onConfirmOtp}
           mobileNumber={mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
