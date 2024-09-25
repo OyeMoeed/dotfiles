@@ -161,8 +161,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
 
   const totalAmount = useMemo(
     () =>
-      moiBillData
-        .find((item: { label: string }) => item.label === t('BILL_PAYMENTS.DUE_AMOUNT'))
+      moiBillData?.find((item: { label: string }) => item.label === t('BILL_PAYMENTS.DUE_AMOUNT'))
         ?.value.split(' ')[0] || null,
     [moiBillData],
   );
