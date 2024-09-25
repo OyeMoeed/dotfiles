@@ -34,8 +34,9 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
   const otpBottomSheetRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
   const { showToast } = useToastContext();
+  const { billData } = route?.params || {};
   const { otp, setOtp, isLoading, otpError, setOtpError, otpVerificationRef, moiRefundBillSubList } =
-    useMoiPaymentConfirmation();
+    useMoiPaymentConfirmation(billData);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.walletNumber);
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
 
@@ -161,7 +162,8 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
 
   const totalAmount = useMemo(
     () =>
-      moiBillData?.find((item: { label: string }) => item.label === t('BILL_PAYMENTS.DUE_AMOUNT'))
+      moiBillData
+        ?.find((item: { label: string }) => item.label === t('BILL_PAYMENTS.DUE_AMOUNT'))
         ?.value.split(' ')[0] || null,
     [moiBillData],
   );

@@ -20,8 +20,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
@@ -71,17 +71,9 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       id: (index + 1).toString(),
     }));
 
-    // Step 3: Add the new object with id "6" TODO
-    const newItem = {
-      id: '6',
-      label: 'Ref. Number',
-      value: 'FTA35346',
-      icon: icons.copy,
-    };
-
     // Adding the new item and re-sorting the array
-    const detailsWithNewItem = refund ? reorderedDetails : [...reorderedDetails, newItem];
-    const finalDetails = detailsWithNewItem.sort((a: { id: number }, b: { id: number }) => a.id - b.id);
+    const detailsWithNewItem =  reorderedDetails;
+    const finalDetails = detailsWithNewItem?.sort((a: { id: number }, b: { id: number }) => a.id - b.id);
     setPaymentDetails(finalDetails);
   };
 
