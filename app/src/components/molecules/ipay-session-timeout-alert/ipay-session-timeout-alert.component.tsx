@@ -4,10 +4,12 @@ import { hideSessionTimeoutAlert } from '@app/store/slices/alert-slice';
 import { store } from '@app/store/store';
 import { alertVariant } from '@app/utilities/enums.util';
 import { FC } from 'react';
+import { setIdRenewalSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { IPaySessionTimeoutAlertProps } from './ipay-session-timeout-alert.interface';
 
 const IPaySessionTimeoutAlert: FC<IPaySessionTimeoutAlertProps> = ({ visible, testID }) => {
   const onClose = async () => {
+    store.dispatch(setIdRenewalSheetVisibility(false));
     const { auth } = store.getState();
     if (auth?.isAuthorized) {
       store.dispatch(hideSessionTimeoutAlert());
