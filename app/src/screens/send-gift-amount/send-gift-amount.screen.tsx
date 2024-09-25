@@ -42,11 +42,15 @@ const SendGiftAmountScreen = ({ route }) => {
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
-  const GIFT_TABS = [t('SEND_GIFT.EQUALLY'), t('SEND_GIFT.SPLIT'), t('SEND_GIFT.MANUAL')];
+  const GIFT_TABS = [
+    t('SEND_GIFT.EQUALLY'),
+    ...(contacts.length > 1 ? [t('SEND_GIFT.SPLIT')] : []),
+    t('SEND_GIFT.MANUAL'),
+  ];
 
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const { colors } = useTheme();
-  const styles = sendGiftAmountStyles(colors);
+  const styles = sendGiftAmountStyles(colors, GIFT_TABS.length);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { availableBalance } = walletInfo;
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
@@ -373,7 +377,13 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualComponent : styles.amountComponent}>
             <IPayView style={styles.header}>
               <IPayFootnoteText text="SEND_GIFT.SELECT_METHOD" color={colors.primary.primary600} />
-              <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+              <IPaySegmentedControls
+                tabs={GIFT_TABS}
+                onSelect={handleSelectedTab}
+                selectedTab={selectedTab}
+                selectedTabStyle={styles.tabs}
+                unselectedTabStyle={styles.tabs}
+              />
             </IPayView>
             {renderAmountInput()}
           </IPayView>
