@@ -33,7 +33,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
   const styles = sadadEditBillsStyles(colors);
   const { t } = useTranslation();
   const [showAlert, setShowAlert] = useState(false);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const { getValues, control, setValue, watch } = useForm();
 
   const onSubmit = async () => {

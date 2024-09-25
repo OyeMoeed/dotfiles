@@ -40,13 +40,17 @@ const SendGiftAmountScreen = ({ route }) => {
   const MAX_CONTACTS = 5;
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
-  const GIFT_TABS = [t('SEND_GIFT.EQUALLY'), t('SEND_GIFT.SPLIT'), t('SEND_GIFT.MANUAL')];
+  const GIFT_TABS = [
+    t('SEND_GIFT.EQUALLY'),
+    ...(contacts.length > 1 ? [t('SEND_GIFT.SPLIT')] : []),
+    t('SEND_GIFT.MANUAL'),
+  ];
 
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const { colors } = useTheme();
-  const styles = sendGiftAmountStyles(colors);
+  const styles = sendGiftAmountStyles(colors, GIFT_TABS.length);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { availableBalance } = walletInfo;
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
@@ -358,7 +362,7 @@ const SendGiftAmountScreen = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader title="SEND_GIFT.TITLE" applyFlex backBtn />
-      <IPayScrollView>
+      <IPayScrollView nestedScrollEnabled>
         <IPayView style={styles.container}>
           <IPayView>
             <IPayTopUpBox
@@ -373,19 +377,25 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualComponent : styles.amountComponent}>
             <IPayView style={styles.header}>
               <IPayFootnoteText text="SEND_GIFT.SELECT_METHOD" color={colors.primary.primary600} />
-              <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+              <IPaySegmentedControls
+                tabs={GIFT_TABS}
+                onSelect={handleSelectedTab}
+                selectedTab={selectedTab}
+                selectedTabStyle={styles.tabs}
+                unselectedTabStyle={styles.tabs}
+              />
             </IPayView>
             {renderAmountInput()}
           </IPayView>
           <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualContactList : styles.contactList}>
             {getContactInfoText()}
             <IPayFlatlist
-              scrollEnabled
+              scrollEnabled={false}
+              keyExtractor={(item, index) => `${item.recordID}-${index}`}
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
               ListFooterComponent={<ListFooterContacts />}
-              keyExtractor={(item) => item.recordID}
               showsVerticalScrollIndicator={false}
             />
           </IPayView>

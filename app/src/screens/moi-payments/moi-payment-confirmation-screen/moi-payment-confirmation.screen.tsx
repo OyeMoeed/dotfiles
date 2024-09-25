@@ -31,7 +31,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { mobileNumber } = userContactInfo;
   const { moiPaymentDetailes, otp, setOtp, isLoading, otpError, setOtpError, setAPIError, otpVerificationRef } =
     useMoiPaymentConfirmation();
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const { otpConfig } = useConstantData();
   const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);

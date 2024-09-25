@@ -31,7 +31,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const styles = IPayCardSelectorStyles(colors);
   const [selectedCard, setSelectedCard] = useState<number | null>();
   const [, setSelectedCardObj] = useState<any>({});
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [topupCards, setTopupcards] = useState<any[]>([]);
 
   const handleCardSelect = (key: number) => {

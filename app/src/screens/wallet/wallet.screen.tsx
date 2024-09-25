@@ -84,7 +84,7 @@ const WalletScreen = () => {
       }, 1000);
     }
     copyText(textToCopy);
-    renderToast(step === 1 ? t('HOME.NAME_COPIED') : t('HOME.IBAN_NUMBER'), icons.copy_success);
+    renderToast(step === 1 ? 'HOME.NAME_COPIED' : 'HOME.IBAN_NUMBER', icons.copy_success);
   };
 
   const remainingSpendingLimit = parseFloat(walletInfo.limitsDetails.monthlyRemainingOutgoingAmount);

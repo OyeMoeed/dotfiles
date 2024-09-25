@@ -43,8 +43,8 @@ const TransferConfirmation: React.FC = () => {
   const { t } = useTranslation();
   const { showToast } = useToastContext();
   const otpBottomSheetRef = useRef<any>(null);
-  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { userContactInfo } = walletInfo;
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { userContactInfo, walletNumber } = walletInfo;
   const { mobileNumber } = userContactInfo;
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const [beneficiaryData, setBeneficiaryData] = useState();
@@ -57,8 +57,6 @@ const TransferConfirmation: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
-
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     amount,
@@ -177,7 +175,7 @@ const TransferConfirmation: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="LOCAL_TRANSFER.TRANSFER_CONFIRMATION" />
-      <IPayScrollView style={styles.container}>
+      <IPayScrollView style={styles.container} nestedScrollEnabled>
         <IPayLinearGradientView gradientColors={colors.bottomsheetGradient} style={styles.beneficiaryDetailsView}>
           <IPayView style={styles.beneficiaryBankDetailsView}>
             <IPayIcon icon={bankDetails?.icon} size={30} />
@@ -191,8 +189,9 @@ const TransferConfirmation: React.FC = () => {
           </IPayView>
           <IPayView style={styles.listView}>
             <IPayFlatlist
+              scrollEnabled={false}
               data={beneficiaryData}
-              keyExtractor={(_, index) => index.toString()}
+              keyExtractor={(item, index) => `${item.title}-${index}`}
               renderItem={renderBenificaryDetails}
               itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
             />

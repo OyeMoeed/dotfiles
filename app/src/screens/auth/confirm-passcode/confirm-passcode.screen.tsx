@@ -27,7 +27,7 @@ const ConfirmPasscodeScreen: React.FC = ({ route }: any) => {
   const { t } = useTranslation();
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
   const [apiError] = useState<string>('');
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const { showToast } = useToastContext();
   const dispatch = useTypedDispatch();
 

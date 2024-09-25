@@ -49,7 +49,13 @@ import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
-  const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
+  const {
+    heading,
+    from = TRANSFERTYPE.SEND_MONEY,
+    showHistory = true,
+    giftDetails,
+    qrErrorMessage = '',
+  } = route?.params || {};
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
@@ -383,6 +389,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             onPress={() =>
               navigate(ScreenNames.SEND_MONEY_QRCODE_SCANNER, {
                 onGoBack: qrCodeCallBack,
+                qrErrorMessage,
               })
             }
           >

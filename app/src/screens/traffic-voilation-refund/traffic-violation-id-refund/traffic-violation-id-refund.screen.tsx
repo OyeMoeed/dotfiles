@@ -44,7 +44,7 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
         <IPayFootnoteText color={colors.primary.primary900} regular={false} text="TRAFFIC_VIOLATION.FOUND_VIOLATION" />
         <IPayButton
           btnIconsDisabled
-          btnText={selectedBillsCount === billsData?.length ? t('COMMON.DESELECT_ALL') : t('COMMON.SELECT_ALL')}
+          btnText={selectedBillsCount === billsData?.length ? 'COMMON.DESELECT_ALL' : 'COMMON.SELECT_ALL'}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={selectedBillsCount === billsData?.length ? deselectAllBills : selectAllBills}
         />

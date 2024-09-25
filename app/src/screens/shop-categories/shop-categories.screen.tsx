@@ -26,7 +26,7 @@ const ShopCategoriesScreen: React.FC = ({ route }) => {
   const [selectedTab, setSelectedTab] = useState<string>('');
   const [categoryProductsData, setCategoryProductsData] = useState([]);
   const [categoryProducts, setCategoryProducts] = useState([]);
-  const { selectedLanguage } = useTypedSelector((state) => state.languageReducer);
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const { showToast } = useToastContext();
 
   const renderToast = (apiError?: string) => {
