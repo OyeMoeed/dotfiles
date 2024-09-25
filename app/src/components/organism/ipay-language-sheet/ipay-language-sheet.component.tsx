@@ -64,7 +64,11 @@ const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((
                 key={`${`${index}IPayPressable`}`}
                 style={sheetStyles.buttonBox}
                 onPress={() => {
-                  changeMainLanguage(item.language, item.isRTL, item.code);
+                  if (item.code !== selectedLanguage) {
+                    changeMainLanguage(item.language, item.isRTL, item.code);
+                  } else {
+                    handleClosePress();
+                  }
                 }}
               >
                 <IPayView style={sheetStyles.row}>
