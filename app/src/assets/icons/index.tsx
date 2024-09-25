@@ -14,11 +14,9 @@ import {
   PointRedemptionPlus,
   Question,
   UserTick,
-  EhsanIcon,
 } from '@app/assets/svgs/index';
 
 const icons = {
-  ehasn_icon: EhsanIcon,
   finger_scan: 'finger-scan',
   trashtransparent: 'trashtransparent',
   airplaneSquare1: 'airplane-square1',
