@@ -171,7 +171,8 @@
     "EDIT_CARD": "کارڈ میں ترمیم کریں۔",
     "CALL_WITHIN_SA": "سعودی عرب میں کال کریں۔",
     "CALL_OUTSIDE_SA": "سعودی عرب کے باہر سے کال کریں۔",
-    "CALL": "کال کریں۔"
+    "CALL": "کال کریں۔",
+    "APP_TERMS_AND_CONDITIONS": "ایپ کی شرائط اور ضوابط"
   },
   "TOP_UP": {
     "APPLE_PAY": "ایپل پے",
@@ -323,6 +324,8 @@
     "TERMS_AND_CONDITIONS_VALIDATION": "آگے بڑھنے سے پہلے آپ کو شرائط و ضوابط سے اتفاق کرنا ہوگا",
     "TERMS_AND_CONDITIONS_HEADING": "شرائط و ضوابط اور ان کی ضرورت کب ہے",
     "TERMS_AND_CONDITIONS": "شرائط و ضوابط",
+    "FOR_OPENING_NEW_WALLET": "نیا بٹوا کھولنے کے لیے",
+    "FOR_ALINMAPAY_CARDS": "AlinmaPay کارڈز کے لیے",
     "INCORRECT_MOBILE_NUMBER": "غلط موبائل نمبر",
     "TERMS_AND_CONDITIONS_TEXT": "ہماری شرائط و ضوابط سے اتفاق کریں",
     "ENTER_VALID_ID_OR_IQAMA": "براہ کرم اپنا شناختی یا اقامہ نمبر درج کریں، تاکہ ہم آپ کے اکاؤنٹ کی تصدیق کر سکیں",
