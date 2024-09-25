@@ -10,7 +10,6 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import ApplePayButtonProps from './card-renewal-success.interface';
 import cardRenewalSuccessStyles from './card-renewal-success.style';
 
@@ -24,7 +23,6 @@ const ApplePayButton: React.FC<ApplePayButtonProps> = ({ onPress }) => {
 const CardRenewalSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = cardRenewalSuccessStyles(colors);
-  const { t } = useTranslation();
   const [isAdded, setIsAdded] = React.useState(false); // TODO will be handle on the basis of api
 
   const togleIsAdded = () => {
@@ -37,7 +35,7 @@ const CardRenewalSuccessScreen: React.FC = () => {
         <IPaySuccess
           style={styles.ipaySuccessContainer}
           headingText="CARD_RENEWAL_SUCCESS.THE_CARD_HAS_BEEN_RENEWED"
-          descriptionText={isIosOS ? t('CARD_OPTIONS.ADD_TO_APPLE_PAY') : ' '}
+          descriptionText={isIosOS ? 'CARD_OPTIONS.ADD_TO_APPLE_PAY' : ' '}
         />
         <IPayView style={styles.appleButtonContainer}>
           {isAdded ? (

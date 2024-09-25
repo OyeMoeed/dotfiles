@@ -69,7 +69,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const [selectedService, setSelectedService] = useState<BillersService>();
   const { showToast } = useToastContext();
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const { companyName, serviceType, accountNumber, billName } = getValidationSchemas(t);
 
@@ -277,9 +277,8 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,
       });
-    } else {
-      invoiceSheetRef.current.present();
     }
+    invoiceSheetRef.current.present();
   };
 
   return (
@@ -319,7 +318,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             <IPayHeader
               testID="sadad-bill-ipay-header"
               backBtn
-              title={isSaveOnly ? t('NEW_SADAD_BILLS.PAY_SADAD_BILLS') : t('NEW_SADAD_BILLS.NEW_SADAD_BILLS')}
+              title={isSaveOnly ? 'NEW_SADAD_BILLS.PAY_SADAD_BILLS' : 'NEW_SADAD_BILLS.NEW_SADAD_BILLS'}
               titleStyle={styles.headerText}
               applyFlex
             />
@@ -379,9 +378,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
               </IPayScrollView>
             )}
             <IPayBottomSheet
-              heading={
-                sheetType === NewSadadBillType.COMPANY_NAME ? t('COMMON.COMPANY') : t('NEW_SADAD_BILLS.SERVICE_TYPE')
-              }
+              heading={sheetType === NewSadadBillType.COMPANY_NAME ? 'COMMON.COMPANY' : 'NEW_SADAD_BILLS.SERVICE_TYPE'}
               customSnapPoint={['1%', '90%']}
               onCloseBottomSheet={() => selectSheeRef.current.close()}
               ref={selectSheeRef}

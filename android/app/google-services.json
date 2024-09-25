@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1046006648239",
+    "project_id": "alinmapay-consumer-rn",
+    "storage_bucket": "alinmapay-consumer-rn.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046006648239:android:64498b5f71e19b3148335a",
+        "android_client_info": {
+          "package_name": "com.alinmapay.consumer.mobile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAD9843T2-YfUM6pCSUDfEPtBJildWZ0oI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

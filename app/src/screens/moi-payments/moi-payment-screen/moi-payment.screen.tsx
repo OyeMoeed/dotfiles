@@ -360,8 +360,8 @@ const MoiPaymentScreen: React.FC = () => {
                         iconViewStyles={styles.iconView}
                         message={
                           sheetType === MoiPaymentType.SERVICE_PROVIDER
-                            ? t('BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND')
-                            : t('BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND')
+                            ? 'BILL_PAYMENTS.NO_SERVICE_PROVIDER_FOUND'
+                            : 'BILL_PAYMENTS.NO_SERVICE_TYPE_FOUND'
                         }
                         showIcon
                         icon={icons.note_remove}

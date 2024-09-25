@@ -39,7 +39,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const { colors } = useTheme();
   const [currentState, setCurrentState] = useState(TopUpStates.INITAL_STATE);
   const [topUpAmount, setTopUpAmount] = useState('');
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [isTopUpNextEnable, setIsTopUpNextEnable] = useState(true);
   const [isCardSaved, setIsCardSaved] = useState(true);
   const [chipValue, setChipValue] = useState('');
@@ -48,7 +48,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [, setResponse] = useState<object>();
 
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [, setAPIError] = useState<string>('');
   const [, setRedirectUrl] = useState<string>('');
   const [selectedCardTypeId, setSelectedCardTypeId] = useState<string>('');
@@ -274,7 +274,7 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
               large
               btnType={buttonVariants.PRIMARY}
               btnIconsDisabled
-              btnText={currentState === TopUpStates.SAVED_CARD ? t('TOP_UP.PAY') : t('COMMON.NEXT')}
+              btnText={currentState === TopUpStates.SAVED_CARD ? 'TOP_UP.PAY' : 'COMMON.NEXT'}
               onPress={() => {
                 if (currentState === TopUpStates.SAVED_CARD) {
                   handlePressPay(false);

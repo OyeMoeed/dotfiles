@@ -10,7 +10,8 @@ import { IPayPermissionAlertProps } from './ipay-permission-alert.interface';
 import alertStyles from './ipay-permission-alert.styles';
 
 const IPayPermissionAlert: FC<IPayPermissionAlertProps> = ({ onClose, visible, testID }) => {
-  const { title, description } = useTypedSelector((state) => state.permissionAlertReducer);
+  const description = useTypedSelector((state) => state.permissionAlertReducer.description);
+  const title = useTypedSelector((state) => state.permissionAlertReducer.title);
 
   // Function to navigate to settings
   const onGoToSettings = () => {
