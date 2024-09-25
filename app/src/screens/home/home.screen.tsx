@@ -356,7 +356,7 @@ const Home: React.FC = () => {
           cancelBnt
           isVisible={ehsanVisible}
         >
-          <IPayEhsanBottomSheet />
+          <IPayEhsanBottomSheet closeBottomSheetEhsan={closeBottomSheetEhsan} />
         </IPayPortalBottomSheet>
       </>
     </IPaySafeAreaView>
