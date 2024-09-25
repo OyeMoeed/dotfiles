@@ -665,7 +665,7 @@ const SNAP_POINT = {
   MID_SMALL: ['55%', '63%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '95%'],
+  MEDIUM_LARGE: ['93%', '95%'],
   LARGE: ['100%', '100%'],
 };
 const ALINMA_BANK_CODE = '999999';
@@ -679,6 +679,24 @@ const DASHBOARD_ITEMS = [
   FeatureSections.LATEST_OFFERS,
 ];
 
+export enum DYNAMIC_FIELDS_TYPES {
+  TEXT = 'TEXT',
+  LIST_OF_VALUE = 'LIST_OF_VALUE',
+  NUMBER = 'NUMBER',
+  GREGORIAN_DATE = 'gregorianDate',
+  GREGORIAN_DATE_PAST = 'gregorianDatePast',
+  GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
+  HIJRI_DATE = 'hijriDate',
+  HIJRI_DATE_PAST = 'hijriDatePast',
+  HIJRI_DATE_FUTURE = 'hijriDateFuture',
+  BOOLEAN_TYPE = 'booleanType',
+  DATE = 'date',
+  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
+  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
+  ALPHA_NO_DIGITS = 'alphaNoDigits',
+  ENGLISH_CHARACTERS = 'englishCharacters',
+  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+}
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:
     'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/RegistrationTerms_ar.pdf?alt=media&token=3b50f05b-3f96-4d33-9065-b4a5951230f8',
@@ -738,7 +756,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES,
+  WU_TRANSFER_TYPES
 };
 
 export default constants;

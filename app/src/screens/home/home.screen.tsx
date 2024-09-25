@@ -127,6 +127,7 @@ const Home: React.FC = () => {
     dispatch(setProfileSheetVisibility(false));
     setTopUpOptionsVisible(true);
   };
+
   const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };

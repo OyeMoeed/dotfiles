@@ -1,3 +1,4 @@
+import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
@@ -16,14 +17,13 @@ import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import React, { useMemo, useRef, useState } from 'react';
-import icons from '@app/assets/icons';
 import { useTranslation } from 'react-i18next';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
 const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
+  const { moiBillData } = route.params || {};
   const { t } = useTranslation();
-  const { moiBillData } = route.params;
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { showToast } = useToastContext();
@@ -135,9 +135,8 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
 
   const totalAmount = useMemo(
     () =>
-      moiBillData
-        .find((item: { label: string }) => item.label === t('BILL_PAYMENTS.DUE_AMOUNT'))
-        ?.value.split(' ')[0] || null,
+      moiBillData?.find((item: { label: string }) => item.label === 'BILL_PAYMENTS.DUE_AMOUNT')?.value.split(' ')[0] ||
+      null,
     [moiBillData],
   );
 

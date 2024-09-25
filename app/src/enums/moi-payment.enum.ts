@@ -14,11 +14,6 @@ enum MoiPaymentType {
 enum MoiPaymentFormFields {
   SERVICE_PROVIDER = 'serviceProvider',
   SERVICE_TYPE = 'serviceType',
-  MY_ID_CHECK = 'myIdCheck',
-  BENEFICIARY_ID = 'beneficiary',
-  MY_ID = 'myId',
-  ID_TYPE = 'idType',
-  DURATION = 'duration',
 }
 
 export { MoiPaymentFormFields, MoiPaymentType };
