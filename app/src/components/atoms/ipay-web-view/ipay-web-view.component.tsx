@@ -18,7 +18,10 @@ const IPayWebView: React.FC<IPayWebViewProps> = ({
       source={source}
       style={[styles.container, style]}
       startInLoadingState={startInLoadingState}
-      onNavigationStateChange={onNavigationStateChange}
+      onLoadStart={(syntheticEvent) => {
+        const { nativeEvent } = syntheticEvent;
+        onNavigationStateChange?.(nativeEvent);
+      }}
       {...props}
     />
   );

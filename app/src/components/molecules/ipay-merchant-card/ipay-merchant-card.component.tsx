@@ -8,6 +8,7 @@ import { IPayMerchantCardProps } from './ipay-merchant-card.interface';
 const IPayMerchantCard: React.FC<IPayMerchantCardProps> = ({ testID, item, containerStyle }) => {
   const { colors } = useTheme();
   const styles = merchantCardStyles(colors);
+
   return (
     <IPayView testID={testID} style={[styles.cardContainer, containerStyle]}>
       <IPayView style={styles.imageContainer}>

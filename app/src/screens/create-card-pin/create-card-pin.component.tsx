@@ -4,13 +4,13 @@ import constants from '@app/constants/constants';
 import { IPayPasscode } from '@app/components/organism';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
-import { forwardRef, useState } from 'react';
+import { FC, useState } from 'react';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import images from '@app/assets/images';
 import createCardPinStyles from './create-card-pin.style';
 import { CreateCardPinViewTypes, CreateCardPinProps } from './create-card-pin.interface';
 
-const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
+const IPayCreateCardPin: FC<CreateCardPinProps> = ({ onSuccess }) => {
   const { colors } = useTheme();
   const styles = createCardPinStyles();
   const [passcodeError, setPasscodeError] = useState(false);
@@ -128,6 +128,6 @@ const IPayCreateCardPin = forwardRef(({ onSuccess }: CreateCardPinProps) => {
       </IPayView>
     </IPayView>
   );
-});
+};
 
 export default IPayCreateCardPin;

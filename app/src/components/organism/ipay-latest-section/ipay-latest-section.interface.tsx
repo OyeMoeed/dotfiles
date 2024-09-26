@@ -19,4 +19,5 @@ export interface IPayLatestSectionProps {
   openProfileBottomSheet?: () => void;
 
   cards: CardInterface[];
+  isLoading: boolean;
 }

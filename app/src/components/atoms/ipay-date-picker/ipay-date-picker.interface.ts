@@ -34,4 +34,8 @@ export interface IPayDatePickerProps {
   display?: string;
 
   mode?: string;
+  maximumDate?: Date | null;
+  minimumDate?: Date | null;
+  assistiveText?: string;
+  isError?: boolean;
 }

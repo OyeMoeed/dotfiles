@@ -27,7 +27,7 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
 
   const [renderQRCodeScanner, setRenderQRCodeScanner] = useState(true);
   const [scannedCode, setScannedCode] = useState('');
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const { showToast } = useToastContext();
 
   const styles = qrCodeScannerStyles();
@@ -58,15 +58,17 @@ const ATMWithdrawQRCodeScannerScreen: React.FC<ATMWithdrawQRCodeScannerScreenPro
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       });
 
+      if (route?.params?.setTopUpAmount != null) {
+        route?.params?.setTopUpAmount('0');
+      }
+
       if (confirmApiResponse?.status?.type === 'SUCCESS') {
         navigate(ScreenNames.ATM_WITHDRAW_SUCCESSFUL, {
           amount: route?.params?.amount,
           referenceNumber: confirmApiResponse?.response?.referenceNumber,
         });
-      }
-
-      if (route?.params?.setTopUpAmount != null) {
-        route?.params?.setTopUpAmount(0);
+      } else {
+        goBack();
       }
 
       return;

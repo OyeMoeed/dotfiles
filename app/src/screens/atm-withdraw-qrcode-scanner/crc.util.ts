@@ -232,22 +232,22 @@ export class Crc {
         }
       }
 
-      const type = this.arr[18].value;
+      const type = this.arr[18]?.value;
       if (type == 'COUT_WALLET' || type == 'PAY_MRCHNT_OUT') {
-        this.cashBackObj.Type = this.arr[18].value;
-        this.cashBackObj.WalletNum = this.arr[8].value;
-        this.cashBackObj.Amount = this.arr[11].value;
-        this.cashBackObj.Currency = this.arr[10].value;
-        this.cashBackObj.UID = this.arr[17].value;
+        this.cashBackObj.Type = this.arr[18]?.value;
+        this.cashBackObj.WalletNum = this.arr[8]?.value;
+        this.cashBackObj.Amount = this.arr[11]?.value;
+        this.cashBackObj.Currency = this.arr[10]?.value;
+        this.cashBackObj.UID = this.arr[17]?.value;
         this.scannedData = this.cashBackObj;
       } else if (type == 'mWallet') {
-        this.merchantWalletObj.Type = this.arr[18].value;
-        this.merchantWalletObj.WalletNum = this.arr[8].value;
-        this.merchantWalletObj.UID = this.arr[17].value;
+        this.merchantWalletObj.Type = this.arr[18]?.value;
+        this.merchantWalletObj.WalletNum = this.arr[8]?.value;
+        this.merchantWalletObj.UID = this.arr[17]?.value;
         this.scannedData = this.merchantWalletObj;
       } else if (type == 'ATM') {
-        this.atmtObj.Type = this.arr[18].value;
-        this.atmtObj.ID = this.arr[17].value;
+        this.atmtObj.Type = this.arr[18]?.value;
+        this.atmtObj.ID = this.arr[17]?.value;
         this.atmtObj.ID = this.atmtObj.ID.replace(/^\b0+/g, '');
         this.scannedData = this.atmtObj;
       }
@@ -255,7 +255,7 @@ export class Crc {
       // 	this.scannedData = JSON.parse(this.data);
 
       // }
-      const ress = this.arr[19].value;
+      const ress = this.arr[19]?.value;
 
       if (ress == CRCResult) {
         this.crcCheck = true;

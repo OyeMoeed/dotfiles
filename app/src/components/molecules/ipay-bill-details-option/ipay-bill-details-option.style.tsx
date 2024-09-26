@@ -45,6 +45,14 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
     detailsText: {
       color: colors.primary.primary800,
     },
+    columnList: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      gap: moderateScale(6),
+    },
+    rightContainerStyle: {
+      marginLeft: moderateScale(-4),
+    },
   });
 
 export default sadadFooterComponentStyles;

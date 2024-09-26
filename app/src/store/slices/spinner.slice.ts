@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IPaySpinnerProps } from '@app/components/atoms/ipay-spinner/ipay-spinner-interface';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { SpinnerVariant } from '@app/utilities/enums.util';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 
 interface SpinnerState {
@@ -11,7 +11,7 @@ interface SpinnerState {
 const initialState: SpinnerState = {
   visible: false,
   spinnerProps: {
-    variant: spinnerVariant.DEFAULT,
+    variant: SpinnerVariant.DEFAULT,
     hasBackgroundColor: true,
   },
 };
