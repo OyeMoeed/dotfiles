@@ -28,7 +28,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { billData } = route?.params || {};
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const {
-    moiPaymentDetailes,
     handlePay,
     setOtp,
     otp,
@@ -83,11 +82,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
           showRemainingAmount
           topUpBtnStyle={styles.topUpButton}
         />
-        <IPayBillDetailsOption
-          data={moiPaymentDetailes}
-          showHeader={false}
-          optionsStyles={styles.moiPaymentDetailesTab}
-        />
+        <IPayBillDetailsOption data={billData} showHeader={false} optionsStyles={styles.moiPaymentDetailesTab} />
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent

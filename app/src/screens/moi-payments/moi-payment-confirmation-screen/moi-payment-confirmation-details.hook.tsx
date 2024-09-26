@@ -30,38 +30,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const moiPaymentDetailes: MoiPaymentDetail[] = [
-    {
-      id: '1',
-      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
-      value: '500 SAR',
-    },
-    {
-      id: '2',
-      label: t('BILL_PAYMENTS.SERVICE_PROVIDER'),
-      value: 'Expatriate Services',
-    },
-    {
-      id: '3',
-      label: t('BILL_PAYMENTS.SERVICE_TYPE'),
-      value: 'Renewal of residence',
-    },
-    {
-      id: '4',
-      label: t('BILL_PAYMENTS.BENEFICIARY_ID'),
-      value: '1965873233',
-    },
-    {
-      id: '5',
-      label: t('BILL_PAYMENTS.LICENSE_TYPE'),
-      value: 'Expatriate Services',
-    },
-    {
-      id: '6',
-      label: t('BILL_PAYMENTS.DURATION'),
-      value: 'Two years',
-    },
-  ];
+
 
   const moiPayBillSubList: MoiPaymentDetail[] = [
     {
@@ -147,7 +116,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
     if (apiResponse?.successfulResponse) {
       setOtpSheetVisible(false)
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-        moiPaymentDetailes,
+        moiPaymentDetailes: billData,
         successMessage: 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
         subDetails: moiPayBillSubList,
       });
@@ -165,7 +134,6 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
 
   return {
     otpBottomSheetRef,
-    moiPaymentDetailes,
     moiRefundBillSubList,
     moiPayBillSubList,
     handlePay,
