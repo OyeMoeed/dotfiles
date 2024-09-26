@@ -410,28 +410,24 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           data={dataForPaginatedFLatlist}
           ListEmptyComponent={noResult}
         />
-        {dataForPaginatedFLatlist?.length > 0 && (
-          <>
-            {selectedTab === SEND_REQUESTS ? (
-              <IPayButton
-                btnType={buttonVariants.PRIMARY}
-                large
-                onPress={createRequest}
-                btnText="REQUEST_MONEY.CREATE_REQUEST"
-                btnStyle={styles.requestButton}
-                leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
-              />
-            ) : (
-              <IPayButton
-                btnType={buttonVariants.PRIMARY}
-                large
-                onPress={createRequest}
-                btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
-                btnStyle={styles.requestButton}
-                leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
-              />
-            )}
-          </>
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === SEND_REQUESTS ? (
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            onPress={createRequest}
+            btnText="REQUEST_MONEY.CREATE_REQUEST"
+            btnStyle={styles.requestButton}
+            leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
+          />
+        ) : (
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            onPress={createRequest}
+            btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
+            btnStyle={styles.requestButton}
+            leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
+          />
         )}
       </IPayView>
       <IPayActionSheet

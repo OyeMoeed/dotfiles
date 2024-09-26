@@ -4,7 +4,7 @@ export interface DynamicField {
   onlyHijri: boolean | null;
   type: string;
   disable?: boolean;
-  dependsOn?:string;
+  dependsOn?: string;
   required: boolean;
   lovFilter3: string | null;
   billIdType: string | null;

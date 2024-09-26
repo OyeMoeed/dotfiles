@@ -3,6 +3,10 @@ import useLocation from '@app/hooks/location.hook';
 import { fadeIn, parallelAnimations, scale } from '@app/ipay-animations/ipay-animations';
 import { navigateAndReset } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import { showForceUpdate } from '@app/store/slices/app-force-update-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
@@ -23,6 +27,18 @@ const useSplashAnimations = () => {
   useLocation();
   const { isFirstTime, isLinkedDevice, isAuthenticated } = useTypedSelector((state) => state.appDataReducer.appData);
 
+  const splashPrepareApi = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const prepareLoginPayload: DeviceInfoProps = {
+      ...deviceInfo,
+      locationDetails: {},
+    };
+
+    const apiResponse: any = await prepareLogin(prepareLoginPayload);
+    if (apiResponse?.status?.code === 'E430995') {
+      dispatch(showForceUpdate());
+    }
+  };
   const handleNavigation = async () => {
     if (isFirstTime) {
       navigateAndReset(screenNames.ONBOARDING);
@@ -40,9 +56,9 @@ const useSplashAnimations = () => {
         scale(scaleAnim, 1, animationDurations.duration1000),
       ]).start();
 
-      // prepareLogin(dispatch);
-
       if (isTranslationsLoaded) {
+        splashPrepareApi();
+
         await fadeIn(blurAnim, animationDurations.duration500).start(async () => {
           await handleNavigation();
         });

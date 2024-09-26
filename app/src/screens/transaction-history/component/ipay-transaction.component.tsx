@@ -1,3 +1,4 @@
+/* eslint-disable max-lines-per-function */
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -61,12 +62,15 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const CIN_ALINMA = transactionRequestType === TransactionTypes.CIN_ALINMA ?? false;
 
   // case 8
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_MRCHNT_IN = transactionRequestType === TransactionTypes.PAY_MRCHNT_IN ?? false;
 
   // case 9
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_MRCHNT_OUT = transactionRequestType === TransactionTypes.PAY_MRCHNT_OUT ?? false;
 
   // case 10
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_MRCHNT_BILL = transactionRequestType === TransactionTypes.PAY_MRCHNT_BILL ?? false;
 
   // case 11
@@ -160,12 +164,15 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   const PAY_VCARD_POS_VISA = transactionRequestType === TransactionTypes.PAY_VCARD_POS_VISA ?? false;
 
   // case 41
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_VCARD_POS_NAQD_MADA = transactionRequestType === TransactionTypes.PAY_VCARD_POS_NAQD_MADA ?? false;
 
   // case 42
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_VCARD_POS_NAQD_VISA = transactionRequestType === TransactionTypes.PAY_VCARD_POS_NAQD_VISA ?? false;
 
   // case 43
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const PAY_VCARD_POS_NAQD = transactionRequestType === TransactionTypes.PAY_VCARD_POS_NAQD ?? false;
 
   // case 44
@@ -204,23 +211,21 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
   // case 55
   const PAYMENT_REQUEST = transactionRequestType === TransactionTypes.PAYMENT_REQUEST ?? false;
 
-  const trxTitleAndSubTile = (title: string, subtitle: string) => {
-    return (
-      <>
-        <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
-          {title}
-        </IPayFootnoteText>
-        <IPayCaption1Text
-          numberOfLines={CAPTION_LINES}
-          style={styles.trasnactionTypeText}
-          color={colors.natural.natural900}
-          shouldTranslate={false}
-        >
-          {subtitle}
-        </IPayCaption1Text>
-      </>
-    );
-  };
+  const trxTitleAndSubTile = (title: string, subtitle: string) => (
+    <>
+      <IPayFootnoteText style={styles.transactionRequestTypeDescStyle} numberOfLines={1} shouldTranslate={false}>
+        {title}
+      </IPayFootnoteText>
+      <IPayCaption1Text
+        numberOfLines={CAPTION_LINES}
+        style={styles.trasnactionTypeText}
+        color={colors.natural.natural900}
+        shouldTranslate={false}
+      >
+        {subtitle}
+      </IPayCaption1Text>
+    </>
+  );
 
   const renderTrxsItemTitleAndDesc = () => {
     if (COUT_MUSANED) {
@@ -438,9 +443,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
         transaction?.beneficiaryName || transaction?.nickname || transaction?.mobileNumber,
         t('TRANSACTION_HISTORY.MONEY_REQUEST'),
       );
-    } else {
-      return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc, '');
     }
+    return trxTitleAndSubTile(transaction?.transactionDescription || transaction?.transactionRequestTypeDesc, '');
   };
 
   const renderLeftIcon = () => {
@@ -459,6 +463,8 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     );
   };
 
+  // TODO: remove unused function
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const renderTrxsItemTitle = () => {
     if (transaction?.transactionRequestType === TransactionTypes.PAY_WALLET || isBeneficiaryHistory) {
       return (
@@ -490,6 +496,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     );
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const renderTrxsSecondTitle = () => {
     if (transaction?.transactionRequestType === TransactionTypes.PAY_VCARD_REFUND_REV) {
       return (
@@ -722,6 +729,7 @@ const IPayTransactionItem: React.FC<IPayTransactionProps> = ({
     return <></>;
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const renderTrxsTopTitle = () => {
     if (
       transaction?.walletTransactionStatus &&
