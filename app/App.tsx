@@ -24,7 +24,7 @@ import appStyles from './app.styles';
 
 const App = (): JSX.Element => {
   const style = appStyles();
-  // usePushNotifications();
+  usePushNotifications();
 
   return (
     <Provider store={store}>
