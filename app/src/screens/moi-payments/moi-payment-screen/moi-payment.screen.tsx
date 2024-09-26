@@ -32,8 +32,8 @@ import moiPaymentStyles from './moi-payment.style';
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
-  const [serviceProviderValue, setServiceProviderValue] = useState(null);
-  const [serviceTypeValue, setServiceTypeValue] = useState(null);
+  const [serviceProviderValue, setServiceProviderValue] = useState<string | null>(null);
+  const [serviceTypeValue, setServiceTypeValue] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [selectedBiller, setSelectedBiller] = useState<string>('');
   const [selectedServiceType, setSelectedServiceType] = useState<string>('');
@@ -49,10 +49,6 @@ const MoiPaymentScreen: React.FC = () => {
     },
     [selectedTab],
   );
-
-  useEffect(() => {
-    onGetBillers();
-  }, []);
 
   const { defaultValues, validationSchema } = useDynamicForm(fields);
 
@@ -94,8 +90,13 @@ const MoiPaymentScreen: React.FC = () => {
       setFields(updatedFields);
     }
   };
+
+  useEffect(() => {
+    onGetBillers();
+  }, []);
+
   const onGetBillersServices = async (billerID?: string) => {
-    const apiResponse = await getBillersServiceProvider(billerID);
+    const apiResponse = await getBillersServiceProvider(billerID || '');
 
     if (apiResponse?.successfulResponse) {
       const serviceList = apiResponse?.response?.servicesList?.map((serviceItem: BillersService) => ({
@@ -105,6 +106,7 @@ const MoiPaymentScreen: React.FC = () => {
       }));
       return serviceList;
     }
+    return null;
   };
 
   const fetchFields = async (selectedBiller: string, selectedServiceType: string) => {
@@ -208,6 +210,7 @@ const MoiPaymentScreen: React.FC = () => {
       fetchFields(serviceProviderValue, serviceTypeValue);
     }
   }, [serviceTypeValue]);
+
   return (
     <>
       <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
@@ -246,6 +249,15 @@ const MoiPaymentScreen: React.FC = () => {
                     btnIconsDisabled
                   />
                 </IPayView>
+
+                <IPayButton
+                  btnText="NEW_SADAD_BILLS.INQUIRY"
+                  btnType={buttonVariants.PRIMARY}
+                  onPress={handleSubmit(onSubmit)}
+                  btnStyle={styles.inquiryBtn}
+                  large
+                  btnIconsDisabled
+                />
               </IPayView>
             </IPaySafeAreaView>
           );

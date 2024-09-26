@@ -131,4 +131,4 @@ interface GetWalletMockProps extends MockAPIOkProp {
   data: GetWalletDataProps;
 }
 
-export { GetWalletMockProps, GetWalletResponse, WalletNumberProp };
+export { GetWalletMockProps, GetWalletResponse, WalletNumberProp, GetWalletDataProps };

@@ -2,6 +2,7 @@ import { SkeletonLoaderTypes } from '@app/components/atoms/ipay-skeletonview/ipa
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 import { SCALE_34 } from '@app/styles/spacing.const';
 import type { Colors } from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import { IPaySKeletonBuilderTypes, IPaySkeletonEnums } from './ipay-skeleton-loader.interface';
 
 type IPaySkeletonFactoryType = (colors: Colors) => { [key in IPaySkeletonEnums]: IPaySKeletonBuilderTypes };
@@ -32,6 +33,52 @@ const IPAY_SKELETON_FACTORY: IPaySkeletonFactoryType = (colors: Colors) => ({
       },
     ],
     space: verticalScale(8),
+  },
+  [IPaySkeletonEnums.CARD_WITH_TITLE]: {
+    overrideStyle: {
+      gap: verticalScale(24),
+      alignSelf: 'center',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    left: [
+      {
+        type: SkeletonLoaderTypes.TEXT,
+        width: 120,
+      },
+    ],
+    center: [
+      {
+        type: SkeletonLoaderTypes.TEXT,
+        height: verticalScale(325),
+        width: scaleSize(220),
+        radius: scaleSize(24),
+      },
+    ],
+  },
+  [IPaySkeletonEnums.CARD]: {
+    center: [
+      {
+        type: SkeletonLoaderTypes.TEXT,
+        height: verticalScale(325),
+        width: scaleSize(220),
+        radius: scaleSize(24),
+      },
+    ],
+  },
+  [IPaySkeletonEnums.TEXT]: {
+    overrideStyle: {
+      height: verticalScale(12),
+      width: scaleSize(60),
+      position: 'relative',
+    },
+    left: [
+      {
+        type: SkeletonLoaderTypes.TEXT,
+        height: verticalScale(12),
+        width: scaleSize(60),
+      },
+    ],
   },
 });
 
