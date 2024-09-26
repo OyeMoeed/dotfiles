@@ -91,7 +91,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     const apiResponse: any = await getNafathRandom(payLoad);
 
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      const nafathToken = Number.isNaN(apiResponse.response.token)
+      const nafathToken = !Number.isInteger(apiResponse.response.token)
         ? atob(apiResponse.response.token)
         : apiResponse.response.token;
 
@@ -124,7 +124,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     const body: IActivationAbsherReq = {
       walletNumber: walletInfo.walletNumber,
       walletTier: 'G',
-      poiNumber: walletInfo?.poiNumber,
+      poiNumber: walletInfo?.poiNumber || nafathObj.idNumber,
       poiExpiryDate: nafathObj.idExpiryDate,
       poiExpiryDateHijri: nafathObj.idExpiryDateHijri,
       birthDate: nafathObj.dateOfBirth,
@@ -156,13 +156,20 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
         walletTier: 'G',
         poiNumber: nafathObj.idNumber,
         poiType: nafathObj.idNumber,
+        fatherName: nafathObj.englishName.secondName,
+        grandFatherName: nafathObj.englishName.thirdName,
+        familyName: nafathObj.englishName.familyName,
+        fullName: nafathObj.englishName.fullName,
+        firstName: nafathObj.englishName.firstName,
+        nickName: `${nafathObj.englishName.fullName}#${nafathObj.arabicName.fullName}`,
       };
-      dispatch(
-        setWalletInfo({
-          ...walletInfo,
-          ...updatedValues,
-        }),
-      );
+
+      const newWalletValues = {
+        ...walletInfo,
+        ...updatedValues,
+      };
+
+      dispatch(setWalletInfo(newWalletValues));
 
       onCloseNafathVerificationSheet();
       navigate(screenNames.IDENTITY_SUCCESSFUL);
