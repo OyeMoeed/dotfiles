@@ -87,7 +87,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
     };
 
     setRefundPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
-  }, [moiBillData]);
+  }, [billData]);
 
   const onPressCompletePayment = async () => {
     const deviceInfo = await getDeviceInfo();
@@ -105,7 +105,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
 
   const redirectToSuccess = () => {
     navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-      moiPaymentDetailes: moiBillData,
+      moiPaymentDetailes: billData,
       successMessage: t('BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE'),
       subDetails: moiRefundBillSubList,
       refund: false,
@@ -156,7 +156,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
 
   useEffect(() => {
     getDataToRender();
-  }, [moiBillData]);
+  }, [billData]);
 
   return (
     <IPaySafeAreaView>
