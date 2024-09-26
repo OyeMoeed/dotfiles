@@ -27,7 +27,7 @@ const nafathVerificationStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: 'auto',
+      marginBottom: spacing.SCALE_12,
       marginTop: 'auto',
       backgroundColor: colors.natural.natural0,
       paddingVertical: spacing.SCALE_12,
