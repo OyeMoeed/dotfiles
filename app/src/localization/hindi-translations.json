@@ -254,5 +254,11 @@
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "कार्ड प्रबंधन",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "आपने कोई कार्ड नहीं जोड़ा है \n आप अब नए कार्ड जोड़ सकते हैं."
+  },
+  "UPDATE": {
+    "HEADER": "",
+    "TITLE": "",
+    "SUBTITLE": "",
+    "BUTTON_TITLE": ""
   }
 }
