@@ -176,7 +176,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       }
     }
   };
-  
+
   const onBeneficiaryNameChange = (text: string, onChange: (...event: any[]) => void) => {
     const filteredText = text.replace(REGEX.name, '');
     onChange(filteredText);
