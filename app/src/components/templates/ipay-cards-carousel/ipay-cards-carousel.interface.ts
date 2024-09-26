@@ -12,6 +12,7 @@ interface IPayCardsCarouselProps {
   setBoxHeight: Dispatch<SetStateAction<number>>;
   onATMLongPress: () => void;
   onPinCodeSheet: () => void;
+  isLoadingCards: boolean;
 }
 
 export default IPayCardsCarouselProps;

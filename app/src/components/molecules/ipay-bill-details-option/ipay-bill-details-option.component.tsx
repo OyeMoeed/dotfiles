@@ -8,9 +8,9 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
 import { copyText } from '@app/utilities';
 import { ToastTypes } from '@app/utilities/enums.util';
+import React from 'react';
 import IPayList from '../ipay-list/ipay-list.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
@@ -56,10 +56,11 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
 
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, onPressIcon = onPressDefault } = item;
+    const isValueExceedsLengthLimit = value && value.length > 24;
 
     return (
       <IPayList
-        containerStyle={[styles.heightStyles, optionsStyles]}
+        containerStyle={[styles.heightStyles, optionsStyles, isValueExceedsLengthLimit ? styles.columnList : {}]}
         title={label}
         detailText={value}
         detailTextStyle={styles.detailsText}
@@ -67,6 +68,8 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
         showDetail={showDetail}
         icon={<IPayIcon icon={icon} color={colors.primary.primary500} />}
         onPressIcon={onPressIcon}
+        showTextInNextLine={!!isValueExceedsLengthLimit}
+        rightContainerStyles={isValueExceedsLengthLimit ? styles.rightContainerStyle : {}}
       />
     );
   };

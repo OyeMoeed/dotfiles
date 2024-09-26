@@ -10,8 +10,7 @@ import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
-import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
+import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
 import getOffers from '@app/network/services/core/offers/offers.service';
 import { CardsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { useGetCards } from '@app/network/services/core/transaction/transactions.service';
@@ -20,7 +19,6 @@ import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setCards } from '@app/store/slices/cards-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
-import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
@@ -102,6 +100,7 @@ const Home: React.FC = () => {
       const payload: any = {
         walletNumber,
         isHome: 'true',
+        hideLoader: true,
       };
 
       const apiResponse: any = await getOffers(payload);
@@ -182,25 +181,31 @@ const Home: React.FC = () => {
   }, [isFocused]);
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
-  const getUpadatedWalletData = async () => {
-    const payload: WalletNumberProp = {
+  const { isLoadingWalletInfo } = useGetWalletInfo({
+    payload: {
       walletNumber,
       hideError: true,
       hideSpinner: true,
-    };
-    const apiResponse: any = await getWalletInfo(payload);
-    if (apiResponse) {
-      dispatch(setWalletInfo(apiResponse?.response));
-    }
-  };
+    },
+  });
+
+  useGetCards({
+    payload: {
+      walletNumber,
+      hideError: true,
+      hideSpinner: true,
+    },
+    onSuccess: getCardsData,
+    refetchOnMount: true,
+  });
+
   useEffect(() => {
     if (isFocused) {
       if (appData.allowEyeIconFunctionality) {
         dispatch(setAppData({ hideBalance: true }));
       }
-      getUpadatedWalletData();
     }
-  }, [isFocused, walletNumber]);
+  }, [isFocused]);
 
   const saveRearrangedItems = () => {
     if (tempreArrangedItems?.length > 0) dispatch(setRearrangedItems(tempreArrangedItems));
@@ -224,6 +229,7 @@ const Home: React.FC = () => {
             setBoxHeight={setBalanceBoxHeight}
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
             monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
+            isLoading={isLoadingWalletInfo}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}

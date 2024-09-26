@@ -187,7 +187,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     });
   };
 
-  const handleSelect = (contact: Contact) => {
+  const handleSelect = (contact: Contact, isQR?: boolean) => {
     // Corrected 'lenght' to 'length'
     setSelectedContacts((prevSelectedContacts) => {
       const isAlreadySelected = prevSelectedContacts.some(
@@ -196,7 +196,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
       if (isAlreadySelected) {
         // Remove the contact if it's already selected
-        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+        return isQR
+          ? prevSelectedContacts
+          : prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
       }
 
       // Add the contact if the limit is not exceeded
@@ -317,16 +319,19 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const qrCodeCallBack = (mobileNumber: string) => {
     if (mobileNumber) {
-      handleSelect({
-        givenName: mobileNumber,
-        recordID: mobileNumber,
-        phoneNumbers: [
-          {
-            label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
-            number: mobileNumber,
-          },
-        ],
-      } as Contact);
+      handleSelect(
+        {
+          givenName: mobileNumber,
+          recordID: mobileNumber,
+          phoneNumbers: [
+            {
+              label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
+              number: mobileNumber,
+            },
+          ],
+        } as Contact,
+        true,
+      );
     }
   };
   const { unsavedMobileNumberSchema } = getValidationSchemas(t);

@@ -1,10 +1,10 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPaySpinner, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton, useToastContext } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
-import IPayCardsCarousel from '@app/components/templates/ipay-cards-carousel/IpayCardsCarosel.component';
+import IPayCardsCarousel from '@app/components/templates/ipay-cards-carousel/ipay-cards-carousel.component';
 import IPayFreezeConfirmationSheet from '@app/components/templates/ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
@@ -32,6 +32,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { buttonVariants, CardOptions, ToastTypes } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import CardScreenCurrentState from './cards.screen.interface';
 import cardScreenStyles from './cards.style';
@@ -49,7 +50,6 @@ const CardsScreen: React.FC = () => {
   const { cards: cardsData, currentCard } = useTypedSelector((state) => state.cardsReducer);
 
   const [boxHeight, setBoxHeight] = useState<number>(0);
-  const [refresh, setRefresh] = useState(false);
 
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
@@ -137,6 +137,7 @@ const CardsScreen: React.FC = () => {
 
   const getCardPayload: CardsProp = {
     walletNumber,
+    hideSpinner: true,
   };
 
   const getCardsData = async (cardApiResponse: any) => {
@@ -163,7 +164,11 @@ const CardsScreen: React.FC = () => {
     });
   };
 
-  useGetCards({ payload: getCardPayload, onSuccess: getCardsData, onError: getCardsError });
+  const { isLoading: isLoadingCards } = useGetCards({
+    payload: getCardPayload,
+    onSuccess: getCardsData,
+    onError: getCardsError,
+  });
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
@@ -193,7 +198,7 @@ const CardsScreen: React.FC = () => {
     if (constants.MOCK_API_RESPONSE) {
       otpVerificationRef?.current?.resetInterval();
       setOtpSheetVisible(false);
-      prepareCardInfoData(cardsListMock.response.cards[0]);
+      prepareCardInfoData(cardsListMock?.response?.cards[0]);
       setIsCardDetailsSheetVisible(true);
       cardDetailsSheetRef?.current?.present();
       return;
@@ -239,7 +244,6 @@ const CardsScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    setRefresh(true);
     if (cardsData.length) {
       setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
       dispatch(setCurrentCard(cardsData[0]));
@@ -247,13 +251,7 @@ const CardsScreen: React.FC = () => {
       setCardsCurrentState(CardScreenCurrentState.NO_DATA);
       dispatch(setCurrentCard(undefined));
     }
-    setRefresh(false);
   }, [cardsData]);
-
-  // TODO: will be updated with the actual loader
-  if (refresh) {
-    return <IPaySpinner />;
-  }
 
   return (
     <IPaySafeAreaView testID="ipay-safearea" style={styles.container}>
@@ -277,6 +275,7 @@ const CardsScreen: React.FC = () => {
         onATMLongPress={onATMLongPress}
         boxHeight={boxHeight}
         onPinCodeSheet={onPinCodeSheet}
+        isLoadingCards={isLoadingCards}
       />
       <IPayPortalBottomSheet
         heading="CARD_OPTIONS.CARD_DETAILS"
@@ -336,7 +335,7 @@ const CardsScreen: React.FC = () => {
           onNextPress={handleNext}
         />
       </IPayPortalBottomSheet>
-      <IPayFreezeConfirmationSheet ref={actionSheetRef} />
+      {currentCard ? <IPayFreezeConfirmationSheet ref={actionSheetRef} /> : <View />}
     </IPaySafeAreaView>
   );
 };

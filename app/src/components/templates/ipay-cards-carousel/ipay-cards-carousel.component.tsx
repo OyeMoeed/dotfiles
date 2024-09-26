@@ -3,6 +3,8 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayCarousel, IPayNoResult } from '@app/components/molecules';
 import IPayATMCard from '@app/components/molecules/ipay-atm-card/ipay-atm-card.component';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
 import IPayCardSection from '@app/components/templates/ipay-card-details-section/ipay-card-details-section.component';
 import CardScreenCurrentState from '@app/screens/cards/cards.screen.interface';
@@ -13,7 +15,7 @@ import { buttonVariants, CarouselModes } from '@app/utilities';
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { FC } from 'react';
 import { verticalScale } from 'react-native-size-matters';
-import IPayCardsCarouselProps from './ipayCardsCarosel.interface';
+import IPayCardsCarouselProps from './ipay-cards-carousel.interface';
 
 const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
   cardsCurrentState,
@@ -25,11 +27,16 @@ const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
   onATMLongPress,
   boxHeight,
   onPinCodeSheet,
+  isLoadingCards,
 }) => {
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
 
   const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+
+  if (isLoadingCards) {
+    return <IPaySkeletonBuilder variation={IPaySkeletonEnums.CARD_WITH_TITLE} isLoading={isLoadingCards} />;
+  }
 
   if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
     return (
