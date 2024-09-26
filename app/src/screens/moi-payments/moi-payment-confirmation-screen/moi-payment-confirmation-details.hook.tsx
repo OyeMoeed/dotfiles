@@ -61,6 +61,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   ];
 
   const onConfirm = async () => {
+    
     const payLoad = {
       billIdType: '',
       moiBillPaymentType: MoiPaymentTypes.PAYMENT,
@@ -77,10 +78,10 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
       otp: otp,
       otpRef: otpRef,
     };
-
+    setOtpSheetVisible(false);
     const apiResponse = await moiBillPayment(payLoad);
     if (apiResponse?.successfulResponse) {
-      setOtpSheetVisible(false);
+  
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
         moiPaymentDetailes: billData,
         successMessage: 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
