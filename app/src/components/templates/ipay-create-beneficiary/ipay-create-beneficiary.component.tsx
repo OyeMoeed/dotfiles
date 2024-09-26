@@ -177,6 +177,11 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     }
   };
 
+  const onBeneficiaryNameChange = (text: string, onChange: (...event: any[]) => void) => {
+    const filteredText = text.replace(/[^a-zA-Z\s]/g, '');
+    onChange(filteredText);
+  };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       {isBeneficiaryCreated ? (
@@ -210,7 +215,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   label="NEW_BENEFICIARY.BENEFECIARY_NAME"
                   value={value}
                   maxLength={50}
-                  onChangeText={onChange}
+                  onChangeText={(text) => onBeneficiaryNameChange(text, onChange)}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.beneficiaryName}
                   testID="beneficiaryName"

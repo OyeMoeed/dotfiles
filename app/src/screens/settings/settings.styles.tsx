@@ -31,10 +31,12 @@ const settingStyles = (colors: any) =>
     },
     cardTitleText: {
       color: colors.natural.natural900,
+      textAlign: 'left',
     },
     cardText: {
       flexDirection: 'row',
       alignItems: 'center',
+      textAlign: 'left',
     },
     iconStyle: {
       width: 24,
@@ -49,6 +51,7 @@ const settingStyles = (colors: any) =>
     captionText: {
       color: colors.natural.natural500,
       width: scaleSize(185),
+      textAlign: 'left',
     },
     toast: {
       position: 'absolute',
