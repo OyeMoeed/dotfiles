@@ -6,6 +6,7 @@ import get from 'lodash/get';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import IPayAnimatedTextInput from '../../ipay-animated-input-text/ipay-animated-input-text.component';
+import IPayCheckboxTitle from '../../ipay-checkbox-title/ipay-chekbox-title.component';
 import DynamicFieldRendererProps from './ipay-field-renderer.interface';
 
 const DYNAMIC_FIELDS_CONFIGS = {
@@ -115,6 +116,27 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                   isError={!!get(errors, flatKey)}
                   onDateChange={onChange}
                   assistiveText={errorMessage as string}
+                />
+              );
+            }}
+          />
+        );
+
+      case DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE:
+        return (
+          <Controller
+            name={flatKey}
+            control={control}
+            defaultValue={field.value} // Converting the value to boolean
+            render={({ field: { value, onChange } }) => {
+              return (
+                <IPayCheckboxTitle
+                  heading={field.label}
+                  isCheck={value}
+                  onPress={() => {
+                    onChange(!value); // Toggle checkbox state
+                    if (handleChange) handleChange(field.dependsOn, !value);
+                  }}
                 />
               );
             }}

@@ -1,4 +1,7 @@
-const cardsListMock = {
+import { CardResponseInterface } from './transaction.interface';
+import { ApiResponse } from '../../services.interface';
+
+const cardsListMock: ApiResponse<{ cards: CardResponseInterface[] }> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -342,7 +345,7 @@ const cardsListMock = {
           virtualCard: true,
         },
       },
-    ],
+    ] as CardResponseInterface[],
   },
   successfulResponse: true,
 };

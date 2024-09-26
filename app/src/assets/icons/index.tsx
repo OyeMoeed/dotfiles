@@ -256,6 +256,7 @@ const icons = {
   call_outgoing: Outgoing,
   nonALinma: NonAlinma,
   addSquare2: 'add-square2',
+  wallet_add_11: 'wallet-add-11',
 };
 
 export default icons;

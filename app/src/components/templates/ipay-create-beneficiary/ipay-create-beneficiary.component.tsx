@@ -101,7 +101,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     const payload: BeneficiaryInfo = {
       beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo,
       fullName: values?.beneficiaryName,
-      nickname: values?.beneficiaryNickName,
+      nickname: values?.beneficiaryNickName ? values?.beneficiaryNickName : values?.beneficiaryName,
       beneficiaryBankDetail: {
         bankCode: beneficiaryBankDetails?.bankCode,
         bankName: beneficiaryBankDetails?.bankName,
