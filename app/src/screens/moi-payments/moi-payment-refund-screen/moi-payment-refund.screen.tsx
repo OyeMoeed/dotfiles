@@ -1,8 +1,6 @@
-import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
@@ -25,9 +23,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = moiPaymentRefundStyles(colors);
   const [refundPaymentDetails, setRefundPaymentDetails] = useState<MOIItemProps[]>([]);
-  const [otpRef, setOtpRef] = useState<string>('');
   const { otpConfig } = useConstantData();
-  const { showToast } = useToastContext();
   const { billData } = route?.params || {};
   const {
     otp,
@@ -39,23 +35,16 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
     isOtpSheetVisible,
     setOtpSheetVisible,
     handlePay,
+    setOtpRef,
   } = useMoiPaymentConfirmation(billData);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.walletNumber);
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
 
   const helpCenterRef = useRef<any>(null);
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
   const onCloseBottomSheet = () => {
     setOtpSheetVisible(false);
+    setOtpError(false);
   };
 
   const onPressHelp = () => {
