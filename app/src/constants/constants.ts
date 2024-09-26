@@ -6,8 +6,12 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FeatureSections } from '@app/enums';
+import { isArabic } from '@app/utilities/constants';
 import { BillStatus } from '@app/utilities/enums.util';
 import Share from 'react-native-share';
+
+const arabicDialer = ['3', '2', '1', '6', '5', '4', '9', '8', '7', 'back', '0', ''];
+const englishDialer = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'];
 
 const constants = {
   MOCK_API_RESPONSE: false,
@@ -41,7 +45,7 @@ const constants = {
     filename: 'test', // only for base64 file in Android
   },
   OTP_CELL_COUNT: 4,
-  DIALER_DATA: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'],
+  DIALER_DATA: isArabic ? arabicDialer : englishDialer,
   FORGET_PASSWORD_COMPONENTS: {
     USER_IDENTITY: 'User Identity',
     CONFIRM_OTP: 'Confirm OTP',
@@ -756,7 +760,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES
+  WU_TRANSFER_TYPES,
 };
 
 export default constants;

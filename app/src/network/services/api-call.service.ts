@@ -53,7 +53,7 @@ const apiCall = async <T>({
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
       await handleAxiosError(response);
-      return undefined;
+      return handleApiResponse(response);
     }
     store.dispatch(hideSpinner());
     return handleApiResponse(response);
