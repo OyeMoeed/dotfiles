@@ -29,36 +29,37 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
   const moiPaymentDetailes: MoiPaymentDetail[] = [
     {
       id: '1',
       label: t('BILL_PAYMENTS.DUE_AMOUNT'),
-      value: '500 SAR',
+      value: billData?.totalFeeAmount ? `${billData.totalFeeAmount} ${t('COMMON.SAR')}` : '',
     },
     {
       id: '2',
       label: t('BILL_PAYMENTS.SERVICE_PROVIDER'),
-      value: 'Expatriate Services',
+      value: billData?.serviceProviderFromLOV?.billerDesc ?? '',
     },
     {
       id: '3',
       label: t('BILL_PAYMENTS.SERVICE_TYPE'),
-      value: 'Renewal of residence',
+      value: billData?.serviceTypeFromLOV?.serviceDesc ?? '',
     },
     {
       id: '4',
       label: t('BILL_PAYMENTS.BENEFICIARY_ID'),
-      value: '1965873233',
+      value: billData?.dynamicFields[0]?.value ?? '',
     },
     {
       id: '5',
       label: t('BILL_PAYMENTS.LICENSE_TYPE'),
-      value: 'Expatriate Services',
+      value: billData?.serviceTypeFromLOV?.serviceDesc ?? '',
     },
     {
       id: '6',
       label: t('BILL_PAYMENTS.DURATION'),
-      value: 'Two years',
+      value: billData?.duration ?? '',
     },
   ];
 
@@ -124,6 +125,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
       icon: icons.copy,
     },
   ];
+
   const onConfirm = async () => {
     const payLoad = {
       billIdType: '',
@@ -136,10 +138,10 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
       groupPaymentId: billData.groupPaymentId,
       paymentId: billData.paymentId,
       dynamicFields: billData.dynamicFields,
-      walletNumber: walletNumber,
+      walletNumber,
       mobileNo: mobileNumber,
-      otp: otp,
-      otpRef: otpRef,
+      otp,
+      otpRef,
     };
 
     const apiResponse = await moiBillPayment(payLoad);

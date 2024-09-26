@@ -20,8 +20,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
 import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
@@ -31,7 +31,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const { showToast } = useToastContext();
-  const [isShareable, setIsShareable] = useState<boolean>(false);
   const [paymentDtails, setPaymentDetails] = useState<ItemProps[]>([]);
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
   const totalTransferedAmount = `500 ${t('COMMON.SAR')}`;
@@ -51,10 +50,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
     renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
-  };
-
-  const onPressShare = () => {
-    setIsShareable(true);
   };
 
   const onPressHome = () => {
@@ -129,7 +124,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
         />
 
         <IPayShareableImageView
-          isShareable={isShareable}
           otherView={
             <IPayView style={styles.footerView}>
               <IPayView style={styles.linkButtonsView}>
@@ -141,11 +135,10 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                   btnText="BILL_PAYMENTS.PAY_ANOTHER_BILL"
                 />
                 <IPayButton
-                  onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText="TOP_UP.SHARE"
+                  btnText={t('TOP_UP.SHARE')}
                 />
               </IPayView>
               <IPayButton

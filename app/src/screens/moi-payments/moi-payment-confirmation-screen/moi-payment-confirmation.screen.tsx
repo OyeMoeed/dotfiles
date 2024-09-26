@@ -12,20 +12,17 @@ import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import { PaymentType } from '@app/utilities';
-import React, { useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useRef, useState } from 'react';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
 const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
-  const { moiBillData } = route.params || {};
-  const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
-  const { billData } = route?.params || {};
+  const { billData, isRefund } = route?.params || {};
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const {
     moiPaymentDetailes,
@@ -37,6 +34,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     setOtpError,
     otpVerificationRef,
     setOtpRef,
+    otpBottomSheetRef,
   } = useMoiPaymentConfirmation(billData);
   const { otpConfig } = useConstantData();
 
@@ -55,34 +53,29 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const onPressCompletePayment = async () => {
     const deviceInfo = await getDeviceInfo();
     const payLoad = {
-      deviceInfo: deviceInfo,
-      walletNumber: walletNumber,
+      deviceInfo,
+      walletNumber,
     };
-
-    const apiResponse = await prepareMoiBill(PaymentType.MOI, payLoad);
+    const paymentType = isRefund ? PaymentType.REFUND : PaymentType.MOI;
+    const apiResponse = await prepareMoiBill(paymentType, payLoad);
     if (apiResponse?.successfulResponse) {
       setOtpRef(apiResponse?.response.otpRef);
       setOtpSheetVisible(true);
     }
   };
 
-  const totalAmount = useMemo(
-    () =>
-      moiBillData?.find((item: { label: string }) => item.label === 'BILL_PAYMENTS.DUE_AMOUNT')?.value.split(' ')[0] ||
-      null,
-    [moiBillData],
-  );
-
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.MOI_PAYMENT" titleStyle={styles.screenTitle} />
       <IPayView style={styles.container}>
-        <IPayAccountBalance
-          balance={availableBalance}
-          availableBalance={currentBalance}
-          showRemainingAmount
-          topUpBtnStyle={styles.topUpButton}
-        />
+        {!isRefund && (
+          <IPayAccountBalance
+            balance={availableBalance}
+            availableBalance={currentBalance}
+            showRemainingAmount
+            topUpBtnStyle={styles.topUpButton}
+          />
+        )}
         <IPayBillDetailsOption
           data={moiPaymentDetailes}
           showHeader={false}
@@ -92,15 +85,17 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
-          btnText="SADAD.PAY"
-          totalAmount={totalAmount}
+          btnText={isRefund ? 'COMMON.CONFIRM' : 'SADAD.PAY'}
+          totalAmount={billData?.totalFeeAmount ?? 0}
           backgroundGradient={['transparent', 'transparent']}
           gradientViewStyle={styles.sadadFooterGradient}
           btnStyle={styles.sadadBtn}
           disableBtnIcons
+          totalAmountText={isRefund && 'LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND'}
         />
       </IPayView>
       <IPayPortalBottomSheet
+        ref={otpBottomSheetRef}
         heading="BILL_PAYMENTS.NEW_MOI_BILL"
         enablePanDownToClose
         simpleBar
@@ -123,6 +118,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}
           toastContainerStyle={styles.toastContainerStyle}
+          onResendCodePress={() => otpVerificationRef.current?.resetInterval()}
         />
       </IPayPortalBottomSheet>
 

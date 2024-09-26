@@ -1,11 +1,13 @@
-import { IPayCaption2Text, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayHeader } from '@app/components/molecules';
+import icons from '@app/assets/icons';
+import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayContentNotFound, IPayHeader } from '@app/components/molecules';
 import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
 import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
+import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
+import { DYNAMIC_FIELDS_TYPES, SNAP_POINTS } from '@app/constants/constants';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -20,7 +22,8 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { MoiPaymentTypes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useCallback, useEffect, useState } from 'react';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { RequiredInPaymentOrRefund } from './moi-payment.interface';
@@ -38,6 +41,7 @@ const MoiPaymentScreen: React.FC = () => {
   const { t } = useTranslation();
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const invoiceSheetRef = useRef<bottomSheetTypes>(null);
 
   const handleTabSelect = useCallback(
     (tab: string) => {
@@ -50,7 +54,7 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillers();
   }, []);
 
-  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+  const { defaultValues, validationSchema } = useDynamicForm(fields);
 
   const onGetBillers = async () => {
     const deviceInfo = await getDeviceInfo();
@@ -115,12 +119,11 @@ const MoiPaymentScreen: React.FC = () => {
             field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.REFUND ||
             field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.BOTH
           );
-        } else {
-          return (
-            field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.PAYMENT ||
-            field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.BOTH
-          );
         }
+        return (
+          field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.PAYMENT ||
+          field.requiredInPaymentOrRefund === RequiredInPaymentOrRefund.BOTH
+        );
       });
 
       const updatedFields = [...fields, ...filteredFields];
@@ -131,39 +134,47 @@ const MoiPaymentScreen: React.FC = () => {
 
   const onSubmit = async (data: any) => {
     const excludedIndices = [MoiPaymentFormFields.SERVICE_TYPE, MoiPaymentFormFields.SERVICE_PROVIDER];
+
     const dynamicFields = fields
       .map((item) => {
         const { label, index, value } = item;
         const fieldValueFromData = data[index.replace(/\./g, '_')]; // Matching the index from data with its flat key form
 
         return {
-          label: label,
-          index: index,
+          label,
+          index,
           value: fieldValueFromData !== undefined ? fieldValueFromData : value, // Use value from data if available
           description: label,
           isFormValid: !!fieldValueFromData, // Set form validation flag based on field value availability
         };
       })
-      .filter((field) => {
-        return field.value !== undefined && !excludedIndices.includes(field.index);
-      });
+      .filter((field) => field.value !== undefined && !excludedIndices.includes(field.index));
 
     const payLoad = {
-      dynamicFields: dynamicFields,
-      walletNumber: walletNumber,
+      dynamicFields,
+      walletNumber,
       refund: false,
     };
     const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
     if (apiResponse?.successfulResponse) {
       const serviceTypeField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_TYPE);
-      const serviceTypeFromLOV = serviceTypeField?.lovList.find((lov) => lov.code === selectedServiceType);
-      if (selectedTab === MoiPaymentTypes.REFUND) {
-        navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: apiResponse.response });
-      } else {
-        navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
-          billData: { ...apiResponse.response, dynamicFields, serviceTypeFromLOV },
-        });
-      }
+      const serviceProviderField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_PROVIDER);
+      const serviceProviderFromLOV = serviceProviderField?.lovList?.find(
+        (lov) => lov?.billerId === serviceProviderValue,
+      );
+      const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
+      const isRefund = selectedTab === MoiPaymentTypes.REFUND;
+      navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
+        billData: {
+          ...apiResponse.response,
+          dynamicFields,
+          serviceTypeFromLOV,
+          serviceProviderFromLOV,
+        },
+        isRefund,
+      });
+    } else {
+      invoiceSheetRef.current?.present();
     }
   };
 
@@ -198,23 +209,23 @@ const MoiPaymentScreen: React.FC = () => {
     }
   }, [serviceTypeValue]);
   return (
-    <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
-      {({ control, formState: { errors }, handleSubmit }) => {
-        const {
-          [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
-          [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
-        } = useWatch({ control });
-        setServiceProviderValue(serviceProviderValue);
-        setServiceTypeValue(serviceTypeValue);
+    <>
+      <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
+        {({ control, formState: { errors }, handleSubmit }) => {
+          const {
+            [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
+            [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
+          } = useWatch({ control });
+          setServiceProviderValue(serviceProviderValue);
+          setServiceTypeValue(serviceTypeValue);
 
-        return (
-          <>
+          return (
             <IPaySafeAreaView>
               <IPayHeader
                 backBtn
                 onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
                 applyFlex
-                title={'BILL_PAYMENTS.MOI_PAYMENT'}
+                title="BILL_PAYMENTS.MOI_PAYMENT"
                 titleStyle={styles.screenTitle}
               />
               <IPayView style={styles.container}>
@@ -222,12 +233,12 @@ const MoiPaymentScreen: React.FC = () => {
 
                 <IPayView style={styles.contentContainer}>
                   <IPayView style={styles.dynamicFieldContainer}>
-                    <IPayCaption2Text regular text={'BILL_PAYMENTS.BENEFECIARY_DETAILS'} />
+                    <IPayCaption2Text regular text="BILL_PAYMENTS.BENEFECIARY_DETAILS" />
                     <DynamicFormComponent errors={errors} control={control} fields={fields} />
                   </IPayView>
 
                   <IPayButton
-                    btnText={'NEW_SADAD_BILLS.INQUIRY'}
+                    btnText="NEW_SADAD_BILLS.INQUIRY"
                     btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onSubmit)}
                     btnStyle={styles.inquiryBtn}
@@ -237,10 +248,31 @@ const MoiPaymentScreen: React.FC = () => {
                 </IPayView>
               </IPayView>
             </IPaySafeAreaView>
-          </>
-        );
-      }}
-    </IPayFormProvider>
+          );
+        }}
+      </IPayFormProvider>
+      <IPayBottomSheet
+        heading="BILL_PAYMENTS.TRAFFIC_VIOLATIONS"
+        customSnapPoint={SNAP_POINTS.SMALL}
+        onCloseBottomSheet={() => invoiceSheetRef.current.close()}
+        ref={invoiceSheetRef}
+        simpleBar
+        cancelBnt
+        bold
+        headerContainerStyles={styles.sheetHeader}
+        bgGradientColors={colors.sheetGradientPrimary10}
+        bottomSheetBgStyles={styles.sheetBackground}
+      >
+        <IPayContentNotFound
+          title="BILL_PAYMENTS.NO_BILLS_WERE_FOUND"
+          message="BILL_PAYMENTS.NO_BILLS_FOUND_ERROR_MESSAGE"
+          btnText="COMMON.TRY_AGAIN"
+          isShowButton
+          icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
+          onBtnPress={() => invoiceSheetRef.current.close()}
+        />
+      </IPayBottomSheet>
+    </>
   );
 };
 
