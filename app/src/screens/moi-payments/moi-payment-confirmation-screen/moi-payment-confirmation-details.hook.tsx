@@ -4,7 +4,6 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
 
 import { useTypedSelector } from '@app/store/store';
-import { MoiPaymentTypes } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -61,18 +60,32 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   ];
 
   const onConfirm = async () => {
-    
     const payLoad = {
-      billIdType: '',
-      moiBillPaymentType: MoiPaymentTypes.PAYMENT,
-      amount: billData.totalFeeAmount,
+      // billIdType: '',
+      //   moiBillPaymentType: MoiPaymentTypes.PAYMENT,
+      // amount: billData.totalFeeAmount,
       billerId: billData?.billerId,
-      serviceDescription: billData?.serviceTypeFromLOV?.desc,
-      applyTax: 'N',
+      // serviceDescription: billData?.serviceTypeFromLOV?.desc,
+      // applyTax: 'N',
       serviceId: billData?.serviceTypeFromLOV?.code,
-      groupPaymentId: billData?.groupPaymentId,
-      paymentId: billData?.paymentId,
+      // groupPaymentId: billData?.groupPaymentId,
+      // paymentId: billData?.paymentId,
       dynamicFields: billData?.dynamicFields,
+      // walletNumber: walletNumber,
+      // mobileNo: mobileNumber,
+      // otp: otp,
+      // otpRef: otpRef,
+      // billIdType: '',
+      // moiBillPaymentType: 'REFUND',
+
+      billIdType: '',
+      moiBillPaymentType: 'REFUND',
+      amount: '',
+      //  billerId: '090',
+      serviceDescription: 'Extend Visitor Visa',
+      applyTax: 'N',
+      // serviceId: '001',
+
       walletNumber: walletNumber,
       mobileNo: mobileNumber,
       otp: otp,
@@ -81,7 +94,6 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
     setOtpSheetVisible(false);
     const apiResponse = await moiBillPayment(payLoad);
     if (apiResponse?.successfulResponse) {
-  
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
         moiPaymentDetailes: billData,
         successMessage: 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
