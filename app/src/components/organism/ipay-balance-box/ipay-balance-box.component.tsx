@@ -92,7 +92,10 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
         case DashboardOptions.REQUEST_MONEY:
           navigate(screenNames.REQUEST_MONEY);
           break;
-        case 'ehsan':
+        case DashboardOptions.MUSANED:
+          navigate(screenNames.MUSANED);
+          break;
+        case DashboardOptions.EHSAN:
           handleOnPress();
           break;
         default:

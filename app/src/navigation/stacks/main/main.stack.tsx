@@ -114,6 +114,7 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import MusanedScreen from '@app/screens/musaned/musaned.screen';
 
 const MainStack = createStackNavigator();
 
@@ -291,6 +292,7 @@ const MainStackNavigator = () => {
             component={CreateMoneyRequestSummaryScreen}
           />
           <MainStack.Screen name={screenNames.TERMS_AND_CONDITIONS} component={AppTermsAndConditions} />
+          <MainStack.Screen name={screenNames.MUSANED} component={MusanedScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>

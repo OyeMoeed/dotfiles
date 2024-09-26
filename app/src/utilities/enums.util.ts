@@ -214,6 +214,8 @@ enum DashboardOptions {
   QR_ACCEPTANCE = 'QR acceptance',
   SPENDING_LIMIT = 'Spending limit',
   MY_ACCOUNT = 'My account',
+  MUSANED = 'Musaned',
+  EHSAN = 'ehsan',
 }
 
 enum TopUpStates {

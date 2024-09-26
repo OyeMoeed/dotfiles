@@ -122,6 +122,7 @@ const icons = {
   send_money: 'Custom-send-money-two-tone',
   money_request: 'Custom-money-request-two-tone',
   user_tag: 'user-tag',
+  people: 'people',
   calculator: 'calculator',
   scanner: 'scanner',
   receipt_item: 'receipt-item',
