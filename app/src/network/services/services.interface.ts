@@ -48,7 +48,7 @@ interface IApiStatus {
 }
 
 interface ApiResponse<T> {
-  data: DeleteBillResponse;
+  data?: DeleteBillResponse;
   status: IApiStatus;
   response?: T;
   successfulResponse?: boolean;
@@ -56,6 +56,10 @@ interface ApiResponse<T> {
     transactionId: string;
   };
   headers?: {};
+  paginationInfo?: {
+    matchedRecords?: string;
+    sentRecords: string;
+  };
 }
 
 interface ApiResponseNotOk {

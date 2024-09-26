@@ -22,4 +22,7 @@ export interface IPaySkeletonBuilderProps {
 
 export enum IPaySkeletonEnums {
   TRANSACTION_LIST = 'TRANSACTION_LIST',
+  CARD_WITH_TITLE = 'CARD_WITH_TITLE',
+  CARD = 'CARD',
+  TEXT = 'TEXT',
 }
