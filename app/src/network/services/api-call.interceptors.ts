@@ -18,7 +18,7 @@ const mapApiError = (error: any): ApiResponse<any> => {
   const status: IApiStatus = {
     code: result?.status?.code || 'NETWORK_ERROR',
     type: result?.status?.type || 'ERROR',
-    desc: result?.status?.translation || 'SOMETHING_WENT_WRONG',
+    desc: result?.status?.translation || 'ERROR.SOMETHING_WENT_WRONG',
   };
 
   return {

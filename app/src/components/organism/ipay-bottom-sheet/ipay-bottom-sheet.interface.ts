@@ -37,6 +37,9 @@ export interface IPayBottomSheetProps extends CommonPros {
   closeBottomSheetOnDone?: boolean;
   noGradient?: boolean;
   testID?: string;
+  enableOverDrag?: boolean;
+  enableHandlePanningGesture?: boolean;
+  stopCloseBackgroundPress?: boolean;
 }
 
 export interface IPayBottomSheetHandleProps extends CommonPros {

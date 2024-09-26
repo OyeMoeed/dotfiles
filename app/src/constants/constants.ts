@@ -8,6 +8,7 @@ import images from '@app/assets/images';
 import { FeatureSections } from '@app/enums';
 import { isArabic } from '@app/utilities/constants';
 import { BillStatus } from '@app/utilities/enums.util';
+import { Platform } from 'react-native';
 import Share from 'react-native-share';
 
 const arabicDialer = ['3', '2', '1', '6', '5', '4', '9', '8', '7', 'back', '0', ''];
@@ -683,6 +684,7 @@ const DASHBOARD_ITEMS = [
   FeatureSections.LATEST_OFFERS,
 ];
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export enum DYNAMIC_FIELDS_TYPES {
   TEXT = 'TEXT',
   LIST_OF_VALUE = 'LIST_OF_VALUE',
@@ -729,6 +731,13 @@ const NAFATH_APP = {
   IOS_ID: 'id1598909871',
 };
 
+const MAIN_APP_STORE_LINKS = Platform.select({
+  ios: 'https://apps.apple.com/us/app/alinmapay-e-wallet/id1492900777?ls=1',
+  android: 'https://play.google.com/store/apps/details?id=com.alinma.pay.consumer&hl=ar&gl=US',
+  default: '',
+});
+// HUAWEI: 'https://appgallery.huawei.com/app/C101976663',
+
 export {
   ACTIVE_SADAD_BILLS,
   ALINMA_BANK_CODE,
@@ -748,6 +757,7 @@ export {
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
+  MAIN_APP_STORE_LINKS,
   MAX_CONTACTS,
   NAFATH_APP,
   NO_INVOICE_ACCOUNT_NUMBER,

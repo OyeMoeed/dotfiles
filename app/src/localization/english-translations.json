@@ -1526,5 +1526,11 @@
     "REQUIRED": "{label} is required",
     "MUST_BE_TEXT": "{label} must be valid text",
     "MUST_BE_SELECTED": "{label} must be selected"
+  },
+  "UPDATE": {
+    "HEADER": "Update the app",
+    "TITLE": "Update Required",
+    "SUBTITLE": "This is an old version of the app, and you cannot continue or log in using it. You will need to update the app to access your account.",
+    "BUTTON_TITLE": "Update Now"
   }
 }
