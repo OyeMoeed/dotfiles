@@ -108,7 +108,11 @@ const MenuScreen: FC = () => {
                     style={styles.profileNameText}
                     shouldTranslate={false}
                   />
-                  <IPayCaption1Text text="MENU.SHOW_PROFILE" color={colors.natural.natural900} />
+                  <IPayCaption1Text
+                    style={styles.showMenuProfile}
+                    text="MENU.SHOW_PROFILE"
+                    color={colors.natural.natural900}
+                  />
                 </IPayView>
                 <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
               </IPayLinearGradientView>
