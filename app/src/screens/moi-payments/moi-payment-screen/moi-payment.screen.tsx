@@ -165,7 +165,7 @@ const MoiPaymentScreen: React.FC = () => {
         });
       } else {
         navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
-          billData: { ...apiResponse.response, dynamicFields, serviceTypeFromLOV },
+          billData: { ...apiResponse.response, dynamicFields, serviceTypeFromLOV, serviceProviderDesc },
         });
       }
     }
