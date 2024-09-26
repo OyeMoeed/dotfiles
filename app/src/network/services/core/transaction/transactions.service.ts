@@ -30,10 +30,13 @@ const getTransactions = async (payload: TransactionsProp): Promise<TransactionsM
   return apiResponse;
 };
 
-const getTransactionTypes = async (): Promise<unknown> => {
+const getTransactionTypes = async ({ hideSpinner }: { hideSpinner?: boolean }): Promise<unknown> => {
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
     method: requestType.GET,
+    headers: {
+      hide_spinner_loading: hideSpinner,
+    },
   });
 
   return apiResponse;
