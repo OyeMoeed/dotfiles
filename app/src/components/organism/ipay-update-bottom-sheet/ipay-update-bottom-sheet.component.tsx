@@ -17,7 +17,7 @@ import forceUpdateStyle from './ipay-update-bottom-sheet.style';
 const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, ref) => {
   const { colors } = useTheme();
   const styles = forceUpdateStyle();
-  const size = useTypedSelector((state) => state.dropdownReducer.size);
+  const shouldForceUpdate = useTypedSelector((state) => state.forceUpdateReducer.visible);
 
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
@@ -35,8 +35,12 @@ const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, 
   }));
 
   useEffect(() => {
-    handlePresentModalPress();
-  }, []);
+    if (shouldForceUpdate) {
+      handlePresentModalPress();
+    }
+
+    handleClosePress();
+  }, [handleClosePress, handlePresentModalPress, shouldForceUpdate]);
 
   const onPressAppUpdate = async () => {
     await openAppOrStore(MAIN_APP_STORE_LINKS);
@@ -44,9 +48,8 @@ const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, 
 
   return (
     <IPayBottomSheet
-      isVisible
+      isVisible={false}
       heading="UPDATE.HEADER"
-      customSnapPoint={size}
       ref={bottomSheetModalRef}
       simpleHeader
       simpleBar
