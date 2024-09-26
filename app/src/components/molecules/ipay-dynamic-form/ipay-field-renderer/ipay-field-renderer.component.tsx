@@ -128,18 +128,16 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             name={flatKey}
             control={control}
             defaultValue={field.value} // Converting the value to boolean
-            render={({ field: { value, onChange } }) => {
-              return (
-                <IPayCheckboxTitle
-                  heading={field.label}
-                  isCheck={value}
-                  onPress={() => {
-                    onChange(!value); // Toggle checkbox state
-                    if (handleChange) handleChange(field.dependsOn, !value);
-                  }}
-                />
-              );
-            }}
+            render={({ field: { value, onChange } }) => (
+              <IPayCheckboxTitle
+                heading={field.label}
+                isCheck={value}
+                onPress={() => {
+                  onChange(!value); // Toggle checkbox state
+                  if (handleChange) handleChange(field.dependsOn, !value);
+                }}
+              />
+            )}
           />
         );
 

@@ -27,8 +27,8 @@ import moiPaymentStyles from './moi-payment.style';
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
-  const [serviceProviderValue, setServiceProviderValue] = useState(null);
-  const [serviceTypeValue, setServiceTypeValue] = useState(null);
+  const [serviceProviderValue, setServiceProviderValue] = useState<string | null>(null);
+  const [serviceTypeValue, setServiceTypeValue] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [fields, setFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
@@ -157,10 +157,11 @@ const MoiPaymentScreen: React.FC = () => {
         const {
           [MoiPaymentFormFields.SERVICE_PROVIDER]: moiServiceProviderValue,
           [MoiPaymentFormFields.SERVICE_TYPE]: moiServiceTypeValue,
+          // eslint-disable-next-line react-hooks/rules-of-hooks
         } = useWatch({ control });
 
-        setServiceProviderValue(moiServiceProviderValue);
-        setServiceTypeValue(moiServiceTypeValue);
+        setServiceProviderValue(moiServiceProviderValue || '');
+        setServiceTypeValue(moiServiceTypeValue || '');
 
         return (
           <IPaySafeAreaView>
