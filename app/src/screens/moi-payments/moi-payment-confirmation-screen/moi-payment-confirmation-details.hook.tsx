@@ -23,6 +23,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [otpRef, setOtpRef] = useState<string>('');
   const [apiError] = useState<string>('');
   const otpBottomSheetRef = useRef<any>(null);
@@ -144,7 +145,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
 
     const apiResponse = await moiBillPayment(payLoad);
     if (apiResponse?.successfulResponse) {
-      otpBottomSheetRef?.current?.close();
+      setOtpSheetVisible(false)
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
         moiPaymentDetailes,
         successMessage: 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
@@ -176,6 +177,8 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
     apiError,
     otpVerificationRef,
     setOtpRef,
+    isOtpSheetVisible,
+    setOtpSheetVisible,
   };
 };
 
