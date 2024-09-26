@@ -226,6 +226,7 @@
     "FAQ_ANSWERS": "You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity."
   },
   "HOME": {
+    "EHSAN": "Ehsan Donation",
     "CASHBACK_PROMO": "Cashback Promo",
     "RECEIVED_MONEY": "Received money",
     "POS_PURSHASE": "POS Purchase",
@@ -1526,5 +1527,11 @@
     "REQUIRED": "{label} is required",
     "MUST_BE_TEXT": "{label} must be valid text",
     "MUST_BE_SELECTED": "{label} must be selected"
+  },
+  "UPDATE": {
+    "HEADER": "Update the app",
+    "TITLE": "Update Required",
+    "SUBTITLE": "This is an old version of the app, and you cannot continue or log in using it. You will need to update the app to access your account.",
+    "BUTTON_TITLE": "Update Now"
   }
 }

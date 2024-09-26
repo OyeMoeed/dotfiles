@@ -26,7 +26,6 @@ const getDynamicFieldsService = async (
 
     return undefined;
   } catch (error: any) {
-    console.error(error);
     return undefined;
   }
 };

@@ -155,8 +155,10 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
     },
     giftText: {
+      marginHorizontal: moderateScale(24),
       gap: moderateScale(20),
       flexDirection: 'row',
+      justifyContent: 'space-between',
       marginBottom: moderateScale(18),
     },
     alinmaLogo: {

@@ -85,6 +85,5 @@ export {
   formatTimeAndDate,
   formatYearToLastTwoDigits,
   getDateFormate,
-  minutesToSeconds
+  minutesToSeconds,
 };
-

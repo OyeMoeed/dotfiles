@@ -176,9 +176,9 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
       }
     }
   };
-
-  const onBeneficiaryNickNameChange = (text: string, onChange: (...event: any[]) => void) => {
-    const filteredText = text.replace(/[^a-zA-Z\s]/g, '');
+  
+  const onBeneficiaryNameChange = (text: string, onChange: (...event: any[]) => void) => {
+    const filteredText = text.replace(REGEX.name, '');
     onChange(filteredText);
   };
 
@@ -215,7 +215,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   label="NEW_BENEFICIARY.BENEFECIARY_NAME"
                   value={value}
                   maxLength={50}
-                  onChangeText={onChange}
+                  onChangeText={(text) => onBeneficiaryNameChange(text, onChange)}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.beneficiaryName}
                   testID="beneficiaryName"
@@ -266,7 +266,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   label="NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL"
                   value={value}
                   maxLength={50}
-                  onChangeText={(text) => onBeneficiaryNickNameChange(text, onChange)}
+                  onChangeText={(text) => onBeneficiaryNameChange(text, onChange)}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors?.beneficiaryNickName}
                   assistiveText={errors?.beneficiaryNickName && errors?.beneficiaryNickName?.message}
