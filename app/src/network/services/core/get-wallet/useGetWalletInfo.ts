@@ -11,7 +11,6 @@ const useGetWalletInfo = ({ payload }: { payload: WalletNumberProp }) => {
     queryKey: WALLET_QUERY_KEYS.GET_WALLET_INFO,
     queryFn: () => getWalletInfo(payload),
     onSuccess: (data) => dispatch(setWalletInfo(data?.response)),
-    refetchOnMount: true,
     enabled: !!payload?.walletNumber,
   });
 

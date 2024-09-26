@@ -20,9 +20,10 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useTranslation } from 'react-i18next';
-import { copyText, dateTimeFormat, formatDateAndTime } from '@app/utilities';
+import { copyText, customInvalidateQuery, dateTimeFormat, formatDateAndTime, toggleAppRating } from '@app/utilities';
 import { TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 import useData from './use-data';
@@ -52,6 +53,15 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       containerStyle: topupChannel === PayChannel.ORDER ? styles.orderToast : styles.toastContainer,
     });
   };
+
+  const navigateHome = useCallback(() => {
+    if (completionStatus !== TopupStatus.FAILED) {
+      customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+      toggleAppRating();
+    }
+    navigate(screenNames.HOME);
+  }, [completionStatus]);
+
   const [cardPayDetails] = useState<any>([
     {
       id: '1',
@@ -273,7 +283,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             textStyle={styles.text}
             hasLeftIcon
             leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
-            onPress={() => navigate(screenNames.HOME)}
+            onPress={navigateHome}
             btnStyle={styles.home}
           />
         </IPayView>
@@ -404,7 +414,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                   btnColor={colors.primary.primary500}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
-                  onPress={() => navigate(screenNames.HOME)}
+                  onPress={navigateHome}
                   textStyle={styles.text}
                 />
               </IPayView>
