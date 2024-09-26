@@ -8,10 +8,6 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
-import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.interface';
-import moiBillPayment from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.service';
 import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-bill/prepare-moi-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
@@ -26,7 +22,6 @@ import moiPaymentRefundStyles from './moi-payment-refund.style';
 
 const MoiPaymentRefund: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { moiBillData } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentRefundStyles(colors);
   const [refundPaymentDetails, setRefundPaymentDetails] = useState<MOIItemProps[]>([]);
@@ -41,9 +36,9 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
     otpError,
     setOtpError,
     otpVerificationRef,
-    moiRefundBillSubList,
     isOtpSheetVisible,
     setOtpSheetVisible,
+    handlePay,
   } = useMoiPaymentConfirmation(billData);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.walletNumber);
   const mobileNumber = useTypedSelector((state) => state.walletInfoReducer?.walletInfo?.userContactInfo?.mobileNumber);
@@ -103,57 +98,6 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
     }
   };
 
-  const redirectToSuccess = () => {
-    navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-      moiPaymentDetailes: billData,
-      successMessage: t('BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE'),
-      subDetails: moiRefundBillSubList,
-      refund: false,
-    });
-  };
-
-  const verifyOtp = async () => {
-    try {
-      const deviceInfo = await getDeviceInfo();
-
-      const payload: MOIBillPaymentPayloadProps = {
-        deviceInfo,
-        otp,
-        otpRef,
-        walletNumber,
-        moiBillPaymentType: 'Payment',
-        billerId: '',
-        billNumOrBillingAcct: '',
-        dueDateTime: '',
-        billIdType: '',
-        billingCycle: '',
-        serviceDescription: '',
-      };
-
-      const apiResponse: any = await moiBillPayment(payload);
-
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        if (apiResponse?.response) {
-          onCloseBottomSheet();
-          redirectToSuccess();
-        }
-      } else {
-        renderToast(t('ERROR.API_ERROR_RESPONSE'));
-      }
-    } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  const onConfirmOtp = () => {
-    if (otp === '' || otp.length < 4) {
-      setOtpError(true);
-      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'));
-    } else {
-      verifyOtp();
-    }
-  };
-
   useEffect(() => {
     getDataToRender();
   }, [billData]);
@@ -192,7 +136,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
-          onPressConfirm={onConfirmOtp}
+          onPressConfirm={handlePay}
           mobileNumber={mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}

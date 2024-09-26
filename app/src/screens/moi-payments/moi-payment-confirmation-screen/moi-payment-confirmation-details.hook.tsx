@@ -31,7 +31,6 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-
   const moiPayBillSubList: MoiPaymentDetail[] = [
     {
       id: '1',
@@ -61,51 +60,18 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
     },
   ];
 
-  const moiRefundBillSubList: MoiPaymentDetail[] = [
-    {
-      id: '1',
-      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
-      value: '500 SAR',
-    },
-    {
-      id: '2',
-      label: t('BILL_PAYMENTS.SERVICE_PROVIDER'),
-      value: 'Expatriate Services',
-    },
-    {
-      id: '3',
-      label: t('BILL_PAYMENTS.SERVICE_TYPE'),
-      value: 'Renewal of residence',
-    },
-    {
-      id: '4',
-      label: t('BILL_PAYMENTS.VIOLATION_NUBMER'),
-      value: '1965873233',
-    },
-    {
-      id: '5',
-      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
-      value: '14/03/2023 - 15:30',
-    },
-    {
-      id: '6',
-      label: t('COMMON.REF_NUM'),
-      value: 'FAT35346',
-      icon: icons.copy,
-    },
-  ];
   const onConfirm = async () => {
     const payLoad = {
       billIdType: '',
       moiBillPaymentType: MoiPaymentTypes.PAYMENT,
       amount: billData.totalFeeAmount,
-      billerId: billData.billerId,
-      serviceDescription: billData.serviceTypeFromLOV.desc,
+      billerId: billData?.billerId,
+      serviceDescription: billData?.serviceTypeFromLOV?.desc,
       applyTax: 'N',
-      serviceId: billData.serviceTypeFromLOV.code,
-      groupPaymentId: billData.groupPaymentId,
-      paymentId: billData.paymentId,
-      dynamicFields: billData.dynamicFields,
+      serviceId: billData?.serviceTypeFromLOV?.code,
+      groupPaymentId: billData?.groupPaymentId,
+      paymentId: billData?.paymentId,
+      dynamicFields: billData?.dynamicFields,
       walletNumber: walletNumber,
       mobileNo: mobileNumber,
       otp: otp,
@@ -114,7 +80,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
 
     const apiResponse = await moiBillPayment(payLoad);
     if (apiResponse?.successfulResponse) {
-      setOtpSheetVisible(false)
+      setOtpSheetVisible(false);
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
         moiPaymentDetailes: billData,
         successMessage: 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
@@ -134,7 +100,6 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
 
   return {
     otpBottomSheetRef,
-    moiRefundBillSubList,
     moiPayBillSubList,
     handlePay,
     setOtp,
