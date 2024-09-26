@@ -12,14 +12,13 @@ import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import { PaymentType } from '@app/utilities';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { MOIItemProps } from '../moi-payment-refund-screen/moi-payment-refund.interface';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
 const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
-  const { moiBillData } = route.params || {};
   const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
@@ -94,13 +93,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     }
   };
 
-  const totalAmount = useMemo(
-    () =>
-      moiBillData?.find((item: { label: string }) => item.label === 'BILL_PAYMENTS.DUE_AMOUNT')?.value.split(' ')[0] ||
-      null,
-    [moiBillData],
-  );
-
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.MOI_PAYMENT" titleStyle={styles.screenTitle} />
@@ -117,7 +109,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
           btnText="SADAD.PAY"
-          totalAmount={totalAmount}
+          totalAmount={billData?.totalFeeAmount}
           backgroundGradient={['transparent', 'transparent']}
           gradientViewStyle={styles.sadadFooterGradient}
           btnStyle={styles.sadadBtn}
