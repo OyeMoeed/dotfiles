@@ -1339,5 +1339,11 @@
     "SATISFACTION": "كم هو درجة رضاك",
     "ALINMA_PAY_APP": "بخصوص تطبيق ألما باي؟",
     "RATE_APP_NOW": "أعطنا تقييم"
+  },
+  "UPDATE": {
+    "HEADER": "",
+    "TITLE": "",
+    "SUBTITLE": "",
+    "BUTTON_TITLE": ""
   }
 }

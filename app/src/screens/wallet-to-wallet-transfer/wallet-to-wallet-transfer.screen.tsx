@@ -61,7 +61,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
-  const { isKeyboardOpen, isKeyboardWillOpen } = useKeyboardStatus();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
@@ -476,7 +476,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         enablePanDownToClose
         simpleBar
         isVisible={unSavedVisible}
-        customSnapPoint={isKeyboardWillOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XX_SMALL}
+        // customSnapPoint={isKeyboardWillOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XX_SMALL}
+        customSnapPoint={SNAP_POINT.MEDIUM}
         bold
         cancelBnt
         onCloseBottomSheet={onCloseSaveContact}
@@ -492,6 +493,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                 containerStyle={styles.phoneInputStyle}
                 mainContainerStyles={styles.phoneInputStyleMain}
                 maxLength={constants.UNSAVED_NUMBER_LENGTH}
+                autoFocus
               />
               <IPayButton
                 btnStyle={styles.padding}

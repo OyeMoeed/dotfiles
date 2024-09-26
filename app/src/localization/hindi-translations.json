@@ -260,5 +260,11 @@
     "SATISFACTION": "आपकी संतुष्टि क्या है",
     "ALINMA_PAY_APP": "आलिमा पे एप्प के बारे में?",
     "RATE_APP_NOW": "हमें रेट करें"
+  },
+  "UPDATE": {
+    "HEADER": "",
+    "TITLE": "",
+    "SUBTITLE": "",
+    "BUTTON_TITLE": ""
   }
 }

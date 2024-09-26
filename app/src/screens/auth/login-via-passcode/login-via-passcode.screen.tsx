@@ -69,7 +69,6 @@ const LoginViaPasscode: React.FC = () => {
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
   const [showForgotSheet, setShowForgotSheet] = useState<boolean>(false);
@@ -197,7 +196,10 @@ const LoginViaPasscode: React.FC = () => {
       );
       saveProfileImage(loginApiResponse?.response);
       redirectToHome();
+      return;
     }
+
+    setPasscodeError(true);
   };
 
   const login = async (passcode: string) => {
@@ -226,6 +228,7 @@ const LoginViaPasscode: React.FC = () => {
       };
 
       const prepareLoginApiResponse: any = await prepareLogin(prepareLoginPayload);
+
       if (prepareLoginApiResponse?.status.type === APIResponseType.SUCCESS) {
         dispatch(
           setAppData({
@@ -239,6 +242,7 @@ const LoginViaPasscode: React.FC = () => {
         renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
     } catch (error) {
+      setPasscodeError(true);
       renderToast('ERROR.SOMETHING_WENT_WRONG');
     }
   };
@@ -254,7 +258,6 @@ const LoginViaPasscode: React.FC = () => {
   const onEnterPassCode = (newCode: string) => {
     if (newCode.length <= 4) {
       if (passcodeError) setPasscodeError(false);
-      setPasscode(newCode);
       if (newCode.length === 4) login(newCode);
     }
   };

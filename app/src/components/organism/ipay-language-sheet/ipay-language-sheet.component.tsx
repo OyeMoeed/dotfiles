@@ -13,6 +13,7 @@ import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { JSX, forwardRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { setValueToAsyncStorage } from '@app/utilities';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import styles from './ipay-language-sheet.styles';
 import { IPayLanguageSheetProps, SelectedChangedLanguageProps } from './ipay-language.interface';
@@ -24,6 +25,7 @@ const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((
   const { colors } = useTheme();
   const sheetStyles = styles(colors);
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
+  const isAuthorized = useTypedSelector((state) => state.auth.isAuthorized);
 
   const [openAlert, setOpenAlert] = useState(false);
   const [selectChangedLanguage, setSelectChangedLanguage] = useState<SelectedChangedLanguageProps>({
@@ -43,6 +45,9 @@ const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((
   const changeMainLanguage = async () => {
     const { language, isRTL, code } = selectChangedLanguage;
     const deviceInfo = await getDeviceInfo();
+    if (isAuthorized) {
+      await setValueToAsyncStorage('skipLoginAfterLogin', 'true');
+    }
 
     const payLoad: ChangeLangPayloadProps = {
       walletNumber,
