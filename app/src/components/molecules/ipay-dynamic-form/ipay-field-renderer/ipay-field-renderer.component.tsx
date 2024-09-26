@@ -30,7 +30,7 @@ const DYNAMIC_FIELDS_CONFIGS = {
     keyboardType: 'numeric',
   },
 };
-const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleChange }) => {
+const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleParentLovChange }) => {
   const renderField = () => {
     // Replace "." with "_" to flatten the name
     const flatKey = field.index.replace(/\./g, '_');
@@ -82,13 +82,13 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                   label={field.label}
                   onSelectListItem={(selectedItem: string) => {
                     onChange(selectedItem);
-                    if (handleChange) handleChange(field.dependsOn, selectedItem);
+                    if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
                   }}
                   isSearchable={true}
                   testID={`${flatKey}-dropdown`}
                   labelKey="desc"
                   valueKey="code"
-                  disabled={field.disable}
+                  disabled={field.lovList === null ? true : field.lovList.length === 0}
                   errorMessage={errorMessage as string}
                 />
               );
@@ -129,15 +129,14 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
           <Controller
             name={flatKey}
             control={control}
-            defaultValue={field.value} // Converting the value to boolean
+            defaultValue={field.value}
             render={({ field: { value, onChange } }) => {
               return (
                 <IPayCheckboxTitle
                   heading={field.label}
                   isCheck={value}
                   onPress={() => {
-                    onChange(!value); // Toggle checkbox state
-                    if (handleChange) handleChange(field.dependsOn, !value);
+                    onChange(!value);
                   }}
                 />
               );

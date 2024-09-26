@@ -4,11 +4,11 @@ export interface DynamicField {
   onlyHijri: boolean | null;
   type: string;
   disable?: boolean;
-  dependsOn?:string;
+  dependsOn?: string;
   required: boolean;
   lovFilter3: string | null;
   billIdType: string | null;
-  childIndex: number | null;
+  childIndex: number | null | string;
   lovFilter2: string | null;
   maxAmount: number | null;
   value: string | null;
@@ -27,7 +27,7 @@ export interface DynamicField {
   orderIndex: string;
   lovList: Array<{
     code: string;
-    addtionalAttribute1: string;
+    addtionalAttribute1?: string;
     desc: string;
   }> | null;
   lOVType: string | null;
