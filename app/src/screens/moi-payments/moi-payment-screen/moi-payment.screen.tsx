@@ -249,15 +249,6 @@ const MoiPaymentScreen: React.FC = () => {
                     btnIconsDisabled
                   />
                 </IPayView>
-
-                <IPayButton
-                  btnText="NEW_SADAD_BILLS.INQUIRY"
-                  btnType={buttonVariants.PRIMARY}
-                  onPress={handleSubmit(onSubmit)}
-                  btnStyle={styles.inquiryBtn}
-                  large
-                  btnIconsDisabled
-                />
               </IPayView>
             </IPaySafeAreaView>
           );

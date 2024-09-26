@@ -27,7 +27,7 @@ import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { moiPaymentDetailes, successMessage, refund, subDetails } = route.params;
+  const { moiPaymentDetailes, successMessage, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const { showToast } = useToastContext();
@@ -57,27 +57,25 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   };
 
   const getDataToRender = () => {
-    // Step 1: Remove the object with id "1"
-    const updatedDetails = moiPaymentDetailes?.filter((item: { id: string }) => item.id !== '1');
+    const updatedPaymentDetails = moiPaymentDetailes?.dynamicFields?.filter((item: { id: string }) => item.id !== '1');
 
-    // Step 2: Update ids to maintain sequential order
-    const reorderedDetails = updatedDetails?.map((item: ItemProps, index: number) => ({
+    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
       ...item,
       id: (index + 1).toString(),
     }));
 
-    // Step 3: Add the new object with id "6" TODO
-    const newItem = {
-      id: '6',
-      label: 'Ref. Number',
-      value: 'FTA35346',
-      icon: icons.copy,
+    const serviceType = {
+      id: (updatedPaymentDetailsWithNewIds.length + 1).toString(),
+      label: t('PAY_BILL.SERVICE_TYPE'),
+      value: moiPaymentDetailes?.serviceTypeFromLOV?.desc,
+    };
+    const serviceProvider = {
+      id: (updatedPaymentDetailsWithNewIds.length + 2).toString(),
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
+      value: moiPaymentDetailes?.serviceProviderDesc?.desc,
     };
 
-    // Adding the new item and re-sorting the array
-    const detailsWithNewItem = refund ? reorderedDetails : [...reorderedDetails, newItem];
-    const finalDetails = detailsWithNewItem.sort((a: { id: number }, b: { id: number }) => a.id - b.id);
-    setPaymentDetails(finalDetails);
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
   };
 
   const onPressPayOtherBill = () => {

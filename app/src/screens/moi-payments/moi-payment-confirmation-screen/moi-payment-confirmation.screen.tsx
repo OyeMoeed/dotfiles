@@ -12,11 +12,14 @@ import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
 import { PaymentType } from '@app/utilities';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { MOIItemProps } from '../moi-payment-refund-screen/moi-payment-refund.interface';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
 const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
+  const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
   const { availableBalance, currentBalance, userContactInfo } = walletInfo;
@@ -24,21 +27,39 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { mobileNumber } = userContactInfo;
   const { billData, isRefund } = route?.params || {};
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-  const {
-    moiPaymentDetailes,
-    handlePay,
-    setOtp,
-    otp,
-    isLoading,
-    otpError,
-    setOtpError,
-    otpVerificationRef,
-    setOtpRef,
-    otpBottomSheetRef,
-  } = useMoiPaymentConfirmation(billData);
+
+  const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
+    useMoiPaymentConfirmation(billData);
+  const [paymentDetails, setPaymentDetails] = useState<MOIItemProps[]>([]);
   const { otpConfig } = useConstantData();
 
   const helpCenterRef = useRef<any>(null);
+
+  const getDataToRender = useCallback(() => {
+    const updatedPaymentDetails = billData?.dynamicFields?.filter((item: { id: string }) => item.id !== '1');
+
+    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
+      ...item,
+      id: (index + 1).toString(),
+    }));
+
+    const serviceType = {
+      id: (updatedPaymentDetailsWithNewIds.length + 1).toString(),
+      label: t('PAY_BILL.SERVICE_TYPE'),
+      value: billData?.serviceTypeFromLOV?.desc,
+    };
+    const serviceProvider = {
+      id: (updatedPaymentDetailsWithNewIds.length + 2).toString(),
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
+      value: billData?.serviceProviderDesc?.desc,
+    };
+
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
+  }, [billData]);
+
+  useEffect(() => {
+    getDataToRender();
+  }, [billData]);
 
   const onCloseBottomSheet = () => {
     setOtpSheetVisible(false);
@@ -68,19 +89,13 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.MOI_PAYMENT" titleStyle={styles.screenTitle} />
       <IPayView style={styles.container}>
-        {!isRefund && (
-          <IPayAccountBalance
-            balance={availableBalance}
-            availableBalance={currentBalance}
-            showRemainingAmount
-            topUpBtnStyle={styles.topUpButton}
-          />
-        )}
-        <IPayBillDetailsOption
-          data={moiPaymentDetailes}
-          showHeader={false}
-          optionsStyles={styles.moiPaymentDetailesTab}
+        <IPayAccountBalance
+          balance={availableBalance}
+          availableBalance={currentBalance}
+          showRemainingAmount
+          topUpBtnStyle={styles.topUpButton}
         />
+        <IPayBillDetailsOption data={paymentDetails} showHeader={false} optionsStyles={styles.moiPaymentDetailesTab} />
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent

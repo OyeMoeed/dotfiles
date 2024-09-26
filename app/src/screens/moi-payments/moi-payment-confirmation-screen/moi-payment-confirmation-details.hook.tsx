@@ -1,10 +1,9 @@
 import icons from '@app/assets/icons';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import ScreenNames from '@app/navigation/screen-names.navigation';
 import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
 
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
-import { MoiPaymentTypes } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -23,45 +22,13 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [otpRef, setOtpRef] = useState<string>('');
   const [apiError] = useState<string>('');
   const otpBottomSheetRef = useRef<any>(null);
   const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const moiPaymentDetailes: MoiPaymentDetail[] = [
-    {
-      id: '1',
-      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
-      value: billData?.totalFeeAmount ? `${billData.totalFeeAmount} ${t('COMMON.SAR')}` : '',
-    },
-    {
-      id: '2',
-      label: t('BILL_PAYMENTS.SERVICE_PROVIDER'),
-      value: billData?.serviceProviderFromLOV?.billerDesc ?? '',
-    },
-    {
-      id: '3',
-      label: t('BILL_PAYMENTS.SERVICE_TYPE'),
-      value: billData?.serviceTypeFromLOV?.serviceDesc ?? '',
-    },
-    {
-      id: '4',
-      label: t('BILL_PAYMENTS.BENEFICIARY_ID'),
-      value: billData?.dynamicFields[0]?.value ?? '',
-    },
-    {
-      id: '5',
-      label: t('BILL_PAYMENTS.LICENSE_TYPE'),
-      value: billData?.serviceTypeFromLOV?.serviceDesc ?? '',
-    },
-    {
-      id: '6',
-      label: t('BILL_PAYMENTS.DURATION'),
-      value: billData?.duration ?? '',
-    },
-  ];
 
   const moiPayBillSubList: MoiPaymentDetail[] = [
     {
@@ -92,63 +59,29 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
     },
   ];
 
-  const moiRefundBillSubList: MoiPaymentDetail[] = [
-    {
-      id: '1',
-      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
-      value: '500 SAR',
-    },
-    {
-      id: '2',
-      label: t('BILL_PAYMENTS.SERVICE_PROVIDER'),
-      value: 'Expatriate Services',
-    },
-    {
-      id: '3',
-      label: t('BILL_PAYMENTS.SERVICE_TYPE'),
-      value: 'Renewal of residence',
-    },
-    {
-      id: '4',
-      label: t('BILL_PAYMENTS.VIOLATION_NUBMER'),
-      value: '1965873233',
-    },
-    {
-      id: '5',
-      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
-      value: '14/03/2023 - 15:30',
-    },
-    {
-      id: '6',
-      label: t('COMMON.REF_NUM'),
-      value: 'FAT35346',
-      icon: icons.copy,
-    },
-  ];
-
   const onConfirm = async () => {
     const payLoad = {
+      billerId: billData?.billerId,
+      serviceId: billData?.serviceTypeFromLOV?.code,
+      dynamicFields: billData?.dynamicFields,
       billIdType: '',
-      moiBillPaymentType: MoiPaymentTypes.PAYMENT,
-      amount: billData.totalFeeAmount,
-      billerId: billData.billerId,
-      serviceDescription: billData.serviceTypeFromLOV.desc,
+      moiBillPaymentType: 'REFUND',
+      amount: '',
+      serviceDescription: 'Extend Visitor Visa',
       applyTax: 'N',
-      serviceId: billData.serviceTypeFromLOV.code,
       groupPaymentId: billData.groupPaymentId,
       paymentId: billData.paymentId,
-      dynamicFields: billData.dynamicFields,
       walletNumber,
       mobileNo: mobileNumber,
       otp,
       otpRef,
     };
-
+    setOtpSheetVisible(false);
     const apiResponse = await moiBillPayment(payLoad);
     if (apiResponse?.successfulResponse) {
-      otpBottomSheetRef?.current?.close();
+      otpBottomSheetRef.current?.close();
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
-        moiPaymentDetailes,
+        moiPaymentDetailes: billData,
         successMessage: 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
         subDetails: moiPayBillSubList,
       });
@@ -166,8 +99,6 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
 
   return {
     otpBottomSheetRef,
-    moiPaymentDetailes,
-    moiRefundBillSubList,
     moiPayBillSubList,
     handlePay,
     setOtp,
@@ -178,6 +109,8 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
     apiError,
     otpVerificationRef,
     setOtpRef,
+    isOtpSheetVisible,
+    setOtpSheetVisible,
   };
 };
 
