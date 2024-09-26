@@ -18,8 +18,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { PaymentType } from '@app/utilities/enums.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useMoiPaymentConfirmation from '../moi-payment-confirmation-screen/moi-payment-confirmation-details.hook';
 import { MOIItemProps } from './moi-payment-refund.interface';
@@ -32,7 +31,6 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
   const styles = moiPaymentRefundStyles(colors);
   const [refundPaymentDetails, setRefundPaymentDetails] = useState<MOIItemProps[]>([]);
   const [otpRef, setOtpRef] = useState<string>('');
-  const otpBottomSheetRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
   const { showToast } = useToastContext();
   const { billData } = route?.params || {};
@@ -69,21 +67,26 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
     helpCenterRef?.current?.present();
   };
 
-  const onPressConfirm = () => {
-    otpBottomSheetRef?.current?.present();
-  };
-
   const getDataToRender = useCallback(() => {
-    // Remove the item with id '1'
-    const updatedPaymentDetails = moiBillData?.filter((item: { id: string }) => item.id !== '1');
+    const updatedPaymentDetails = billData?.dynamicFields?.filter((item: { id: string }) => item.id !== '1');
 
-    // Update the ids accordingly
     const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
       ...item,
       id: (index + 1).toString(),
     }));
 
-    setRefundPaymentDetails(updatedPaymentDetailsWithNewIds);
+    const serviceType = {
+      id: (updatedPaymentDetailsWithNewIds.length + 1).toString(),
+      label: t('PAY_BILL.SERVICE_TYPE'),
+      value: billData?.serviceTypeFromLOV?.desc,
+    };
+    const serviceProvider = {
+      id: (updatedPaymentDetailsWithNewIds.length + 2).toString(),
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
+      value: billData?.serviceProviderDesc?.desc,
+    };
+
+    setRefundPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
   }, [moiBillData]);
 
   const onPressCompletePayment = async () => {
@@ -155,14 +158,6 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
     getDataToRender();
   }, [moiBillData]);
 
-  const totalAmount = useMemo(
-    () =>
-      moiBillData
-        ?.find((item: { label: string }) => item.label === t('BILL_PAYMENTS.DUE_AMOUNT'))
-        ?.value.split(' ')[0] || null,
-    [moiBillData],
-  );
-
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.REFUND_BILLS" />
@@ -177,7 +172,7 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
           btnText="COMMON.CONFIRM"
-          totalAmount={totalAmount}
+          totalAmount={billData?.totalFeeAmount}
           btnRightIcon={<IPayIcon size={20} color={colors.natural.natural0} />}
           totalAmountText="LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND"
           backgroundGradient={[colors.transparent, colors.transparent]}

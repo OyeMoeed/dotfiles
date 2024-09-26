@@ -50,7 +50,7 @@ const MoiPaymentScreen: React.FC = () => {
     onGetBillers();
   }, []);
 
-  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+  const { defaultValues, validationSchema } = useDynamicForm(fields);
 
   const onGetBillers = async () => {
     const deviceInfo = await getDeviceInfo();
@@ -156,9 +156,13 @@ const MoiPaymentScreen: React.FC = () => {
     const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
     if (apiResponse?.successfulResponse) {
       const serviceTypeField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_TYPE);
+      const serviceProviderField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_PROVIDER);
       const serviceTypeFromLOV = serviceTypeField?.lovList.find((lov) => lov.code === selectedServiceType);
+      const serviceProviderDesc = serviceProviderField?.lovList.find((lov) => lov.code === selectedBiller);
       if (selectedTab === MoiPaymentTypes.REFUND) {
-        navigate(ScreenNames.MOI_PAYMENT_REFUND, { billData: apiResponse.response, dynamicFields, serviceTypeFromLOV });
+        navigate(ScreenNames.MOI_PAYMENT_REFUND, {
+          billData: { ...apiResponse.response, dynamicFields, serviceTypeFromLOV, serviceProviderDesc },
+        });
       } else {
         navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
           billData: { ...apiResponse.response, dynamicFields, serviceTypeFromLOV },
