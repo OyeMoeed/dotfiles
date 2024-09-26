@@ -6,7 +6,7 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
-import { hideForceUpdate, showForceUpdate } from '@app/store/slices/app-force-update-slice';
+import { showForceUpdate } from '@app/store/slices/app-force-update-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
@@ -35,10 +35,8 @@ const useSplashAnimations = () => {
     };
 
     const apiResponse: any = await prepareLogin(prepareLoginPayload);
-    if (apiResponse.status?.code === 'E430995') {
+    if (apiResponse?.status?.code === 'E430995') {
       dispatch(showForceUpdate());
-    } else {
-      dispatch(hideForceUpdate());
     }
   };
   const handleNavigation = async () => {
