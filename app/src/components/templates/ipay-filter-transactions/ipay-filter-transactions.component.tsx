@@ -1,7 +1,7 @@
 import { IPayCaption1Text, IPayDatePicker, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, buttonVariants, FiltersType } from '@app/utilities/enums.util';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { IPayAnimatedTextInput, IPayButton, IPayTextInput } from '@app/components/molecules';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -18,6 +18,7 @@ import LocalTransferBeneficiariesMockProps from '@app/network/services/local-tra
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import LocalBeneficiaryMetaMockProps from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.interface';
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
+import useConstantData from '@app/constants/use-constants';
 import IPayFilterTransactionsStyles from './ipay-filter-transactions.styles';
 import { IPayFilterTransactionsProps } from './ipay-filter-transactions.interface';
 
@@ -68,7 +69,7 @@ const IPayControlledDatePicker = ({
       render={({ field: { onChange, value } }) => (
         <IPayTextInput
           label={label}
-          editable
+          editable={false}
           text={value}
           showLeftIcon
           leftIcon={listCheckIcon}
@@ -96,6 +97,7 @@ const IPayFilterTransactions = ({
   showAmountFilter,
   showDateFilter,
   showBeneficiaryFilter = false,
+  showGiftFilters = false,
   onSubmit,
   defaultValues,
   heading,
@@ -114,8 +116,13 @@ const IPayFilterTransactions = ({
   const [transactionTypes, setTransactionTypes] = useState<ListItem[]>([]);
   const [beneficiaryData, setBeneficiaryData] = useState<ListItem[]>([]);
   const [bankList, setBankList] = useState<ListItem[]>([]);
-
   const [isCardFilterVisible, setIsCardFilterVisible] = useState<boolean | undefined>(false);
+
+  // Todo: replace dummy data with real
+  const { sendGiftBottomFilterData } = useConstantData();
+
+  const [giftStatus, setGiftStatus] = useState<ListItem[]>(sendGiftBottomFilterData[0].filterValues);
+  const [giftOccasion, setGiftOccasion] = useState<ListItem[]>(sendGiftBottomFilterData[1].filterValues);
 
   const {
     getValues,
@@ -127,6 +134,20 @@ const IPayFilterTransactions = ({
   } = useForm({
     defaultValues,
   });
+
+  const onContactsList = useCallback(
+    () =>
+      contacts?.map((item: any, index: any) => ({
+        id: index,
+        key: index,
+        displayValue: item?.givenName,
+        value: item?.phoneNumbers[0]?.number,
+        description: item?.phoneNumbers[0]?.number,
+      })),
+    [contacts],
+  );
+
+  const mappedContacts = useMemo(() => onContactsList(), [onContactsList]);
 
   const getTransactionTypesData = async () => {
     const apiResponse: any = await getTransactionTypes();
@@ -185,6 +206,7 @@ const IPayFilterTransactions = ({
 
   const onPressDone = () => {
     reset();
+    setIsCardFilterVisible(false);
     setShowFromDatePicker(false);
     setShowToDatePicker(false);
   };
@@ -219,7 +241,8 @@ const IPayFilterTransactions = ({
       const dateRange = data?.dateFrom || data?.dateTo ? `${data?.dateFrom} - ${data?.dateTo}` : '';
       if (dateRange && dateRange.length > 0) mapFilterTags.set(dateRange, { dateFrom: '', dateTo: '' });
 
-      const amountRange = data?.amountFrom || data?.amountTo ? `${data?.amountFrom} - ${data?.amountTo}` : '';
+      const amountRange =
+        data?.amountFrom || data?.amountTo ? `${data?.amountFrom} - ${data?.amountTo} ${t('COMMON.SAR')}` : '';
       if (amountRange && amountRange.length > 0) mapFilterTags.set(amountRange, { amountFrom: '', amountTo: '' });
 
       const card = data?.card;
@@ -397,6 +420,50 @@ const IPayFilterTransactions = ({
     </>
   );
 
+  const renderGiftFilters = () => (
+    <>
+      <Controller
+        control={control}
+        name={FiltersType.STATUS}
+        render={({ field: { onChange, value } }) => (
+          <IPayDropdownSelect
+            data={giftStatus as ListItem[]}
+            selectedValue={value}
+            label="SEND_GIFT.STATUS"
+            onSelectListItem={(selectedItem: string) => {
+              onChange(selectedItem);
+            }}
+            isSearchable
+            testID="gift-status-dropdown"
+            labelKey="value"
+            valueKey="key"
+            containerStyle={styles.inputContainerStyle}
+            customSnapPoints={SNAP_POINT.MEDIUM_LARGE}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name={FiltersType.OCCASION}
+        render={({ field: { onChange, value } }) => (
+          <IPayDropdownSelect
+            data={giftOccasion as ListItem[]}
+            selectedValue={value}
+            label="SEND_GIFT.OCCASION"
+            onSelectListItem={(selectedItem: string) => {
+              onChange(selectedItem);
+            }}
+            testID="gift-occasion-dropdown"
+            labelKey="value"
+            valueKey="key"
+            containerStyle={styles.inputContainerStyle}
+            customSnapPoints={SNAP_POINT.MEDIUM_LARGE}
+          />
+        )}
+      />
+    </>
+  );
+
   const renderFilters = () => (
     <IPayView style={styles.inputContainer}>
       {showBeneficiaryFilter && rendeBeneficiaryFilters()}
@@ -422,13 +489,13 @@ const IPayFilterTransactions = ({
           )}
         />
       )}
-      {showContactsFilter && (
+      {(showContactsFilter || showGiftFilters) && (
         <Controller
           control={control}
           name={FiltersType.CONTACT_NUMBER}
           render={({ field: { onChange, value } }) => (
             <IPayDropdownSelect
-              data={contacts as ListItem[]}
+              data={mappedContacts as ListItem[]}
               selectedValue={value}
               label="WALLET_TO_WALLET.CONTACT_NUMBER_OR_NAME"
               onSelectListItem={(selectedItem: string) => onChange(selectedItem)}
@@ -466,6 +533,7 @@ const IPayFilterTransactions = ({
       )}
       {showAmountFilter && renderAmountFilter()}
       {showDateFilter && renderDateFilter()}
+      {showGiftFilters && renderGiftFilters()}
       <IPayView style={styles.buttonWrapper}>
         <IPayButton
           medium

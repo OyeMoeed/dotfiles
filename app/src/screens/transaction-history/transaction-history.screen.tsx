@@ -14,10 +14,9 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
@@ -34,7 +33,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     isShowCard = false,
     isShowAmount = true,
   } = route.params;
-  const { transactionHistoryFilterDefaultValues, w2WFilterData, w2WFilterDefaultValues } = useConstantData();
+  const { transactionHistoryFilterDefaultValues, w2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const { t } = useTranslation();
@@ -44,7 +43,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const [filterTags, setFilterTags] = useState<Map<any, any>>();
   const transactionRef = React.createRef<any>();
-  const filterRef = useRef<bottomSheetTypes>(null);
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
   const [appliedFilters, setAppliedFilters] = useState<FiltersArrayProps | null>(null);
@@ -69,25 +67,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       })),
     [cards],
   );
-
-  const onContactsList = useCallback(
-    () =>
-      contacts?.map((item: any, index: any) => ({
-        id: index,
-        key: index,
-        displayValue: item?.givenName,
-        value: item?.phoneNumbers[0]?.number,
-        description: item?.phoneNumbers[0]?.number,
-        heading: t('WALLET_TO_WALLET.CONTACT_NAME'),
-      })),
-    [contacts, t],
-  );
-
-  const mappedContacts = useMemo(() => onContactsList(), [onContactsList]);
-
-  const selectedFilterData = isW2WTransactions
-    ? w2WFilterData(onContactsList())
-    : transactionHistoryFilterDefaultValues;
 
   const getTransactionsData = async (filtersData?: any) => {
     setIsLoading(true);
@@ -302,7 +281,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
                 headingStyles={styles.chipHeading}
                 textValue={key as string}
                 icon={
-                  <IPayPressable onPress={() => onPressClose(key as string)}>
+                 <IPayPressable onPress={() => onPressClose(key as string)}>
                     <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
                   </IPayPressable>
                 }
@@ -335,36 +314,24 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       >
         <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
       </IPayBottomSheet>
-      {selectedFilterData && (
-        <>
-          {/* <IPayFilterBottomSheet
-            heading="TRANSACTION_HISTORY.FILTER"
-            defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
-            showAmountFilter={isShowAmount}
-            showDateFilter
-            ref={filterRef}
-            onSubmit={handleSubmit}
-            filters={selectedFilterData}
-          /> */}
 
-          <IPayFilterTransactions
-            // ref={filterRef}
-            heading="TRANSACTION_HISTORY.FILTER"
-            showAmountFilter={isShowAmount}
-            showDateFilter
-            showCardFilter={!isW2WTransactions}
-            cards={mappedCards ?? []}
-            showContactsFilter={isW2WTransactions}
-            contacts={mappedContacts ?? []}
-            showTypeFilter={!isW2WTransactions}
-            onSubmit={handleSubmit}
-            defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
-            isVisible={isFilterSheetVisible}
-            onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
-            setSelectedCard={(card: any) => setSelectedCard(card)}
-          />
-        </>
-      )}
+      <IPayFilterTransactions
+        // ref={filterRef}
+        heading="TRANSACTION_HISTORY.FILTER"
+        showAmountFilter={isShowAmount}
+        showDateFilter
+        showCardFilter={!isW2WTransactions}
+        cards={mappedCards ?? []}
+        showContactsFilter={isW2WTransactions}
+        contacts={contacts ?? []}
+        showTypeFilter={!isW2WTransactions}
+        onSubmit={handleSubmit}
+        defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
+        isVisible={isFilterSheetVisible}
+        onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
+        setSelectedCard={(card: any) => setSelectedCard(card)}
+      />
+
       <IPayAlert
         icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
         visible={noFilterResult}

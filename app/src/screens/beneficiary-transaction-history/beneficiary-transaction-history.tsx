@@ -249,17 +249,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
           onCloseBottomSheet={() => setShowTransactionSheet(false)}
         />
       </IPayPortalBottomSheet>
-      {/* <IPayFilterBottomSheet
-        heading="TRANSACTION_HISTORY.FILTER"
-        defaultValues={transferHistoryFilterDefaultValues}
-        showAmountFilter
-        showDateFilter
-        ref={filterRef}
-        filters={filtersList}
-        applySearchOn={[FiltersType.BANK_NAME_LIST]}
-        onSubmit={handleSubmit}
-      /> */}
-
       <IPayFilterTransactions
         // ref={filterRef}
         heading="TRANSACTION_HISTORY.FILTER"

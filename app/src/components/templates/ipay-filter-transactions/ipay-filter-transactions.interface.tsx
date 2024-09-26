@@ -26,6 +26,8 @@ export interface IPayFilterTransactionsProps {
 
   showBeneficiaryFilter?: boolean;
 
+  showGiftFilters?: boolean;
+
   transactionTypes?: any[] | undefined;
 
   currentCard?: CardInterface;
