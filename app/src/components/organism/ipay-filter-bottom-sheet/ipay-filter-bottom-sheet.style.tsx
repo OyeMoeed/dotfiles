@@ -30,6 +30,9 @@ const filtersStyles = (colors: typeof themeColors) =>
       borderRadius: spacing.CUSTOME_SCALE(22),
       backgroundColor: colors.natural.natural0,
     },
+    receiverName: {
+      marginBottom: moderateScale(8, 0.3),
+    },
     input: {
       borderRadius: moderateScale(24),
     },

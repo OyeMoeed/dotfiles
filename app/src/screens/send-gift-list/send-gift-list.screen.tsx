@@ -277,6 +277,7 @@ const SendGiftListScreen: React.FC = () => {
         isBottomDropdowns
         bottomFilters={sendGiftBottomFilterData}
         applySearchOn={[FiltersType.CONTACT_NUMBER]}
+        onReset={() => setFilters([])}
       />
     </IPaySafeAreaView>
   );

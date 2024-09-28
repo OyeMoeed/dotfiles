@@ -298,7 +298,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   label={label}
                   editable={editable}
                   value={value?.title ? extractTitleByValue(value?.title) : extractTitleByValue(value)}
-                  containerStyle={[styles.inputContainerStyle, inputStyle]}
+                  containerStyle={[styles.inputContainerStyle, styles.receiverName, inputStyle]}
                   inputStyle={styles.input}
                   showRightIcon
                   customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
@@ -411,28 +411,21 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             scrollEnabled={false}
             data={bottomFilters}
             renderItem={({ item: { type, label, icon, dropdownIcon } }) => (
-              <Controller
-                control={control}
-                name={type}
-                rules={{ required: true }}
-                render={() => (
-                  <IPayAnimatedTextInput
-                    label={label}
-                    editable={false}
-                    value={getValues(type)}
-                    containerStyle={styles.inputContainerStyle}
-                    showRightIcon
-                    customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
-                    onClearInput={() => {
-                      setCategory(type);
-                      setCurrentView(CurrentViewTypes.FILTER_VALUES);
-                    }}
-                    isError={!!errors[type]}
-                    assistiveText={errors[type] && t('COMMON.REQUIRED_FIELD')}
-                    onChangeText={() => {}}
-                    rightIcon={renderImage(type, icon)}
-                  />
-                )}
+              <IPayAnimatedTextInput
+                label={label}
+                editable={false}
+                value={getValues(type)?.title}
+                containerStyle={styles.inputContainerStyle}
+                showRightIcon
+                customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
+                onClearInput={() => {
+                  setCategory(type);
+                  setCurrentView(CurrentViewTypes.FILTER_VALUES);
+                }}
+                isError={!!errors[type]}
+                assistiveText={errors[type] && t('COMMON.REQUIRED_FIELD')}
+                onChangeText={() => {}}
+                rightIcon={renderImage(type, icon)}
               />
             )}
           />
