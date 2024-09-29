@@ -1,5 +1,4 @@
 import colors from '@app/styles/colors.const';
-import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { fonts } from '@app/styles/typography.styles';
 import { PayChannel } from '@app/utilities/enums.util';
@@ -36,7 +35,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       alignItems: 'center',
     },
     failedText: {
-      marginVertical: scaleSize(8),
+      marginVertical: moderateScale(8),
       color: themeColors.error.error500,
     },
     failedSubtitle: {
@@ -71,12 +70,12 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       marginBottom: moderateScale(24),
     },
     btnStyle: {
-      marginBottom: scaleSize(24),
+      marginBottom: moderateScale(24),
       justifyContent: 'center',
-      paddingVertical: scaleSize(14),
-      paddingHorizontal: scaleSize(20),
+      paddingVertical: moderateScale(14),
+      paddingHorizontal: moderateScale(20),
       backgroundColor: themeColors.primary.primary500,
-      borderRadius: scaleSize(20),
+      borderRadius: moderateScale(20),
     },
     text: {
       alignSelf: 'center',
@@ -85,7 +84,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     listContainer: {
       backgroundColor: themeColors.primary.primary10,
       width: '100%',
-      borderRadius: scaleSize(12),
+      borderRadius: moderateScale(12),
       marginBottom: moderateScale(8),
     },
 
@@ -96,7 +95,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     },
 
     innerLinearGradientView: {
-      borderRadius: scaleSize(48),
+      borderRadius: moderateScale(48),
       alignSelf: 'center',
       justifyContent: 'space-between',
       marginBottom: moderateScale(10),
@@ -149,17 +148,17 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     },
     newTopupText: {
       color: themeColors.primary.primary500,
-      marginLeft: scaleSize(6),
+      marginLeft: moderateScale(6),
     },
 
     appleIcon: {
       alignItems: 'center',
-      marginHorizontal: scaleSize(6),
+      marginHorizontal: moderateScale(6),
     },
     copyIcon: {
       alignItems: 'center',
-      marginLeft: scaleSize(6),
-      paddingRight: scaleSize(2),
+      marginLeft: moderateScale(6),
+      paddingRight: moderateScale(2),
     },
 
     detailesFlex: {
@@ -179,7 +178,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     },
     iconLabel: {
       flexDirection: 'row',
-      marginRight: scaleSize(2),
+      marginRight: moderateScale(2),
       alignItems: 'center',
       justifyContent: 'space-between',
     },
@@ -230,8 +229,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     walletListBackground: {
       backgroundColor: themeColors.backgrounds.greyOverlay,
       borderRadius: moderateScale(16),
-      paddingVertical: scaleSize(12),
-      paddingHorizontal: scaleSize(18),
+      paddingVertical: moderateScale(12),
+      paddingHorizontal: moderateScale(18),
       justifyContent: 'space-between',
       flexDirection: 'row',
     },
@@ -261,7 +260,7 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       paddingTop: moderateScale(24),
     },
     image: { width: moderateScale(120), height: moderateScale(120) },
-    amount: { flexDirection: 'row', alignItems: 'center', gap: scaleSize(2) },
+    amount: { flexDirection: 'row', alignItems: 'center', gap: moderateScale(2) },
     messagePreview: {
       marginHorizontal: moderateScale(12),
     },
