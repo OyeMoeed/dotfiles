@@ -114,6 +114,7 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import { IPayRatingSheet } from '@app/components/organism';
 
 const MainStack = createStackNavigator();
 
@@ -293,6 +294,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.TERMS_AND_CONDITIONS} component={AppTermsAndConditions} />
         </MainStack.Group>
       </MainStack.Navigator>
+      <IPayRatingSheet />
     </IPaySafeAreaView>
   );
 };

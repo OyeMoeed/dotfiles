@@ -65,7 +65,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
   const onSendAnotherGift = () => navigate(ScreenNames.SEND_GIFT);
   const onHome = () => navigate(ScreenNames.HOME);
 
-  const { totalAmount: giftAmount, notes, name } = transferDetails.formData[0];
+  const { totalAmount: giftAmount, notes } = transferDetails.formData[0];
 
   const formattedTransferDetails = transferDetails?.formData?.map((item) => {
     const commonDetails = [

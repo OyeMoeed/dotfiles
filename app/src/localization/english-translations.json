@@ -1528,6 +1528,12 @@
     "MUST_BE_TEXT": "{label} must be valid text",
     "MUST_BE_SELECTED": "{label} must be selected"
   },
+  "RATING": {
+    "APP_RATING": "App Rating",
+    "SATISFACTION": "How satisfied are you",
+    "ALINMA_PAY_APP": "with the AlinmaPay app?",
+    "RATE_APP_NOW": "Rate Us"
+  },
   "UPDATE": {
     "HEADER": "Update the app",
     "TITLE": "Update Required",
