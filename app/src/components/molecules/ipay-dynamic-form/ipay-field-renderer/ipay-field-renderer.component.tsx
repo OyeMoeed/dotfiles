@@ -1,4 +1,4 @@
-import { IPayDatePicker } from '@app/components/atoms';
+import { IPayCaption2Text, IPayDatePicker } from '@app/components/atoms';
 import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import { DateFieldTypes } from '@app/utilities';
@@ -64,6 +64,15 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                 testID={`${flatKey}-text-input`}
               />
             )}
+          />
+        );
+      case DYNAMIC_FIELDS_TYPES.LABEL:
+        return (
+          <Controller
+            name={flatKey} // Use the flattened key
+            control={control}
+            defaultValue={field.value}
+            render={({ field: { value } }) => <IPayCaption2Text regular text={value} />}
           />
         );
 

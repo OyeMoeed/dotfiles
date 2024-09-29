@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayCaption2Text, IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayContentNotFound, IPayHeader } from '@app/components/molecules';
 import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
 import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
@@ -116,6 +116,16 @@ const MoiPaymentScreen: React.FC = () => {
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
+      const benLabel = 'BILL_PAYMENTS.BENEFECIARY_DETAILS';
+      const beneficiaryLabel = [
+        {
+          index: benLabel,
+          integrationTagName: benLabel,
+          type: DYNAMIC_FIELDS_TYPES.LABEL,
+          value: benLabel,
+        },
+      ];
+
       const filteredFields = fetchedFields.filter((field) => {
         if (selectedTab === MoiPaymentTypes.REFUND) {
           return (
@@ -129,7 +139,7 @@ const MoiPaymentScreen: React.FC = () => {
         );
       });
 
-      const updatedFields = [...fields, ...filteredFields];
+      const updatedFields = [...fields, ...beneficiaryLabel, ...filteredFields];
 
       setFields(updatedFields);
     }
@@ -239,7 +249,6 @@ const MoiPaymentScreen: React.FC = () => {
 
                 <IPayView style={styles.contentContainer}>
                   <IPayView style={styles.dynamicFieldContainer}>
-                    <IPayCaption2Text regular text="BILL_PAYMENTS.BENEFECIARY_DETAILS" />
                     <DynamicFormComponent errors={errors} control={control} fields={fields} />
                   </IPayView>
                   <IPayButton
