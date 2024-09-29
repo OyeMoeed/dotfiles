@@ -1,12 +1,12 @@
 import { OsTypes, PermissionsStatus } from '@app/enums';
+import { IlocationDetails } from '@app/network/services/services.interface';
 import { showPermissionAlert } from '@app/store/slices/permission-alert-slice';
-import { useState, useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Platform } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 import { PERMISSIONS, request } from 'react-native-permissions';
 import { useDispatch } from 'react-redux';
-import Geolocation from 'react-native-geolocation-service';
-import { IlocationDetails } from '@app/network/services/services.interface';
-import { useTranslation } from 'react-i18next';
 
 const useLocation = () => {
   const { ready: isTranslationsLoaded } = useTranslation(undefined, {
@@ -25,7 +25,7 @@ const useLocation = () => {
     return request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE);
   }, []);
 
-  const handlePermissionStatus = (status: string): boolean => {
+  const handlePermissionStatus = (status: string, showAlert: boolean = true): boolean => {
     switch (status) {
       case PermissionsStatus.GRANTED:
         setPermissionStatus(PermissionsStatus.GRANTED);
@@ -40,7 +40,7 @@ const useLocation = () => {
         const description = t('LOCATION.LOCATION_PERMISSION_REQUIRED');
 
         setPermissionStatus(PermissionsStatus.BLOCKED);
-        dispatch(showPermissionAlert({ title, description }));
+        if (showAlert) dispatch(showPermissionAlert({ title, description }));
         return false;
       }
 
@@ -55,10 +55,10 @@ const useLocation = () => {
     }
   };
 
-  const checkPermission = async (): Promise<boolean> => {
+  const checkPermission = async (showAlert: boolean = true): Promise<boolean> => {
     try {
       const permission = await requestLocationPermission();
-      return handlePermissionStatus(permission);
+      return handlePermissionStatus(permission, showAlert);
     } catch (error) {
       setPermissionStatus(PermissionsStatus.UNAVAILABLE);
       return false;
@@ -66,39 +66,44 @@ const useLocation = () => {
   };
 
   useEffect(() => {
-    if (isTranslationsLoaded) checkPermission();
+    if (isTranslationsLoaded) {
+      checkPermission();
+    }
   }, []);
 
-  const fetchLocation = useCallback(async (): Promise<IlocationDetails | null> => {
-    const hasPermission = await checkPermission();
+  const fetchLocation = useCallback(
+    async (showAlert: boolean = true): Promise<IlocationDetails | null> => {
+      const hasPermission = await checkPermission(showAlert);
 
-    if (hasPermission) {
-      setIsFetchingLocation(true);
-      try {
-        const position = await new Promise<Geolocation.GeoPosition>((resolve, reject) => {
-          Geolocation.getCurrentPosition(resolve, reject, {
-            enableHighAccuracy: true,
-            timeout: 15000,
-            maximumAge: 10000,
+      if (hasPermission) {
+        setIsFetchingLocation(true);
+        try {
+          const position = await new Promise<Geolocation.GeoPosition>((resolve, reject) => {
+            Geolocation.getCurrentPosition(resolve, reject, {
+              enableHighAccuracy: true,
+              timeout: 15000,
+              maximumAge: 10000,
+            });
           });
-        });
 
-        const { latitude, longitude } = position.coords;
-        const locationDetails: IlocationDetails = {
-          latitude: latitude.toString(),
-          longitude: longitude.toString(),
-        };
-        setLocation(locationDetails);
-        return locationDetails;
-      } catch (error) {
-        setPermissionStatus(PermissionsStatus.UNAVAILABLE);
-        return null;
-      } finally {
-        setIsFetchingLocation(false);
+          const { latitude, longitude } = position.coords;
+          const locationDetails: IlocationDetails = {
+            latitude: latitude.toString(),
+            longitude: longitude.toString(),
+          };
+          setLocation(locationDetails);
+          return locationDetails;
+        } catch (error) {
+          setPermissionStatus(PermissionsStatus.UNAVAILABLE);
+          return null;
+        } finally {
+          setIsFetchingLocation(false);
+        }
       }
-    }
-    return null;
-  }, [permissionStatus]);
+      return null;
+    },
+    [permissionStatus],
+  );
 
   useEffect(() => {
     const fetchAndSetLocation = async () => {

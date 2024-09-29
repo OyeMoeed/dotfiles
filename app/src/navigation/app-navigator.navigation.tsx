@@ -5,7 +5,9 @@ import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-
 import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
 import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
+import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
 import IPayServiceErrorToast from '@app/components/organism/ipay-service-error-toast/ipay-service-error-toast.component';
+import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { hideDropdownSheet } from '@app/store/slices/dropdown-slice';
@@ -19,7 +21,6 @@ import { useTypedSelector } from '@store/store';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
 import { setTopLevelNavigator } from './navigation-service.navigation';
 
 const MainNavigation: React.FC = () => {
@@ -103,6 +104,7 @@ const MainNavigation: React.FC = () => {
 
       <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />
       <IPayUpdateBottomSheet />
+      <IPayLocationPermissionSheet />
     </>
   );
 };

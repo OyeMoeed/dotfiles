@@ -203,14 +203,14 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
-    const hasLocation = await checkAndHandlePermission();
+    const hasLocation = await checkAndHandlePermission(false);
     if (!hasLocation) {
       setPasscodeError(true);
       return;
     }
     setPasscodeError(false);
 
-    const location = await fetchLocation();
+    const location = await fetchLocation(false);
     if (!location) {
       setPasscodeError(true);
       return;

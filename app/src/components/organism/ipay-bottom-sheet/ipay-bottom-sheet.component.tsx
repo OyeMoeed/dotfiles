@@ -41,7 +41,7 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       testID,
       enableOverDrag,
       enableHandlePanningGesture,
-      stopCloseBackgroundPress,
+      stopCloseBackgroundPress = false,
     },
     ref,
   ) => {

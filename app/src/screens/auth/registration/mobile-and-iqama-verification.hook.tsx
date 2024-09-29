@@ -14,6 +14,7 @@ import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
+import { showPermissionModal } from '@app/store/slices/permission-alert-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -31,6 +32,7 @@ const useMobileAndIqamaVerification = () => {
   const { showToast } = useToastContext();
   const { t } = useTranslation();
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
+  const isPermissionModalVisible = useTypedSelector((state) => state.permissionAlertReducer.modalVisible);
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -177,10 +179,12 @@ const useMobileAndIqamaVerification = () => {
 
   const prepareTheLoginService = async (data: any) => {
     const { mobileNumber, iqamaId } = data;
-    const locationData = await fetchLocation();
+    const locationData = await fetchLocation(false);
     if (!locationData) {
+      if (!isPermissionModalVisible) dispatch(showPermissionModal());
       return;
     }
+
     setIsLoading(true);
     const deviceInfo: DeviceInfoProps = {
       ...(await getDeviceInfo()),
@@ -211,8 +215,9 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const hasLocation = await checkAndHandlePermission();
+    const hasLocation = await checkAndHandlePermission(false);
     if (!hasLocation) {
+      if (!isPermissionModalVisible) dispatch(showPermissionModal());
       return;
     }
     setOtpError(false);

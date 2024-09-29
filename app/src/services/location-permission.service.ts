@@ -39,10 +39,10 @@ export const useLocationPermission = () => {
   const title = t('LOCATION.PERMISSION_REQUIRED');
   const description = t('LOCATION.LOCATION_PERMISSION_REQUIRED');
 
-  const checkAndHandlePermission = async () => {
+  const checkAndHandlePermission = async (showAlert: boolean = true) => {
     const hasLocationPermission = await checkLocationPermission();
 
-    if (!hasLocationPermission) {
+    if (!hasLocationPermission && showAlert) {
       dispatch(showPermissionAlert({ title, description }));
       return false;
     }
