@@ -1,0 +1,60 @@
+import { AlinmaExpressTransactionsResponse } from './get-alinma_express_transactions.interface';
+
+const alinmaExpressTransactions: AlinmaExpressTransactionsResponse = {
+  status: {
+    code: 'I000000',
+    type: 'SUCCESS',
+    desc: 'TransferManagement.SpeedRemitanceTransfersInquiryService.getWesternUnionTransactions.messege.success',
+    sessionReference: 'SSPAYCbde1c6a47241400a95d06711658f81ce',
+    requestReference: '06851820381011026707',
+  },
+  response: {
+    fromDate: '2024-07-01',
+    toDate: '2024-07-15',
+    transactions: [
+      {
+        speedRemittanceReferenceNumber: 'SR123456',
+        fundTransferReferenceNumber: 'FT789012',
+        date: '2024-07-10',
+        status: 'SUCCESS',
+        statusDesc: 'Transaction successful',
+        beneficiaryName: 'John Doe',
+        country: 'US',
+        countryDesc: 'United States',
+        beneficiaryBank: 'BOFAUS3N',
+        beneficiaryBankDesc: 'Bank of America',
+        type: 'INTERNATIONAL',
+        typeDesc: 'International Remittance',
+        amount: '1000.00',
+        feeAmount: '10.00',
+        taxAmount: '5.00',
+        totalAmount: '1015.00',
+        currencyCode: 'USD',
+        currencyDesc: 'United States Dollar',
+      },
+      {
+        speedRemittanceReferenceNumber: 'SR789012',
+        fundTransferReferenceNumber: 'FT345678',
+        date: '2024-07-12',
+        status: 'SUCCESS',
+        statusDesc: 'Transaction successful',
+        beneficiaryName: 'Jane Smith',
+        country: 'CA',
+        countryDesc: 'Canada',
+        beneficiaryBank: 'TDCA1234',
+        beneficiaryBankDesc: 'TD Canada Trust',
+        type: 'DOMESTIC',
+        typeDesc: 'Domestic Remittance',
+        amount: '500.00',
+        feeAmount: '5.00',
+        taxAmount: '2.50',
+        totalAmount: '507.50',
+        currencyCode: 'CAD',
+        currencyDesc: 'Canadian Dollar',
+      },
+    ],
+  },
+  successfulResponse: true,
+};
+
+export default alinmaExpressTransactions;

@@ -141,9 +141,12 @@ const giftDetailsStyles = (themeColors: typeof colors) =>
     itemSeparatorStyle: {
       height: verticalScale(8),
     },
-    bottomView: {
+    viewShot: {
       flex: 1,
       marginTop: isTablet ? verticalScale(295) : verticalScale(230),
+    },
+    bottomView: {
+      flex: 1,
     },
     receiveAmountStyle: {
       fontSize: FONT_SIZE_40,

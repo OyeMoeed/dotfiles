@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images/index';
+import { RefreshIcon } from '@app/assets/svgs';
 import {
   IPayCaption1Text,
   IPayFootnoteText,
@@ -9,10 +10,12 @@ import {
   IPayLinearGradientView,
   IPayPressable,
   IPayProgressBar,
+  IPayScrollView,
   IPayText,
   IPayView,
 } from '@app/components/atoms';
 import { IPayButton, IPayGradientText, IPayPageDescriptionText, IPayPrimaryButton } from '@app/components/molecules';
+import { NAFATH_APP } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import {
@@ -27,14 +30,17 @@ import {
   updateWalletTierReq,
 } from '@app/network/services/core/nafath-verification/nafath-verification.service';
 import { getDeviceInfo } from '@app/network/utilities';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { store, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { useTranslation } from 'react-i18next';
+import { isAndroidOS, isIosOS } from '@app/utilities/constants';
 import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { openAppOrStore } from '@app/utilities/linking-utils';
+
 import { IPayNafathVerificationProps } from './ipay-nafath-verification.interface';
 import nafathVerificationStyles from './ipay-nafath-verification.style';
 
@@ -46,7 +52,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
   const { t } = useTranslation();
 
   const styles = nafathVerificationStyles(colors);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [nafathNumber, setNafathNumber] = useState<number>();
   const [duration, setDuration] = useState<number>();
   const [waitngScnds] = useState<number>(20);
@@ -87,7 +93,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     const apiResponse: any = await getNafathRandom(payLoad);
 
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      const nafathToken = Number.isNaN(apiResponse.response.token)
+      const nafathToken = !Number.isInteger(apiResponse.response.token)
         ? atob(apiResponse.response.token)
         : apiResponse.response.token;
 
@@ -120,7 +126,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     const body: IActivationAbsherReq = {
       walletNumber: walletInfo.walletNumber,
       walletTier: 'G',
-      poiNumber: walletInfo?.poiNumber,
+      poiNumber: walletInfo?.poiNumber || nafathObj.idNumber,
       poiExpiryDate: nafathObj.idExpiryDate,
       poiExpiryDateHijri: nafathObj.idExpiryDateHijri,
       birthDate: nafathObj.dateOfBirth,
@@ -152,13 +158,20 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
         walletTier: 'G',
         poiNumber: nafathObj.idNumber,
         poiType: nafathObj.idNumber,
+        fatherName: nafathObj.englishName.secondName,
+        grandFatherName: nafathObj.englishName.thirdName,
+        familyName: nafathObj.englishName.familyName,
+        fullName: nafathObj.englishName.fullName,
+        firstName: nafathObj.englishName.firstName,
+        nickName: `${nafathObj.englishName.fullName}#${nafathObj.arabicName.fullName}`,
       };
-      dispatch(
-        setWalletInfo({
-          ...walletInfo,
-          ...updatedValues,
-        }),
-      );
+
+      const newWalletValues = {
+        ...walletInfo,
+        ...updatedValues,
+      };
+
+      dispatch(setWalletInfo(newWalletValues));
 
       onCloseNafathVerificationSheet();
       navigate(screenNames.IDENTITY_SUCCESSFUL);
@@ -238,99 +251,128 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
     setStartInqiryInterval(false);
   };
 
+  const goToNafathApp = async (): Promise<void> => {
+    try {
+      if (isIosOS) {
+        await openAppOrStore(NAFATH_APP.IOS, `https://apps.apple.com/app/id${NAFATH_APP.IOS_ID}`);
+      } else if (isAndroidOS) {
+        await openAppOrStore(
+          `market://details?id=${NAFATH_APP.ANDROID}`,
+          `https://play.google.com/store/apps/details?id=${NAFATH_APP.ANDROID}`,
+        );
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error('Failed to open Nafath app:', error);
+    }
+  };
+
   return (
-    <IPayView testID={testID} style={styles.container}>
-      <IPayView style={styles.logoWrapper}>
-        <IPayImage image={images.nafathLogo} style={styles.nafathLogo} />
-      </IPayView>
-      {step === 1 ? (
-        <>
-          <IPayPageDescriptionText heading="PROFILE.NAFATH_VALIDATION" text="SETTINGS.NAFATH_VALIDATION_DESCRIPTION" />
-          <IPayPressable style={styles.downloadSection}>
-            <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.DOWNLOAD_NAFATH_ACCOUNT" />
-            <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
-          </IPayPressable>
-          <IPayPressable onPress={openTermsAndConditionModal} style={styles.disclaimer}>
-            <IPayFootnoteText color={colors.natural.natural900} text="SETTINGS.NAFATH_TERMS_AND_CONDITION" />
-            <IPayIcon icon={icons.infoIcon} size={20} />
-          </IPayPressable>
-          <IPayButton
-            btnType={buttonVariants.PRIMARY}
-            btnText="PROFILE.VALIDATE"
-            rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
-            onPress={() => getNafathRandomNumber()}
-            large
-            btnStyle={styles.btnStyle}
-          />
-        </>
-      ) : (
-        <>
-          <IPayPageDescriptionText heading="SETTINGS.VALIDATE_THROUGH_NAFAH" />
-          <IPayPressable style={styles.stepper}>
-            {renderStep('1')}
-            <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.OPEN_NAFATH_APP" />
-            <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
-          </IPayPressable>
-          <IPayView style={styles.stepTwo}>
-            <IPayView style={styles.flexRow}>
-              {renderStep('2')}
-              <IPayView>
-                <IPayHeadlineText style={styles.sectionText} text="HOME.SELECT_CODE" />
-                <IPayCaption1Text text="COMMON.INTO_NAFATH_APP" color={colors.primary.primary800} />
+    <IPayScrollView
+      testID={testID}
+      style={styles.container}
+      horizontal={false}
+      showsHorizontalScrollIndicator={false}
+      overScrollMode="never"
+      bounces={false}
+      contentContainerStyle={styles.contentContainerStyle}
+    >
+      <>
+        <IPayView style={styles.logoWrapper}>
+          <IPayImage image={images.nafathLogo} style={styles.nafathLogo} />
+        </IPayView>
+        {step === 1 ? (
+          <>
+            <IPayPageDescriptionText
+              heading="PROFILE.NAFATH_VALIDATION"
+              text="SETTINGS.NAFATH_VALIDATION_DESCRIPTION"
+            />
+            <IPayPressable onPress={goToNafathApp} style={styles.downloadSection}>
+              <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.DOWNLOAD_NAFATH_ACCOUNT" />
+              <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
+            </IPayPressable>
+            <IPayPressable onPress={openTermsAndConditionModal} style={styles.disclaimer}>
+              <IPayFootnoteText color={colors.natural.natural900} text="SETTINGS.NAFATH_TERMS_AND_CONDITION" />
+              <IPayIcon icon={icons.infoIcon} size={20} />
+            </IPayPressable>
+            <IPayButton
+              btnType={buttonVariants.PRIMARY}
+              btnText="PROFILE.VALIDATE"
+              rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
+              onPress={() => getNafathRandomNumber()}
+              large
+              btnStyle={styles.btnStyle}
+            />
+          </>
+        ) : (
+          <>
+            <IPayPageDescriptionText heading="SETTINGS.VALIDATE_THROUGH_NAFAH" />
+            <IPayPressable style={styles.stepper}>
+              {renderStep('1')}
+              <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.OPEN_NAFATH_APP" />
+              <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
+            </IPayPressable>
+            <IPayView style={styles.stepTwo}>
+              <IPayView style={styles.flexRow}>
+                {renderStep('2')}
+                <IPayView>
+                  <IPayHeadlineText style={styles.sectionText} text="HOME.SELECT_CODE" />
+                  <IPayCaption1Text text="COMMON.INTO_NAFATH_APP" color={colors.primary.primary800} />
+                </IPayView>
+              </IPayView>
+              <IPayLinearGradientView
+                locations={[0.1, 0.9]}
+                style={styles.verifiedCodeContainer}
+                gradientColors={colors.bottomsheetGradient}
+              >
+                {isExpired ? (
+                  <IPayPrimaryButton
+                    btnText="COMMON.SEND_NEW_CODE"
+                    large
+                    style={styles.resendButton}
+                    onPress={() => getNafathRandomNumber()}
+                    rightIcon={<RefreshIcon style={styles.refreshIcon} color={colors.natural.natural0} />}
+                  />
+                ) : (
+                  <IPayPressable style={styles.codeWrapper}>
+                    <IPayGradientText
+                      text={`${nafathNumber}`}
+                      shouldTranslate={false}
+                      yScale={28}
+                      gradientColors={colors.gradient1}
+                      fontSize={styles.linearGradientText.fontSize}
+                      fontFamily={styles.linearGradientText.fontFamily}
+                      style={styles.gradientTextSvg}
+                    />
+                  </IPayPressable>
+                )}
+              </IPayLinearGradientView>
+              <IPayView style={styles.expireSection}>
+                <IPayProgressBar
+                  colors={colors.gradientSecondary}
+                  onComplete={onTimerCompete}
+                  reverse
+                  showExpired={isExpired}
+                  intervalTime={duration}
+                />
+                <IPayText
+                  style={[styles.expireText, isExpired && styles.expireTextColor]}
+                  text={isExpired ? t('COMMON.CODE_HAS_EXPIRED') : `${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
+                  shouldTranslate={false}
+                />
               </IPayView>
             </IPayView>
-            <IPayLinearGradientView
-              locations={[0.1, 0.9]}
-              style={styles.verifiedCodeContainer}
-              gradientColors={colors.bottomsheetGradient}
-            >
-              {isExpired ? (
-                <IPayPrimaryButton
-                  btnText="COMMON.SEND_NEW_CODE"
-                  large
-                  style={styles.resendButton}
-                  onPress={() => getNafathRandomNumber()}
-                  rightIcon={<icons.dottedRefresh />}
-                />
-              ) : (
-                <IPayPressable style={styles.codeWrapper}>
-                  <IPayGradientText
-                    text={`${nafathNumber}`}
-                    shouldTranslate={false}
-                    yScale={28}
-                    gradientColors={colors.gradient1}
-                    fontSize={styles.linearGradientText.fontSize}
-                    fontFamily={styles.linearGradientText.fontFamily}
-                    style={styles.gradientTextSvg}
-                  />
-                </IPayPressable>
-              )}
-            </IPayLinearGradientView>
-            <IPayView style={styles.expireSection}>
-              <IPayProgressBar
-                colors={colors.gradientSecondary}
-                onComplete={onTimerCompete}
-                reverse
-                showExpired={isExpired}
-                intervalTime={duration}
-              />
-              <IPayText
-                style={[styles.expireText, isExpired && styles.expireTextColor]}
-                text={isExpired ? t('COMMON.CODE_HAS_EXPIRED') : `${t('COMMON.CODE_EXPIRES_IN')} ${format(counter)}`}
-                shouldTranslate={false}
-              />
-            </IPayView>
-          </IPayView>
-          <IPayPressable style={styles.stepper}>
-            {renderStep('3')}
-            <IPayView style={styles.backSection}>
-              <IPayHeadlineText style={styles.sectionText} text="PROFILE.BACK_TO_ALINMA_APP" />
-              <IPayCaption1Text text="PROFILE.VERIFY_ACCOUNT" color={colors.primary.primary800} />
-            </IPayView>
-          </IPayPressable>
-        </>
-      )}
-    </IPayView>
+            <IPayPressable style={styles.stepper}>
+              {renderStep('3')}
+              <IPayView style={styles.backSection}>
+                <IPayHeadlineText style={styles.sectionText} text="PROFILE.BACK_TO_ALINMA_APP" />
+                <IPayCaption1Text text="PROFILE.VERIFY_ACCOUNT" color={colors.primary.primary800} />
+              </IPayView>
+            </IPayPressable>
+          </>
+        )}
+      </>
+    </IPayScrollView>
   );
 };
 

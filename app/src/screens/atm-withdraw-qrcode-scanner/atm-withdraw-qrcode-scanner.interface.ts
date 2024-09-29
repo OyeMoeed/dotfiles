@@ -1,6 +1,6 @@
 interface Params {
   amount: string;
-  setTopUpAmount?: (value: Number) => {};
+  setTopUpAmount?: (value: string) => {};
 }
 
 export interface ATMWithdrawQRCodeScannerScreenProps {

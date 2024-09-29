@@ -25,13 +25,15 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
     voilatorID,
   } = useTrafficViolation();
 
+  const violations = billsData?.length === 1 ? t('TRAFFIC_VIOLATION.VIOLATION') : t('TRAFFIC_VIOLATION.VIOLATIONS');
+
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE} titleStyle={styles.screenTitle" />
+      <IPayHeader backBtn applyFlex title={t('TRAFFIC_VIOLATION.TITLE')} titleStyle={styles.screenTitle} />
       <IPayView style={styles.rowStyles}>
         <IPayList
           title="TRAFFIC_VIOLATION.VIOLATOR_ID"
-          detailText={`${billsData?.length} ${t('TRAFFIC_VIOLATION.VIOLATION')}`}
+          detailText={`${billsData?.length} ${violations}`}
           subTitle={voilatorID}
           isShowSubTitle
           showDetail
@@ -42,7 +44,7 @@ const TrafficVoilationIDRefundScreen: React.FC = () => {
         <IPayFootnoteText color={colors.primary.primary900} regular={false} text="TRAFFIC_VIOLATION.FOUND_VIOLATION" />
         <IPayButton
           btnIconsDisabled
-          btnText={selectedBillsCount === billsData?.length ? t('COMMON.DESELECT_ALL') : t('COMMON.SELECT_ALL')}
+          btnText={selectedBillsCount === billsData?.length ? 'COMMON.DESELECT_ALL' : 'COMMON.SELECT_ALL'}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={selectedBillsCount === billsData?.length ? deselectAllBills : selectAllBills}
         />

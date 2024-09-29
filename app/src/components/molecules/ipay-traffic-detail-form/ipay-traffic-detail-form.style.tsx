@@ -37,6 +37,9 @@ const trafficDetailStyles = (themeColors: typeof colors) =>
     checkBoxStyle: {
       marginRight: moderateScale(-2, 0.3),
     },
+    tabWrapper: {
+      gap: moderateScale(8),
+    },
   });
 
 export default trafficDetailStyles;

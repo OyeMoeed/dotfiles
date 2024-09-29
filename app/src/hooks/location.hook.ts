@@ -9,14 +9,14 @@ import { IlocationDetails } from '@app/network/services/services.interface';
 import { useTranslation } from 'react-i18next';
 
 const useLocation = () => {
+  const { ready: isTranslationsLoaded } = useTranslation(undefined, {
+    useSuspense: false,
+  });
   const { t } = useTranslation();
   const [permissionStatus, setPermissionStatus] = useState(PermissionsStatus.UNKNOWN);
   const [location, setLocation] = useState<IlocationDetails | null>(null);
   const [isFetchingLocation, setIsFetchingLocation] = useState(false);
   const dispatch = useDispatch();
-
-  const title = t('LOCATION.PERMISSION_REQUIRED');
-  const description = t('LOCATION.LOCATION_PERMISSION_REQUIRED');
 
   const requestLocationPermission = useCallback(async (): Promise<string> => {
     if (Platform.OS === OsTypes.ANDROID) {
@@ -35,10 +35,14 @@ const useLocation = () => {
         setPermissionStatus(PermissionsStatus.DENIED);
         return false;
 
-      case PermissionsStatus.BLOCKED:
+      case PermissionsStatus.BLOCKED: {
+        const title = t('LOCATION.PERMISSION_REQUIRED');
+        const description = t('LOCATION.LOCATION_PERMISSION_REQUIRED');
+
         setPermissionStatus(PermissionsStatus.BLOCKED);
         dispatch(showPermissionAlert({ title, description }));
         return false;
+      }
 
       case PermissionsStatus.LIMITED:
         setPermissionStatus(PermissionsStatus.LIMITED);
@@ -62,7 +66,7 @@ const useLocation = () => {
   };
 
   useEffect(() => {
-    checkPermission();
+    if (isTranslationsLoaded) checkPermission();
   }, []);
 
   const fetchLocation = useCallback(async (): Promise<IlocationDetails | null> => {
@@ -103,7 +107,7 @@ const useLocation = () => {
       }
     };
     fetchAndSetLocation();
-  }, [permissionStatus, fetchLocation]);
+  }, [permissionStatus, fetchLocation, isTranslationsLoaded]);
 
   return {
     permissionStatus,

@@ -11,7 +11,7 @@ import renderFilterInputImage from '@app/utilities/filter-sheet-helper.utils';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayBottomSheet } from '@components/organism/index';
 import moment from 'moment';
-import React, { forwardRef, useCallback, useImperativeHandle, useMemo, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { ScrollView } from 'react-native';
 import { useTranslation } from 'react-i18next';
@@ -41,6 +41,12 @@ const IPayControlledInput = ({ control, label, message, isError, name, required,
   const { colors } = useTheme();
   const styles = filtersStyles(colors);
 
+  const handleTextChange = (text: string, onChange: (value: string) => void) => {
+    // Allow only digits and decimal point on pasting
+    const filteredText = text.replace(/[^0-9.]/g, '');
+    onChange(filteredText);
+  };
+
   return (
     <Controller
       control={control}
@@ -49,10 +55,10 @@ const IPayControlledInput = ({ control, label, message, isError, name, required,
         <IPayAnimatedTextInput
           label={label}
           editable
-          inputMode="numeric"
+          inputMode="decimal"
           value={value}
           suffix={suffix}
-          onChangeText={onChange}
+          onChangeText={(text) => handleTextChange(text, onChange)}
           containerStyle={styles.amount}
           isError={isError}
           assistiveText={isError ? message : ''}
@@ -119,6 +125,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       doneText,
       customFiltersValue,
       handleCallback,
+      onWatch,
+      onReset,
     },
     ref,
   ) => {
@@ -140,17 +148,25 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       control,
       handleSubmit,
       setValue,
+      watch,
       reset,
       formState: { errors, isDirty },
     } = useForm({
       defaultValues,
     });
 
+    useEffect(() => {
+      const subscription = watch((value, { name, type }) => {
+        if (onWatch) onWatch(value, name, type);
+      });
+      return () => subscription.unsubscribe();
+    }, [watch]);
+
     const showFilters = () => {
       filterSheetRef?.current?.present();
     };
     const closeFilter = () => {
-      filterSheetRef?.current?.dismiss();
+      filterSheetRef?.current?.close();
     };
 
     const onSubmitEvent = (data: SubmitEvent) => {
@@ -163,8 +179,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         setAmountError(t('ERROR.AMOUNT_ERROR'));
         return;
       }
+
       filterSheetRef.current?.close();
-      filterSheetRef.current?.dismiss();
+
       if (onSubmit) onSubmit(data);
       setDateError('');
       setAmountError('');
@@ -201,6 +218,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       reset();
       setShowFromDatePicker(false);
       setShowToDatePicker(false);
+      onReset(true);
     };
 
     const scrollToBottom = () => {
@@ -279,7 +297,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                 <IPayAnimatedTextInput
                   label={label}
                   editable={editable}
-                  value={extractTitleByValue(value)}
+                  value={value?.title ? extractTitleByValue(value?.title) : extractTitleByValue(value)}
                   containerStyle={[styles.inputContainerStyle, inputStyle]}
                   inputStyle={styles.input}
                   showRightIcon
@@ -297,35 +315,6 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             />
           )}
         />
-        {showAmountFilter && (
-          <IPayView style={styles.amountCard}>
-            <IPayView style={styles.rowInputHeading}>
-              <IPayIcon icon={icons.amount} />
-              <IPayCaption1Text text="TRANSACTION_HISTORY.BY_AMOUNT" style={styles.rowInputHeadingText} />
-            </IPayView>
-
-            <IPayView style={styles.rowInput}>
-              <IPayControlledInput
-                label="TRANSACTION_HISTORY.FROM"
-                control={control}
-                suffix="COMMON.SAR"
-                isError={!!errors?.amountFrom}
-                message="COMMON.REQUIRED_FIELD"
-                name={FiltersType.AMOUNT_FROM}
-                required={!!getValues(FiltersType.AMOUNT_FROM)}
-              />
-              <IPayControlledInput
-                label="TRANSACTION_HISTORY.TO_INPUT"
-                control={control}
-                suffix="COMMON.SAR"
-                isError={!!amountError || !!errors?.amountTo}
-                message={amountError || t('COMMON.REQUIRED_FIELD')}
-                name={FiltersType.AMOUNT_TO}
-                required={!!getValues(FiltersType.AMOUNT_FROM)}
-              />
-            </IPayView>
-          </IPayView>
-        )}
 
         {showDateFilter && (
           <IPayView style={styles.dateHeading}>
@@ -383,6 +372,36 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   androidStyle={styles.datePickerAndroidStyle}
                 />
               )}
+            </IPayView>
+          </IPayView>
+        )}
+
+        {showAmountFilter && (
+          <IPayView style={styles.amountCard}>
+            <IPayView style={styles.rowInputHeading}>
+              <IPayIcon icon={icons.amount} />
+              <IPayCaption1Text text="TRANSACTION_HISTORY.BY_AMOUNT" style={styles.rowInputHeadingText} />
+            </IPayView>
+
+            <IPayView style={styles.rowInput}>
+              <IPayControlledInput
+                label="TRANSACTION_HISTORY.FROM"
+                control={control}
+                suffix="COMMON.SAR"
+                isError={!!errors?.amountFrom}
+                message="COMMON.REQUIRED_FIELD"
+                name={FiltersType.AMOUNT_FROM}
+                required={!!getValues(FiltersType.AMOUNT_FROM)}
+              />
+              <IPayControlledInput
+                label="TRANSACTION_HISTORY.TO_INPUT"
+                control={control}
+                suffix="COMMON.SAR"
+                isError={!!amountError || !!errors?.amountTo}
+                message={amountError || t('COMMON.REQUIRED_FIELD')}
+                name={FiltersType.AMOUNT_TO}
+                required={!!getValues(FiltersType.AMOUNT_FROM)}
+              />
             </IPayView>
           </IPayView>
         )}
@@ -448,9 +467,9 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                     scrollEnabled={false}
                     data={getFilteredData(currentFilter.filterValues)}
                     keyExtractor={(item: FilterValueTypes) => item.key}
-                    renderItem={({ item: { value: title, description, image, displayValue } }) => (
+                    renderItem={({ item: { value: title, description, image, displayValue, key } }) => (
                       <IPayList
-                        isShowIcon={value === title}
+                        isShowIcon={value?.title === title}
                         title={displayValue || title}
                         icon={checkMark}
                         isShowSubTitle={!!description}
@@ -459,7 +478,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                         style={styles.listStyle}
                         containerStyle={styles.input}
                         onPress={() => {
-                          onChange(title);
+                          onChange(key ? { title, key } : title);
                           setCurrentView(CurrentViewTypes.FILTERS);
                           setSearch('');
                         }}

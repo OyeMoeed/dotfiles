@@ -61,7 +61,8 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
       return (
         <IPayPressable
           activeOpacity={0.8}
-          testID={`${testID}-${index}`}
+          testID={`${testID}-${index}-i-pay-pressable`}
+          key={`${testID}-${index}-i-pay-pressable`}
           style={styles.passcodeIconTab}
           onPress={item === 'back' ? handleBackPress : onPressFaceID}
         >
@@ -121,7 +122,7 @@ const IPayPasscode: React.FC<IPayPasscodeProps> = ({
         numColumns={3}
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item, index) => index.toString()}
+        keyExtractor={(_, index) => `${index}-i-pay-pressable`}
         ItemSeparatorComponent={ItemSeparatorComponent}
       />
     </IPayView>

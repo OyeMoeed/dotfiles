@@ -2,11 +2,10 @@ import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput } from '@app/components/molecules';
 import { initializeDropdown, selectSelectedValue } from '@app/store/slices/dropdown-slice';
-import { RootState, useTypedDispatch } from '@app/store/store';
+import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect } from 'react';
 import { useController, useFormContext } from 'react-hook-form';
-import { useSelector } from 'react-redux';
 import { IPayDropdownComponentProps } from './ipay-dropdown.interface';
 import dropdownStyles from './ipay-dropdown.styles';
 
@@ -30,7 +29,8 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
       color={disabled ? colors.natural.natural500 : colors.primary.primary500}
     />
   );
-  const selectedValue = useSelector((state: RootState) => selectSelectedValue(state, dropdownType));
+
+  const selectedValue = useTypedSelector((state) => selectSelectedValue(state, dropdownType));
   const { control } = useFormContext();
   const { field } = useController({
     name,

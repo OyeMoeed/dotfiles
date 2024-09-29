@@ -7,7 +7,7 @@ import icons from '@app/assets/icons';
 import { buttonVariants } from '@app/utilities/enums.util';
 import physicalCardMainNoCardStyle from './physical-card-main-no-card.style';
 
-const PhysicalCardMainNoCardScreen: React.FC = () => {
+const PhysicalCardMainNoCardScreen: React.FC = ({ onPressIssueNewCard }) => {
   const { colors } = useTheme();
   const styles = physicalCardMainNoCardStyle(colors);
   return (
@@ -48,7 +48,7 @@ const PhysicalCardMainNoCardScreen: React.FC = () => {
           </IPayView>
           <IPayButton
             btnStyle={styles.btnStyle}
-            onPress={() => {}}
+            onPress={onPressIssueNewCard}
             large
             btnIconsDisabled
             btnType={buttonVariants.PRIMARY}

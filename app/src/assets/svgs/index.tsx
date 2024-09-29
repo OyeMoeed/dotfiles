@@ -39,6 +39,8 @@ import Send2Icon from './send-2.svg';
 import ShoppingCartIcon from './shopping-cart.svg';
 import TrashIcon from './trash.svg';
 import DottedRefresh from './refresh-dotted.svg';
+import EhsanIcon from './ehsan-icon.svg';
+import HeartGradientIcon from './heart-circle.svg';
 
 export {
   AlimapayLogo,
@@ -83,4 +85,6 @@ export {
   ShoppingCartIcon,
   TrashIcon,
   UserTick,
+  EhsanIcon,
+  HeartGradientIcon,
 };

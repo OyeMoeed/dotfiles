@@ -33,8 +33,8 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [pinCode, setPinCode] = useState<string>('');
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
 
   const getTitle = (selectedView: string) => {
     switch (selectedView) {

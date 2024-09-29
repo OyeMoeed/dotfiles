@@ -27,9 +27,9 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import getTotalAmount from '@app/utilities/total-amount-utils';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React from 'react';
-import getTotalAmount from '@app/utilities/total-amount-utils';
 import { useTranslation } from 'react-i18next';
 import { IW2WTransferSummaryItem, ParamsProps } from './create-money-request-summary.interface';
 import createMoneyRequestSummaryStyles from './create-money-request-summary.styles';
@@ -194,7 +194,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
-      <IPayHeader backBtn title="TRANSFER_SUMMARY.TITLE" applyFlex />
+      <IPayHeader backBtn title="REQUEST_SUMMARY.SUMMARY" applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>

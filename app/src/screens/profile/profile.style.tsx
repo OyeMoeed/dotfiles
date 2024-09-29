@@ -58,6 +58,7 @@ const profileStyles = (colors: any) =>
     },
     personalInfoCardTitleText: {
       color: colors.natural.natural900,
+      width: '40%',
     },
 
     body1: { marginHorizontal: moderateScale(24), marginVertical: verticalScale(32) },
@@ -82,7 +83,7 @@ const profileStyles = (colors: any) =>
     subHeadline: {
       color: colors.primary.primary800,
       marginStart: moderateScale(8, 0.3),
-      width: scale(175),
+      width: '60%',
       textAlign: 'right',
     },
     listStyle: {

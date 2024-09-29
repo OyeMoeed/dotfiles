@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayChip, IPayHeader } from '@app/components/molecules';
+import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
@@ -28,9 +28,11 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, FiltersType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SNAP_POINT } from '@app/constants/constants';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import {
@@ -58,11 +60,12 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   const [appliedFilters, setAppliedFilters] = useState<BeneficiaryData>({});
   const [beneficiaryData, setBeneficiaryData] = useState<BeneficiaryDetails[]>([]);
   const [bankList, setBankList] = useState<LocalBank[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { showToast } = useToastContext();
 
   const tabOptions = [t('COMMON.SENT'), t('COMMON.RECEIVED')];
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const openBottomSheet = (item: BeneficiaryTransactionItemProps) => {
     const calculatedSnapPoint = [heightMapping[item?.transactionType], '100%'];
@@ -197,11 +200,13 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
   };
 
   const getLocalTransactionsData = async (beneficiaryFilters: BeneficiaryData) => {
+    setIsLoading(true);
     await Promise.all([
       getBeneficiariesHistory(TransactionTypes.COUT_ALINMA, beneficiaryFilters),
       getBeneficiariesHistory(TransactionTypes.COUT_SARIE, beneficiaryFilters),
       getBeneficiariesHistory(TransactionTypes.COUT_IPS, beneficiaryFilters),
     ]);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -269,6 +274,20 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     removeFilter(text, appliedFilters);
   };
 
+  const ListEmptyComponent = useCallback(() => {
+    if (isLoading) {
+      return <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />;
+    }
+    return (
+      <IPayNoResult
+        testID="no-results"
+        textColor={colors.primary.primary800}
+        message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
+        showEmptyBox
+      />
+    );
+  }, [colors.primary.primary800, isLoading]);
+
   return (
     <IPaySafeAreaView testID="transaction-section" style={styles.container}>
       <IPayHeader
@@ -330,6 +349,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
               transaction={item}
             />
           )}
+          ListEmptyComponent={ListEmptyComponent}
         />
       </IPayView>
       <IPayBottomSheet

@@ -23,6 +23,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import IPayBeneficiariesSortSheet from '@app/components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { useKeyboardStatus } from '@app/hooks';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import deleteLocalTransferBeneficiary from '@app/network/services/local-transfer/delete-beneficiary/delete-beneficiary.service';
@@ -44,9 +45,8 @@ import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useFocusEffect } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Keyboard, ViewStyle } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { useKeyboardStatus } from '@app/hooks';
+import { Keyboard, ViewStyle } from 'react-native';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import { BeneficiaryDetails } from './local-transfer.interface';
 import localTransferStyles from './local-transfer.style';
@@ -54,7 +54,7 @@ import localTransferStyles from './local-transfer.style';
 const LocalTransferScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { isKeyboardOpen } = useKeyboardStatus();
+  const { isKeyboardWillOpen } = useKeyboardStatus();
   const styles = localTransferStyles(colors);
   const beneficiariesToShow = 4;
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
@@ -64,7 +64,6 @@ const LocalTransferScreen: React.FC = () => {
   const [search, setSearch] = useState<string>('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
   const { showToast } = useToastContext();
-  const editNickNameSheetRef = useRef<bottomSheetTypes>(null);
   const editBeneficiaryRef = useRef<any>(null);
   const selectedBeneficiaryRef = useRef<BeneficiaryDetails | null>(null);
   const [apiError, setAPIError] = useState<string>('');
@@ -172,9 +171,8 @@ const LocalTransferScreen: React.FC = () => {
         selectedBeneficiaryRef?.current?.beneficiaryCode || '',
         activateBeneficiaryPayload,
       );
-
+      setShowEditSheet(false);
       showUpdateBeneficiaryToast();
-      editNickNameSheetRef?.current?.close();
       getBeneficiariesData();
     } catch (error: any) {
       setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
@@ -186,7 +184,7 @@ const LocalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
     showToast({
       title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
-      subTitle: `${nickName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+      subTitle: `${selectedBeneficiary?.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
       isShowRightIcon: false,
       isShowLeftIcon: true,
       leftIcon: <TrashIcon style={styles.trashIcon} color={colors.natural.natural0} />,
@@ -471,7 +469,7 @@ const LocalTransferScreen: React.FC = () => {
             </IPayView>
             {hasBeneficiariesData() ? (
               <IPayView style={styles.listWrapper}>
-                <IPayScrollView showsVerticalScrollIndicator={false}>
+                <IPayScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
                   <IPayView
                     style={[
                       styles.activeInactiveListWrapper,
@@ -480,6 +478,8 @@ const LocalTransferScreen: React.FC = () => {
                   >
                     {!!getSortedData(BeneficiaryTypes.ACTIVE)?.length && (
                       <IPayFlatlist
+                        scrollEnabled={false}
+                        keyExtractor={(item, index) => `${item.fullName}-active-status-${index}`}
                         data={listData(viewAll.ACTIVATE, BeneficiaryTypes.ACTIVE)}
                         renderItem={beneficiaryItem}
                         ListHeaderComponent={() =>
@@ -494,9 +494,10 @@ const LocalTransferScreen: React.FC = () => {
                     )}
                     {!!getSortedData(BeneficiaryTypes.INACTIVE)?.length && (
                       <IPayFlatlist
+                        scrollEnabled={false}
+                        keyExtractor={(item, index) => `${item.fullName}-inactive-status-${index}`}
                         data={listData(viewAll.NEW_BENEFICIARY, BeneficiaryTypes.INACTIVE)}
                         renderItem={beneficiaryItem}
-                        keyExtractor={(item) => item.id}
                         ListHeaderComponent={() =>
                           renderHeader(
                             BeneficiaryTypes.INACTIVE,
@@ -589,8 +590,7 @@ const LocalTransferScreen: React.FC = () => {
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={isKeyboardOpen ? SNAP_POINT.SMALL : SNAP_POINT.XX_SMALL}
-        ref={editNickNameSheetRef}
+        customSnapPoint={isKeyboardWillOpen ? SNAP_POINT.SMALL : SNAP_POINT.XX_SMALL}
         isVisible={showEditSheet}
       >
         <IPayView style={styles.editStyles}>

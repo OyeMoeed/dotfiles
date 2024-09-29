@@ -1,6 +1,6 @@
 import { IPayView } from '@app/components/atoms';
 import { store } from '@app/store/store';
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { SpinnerVariant } from '@app/utilities/enums.util';
 import type { Meta, StoryObj } from '@storybook/react';
 import { Provider } from 'react-redux';
 import IPaySpinner from './ipay-spinner-component';
@@ -29,12 +29,12 @@ export const Basic: StoryObj<typeof IPaySpinner> = {};
 
 export const DefaultSpinner: StoryObj<typeof IPaySpinner> = {
   args: {
-    variant: spinnerVariant.DEFAULT,
+    variant: SpinnerVariant.DEFAULT,
   },
 };
 
 export const SpinnerWithText: StoryObj<typeof IPaySpinner> = {
   args: {
-    variant: spinnerVariant.TEXT,
+    variant: SpinnerVariant.TEXT,
   },
 };

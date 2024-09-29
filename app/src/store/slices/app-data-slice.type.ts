@@ -26,5 +26,7 @@ export interface AppDataInitialStateProps {
       hasGeneralNotification: boolean;
       hasOffersNotification: boolean;
     };
+    didUserRateApp?: boolean;
+    shouldShowRate?: boolean;
   };
 }

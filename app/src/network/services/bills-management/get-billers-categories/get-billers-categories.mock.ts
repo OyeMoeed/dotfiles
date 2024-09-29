@@ -7,6 +7,7 @@ const getBillersCategoriesMockResponse: GetBillersCategoriesResponseTypes = {
     desc: 'retail.msg.default.success',
     sessionReference: 'SSPAYC29bf4368e6c04861af0256da48d444a7',
     requestReference: '06851820381011026737',
+    translation: '',
   },
   response: {
     billerCategoryList: [

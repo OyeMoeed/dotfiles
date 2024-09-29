@@ -28,6 +28,7 @@ import bottomSheetModal from '@gorhom/bottom-sheet/lib/typescript/components/bot
 import React, { useEffect, useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
+import checkUserAccess from '@app/utilities/check-user-access';
 import cardManagementStyles from './card-management.style';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 
@@ -45,7 +46,7 @@ const CardManagementScreen: React.FC = () => {
   const [selectedCardName, setSelectedCardName] = useState('');
   const { isKeyboardOpen } = useKeyboardStatus();
   const styles = cardManagementStyles(colors);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const getCardImage = (cardType: string): any => {
     if (cardType.toLowerCase() === 'visa') {
@@ -180,9 +181,12 @@ const CardManagementScreen: React.FC = () => {
   };
 
   const onAddCard = () => {
-    navigate(ScreenNames.TOP_UP, {
-      topupChannel: PayChannel.CARD,
-    });
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      navigate(ScreenNames.TOP_UP, {
+        topupChannel: PayChannel.CARD,
+      });
+    }
   };
 
   return (

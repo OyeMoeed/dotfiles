@@ -71,7 +71,6 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'center',
-      marginBottom: moderateScale(16),
     },
     newTopupText: {
       color: themeColors.primary.primary500,
@@ -156,9 +155,11 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
     },
     giftText: {
+      marginHorizontal: moderateScale(24),
+      gap: moderateScale(20),
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginBottom: moderateScale(16),
+      marginBottom: moderateScale(18),
     },
     alinmaLogo: {
       height: moderateScale(24),
@@ -168,7 +169,7 @@ export const GiftTransferSuccessStyles = (themeColors: typeof colors) =>
       height: moderateScale(23),
       width: moderateScale(75),
     },
-    scrollViewStyle: { flex: 0, height: verticalScale(280) },
+    scrollViewStyle: { flex: 0, height: verticalScale(220) },
   });
 
 export default GiftTransferSuccessStyles;

@@ -33,6 +33,8 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { customInvalidateQuery, toggleAppRating } from '@app/utilities';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BeneficiaryDetailsProps, TransactionDetails } from './transfer-confirmation.interface';
 import transferConfirmationStyles from './transfer-confirmation.style';
@@ -43,8 +45,8 @@ const TransferConfirmation: React.FC = () => {
   const { t } = useTranslation();
   const { showToast } = useToastContext();
   const otpBottomSheetRef = useRef<any>(null);
-  const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { userContactInfo } = walletInfo;
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const { userContactInfo, walletNumber } = walletInfo;
   const { mobileNumber } = userContactInfo;
   const footerGradientColors = [colors.primary.primary100, colors.secondary.secondary100];
   const [beneficiaryData, setBeneficiaryData] = useState();
@@ -57,8 +59,6 @@ const TransferConfirmation: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: TransactionDetails }, 'params'>;
   const route = useRoute<RouteProps>();
-
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const {
     amount,
@@ -162,6 +162,8 @@ const TransferConfirmation: React.FC = () => {
       const apiResponse = await localTransferConfirm(walletNumber, payload);
       if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
         onCloseBottomSheet();
+        customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+        toggleAppRating();
         navigate(ScreenNames.TRANSFER_SUCCESS, {
           amount: apiResponse?.response?.amountCredited,
           beneficiaryNickName: apiResponse?.response?.beneficiaryName,
@@ -177,7 +179,7 @@ const TransferConfirmation: React.FC = () => {
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="LOCAL_TRANSFER.TRANSFER_CONFIRMATION" />
-      <IPayScrollView style={styles.container}>
+      <IPayScrollView style={styles.container} nestedScrollEnabled>
         <IPayLinearGradientView gradientColors={colors.bottomsheetGradient} style={styles.beneficiaryDetailsView}>
           <IPayView style={styles.beneficiaryBankDetailsView}>
             <IPayIcon icon={bankDetails?.icon} size={30} />
@@ -191,8 +193,9 @@ const TransferConfirmation: React.FC = () => {
           </IPayView>
           <IPayView style={styles.listView}>
             <IPayFlatlist
+              scrollEnabled={false}
               data={beneficiaryData}
-              keyExtractor={(_, index) => index.toString()}
+              keyExtractor={(item, index) => `${item.title}-${index}`}
               renderItem={renderBenificaryDetails}
               itemSeparatorStyle={StyleSheet.flatten(styles.itemSeparatorStyle)}
             />

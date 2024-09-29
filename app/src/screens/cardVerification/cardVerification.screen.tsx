@@ -1,7 +1,7 @@
 import { IPayView, IPayWebView } from '@app/components/atoms';
 import { IPayHeader } from '@app/components/molecules';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { navigate } from '@app/navigation/navigation-service.navigation';
+import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { PayChannel, TopupStatus } from '@app/utilities/enums.util';
@@ -25,20 +25,9 @@ const CardVerificationScreen: React.FC = () => {
 
   const route: any = useRoute();
   const { redirectUrl, transactionRefNumber } = route.params;
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  // const [trials, setTrials] = useState<number>(0);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [showWebView, setShowWebView] = useState<boolean>(true);
   let trial = 0;
-
-  // const handlePressPay = () => {
-  //   setProcessToast(false);
-  //   if (channel === PayChannel.APPLE) {
-  //     setTopUpAmount('');
-  //     navigate(screenNames.TOP_UP_SUCCESS, { topupChannel: PayChannel.APPLE, topupStatus: TopupStatus.SUCCESS });
-  //   } else {
-  //     navigate(screenNames.CARD_VERIFICATION);
-  //   }
-  // };
 
   const checkStatus = async () => {
     const payload: CheckStatusProp = {
@@ -75,7 +64,7 @@ const CardVerificationScreen: React.FC = () => {
         setTimeout(() => {
           checkStatus();
         }, 3000);
-      } else {
+      } else if (apiResponse?.response?.pmtResultCd === 'A') {
         navigate(screenNames.TOP_UP_SUCCESS, {
           topupChannel: PayChannel.CARD,
           topupStatus: TopupStatus.SUCCESS,
@@ -83,14 +72,18 @@ const CardVerificationScreen: React.FC = () => {
           summaryData: apiResponse,
           details,
         });
+      } else {
+        goBack();
       }
-    } else if (apiResponse) {
+    } else if (apiResponse?.response?.pmtResultCd === 'A') {
       navigate(screenNames.TOP_UP_SUCCESS, {
         topupChannel: PayChannel.CARD,
         topupStatus: TopupStatus.SUCCESS,
         summaryData: apiResponse,
         details,
       });
+    } else {
+      goBack();
     }
   };
 

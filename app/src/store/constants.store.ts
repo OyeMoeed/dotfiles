@@ -14,7 +14,8 @@ export const SLICE_NAMES = {
   DROPDOWN_SLICE: 'dropdownSlice',
   PERMISSION_ALERT_SLICE: 'permissionAlertSlice',
   RESET_STATE_SLICE: 'resetStateSlice',
-  NAFAT_VERIFICATION_SLICE: 'nafathVerificationSlice',
+  BOTTOM_SHEET_SLICE: 'bottomSheetSlice',
+  FORCE_UPDATE_SLICE: 'forceUpdateSlice',
 };
 
 export const WHITELISTED_DATA = ['appDataReducer', 'languageReducer', 'rearrangement', 'walletInfoReducer'];
