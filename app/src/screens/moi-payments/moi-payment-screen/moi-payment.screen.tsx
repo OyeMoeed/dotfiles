@@ -43,7 +43,8 @@ const MoiPaymentScreen: React.FC = () => {
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const invoiceSheetRef = useRef<bottomSheetTypes>(null);
-
+  const benLabel = 'BILL_PAYMENTS.BENEFECIARY_DETAILS';
+  const useID = t('BILL_PAYMENTS.USE_MY_ID');
   const handleTabSelect = useCallback(
     (tab: string) => {
       setSelectedTab(tab);
@@ -116,8 +117,7 @@ const MoiPaymentScreen: React.FC = () => {
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
-      const benLabel = 'BILL_PAYMENTS.BENEFECIARY_DETAILS';
-      const useID = t('BILL_PAYMENTS.USE_MY_ID');
+
       const beneficiaryLabel = [
         {
           index: benLabel,
@@ -160,7 +160,7 @@ const MoiPaymentScreen: React.FC = () => {
   };
 
   const onSubmit = async (data: any) => {
-    const excludedIndices = [MoiPaymentFormFields.SERVICE_TYPE, MoiPaymentFormFields.SERVICE_PROVIDER];
+    const excludedIndices = [MoiPaymentFormFields.SERVICE_TYPE, MoiPaymentFormFields.SERVICE_PROVIDER, benLabel, useID];
 
     const dynamicFields = fields
       .map((item) => {
