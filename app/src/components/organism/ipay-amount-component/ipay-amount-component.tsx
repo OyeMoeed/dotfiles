@@ -50,7 +50,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
   const [selectedCardObj, setSelectedCardObj] = useState<any>({});
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [, setAPIError] = useState<string>('');
-  const [, setRedirectUrl] = useState<string>('');
   const [selectedCardTypeId, setSelectedCardTypeId] = useState<string>('');
 
   const methodData: PaymentMethodData[] = [
@@ -158,7 +157,6 @@ const IPayAmount: React.FC<IPayAmountProps> = ({
       case ApiResponseStatusType.SUCCESS: {
         const paymentGateway = apiResponse?.response?.paymentGateway;
 
-        setRedirectUrl(apiResponse?.response?.redirectUrl);
         if (paymentGateway === 'CLICKPAY') {
           navigate(screenNames.CARD_VERIFICATION, {
             redirectUrl: apiResponse?.response?.redirectUrl,

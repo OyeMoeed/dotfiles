@@ -6,6 +6,7 @@ import get from 'lodash/get';
 import React from 'react';
 import { Controller } from 'react-hook-form';
 import IPayAnimatedTextInput from '../../ipay-animated-input-text/ipay-animated-input-text.component';
+import IPayCheckboxTitle from '../../ipay-checkbox-title/ipay-chekbox-title.component';
 import DynamicFieldRendererProps from './ipay-field-renderer.interface';
 
 const DYNAMIC_FIELDS_CONFIGS = {
@@ -42,6 +43,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
     const flatKey = field.index.replace(/\./g, '_');
     // let errorMessage
     // Fetch the error message before the switch statement
+    // eslint-disable-next-line no-underscore-dangle
     const errorMessage = get(control?._formState?.errors, `${flatKey}.message`, '');
 
     switch (field.type) {
@@ -87,7 +89,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                   onChange(selectedItem);
                   if (handleChange) handleChange(field.dependsOn, selectedItem);
                 }}
-                isSearchable={true}
+                isSearchable
                 testID={`${flatKey}-dropdown`}
                 labelKey="desc"
                 valueKey="code"
@@ -123,6 +125,25 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                 />
               );
             }}
+          />
+        );
+
+      case DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE:
+        return (
+          <Controller
+            name={flatKey}
+            control={control}
+            defaultValue={field.value} // Converting the value to boolean
+            render={({ field: { value, onChange } }) => (
+              <IPayCheckboxTitle
+                heading={field.label}
+                isCheck={value}
+                onPress={() => {
+                  onChange(!value); // Toggle checkbox state
+                  if (handleChange) handleChange(field.dependsOn, !value);
+                }}
+              />
+            )}
           />
         );
 

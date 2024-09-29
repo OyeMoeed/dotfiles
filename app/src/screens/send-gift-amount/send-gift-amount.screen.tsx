@@ -120,10 +120,19 @@ const SendGiftAmountScreen = ({ route }) => {
     Object.values(contactAmounts)
       .reduce((total, amount) => total + (amount ? parseFloat(amount) : 0), 0)
       .toFixed(2);
+
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
     setContacts((prevContacts) => {
       const updatedContacts = prevContacts.filter((contact) => contact.recordID !== contactId);
+
+      if (selectedTab === t('SEND_GIFT.MANUAL')) {
+        const calculateTotalManualAmountValue = updatedContacts.reduce((acc, contact) => {
+          const amount = contactAmounts[contact.recordID];
+          return { ...acc, [contact.recordID]: amount };
+        }, {});
+        setContactAmounts(calculateTotalManualAmountValue);
+      }
 
       // If no contacts are left, navigate back
       if (updatedContacts.length === 0) {
@@ -362,7 +371,7 @@ const SendGiftAmountScreen = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader title="SEND_GIFT.TITLE" applyFlex backBtn />
-      <IPayScrollView nestedScrollEnabled>
+      <IPayScrollView nestedScrollEnabled keyboardShouldPersistTaps="handled">
         <IPayView style={styles.container}>
           <IPayView>
             <IPayTopUpBox
@@ -395,6 +404,7 @@ const SendGiftAmountScreen = ({ route }) => {
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
+              keyboardShouldPersistTaps="always"
               ListFooterComponent={<ListFooterContacts />}
               showsVerticalScrollIndicator={false}
             />

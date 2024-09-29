@@ -6,6 +6,8 @@ import React, { JSX } from 'react';
 import { Text } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { isNumber, isUpperCase } from '@app/utilities';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { IPayTextProps } from './ipay-text.interface';
 import styles from './ipay-text.style';
 
@@ -25,6 +27,7 @@ const IPayText: React.FC<IPayTextProps> = ({
   varient = 'primary',
   fontWeight,
   shouldTranslate = true,
+  isLoading,
 }: IPayTextProps): JSX.Element => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -38,6 +41,10 @@ const IPayText: React.FC<IPayTextProps> = ({
   const isNeedTranslate =
     !isNumber(formattedText) && isUpperCase(formattedText) && formattedText?.length !== 0 && formattedText?.length > 1;
   const showText = isNeedTranslate && shouldTranslate ? t(formattedText) : formattedText;
+
+  if (isLoading) {
+    return <IPaySkeletonBuilder variation={IPaySkeletonEnums.TEXT} isLoading={isLoading} />;
+  }
 
   return (
     <Text

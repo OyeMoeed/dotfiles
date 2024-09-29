@@ -4,7 +4,7 @@ import { IPayHeader, SadadFooterComponent, useToastContext } from '@app/componen
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { IPayOtpVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -12,6 +12,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.interface';
 import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
 import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-bill/prepare-moi-bill.service';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -36,6 +37,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const [otpRefState, setOtpRefState] = useState<string>('');
   const [isSheetVisible, setIsSheetVisible] = useState(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
+  const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
   const { t } = useTranslation();
   const { variant, payOnly, violationDetails, isRefund, isViolationID, dynamicFields } = route.params;
@@ -112,6 +114,37 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     setIsSheetVisible(false);
   };
 
+  const topUpSelectionRef = React.createRef<any>();
+
+  const navigateTOAktharPoints = async () => {
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+  const closeBottomSheetTopUp = () => {
+    setTopUpOptionsVisible(false);
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
+  };
+
+  const topUpSelectionBottomSheet = () => {
+    setTopUpOptionsVisible(true);
+  };
+
   const handleOnPressHelp = () => {
     setHelpCenterVisible(true);
   };
@@ -171,6 +204,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
             monthlyIncomingLimit={limitsDetails?.monthlyIncomingLimit ?? 0}
             topUpBtnStyle={styles.topUpButton}
             gradientWidth={`${getBalancePercentage(currentBalance, availableBalance)}%`}
+            onPressTopup={topUpSelectionBottomSheet}
           />
         )}
         <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -233,6 +267,26 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         onCloseBottomSheet={onCloseHelpCenter}
       >
         <HelpCenterComponent />
+      </IPayPortalBottomSheet>
+
+      <IPayPortalBottomSheet
+        noGradient
+        heading="TOP_UP.ADD_MONEY_USING"
+        onCloseBottomSheet={closeBottomSheetTopUp}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
+        ref={topUpSelectionRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={topUpOptionsVisible}
+      >
+        <IPayTopUpSelection
+          testID="topUp-selection"
+          closeBottomSheet={closeBottomSheetTopUp}
+          topupItemSelected={topupItemSelected}
+        />
       </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );

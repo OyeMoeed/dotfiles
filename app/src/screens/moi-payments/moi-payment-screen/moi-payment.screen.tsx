@@ -27,8 +27,8 @@ import moiPaymentStyles from './moi-payment.style';
 const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
-  const [serviceProviderValue, setServiceProviderValue] = useState(null);
-  const [serviceTypeValue, setServiceTypeValue] = useState(null);
+  const [serviceProviderValue, setServiceProviderValue] = useState<string | null>(null);
+  const [serviceTypeValue, setServiceTypeValue] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [fields, setFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
@@ -42,11 +42,7 @@ const MoiPaymentScreen: React.FC = () => {
     [selectedTab],
   );
 
-  useEffect(() => {
-    onGetBillers();
-  }, []);
-
-  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+  const { defaultValues, validationSchema } = useDynamicForm(fields);
 
   const onGetBillers = async () => {
     const deviceInfo = await getDeviceInfo();
@@ -86,8 +82,13 @@ const MoiPaymentScreen: React.FC = () => {
       setFields(updatedFields);
     }
   };
+
+  useEffect(() => {
+    onGetBillers();
+  }, []);
+
   const onGetBillersServices = async (billerID?: string) => {
-    const apiResponse = await getBillersServiceProvider(billerID);
+    const apiResponse = await getBillersServiceProvider(billerID || '');
 
     if (apiResponse?.successfulResponse) {
       const serviceList = apiResponse?.response?.servicesList?.map((serviceItem: BillersService) => ({
@@ -97,6 +98,7 @@ const MoiPaymentScreen: React.FC = () => {
       }));
       return serviceList;
     }
+    return null;
   };
 
   const fetchFields = async (selectedBiller: string, selectedServiceType: string) => {
@@ -110,9 +112,7 @@ const MoiPaymentScreen: React.FC = () => {
     }
   };
 
-  const onSubmit = (data: any) => {
-    const originalData = revertFlatKeys(data);
-
+  const onSubmit = () => {
     if (selectedTab === MoiPaymentTypes.REFUND) {
       navigate(ScreenNames.MOI_PAYMENT_REFUND);
     } else {
@@ -150,15 +150,18 @@ const MoiPaymentScreen: React.FC = () => {
       fetchFields(serviceProviderValue, serviceTypeValue);
     }
   }, [serviceTypeValue]);
+
   return (
     <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
       {({ control, formState: { errors }, handleSubmit }) => {
         const {
-          [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
-          [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
+          [MoiPaymentFormFields.SERVICE_PROVIDER]: moiServiceProviderValue,
+          [MoiPaymentFormFields.SERVICE_TYPE]: moiServiceTypeValue,
+          // eslint-disable-next-line react-hooks/rules-of-hooks
         } = useWatch({ control });
-        setServiceProviderValue(serviceProviderValue);
-        setServiceTypeValue(serviceTypeValue);
+
+        setServiceProviderValue(moiServiceProviderValue || '');
+        setServiceTypeValue(moiServiceTypeValue || '');
 
         return (
           <IPaySafeAreaView>
@@ -166,7 +169,7 @@ const MoiPaymentScreen: React.FC = () => {
               backBtn
               onBackPress={() => navigate(ScreenNames.BILL_PAYMENTS_SCREEN)}
               applyFlex
-              title={'BILL_PAYMENTS.MOI_PAYMENT'}
+              title="BILL_PAYMENTS.MOI_PAYMENT"
               titleStyle={styles.screenTitle}
             />
             <IPayView style={styles.container}>
@@ -174,12 +177,12 @@ const MoiPaymentScreen: React.FC = () => {
 
               <IPayView style={styles.contentContainer}>
                 <IPayView style={styles.dynamicFieldContainer}>
-                  <IPayCaption2Text regular text={'BILL_PAYMENTS.BENEFECIARY_DETAILS'} />
+                  <IPayCaption2Text regular text="BILL_PAYMENTS.BENEFECIARY_DETAILS" />
                   <DynamicFormComponent errors={errors} control={control} fields={fields} />
                 </IPayView>
 
                 <IPayButton
-                  btnText={'NEW_SADAD_BILLS.INQUIRY'}
+                  btnText="NEW_SADAD_BILLS.INQUIRY"
                   btnType={buttonVariants.PRIMARY}
                   onPress={handleSubmit(onSubmit)}
                   btnStyle={styles.inquiryBtn}

@@ -133,6 +133,5 @@ export {
   IPayTransactionHistoryDetails,
   IPayUserAvatar,
   SadadFooterComponent,
-  useToastContext
+  useToastContext,
 };
-

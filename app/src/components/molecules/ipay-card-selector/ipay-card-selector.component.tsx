@@ -125,7 +125,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
         <IPayButton
           btnType={buttonVariants.OUTLINED}
           leftIcon={<IPayIcon icon={icons.add_bold} size={20} color={colors.primary.primary850} />}
-          btnText="TOP_UP.ADD_CARD"
+          btnText="MENU.ADD_CARD"
           onPress={onPressAddCard}
         />
       </IPayView>

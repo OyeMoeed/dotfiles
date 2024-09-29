@@ -27,6 +27,7 @@ const menuStyles = (theme: any) =>
     },
     profileNameText: {
       marginBottom: moderateScale(4),
+      textAlign: 'left',
     },
     profileImage: {
       width: verticalScale(60),
@@ -38,6 +39,7 @@ const menuStyles = (theme: any) =>
       flex: 1,
       marginHorizontal: moderateScale(16, 0.3),
       justifyContent: 'center',
+      textAlign: 'left',
     },
     menuItemView: {
       paddingHorizontal: moderateScale(18, 0.3),
@@ -52,6 +54,17 @@ const menuStyles = (theme: any) =>
     menuItemText: {
       flex: 1,
       marginStart: moderateScale(12),
+      textAlign: 'left',
+    },
+    termsAndConditionsView: {
+      paddingHorizontal: moderateScale(18, 0.3),
+      paddingVertical: moderateScale(10, 0.3),
+      borderRadius: moderateScale(50),
+      height: verticalScale(50),
+      backgroundColor: theme.backgrounds.grayButtonBackground,
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginTop: moderateScale(16),
     },
     separatorBar: {
       width: '100%',
@@ -68,6 +81,9 @@ const menuStyles = (theme: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       marginBottom: moderateScale(16),
+    },
+    showMenuProfile: {
+      textAlign: 'left',
     },
   });
 
