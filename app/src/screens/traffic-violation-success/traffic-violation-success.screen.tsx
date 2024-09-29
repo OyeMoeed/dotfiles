@@ -19,14 +19,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
   const { goToHome, declinedBillPayDetails, paidBilled, paymentDeclined, payOtherViolation } =
     useTrafficViolationSuccess();
   const route = useRoute();
-  const { payOnly, violationDetails, isRefund, isViolationID } = route.params;
-
-  const headingText = () => {
-    if (isRefund) {
-      return isViolationID ? 'TRAFFIC_VIOLATION.VIOLATION_SUCCESS' : 'TRAFFIC_VIOLATION.REFUND_SUCCESS';
-    }
-    return 'TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS';
-  };
+  const { payOnly, violationDetails } = route.params;
 
   const billPayDetailsData = [
     {
@@ -66,7 +59,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
       <IPayView style={styles.childContainer}>
         <IPaySuccess
           style={styles.minFlex}
-          headingText={headingText()}
+          headingText="TRAFFIC_VIOLATION.VIOLATION_PAID_SUCCESS"
           descriptionText={`${violationDetails?.amount ?? 0} ${t('COMMON.SAR')}`}
           descriptionStyle={[styles.boldStyles, styles.descriptionText]}
         />

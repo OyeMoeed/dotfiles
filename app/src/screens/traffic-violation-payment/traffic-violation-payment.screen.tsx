@@ -40,7 +40,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
   const { t } = useTranslation();
-  const { variant, payOnly, violationDetails, isRefund, isViolationID, dynamicFields } = route.params;
+  const { variant, payOnly, violationDetails, isViolationID, dynamicFields } = route.params;
 
   const { showToast } = useToastContext();
 
@@ -59,7 +59,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       deviceInfo,
       walletNumber,
     };
-    const paymentType = isRefund ? 'moi-refund' : 'moi';
+    const paymentType = 'moi';
     const apiResponse = await prepareMoiBill(paymentType, payLoad);
     if (apiResponse?.successfulResponse) {
       setOtpRefState(apiResponse?.response?.otpRef);
@@ -97,13 +97,12 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, {
             payOnly: !payOnly,
             violationDetails,
-            isRefund,
             isViolationID,
           });
         }
       } else {
         renderToast(t('ERROR.API_ERROR_RESPONSE'));
-        navigate(ScreenNames.BILL_PAYMENT_FAILED, { isRefund });
+        navigate(ScreenNames.BILL_PAYMENT_FAILED);
       }
     } catch (error: any) {
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
@@ -190,23 +189,17 @@ const TrafficViolationPaymentScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView style={styles.container}>
-      <IPayHeader
-        title={isRefund ? 'TRAFFIC_VIOLATION.REFUND_VIOLATION' : 'TRAFFIC_VIOLATION.TITLE'}
-        backBtn
-        applyFlex
-      />
+      <IPayHeader title="TRAFFIC_VIOLATION.TITLE" backBtn applyFlex />
       <IPayView style={styles.innerContainer}>
-        {!isRefund && (
-          <IPayAccountBalance
-            availableBalance={availableBalance ?? 0}
-            showRemainingAmount
-            balance={currentBalance ?? 0}
-            monthlyIncomingLimit={limitsDetails?.monthlyIncomingLimit ?? 0}
-            topUpBtnStyle={styles.topUpButton}
-            gradientWidth={`${getBalancePercentage(currentBalance, availableBalance)}%`}
-            onPressTopup={topUpSelectionBottomSheet}
-          />
-        )}
+        <IPayAccountBalance
+          availableBalance={availableBalance ?? 0}
+          showRemainingAmount
+          balance={currentBalance ?? 0}
+          monthlyIncomingLimit={limitsDetails?.monthlyIncomingLimit ?? 0}
+          topUpBtnStyle={styles.topUpButton}
+          gradientWidth={`${getBalancePercentage(currentBalance, availableBalance)}%`}
+          onPressTopup={topUpSelectionBottomSheet}
+        />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailsData} />
@@ -221,11 +214,10 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           onPressBtn={handleOTPVerify}
           style={styles.margins}
           totalAmount={violationDetails?.amount ?? 0}
-          btnText={isRefund ? 'TRAFFIC_VIOLATION.REFUND' : 'COMMON.PAY'}
+          btnText="COMMON.PAY"
           disableBtnIcons
           btnStyle={styles.payBtn}
           backgroundGradient={colors.appGradient.buttonBackground}
-          totalAmountText={isRefund && !isViolationID && 'TRAFFIC_VIOLATION.AMOUNT_REFUND'}
         />
       </IPayView>
       <IPayPortalBottomSheet

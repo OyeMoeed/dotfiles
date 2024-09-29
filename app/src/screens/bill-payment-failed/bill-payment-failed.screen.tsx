@@ -6,23 +6,19 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { useRoute } from '@react-navigation/core';
 import React from 'react';
 import billFailedStyles from './bill-payment-failed.style';
 
 const BillPaymentFailedScreen: React.FC = () => {
   const { colors } = useTheme();
-  const route = useRoute();
   const styles = billFailedStyles(colors);
-  const { isRefund } = route.params;
-  const titleText = isRefund ? 'TRAFFIC_VIOLATION.REFUND_FAILED' : 'PAY_BILL.PAYMENT_FAILED';
 
   return (
     <IPayPageWrapper>
       <IPayView style={styles.alertContainer}>
         <IPayView style={styles.alertWrapper}>
           <IPayIcon testID="danger12-icon" icon={icons.danger12} size={80} color={colors.error.error500} />
-          <IPayTitle2Text text={titleText} style={styles.titleStyle} />
+          <IPayTitle2Text text="PAY_BILL.PAYMENT_FAILED" style={styles.titleStyle} />
           <IPayFootnoteText text="PAY_BILL.TRY_AGAIN_COMPLETE_PAYMENT" color={colors.primary.primary800} />
         </IPayView>
         <IPayView style={styles.buttonWrapper}>

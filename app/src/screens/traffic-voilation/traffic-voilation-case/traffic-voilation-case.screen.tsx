@@ -54,7 +54,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const [trafficServiceType, setTrafficServiceType] = useState<BillersService[]>([]);
   const [myIdValue, setMyIdValue] = useState<string>('');
 
-  const paymentOrRefund = isRefund ? MoiPaymentTypes.REFUND : MoiPaymentTypes.PAYMENT;
+  const paymentOrRefund = MoiPaymentTypes.PAYMENT;
 
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
 
@@ -128,12 +128,11 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         paymentId: apiResponse?.response?.paymentId,
       };
       if (isViolationID) {
-        navigate(ScreenNames.TRAFFIC_VOILATION_ID, { isRefund, violationDetails, isViolationID, dynamicFields });
+        navigate(ScreenNames.TRAFFIC_VOILATION_ID, { violationDetails, isViolationID, dynamicFields });
       } else {
         navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, {
           variant: true,
           payOnly: false,
-          isRefund,
           violationDetails,
           isViolationID,
           dynamicFields,
@@ -175,7 +174,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     if (trafficService?.serviceId) {
       fetchFields();
     }
-  }, [trafficService, isRefund]);
+  }, [trafficService]);
 
   useEffect(() => {
     onGetBillers();
@@ -239,7 +238,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                     myIdValue={myIdValue}
                   />
                   <IPayButton
-                    btnText={isRefund ? 'TRAFFIC_VIOLATION.REFUND' : 'NEW_SADAD_BILLS.INQUIRE'}
+                    btnText="NEW_SADAD_BILLS.INQUIRE"
                     btnType={buttonVariants.PRIMARY}
                     onPress={handleSubmit(onValidateBills)}
                     large

@@ -18,24 +18,18 @@ const TrafficViolationIDScreen: React.FC = () => {
   const styles = trafficViolationStyles(colors);
   const { t } = useTranslation();
   const route = useRoute();
-  const { violationDetails, isRefund, dynamicFields } = route.params;
+  const { violationDetails, dynamicFields } = route.params;
   const { billsData, selectedBillsCount, onSelectBill, selectAllBills, deselectAllBills } = useTrafficViolation();
 
-  const violations =
-    billsData?.length === 1 || isRefund ? t('TRAFFIC_VIOLATION.VIOLATION') : t('TRAFFIC_VIOLATION.VIOLATIONS');
+  const violations = billsData?.length === 1 && t('TRAFFIC_VIOLATION.VIOLATIONS');
 
   const onHandlePayButton = () => {
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, violationDetails, isRefund, dynamicFields });
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, violationDetails, dynamicFields });
   };
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader
-        backBtn
-        applyFlex
-        title={isRefund ? 'TRAFFIC_VIOLATION.REFUND_VIOLATION' : 'TRAFFIC_VIOLATION.TITLE'}
-        titleStyle={styles.screenTitle}
-      />
+      <IPayHeader backBtn applyFlex title="TRAFFIC_VIOLATION.TITLE" titleStyle={styles.screenTitle} />
       <IPayView style={styles.rowStyles}>
         <IPayList
           title="TRAFFIC_VIOLATION.VIOLATOR_ID"
@@ -79,7 +73,7 @@ const TrafficViolationIDScreen: React.FC = () => {
               <SadadFooterComponent
                 textColor={colors.natural.natural500}
                 onPressBtn={onHandlePayButton}
-                btnText={`${isRefund ? t('TRAFFIC_VIOLATION.REFUND') : t('COMMON.PAY')} : ${violationDetails?.amount ?? 0} ${t('COMMON.SAR')}`}
+                btnText={`${t('COMMON.PAY')} : ${violationDetails?.amount ?? 0} ${t('COMMON.SAR')}`}
                 selectedItemsCount={1}
                 disableBtnIcons
                 shouldTranslateBtnText={false}
