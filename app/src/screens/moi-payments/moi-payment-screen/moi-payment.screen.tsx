@@ -177,30 +177,34 @@ const MoiPaymentScreen: React.FC = () => {
       })
       .filter((field) => field.value !== undefined && !excludedIndices.includes(field.index));
     const isRefund = selectedTab === MoiPaymentTypes.REFUND;
-    const payLoad = {
-      dynamicFields,
-      walletNumber,
-      refund: isRefund,
-    };
-    const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
-    if (apiResponse?.successfulResponse) {
-      const serviceTypeField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_TYPE);
-      const serviceProviderField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_PROVIDER);
-      const serviceProviderFromLOV = serviceProviderField?.lovList?.find(
-        (lov) => lov?.billerId === serviceProviderValue,
-      );
-      const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
-      resetFields();
-      navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
-        billData: {
-          ...apiResponse.response,
-          dynamicFields,
-          serviceTypeFromLOV,
-          serviceProviderFromLOV,
-        },
-        isRefund,
-      });
-    } else {
+    try {
+      const payLoad = {
+        dynamicFields,
+        walletNumber,
+        refund: isRefund,
+      };
+      const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
+      if (apiResponse?.successfulResponse) {
+        const serviceTypeField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_TYPE);
+        const serviceProviderField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_PROVIDER);
+        const serviceProviderFromLOV = serviceProviderField?.lovList?.find(
+          (lov) => lov?.billerId === serviceProviderValue,
+        );
+        const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
+        resetFields();
+        navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
+          billData: {
+            ...apiResponse.response,
+            dynamicFields,
+            serviceTypeFromLOV,
+            serviceProviderFromLOV,
+          },
+          isRefund,
+        });
+      } else {
+        invoiceSheetRef.current?.present();
+      }
+    } catch (error) {
       invoiceSheetRef.current?.present();
     }
   };
