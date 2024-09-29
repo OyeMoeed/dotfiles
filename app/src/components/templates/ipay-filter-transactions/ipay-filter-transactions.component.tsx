@@ -150,7 +150,7 @@ const IPayFilterTransactions = ({
   const mappedContacts = useMemo(() => onContactsList(), [onContactsList]);
 
   const getTransactionTypesData = async () => {
-    const apiResponse: any = await getTransactionTypes();
+    const apiResponse: any = await getTransactionTypes({ hideSpinner: false });
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       const transactionTypesRes = apiResponse?.response?.transactionRequestTypeRecs;

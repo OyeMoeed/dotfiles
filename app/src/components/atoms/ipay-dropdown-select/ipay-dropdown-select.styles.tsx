@@ -8,6 +8,7 @@ const dropdownStyles = (colors: typeof themeColors) =>
     container: {
       width: '100%',
       paddingHorizontal: moderateScale(24, 0.3),
+      paddingBottom: verticalScale(30),
     },
     inputContainerStyle: {
       width: '100%',
