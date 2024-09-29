@@ -27,7 +27,7 @@ import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { moiPaymentDetailes, successMessage, subDetails } = route.params;
+  const { moiPaymentDetailes, successMessage, subDetails, isRefund } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const { showToast } = useToastContext();
@@ -130,7 +130,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                   small
                   onPress={onPressPayOtherBill}
                   leftIcon={<Refresh2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText="BILL_PAYMENTS.PAY_ANOTHER_BILL"
+                  btnText={isRefund ? 'BILL_PAYMENTS.ANOTHER_REFUND' : 'BILL_PAYMENTS.PAY_ANOTHER_BILL'}
                 />
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}

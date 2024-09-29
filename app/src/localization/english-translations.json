@@ -1230,6 +1230,7 @@
     "AMOUNT": "Amount"
   },
   "BILL_PAYMENTS": {
+    "ANOTHER_REFUND": "Another Refund",
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
     "NEW_MOI_BILL": "New MOI Bill",

@@ -85,6 +85,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
         moiPaymentDetailes: billData,
         successMessage: isRefund ? 'BILL_PAYMENTS.PAYMENT_REFUND_SUCCESS' : 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
         subDetails: moiPayBillSubList,
+        isRefund,
       });
     }
   };
