@@ -21,6 +21,7 @@ import { SNAP_POINTS } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
 import { buttonVariants, copyText } from '@app/utilities';
@@ -36,6 +37,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
   const { t } = useTranslation();
   const styles = GiftTransferSuccessStyles(colors);
   const previewBottomSheetRef = useRef<bottomSheetTypes>(null);
+  const firstName = useTypedSelector((state) => state.walletInfoReducer.walletInfo.firstName);
 
   const { showToast } = useToastContext();
 
@@ -63,7 +65,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
   const onSendAnotherGift = () => navigate(ScreenNames.SEND_GIFT);
   const onHome = () => navigate(ScreenNames.HOME);
 
-  const { totalAmount: giftAmount, notes, name } = transferDetails.formData[0];
+  const { totalAmount: giftAmount, notes } = transferDetails.formData[0];
 
   const formattedTransferDetails = transferDetails?.formData?.map((item) => {
     const commonDetails = [
@@ -243,7 +245,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
             <IPayFootnoteText
               color={themeTextColor}
               style={styles.messagePreviewText}
-              text={`${t('SEND_GIFT.FROM')}: ${name}`}
+              text={`${t('SEND_GIFT.FROM')}: ${firstName}`}
               fontWeight={typography.FONT_WEIGHT_NORMAL}
             />
           </IPayView>

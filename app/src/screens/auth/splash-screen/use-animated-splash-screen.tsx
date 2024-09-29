@@ -3,11 +3,13 @@ import useLocation from '@app/hooks/location.hook';
 import { fadeIn, parallelAnimations, scale } from '@app/ipay-animations/ipay-animations';
 import { navigateAndReset } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import { setAuth } from '@app/store/slices/auth-slice';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import { showForceUpdate } from '@app/store/slices/app-force-update-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
+import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -40,6 +42,17 @@ const useSplashAnimations = () => {
     }
   };
   const handleNavigation = async () => {
+    const skipLoginAfterChange = await getValueFromAsyncStorage('skipLoginAfterLogin');
+
+    if (skipLoginAfterChange === 'true') {
+      await setValueToAsyncStorage('skipLoginAfterLogin', 'false');
+
+      setTimeout(() => {
+        dispatch(setAuth(true));
+      }, 150);
+      return;
+    }
+
     if (isFirstTime) {
       navigateAndReset(screenNames.ONBOARDING);
     } else if (!isAuthenticated && isLinkedDevice) {

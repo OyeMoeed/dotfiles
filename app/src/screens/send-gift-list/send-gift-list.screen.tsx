@@ -157,18 +157,19 @@ const SendGiftListScreen: React.FC = () => {
   };
 
   const renderItem = ({ item }) => {
-    const { trnsDateTime, senderName, receiverName, userNotes, status, amount } = item;
+    const { trnsDateTime, senderName, receiverName, userNotes, status, amount, receiverMobile, senderMobile } = item;
     const isSend = selectedTab === t('SEND_GIFT.SENT');
 
     const giftCategory = userNotes.split('#')[1];
     const giftType = giftCategory?.split('_')[0]?.toLowerCase();
     const occasion = giftTypeMapping[giftType as keyof typeof giftTypeMapping];
+    const title = isSend ? receiverName || receiverMobile : senderName || senderMobile;
 
     return (
       <IPayView style={styles.listView}>
         <IPayGiftTransactionList
           date={trnsDateTime}
-          titleText={isSend ? receiverName : senderName}
+          titleText={title}
           footText={occasion}
           status={status}
           amount={amount}

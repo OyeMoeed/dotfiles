@@ -27,6 +27,7 @@ import IPayMoneyRequestList from './ipay-money-request-list/ipay-money-request-l
 import IPayReceiveCall from './ipay-receive-call/ipay-receive-call.component';
 import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
+import IPayRatingSheet from './ipay-rating-sheet/ipay-rating-sheet.component';
 
 export {
   IPayActionSheet,
@@ -54,4 +55,5 @@ export {
   IPayShortHandAtmCard,
   IPayTermsAndConditions,
   IPayTransferInformation,
+  IPayRatingSheet,
 };

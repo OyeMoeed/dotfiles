@@ -44,6 +44,7 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
       </IPayView>
       <IPayView style={styles.buttonContainer}>
         <IPayButton
+          disabled={!selectedCard}
           btnType={buttonVariants.PRIMARY}
           large
           hasRightIcon
