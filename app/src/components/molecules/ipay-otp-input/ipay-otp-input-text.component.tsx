@@ -3,8 +3,7 @@
 import { IPayBodyText, IPayView } from '@app/components/atoms';
 import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import { Platform } from 'react-native';
+import React, { useEffect } from 'react';
 import { CodeField, Cursor, useBlurOnFulfill, useClearByFocusCell } from 'react-native-confirmation-code-field';
 import { IPayOtpInputTextProps } from './ipay-otp-input-text.interface';
 import genratedStyles from './ipay-otp-input-text.style';
@@ -15,6 +14,7 @@ const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({
   onChangeText,
   value,
   setValue = () => {},
+  autoFocus,
 }) => {
   const { colors } = useTheme();
   const styles = genratedStyles(colors);
@@ -29,6 +29,12 @@ const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({
     if (onChangeText) onChangeText(text);
   };
 
+  useEffect(() => {
+    if (autoFocus) {
+      ref?.current?.focus();
+    }
+  }, [autoFocus, ref]);
+
   return (
     <CodeField
       ref={ref}
@@ -39,7 +45,7 @@ const IPayOtpInputText: React.FC<IPayOtpInputTextProps> = ({
       rootStyle={styles.codeFieldRoot}
       keyboardType="number-pad"
       textContentType="oneTimeCode"
-      autoComplete={Platform.select({ android: 'sms-otp', default: 'one-time-code' })}
+      autoComplete="sms-otp"
       testID={`${testID}-otp-input`}
       renderCell={({ index, symbol, isFocused }) => (
         <IPayView

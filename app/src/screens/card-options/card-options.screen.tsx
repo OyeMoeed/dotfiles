@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import icons from '@app/assets/icons';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
@@ -22,6 +22,7 @@ import {
   changeStatus,
   prepareResetCardPinCode,
   resetPinCode,
+  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
@@ -32,9 +33,12 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import checkUserAccess from '@app/utilities/check-user-access';
+import { queryClient } from '@app/network';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import IPayChangeCardPin from '../change-card-pin/change-card-pin.screens';
+import IPayChangeCardPin from '../change-card-pin';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
 import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
@@ -46,7 +50,7 @@ const CardOptionsScreen: React.FC = () => {
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
-  const { cashWithdrawalCardsList } = useSelector((state) => state.walletInfoReducer);
+  const { cashWithdrawalCardsList } = useTypedSelector((state) => state.walletInfoReducer);
 
   const {
     currentCard,
@@ -78,9 +82,17 @@ const CardOptionsScreen: React.FC = () => {
   const { otpConfig } = useConstantData();
   const helpCenterRef = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [pin, setPin] = useState('');
+
+  const { refetch } = useGetCards({
+    payload: {
+      walletNumber,
+    },
+    refetchOnWindowFocus: false,
+    enabled: false,
+  });
 
   const initOnlinePurchase = () => {
     if (currentCard.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
@@ -123,20 +135,20 @@ const CardOptionsScreen: React.FC = () => {
       case ApiResponseStatusType.SUCCESS:
         setIsOnlinePurchase((prev) => !prev);
         renderToast(
-          isOn ? t('CARD_OPTIONS.ONLINE_PURCHASE_ENABLED') : t('CARD_OPTIONS.ONLINE_PURCHASE_DISABLED'),
+          isOn ? 'CARD_OPTIONS.ONLINE_PURCHASE_ENABLED' : 'CARD_OPTIONS.ONLINE_PURCHASE_DISABLED',
           true,
           icons.receipt_item,
           false,
         );
         break;
       case apiResponse?.apiResponseNotOk:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
       case ApiResponseStatusType.FAILURE:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
       default:
-        renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+        renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
         break;
     }
   };
@@ -159,7 +171,7 @@ const CardOptionsScreen: React.FC = () => {
 
     setIsATMWithDraw(isOn);
     renderToast(
-      isOn ? t('CARD_OPTIONS.ATM_WITHDRAW_ENABLED') : t('CARD_OPTIONS.ATM_WITHDRAW_DISABLED'),
+      isOn ? 'CARD_OPTIONS.ATM_WITHDRAW_ENABLED' : 'CARD_OPTIONS.ATM_WITHDRAW_DISABLED',
       true,
       icons.moneys,
       false,
@@ -182,36 +194,41 @@ const CardOptionsScreen: React.FC = () => {
     };
 
     const apiResponse: any = await changeStatus(payload);
-    deleteCardSheetRef.current.hide();
 
     if (apiResponse) {
+      queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
+      refetch();
       navigate(ScreenNames.CARDS);
-      renderToast(t('CARD_OPTIONS.CARD_HAS_BEEN_DELETED'), true, icons.trash, true);
+      renderToast('CARD_OPTIONS.CARD_HAS_BEEN_DELETED', true, icons.trash, true);
     }
   };
 
   const onConfirmDeleteCard = () => {
-    stopCard();
+    deleteCardSheetRef.current.hide();
+
+    setTimeout(() => {
+      stopCard();
+    }, 500);
   };
+
   const showDeleteCardSheet = () => {
     deleteCardSheetRef.current.show();
   };
 
-  const onClickDeleteCardSheet = useCallback((index: number) => {
-    switch (index) {
-      case 0:
-        deleteCardSheetRef.current.hide();
-        break;
-      case 1:
-        onConfirmDeleteCard();
-        break;
-      default:
-        break;
+  const onClickDeleteCardSheet = (index: number) => {
+    if (index === 1) {
+      onConfirmDeleteCard();
+      return;
     }
-  }, []);
+
+    deleteCardSheetRef.current.hide();
+  };
 
   const onNavigateToChooseAddress = () => {
-    navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+    }
   };
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
@@ -240,17 +257,17 @@ const CardOptionsScreen: React.FC = () => {
           navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
           break;
         case apiResponse?.apiResponseNotOk:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
           break;
         case ApiResponseStatusType.FAILURE:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
           break;
         default:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'), false, icons.warning, false);
+          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
           break;
       }
     } catch (error: any) {
-      renderToast(t('ERROR.SOMETHING_WENT_WRONG'), false, icons.warning, false);
+      renderToast('ERROR.SOMETHING_WENT_WRONG', false, icons.warning, false);
     }
   };
 
@@ -329,7 +346,10 @@ const CardOptionsScreen: React.FC = () => {
             subTitle="CARD_OPTIONS.FOUR_DIGIT_PIN"
             detailText="CARD_OPTIONS.CHANGE"
             onPress={() => {
-              openBottomSheet.current?.present();
+              const hasAccess = checkUserAccess();
+              if (hasAccess) {
+                openBottomSheet.current?.present();
+              }
             }}
           />
           <IPayCardOptionsIPayListDescription
@@ -353,9 +373,7 @@ const CardOptionsScreen: React.FC = () => {
             <IPayCardOptionsIPayListToggle
               leftIcon={icons.receipt_item}
               title={
-                isOnlinePurchase
-                  ? t('CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE')
-                  : t('CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE')
+                isOnlinePurchase ? 'CARD_OPTIONS.DE_ACTIVATE_ONLINE_PURCHASE' : 'CARD_OPTIONS.ACTIVATE_ONLINE_PURCHASE'
               }
               onToggleChange={toggleOnlinePurchase}
               toggleState={isOnlinePurchase}

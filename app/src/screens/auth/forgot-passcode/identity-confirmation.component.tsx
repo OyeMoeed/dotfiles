@@ -33,7 +33,7 @@ const IdentityConfirmationComponent: React.FC<SetPasscodeComponentProps> = ({ on
   const styles = ForgotPasscodeStyles(colors);
   const { t } = useTranslation();
   const { showToast } = useToastContext();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
 
   const validationSchema = Yup.object().shape({
     iqamaId: getValidationSchemas(t).iqamaIdSchema,

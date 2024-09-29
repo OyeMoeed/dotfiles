@@ -18,6 +18,7 @@ const IPayCaption2Text: React.FC<IPayCaption2TextProps> = ({
   children,
   color,
   shouldTranslate = true,
+  isLoading,
 }: IPayCaption2TextProps): JSX.Element => {
   const textColor = color ? { color } : {};
   return (
@@ -27,6 +28,7 @@ const IPayCaption2Text: React.FC<IPayCaption2TextProps> = ({
       numberOfLines={numberOfLines}
       style={[styles.textStyle, textColor, style]}
       shouldTranslate={shouldTranslate}
+      isLoading={isLoading}
     >
       {text || children}
     </IPayText>

@@ -76,8 +76,6 @@ const useBillPaymentConfirmation = (
   const getTransactionIds = (apiResponse: MultiPaymentBillResponseTypes, index: number) =>
     apiResponse.response.billPaymentResponses[index].transactionId;
 
-  const getTotalAmount = () => (billPaymentInfos ? billPaymentInfos.reduce((sum, item) => sum + item.amount, 0) : 0);
-
   const onConfirm = async () => {
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
@@ -118,12 +116,11 @@ const useBillPaymentConfirmation = (
         isPayOnly,
         isPayPartially,
         billPayDetailes: billPayDetailsArr,
-        // totalAmount: billPaymentInfos?.[0].amount,
+        totalAmount: billPaymentInfos?.[0].amount,
         billPaymentInfos: billPaymentInfos?.map((el, index) => ({
           ...el,
           transactionId: getTransactionIds(apiResponse, index),
         })),
-        totalAmount: getTotalAmount(),
       });
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));

@@ -1,12 +1,14 @@
-import React from 'react';
-import { ViewStyle } from 'react-native';
+import { MotiSkeletonProps } from 'moti/build/skeleton/types';
 
-export interface IPaySkeletonViewProps {
-  isLoading: boolean;
-  children: React.ReactNode;
-  containerStyle?: ViewStyle;
+export enum SkeletonLoaderTypes {
+  'IMAGE',
+  'TITLE',
+  'TEXT',
+}
+export interface IPaySkeletonViewProps extends Omit<MotiSkeletonProps, 'Gradient'> {
+  isLoading?: boolean;
   /**
    * testID for the component to test the element.
    */
-  testID?: string;
+  type: SkeletonLoaderTypes;
 }

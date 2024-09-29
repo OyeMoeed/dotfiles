@@ -48,7 +48,7 @@ enum alertType {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-enum spinnerVariant {
+enum SpinnerVariant {
   TEXT = 'text',
   DEFAULT = 'default',
 }
@@ -259,8 +259,11 @@ enum BillsStatusTypes {
 }
 
 enum BillStatus {
-  UNPAID = 'Unpaid',
-  PAID = 'Paid',
+  UNPAID = 'BillUnpaid',
+  PAID = 'BillPaid',
+  PARTIALLY_PAID = 'BillPartialPd',
+  OVER_PAID = 'BillOverPd',
+  DEACTIVE = 'BillDeactive',
 }
 interface FilterValue {
   id: string;
@@ -363,6 +366,7 @@ export {
   MoiPaymentTypes,
   PayChannel,
   PickerVariant,
+  SpinnerVariant,
   States,
   TabBase,
   ToastTypes,
@@ -374,5 +378,4 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant,
 };

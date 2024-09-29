@@ -7,11 +7,11 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
-import { forwardRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './change-card-pin.interface';
 import changeCardPinStyles from './change-card-pin.style';
 
-const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
+const IPayChangeCardPin: React.FC<ChangeCardPinProps> = ({ onSuccess }) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
   const [passcodeError, setPasscodeError] = useState(false);
@@ -135,6 +135,6 @@ const IPayChangeCardPin = forwardRef(({ onSuccess }: ChangeCardPinProps) => {
       </IPayView>
     </IPayView>
   );
-});
+};
 
 export default IPayChangeCardPin;

@@ -1,5 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { FONT_SIZE_11, FONT_SIZE_15, typography } from '@app/styles/typography.styles';
+import { FONT_SIZE_11, FONT_SIZE_15, FONT_WEIGHT_BOLD, FONT_WEIGHT_NORMAL } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const atmWithdrawalsStyles = (colors: any) =>
@@ -33,19 +33,19 @@ const atmWithdrawalsStyles = (colors: any) =>
       justifyContent: 'space-between',
     },
     textBold: {
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     balanceContainer: {
       flexDirection: 'row',
       gap: moderateScale(5),
     },
     accountBalanceTitle: {
-      fontWeight: typography.FONT_WEIGHT_NORMAL,
+      fontWeight: FONT_WEIGHT_NORMAL,
       fontSize: FONT_SIZE_11,
     },
     currencyStyle: {
       alignSelf: 'center',
-      fontWeight: typography.FONT_WEIGHT_NORMAL,
+      fontWeight: FONT_WEIGHT_NORMAL,
       color: colors.primary.primary900,
       fontSize: FONT_SIZE_15,
     },
@@ -64,7 +64,7 @@ const atmWithdrawalsStyles = (colors: any) =>
       marginVertical: verticalScale(16),
     },
     balanceTextStyle: {
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
       color: colors.primary.primary900,
       fontSize: FONT_SIZE_15,
     },

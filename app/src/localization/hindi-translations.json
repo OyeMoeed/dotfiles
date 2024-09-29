@@ -174,7 +174,8 @@
     "EDIT_CARD": "कार्ड संपादित करें",
     "CALL_WITHIN_SA": "सऊदी अरब के भीतर कॉल करें",
     "CALL_OUTSIDE_SA": "सऊदी अरब के बाहर से कॉल करें",
-    "CALL": "पुकारना"
+    "CALL": "पुकारना",
+    "APP_TERMS_AND_CONDITIONS": "ऐप नियम और शर्तें"
   },
   "TOP_UP": {
     "APPLE_PAY": "मोटी वेतन",
@@ -253,5 +254,11 @@
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "कार्ड प्रबंधन",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "आपने कोई कार्ड नहीं जोड़ा है \n आप अब नए कार्ड जोड़ सकते हैं."
+  },
+  "UPDATE": {
+    "HEADER": "",
+    "TITLE": "",
+    "SUBTITLE": "",
+    "BUTTON_TITLE": ""
   }
 }

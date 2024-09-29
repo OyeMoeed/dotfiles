@@ -39,6 +39,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
       noGradient = true,
       animate = true,
       testID,
+      enableOverDrag,
+      enableHandlePanningGesture,
+      stopCloseBackgroundPress,
     },
     ref,
   ) => {
@@ -89,7 +92,12 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
     // renders
     const renderBackdrop = useCallback(
       (props) => (
-        <BottomSheetBackdrop pressBehavior="close" {...props} opacity={1} style={[props.style, styles.overlayStyle]} />
+        <BottomSheetBackdrop
+          pressBehavior={stopCloseBackgroundPress ? 'none' : 'close'}
+          {...props}
+          opacity={1}
+          style={[props.style, styles.overlayStyle]}
+        />
       ),
       [],
     );
@@ -124,7 +132,9 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           backdropComponent={renderBackdrop}
           name="BottomSheet"
           enableDismissOnClose
-          onDismiss={animate ? () => bottomSheetModalRef.current?.close() : onCloseBottomSheet}
+          onDismiss={
+            animate && !stopCloseBackgroundPress ? () => bottomSheetModalRef.current?.close() : onCloseBottomSheet
+          }
           ref={bottomSheetModalRef}
           index={1}
           snapPoints={snapPoints}
@@ -135,6 +145,8 @@ const IPayBottomSheet = forwardRef<BottomSheetModal, IPayBottomSheetProps>(
           enableDynamicSizing={enableDynamicSizing}
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
+          enableOverDrag={enableOverDrag}
+          enableHandlePanningGesture={enableHandlePanningGesture}
           containerComponent={Platform.OS === 'ios' ? containerComponent : undefined}
           handleComponent={handleComponent}
         >

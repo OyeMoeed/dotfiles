@@ -20,9 +20,9 @@ import {
   prepareShowDetailsProp,
 } from '@app/network/services/core/transaction/transaction.interface';
 import {
-  getCards,
   otpGetCardDetails,
   prepareShowCardDetails,
+  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
@@ -31,14 +31,16 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize } from '@app/styles/mixins';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { CardOptions, CardStatusNumber, CardTypes, CarouselModes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
 import { verticalScale } from 'react-native-size-matters';
-import CardScreenCurrentState from './cards.screen.interface';
-import cardScreenStyles from './cards.style';
 import cardsListMock from '@app/network/services/core/transaction/cards-list.mock';
 import { isAndroidOS } from '@app/utilities/constants';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import CardScreenCurrentState from './cards.screen.interface';
+import cardScreenStyles from './cards.style';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 
@@ -57,7 +59,7 @@ const CardsScreen: React.FC = () => {
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
   const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
 
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isCardDetailsSheetVisible, setIsCardDetailsSheetVisible] = useState(false);
@@ -107,31 +109,34 @@ const CardsScreen: React.FC = () => {
   );
 
   const prepareOtpCardDetails = async (showOtpSheet: boolean) => {
-    if (constants.MOCK_API_RESPONSE) {
-      setOtpRef('1111');
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present();
+    const hasAccess = checkUserAccess();
+    if (hasAccess) {
+      if (constants.MOCK_API_RESPONSE) {
+        setOtpRef('1111');
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
+        otpVerificationRef?.current?.resetInterval();
+        return;
+      }
+      const payload: prepareShowDetailsProp = {
+        walletNumber,
+        body: {
+          cardIndex: currentCard?.cardIndex,
+          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+        },
+      };
+      const apiResponse: any = await prepareShowCardDetails(payload);
+      if (apiResponse) {
+        setOtpRef(apiResponse?.response?.otpRef as string);
+        if (showOtpSheet) {
+          setOtpSheetVisible(true);
+          otpVerificationRef?.current?.present();
+        }
       }
       otpVerificationRef?.current?.resetInterval();
-      return;
     }
-    const payload: prepareShowDetailsProp = {
-      walletNumber,
-      body: {
-        cardIndex: currentCard?.cardIndex,
-        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-      },
-    };
-    const apiResponse: any = await prepareShowCardDetails(payload);
-    if (apiResponse) {
-      setOtpRef(apiResponse?.response?.otpRef as string);
-      if (showOtpSheet) {
-        setOtpSheetVisible(true);
-        otpVerificationRef?.current?.present();
-      }
-    }
-    otpVerificationRef?.current?.resetInterval();
   };
 
   const onPinCodeSheet = () => {
@@ -181,14 +186,14 @@ const CardsScreen: React.FC = () => {
     }));
     return mappedCards;
   };
-  const getCardsData = async () => {
-    const payload: CardsProp = {
-      walletNumber,
-    };
-    const apiResponse: any = await getCards(payload);
+  const getCardPayload: CardsProp = {
+    walletNumber,
+    hideSpinner: true,
+  };
 
-    if (apiResponse) {
-      const availableCards = apiResponse?.response?.cards.filter(
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = cardApiResponse?.response?.cards.filter(
         (card: any) =>
           card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
@@ -204,6 +209,14 @@ const CardsScreen: React.FC = () => {
       }
     }
   };
+
+  const getCardsError = () => setCardsCurrentState(CardScreenCurrentState.NO_DATA);
+
+  const { isLoading: isLoadingCards } = useGetCards({
+    payload: getCardPayload,
+    onSuccess: getCardsData,
+    onError: getCardsError,
+  });
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
@@ -233,12 +246,12 @@ const CardsScreen: React.FC = () => {
     if (constants.MOCK_API_RESPONSE) {
       otpVerificationRef?.current?.resetInterval();
       setOtpSheetVisible(false);
-      prepareCardInfoData(cardsListMock.response.cards[0]);
+      prepareCardInfoData(cardsListMock?.response?.cards[0]);
       setIsCardDetailsSheetVisible(true);
       cardDetailsSheetRef?.current?.present();
       return;
     }
-    const payload: getCardDetailsProp = {
+    const cardDetailsPayload: getCardDetailsProp = {
       walletNumber,
       body: {
         cardIndex: currentCard?.cardIndex,
@@ -247,7 +260,7 @@ const CardsScreen: React.FC = () => {
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
       },
     };
-    const apiResponse: any = await otpGetCardDetails(payload);
+    const apiResponse: any = await otpGetCardDetails(cardDetailsPayload);
     if (apiResponse.status.type === 'SUCCESS') {
       otpVerificationRef?.current?.resetInterval();
       setOtpSheetVisible(false);
@@ -278,11 +291,10 @@ const CardsScreen: React.FC = () => {
     actionSheetRef.current.show();
   };
 
-  useEffect(() => {
-    getCardsData();
-  }, []);
-
   const renderCardsCurrentState = () => {
+    if (isLoadingCards) {
+      return <IPaySkeletonBuilder variation={IPaySkeletonEnums.CARD_WITH_TITLE} isLoading={isLoadingCards} />;
+    }
     if (cardsCurrentState === CardScreenCurrentState.NO_DATA) {
       return (
         <IPayView style={styles.noResultContainer}>
@@ -304,7 +316,7 @@ const CardsScreen: React.FC = () => {
       );
     }
 
-    if (CardScreenCurrentState.HAS_DATA) {
+    if (cardsCurrentState === CardScreenCurrentState.HAS_DATA) {
       return (
         <>
           <IPayView style={styles.cardsContainer}>
@@ -413,12 +425,16 @@ const CardsScreen: React.FC = () => {
           onNextPress={handleNext}
         />
       </IPayPortalBottomSheet>
-      <IPayFreezeConfirmationSheet
-        currentCard={currentCard}
-        cards={cardsData}
-        setCards={setCardsData}
-        ref={actionSheetRef}
-      />
+      {currentCard ? (
+        <IPayFreezeConfirmationSheet
+          currentCard={currentCard}
+          cards={cardsData}
+          setCards={setCardsData}
+          ref={actionSheetRef}
+        />
+      ) : (
+        <View />
+      )}
     </IPaySafeAreaView>
   );
 };

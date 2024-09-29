@@ -4,12 +4,13 @@ import { store } from '@app/store/store';
 import clearSession from './network-session-helper';
 import constants from '../constants';
 import { mapApiError } from '../services/api-call.interceptors';
+import { ApiResponse } from '../services/services.interface';
 
 const hideErrorResponse = (response: AxiosResponse | AxiosError) => response?.config?.headers.hide_error_response;
 
 const hideSpinnerLoading = (response: AxiosResponse | AxiosError) => response?.config?.headers.hide_spinner_loading;
 
-const isErrorResponse = (response: AxiosResponse) => {
+const isErrorResponse = (response: AxiosResponse | ApiResponse<unknown>) => {
   if (response?.status !== constants.SUCCESS_RESPONSE) return true;
   if (response?.data?.status?.type === 'SUCCESS') return false;
   if (response?.data?.successfulResponse) return false;

@@ -1,7 +1,5 @@
-import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayList } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { REGEX } from '@app/constants/app-validations';
 import { ALINMA_BANK_CODE } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -44,7 +42,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = createBeneficiaryStyles(colors);
-  const { showToast } = useToastContext();
   const [beneficiaryData, setBeneficiaryData] = useState<FormValues>();
   const [isBeneficiaryCreated, setIsBeneficiaryCreated] = useState<boolean>(false);
   const [bankList, setBankList] = useState<LocalBank[]>([]);
@@ -96,16 +93,6 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     }
   };
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: t('ERROR.SOMETHING_WENT_WRONG'),
-      containerStyle: styles.toast,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
   useEffect(() => {
     getBankList();
   }, []);
@@ -114,7 +101,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     const payload: BeneficiaryInfo = {
       beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo,
       fullName: values?.beneficiaryName,
-      nickname: values?.beneficiaryNickName,
+      nickname: values?.beneficiaryNickName ? values?.beneficiaryNickName : values?.beneficiaryName,
       beneficiaryBankDetail: {
         bankCode: beneficiaryBankDetails?.bankCode,
         bankName: beneficiaryBankDetails?.bankName,
@@ -190,6 +177,11 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
     }
   };
 
+  const onBeneficiaryNameChange = (text: string, onChange: (...event: any[]) => void) => {
+    const filteredText = text.replace(/[^a-zA-Z\s]/g, '');
+    onChange(filteredText);
+  };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       {isBeneficiaryCreated ? (
@@ -223,7 +215,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
                   label="NEW_BENEFICIARY.BENEFECIARY_NAME"
                   value={value}
                   maxLength={50}
-                  onChangeText={onChange}
+                  onChangeText={(text) => onBeneficiaryNameChange(text, onChange)}
                   containerStyle={styles.inputContainerStyle}
                   isError={!!errors.beneficiaryName}
                   testID="beneficiaryName"
