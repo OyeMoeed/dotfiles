@@ -117,12 +117,22 @@ const MoiPaymentScreen: React.FC = () => {
     if (response) {
       const fetchedFields = response.response.dynamicFields;
       const benLabel = 'BILL_PAYMENTS.BENEFECIARY_DETAILS';
+      const useID = t('BILL_PAYMENTS.USE_MY_ID');
       const beneficiaryLabel = [
         {
           index: benLabel,
           integrationTagName: benLabel,
           type: DYNAMIC_FIELDS_TYPES.LABEL,
           value: benLabel,
+        },
+        {
+          index: useID,
+          integrationTagName: useID,
+          type: DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE,
+          requiredInPaymentOrRefund: 'BOTH',
+          label: useID,
+
+          value: false,
         },
       ];
 
