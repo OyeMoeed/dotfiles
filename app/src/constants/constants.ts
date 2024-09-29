@@ -278,6 +278,7 @@ const constants = {
     { id: 1, title: 'Government Payments (MOI)', icon: images.moiLogo },
     { id: 2, title: 'Traffic Violation', icon: icons.driving },
   ],
+  CAN_FORCE_UPDATE_CLOSE: true,
 };
 const SUPPORTED_CARD = ['visa', 'master', 'madaWhiteBG'];
 const CARDS_MOCK_DATA = [
