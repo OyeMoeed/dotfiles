@@ -116,6 +116,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import MusanedScreen from '@app/screens/musaned/musaned.screen';
 import MusanedHistoryScreen from '@app/screens/musaned-history/musaned-history.screen';
+import { IPayRatingSheet } from '@app/components/organism';
 
 const MainStack = createStackNavigator();
 
@@ -297,6 +298,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MUSANED_HISTORY} component={MusanedHistoryScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
+      <IPayRatingSheet />
     </IPaySafeAreaView>
   );
 };

@@ -1335,6 +1335,12 @@
     "DELETE_NOTIFICATION": "حذف الإشعار",
     "CANCEL": "إلغاء"
   },
+  "RATING": {
+    "APP_RATING": "تقييم التطبيق",
+    "SATISFACTION": "كم هو درجة رضاك",
+    "ALINMA_PAY_APP": "بخصوص تطبيق ألما باي؟",
+    "RATE_APP_NOW": "أعطنا تقييم"
+  },
   "UPDATE": {
     "HEADER": "",
     "TITLE": "",

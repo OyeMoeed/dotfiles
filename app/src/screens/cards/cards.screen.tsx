@@ -57,7 +57,7 @@ const CardsScreen: React.FC = () => {
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
-  const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
+  const [selectedCard, setSelectedCard] = useState<CardOptions | ''>('');
 
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
@@ -87,6 +87,7 @@ const CardsScreen: React.FC = () => {
   };
   const handleNext = () => {
     setIsCardSheetVisible(false);
+    setSelectedCard('');
     if (selectedCard === CardOptions.VIRTUAL) {
       navigate(screenNames.VIRTUAL_CARD);
     } else {
