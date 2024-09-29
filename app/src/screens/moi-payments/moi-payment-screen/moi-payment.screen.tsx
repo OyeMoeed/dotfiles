@@ -36,6 +36,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [serviceTypeValue, setServiceTypeValue] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [selectedBiller, setSelectedBiller] = useState<string>('');
+  const [isInquired, setIsInquired] = useState<boolean>(false);
   const [selectedServiceType, setSelectedServiceType] = useState<string>('');
   const [fields, setFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
@@ -133,6 +134,9 @@ const MoiPaymentScreen: React.FC = () => {
       setFields(updatedFields);
     }
   };
+  const resetFields = () => {
+    setIsInquired(false);
+  };
 
   const onSubmit = async (data: any) => {
     const excludedIndices = [MoiPaymentFormFields.SERVICE_TYPE, MoiPaymentFormFields.SERVICE_PROVIDER];
@@ -151,7 +155,7 @@ const MoiPaymentScreen: React.FC = () => {
         };
       })
       .filter((field) => field.value !== undefined && !excludedIndices.includes(field.index));
-      const isRefund = selectedTab === MoiPaymentTypes.REFUND;
+    const isRefund = selectedTab === MoiPaymentTypes.REFUND;
     const payLoad = {
       dynamicFields,
       walletNumber,
@@ -165,7 +169,7 @@ const MoiPaymentScreen: React.FC = () => {
         (lov) => lov?.billerId === serviceProviderValue,
       );
       const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
-
+      resetFields();
       navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
         billData: {
           ...apiResponse.response,
@@ -205,11 +209,10 @@ const MoiPaymentScreen: React.FC = () => {
     if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
   }, [serviceProviderValue]);
 
-  useEffect(() => {
-    if (serviceTypeValue) {
-      fetchFields(serviceProviderValue, serviceTypeValue);
-    }
-  }, [serviceTypeValue]);
+  const handleInquiry = () => {
+    setIsInquired(true);
+    fetchFields(serviceProviderValue, serviceTypeValue);
+  };
 
   return (
     <>
@@ -239,11 +242,10 @@ const MoiPaymentScreen: React.FC = () => {
                     <IPayCaption2Text regular text="BILL_PAYMENTS.BENEFECIARY_DETAILS" />
                     <DynamicFormComponent errors={errors} control={control} fields={fields} />
                   </IPayView>
-
                   <IPayButton
                     btnText="NEW_SADAD_BILLS.INQUIRY"
                     btnType={buttonVariants.PRIMARY}
-                    onPress={handleSubmit(onSubmit)}
+                    onPress={isInquired ? handleSubmit(onSubmit) : handleInquiry}
                     btnStyle={styles.inquiryBtn}
                     large
                     btnIconsDisabled
