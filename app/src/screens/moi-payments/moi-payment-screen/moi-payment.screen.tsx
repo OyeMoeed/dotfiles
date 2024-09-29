@@ -85,7 +85,7 @@ const MoiPaymentScreen: React.FC = () => {
           integrationTagName: MoiPaymentFormFields.SERVICE_TYPE,
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
-          disable: true,
+          disable: !serviceProviderValue,
           dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
         },
       ];
@@ -155,8 +155,9 @@ const MoiPaymentScreen: React.FC = () => {
   };
   const resetFields = () => {
     setIsInquired(false);
-    onGetBillers();
     setFields([]);
+    onGetBillers();
+    if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
   };
 
   const onSubmit = async (data: any) => {
@@ -202,7 +203,7 @@ const MoiPaymentScreen: React.FC = () => {
       });
     } else {
       invoiceSheetRef.current?.present();
-      resetFields()
+      resetFields();
     }
   };
 
