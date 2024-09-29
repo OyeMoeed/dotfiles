@@ -663,7 +663,8 @@
     "GO_TO_CARD": "Go to Card",
     "CARD_HAS_BEEN_DELETED": "The card has been deleted",
     "CHANGE_PIN": "Change pincode",
-    "CARD_DETAILS": "Card Details"
+    "CARD_DETAILS": "Card Details",
+    "ISSUE_A_PHSYICAL": "Issue a Physical card for this virtual card"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
