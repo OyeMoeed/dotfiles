@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { EhsanIcon } from '@app/assets/svgs';
 import IpayFlagIcon from '@app/components/molecules/ipay-flag-icon/ipay-flag-icon.component';
 import { DashboardOptions } from '@app/utilities';
 import { useTranslation } from 'react-i18next';
@@ -49,6 +50,11 @@ const useCarouselData = () => {
         { text: t('HOME.QR_ACCEPTANCE'), icon: icons.scanner, isNew: true },
         { text: t('HOME.SPENDING_LIMIT'), icon: icons.calculator },
         { text: t('HOME.MY_ACCOUNT'), icon: icons.user_tag },
+        {
+          text: t('HOME.EHSAN'),
+          icon: <EhsanIcon />,
+          navigate: 'ehsan',
+        },
       ],
     },
   ];

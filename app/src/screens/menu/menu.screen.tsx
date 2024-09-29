@@ -82,6 +82,10 @@ const MenuScreen: FC = () => {
     navigate(screenNames.CARD_MANAGEMENT);
   };
 
+  const onNavigateToTermsAndConditions = () => {
+    navigate(screenNames.TERMS_AND_CONDITIONS);
+  };
+
   return (
     <IPaySafeAreaView>
       <>
@@ -104,7 +108,11 @@ const MenuScreen: FC = () => {
                     style={styles.profileNameText}
                     shouldTranslate={false}
                   />
-                  <IPayCaption1Text text="MENU.SHOW_PROFILE" color={colors.natural.natural900} />
+                  <IPayCaption1Text
+                    style={styles.showMenuProfile}
+                    text="MENU.SHOW_PROFILE"
+                    color={colors.natural.natural900}
+                  />
                 </IPayView>
                 <IPayIcon icon={icons.drill_in_icon} size={18} color={colors.primary.primary900} />
               </IPayLinearGradientView>
@@ -142,6 +150,16 @@ const MenuScreen: FC = () => {
               color={colors.primary.primary800}
             />
             <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.primary.primary800} />
+          </IPayPressable>
+
+          <IPayPressable onPress={onNavigateToTermsAndConditions} style={styles.termsAndConditionsView}>
+            <IPaySubHeadlineText
+              regular
+              text="MENU.APP_TERMS_AND_CONDITIONS"
+              style={styles.menuItemText}
+              color={colors.natural.natural700}
+            />
+            <IPayIcon icon={icons.arrow_right_1} size={18} color={colors.natural.natural700} />
           </IPayPressable>
 
           <IPayView style={styles.separatorBar} />

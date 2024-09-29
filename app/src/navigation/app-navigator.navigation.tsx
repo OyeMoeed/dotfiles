@@ -19,6 +19,7 @@ import { useTypedSelector } from '@store/store';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
 import { setTopLevelNavigator } from './navigation-service.navigation';
 
 const MainNavigation: React.FC = () => {
@@ -101,6 +102,7 @@ const MainNavigation: React.FC = () => {
       <IPayServiceErrorToast testID={navigationRef?.current?.getCurrentRoute().name} />
 
       <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />
+      <IPayUpdateBottomSheet />
     </>
   );
 };

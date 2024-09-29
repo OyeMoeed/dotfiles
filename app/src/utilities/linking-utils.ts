@@ -20,4 +20,13 @@ const openGoogleMaps = (latitude: number, longitude: number) => {
   openURL(url);
 };
 
-export { openGoogleMaps, openURL };
+const openAppOrStore = async (appUrl: string, storeUrl?: string): Promise<void> => {
+  const supported = await Linking.canOpenURL(appUrl);
+  if (supported) {
+    await Linking.openURL(appUrl);
+  } else {
+    await Linking.openURL(storeUrl || '');
+  }
+};
+
+export { openGoogleMaps, openURL, openAppOrStore };

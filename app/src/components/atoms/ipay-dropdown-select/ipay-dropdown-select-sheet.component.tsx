@@ -53,7 +53,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
 
   const renderNoResults = () => (
     <IPayView style={styles.noResultsView}>
-      <IPayFootnoteText text={'COMMON.NO_RESULTS_FOUND'} />
+      <IPayFootnoteText text="COMMON.NO_RESULTS_FOUND" />
     </IPayView>
   );
 
@@ -75,7 +75,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
             <IPayInput
               onChangeText={setSearchText}
               text={searchText}
-              placeholder={'COMMON.SEARCH'}
+              placeholder="COMMON.SEARCH"
               style={styles.searchInputText}
             />
           </IPayView>

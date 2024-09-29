@@ -235,6 +235,7 @@ const colors = {
     mildPurple: '#E7D0FF',
     lightBlue: '#B9DBFD',
     palePink: '#F9DFD8',
+    grayButtonBackground: '#04334D0A',
   },
 
   appGradient: {
