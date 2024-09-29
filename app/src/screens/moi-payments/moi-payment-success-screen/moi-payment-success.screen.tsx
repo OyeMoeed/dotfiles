@@ -72,7 +72,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     const serviceProvider = {
       id: (updatedPaymentDetailsWithNewIds.length + 2).toString(),
       label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
-      value: moiPaymentDetailes?.serviceProviderDesc?.desc,
+      value: moiPaymentDetailes?.serviceProviderFromLOV?.desc,
     };
 
     setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
