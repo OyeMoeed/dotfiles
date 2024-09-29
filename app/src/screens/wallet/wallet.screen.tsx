@@ -49,7 +49,7 @@ const WalletScreen = () => {
     return `${appTitle}\n${walletInfoLabel}\n${nameLabel} : ${walletInfo?.fullName}\n${ibanLabel} : ${walletInfo?.viban}`;
   };
 
-  const bottonSheetOpen = async () => {
+  const bottomSheetOpen = async () => {
     const otherOptions = {
       subject: 'Wa',
       message: getShareableMessage(),
@@ -195,7 +195,7 @@ const WalletScreen = () => {
           subTextStyle={styles.rightTextStyle}
         />
 
-        <IPayPressable onPress={bottonSheetOpen}>
+        <IPayPressable onPress={bottomSheetOpen}>
           <IPayView style={styles.buttonContainer}>
             <IPayBodyText style={styles.codeBarTextStyle} text="HOME.SHARE_ALL_DETAILS" />
             <IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />

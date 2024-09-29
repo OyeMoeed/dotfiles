@@ -29,6 +29,8 @@ import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bi
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 import IPayRatingSheet from './ipay-rating-sheet/ipay-rating-sheet.component';
 
+export * from './ipay-musaned-list';
+
 export {
   IPayActionSheet,
   IPayActivateBeneficiary,

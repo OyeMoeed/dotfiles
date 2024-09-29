@@ -1546,6 +1546,13 @@
     "HEADER": "Musaned",
     "ALINMA_PAY_USERS": "AlinmaPay Users",
     "OTHER_USERS": "Other Users",
-    "NO_LABORERS": "You currently have no laborers.\nPlease add them using Musaned App"
+    "NO_LABORERS": "You currently have no laborers.\nPlease add them using Musaned App",
+    "UNPAID": "Unpaid",
+    "PAID": "Paid",
+    "SELECT": "Select",
+    "PAY_SALARY": "Pay Salary",
+    "VIEW_DETAILS":"View Details",
+    "INVITE_NOW": "Invite now",
+    "INVITE_LABORER": "Invite laborer"
   }
 }

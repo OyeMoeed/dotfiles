@@ -329,6 +329,11 @@ enum BillingStatus {
   NOT_ENABLED = 'NOT_ENABLED',
 }
 
+enum MusanedStatus {
+  UNPAIED = 'Unpaid',
+  PAID = 'Paid',
+}
+
 // Export all enums
 export {
   APIResponseType,
@@ -380,4 +385,5 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
+  MusanedStatus,
 };

@@ -129,6 +129,8 @@ const enum ScreenNames {
   TERMS_AND_CONDITIONS = 'TermsAndConditions',
   MUSANED = 'Musaned',
   MUSANED_HISTORY = 'MusanedHistory',
+  MUSANED_PAY_SALARY = 'MusanedPaySalary',
+  MUSANED_USER_DETAILS = 'MusanedUserDetails',
 }
 
 export default ScreenNames;
