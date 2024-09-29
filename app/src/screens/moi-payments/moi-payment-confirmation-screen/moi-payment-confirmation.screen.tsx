@@ -22,14 +22,14 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { availableBalance, currentBalance, userContactInfo } = walletInfo;
+  const { availableBalance, currentBalance, limitsDetails, userContactInfo } = walletInfo;
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
   const { billData, isRefund } = route?.params || {};
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
 
   const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
-    useMoiPaymentConfirmation(billData,isRefund);
+    useMoiPaymentConfirmation(billData, isRefund);
   const [paymentDetails, setPaymentDetails] = useState<MOIItemProps[]>([]);
   const { otpConfig } = useConstantData();
 
@@ -91,7 +91,8 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       <IPayView style={styles.container}>
         <IPayAccountBalance
           balance={availableBalance}
-          availableBalance={currentBalance}
+          availableBalance={limitsDetails.monthlyOutgoingLimit}
+          monthlyIncomingLimit={limitsDetails.monthlyRemainingOutgoingAmount}
           showRemainingAmount
           topUpBtnStyle={styles.topUpButton}
         />
