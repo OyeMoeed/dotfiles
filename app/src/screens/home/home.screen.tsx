@@ -11,19 +11,12 @@ import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
-import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import getOffers from '@app/network/services/core/offers/offers.service';
-import {
-  CardListItem,
-  CardsProp,
-  TransactionsProp,
-} from '@app/network/services/core/transaction/transaction.interface';
-import { getCards, getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
+import { useGetCards } from '@app/network/services/core/transaction/transactions.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
-import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardStatusNumber, CardTypes } from '@app/utilities';
 import checkUserAccess from '@app/utilities/check-user-access';
@@ -31,8 +24,11 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
+import { ApiResponse } from '@app/network/services/services.interface';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -44,16 +40,16 @@ const Home: React.FC = () => {
   const ref = React.createRef<any>();
   const rearrangeRef = React.createRef<any>();
   const [apiError, setAPIError] = useState<string>('');
-  const [transactionsData, setTransactionsData] = useState<object[] | null>(null);
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
+
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
   const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
     (state) => state.walletInfoReducer.walletInfo,
   );
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
@@ -78,23 +74,20 @@ const Home: React.FC = () => {
     });
   };
 
-  const getTransactionsData = async () => {
-    const payload: TransactionsProp = {
+  const { transactionsData, isLoadingTransactions } = useGetTransactions({
+    payload: {
       walletNumber,
       maxRecords: '3',
       offset: '1',
-    };
-
-    const apiResponse: any = await getTransactions(payload);
-
-    setTransactionsData(apiResponse?.response?.transactions);
-  };
+    },
+  });
 
   const getOffersData = async () => {
     try {
       const payload: any = {
         walletNumber,
         isHome: 'true',
+        hideLoader: true,
       };
 
       const apiResponse: any = await getOffers(payload);
@@ -113,7 +106,6 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Dispatch the setItems action on initial render
-    getTransactionsData();
     getOffersData();
   }, []); // Empty dependency array to run the effect only once on initial render
 
@@ -121,6 +113,7 @@ const Home: React.FC = () => {
     dispatch(setProfileSheetVisibility(false));
     setTopUpOptionsVisible(true);
   };
+
   const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };
@@ -169,9 +162,8 @@ const Home: React.FC = () => {
     }
   };
 
-  const mapCardData = (cards: CardListItem[]) => {
+  const mapCardData = (cards: CardResponseInterface[]) => {
     try {
-      console.log(cards);
       let mappedCards = [];
       mappedCards = cards?.map((card: any) => ({
         name: card?.linkedName?.embossingName,
@@ -190,18 +182,11 @@ const Home: React.FC = () => {
       }));
       return mappedCards;
     } catch (err) {
-      /* empty */
+      return [];
     }
   };
 
-  const getCardsData = async () => {
-    const payload: CardsProp = {
-      walletNumber,
-      hideError: true,
-      hideSpinner: true,
-    };
-    const apiResponse: any = await getCards(payload);
-
+  const getCardsData = async (apiResponse?: ApiResponse<{ cards: CardResponseInterface[] }>) => {
     if (apiResponse) {
       const availableCardsForSearch = apiResponse?.response?.cards.filter(
         (card: any) =>
@@ -210,7 +195,6 @@ const Home: React.FC = () => {
           card.cardStatus === CardStatusNumber.Freezed,
       );
 
-      console.log(availableCardsForSearch)
       if (availableCardsForSearch?.length) {
         setCardsData(mapCardData(availableCardsForSearch));
       }
@@ -239,26 +223,31 @@ const Home: React.FC = () => {
   }, [isFocused]);
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
-  const getUpadatedWalletData = async () => {
-    const payload: WalletNumberProp = {
+  const { isLoadingWalletInfo } = useGetWalletInfo({
+    payload: {
       walletNumber,
       hideError: true,
       hideSpinner: true,
-    };
-    const apiResponse: any = await getWalletInfo(payload);
-    if (apiResponse) {
-      dispatch(setWalletInfo(apiResponse?.response));
-    }
-  };
+    },
+  });
+
+  useGetCards({
+    payload: {
+      walletNumber,
+      hideError: true,
+      hideSpinner: true,
+    },
+    onSuccess: getCardsData,
+    refetchOnMount: true,
+  });
+
   useEffect(() => {
     if (isFocused) {
       if (appData.allowEyeIconFunctionality) {
         dispatch(setAppData({ hideBalance: true }));
       }
-      getUpadatedWalletData();
-      getCardsData();
     }
-  }, [isFocused, walletNumber]);
+  }, [isFocused]);
 
   const saveRearrangedItems = () => {
     if (tempreArrangedItems?.length > 0) dispatch(setRearrangedItems(tempreArrangedItems));
@@ -282,6 +271,7 @@ const Home: React.FC = () => {
             setBoxHeight={setBalanceBoxHeight}
             monthlyRemainingOutgoingAmount={limitsDetails.monthlyRemainingOutgoingAmount}
             monthlyOutgoingLimit={limitsDetails.monthlyOutgoingLimit}
+            isLoading={isLoadingWalletInfo}
           />
         </IPayView>
         {/* -------Pending Tasks--------- */}
@@ -293,6 +283,7 @@ const Home: React.FC = () => {
               openBottomSheet={openBottomSheet}
               openProfileBottomSheet={openProfileBottomSheet}
               cards={cardsData}
+              isLoading={isLoadingTransactions}
             />
           </IPayCustomSheet>
         )}

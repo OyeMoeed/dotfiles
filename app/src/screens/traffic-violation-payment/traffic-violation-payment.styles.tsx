@@ -7,6 +7,13 @@ const billPaymentStyles = () =>
       flex: 1,
       paddingBottom: moderateScale(36),
     },
+    gradientBg: {
+      flex: 0,
+      padding: moderateScale(16),
+      gap: moderateScale(16),
+      borderRadius: moderateScale(22),
+      marginHorizontal: moderateScale(24),
+    },
     listBottomView: {
       marginVertical: moderateScale(12),
     },
@@ -37,6 +44,12 @@ const billPaymentStyles = () =>
     },
     otpInnerContainer: {
       paddingHorizontal: moderateScale(24),
+    },
+    chipContainer: { width: '100%' },
+    confirmButton: {
+      height: moderateScale(50, 0.3),
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     footerContainer: {
       paddingTop: moderateScale(12, 0.3),

@@ -19,6 +19,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
+
   const [filteredListItems, setFilteredListItems] = useState<ListItem[]>([]);
   const [searchText, setSearchText] = useState<string>('');
   const listCheckIcon = <IPayIcon icon={icons.tick_check_mark_default} size={22} color={colors.primary.primary500} />;
@@ -34,7 +35,9 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
   };
 
   useEffect(() => {
-    filterListItems();
+    if (searchText.length === 0 || searchText.length > 3) {
+      filterListItems();
+    }
   }, [data, searchText]);
 
   const onPressListItem = (item: ListItem) => {

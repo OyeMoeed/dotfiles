@@ -1,5 +1,6 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
+import { Platform } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const cardSegmentStyles = (colors: typeof themeColors) =>
@@ -27,7 +28,16 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
       paddingVertical: 0,
     },
     flatListContainer: {
-      height: '61.5%',
+      marginTop: moderateScale(3),
+      flex: 0,
+      ...Platform.select({
+        android: {
+          height: '45.5%',
+        },
+        ios: {
+          height: '43.5%',
+        },
+      }),
     },
   });
 

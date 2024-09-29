@@ -9,7 +9,6 @@ import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
-
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
 import trafficDetailStyles from './ipay-traffic-detail-form.style';
 

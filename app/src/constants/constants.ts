@@ -6,8 +6,13 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FeatureSections } from '@app/enums';
+import { isArabic } from '@app/utilities/constants';
 import { BillStatus } from '@app/utilities/enums.util';
+import { Platform } from 'react-native';
 import Share from 'react-native-share';
+
+const arabicDialer = ['3', '2', '1', '6', '5', '4', '9', '8', '7', 'back', '0', ''];
+const englishDialer = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'];
 
 const constants = {
   MOCK_API_RESPONSE: false,
@@ -41,7 +46,7 @@ const constants = {
     filename: 'test', // only for base64 file in Android
   },
   OTP_CELL_COUNT: 4,
-  DIALER_DATA: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'],
+  DIALER_DATA: isArabic ? arabicDialer : englishDialer,
   FORGET_PASSWORD_COMPONENTS: {
     USER_IDENTITY: 'User Identity',
     CONFIRM_OTP: 'Confirm OTP',
@@ -310,7 +315,7 @@ const CARD_DATA = {
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'supports Apple Pay & Mada Pay.',
     ],
     fees: [
       { description: 'Annual fee', fee: '0 SAR' },
@@ -353,12 +358,12 @@ const CARD_DATA = {
 };
 
 const CARD_DATA_PHYSICAL_CARD = {
-  classic: {
+  IPMC: {
     features: [
       'Instant card issuance through the App.',
       'Accepted by Visa & Mada network.',
       'Free for life Card.',
-      'Added to Apple Pay & Mada Pay.',
+      'support Apple Pay & Mada Pay.',
       'Annual fee: 0 SAR.',
       'Replacement fee: 0 SAR.',
       'International transaction fee: 2.2%.',
@@ -372,7 +377,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'International transaction Fee', fee: '9 SAR' },
     ],
   },
-  platinum: {
+  VPPC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -388,7 +393,7 @@ const CARD_DATA_PHYSICAL_CARD = {
       { description: 'Dispute fee', fee: '50 SAR' },
     ],
   },
-  signature: {
+  VSCC: {
     features: [
       'Instant card issuance through the App.',
       'Free card issuance Fee for the first Card.',
@@ -665,7 +670,7 @@ const SNAP_POINT = {
   MID_SMALL: ['55%', '63%'],
   SMALL: ['45%', '90%'],
   MEDIUM: ['50%', '90%'],
-  MEDIUM_LARGE: ['95%', '95%'],
+  MEDIUM_LARGE: ['93%', '95%'],
   LARGE: ['100%', '100%'],
 };
 const ALINMA_BANK_CODE = '999999';
@@ -679,6 +684,25 @@ const DASHBOARD_ITEMS = [
   FeatureSections.LATEST_OFFERS,
 ];
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
+export enum DYNAMIC_FIELDS_TYPES {
+  TEXT = 'TEXT',
+  LIST_OF_VALUE = 'LIST_OF_VALUE',
+  NUMBER = 'NUMBER',
+  GREGORIAN_DATE = 'gregorianDate',
+  GREGORIAN_DATE_PAST = 'gregorianDatePast',
+  GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
+  HIJRI_DATE = 'hijriDate',
+  HIJRI_DATE_PAST = 'hijriDatePast',
+  HIJRI_DATE_FUTURE = 'hijriDateFuture',
+  BOOLEAN_TYPE = 'booleanType',
+  DATE = 'date',
+  LIST_OF_VALUE_WITH_OTHER_OPTION = 'listOfValueWithOtherOption',
+  TEXT_ALTERNATIVE_LOV = 'textAlternativetoLOV',
+  ALPHA_NO_DIGITS = 'alphaNoDigits',
+  ENGLISH_CHARACTERS = 'englishCharacters',
+  ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+}
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:
     'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/RegistrationTerms_ar.pdf?alt=media&token=3b50f05b-3f96-4d33-9065-b4a5951230f8',
@@ -707,6 +731,13 @@ const NAFATH_APP = {
   IOS_ID: 'id1598909871',
 };
 
+const MAIN_APP_STORE_LINKS = Platform.select({
+  ios: 'https://apps.apple.com/us/app/alinmapay-e-wallet/id1492900777?ls=1',
+  android: 'https://play.google.com/store/apps/details?id=com.alinma.pay.consumer&hl=ar&gl=US',
+  default: '',
+});
+// HUAWEI: 'https://appgallery.huawei.com/app/C101976663',
+
 export {
   ACTIVE_SADAD_BILLS,
   ALINMA_BANK_CODE,
@@ -726,6 +757,7 @@ export {
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
+  MAIN_APP_STORE_LINKS,
   MAX_CONTACTS,
   NAFATH_APP,
   NO_INVOICE_ACCOUNT_NUMBER,

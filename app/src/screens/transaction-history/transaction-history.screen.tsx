@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPaySpinner, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
@@ -17,8 +17,10 @@ import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import React, { useEffect, useMemo, useState } from 'react';
+import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
-import IPayTransactionItem from './component/ipay-transaction.component';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
@@ -48,9 +50,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [appliedFilters, setAppliedFilters] = useState<FiltersArrayProps | null>(null);
   const [filteredData, setFilteredData] = useState<IPayTransactionItemProps[] | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [, setIsLoadingW2W] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
   const [selectedCard, setSelectedCard] = useState<any>(currentCard);
@@ -93,8 +94,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     const apiResponse: any = await getTransactions(payload);
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-      if (apiResponse?.response?.transactions?.length) {
-        setTransactionsData(apiResponse?.response?.transactions);
+      const transactionsResponse = apiResponse?.response?.transactions || [];
+      if (transactionsResponse?.length) {
+        setTransactionsData(transactionsResponse);
       } else {
         setTransactionsData([]);
         setNoFilterResult(true);
@@ -104,7 +106,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
-    setIsLoadingW2W(true);
+    setIsLoading(true);
     setTransactionsData([]);
     setFilteredData([]);
 
@@ -125,7 +127,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       setFilteredData(apiResponse?.response?.transactions);
     }
 
-    setIsLoadingW2W(false);
+    setIsLoading(false);
   };
 
   const applyFilters = (filtersArray: any) => {
@@ -214,21 +216,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     return () => setNoFilterResult(false);
   }, []);
 
-  useEffect(() => {
-    setFilteredData(transactionsData);
-  }, [transactionsData]);
-
-  const renderTrxsList = () => (
-    <IPayView>
-      <IPayFlatlist
-        data={filteredData}
-        showsVerticalScrollIndicator={false}
-        keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
-      />
-    </IPayView>
-  );
-
   const renderNoResult = () =>
     noFilterResult ? (
       <IPayNoResult textColor={colors.primary.primary800} message="TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND" />
@@ -239,7 +226,23 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       />
     );
 
-  const renderLoadingWithNoResult = () => (isLoading ? <IPaySpinner hasBackgroundColor={false} /> : renderNoResult());
+  const renderTrxsList = () => (
+    <IPayView style={styles.listContainer}>
+      <IPayFlatlist
+        data={filteredData}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
+        ListEmptyComponent={
+          isLoading ? (
+            <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />
+          ) : (
+            renderNoResult()
+          )
+        }
+      />
+    </IPayView>
+  );
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -281,7 +284,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
                 headingStyles={styles.chipHeading}
                 textValue={key as string}
                 icon={
-                 <IPayPressable onPress={() => onPressClose(key as string)}>
+                  <IPayPressable onPress={() => onPressClose(key as string)}>
                     <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
                   </IPayPressable>
                 }
@@ -299,9 +302,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
           unselectedTabStyle={styles.unselectedTab}
         />
       )}
-      <IPayView style={styles.listContainer}>
-        {filteredData && filteredData.length ? renderTrxsList() : renderLoadingWithNoResult()}
-      </IPayView>
+      {renderTrxsList()}
       <IPayBottomSheet
         heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
         onCloseBottomSheet={closeBottomSheet}

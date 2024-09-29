@@ -2,8 +2,8 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
+import React from 'react';
 import IPayButton from '../ipay-button/ipay-button.component';
 import BackComponent from './ipay-header-components/back.component';
 import CustomComponent from './ipay-header-components/custom.component';
@@ -37,6 +37,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
   menu,
   contactUs,
   customRightComponent,
+  containerStyle,
 }) => {
   const { colors } = useTheme();
   const styles = headerStyles(colors);
@@ -45,7 +46,7 @@ const IPayHeader: React.FC<IPayHeaderProps> = ({
     goBack();
   };
   return (
-    <IPayView testID={`${testID}-ipay-header`} style={styles.headerContainer}>
+    <IPayView testID={`${testID}-ipay-header`} style={[styles.headerContainer, containerStyle]}>
       <IPayView style={[styles.iconContainer, applyFlex && styles.flexOne]}>
         {leftComponent || (
           <>

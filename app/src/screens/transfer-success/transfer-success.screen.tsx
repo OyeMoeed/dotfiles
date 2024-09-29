@@ -92,7 +92,7 @@ const TransferSuccessScreen = () => {
 
     return (
       <IPayView>
-        {index === 0 && (
+        {index === 0 && Object.keys(bankDetails || {}).length && (
           <IPayView style={styles.beneficiaryBankDetailsView}>
             <IPayIcon icon={bankDetails?.icon} size={30} />
             <IPayView style={styles.bankDetailsView}>

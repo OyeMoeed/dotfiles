@@ -46,7 +46,7 @@ const CardManagementScreen: React.FC = () => {
   const [selectedCardName, setSelectedCardName] = useState('');
   const { isKeyboardOpen } = useKeyboardStatus();
   const styles = cardManagementStyles(colors);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const getCardImage = (cardType: string): any => {
     if (cardType.toLowerCase() === 'visa') {

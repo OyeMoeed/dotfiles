@@ -3,6 +3,7 @@ import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
+import { SNAP_POINT } from '@app/constants/constants';
 import IPayDropdownSheet from './ipay-dropdown-select-sheet.component';
 import { IPayDropdownSelectProps, ListItem } from './ipay-dropdown-select.interface';
 import dropdownStyles from './ipay-dropdown-select.styles';
@@ -29,7 +30,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   const styles = dropdownStyles(colors);
   const [isVisible, setIsVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    data.find((item) => item[valueKey] === selectedValue)?.[labelKey] ?? '',
+    data?.find((item) => item[valueKey] === selectedValue)?.[labelKey] ?? '',
   );
 
   const listCheckIcon = (
@@ -76,7 +77,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         isSearchable={isSearchable}
         onSelectItem={handleSelectItem}
         selectedItem={selectedItem || ''}
-        snapPoints={customSnapPoints ?? ['60%', '90%']}
+        snapPoints={customSnapPoints ?? SNAP_POINT.MEDIUM_LARGE}
         heading={label}
         isVisible={isVisible}
         labelKey={labelKey}

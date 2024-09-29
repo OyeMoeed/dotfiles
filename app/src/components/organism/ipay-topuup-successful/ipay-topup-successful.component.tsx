@@ -45,7 +45,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const penddingGradientColors = [colors.critical.critical500, colors.backgrounds.yellowish];
   const renderToast = () => {
     showToast({
-      title: topupChannel === PayChannel.ORDER ? t('ORDER_SCREEN.COPY') : t('TOP_UP.COPIED'),
+      title: topupChannel === PayChannel.ORDER ? 'ORDER_SCREEN.COPY' : 'TOP_UP.COPIED',
       // subTitle: subTitle,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
@@ -55,14 +55,14 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const [cardPayDetails] = useState<any>([
     {
       id: '1',
-      label: t('TOP_UP.TOPUP_TYPE'),
+      label: 'TOP_UP.TOPUP_TYPE',
       value: t('TOP_UP.CARDS'),
       icon: icons.cards,
       color: colors.primary.primary800,
     },
     {
       id: '3',
-      label: t('TOP_UP.REF_NUMBER'),
+      label: 'TOP_UP.REF_NUMBER',
       value: summaryData?.response?.transactionId,
       detailsText: summaryData?.response?.transactionId,
       icon: icons.copy,
@@ -70,8 +70,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     },
     {
       id: '4',
-      label: t('TOP_UP.TOPUP_DATE'),
-      value: formatDateAndTime(summaryData?.response?.transactionTime, dateTimeFormat.TimeAndDate),
+      label: 'TOP_UP.TOPUP_DATE',
+      value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime),
       icon: null,
     },
   ]);
@@ -190,7 +190,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           <IPayPressable style={styles.newTopup} onPress={goBack}>
             <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
             <IPaySubHeadlineText
-              text={topupChannel === PayChannel.APPLE ? t('TOP_UP.NEW_TOP_UP') : t('TOP_UP.NEW_TRANSFER')}
+              text={topupChannel === PayChannel.APPLE ? 'TOP_UP.NEW_TOP_UP' : 'TOP_UP.NEW_TRANSFER'}
               style={styles.newTopupText}
               regular
             />
