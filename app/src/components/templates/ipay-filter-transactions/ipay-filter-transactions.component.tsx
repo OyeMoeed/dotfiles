@@ -477,7 +477,20 @@ const IPayFilterTransactions = ({
               selectedValue={value}
               label="TRANSACTION_HISTORY.TRANSACTION_TYPE"
               onSelectListItem={(selectedItem: string) => {
-                if (showCardFilter) setIsCardFilterVisible(selectedItem?.includes('POS'));
+                if (showCardFilter) {
+                  const CARD_TYPES = [
+                    'CIN_VISA_CASHBACK',
+                    'PAY_VCARD_POS_MADA',
+                    'PAY_VCARD_POS_VISA',
+                    'PAY_VCARD_POS_NAQD_MADA',
+                    'PAY_VCARD_POS_NAQD_VISA',
+                    'PAY_VCARD_POS_NAQD',
+                    'PAY_VCARD_ECOM_MADA',
+                    'PAY_VCARD_ECOM_VISA',
+                  ];
+                  const foundItem: any = CARD_TYPES.find((cardType: string) => cardType === selectedItem) || null;
+                  setIsCardFilterVisible(!!foundItem);
+                }
                 onChange(selectedItem);
               }}
               testID="transactionTypes-dropdown"
