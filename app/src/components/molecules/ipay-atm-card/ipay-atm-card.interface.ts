@@ -68,6 +68,7 @@ export interface CardInterface {
   nextAnnualFeeAmt?: any;
   nextAnnualFeeVAT?: any;
   isAtmWithdrawalEnabled?: boolean;
+  physicalCard?: boolean;
 }
 
 export interface IPayATMCardProps {

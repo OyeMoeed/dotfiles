@@ -1333,5 +1333,17 @@
     "MARK_AS_READ": "وضع علامة كمقروء",
     "DELETE_NOTIFICATION": "حذف الإشعار",
     "CANCEL": "إلغاء"
+  },
+  "RATING": {
+    "APP_RATING": "تقييم التطبيق",
+    "SATISFACTION": "كم هو درجة رضاك",
+    "ALINMA_PAY_APP": "بخصوص تطبيق ألما باي؟",
+    "RATE_APP_NOW": "أعطنا تقييم"
+  },
+  "UPDATE": {
+    "HEADER": "",
+    "TITLE": "",
+    "SUBTITLE": "",
+    "BUTTON_TITLE": ""
   }
 }

@@ -26,6 +26,7 @@ const termsStyles = (theme: any) =>
     menuItemText: {
       marginTop: 0,
       marginBottom: 0,
+      textAlign: 'left',
     },
     termsAndConditionsView: {
       paddingHorizontal: moderateScale(18, 0.3),

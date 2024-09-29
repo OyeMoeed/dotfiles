@@ -52,7 +52,7 @@ const CardsScreen: React.FC = () => {
   const [boxHeight, setBoxHeight] = useState<number>(0);
 
   const sheetGradient = [colors.primary.primary10, colors.primary.primary10];
-  const [selectedCard, setSelectedCard] = useState<CardOptions>(CardOptions.VIRTUAL);
+  const [selectedCard, setSelectedCard] = useState<CardOptions | ''>('');
 
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
@@ -81,6 +81,7 @@ const CardsScreen: React.FC = () => {
   };
   const handleNext = () => {
     setIsCardSheetVisible(false);
+    setSelectedCard('');
     if (selectedCard === CardOptions.VIRTUAL) {
       navigate(screenNames.VIRTUAL_CARD);
     } else {

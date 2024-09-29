@@ -99,15 +99,6 @@ const TrafficViolationPaymentScreen: React.FC = () => {
 
   const topUpSelectionRef = React.createRef<any>();
 
-  const topupItemSelected = (routeName: string, params: {}) => {
-    closeBottomSheetTopUp();
-    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
-      navigateTOAktharPoints();
-    } else {
-      navigate(routeName, params);
-    }
-  };
-
   const navigateTOAktharPoints = async () => {
     const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
     if (
@@ -117,6 +108,15 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
     } else {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
     }
   };
 
@@ -147,9 +147,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         </IPayScrollView>
       </IPayView>
       <IPayLinearGradientView style={styles.gradientBg} gradientColors={colors.appGradient.buttonBackground}>
-        {renderChip ? (
-          renderChip
-        ) : (
+        {renderChip || (
           <IPayList
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
             detailTextStyle={{ color: colors.primary.primary900 }}

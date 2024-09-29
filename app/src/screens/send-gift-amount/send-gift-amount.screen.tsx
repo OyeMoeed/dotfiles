@@ -127,11 +127,11 @@ const SendGiftAmountScreen = ({ route }) => {
       const updatedContacts = prevContacts.filter((contact) => contact.recordID !== contactId);
 
       if (selectedTab === t('SEND_GIFT.MANUAL')) {
-        const calculateTotalManualAmount = updatedContacts.reduce((acc, contact) => {
+        const calculateTotalManualAmountValue = updatedContacts.reduce((acc, contact) => {
           const amount = contactAmounts[contact.recordID];
           return { ...acc, [contact.recordID]: amount };
         }, {});
-        setContactAmounts(calculateTotalManualAmount);
+        setContactAmounts(calculateTotalManualAmountValue);
       }
 
       // If no contacts are left, navigate back

@@ -18,12 +18,13 @@ import MainNavigation from '@app/navigation/app-navigator.navigation';
 import { queryClient } from '@app/network';
 import { isIosOS } from '@app/utilities/constants';
 import { persistor, store } from '@store/store';
+import usePushNotifications from '@app/hooks/use-push-notifications';
 
 import appStyles from './app.styles';
 
 const App = (): JSX.Element => {
   const style = appStyles();
-  // usePushNotifications();
+  usePushNotifications();
 
   return (
     <Provider store={store}>

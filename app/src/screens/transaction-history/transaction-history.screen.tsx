@@ -46,6 +46,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [selectedTab, setSelectedTab] = useState<string>(TRANSACTION_TABS[0]);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoadingTypes, setIsLoadingTypes] = useState(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
   const [transactionHistoryFilterData, setTransactionHistoryFilterData] = useState<any[]>();
@@ -325,7 +326,8 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const getTransactionTypesData = async () => {
-    const apiResponse: any = await getTransactionTypes();
+    setIsLoadingTypes(true);
+    const apiResponse: any = await getTransactionTypes({ hideSpinner: true });
     let transactionTypesFilter: { id: string; label: string; type: FiltersType; filterValues: any }[] = [];
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       transactionTypesFilter = mapFiltersTypes(apiResponse?.response?.transactionRequestTypeRecs);
@@ -334,6 +336,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     if (!isW2WTransactions) {
       setSelectedFilterData([...transactionTypesFilter]);
     }
+    setIsLoadingTypes(false);
   };
 
   useEffect(() => {
@@ -386,8 +389,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
         ListEmptyComponent={
-          isLoading ? (
-            <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />
+          isLoading || isLoadingTypes ? (
+            <IPaySkeletonBuilder
+              isLoading={isLoading || isLoadingTypes}
+              variation={IPaySkeletonEnums.TRANSACTION_LIST}
+            />
           ) : (
             renderNoResult()
           )

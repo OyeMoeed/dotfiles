@@ -254,5 +254,17 @@
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "कार्ड प्रबंधन",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "आपने कोई कार्ड नहीं जोड़ा है \n आप अब नए कार्ड जोड़ सकते हैं."
+  },
+  "RATING": {
+    "APP_RATING": "एप्प रेटिंग",
+    "SATISFACTION": "आपकी संतुष्टि क्या है",
+    "ALINMA_PAY_APP": "आलिमा पे एप्प के बारे में?",
+    "RATE_APP_NOW": "हमें रेट करें"
+  },
+  "UPDATE": {
+    "HEADER": "",
+    "TITLE": "",
+    "SUBTITLE": "",
+    "BUTTON_TITLE": ""
   }
 }

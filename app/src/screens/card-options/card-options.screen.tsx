@@ -367,6 +367,20 @@ const CardOptionsScreen: React.FC = () => {
             onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
 
+          {!currentCard.physicalCard && (
+            <IPayCardOptionsIPayListDescription
+              leftIcon={icons.card_pos}
+              rightIcon={icons.arrow_right_1}
+              title="CARDS.PRINT_CARD"
+              subTitle="CARD_OPTIONS.ISSUE_A_PHSYICAL"
+              onPress={() =>
+                navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+                  currentCard,
+                })
+              }
+            />
+          )}
+
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}

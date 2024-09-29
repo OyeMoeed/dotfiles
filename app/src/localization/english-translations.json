@@ -226,6 +226,7 @@
     "FAQ_ANSWERS": "You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity."
   },
   "HOME": {
+    "EHSAN": "Ehsan Donation",
     "CASHBACK_PROMO": "Cashback Promo",
     "RECEIVED_MONEY": "Received money",
     "POS_PURSHASE": "POS Purchase",
@@ -662,7 +663,8 @@
     "GO_TO_CARD": "Go to Card",
     "CARD_HAS_BEEN_DELETED": "The card has been deleted",
     "CHANGE_PIN": "Change pincode",
-    "CARD_DETAILS": "Card Details"
+    "CARD_DETAILS": "Card Details",
+    "ISSUE_A_PHSYICAL": "Issue a Physical card for this virtual card"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -1526,5 +1528,17 @@
     "REQUIRED": "{label} is required",
     "MUST_BE_TEXT": "{label} must be valid text",
     "MUST_BE_SELECTED": "{label} must be selected"
+  },
+  "RATING": {
+    "APP_RATING": "App Rating",
+    "SATISFACTION": "How satisfied are you",
+    "ALINMA_PAY_APP": "with the AlinmaPay app?",
+    "RATE_APP_NOW": "Rate Us"
+  },
+  "UPDATE": {
+    "HEADER": "Update the app",
+    "TITLE": "Update Required",
+    "SUBTITLE": "This is an old version of the app, and you cannot continue or log in using it. You will need to update the app to access your account.",
+    "BUTTON_TITLE": "Update Now"
   }
 }

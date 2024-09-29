@@ -6,8 +6,13 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { FeatureSections } from '@app/enums';
+import { isArabic } from '@app/utilities/constants';
 import { BillStatus } from '@app/utilities/enums.util';
+import { Platform } from 'react-native';
 import Share from 'react-native-share';
+
+const arabicDialer = ['3', '2', '1', '6', '5', '4', '9', '8', '7', 'back', '0', ''];
+const englishDialer = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'];
 
 const constants = {
   MOCK_API_RESPONSE: false,
@@ -41,7 +46,7 @@ const constants = {
     filename: 'test', // only for base64 file in Android
   },
   OTP_CELL_COUNT: 4,
-  DIALER_DATA: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'],
+  DIALER_DATA: isArabic ? arabicDialer : englishDialer,
   FORGET_PASSWORD_COMPONENTS: {
     USER_IDENTITY: 'User Identity',
     CONFIRM_OTP: 'Confirm OTP',
@@ -679,6 +684,7 @@ const DASHBOARD_ITEMS = [
   FeatureSections.LATEST_OFFERS,
 ];
 
+// eslint-disable-next-line @typescript-eslint/naming-convention
 export enum DYNAMIC_FIELDS_TYPES {
   TEXT = 'TEXT',
   LIST_OF_VALUE = 'LIST_OF_VALUE',
@@ -709,10 +715,14 @@ const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
 };
 
 const TERMS_AND_CONDITIONS_URLS_PROD = {
-  ALINMAPAY_REG_TERMS_AR_URL: 'https://www.alinma.com/ADS/channels/retail/assets/docs/RegistrationTerms_ar.pdf',
-  ALINMAPAY_REG_TERMS_EN_URL: 'https://civicus.org/documents/toolkits/Public%20Information.pdf',
-  VC_TERMS_AR_URL: 'https://www.alinma.com/ADS/TermsandconditionsforAlinmaPayVirtualCards(Arabic).pdf',
-  VC_TERMS_EN_URL: 'https://www.alinma.com/ADS/TermsandconditionsforAlinmaPayVirtualCards(English).pdf',
+  ALINMAPAY_REG_TERMS_AR_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/RegistrationTerms_ar.pdf?alt=media&token=3b50f05b-3f96-4d33-9065-b4a5951230f8',
+  ALINMAPAY_REG_TERMS_EN_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/RegistrationTerms_en.pdf?alt=media&token=4e8c5316-bf29-4d71-b611-788f479ca7b7',
+  VC_TERMS_AR_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/TermsandconditionsforAlinmaPayVirtualCards(Arabic).pdf?alt=media&token=509d1cad-ce8a-43fe-86a7-517838d988b3',
+  VC_TERMS_EN_URL:
+    'https://firebasestorage.googleapis.com/v0/b/alinmapay-consumer-rn.appspot.com/o/TermsandconditionsforAlinmaPayVirtualCards(English).pdf?alt=media&token=84d91999-446d-4b5a-87cc-23d208006b57',
 };
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production';
@@ -724,6 +734,13 @@ const NAFATH_APP = {
   IOS: 'nafath://home',
   IOS_ID: 'id1598909871',
 };
+
+const MAIN_APP_STORE_LINKS = Platform.select({
+  ios: 'https://apps.apple.com/us/app/alinmapay-e-wallet/id1492900777?ls=1',
+  android: 'https://play.google.com/store/apps/details?id=com.alinma.pay.consumer&hl=ar&gl=US',
+  default: '',
+});
+// HUAWEI: 'https://appgallery.huawei.com/app/C101976663',
 
 export {
   ACTIVE_SADAD_BILLS,
@@ -744,6 +761,7 @@ export {
   DURATIONS,
   INACTIVEACTIVE_SADAD_BILLS,
   INITIAL_TIMER,
+  MAIN_APP_STORE_LINKS,
   MAX_CONTACTS,
   NAFATH_APP,
   NO_INVOICE_ACCOUNT_NUMBER,
@@ -756,7 +774,7 @@ export {
   TRAFFIC_VIOLATIONS,
   VOILATOR_ID,
   WALLET_TIERS,
-  WU_TRANSFER_TYPES
+  WU_TRANSFER_TYPES,
 };
 
 export default constants;
