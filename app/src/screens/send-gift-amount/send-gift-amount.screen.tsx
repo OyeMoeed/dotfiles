@@ -10,7 +10,15 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import {
+  IPayAmountInput,
+  IPayBalanceStatusChip,
+  IPayButton,
+  IPayChip,
+  IPayHeader,
+  IPayList,
+  IPayTopUpBox,
+} from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -56,6 +64,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
   const [chipValue, setChipValue] = useState('');
   const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
+  const [warningStatus, setWarningStatus] = useState<string>('');
 
   useEffect(() => {
     setContacts(selectedContacts);
@@ -412,6 +421,13 @@ const SendGiftAmountScreen = ({ route }) => {
         </IPayView>
       </IPayScrollView>
       <IPayView style={styles.buttonContainer}>
+        <IPayBalanceStatusChip
+          monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+          currentBalance={Number(availableBalance)}
+          amount={Number(amountToShow || topUpAmount)}
+          setWarningStatus={setWarningStatus}
+          dailySpendingLimit={Number(dailyOutgoingLimit)}
+        />
         {selectedTab === t('SEND_GIFT.MANUAL') && (
           <IPayList
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
@@ -426,7 +442,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnText="SEND_GIFT.SEND"
           btnIconsDisabled
           onPress={getW2WActiveFriends}
-          disabled={isDisabled}
+          disabled={isDisabled || !!warningStatus}
           btnStyle={styles.btnText}
         />
       </IPayView>
