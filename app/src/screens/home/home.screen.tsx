@@ -6,7 +6,7 @@ import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.compon
 import { IPayBalanceBox, IPayBottomSheet, IPayLatestList } from '@app/components/organism/index';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayCustomSheet from '@app/components/organism/ipay-custom-sheet/ipay-custom-sheet.component';
-import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
+import { IPayCardIssuanceSheet, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -25,10 +25,11 @@ import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
 import { ApiResponse } from '@app/network/services/services.interface';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -43,12 +44,19 @@ const Home: React.FC = () => {
   const [offersData, setOffersData] = useState<object[] | null>(null);
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
+  const cardIssuanceSheetRef = useRef<BottomSheetModal>(null);
 
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
-  const { walletNumber, firstName, availableBalance, currentBalance, limitsDetails } = useTypedSelector(
-    (state) => state.walletInfoReducer.walletInfo,
-  );
+  const {
+    walletNumber,
+    firstName,
+    availableBalance,
+    currentBalance,
+    limitsDetails,
+    nationalAddressComplete,
+    accountBasicInfoCompleted,
+  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
@@ -188,12 +196,22 @@ const Home: React.FC = () => {
 
   const getCardsData = async (apiResponse?: ApiResponse<{ cards: CardResponseInterface[] }>) => {
     if (apiResponse) {
-      const availableCardsForSearch = apiResponse?.response?.cards.filter(
-        (card: any) =>
+      let shouldShowIssuance = accountBasicInfoCompleted && nationalAddressComplete && checkUserAccess();
+      const availableCardsForSearch = apiResponse?.response?.cards.filter((card: any) => {
+        if (
           card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
           card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
-          card.cardStatus === CardStatusNumber.Freezed,
-      );
+          card.cardStatus === CardStatusNumber.Freezed
+        ) {
+          shouldShowIssuance = false;
+          return true;
+        }
+        return false;
+      });
+
+      if (shouldShowIssuance) {
+        cardIssuanceSheetRef?.current?.present();
+      }
 
       if (availableCardsForSearch?.length) {
         setCardsData(mapCardData(availableCardsForSearch));
@@ -322,6 +340,7 @@ const Home: React.FC = () => {
             topupItemSelected={topupItemSelected}
           />
         </IPayPortalBottomSheet>
+        <IPayCardIssuanceSheet ref={cardIssuanceSheetRef} />
       </>
     </IPaySafeAreaView>
   );

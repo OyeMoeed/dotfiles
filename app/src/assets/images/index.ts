@@ -114,6 +114,7 @@ const images = {
   mastercardIcon: require('./mastercard-icon.png'),
   truckTime: require('./truck-time.png'),
   imagePlaceholder: require('./image-placeholder.png'),
+  cardIssuance: require('./card-issuance.png'),
 };
 
 export default images;

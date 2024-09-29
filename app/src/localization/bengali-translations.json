@@ -261,5 +261,10 @@
     "SATISFACTION": "আপনি কীভাবে সন্তুষ্ট",
     "ALINMA_PAY_APP": "এর সাথে Alinma Pay app?",
     "RATE_APP_NOW": "আমাদের রেট করুন"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "আপনি এখন",
+    "BOLD_TITLE": "সুবিধাজনক নিচের অ্যাকাউंट",
+    "DESCRIPTION": "আলিমা পে থেকে রয়েছে!"
   }
 }
