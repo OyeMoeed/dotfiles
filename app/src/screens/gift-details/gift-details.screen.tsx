@@ -25,12 +25,12 @@ import moment from 'moment';
 import React, { useCallback, useState } from 'react';
 import Share from 'react-native-share';
 import { useTranslation } from 'react-i18next';
+import ViewShot from 'react-native-view-shot';
+import useShareableImage from '@app/components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.hook';
 import { darkCards, giftsCardData } from '../send-gift-card/send-gift-card.constants';
 import { GiftDetails, GiftsCardDataProps } from '../send-gift-card/send-gift-card.interface';
 import { GiftDetailsProps, ItemProps } from './gift-details.interface';
 import giftDetailsStyles from './gift-details.style';
-import ViewShot from 'react-native-view-shot';
-import useShareableImage from '@app/components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.hook';
 
 const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   const { t } = useTranslation();
@@ -90,6 +90,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
   };
 
   /// TODO:  It's temporary formate
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars
   const onPressShare = () => {
     const shareOptions = {
       subject: t('SEND_GIFT.GIFT_DETAILS'),
