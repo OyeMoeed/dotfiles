@@ -14,6 +14,7 @@ import {
   PointRedemptionPlus,
   Question,
   UserTick,
+  HeartGradientIcon,
 } from '@app/assets/svgs/index';
 import { isArabic } from '@app/utilities/constants';
 
@@ -258,6 +259,7 @@ const icons = {
   nonALinma: NonAlinma,
   addSquare2: 'add-square2',
   wallet_add_11: 'wallet-add-11',
+  HeartGradientIcon,
 };
 
 export default icons;

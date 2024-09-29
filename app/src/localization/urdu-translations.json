@@ -920,5 +920,11 @@
     "PAY": "ادا کریں",
     "REJECT": "مسترد کریں",
     "REJECT_THIS_REQUEST": "اس درخواست کو مسترد کریں"
+  },
+  "RATING": {
+    "APP_RATING": "تطبيق کی درجہ بندی",
+    "SATISFACTION": "آپ کس درجے تک سنیاسی ہیں",
+    "ALINMA_PAY_APP": "کے بارے میں Alinma Pay اپ?",
+    "RATE_APP_NOW": "آپ کو راٹنگ"
   }
 }

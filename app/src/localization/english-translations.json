@@ -663,7 +663,8 @@
     "GO_TO_CARD": "Go to Card",
     "CARD_HAS_BEEN_DELETED": "The card has been deleted",
     "CHANGE_PIN": "Change pincode",
-    "CARD_DETAILS": "Card Details"
+    "CARD_DETAILS": "Card Details",
+    "ISSUE_A_PHSYICAL": "Issue a Physical card for this virtual card"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -1527,6 +1528,12 @@
     "REQUIRED": "{label} is required",
     "MUST_BE_TEXT": "{label} must be valid text",
     "MUST_BE_SELECTED": "{label} must be selected"
+  },
+  "RATING": {
+    "APP_RATING": "App Rating",
+    "SATISFACTION": "How satisfied are you",
+    "ALINMA_PAY_APP": "with the AlinmaPay app?",
+    "RATE_APP_NOW": "Rate Us"
   },
   "UPDATE": {
     "HEADER": "Update the app",
