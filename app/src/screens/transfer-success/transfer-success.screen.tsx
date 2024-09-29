@@ -20,12 +20,13 @@ import { IPayPageWrapper } from '@app/components/templates';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
+import { copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import { RouteProp, useRoute } from '@react-navigation/core';
 import { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import { ItemProps, TransferDetails } from './transfer-success.interface';
 import transferSuccessStyles from './transfer-success.style';
 
@@ -81,6 +82,8 @@ const TransferSuccessScreen = () => {
   };
 
   const onPressHome = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    toggleAppRating();
     resetNavigation(ScreenNames.HOME_BASE);
   };
 

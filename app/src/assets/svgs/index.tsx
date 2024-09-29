@@ -21,6 +21,7 @@ import EhsanIcon from './ehsan-icon.svg';
 import ExportIcon from './export.svg';
 import GradientCard from './gradient.card.svg';
 import GradientCvv from './gradient.cvv.svg';
+import HeartGradientIcon from './heart-circle.svg';
 import Home2 from './home-2.svg';
 import IncomingCall from './incoming.svg';
 import AlinmaLogo from './logo.svg';
@@ -54,12 +55,15 @@ export {
   CallOutgoing,
   CallOutgoingIcon,
   CardIcon,
-  DottedRefresh, EhsanIcon, ExportIcon,
+  DottedRefresh,
+  EhsanIcon,
+  ExportIcon,
   FaceId,
   FallbackImage,
   FallbackLoader,
   GradientCard,
   GradientCvv,
+  HeartGradientIcon,
   Home2,
   IncomingCall,
   Login,
