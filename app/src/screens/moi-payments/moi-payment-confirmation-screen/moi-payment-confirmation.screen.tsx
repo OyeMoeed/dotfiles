@@ -106,6 +106,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
           gradientViewStyle={styles.sadadFooterGradient}
           btnStyle={styles.sadadBtn}
           disableBtnIcons
+          warning={billData?.totalFeeAmount > availableBalance && 'COMMON.INSUFFICIENT_BALANCE_COMMON'}
           totalAmountText={isRefund && 'LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND'}
         />
       </IPayView>
