@@ -77,7 +77,6 @@ const MoiPaymentScreen: React.FC = () => {
           label: 'BILL_PAYMENTS.SERVICE_PROVIDER',
           lovList: serviceProvider,
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
-          dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
         },
         {
           index: MoiPaymentFormFields.SERVICE_TYPE,
@@ -86,7 +85,6 @@ const MoiPaymentScreen: React.FC = () => {
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
           disable: !serviceProviderValue,
-          dependsOn: MoiPaymentFormFields.SERVICE_TYPE,
         },
       ];
       setFields(updatedFields);
@@ -157,7 +155,7 @@ const MoiPaymentScreen: React.FC = () => {
     setIsInquired(false);
     setFields([]);
     onGetBillers();
-    if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
+    if (serviceProviderValue) handleChange(serviceProviderValue);
   };
 
   const onSubmit = async (data: any) => {
@@ -207,29 +205,25 @@ const MoiPaymentScreen: React.FC = () => {
     }
   };
 
-  const handleChange = async (triggerFieldIndex: string, selectedValue: string) => {
-    const dependentField = fields?.find((f) => f.index === triggerFieldIndex);
+  const handleChange = async (selectedValue: string) => {
+    const serviceList = await onGetBillersServices(selectedValue);
 
-    if (dependentField) {
-      const serviceList = await onGetBillersServices(selectedValue);
+    const updatedFields = fields.map((field) => {
+      if (field.index === MoiPaymentFormFields.SERVICE_TYPE) {
+        return {
+          ...field,
+          lovList: serviceList,
+          disable: false,
+        };
+      }
+      return field;
+    });
 
-      const updatedFields = fields.map((field) => {
-        if (field.index === dependentField.index) {
-          return {
-            ...field,
-            lovList: serviceList,
-            disable: false,
-          };
-        }
-        return field;
-      });
-
-      setFields(updatedFields);
-    }
+    setFields(updatedFields);
   };
 
   useEffect(() => {
-    if (serviceProviderValue) handleChange(MoiPaymentFormFields.SERVICE_TYPE, serviceProviderValue);
+    if (serviceProviderValue) handleChange(serviceProviderValue);
   }, [serviceProviderValue]);
 
   const handleInquiry = () => {
