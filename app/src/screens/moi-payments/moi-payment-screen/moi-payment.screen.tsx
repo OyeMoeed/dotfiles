@@ -155,6 +155,8 @@ const MoiPaymentScreen: React.FC = () => {
   };
   const resetFields = () => {
     setIsInquired(false);
+    onGetBillers();
+    setFields([]);
   };
 
   const onSubmit = async (data: any) => {
