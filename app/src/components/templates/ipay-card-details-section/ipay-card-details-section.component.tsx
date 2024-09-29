@@ -87,18 +87,21 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       text: activeCardStatus === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
       key: '1',
       onPress: showActionSheet,
+      hidden: false,
     },
     {
       icon: icons.setting_21,
       text: t('CARDS.CARD_OPTIONS'),
       key: '2',
       onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard }),
+      hidden: false,
     },
     {
       icon: icons.info_circle1,
       text: t('CARDS.CARD_DETAILS'),
       key: '3',
       onPress: onOpenOTPSheet,
+      hidden: currentCard?.frozen,
     },
   ];
 
@@ -117,16 +120,22 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     setActiveCardStatus(currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
   }, [currentCard]);
 
-  const renderItem = (item: Option) => (
-    <IPayPressable onPress={item.onPress}>
-      <IPayView style={styles.cardOptionWrapper}>
-        <IPayView style={styles.cardOption}>
-          <IPayIcon icon={item.icon} size={28} color={colors.primary.primary500} />
+  const renderItem = (item: Option) => {
+    if (item?.hidden) {
+      return null;
+    }
+
+    return (
+      <IPayPressable onPress={item.onPress}>
+        <IPayView style={styles.cardOptionWrapper}>
+          <IPayView style={styles.cardOption}>
+            <IPayIcon icon={item.icon} size={28} color={colors.primary.primary500} />
+          </IPayView>
+          <IPayCaption2Text style={styles.optionText}>{item.text}</IPayCaption2Text>
         </IPayView>
-        <IPayCaption2Text style={styles.optionText}>{item.text}</IPayCaption2Text>
-      </IPayView>
-    </IPayPressable>
-  );
+      </IPayPressable>
+    );
+  };
 
   const ListEmptyComponent = useCallback(() => {
     if (isLoadingTransactions) {

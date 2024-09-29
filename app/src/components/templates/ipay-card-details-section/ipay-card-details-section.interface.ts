@@ -18,6 +18,7 @@ interface Option {
    * Callback function called when the Pressable is pressed.
    */
   onPress?: () => void;
+  hidden?: boolean;
 }
 
 interface SheetOptions {
