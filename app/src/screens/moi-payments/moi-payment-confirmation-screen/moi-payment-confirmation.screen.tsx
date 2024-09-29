@@ -31,6 +31,11 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
 
   useEffect(() => {
     if (billData?.totalFeeAmount > availableBalance) setWarning('COMMON.INSUFFICIENT_BALANCE_COMMON');
+    else if (billData?.totalFeeAmount > limitsDetails.dailyRemainingOutgoingAmount)
+      setWarning('SADAD.DAILY_LIMIT_REACHED');
+    else if (billData?.totalFeeAmount > limitsDetails.monthlyRemainingOutgoingAmount)
+      setWarning('SADAD.MONTLY_LIMIT_REACHED');
+    else setWarning('');
   }, [warning]);
 
   const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
