@@ -151,11 +151,11 @@ const MoiPaymentScreen: React.FC = () => {
         };
       })
       .filter((field) => field.value !== undefined && !excludedIndices.includes(field.index));
-
+      const isRefund = selectedTab === MoiPaymentTypes.REFUND;
     const payLoad = {
       dynamicFields,
       walletNumber,
-      refund: false,
+      refund: isRefund,
     };
     const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
     if (apiResponse?.successfulResponse) {
@@ -165,7 +165,7 @@ const MoiPaymentScreen: React.FC = () => {
         (lov) => lov?.billerId === serviceProviderValue,
       );
       const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
-      const isRefund = selectedTab === MoiPaymentTypes.REFUND;
+
       navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
         billData: {
           ...apiResponse.response,
