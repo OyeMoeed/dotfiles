@@ -29,7 +29,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
 
   const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
-    useMoiPaymentConfirmation(billData);
+    useMoiPaymentConfirmation(billData,isRefund);
   const [paymentDetails, setPaymentDetails] = useState<MOIItemProps[]>([]);
   const { otpConfig } = useConstantData();
 
@@ -51,7 +51,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     const serviceProvider = {
       id: (updatedPaymentDetailsWithNewIds.length + 2).toString(),
       label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
-      value: billData?.serviceProviderDesc?.desc,
+      value: billData?.serviceProviderFromLOV?.desc,
     };
 
     setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);

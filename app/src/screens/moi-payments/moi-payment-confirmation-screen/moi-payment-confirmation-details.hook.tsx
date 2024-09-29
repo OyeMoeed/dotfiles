@@ -18,7 +18,7 @@ interface MoiPaymentDetail {
 }
 
 // TODO will be replaced by API
-const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
+const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
@@ -65,9 +65,9 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
       serviceId: billData?.serviceTypeFromLOV?.code,
       dynamicFields: billData?.dynamicFields,
       billIdType: '',
-      moiBillPaymentType: 'REFUND',
+      moiBillPaymentType: isRefund ? 'REFUND' : 'PAYMENT',
       amount: '',
-      serviceDescription: 'Extend Visitor Visa',
+      serviceDescription: billData?.serviceTypeFromLOV?.desc,
       applyTax: 'N',
       groupPaymentId: billData.groupPaymentId,
       paymentId: billData.paymentId,
@@ -76,6 +76,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes) => {
       otp,
       otpRef,
     };
+
     setOtpSheetVisible(false);
     const apiResponse = await moiBillPayment(payLoad);
     if (apiResponse?.successfulResponse) {
