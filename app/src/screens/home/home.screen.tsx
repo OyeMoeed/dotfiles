@@ -12,7 +12,6 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
 import getOffers from '@app/network/services/core/offers/offers.service';
-import { CardsProp } from '@app/network/services/core/transaction/transaction.interface';
 import { useGetCards } from '@app/network/services/core/transaction/transactions.service';
 import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import { setAppData } from '@app/store/slices/app-data-slice';
@@ -51,10 +50,6 @@ const Home: React.FC = () => {
 
   const { showToast } = useToastContext();
 
-  const getCardPayload: CardsProp = {
-    walletNumber,
-  };
-
   const getCardsData = async (cardApiResponse: any) => {
     if (cardApiResponse) {
       const availableCards = filterCards(cardApiResponse?.response?.cards);
@@ -64,8 +59,6 @@ const Home: React.FC = () => {
       }
     }
   };
-
-  useGetCards({ payload: getCardPayload, onSuccess: getCardsData });
 
   const openProfileBottomSheet = () => {
     dispatch(setProfileSheetVisibility(true));

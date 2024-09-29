@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { IPayButton, useToastContext } from '@app/components/molecules';
+import { IPayButton } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayCardIssueBottomSheet, IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import IPayCardDetails from '@app/components/templates/ipay-card-details/ipay-card-details.component';
@@ -29,7 +29,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
-import { buttonVariants, CardOptions, ToastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, CardOptions } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
@@ -40,7 +40,6 @@ import cardScreenStyles from './cards.style';
 const CardsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { showToast } = useToastContext();
   const styles = cardScreenStyles(colors);
   const cardDetailsSheetRef = useRef<any>(null);
   const cardSheetRef = useRef<any>(null);
@@ -155,20 +154,9 @@ const CardsScreen: React.FC = () => {
     }
   };
 
-  const getCardsError = () => {
-    setCardsCurrentState(CardScreenCurrentState.NO_DATA);
-
-    showToast({
-      title: t('ERROR.API_ERROR_RESPONSE'),
-      subTitle: t('COMMON.PLEASE_TRY_AGAIN'),
-      toastType: ToastTypes.WARNING,
-    });
-  };
-
   const { isLoading: isLoadingCards } = useGetCards({
     payload: getCardPayload,
     onSuccess: getCardsData,
-    onError: getCardsError,
   });
 
   const onOtpCloseBottomSheet = (): void => {
