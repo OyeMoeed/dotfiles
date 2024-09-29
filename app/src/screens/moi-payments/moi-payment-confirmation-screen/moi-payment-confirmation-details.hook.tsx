@@ -83,7 +83,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
       otpBottomSheetRef.current?.close();
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
         moiPaymentDetailes: billData,
-        successMessage: 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
+        successMessage: isRefund ? 'BILL_PAYMENTS.PAYMENT_REFUND_SUCCESS' : 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
         subDetails: moiPayBillSubList,
       });
     }
