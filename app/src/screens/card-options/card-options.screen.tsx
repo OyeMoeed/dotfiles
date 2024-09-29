@@ -28,7 +28,7 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
-import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, CardStatusNumber, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
@@ -37,6 +37,15 @@ import { useDispatch } from 'react-redux';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { queryClient } from '@app/network';
 import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
+import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
+import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
+import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
+import {
+  CardType,
+  ICardIssuanceDetails,
+} from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import { IssueCardFeesRes } from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.interface';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -224,10 +233,54 @@ const CardOptionsScreen: React.FC = () => {
     deleteCardSheetRef.current.hide();
   };
 
+  const onReplaceCard = async () => {
+    // get the card index
+    const cardIndex = currentCard?.cardIndex ?? currentCard.cardIndex;
+    const cardStatusPayload: CardStatusReq = {
+      status: CardStatusNumber.Stolen,
+      cardIndex,
+      deviceInfo: await getDeviceInfo(),
+    };
+
+    // change the card status to stolen
+    const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      // get the card issuance details
+      const apiResponseCardInquire = await issueCardInquire(walletInfo?.walletNumber, selectedCardType as CardType);
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        // get the card issuance fees
+        const feesApiResponse = await getCardIssuanceFees(
+          walletInfo?.walletNumber,
+          currentCard.cardType as CardType,
+          apiResponseCardInquire?.response?.transactionType as string,
+        );
+        if (feesApiResponse?.status?.type === 'SUCCESS') {
+          const cardIssuanceDetails: ICardIssuanceDetails = {
+            cardType: currentCard.cardType as CardType,
+            transactionType: apiResponseCardInquire?.response?.transactionType as string,
+            fees: feesApiResponse?.response as IssueCardFeesRes,
+            cardIndex: apiResponseCardInquire?.response?.cardIndex as string,
+            cardManageStatus: apiResponseCardInquire?.response?.cardManageStatus as string,
+          };
+          navigate(ScreenNames.REPLACE_CARD_CONFIRM_DETAILS, {
+            currentCard,
+            issuanceDetails: cardIssuanceDetails,
+          });
+        }
+      }
+    }
+  };
+
   const onNavigateToChooseAddress = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
-      navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+      if (currentCard.physicalCard) {
+        onReplaceCard();
+      } else {
+        navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+          currentCard,
+        });
+      }
     }
   };
 
@@ -360,25 +413,13 @@ const CardOptionsScreen: React.FC = () => {
             onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
           />
 
-          {!currentCard.physicalCard && (
-            <IPayCardOptionsIPayListDescription
-              leftIcon={icons.card_pos}
-              rightIcon={icons.arrow_right_1}
-              title="CARDS.PRINT_CARD"
-              subTitle="CARD_OPTIONS.ISSUE_A_PHSYICAL"
-              onPress={() =>
-                navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-                  currentCard,
-                })
-              }
-            />
-          )}
-
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}
-            title="CARD_OPTIONS.REPLACE_THE_CARD"
-            subTitle="CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES"
+            title={currentCard.physicalCard ? 'CARD_OPTIONS.REPLACE_THE_CARD' : 'CARDS.PRINT_CARD'}
+            subTitle={
+              currentCard.physicalCard ? 'CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES' : 'CARD_OPTIONS.ISSUE_A_PHSYICAL'
+            }
             onPress={onNavigateToChooseAddress}
           />
 

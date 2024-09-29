@@ -26,10 +26,10 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
+import IssueCardPinCreationScreen from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh',
@@ -51,7 +51,10 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
 
   const {
     currentCard: { cardHeaderText, name },
+    issuanceDetails,
   } = route.params;
+
+  console.log('issuanceDetails', issuanceDetails);
 
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
@@ -195,10 +198,10 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
         onCloseBottomSheet={onCloseBottomSheet}
         ref={veriyOTPSheetRef}
       >
-        <OtpVerificationComponent
-          onConfirmPress={onNavigateToSuccess}
-          ref={otpVerificationRef}
-          onPressHelp={handleOnPressHelp}
+        <IssueCardPinCreationScreen
+          onSuccess={onNavigateToSuccess}
+          handleOnPressHelp={handleOnPressHelp}
+          issuanceDetails={issuanceDetails}
         />
       </IPayBottomSheet>
       <IPayBottomSheet

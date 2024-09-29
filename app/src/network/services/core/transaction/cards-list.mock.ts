@@ -47,7 +47,7 @@ const cardsListMock: ApiResponse<{ cards: CardResponseInterface[] }> = {
           nextAnnualFeesDueDate: '2026-02-06',
           virtualCard: true,
         },
-        physicalCard: false,
+        physicalCard: true,
       },
       {
         cardIndex: '4298752495053545348485148564853485357',
@@ -81,7 +81,7 @@ const cardsListMock: ApiResponse<{ cards: CardResponseInterface[] }> = {
           nextAnnualFeesDueDate: '2025-04-04',
           virtualCard: true,
         },
-        physicalCard: false,
+        physicalCard: true,
       },
       {
         cardIndex: '4298752505654555748484855484857515156',
