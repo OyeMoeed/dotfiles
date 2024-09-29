@@ -47,7 +47,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
     {
       id: '4',
       label: t('TRAFFIC_VIOLATION.VIOLATOR_ID'),
-      value: violationDetails?.serviceId ?? '',
+      value: violationDetails?.violatorId ?? '',
     },
     {
       id: '5',
@@ -57,7 +57,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
     {
       id: '6',
       label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
-      value: '',
+      value: '-',
     },
   ];
 

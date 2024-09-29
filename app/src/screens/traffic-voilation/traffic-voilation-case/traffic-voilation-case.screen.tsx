@@ -14,7 +14,6 @@ import {
   BillPaymentOptions,
   MoiPaymentTypes,
   TrafficTabPaymentTypes,
-  TrafficViolationFields,
   TrafficVoilationTypes,
   buttonVariants,
 } from '@app/utilities/enums.util';
@@ -59,6 +58,8 @@ const TrafficVoilationCasesScreen: React.FC = () => {
 
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
 
+  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+
   useEffect(() => {
     if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM) {
       setTrafficService(trafficServiceType?.[0]);
@@ -82,35 +83,25 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   }, []);
 
   const onValidateBills = async (data: any) => {
+    const revertFlatKey = revertFlatKeys(data);
+    const dynamicFields = fields?.map((item) => {
+      if (Object.keys(revertFlatKey).includes(item?.index)) {
+        return {
+          label: item?.label,
+          index: item?.index,
+          value: revertFlatKey[item?.index],
+          description: revertFlatKey[item?.index],
+          isFormValid: false,
+        };
+      }
+      return [];
+    });
+
     const isViolationID = formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID;
-    const violationNumberData = {
-      label: TrafficViolationFields.VIOLATION_NUMBER,
-      index: 'BeneficiaryId.OfficialNumber',
-      value: data.BeneficiaryId_OfficialNumber,
-      description: data.BeneficiaryId_OfficialNumber,
-      isFormValid: 'false',
-    };
-    const appendField = formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM ? violationNumberData : null;
     const payLoad = {
-      dynamicFields: [
-        {
-          label: 'Violator ID',
-          index: 'BeneficiaryId.OfficialId',
-          value: data.BeneficiaryId_OfficialId ?? '',
-          description: data.BeneficiaryId_OfficialId ?? '',
-          isFormValid: 'false',
-        },
-        {
-          label: 'ID Type',
-          index: 'BeneficiaryId.OfficialIdType',
-          value: data.BeneficiaryId_OfficialIdType ?? '',
-          description: data.BeneficiaryId_OfficialIdType ?? '',
-          isFormValid: 'false',
-        },
-        ...(appendField ? [appendField] : []),
-      ],
       walletNumber,
       refund: isRefund,
+      dynamicFields,
     };
 
     const apiResponse = await validateBill(
@@ -137,7 +128,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
         paymentId: apiResponse?.response?.paymentId,
       };
       if (isViolationID) {
-        navigate(ScreenNames.TRAFFIC_VOILATION_ID, { isRefund, violationDetails, isViolationID });
+        navigate(ScreenNames.TRAFFIC_VOILATION_ID, { isRefund, violationDetails, isViolationID, dynamicFields });
       } else {
         navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, {
           variant: true,
@@ -145,9 +136,11 @@ const TrafficVoilationCasesScreen: React.FC = () => {
           isRefund,
           violationDetails,
           isViolationID,
+          dynamicFields,
         });
       }
     }
+    return false;
   };
 
   const onGetBillers = async () => {
@@ -201,8 +194,6 @@ const TrafficVoilationCasesScreen: React.FC = () => {
       onGetBillersServices(trafficViolationsData?.billerId);
     }
   }, [trafficViolationsData]);
-
-  const { defaultValues, validationSchema } = useDynamicForm(fields);
 
   return (
     <IPayFormProvider<TrafficFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>

@@ -18,14 +18,14 @@ const TrafficViolationIDScreen: React.FC = () => {
   const styles = trafficViolationStyles(colors);
   const { t } = useTranslation();
   const route = useRoute();
-  const { violationDetails, isRefund } = route.params;
+  const { violationDetails, isRefund, dynamicFields } = route.params;
   const { billsData, selectedBillsCount, onSelectBill, selectAllBills, deselectAllBills } = useTrafficViolation();
 
   const violations =
     billsData?.length === 1 || isRefund ? t('TRAFFIC_VIOLATION.VIOLATION') : t('TRAFFIC_VIOLATION.VIOLATIONS');
 
   const onHandlePayButton = () => {
-    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, violationDetails, isRefund });
+    navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, violationDetails, isRefund, dynamicFields });
   };
 
   return (

@@ -38,7 +38,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
 
   const { t } = useTranslation();
-  const { variant, payOnly, violationDetails, isRefund, isViolationID } = route.params;
+  const { variant, payOnly, violationDetails, isRefund, isViolationID, dynamicFields } = route.params;
 
   const { showToast } = useToastContext();
 
@@ -84,6 +84,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         serviceId: violationDetails?.serviceId ?? '',
         groupPaymentId: violationDetails?.groupPaymentId ?? '',
         paymentId: violationDetails?.paymentId ?? '',
+        dynamicFields,
       };
 
       const apiResponse: any = await moiBillPayment(payload);
@@ -145,12 +146,12 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     {
       id: '5',
       label: t('TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'),
-      value: violationDetails?.violationNo ?? '',
+      value: violationDetails?.violationNo ?? '-',
     },
     {
       id: '6',
       label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
-      value: '',
+      value: '-',
     },
   ];
 
@@ -199,7 +200,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         simpleBar
         bold
         cancelBnt
-        customSnapPoint={SNAP_POINT.LARGE}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
         isVisible={isSheetVisible}
       >
@@ -227,7 +228,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={SNAP_POINT.LARGE}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         isVisible={isHelpCenterVisible}
         onCloseBottomSheet={onCloseHelpCenter}
       >
