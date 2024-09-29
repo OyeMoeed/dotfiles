@@ -202,6 +202,7 @@ const MoiPaymentScreen: React.FC = () => {
       });
     } else {
       invoiceSheetRef.current?.present();
+      resetFields()
     }
   };
 
