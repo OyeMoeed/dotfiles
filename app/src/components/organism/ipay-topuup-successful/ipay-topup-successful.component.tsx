@@ -365,7 +365,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                   />
                   <IPaySubHeadlineText
                     regular={false}
-                    text={`${amount || summaryData?.response?.totalTransactionAmount} `}
+                    text={`${amount || summaryData?.response?.totalTransactionAmount} ${t('COMMON.SAR')}`}
                     style={styles.headlineText}
                     shouldTranslate={false}
                   />
