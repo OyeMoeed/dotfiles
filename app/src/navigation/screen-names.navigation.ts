@@ -128,6 +128,7 @@ const enum ScreenNames {
   SEND_MONEY_REQUEST = 'SendMoneyRequest',
   TERMS_AND_CONDITIONS = 'TermsAndConditions',
   MUSANED = 'Musaned',
+  MUSANED_HISTORY = 'MusanedHistory',
 }
 
 export default ScreenNames;

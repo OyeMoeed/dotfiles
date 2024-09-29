@@ -1534,5 +1534,11 @@
     "TITLE": "Update Required",
     "SUBTITLE": "This is an old version of the app, and you cannot continue or log in using it. You will need to update the app to access your account.",
     "BUTTON_TITLE": "Update Now"
+  },
+  "MUSANED": {
+    "HEADER": "Musaned",
+    "ALINMA_PAY_USERS": "AlinmaPay Users",
+    "OTHER_USERS": "Other Users",
+    "NO_LABORERS": "You currently have no laborers.\nPlease add them using Musaned App"
   }
 }

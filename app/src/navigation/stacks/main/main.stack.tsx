@@ -115,6 +115,7 @@ import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
 import MusanedScreen from '@app/screens/musaned/musaned.screen';
+import MusanedHistoryScreen from '@app/screens/musaned-history/musaned-history.screen';
 
 const MainStack = createStackNavigator();
 
@@ -293,6 +294,7 @@ const MainStackNavigator = () => {
           />
           <MainStack.Screen name={screenNames.TERMS_AND_CONDITIONS} component={AppTermsAndConditions} />
           <MainStack.Screen name={screenNames.MUSANED} component={MusanedScreen} />
+          <MainStack.Screen name={screenNames.MUSANED_HISTORY} component={MusanedHistoryScreen} />
         </MainStack.Group>
       </MainStack.Navigator>
     </IPaySafeAreaView>
