@@ -17,10 +17,11 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isTablet } from '@app/utilities/constants';
 import { TabBase } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Linking, Platform } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
+import { GeoCoordinates } from 'react-native-geolocation-service';
 import { useTranslation } from 'react-i18next';
+import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
 import NearestAtmListComponent from './nearest-atm-list-component';
 import { AtmDetailsProps } from './nearest-atm-list.interface';
 import nearestAtmStyles from './nearest-atm.style';
@@ -57,25 +58,24 @@ const NearestAtmScreen: React.FC = () => {
     return rad;
   };
 
-  const getDistance = (
-    latitude: number,
-    longitude: number,
-    currentLocation: { latitude: number; longitude: number },
-  ) => {
-    if (currentLocation) {
-      const R = 6372.8; // km
-      const dlat = toRadians(currentLocation.latitude - latitude);
-      const dlon = toRadians(currentLocation.longitude - longitude);
-      const lat1 = toRadians(latitude);
-      const lat2 = toRadians(currentLocation.latitude);
-      const a =
-        Math.sin(dlat / 2) * Math.sin(dlat / 2) +
-        Math.sin(dlon / 2) * Math.sin(dlon / 2) * Math.cos(lat1) * Math.cos(lat2);
-      const c = 2 * Math.asin(Math.sqrt(a));
-      return (R * c).toFixed(2);
-    }
-    return 0;
-  };
+  const getDistance = useCallback(
+    (latitude: number, longitude: number, currentLocation: { latitude: number; longitude: number }) => {
+      if (currentLocation) {
+        const R = 6372.8; // km
+        const dlat = toRadians(currentLocation.latitude - latitude);
+        const dlon = toRadians(currentLocation.longitude - longitude);
+        const lat1 = toRadians(latitude);
+        const lat2 = toRadians(currentLocation.latitude);
+        const a =
+          Math.sin(dlat / 2) * Math.sin(dlat / 2) +
+          Math.sin(dlon / 2) * Math.sin(dlon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        const c = 2 * Math.asin(Math.sqrt(a));
+        return (R * c).toFixed(2);
+      }
+      return 0;
+    },
+    [],
+  );
 
   const sortNearestAtmByDistance = (atmList: AtmDetailsProps[]): AtmDetailsProps[] => {
     const sortedATM = atmList.sort((a, b) => {
@@ -88,51 +88,54 @@ const NearestAtmScreen: React.FC = () => {
     return sortedATM;
   };
 
-  const getNearestATM = async (
-    currentLocation: { latitude: number; longitude: number },
-    filterKeys: { id: string; title: string }[],
-  ) => {
-    const payload: IGetCoreManagementLovPayload = {
-      lovType: '293',
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse?.status.type === 'SUCCESS') {
-      if (apiResponse?.response?.lovInfo) {
-        const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
-          type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
-          city: item.attribute2,
-          title: `${item.recDesc} ${item.recTypeCode}`,
-          address: item.recDesc,
-          distance: getDistance(+item.attribute4, +item.attribute3, currentLocation).toString(),
-          location: { latitude: +item.attribute4, longitude: +item.attribute3 },
-        }));
-        const sortedAtmByDistance = sortNearestAtmByDistance(mappedData);
-        setNearestAtms(sortedAtmByDistance);
+  const getNearestATM = useCallback(
+    async (currentLocation: { latitude: number; longitude: number }, filterKeys: { id: string; title: string }[]) => {
+      const payload: IGetCoreManagementLovPayload = {
+        lovType: '293',
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      };
+      const apiResponse = await geCoreManagementLov(payload);
+      if (apiResponse?.status.type === 'SUCCESS') {
+        if (apiResponse?.response?.lovInfo) {
+          const mappedData = apiResponse?.response?.lovInfo.map((item) => ({
+            type: filterKeys.filter((tab) => tab.id === item.attribute6)[0]?.title,
+            city: item.attribute2,
+            title: `${item.recDesc} ${item.recTypeCode}`,
+            address: item.recDesc,
+            distance: getDistance(+item.attribute4, +item.attribute3, currentLocation).toString(),
+            location: { latitude: +item.attribute4, longitude: +item.attribute3 } as GeoCoordinates,
+          }));
+          const sortedAtmByDistance = sortNearestAtmByDistance(mappedData);
+          setNearestAtms(sortedAtmByDistance);
+        }
       }
-    }
-  };
+    },
+    [getDistance],
+  );
 
-  const getFilterKeys = async (currentLocation: { latitude: number; longitude: number }) => {
-    const payload: IGetCoreManagementLovPayload = {
-      lovType: '295',
-      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-    };
-    const apiResponse = await geCoreManagementLov(payload);
-    if (apiResponse?.status.type === 'SUCCESS') {
-      if (apiResponse?.response?.lovInfo) {
-        const mappedFilterKeys = apiResponse?.response?.lovInfo.map((item) => ({
-          id: item.recTypeCode,
-          title: item.recDesc,
-        }));
+  const getFilterKeys = useCallback(
+    async (currentLocation: { latitude: number; longitude: number }) => {
+      const payload: IGetCoreManagementLovPayload = {
+        lovType: '295',
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      };
+      const apiResponse = await geCoreManagementLov(payload);
+      if (apiResponse?.status.type === 'SUCCESS') {
+        if (apiResponse?.response?.lovInfo) {
+          const mappedFilterKeys = apiResponse?.response?.lovInfo.map((item) => ({
+            id: item.recTypeCode,
+            title: item.recDesc,
+          }));
 
-        const filterKeys = [{ id: '#', title: ALL_TYPES }, ...mappedFilterKeys];
+          const filterKeys = [{ id: '#', title: ALL_TYPES }, ...mappedFilterKeys];
 
-        setNearestAtmFilters(filterKeys);
-        getNearestATM(currentLocation, filterKeys);
+          setNearestAtmFilters(filterKeys);
+          getNearestATM(currentLocation, filterKeys);
+        }
       }
-    }
-  };
+    },
+    [ALL_TYPES, getNearestATM],
+  );
 
   const getCities = async () => {
     const payload: IGetCoreManagementLovPayload = {
@@ -151,17 +154,6 @@ const NearestAtmScreen: React.FC = () => {
       }
     }
   };
-
-  useEffect(() => {
-    Geolocation.getCurrentPosition(
-      async (position) => {
-        await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
-        await getCities();
-      },
-      () => {},
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
-    );
-  }, []);
 
   useEffect(() => {
     setFilteredData(nearestAtms);
@@ -231,6 +223,14 @@ const NearestAtmScreen: React.FC = () => {
     citiesFilterSheetRef?.current?.close();
   };
 
+  const onLocationSelected = useCallback(
+    async (value: GeoCoordinates) => {
+      await getFilterKeys(value);
+      await getCities();
+    },
+    [getFilterKeys],
+  );
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn titleStyle={styles.title} applyFlex title="ATM_WITHDRAWAL.NEAREST_ATM" />
@@ -299,6 +299,7 @@ const NearestAtmScreen: React.FC = () => {
         cancelBnt
       >
         <IPayAtmDetails data={atmDetails as AtmDetailsProps} openGoogleMapsWeb={onOpenGoogleMaps} />
+        <IPayLocationPermissionSheet onLocationSelected={onLocationSelected} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

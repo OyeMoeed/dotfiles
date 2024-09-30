@@ -15,7 +15,6 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import useLocation from '@app/hooks/location.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
@@ -40,6 +39,9 @@ import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import { TextStyle } from 'react-native';
 import useDelinkDevice from '@app/hooks/useDeviceDelink';
+import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
+import { GeoCoordinates } from 'react-native-geolocation-service';
+import { showPermissionModal } from '@app/store/slices/permission-alert-slice';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -62,7 +64,6 @@ const LoginViaPasscode: React.FC = () => {
     componentToRender,
     forgetPasswordFormData,
     setForgetPasswordFormData,
-    checkAndHandlePermission,
     otp,
   } = useLogin();
   const dispatch = useTypedDispatch();
@@ -82,8 +83,7 @@ const LoginViaPasscode: React.FC = () => {
   const { savePasscodeState, resetBiometricConfig } = useBiometricService();
   const { otpConfig, contactusList } = useConstantData();
   const contactUsRef = useRef<any>(null);
-
-  const { fetchLocation } = useLocation();
+  const [location, setLocation] = useState<GeoCoordinates | null>(null);
 
   const renderToast = (apiErrorValue: string) => {
     setPasscodeError(true);
@@ -203,15 +203,8 @@ const LoginViaPasscode: React.FC = () => {
   };
 
   const login = async (passcode: string) => {
-    const hasLocation = await checkAndHandlePermission(false);
-    if (!hasLocation) {
-      setPasscodeError(true);
-      return;
-    }
-    setPasscodeError(false);
-
-    const location = await fetchLocation(false);
-    if (!location) {
+    if (!location?.latitude || !location?.longitude) {
+      dispatch(showPermissionModal());
       setPasscodeError(true);
       return;
     }
@@ -222,8 +215,8 @@ const LoginViaPasscode: React.FC = () => {
       const prepareLoginPayload: DeviceInfoProps = {
         ...deviceInfo,
         locationDetails: {
-          latitude: location.latitude,
-          longitude: location.longitude,
+          latitude: `${location.latitude}`,
+          longitude: `${location.longitude}`,
         },
       };
 
@@ -329,6 +322,10 @@ const LoginViaPasscode: React.FC = () => {
   const onCall = (phoneNumber: string) => {
     openPhoneNumber({ phoneNumber, colors, showToast });
   };
+
+  const onLocationSelected = useCallback((position: GeoCoordinates) => {
+    setLocation(position);
+  }, []);
 
   return (
     <IPaySafeAreaView>
@@ -436,6 +433,7 @@ const LoginViaPasscode: React.FC = () => {
         customImage={actionSheetOptions.customImage}
         onPress={delinkSuccessfully}
       />
+      <IPayLocationPermissionSheet onLocationSelected={onLocationSelected} />
     </IPaySafeAreaView>
   );
 };

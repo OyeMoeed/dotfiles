@@ -5,7 +5,6 @@ import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-
 import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
 import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
 import { IPayLanguageSheet } from '@app/components/organism';
-import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
 import IPayServiceErrorToast from '@app/components/organism/ipay-service-error-toast/ipay-service-error-toast.component';
 import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
@@ -104,7 +103,6 @@ const MainNavigation: React.FC = () => {
 
       <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />
       <IPayUpdateBottomSheet />
-      <IPayLocationPermissionSheet />
     </>
   );
 };

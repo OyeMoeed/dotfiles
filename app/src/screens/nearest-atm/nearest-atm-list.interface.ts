@@ -1,7 +1,4 @@
-interface LocationProps {
-  latitude?: number;
-  longitude?: number;
-}
+import { GeoCoordinates } from 'react-native-geolocation-service';
 
 interface AtmDetailsProps {
   type: string;
@@ -9,7 +6,7 @@ interface AtmDetailsProps {
   title: string;
   address: string;
   distance: string;
-  location: LocationProps;
+  location: GeoCoordinates;
 }
 
 interface AtmProps {

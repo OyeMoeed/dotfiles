@@ -1,49 +1,42 @@
 import { isAndroidOS } from '@app/utilities/constants';
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
-import { AppState, AppStateStatus } from 'react-native';
+import { useState, useEffect } from 'react';
+import { AppState, AppStateStatus, NativeEventSubscription } from 'react-native';
 
-const useAppState = () => {
+const isAppInactiveOrInBackground = (appState: AppStateStatus) => appState?.match(/inactive|background/);
+
+const useAppState = (AppStateChangedCallback?: () => void, shouldHandleBackground = { current: true }) => {
   const [appState, setAppState] = useState(AppState.currentState);
 
   useEffect(() => {
-    const handleAppStateChange = (nextAppState: AppStateStatus) => {
-      setAppState(nextAppState);
-    };
+    const subscriptions: NativeEventSubscription[] = [];
 
-    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    if (isAndroidOS) {
+      subscriptions.push(
+        AppState.addEventListener('focus', () => {
+          if (shouldHandleBackground?.current) {
+            AppStateChangedCallback?.();
+          }
+        }),
+      );
+    }
+
+    subscriptions.push(
+      AppState.addEventListener('change', (nextAppState) => {
+        if (isAppInactiveOrInBackground(appState) && nextAppState === 'active' && shouldHandleBackground?.current) {
+          AppStateChangedCallback?.();
+        }
+        setAppState(nextAppState);
+      }),
+    );
 
     return () => {
-      subscription.remove();
+      subscriptions.forEach((el) => el?.remove());
     };
-  }, []);
+  }, [AppStateChangedCallback, shouldHandleBackground, appState]);
 
-  useFocusEffect(
-    useCallback(() => {
-      if (!isAndroidOS) return;
-
-      const onFocus = () => {
-        if (appState === 'background' || appState === 'inactive') {
-          setAppState('active');
-        }
-      };
-
-      const onBlur = () => {
-        setAppState('inactive');
-      };
-
-      const focusListener = AppState.addEventListener('focus', onFocus);
-      const blurListener = AppState.addEventListener('blur', onBlur);
-
-      // eslint-disable-next-line consistent-return
-      return () => {
-        focusListener.remove();
-        blurListener.remove();
-      };
-    }, [appState]),
-  );
-
-  return appState;
+  return {
+    appState,
+  };
 };
 
-export default useAppState;
+export { isAppInactiveOrInBackground, useAppState };
