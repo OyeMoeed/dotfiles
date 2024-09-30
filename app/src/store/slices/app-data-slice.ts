@@ -29,8 +29,6 @@ const initialState: AppDataInitialStateProps = {
       hasGeneralNotification: true,
       hasOffersNotification: true,
     },
-    didUserRateApp: false,
-    shouldShowRate: false,
   },
 };
 

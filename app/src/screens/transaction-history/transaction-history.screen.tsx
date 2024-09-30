@@ -30,7 +30,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     isW2WTransactions,
     isShowTabs = false,
     currentCard,
-    cards,
     contacts,
     isShowCard = false,
     isShowAmount = true,
@@ -40,6 +39,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const styles = transactionsStyles(colors);
   const { t } = useTranslation();
   const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
+  const cards = useTypedSelector((state) => state.cardsReducer.cards);
 
   const cardLastFourDigit = isShowCard && currentCard?.maskedCardNumber.slice(-4);
 

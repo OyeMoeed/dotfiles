@@ -410,11 +410,12 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           <IPayFlatlist
             scrollEnabled={false}
             data={bottomFilters}
-            renderItem={({ item: { type, label, icon, dropdownIcon } }) => (
+            renderItem={({ item: { type, label, icon, dropdownIcon, isRequired } }) => {
+              return (
               <Controller
                 control={control}
                 name={type}
-                rules={{ required: true }}
+                rules={{ required: isRequired ?? true }}
                 render={() => (
                   <IPayAnimatedTextInput
                     label={label}
@@ -434,7 +435,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                   />
                 )}
               />
-            )}
+            )}}
           />
         )}
       </IPayView>

@@ -24,10 +24,11 @@ import { darkCards } from '@app/screens/send-gift-card/send-gift-card.constants'
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { typography } from '@app/styles/typography.styles';
-import { buttonVariants, copyText } from '@app/utilities';
+import { buttonVariants, copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import IPayBottomSheet from '../ipay-bottom-sheet/ipay-bottom-sheet.component';
 import { GiftDetails, IGiftTransferSuccessProps, WalletPaymentDetails } from './ipay-gift-transfer-success.interface';
 import { GiftTransferSuccessStyles } from './ipay-gift-transfer-success.styles';
@@ -62,8 +63,15 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
     previewBottomSheetRef.current?.present();
   };
 
-  const onSendAnotherGift = () => navigate(ScreenNames.SEND_GIFT);
-  const onHome = () => navigate(ScreenNames.HOME);
+  const onSendAnotherGift = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    navigate(ScreenNames.SEND_GIFT);
+  };
+  const onHome = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    toggleAppRating();
+    navigate(ScreenNames.HOME);
+  };
 
   const { totalAmount: giftAmount, notes } = transferDetails.formData[0];
 
