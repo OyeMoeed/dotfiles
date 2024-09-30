@@ -18,7 +18,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
 import { CardInfo } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { buttonVariants } from '@app/utilities';
+import { buttonVariants, customInvalidateQuery, toggleAppRating } from '@app/utilities';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import IPayPrintCard from '../ipay-print-card/ipay-print-card.component';
 import { IPayCardSuccessProps } from './ipay-card-success.interface';
 import topUpSuccessStyles from './ipay-card-success.style';
@@ -37,12 +38,15 @@ const IPayCardSuccess: React.FC<IPayCardSuccessProps> = ({
   const { colors } = useTheme();
   const styles = topUpSuccessStyles();
   const handleHomePress = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    toggleAppRating();
     navigate(screenNames.HOME);
   };
 
   const gradientColors = [colors.tertiary.tertiary500, colors.primary.primary450];
 
   const handlePrintCard = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
     navigate(screenNames.PRINT_CARD_CONFIRMATION, {
       currentCard: {
         cardHeaderText: 'Mada Debit Card', // TODO: will change api response

@@ -7,7 +7,7 @@ const queryClient = new QueryClient({
       refetchOnMount: false,
       refetchOnReconnect: false,
       retry: false,
-      cacheTime: 60 * 1000,
+      cacheTime: 60 * 1000 * 5,
     },
   },
 });

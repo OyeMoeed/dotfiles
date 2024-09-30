@@ -9,7 +9,7 @@ import { IPayBottomSheet } from '@app/components/organism';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayIcon, IPayText, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { openAppOrStore } from '@app/utilities/linking-utils';
-import { MAIN_APP_STORE_LINKS } from '@app/constants/constants';
+import constants, { MAIN_APP_STORE_LINKS } from '@app/constants/constants';
 
 import { IPayUpdateComponentSheetProps } from './ipay-update-bottom-sheet.interface';
 import forceUpdateStyle from './ipay-update-bottom-sheet.style';
@@ -18,7 +18,7 @@ const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, 
   const { colors } = useTheme();
   const styles = forceUpdateStyle();
   const shouldForceUpdate = useTypedSelector((state) => state.forceUpdateReducer.visible);
-
+  const canForceUpdateClose = constants.CAN_FORCE_UPDATE_CLOSE;
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {
@@ -54,13 +54,14 @@ const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, 
       simpleHeader
       simpleBar
       bold
-      closeBottomSheetOnDone={false}
+      cancelBnt={canForceUpdateClose}
+      closeBottomSheetOnDone={canForceUpdateClose}
       isPanningGesture={false}
       enableDynamicSizing={false}
       enablePanDownToClose={false}
       enableHandlePanningGesture={false}
       enableOverDrag={false}
-      stopCloseBackgroundPress
+      stopCloseBackgroundPress={!canForceUpdateClose}
     >
       <IPayView style={styles.container}>
         <IPayIcon icon={icons.danger_light} size={85} />

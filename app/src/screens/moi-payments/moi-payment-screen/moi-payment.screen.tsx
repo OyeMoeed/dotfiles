@@ -2,6 +2,7 @@ import { IPayCaption2Text, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
 import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
+import useParentLovChange from '@app/components/molecules/ipay-dynamic-form/useParentLovChange.hook';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -151,6 +152,8 @@ const MoiPaymentScreen: React.FC = () => {
     }
   }, [serviceTypeValue]);
 
+  const handleParentLovChange = useParentLovChange(fields, setFields);
+
   return (
     <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
       {({ control, formState: { errors }, handleSubmit }) => {
@@ -178,7 +181,12 @@ const MoiPaymentScreen: React.FC = () => {
               <IPayView style={styles.contentContainer}>
                 <IPayView style={styles.dynamicFieldContainer}>
                   <IPayCaption2Text regular text="BILL_PAYMENTS.BENEFECIARY_DETAILS" />
-                  <DynamicFormComponent errors={errors} control={control} fields={fields} />
+                  <DynamicFormComponent
+                    handleParentLovChange={handleParentLovChange}
+                    errors={errors}
+                    control={control}
+                    fields={fields}
+                  />
                 </IPayView>
 
                 <IPayButton

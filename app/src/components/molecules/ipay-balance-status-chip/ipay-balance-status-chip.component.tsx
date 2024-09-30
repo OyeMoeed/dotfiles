@@ -1,4 +1,3 @@
-import { IPayView } from '@app/components/atoms';
 import { AccountBalanceStatus } from '@app/enums/bill-payment.enum';
 import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
@@ -104,7 +103,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
       fullWidth
     />
   ) : (
-    <IPayView />
+    <></>
   );
 };
 

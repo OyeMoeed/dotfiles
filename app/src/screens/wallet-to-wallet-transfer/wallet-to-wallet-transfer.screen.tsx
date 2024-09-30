@@ -45,8 +45,6 @@ import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { customInvalidateQuery, toggleAppRating } from '@app/utilities';
-import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -88,8 +86,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
-        customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
-        toggleAppRating();
         switch (from) {
           case TRANSFERTYPE.SEND_MONEY:
             navigate(ScreenNames.SEND_MONEY_FORM, {

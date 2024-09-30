@@ -2,7 +2,7 @@ import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const cardIssuaceConfirmationStyles = (themeColors: typeof colors) =>
+const cardIssuanceConfirmationStyles = (themeColors: typeof colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -49,8 +49,8 @@ const cardIssuaceConfirmationStyles = (themeColors: typeof colors) =>
     detailsText: {
       color: themeColors.primary.primary800,
     },
-    flatlist: {
+    flatList: {
       flex: 0,
     },
   });
-export default cardIssuaceConfirmationStyles;
+export default cardIssuanceConfirmationStyles;

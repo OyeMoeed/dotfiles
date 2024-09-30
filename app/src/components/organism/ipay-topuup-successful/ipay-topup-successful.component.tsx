@@ -55,8 +55,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const navigateHome = useCallback(() => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
     if (completionStatus !== TopupStatus.FAILED) {
-      customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
       toggleAppRating();
     }
     navigate(screenNames.HOME);
@@ -365,7 +365,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                   />
                   <IPaySubHeadlineText
                     regular={false}
-                    text={`${amount || summaryData?.response?.totalTransactionAmount} `}
+                    text={`${amount || summaryData?.response?.totalTransactionAmount} ${t('COMMON.SAR')}`}
                     style={styles.headlineText}
                     shouldTranslate={false}
                   />
