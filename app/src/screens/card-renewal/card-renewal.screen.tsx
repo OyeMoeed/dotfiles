@@ -69,6 +69,7 @@ const CardRenewalScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
+  const [statusIndication] = useState();
 
   const lastFourDigit = maskedCardNumber?.slice(-4) || '';
 

@@ -17,7 +17,6 @@ import { useGetCards } from '@app/network/services/core/transaction/transactions
 import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
-import { setCards } from '@app/store/slices/cards-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardStatusNumber, CardTypes } from '@app/utilities';
@@ -30,6 +29,8 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
+import { setCards } from '@app/store/slices/cards-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
