@@ -8,6 +8,7 @@ interface DynamicFieldRendererProps {
   handleChange?: (index?: string, value?: string) => void;
   myIdValue?: string;
   myIdCheck?: boolean;
+  handleParentLovChange?: (fieldIndex: string, selectedValue: string) => Promise<void>;
 }
 
 export default DynamicFieldRendererProps;

@@ -266,5 +266,10 @@
     "TITLE": "",
     "SUBTITLE": "",
     "BUTTON_TITLE": ""
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "अब आप",
+    "BOLD_TITLE": "सहज रूप से कार्ड जारी करें",
+    "DESCRIPTION": "अलिमा पे एप्प के माध्यम से उपलब्ध विभिन्न प्रकार और विशेषताओं को अन्वेषण करना!"
   }
 }

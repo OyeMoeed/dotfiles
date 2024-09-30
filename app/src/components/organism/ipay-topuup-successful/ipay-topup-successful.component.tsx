@@ -55,8 +55,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   };
 
   const navigateHome = useCallback(() => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
     if (completionStatus !== TopupStatus.FAILED) {
-      customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
       toggleAppRating();
     }
     navigate(screenNames.HOME);

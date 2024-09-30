@@ -64,10 +64,10 @@ const MoiPaymentRefund: React.FC = ({ route }) => {
 
   const getDataToRender = useCallback(() => {
     // Remove the item with id '1'
-    const updatedPaymentDetails = moiBillData?.filter((item: { id: string }) => item.id !== '1');
+    const updatedPaymentDetails = moiBillData.filter((item: { id: string }) => item.id !== '1');
 
     // Update the ids accordingly
-    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
+    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails.map((item: any, index: number) => ({
       ...item,
       id: (index + 1).toString(),
     }));

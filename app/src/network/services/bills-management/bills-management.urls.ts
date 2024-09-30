@@ -25,6 +25,8 @@ const BILLS_MANAGEMENT_URLS = {
   pay_moi_bill: () => 'bills-management/v1/alinmaPay/moi/payment',
   IQUIRE_BILL: (payload: InquireBillPayloadProps) =>
     `bills-management/v1/adhoc-payment/billers/${payload?.billerId}/service/${payload.serviceId}/bills/${payload.billAccountNumber}/check-amount`,
+  get_child_lovs: (lovType: string, filter1: string) =>
+    `bills-management/v1/billers/services/dynamic-fields/lov-list/${lovType}?filter1=${filter1}`,
 };
 
 export default BILLS_MANAGEMENT_URLS;

@@ -1296,6 +1296,7 @@ const useConstantData = () => {
       id: '1',
       label: t('COMMON.STATUS'),
       type: FiltersType.STATUS,
+      isRequired: false,
       filterValues: [
         {
           id: '1',
