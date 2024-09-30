@@ -7,6 +7,7 @@ const useParentLovChange = (
   setFields: React.Dispatch<React.SetStateAction<DynamicField[]>>,
 ) => {
   const handleParentLovChange = useCallback(
+    // eslint-disable-next-line consistent-return
     async (fieldIndex: string, selectedValue: string): Promise<void> => {
       setFields((prevFields) => prevFields.map((f) => (f.index === fieldIndex ? { ...f, value: selectedValue } : f)));
 
@@ -30,6 +31,7 @@ const useParentLovChange = (
               ),
             );
           }
+          return undefined;
         } catch (error) {
           return undefined;
         }

@@ -16,10 +16,8 @@ import { useGetCards } from '@app/network/services/core/transaction/transactions
 import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
-import { setCards } from '@app/store/slices/cards-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { filterCards } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
@@ -29,6 +27,10 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ApiResponse } from '@app/network/services/services.interface';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { CardStatusNumber, CardTypes } from '@app/utilities';
+import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -45,7 +47,7 @@ const Home: React.FC = () => {
   const topUpSelectionRef = React.createRef<any>();
   const cardIssuanceSheetRef = useRef<BottomSheetModal>(null);
 
-  const [cardsData, setCardsData] = useState<CardInterface[]>([]);
+  const [, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
   const {
     walletNumber,
