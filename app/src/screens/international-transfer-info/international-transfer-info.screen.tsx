@@ -66,7 +66,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
   const [wuFeesInquiryData, setWUFeesInquiryData] = useState({});
   const amountCurrency = 'SAR';
-  const { showSpinner, hideSpinner } = useSpinnerContext();
+  const amount = 1;
 
   const { showToast } = useToastContext();
 
@@ -155,11 +155,9 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
 
   const wuFeesInquiry = async () => {
     const payload: FeesInquiryPayload = {
-      amount: '',
-      amountCurrency: remitterCurrencyAmount,
-      convertedAmountCurrency: beneficiaryCurrencyAmount,
-      deductFeesFromAmount: isIncludeFees,
-      deviceInfo: await getDeviceInfo(),
+      amount,
+      amountCurrency,
+      promoCode: null
     };
     try {
       const apiResponse: WuFeesInquiryProps = await westerUnionFeesInquiry(payload, transferData?.beneficiaryCode);
@@ -188,19 +186,19 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
 
   useEffect(() => {
     wuFeesInquiry();
-  }, [isIncludeFees]);
+  }, []);
 
   const handleAmountInputChange = (text: string) => {
-    const exchangeRate = 12.8; // TODO Exchange Rate API Needs to be Implemented
+    const exchangeRate = Number(wuFeesInquiryData?.exchangeRate)
     setRemitterCurrencyAmount(text);
     const foreignAmount = Number(text) * exchangeRate;
     setBeneficiaryCurrencyAmount(foreignAmount?.toFixed(2));
   };
 
   const transferFees = t('LOCAL_TRANSFER.FEES');
-  const feeAmount = `${wuFeesInquiryData?.feeAmount ?? ''} ${t('COMMON.SAR')}`;
+  const feeAmount = `${wuFeesInquiryData?.bankFeeAmount ?? ''} ${t('COMMON.SAR')}`;
   const transferVat = t('COMMON.AND_VAT');
-  const vatAmount = `${wuFeesInquiryData?.vatAmount ?? ''} ${t('COMMON.SAR')}`;
+  const vatAmount = `${wuFeesInquiryData?.bankVatAmount ?? ''} ${t('COMMON.SAR')}`;
 
   const onTransferGateway = (methodName: string, index: number) => {
     setTransferGateway({ transferMethod: methodName, index });
@@ -252,7 +250,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                   const isCheck = transferGateway?.index === index;
                   return (
                     <IPayCountryCurrencyBox
-                      transferMethod={transferMethod}
+                      transferMethod={{...transferMethod, beneficiaryAmount: wuFeesInquiryData?.exchangeRate ?? '', beneficiaryCurrency: wuFeesInquiryData?.principleCurrency ?? '', fee: wuFeesInquiryData?.bankFeeAmount ?? ''}}
                       isChecked={isCheck}
                       onRemitterAmountChange={handleAmountInputChange}
                       remitterCurrencyAmount={remitterCurrencyAmount}
