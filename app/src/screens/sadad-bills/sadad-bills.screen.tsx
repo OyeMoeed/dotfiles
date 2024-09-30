@@ -52,7 +52,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const billToEditRef = useRef<any>({});
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { showToast } = useToastContext();
-  const tabs = ['SADAD.ACTIVE_BILLS', 'SADAD.INACTIVE_BILLS'];
+  const tabs = [t('SADAD.ACTIVE_BILLS'), t('SADAD.INACTIVE_BILLS')];
 
   const getSelectedBillsCount = (billsData: BillsProps[]) => {
     const count = billsData.filter((bill) => bill.selected).length;

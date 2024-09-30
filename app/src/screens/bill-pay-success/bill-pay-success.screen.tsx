@@ -27,7 +27,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   const {
     isSaveOnly,
     isPayOnly,
-    isPayPartially = true,
+    isPayPartially,
     totalAmount,
     billPaymentInfos,
     billPaymentData,

@@ -47,7 +47,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
           return States.SUCCESS;
       }
     } else {
-      return null;
+      return '';
     }
   }, [billStatusCode]);
 
@@ -57,26 +57,22 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
 
   const billStatus = useMemo(() => {
     let key: string | undefined = '';
-    if (dueDateTime) {
-      switch (billStatusCode) {
-        case BillStatus.DEACTIVE:
-          key = getEnumKeyByValue(BillStatus, BillStatus.DEACTIVE);
-          return `BILL_PAYMENTS.${key}`;
-        case BillStatus.UNPAID:
-          key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
-          return `BILL_PAYMENTS.${key}`;
-        case BillStatus.PARTIALLY_PAID:
-          key = getEnumKeyByValue(BillStatus, BillStatus.PARTIALLY_PAID);
-          return `BILL_PAYMENTS.${key}`;
-        case BillStatus.OVER_PAID:
-          key = getEnumKeyByValue(BillStatus, BillStatus.OVER_PAID);
-          return `BILL_PAYMENTS.${key}`;
-        default:
-          key = getEnumKeyByValue(BillStatus, BillStatus.PAID);
-          return `BILL_PAYMENTS.${key}`;
-      }
-    } else {
-      return '';
+    switch (billStatusCode) {
+      case BillStatus.DEACTIVE:
+        key = getEnumKeyByValue(BillStatus, BillStatus.DEACTIVE);
+        return `BILL_PAYMENTS.${key}`;
+      case BillStatus.UNPAID:
+        key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
+        return `BILL_PAYMENTS.${key}`;
+      case BillStatus.PARTIALLY_PAID:
+        key = getEnumKeyByValue(BillStatus, BillStatus.PARTIALLY_PAID);
+        return `BILL_PAYMENTS.${key}`;
+      case BillStatus.OVER_PAID:
+        key = getEnumKeyByValue(BillStatus, BillStatus.OVER_PAID);
+        return `BILL_PAYMENTS.${key}`;
+      default:
+        key = getEnumKeyByValue(BillStatus, BillStatus.PAID);
+        return `BILL_PAYMENTS.${key}`;
     }
   }, [billStatusCode]);
 
@@ -117,12 +113,14 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
           <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>
         <IPayView style={styles.contentChildView}>
-          <IPayChip
-            containerStyle={styles.chipView}
-            isShowIcon={false}
-            textValue={billStatus}
-            variant={statusVariant}
-          />
+          {dueDateTime && (
+            <IPayChip
+              containerStyle={styles.chipView}
+              isShowIcon={false}
+              textValue={billStatus}
+              variant={statusVariant}
+            />
+          )}
           <IPaySubHeadlineText text={billingAmount} color={billingAmountColor} />
           {billStatusCode === BillStatus.UNPAID && (
             <IPayCaption2Text text={billingDueDate} style={styles.dueDateText} color={dueDateColor} />
