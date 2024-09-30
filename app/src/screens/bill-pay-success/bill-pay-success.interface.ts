@@ -1,3 +1,4 @@
+import { InquireBillPayloadProps } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 
 interface BillPaymentData {
@@ -20,6 +21,7 @@ interface BillPaySuccessParams {
   billPaymentInfos: BillPaymentInfosTypes[];
   billPaymentData: BillPaymentData[];
   headerAttributes: HeaderAttributes;
+  inquireBillPayload?: InquireBillPayloadProps;
 }
 
 interface BillPaySuccessProps {

@@ -556,6 +556,7 @@
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
     "DATE_AND_TIME": "Transaction Date",
+    "CARD_NUMBER": "Card Number",
     "ACCOUNT": "Account",
     "REASON_OF_TRANSFER": "Reason of Transfer",
     "SALARY": "Salary",
