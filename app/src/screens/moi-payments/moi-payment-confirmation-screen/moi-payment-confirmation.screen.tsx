@@ -22,21 +22,13 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { availableBalance, limitsDetails, userContactInfo } = walletInfo;
+  const { limitsDetails, userContactInfo } = walletInfo;
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
   const { billData, isRefund } = route?.params || {};
-  const [warning, setWarning] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (billData?.totalFeeAmount > availableBalance) setWarning('COMMON.INSUFFICIENT_BALANCE_COMMON');
-    else if (billData?.totalFeeAmount > limitsDetails.dailyRemainingOutgoingAmount)
-      setWarning('SADAD.DAILY_LIMIT_REACHED');
-    else if (billData?.totalFeeAmount > limitsDetails.monthlyRemainingOutgoingAmount)
-      setWarning('SADAD.MONTLY_LIMIT_REACHED');
-    else setWarning('');
-  }, [warning]);
+  const { availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
     useMoiPaymentConfirmation(billData, isRefund);
@@ -110,7 +102,6 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
-          showAmount={warning ? false : true}
           onPressBtn={onPressCompletePayment}
           btnText={isRefund ? 'COMMON.CONFIRM' : 'SADAD.PAY'}
           totalAmount={billData?.totalFeeAmount ?? 0}
