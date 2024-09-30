@@ -13,6 +13,7 @@ interface IPayCardsCarouselProps {
   onATMLongPress: () => void;
   onPinCodeSheet: () => void;
   isLoadingCards: boolean;
+  resetOnDataChange?: boolean;
 }
 
 export default IPayCardsCarouselProps;
