@@ -14,21 +14,17 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
     return null;
   }
 
-  return (
-    <>
-      {fields?.map((field) => (
-        <IPayView key={field.index} style={[containerStyle]}>
-          <DynamicFieldRenderer
-            key={field.index}
-            field={field}
-            control={control}
-            errors={errors}
-            handleParentLovChange={handleParentLovChange}
-          />
-        </IPayView>
-      ))}
-    </>
-  );
+  return fields?.map((field) => (
+    <IPayView key={field.index} style={containerStyle}>
+      <DynamicFieldRenderer
+        key={field.index}
+        field={field}
+        control={control}
+        errors={errors}
+        handleParentLovChange={handleParentLovChange}
+      />
+    </IPayView>
+  ));
 };
 
 export default DynamicFormComponent;

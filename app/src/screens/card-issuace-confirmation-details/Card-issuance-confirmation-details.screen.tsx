@@ -22,7 +22,6 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
@@ -45,7 +44,7 @@ const CardIssuanceConfirmationScreen = () => {
   const changePinRef = useRef<ChangePinRefTypes>(null);
   const helpCenterRef = useRef<any>(null);
 
-  const { refetch } = useGetCards({
+  useGetCards({
     payload: {
       walletNumber,
     },
