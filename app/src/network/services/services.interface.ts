@@ -7,7 +7,7 @@ interface MockAPIStatusProps {
   requestReference: string;
   type: string;
   desc: string;
-  translation: string;
+  translation?: string;
 }
 
 // Define the Data interface

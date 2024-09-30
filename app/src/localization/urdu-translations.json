@@ -920,5 +920,16 @@
     "PAY": "ادا کریں",
     "REJECT": "مسترد کریں",
     "REJECT_THIS_REQUEST": "اس درخواست کو مسترد کریں"
+  },
+  "RATING": {
+    "APP_RATING": "تطبيق کی درجہ بندی",
+    "SATISFACTION": "آپ کس درجے تک سنیاسی ہیں",
+    "ALINMA_PAY_APP": "کے بارے میں Alinma Pay اپ?",
+    "RATE_APP_NOW": "آپ کو راٹنگ"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "اب آپ",
+    "BOLD_TITLE": "بہت آسانی سے کارڈ جاری کریں",
+    "DESCRIPTION": "الیما پی اپ کے ذریعہ دستیاب مختلف اقسام اور خصوصیات کو دریافت کریں!"
   }
 }

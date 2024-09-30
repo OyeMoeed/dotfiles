@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
@@ -28,12 +29,13 @@ import transactionsStyles from './transaction-history.style';
 import { BeneficiaryTransactionItemProps } from '../beneficiary-transaction-history/beneficiary-transaction-history.interface';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
-  const { isW2WTransactions, isShowTabs = false, currentCard, cards, contacts, isShowAmount = true } = route.params;
+  const { isW2WTransactions, isShowTabs = false, currentCard, contacts, isShowAmount = true } = route.params;
   const { transactionHistoryFilterDefaultValues, w2WFilterData, w2WFilterDefaultValues } = useConstantData();
   const { colors } = useTheme();
   const styles = transactionsStyles(colors);
   const { t } = useTranslation();
   const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
+  const cards = useTypedSelector((state) => state.cardsReducer.cards);
 
   const [filters, setFilters] = useState<Array<any>>([]);
   const transactionRef = React.createRef<any>();
@@ -152,7 +154,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       walletNumber,
       maxRecords: '100',
       offset: '1',
-      trxReqType: 'PAY_WALLET',
+      trxReqType: `${TransactionTypes.PAY_WALLET},${TransactionTypes.COUT_MOBILE}`,
       trxType,
       fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
       toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',

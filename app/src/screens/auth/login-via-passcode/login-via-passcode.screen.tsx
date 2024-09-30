@@ -16,6 +16,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocation from '@app/hooks/location.hook';
+import useDelinkDevice from '@app/hooks/useDeviceDelink';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
@@ -39,7 +40,6 @@ import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import { TextStyle } from 'react-native';
-import useDelinkDevice from '@app/hooks/useDeviceDelink';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -84,16 +84,6 @@ const LoginViaPasscode: React.FC = () => {
   const contactUsRef = useRef<any>(null);
 
   const { fetchLocation } = useLocation();
-
-  const renderToast = (apiErrorValue: string) => {
-    setPasscodeError(true);
-    showToast({
-      title: 'COMMON.INCORRECT_CODE',
-      subTitle: apiErrorValue || 'CARDS.VERIFY_CODE_ACCURACY',
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const onPressForgetPassword = () => {
     setComponentToRender('');
@@ -238,12 +228,9 @@ const LoginViaPasscode: React.FC = () => {
         );
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
-      } else {
-        renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
     } catch (error) {
       setPasscodeError(true);
-      renderToast('ERROR.SOMETHING_WENT_WRONG');
     }
   };
 

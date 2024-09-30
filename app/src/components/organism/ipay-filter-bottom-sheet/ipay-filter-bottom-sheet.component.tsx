@@ -410,11 +410,11 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
           <IPayFlatlist
             scrollEnabled={false}
             data={bottomFilters}
-            renderItem={({ item: { type, label, icon, dropdownIcon } }) => (
+            renderItem={({ item: { type, label, icon, dropdownIcon, isRequired } }) => (
               <IPayAnimatedTextInput
                 label={label}
                 editable={false}
-                value={getValues(type)?.title}
+                value={getValues(type)}
                 containerStyle={styles.inputContainerStyle}
                 showRightIcon
                 customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}

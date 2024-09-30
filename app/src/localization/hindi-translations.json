@@ -255,10 +255,21 @@
     "CARD_MANAGEMENT": "कार्ड प्रबंधन",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "आपने कोई कार्ड नहीं जोड़ा है \n आप अब नए कार्ड जोड़ सकते हैं."
   },
+  "RATING": {
+    "APP_RATING": "एप्प रेटिंग",
+    "SATISFACTION": "आपकी संतुष्टि क्या है",
+    "ALINMA_PAY_APP": "आलिमा पे एप्प के बारे में?",
+    "RATE_APP_NOW": "हमें रेट करें"
+  },
   "UPDATE": {
     "HEADER": "",
     "TITLE": "",
     "SUBTITLE": "",
     "BUTTON_TITLE": ""
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "अब आप",
+    "BOLD_TITLE": "सहज रूप से कार्ड जारी करें",
+    "DESCRIPTION": "अलिमा पे एप्प के माध्यम से उपलब्ध विभिन्न प्रकार और विशेषताओं को अन्वेषण करना!"
   }
 }

@@ -7,17 +7,20 @@ import useTheme from '@app/styles/hooks/theme.hook';
 
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayList } from '@app/components/molecules';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { queryClient } from '@app/network';
 import {
   CardStatus,
   changeStatusProp,
   resetPinCodeProp,
 } from '@app/network/services/core/transaction/transaction.interface';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import {
   changeStatus,
   prepareResetCardPinCode,
@@ -26,36 +29,30 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
+import { setCards } from '@app/store/slices/cards-slice';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
+import { filterCards, mapCardData } from '@app/utilities/cards.utils';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import checkUserAccess from '@app/utilities/check-user-access';
-import { queryClient } from '@app/network';
-import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
-import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
+import { ChangePinRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
 import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
   const dispatch = useDispatch();
-  const route = useRoute<RouteProps>();
-  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const { cashWithdrawalCardsList } = useTypedSelector((state) => state.walletInfoReducer);
-
-  const {
-    currentCard,
-    currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
-  } = route.params;
+  const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+  const { cardType, cardHeaderText, name, maskedCardNumber } = currentCard as CardInterface;
 
   const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
@@ -86,10 +83,21 @@ const CardOptionsScreen: React.FC = () => {
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [pin, setPin] = useState('');
 
-  const { refetch } = useGetCards({
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = filterCards(cardApiResponse?.response?.cards);
+
+      if (availableCards?.length) {
+        dispatch(setCards(mapCardData(availableCards)));
+      }
+    }
+  };
+
+  useGetCards({
     payload: {
       walletNumber,
     },
+    onSuccess: getCardsData,
     refetchOnWindowFocus: false,
     enabled: false,
   });
@@ -197,7 +205,6 @@ const CardOptionsScreen: React.FC = () => {
 
     if (apiResponse) {
       queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
-      refetch();
       navigate(ScreenNames.CARDS);
       renderToast('CARD_OPTIONS.CARD_HAS_BEEN_DELETED', true, icons.trash, true);
     }
@@ -357,8 +364,22 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title="CARD_OPTIONS.CARD_FEATURES"
             subTitle="CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE"
-            onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
+            onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
+
+          {!currentCard.physicalCard && (
+            <IPayCardOptionsIPayListDescription
+              leftIcon={icons.card_pos}
+              rightIcon={icons.arrow_right_1}
+              title="CARDS.PRINT_CARD"
+              subTitle="CARD_OPTIONS.ISSUE_A_PHSYICAL"
+              onPress={() =>
+                navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+                  currentCard,
+                })
+              }
+            />
+          )}
 
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}

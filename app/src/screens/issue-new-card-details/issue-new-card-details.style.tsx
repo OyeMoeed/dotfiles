@@ -7,6 +7,7 @@ const issueNewCardDetailsStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       flex: 1,
+      position: 'relative',
     },
     headerGap: {
       marginVertical: verticalScale(8),
@@ -33,6 +34,7 @@ const issueNewCardDetailsStyles = (colors: typeof themeColors) =>
     expandedBorderRadius: {
       borderTopLeftRadius: moderateScale(48),
       borderTopRightRadius: moderateScale(48),
+      height: verticalScale(200),
     },
     outStyles: {
       marginTop: verticalScale(24),
@@ -51,6 +53,16 @@ const issueNewCardDetailsStyles = (colors: typeof themeColors) =>
     },
     heightedView: {
       height: moderateScale(600),
+    },
+    collapsedView: {
+      backgroundColor: colors.natural.natural100,
+    },
+    bottomBackground: {
+      zIndex: -1,
+      position: 'absolute',
+      bottom: 0,
+      height: moderateScale(200),
+      backgroundColor: colors.natural.natural100,
     },
   });
 

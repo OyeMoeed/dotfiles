@@ -8,11 +8,12 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
   control,
   errors,
   containerStyle,
-  handleChange,
+  handleParentLovChange,
 }) => {
   if (!fields.length) {
     return null;
   }
+
   return fields?.map((field) => (
     <IPayView key={field.index} style={containerStyle}>
       <DynamicFieldRenderer
@@ -20,7 +21,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
         field={field}
         control={control}
         errors={errors}
-        handleChange={handleChange}
+        handleParentLovChange={handleParentLovChange}
       />
     </IPayView>
   ));
