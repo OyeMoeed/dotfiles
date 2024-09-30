@@ -19,6 +19,7 @@ const BILLS_MANAGEMENT_URLS = {
   GET_BILLER_IMAGE: (billerId: string) =>
     `https://www.alinma.com/ADS/channels/retail/assets/images/billers/${billerId}.png`,
   DELETE_BILL: 'bills-management/v1/alinma-pay/bill',
+  ACTIVATE_BILL: 'bills-management/v1/alinma-pay/bill',
   validate_bill: (billerId: string, serviceId: string) =>
     `bills-management/v1/moi/billers/${billerId}/services/${serviceId}/payment/validate`,
   prepare_bill: (paymentType: string) => `bills-management/v1/alinmaPay/${paymentType}/prepare/bill`,

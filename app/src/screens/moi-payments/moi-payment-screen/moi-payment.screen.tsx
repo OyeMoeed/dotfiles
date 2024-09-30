@@ -110,10 +110,10 @@ const MoiPaymentScreen: React.FC = () => {
     return null;
   };
 
-  const fetchFields = async () => {
-    setSelectedBiller(selectedBiller);
+  const fetchFields = async (serviceProviderValue: string, selectedServiceType: string) => {
+    setSelectedBiller(serviceProviderValue);
     setSelectedServiceType(selectedServiceType);
-    const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
+    const response = await getDynamicFieldsService(serviceProviderValue, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
 
@@ -179,11 +179,6 @@ const MoiPaymentScreen: React.FC = () => {
   useEffect(() => {
     if (serviceProviderValue) handleChange(serviceProviderValue);
   }, [serviceProviderValue]);
-
-  const handleInquiry = () => {
-    setIsInquired(true);
-    fetchFields();
-  };
 
   const handleParentLovChange = useParentLovChange(fields, setFields);
 
@@ -253,6 +248,11 @@ const MoiPaymentScreen: React.FC = () => {
               invoiceSheetRef.current?.present();
               resetFields(reset);
             }
+          };
+
+          const handleInquiry = () => {
+            setIsInquired(true);
+            fetchFields(serviceProviderValue, serviceTypeValue);
           };
 
           return (

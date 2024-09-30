@@ -19,12 +19,19 @@ const cardIssueStyle = (themeColors: typeof colors) =>
       marginTop: moderateScale(8),
       marginBottom: moderateScale(18),
     },
-
     titleStyle: {
       color: themeColors.natural.natural900,
     },
+    subTitleContainerStyle: {
+      maxWidth: moderateScale(230),
+      marginRight: moderateScale(16),
+    },
     buttonContainer: {
       marginTop: moderateScale(24),
+    },
+    placeholder: {
+      width: moderateScale(30),
+      height: moderateScale(24),
     },
   });
 
