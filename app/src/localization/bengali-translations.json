@@ -175,7 +175,8 @@
     "EDIT_CARD": "কার্ড সম্পাদনা করুন",
     "CALL_WITHIN_SA": "সৌদি আরবের মধ্যে কল করুন",
     "CALL_OUTSIDE_SA": "সৌদি আরবের বাইরে থেকে ফোন",
-    "CALL": "কল"
+    "CALL": "কল",
+    "APP_TERMS_AND_CONDITIONS": "অ্যাপ শর্তাবলী"
   },
   "TOP_UP": {
     "APPLE_PAY": "অ্যাপল পে",
@@ -254,5 +255,16 @@
   "CARD_MANAGEMENT": {
     "CARD_MANAGEMENT": "কার্ড ব্যবস্থাপনা",
     "YOU_DO_NOT_HAVE_ANY_CARDS": "আপনার কোনো কার্ড যোগ করা নেই \n আপনি এখন নতুন কার্ড যোগ করতে পারেন।"
+  },
+  "RATING": {
+    "APP_RATING": "অ্যাপ রেটিং",
+    "SATISFACTION": "আপনি কীভাবে সন্তুষ্ট",
+    "ALINMA_PAY_APP": "এর সাথে Alinma Pay app?",
+    "RATE_APP_NOW": "আমাদের রেট করুন"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "আপনি এখন",
+    "BOLD_TITLE": "সুবিধাজনক নিচের অ্যাকাউंट",
+    "DESCRIPTION": "আলিমা পে থেকে রয়েছে!"
   }
 }

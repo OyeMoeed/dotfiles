@@ -7,7 +7,7 @@ const sadadFooterComponentStyles = (colors: any) =>
       height: moderateScale(124, 0.3),
     },
     containerConditionalStyles: {
-      height: moderateScale(156, 0.3),
+      height: moderateScale(170, 0.3),
     },
     countAndPartialPayStyles: {
       height: moderateScale(168, 0.3),
@@ -38,6 +38,7 @@ const sadadFooterComponentStyles = (colors: any) =>
     },
     chipView: {
       marginBottom: moderateScale(16, 0.3),
+      width: '100%',
     },
   });
 

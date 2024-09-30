@@ -6,6 +6,7 @@ interface DynamicField {
   label: string;
   type: string;
   required: boolean;
+  integrationTagName: string;
 }
 
 interface DynamicFieldsResponse {

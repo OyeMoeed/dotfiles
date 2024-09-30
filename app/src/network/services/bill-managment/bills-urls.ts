@@ -10,6 +10,7 @@ const BILLS_URLS = {
     `/v1/moi/billers/${billerId}/services/${serviceId}/payment/validate`,
   PREPARE_MOI_BILL: (paymentType: string) => `/v1/alinmaPay/${paymentType}/prepare/bill`,
   MOI_BILL_PAYMENT: '/v1/alinmaPay/moi/payment',
+  get_billers: 'bills-management/v1/alinmaPay/billers',
 };
 
 // Export the BILLS_URLS object as the default export

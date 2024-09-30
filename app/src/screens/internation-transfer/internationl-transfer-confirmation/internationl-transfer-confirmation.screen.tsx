@@ -17,7 +17,9 @@ import {
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -29,7 +31,7 @@ import westernUnionTransfer from '@app/network/services/international-transfer/w
 import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import beneficiaryKeysMapping from '@app/screens/international-transfer-info/international-transfer-info.constant';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -37,8 +39,8 @@ import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
-import Flag from 'react-native-round-flags';
 import { useTranslation } from 'react-i18next';
+import Flag from 'react-native-round-flags';
 import { useDispatch } from 'react-redux';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
@@ -54,12 +56,11 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
-  const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { getDataByKey } = useInternationalTransferData();
   const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
 
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
   // TODO
@@ -72,6 +73,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const [validateBeneficiaryData, setValidateBeneficiaryData] = useState({});
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
 
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
 
@@ -124,8 +126,11 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   }, [promoMatchSuccessfuly]);
 
   const totalAmount = () => {
-    const amount = getDataByKey(InternationalTransferDataLabels.total_amount)?.value;
-    return `${amount} ${t('COMMON.SAR')}`;
+    const total =
+      Number(feesInquiryData?.vatAmount) +
+      Number(feesInquiryData?.feeAmount) +
+      Number(feesInquiryData?.remitterCurrencyAmount);
+    return `${total ?? 0} ${t('COMMON.SAR')}`;
   };
 
   const getWidth = (): string[] => {
@@ -135,11 +140,8 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
     return ['1%', isError ? '43%' : '40%'];
   };
 
-  const onCloseBottomSheet = () => {
-    otpBottomSheetRef?.current?.close();
-  };
-
   const onPressHelp = () => {
+    setOtpSheetVisible(false);
     helpCenterRef?.current?.present();
   };
 
@@ -181,7 +183,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           setValidateBeneficiaryData(apiResponse?.response);
-          otpBottomSheetRef?.current?.present();
+          setOtpSheetVisible(true);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(t('ERROR.API_ERROR_RESPONSE'));
@@ -209,7 +211,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       const apiResponse = await westernUnionTransfer(beneficiaryData?.beneficiaryCode, payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          onCloseBottomSheet();
+          setOtpSheetVisible(false);
           navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
           break;
         case apiResponse?.apiResponseNotOk:
@@ -332,7 +334,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
               <IPayFootnoteText text="LOCAL_TRANSFER.TOTAL_AMOUNT" color={colors.natural.natural900} />
               <IPayView style={styles.amountView}>
                 <IPaySubHeadlineText regular text={promoAmount} style={styles.strikethroughText} />
-                <IPaySubHeadlineText regular text={totalAmount()} color={colors.primary.primary800} />
+                <IPaySubHeadlineText regular text={totalAmount() ?? 0} color={colors.primary.primary800} />
               </IPayView>
             </IPayView>
 
@@ -404,16 +406,16 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           />
         </IPayView>
       </IPayBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         testID="otp-bottom-sheet"
         heading="LOCAL_TRANSFER.TRANSFER"
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '99%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={otpBottomSheetRef}
-        bold
         cancelBnt
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={() => setOtpSheetVisible(false)}
+        isVisible={isOtpSheetVisible}
+        bold
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
@@ -422,21 +424,20 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
+          otp={otp}
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}
           onResendCodePress={() => otpVerificationRef?.current?.resetInterval()}
         />
-      </IPayBottomSheet>
-
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         testID="help-center-bottom-sheet"
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         ref={helpCenterRef}
       >
         <HelpCenterComponent />

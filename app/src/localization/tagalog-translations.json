@@ -175,7 +175,8 @@
     "EDIT_CARD": "I-edit ang Card",
     "CALL_WITHIN_SA": "Tumawag sa loob ng Saudi Arabia",
     "CALL_OUTSIDE_SA": "Tawag mula sa labas ng Saudi Arabia",
-    "CALL": "Tumawag"
+    "CALL": "Tumawag",
+    "APP_TERMS_AND_CONDITIONS": "Mga Tuntunin at Kondisyon ng App"
   },
   "TOP_UP": {
     "APPLE_PAY": "Apple Pay",
@@ -249,5 +250,16 @@
     "NO_RESULTS": "Walang resulta",
     "NO_RESULTS_DETAIL": "Mangyaring pinuhin ang iyong mga pinili o i-clear ang filter upang makita ang lahat ng mga transaksyon",
     "GOT_IT": "Nakuha ko"
+  },
+  "RATING": {
+    "APP_RATING": "Ratings ng App",
+    "SATISFACTION": "Paano ka nakakasagot sa iyong pagkakaantig",
+    "ALINMA_PAY_APP": "sa Alinma Pay app?",
+    "RATE_APP_NOW": "Isama natin sa rating"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "Kaya nyo na",
+    "BOLD_TITLE": "Mabilis na Isyu ng Kartang",
+    "DESCRIPTION": "Tingnan ang mga mapapanood at mga feature sa AlinmaPay!"
   }
 }

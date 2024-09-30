@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayInput, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { TouchableOpacity } from 'react-native';
 import { IPayAmountInputProps } from './ipay-amount-input.interface';
 import amountInputStyles from './ipay-amount-input.styles';
@@ -21,6 +22,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
   handleBlur,
   handleIconPress,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = amountInputStyles(colors);
   const amountStr = (amount as string) || '';
@@ -42,7 +44,7 @@ const IPayAmountInput: React.FC<IPayAmountInputProps> = ({
         caretHidden={carretHidden}
       />
       <IPayInput
-        text="COMMON.SAR"
+        text={t('COMMON.SAR')}
         editable={false}
         style={[styles.currencyText, !amount && styles.darkStyle, currencyStyle]}
       />

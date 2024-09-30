@@ -54,7 +54,7 @@ const NotificationCenterScreen: React.FC = () => {
 
   // selectors
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
 
   // variables
   const pendingNotificationsCount = pendingNotifications.length;

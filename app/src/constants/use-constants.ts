@@ -490,6 +490,12 @@ const useConstantData = () => {
       label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
       value: '14/03/2024 - 15:30',
     },
+    {
+      id: '5',
+      label: t('TRAFFIC_VIOLATION.REF_NUMBER'),
+      value: 'FTA35346',
+      icon: icons.copy,
+    },
   ];
 
   const notificationRequestFilters: FilterTypes[] = [
@@ -501,11 +507,12 @@ const useConstantData = () => {
         { id: '1', key: 'paid', value: 'Paid' },
         { id: '2', key: 'cancelled', value: 'Cancelled' },
         { id: '3', key: 'rejected', value: 'Rejected' },
+        { id: '4', key: 'all', value: 'All' },
       ],
     },
     {
       id: '2',
-      label: 'Beneficiary',
+      label: 'Sender Name',
       type: FiltersType.BENEFICIARY_NAME,
       filterValues: [
         { id: '1', key: 'hassan_raza', value: 'Hassan Raza' },
@@ -1290,6 +1297,7 @@ const useConstantData = () => {
       id: '1',
       label: t('COMMON.STATUS'),
       type: FiltersType.STATUS,
+      isRequired: false,
       filterValues: [
         {
           id: '1',

@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "NO": "لا",
     "KYC_CHANGE": "تم تحديث نموذج معرفة العميل!",
     "BENEFECIARY_COUNTRY": "بلد المستفيد",
     "RELATIONSHIP": "العلاقة",
@@ -89,7 +90,11 @@
     "TERMS_AND_CONDITIONS_VALIDATION": "يجب أن توافق على الشروط والأحكام قبل المتابعة",
     "TERMS_AND_CONDITIONS_HEADING": "الشروط والأحكام ومتى تكون مطلوبة",
     "TERMS_AND_CONDITIONS": "الشروط والأحكام",
+    "FOR_OPENING_NEW_WALLET": "لفتح محفظة جديدة",
+    "FOR_ALINMAPAY_CARDS": "للحصول على بطاقات AlinmaPay",
     "INCORRECT_MOBILE_NUMBER": "رقم الجوال غير صحيح",
+    "INCORRECT_IQAMA_NUMBER": "رقم الهوية / رقم الإقامة غير صحيح",
+    "VERIFY_NUMBER_ACCURACY": "الرجاء التأكد من صحة الرقم.",
     "TERMS_AND_CONDITIONS_TEXT": "الموافقة على الشروط والأحكام الخاصة بنا",
     "ENTER_VALID_ID_OR_IQAMA": "يرجى إدخال رقم هويتك أو إقامتك، حتى نتمكن من التحقق من حسابك.",
     "ENTER_INFORMATION": "أدخل معلوماتك",
@@ -310,6 +315,8 @@
     "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
   },
   "SETTINGS": {
+    "CHANGE_LANGUAGE": "تغيير اللغة",
+    "CHANGE_LANGUAGE_DESCRIPTION": "هل انت متآكد من تغيير اللغة؟",
     "SECURITY_SETTINGS": "إعدادات الأمان والخصوصية",
     "PASSCODE": "الرمز السري",
     "CHANGE": "تغيير",
@@ -347,7 +354,8 @@
     "EDIT_CARD": "تعديل بطاقة",
     "CALL_WITHIN_SA": "الاتصال داخل السعودية",
     "CALL_OUTSIDE_SA": "الاتصال من خارج السعودية",
-    "CALL": "اتصال"
+    "CALL": "اتصال",
+    "APP_TERMS_AND_CONDITIONS": "شروط وأحكام التطبيق"
   },
   "TOP_UP": {
     "OCCASION": "مناسبة",
@@ -452,6 +460,7 @@
     "CLEAR_FILTERS": "إزالة الفلاتر",
     "CLEAR_FILTER": "إزالة الفلاتر",
     "FILTERS": "فلاتر",
+    "FILTER": "فلاتر",
     "BY_AMOUNT": "حسب المبلغ",
     "FROM": "من",
     "TO_INPUT": "إلى",
@@ -503,7 +512,40 @@
     "MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID": "يرجى التأكد من أن الاسم المدخل هو نفسه الموجود في هوية المستفيد",
     "BENEFICIARY_NICK_NAME": "اسم المستفيد نيك",
     "TRANSFER_BY": "نقل بواسطة",
-    "SENDER_NICK_NAME": "اسم المرسل نيك"
+    "SENDER_NICK_NAME": "اسم المرسل نيك",
+    "SALARY": "تحويل راتب ",
+    "MUSANED": "مساند",
+    "WALLET_TRANSFER": "تحويل من محفظة ",
+    "QR_WITHDRAWAL": "سحب نقدي",
+    "WU_TRANSFER": "تحويل ويسترن يونيون",
+    "ALINMA_TRANSFER": " تحويل إلى الإنماء",
+    "ADD_MONEY": "إضافة أموال",
+    "MADA_CARD": "بطاقة مدى",
+    "VISA_CARD": "بطاقة فيزا ",
+    "MASTER_CARD": "بطاقة ماستركارد",
+    "TRANSFER_REVERSAL": "عكس عملية تحويل",
+    "BILL_PAYMENT": "تسديد فواتير",
+    "SADAD": "سداد",
+    "CARD_ISSUANCE": "اصدار بطاقة",
+    "CARD_REISSUANCE": "إعادة اصدار بطاقة",
+    "CARD_REPLACEMENT": "استبدال بطاقة",
+    "CARD_PURCHASE": "مشتريات بطاقة",
+    "INTERNET_PURCHASE": "مشتريات عبر الإنترنت",
+    "MOI_PAYMENT": "مدفوعات حكومية",
+    "WALLET_CREDIT": "رصيد مضاف ",
+    "INTERNAL_TRANSFER": "تحويل داخلي ",
+    "LOCAL_TRANSFER_REVERSAL": "Local Transfer reversal",
+    "CASH_BACK": "كاش باك ",
+    "ALINMA_DIRECT_TRANSFER": "الإنماء دايركت",
+    "INTERNET_PURCHASE_OR_POS_PURCHASE": "Internet Purchase or POS Purchase",
+    "GIFT": "هدية",
+    "REVERSE_INCOMING_TRANSFER": "عكس عملية تحويل واردة ",
+    "SWIFT_TRANSFER": "تحويل دولي",
+    "BILL_REFUND_REVERSAL": "عكس عملية استرداد فاتورة",
+    "PROMO_CASHBACK": "عرض الكاش باك",
+    "CARD_CASHBACK": "كاش باك البطاقة",
+    "MARKETPLACE_PURCHASE": "مشتريات السوق الإلكتروني",
+    "MONEY_REQUEST": "طلب أموال"
   },
   "TRANSFER_SUMMARY": {
     "CHIP_TITLE": "سيتم دعوة هذا المستخدم",
@@ -668,6 +710,7 @@
     "SIGNATURE_PREPAID_CARD": "بطاقة التوقيع مسبقة الدفع"
   },
   "VIRTUAL_CARD": {
+    "CLASSIC_DETAILS": "اختيارك الآمن للتسوق، سواء عبر الإنترنت أو عند نقاط البيع، ويقدم لك استرداد نقدي فوري على جميع مشترياتك المحلية والدولية.",
     "CREATE_CARD_PIN_PIN": "إنشاء رمز PIN للبطاقة",
     "CONFIRM_CARD_PIN": "تأكيد رمز PIN للبطاقة",
     "ENTER_PASSCODE_AGAIN": "أدخل رمز المرور مرة أخرى للتأكيد",
@@ -758,7 +801,7 @@
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
     "TOO_LONG": "طويل جدا!",
-    "INVALID_IBAN": "رقم IBAN غير صالح",
+    "INVALID_IBAN": "IBAN غير صالح",
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "لا يمكن إزالة مفاتيح القياس البيومترية",
     "INVALID_OTP": "كلمة المرور لمرة واحدة غير صالحة",
     "INVALID_PASSCODE": "الرجاء إدخال رمز المرور الصحيح",
@@ -814,7 +857,8 @@
       "ATM_WITHDRAWAL": "ATM Withdrawal",
       "REF_NUMBER": "Ref. Number",
       "TRANSACTION_DATE": "Transaction Date"
-    }
+    },
+    "NO_MORE_BRANCHES_OR_ATMS": "لا توجد فروع أو أجهزة صراف آلي أخرى متاحة في موقعك"
   },
   "CARD_RENEWAL_SUCCESS": {
     "THE_CARD_HAS_BEEN": "تم تجديد البطاقة"
@@ -1167,7 +1211,6 @@
     "NO_SERVICE_TYPE_FOUND": "لم يتم العثور على نوع خدمة بهذا الاسم أو الرمز",
     "BENEFECIARY_DETAILS": "تفاصيل المستفيد",
     "BILL_PAYMENTS": "مدفوعات الفواتير",
-    "UNPAID": "غير مدفوعة",
     "MOI_BILLS": "فواتير وزارة الداخلية",
     "NO_BILLS_WERE_FOUND": "لم يتم العثور على فواتير",
     "NO_BILLS_FOUND_ERROR_MESSAGE": "يرجى مراجعة والتحقق من نوع الخدمة المطلوبة وإدخال الرقم التعريفي الصحيح لها",
@@ -1177,7 +1220,12 @@
     "PAYMENT_REFUND_SUCCESS": "تم استرداد فاتورتك بنجاح",
     "VIOLATION_NUBMER": "رقم المخالفة",
     "BILL_TYPE": "نوع الفاتورة",
-    "TRAFFIC_NUMBER": "رقم المرور"
+    "TRAFFIC_NUMBER": "رقم المرور",
+    "UNPAID": "غير مدفوع",
+    "PAID": "مدفوع",
+    "PARTIALLY_PAID": "مدفوع جزئياً",
+    "OVER_PAID": "مدفوع بشكل زائد",
+    "DEACTIVE": "غير نشط"
   },
   "REQUEST_MONEY": {
     "MAKE_NEW_REQUEST": "قم بعمل طلب جديد",
@@ -1289,5 +1337,22 @@
     "MARK_AS_READ": "وضع علامة كمقروء",
     "DELETE_NOTIFICATION": "حذف الإشعار",
     "CANCEL": "إلغاء"
+  },
+  "RATING": {
+    "APP_RATING": "تقييم التطبيق",
+    "SATISFACTION": "كم هو درجة رضاك",
+    "ALINMA_PAY_APP": "بخصوص تطبيق ألما باي؟",
+    "RATE_APP_NOW": "أعطنا تقييم"
+  },
+  "UPDATE": {
+    "HEADER": "",
+    "TITLE": "",
+    "SUBTITLE": "",
+    "BUTTON_TITLE": ""
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "يمكنك الآن",
+    "BOLD_TITLE": "الإصدار السريع للمعاملات",
+    "DESCRIPTION": "اكتشف أنواع رائعة و مميزات متوفرة عبر تطبيق ألما باي!"
   }
 }

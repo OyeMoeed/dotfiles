@@ -39,7 +39,7 @@ const OtpVerificationComponent: React.FC<SetPasscodeComponentProps> = forwardRef
     const timerRef = useRef<any>(null);
     const initialTime = 60; // 1 minute in seconds
     const [counter, setCounter] = useState(initialTime);
-    const { appData } = useTypedSelector((state) => state.appDataReducer);
+    const appData = useTypedSelector((state) => state.appDataReducer.appData);
 
     useEffect(() => {
       timerRef.current = setInterval(() => {

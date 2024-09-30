@@ -73,6 +73,7 @@ import ActivateBeneficiarySuccessScreen from '@app/screens/activate-beneficiary-
 import AddCardScreen from '@app/screens/add-card/add-card.screen';
 import AddInternationalBeneficiary from '@app/screens/add-international-beneficiary/add-international-beneficiary.screen';
 import AllCategoriesScreen from '@app/screens/all-categories.screen/all-categories.screen';
+import AppTermsAndConditions from '@app/screens/app-terms-and-conditions/AppTermsAndConditions.screen';
 import BillActivationScreen from '@app/screens/bill-activation/bill-activation.screen';
 import PayBillScreen from '@app/screens/bill-pay-success/bill-pay-success.screen';
 import BillPaymentFailedScreen from '@app/screens/bill-payment-failed/bill-payment-failed.screen';
@@ -113,6 +114,7 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import { IPayRatingSheet } from '@app/components/organism';
 
 const MainStack = createStackNavigator();
 
@@ -289,8 +291,10 @@ const MainStackNavigator = () => {
             name={screenNames.CREATE_MONEY_REQUEST_SUMMARY}
             component={CreateMoneyRequestSummaryScreen}
           />
+          <MainStack.Screen name={screenNames.TERMS_AND_CONDITIONS} component={AppTermsAndConditions} />
         </MainStack.Group>
       </MainStack.Navigator>
+      <IPayRatingSheet />
     </IPaySafeAreaView>
   );
 };

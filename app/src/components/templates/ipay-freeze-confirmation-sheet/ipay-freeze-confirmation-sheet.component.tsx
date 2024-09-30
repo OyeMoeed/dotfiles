@@ -1,16 +1,17 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { IPayActionSheet } from '@app/components/organism';
 import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
 import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
 import { getDeviceInfo } from '@app/network/utilities';
+import { setCardFrozen } from '@app/store/slices/cards-slice';
 import { useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { CardActiveStatus, CardStatusNumber, ToastTypes } from '@app/utilities';
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { SheetVariants, ToastVariants } from '../ipay-card-details-section/ipay-card-details-section.interface';
 import {
   IPayFreezeConfirmationSheetHandle,
@@ -19,10 +20,13 @@ import {
 import freezeConfirmationSheetStyles from './ipay-freeze-confirmation-sheet.styles';
 
 const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle, IPayFreezeConfirmationSheetProps>(
-  ({ currentCard, cards, setCards, setActiveCardStatus }, ref) => {
+  ({ setActiveCardStatus }, ref) => {
     const { t } = useTranslation();
     const { showToast } = useToastContext();
     const styles = freezeConfirmationSheetStyles();
+
+    const dispatch = useDispatch();
+    const { cards, currentCard } = useTypedSelector((state) => state.cardsReducer);
 
     const actionSheetRef = useRef<any>(null);
     const [cardStatus, setCardStatus] = useState(CardActiveStatus.FREEZE);
@@ -94,12 +98,13 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
     };
 
     const onFreeze = async (type: string) => {
+      const cardIndex = currentCard?.cardIndex ?? cards[0].cardIndex;
       const cardStatusPayload: CardStatusReq = {
         status:
           type.toLowerCase() === CardActiveStatus.UNFREEZE
             ? CardStatusNumber.ActiveWithOnlinePurchase
             : CardStatusNumber.Freezed,
-        cardIndex: currentCard?.cardIndex,
+        cardIndex,
         deviceInfo: await getDeviceInfo(),
       };
 
@@ -107,14 +112,10 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
       if (apiResponse?.status?.type === 'SUCCESS') {
         actionSheetRef.current.hide();
         onFreezeCard(type.toLowerCase());
-        const newCards = cards.map((card: CardInterface) => {
-          if (card.cardIndex === currentCard?.cardIndex) {
-            return { ...currentCard, frozen: apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed };
-          }
-          return card;
-        });
 
-        setCards(newCards);
+        dispatch(
+          setCardFrozen({ cardIndex, frozen: apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed }),
+        );
         setCardStatus(
           apiResponse.response?.cardInfo.cardStatus === CardStatusNumber.Freezed
             ? CardActiveStatus.UNFREEZE
@@ -134,18 +135,13 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
       actionSheetRef.current.hide();
     };
 
-    const handleFinalAction = useCallback((index: number, type: string) => {
-      switch (index) {
-        case 0:
-          onFreeze(type);
-          break;
-        case 1:
-          hideActionSheet();
-          break;
-        default:
-          break;
+    const handleFinalAction = (index: number, type: string) => {
+      if (index === 0) {
+        onFreeze(type);
       }
-    }, []);
+
+      hideActionSheet();
+    };
 
     return (
       <IPayActionSheet

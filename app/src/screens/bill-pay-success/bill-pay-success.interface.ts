@@ -1,4 +1,17 @@
+import { InquireBillPayloadProps } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+
+interface BillPaymentData {
+  id?: string;
+  lable?: string;
+  value?: string | null | number;
+}
+
+interface HeaderAttributes {
+  billNickname: string;
+  billerName: string;
+  billerIcon: string;
+}
 
 interface BillPaySuccessParams {
   isSaveOnly?: boolean;
@@ -6,23 +19,28 @@ interface BillPaySuccessParams {
   isPayPartially?: boolean;
   totalAmount: string;
   billPaymentInfos: BillPaymentInfosTypes[];
+  billPaymentData: BillPaymentData[];
+  headerAttributes: HeaderAttributes;
+  inquireBillPayload?: InquireBillPayloadProps;
 }
 
-export interface BillPaySuccessProps {
+interface BillPaySuccessProps {
   route: {
     params: BillPaySuccessParams;
   };
   testID?: string;
 }
 
-export interface BillInfoItem {
+interface BillInfoItem {
   id: string;
   label: string;
   value: string;
 }
 
-export interface billHeaderDetail {
+interface BillHeaderDetail {
   title: string;
   companyDetails: string;
   companyImage: any;
 }
+
+export { BillHeaderDetail, BillInfoItem, BillPaymentData, BillPaySuccessParams, BillPaySuccessProps, HeaderAttributes };

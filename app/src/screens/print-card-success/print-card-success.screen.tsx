@@ -7,15 +7,25 @@ import icons from '@app/assets/icons';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { customInvalidateQuery, toggleAppRating } from '@app/utilities';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import printCardSuccessStyles from './print-card-success.style';
 
 const PrintCardSuccessScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = printCardSuccessStyles(colors);
 
-  const onGoToCards = () => navigate(ScreenNames.CARDS);
+  const onGoToCards = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    toggleAppRating();
+    navigate(ScreenNames.CARDS);
+  };
 
-  const onGoToHome = () => navigate(ScreenNames.HOME);
+  const onGoToHome = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    toggleAppRating();
+    navigate(ScreenNames.HOME);
+  };
 
   return (
     <IPayPageWrapper>

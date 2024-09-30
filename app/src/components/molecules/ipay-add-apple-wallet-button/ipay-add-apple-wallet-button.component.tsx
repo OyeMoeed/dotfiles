@@ -16,7 +16,7 @@ const { AppleWallet } = NativeModules;
 
 const IPayAddAppleWalletButton: React.FC<IPayAddAppleWalletProps> = ({ selectedCard }) => {
   const styles = addAppleWalletStyles(colors);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [addedSuccessfully, setAddedSuccessfully] = useState<boolean>(false);
 
   const { cardIndex, cardNumber, linkedName, maskedCardNumber } = selectedCard ?? {};
@@ -109,7 +109,7 @@ const IPayAddAppleWalletButton: React.FC<IPayAddAppleWalletProps> = ({ selectedC
           nonce: data[0],
           nonceSig: data[1],
           certificates: data[2],
-          primaryAccountNumberPrefix: selectedCard.cardNumber.slice(0, 6),
+          primaryAccountNumberPrefix: selectedCard?.cardNumber.slice(0, 6),
           networkName: getCardNetworkName(),
           cardIndex,
         };

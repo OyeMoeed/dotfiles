@@ -1,5 +1,4 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
 const billPaymentStyles = () =>
@@ -7,6 +6,13 @@ const billPaymentStyles = () =>
     container: {
       flex: 1,
       paddingBottom: moderateScale(36),
+    },
+    gradientBg: {
+      flex: 0,
+      padding: moderateScale(16),
+      gap: moderateScale(16),
+      borderRadius: moderateScale(22),
+      marginHorizontal: moderateScale(24),
     },
     listBottomView: {
       marginVertical: moderateScale(12),
@@ -26,12 +32,7 @@ const billPaymentStyles = () =>
     },
     toastContainerStyle: {
       margin: 0,
-      ...Platform.select({
-        ios: { bottom: moderateScale(120) },
-        android: {
-          bottom: moderateScale(45),
-        },
-      }),
+      bottom: moderateScale(45),
     },
     headingContainerStyle: {
       width: 'auto',
@@ -43,6 +44,12 @@ const billPaymentStyles = () =>
     },
     otpInnerContainer: {
       paddingHorizontal: moderateScale(24),
+    },
+    chipContainer: { width: '100%' },
+    confirmButton: {
+      height: moderateScale(50, 0.3),
+      justifyContent: 'center',
+      alignItems: 'center',
     },
     footerContainer: {
       paddingTop: moderateScale(12, 0.3),

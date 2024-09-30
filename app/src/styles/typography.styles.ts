@@ -1,4 +1,3 @@
-import { typography as constants } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { Platform } from 'react-native';
 import { scaleFont } from './mixins';
 
@@ -111,15 +110,6 @@ const typography = {
 
   // Custom font scaling
   CUSTOME_FONT_SIZE: createCustomFontScale,
-
-  BOLD_TEXT_STYLES: {
-    fontWeight: FONT_WEIGHT_BOLD,
-    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING,
-  },
-  REGULAR_TEXT_STYLES: {
-    fontWeight: FONT_WEIGHT_NORMAL,
-    letterSpacing: constants?.FONT_VARIANTS?.TITLE_LARGE?.LETTER_SPACING,
-  },
 };
 
 export {

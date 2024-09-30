@@ -9,6 +9,8 @@ export interface IPayTextInputProps {
    * testID for the flatlist to test the element.
    */
   testID?: string;
+  onPressCancle?: () => void;
+  showCancleButton?: boolean;
   /**
    * Unique identifier for the input field.
    */

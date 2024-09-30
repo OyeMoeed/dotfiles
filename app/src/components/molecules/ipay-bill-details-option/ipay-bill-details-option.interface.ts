@@ -19,6 +19,8 @@ interface IPayBillDetailsOptionProps {
   data: BillData[];
   headerData?: HeaderData;
   showHeader?: boolean;
+  isShowIcon?: boolean;
+  showDetail?: boolean;
 }
 
 interface OptionItem {

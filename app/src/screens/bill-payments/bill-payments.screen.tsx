@@ -32,7 +32,7 @@ const BillPaymentsScreen: React.FC = () => {
   const [billsData, setBillsData] = useState<PaymentInfoProps[]>([]);
   const [sadadBills, setSadadBillsData] = useState<PaymentInfoProps[]>([]);
   const [unpaidBillsCount, setUnpaidBillsCount] = useState<number>(0);
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const onPressViewAll = () => {
     navigate(ScreenNames.SADAD_BILLS, { sadadBills: billsData });
@@ -53,7 +53,7 @@ const BillPaymentsScreen: React.FC = () => {
       ...element,
       selected: false,
     }));
-    setUnpaidBillsCount(newBills.filter((bill) => bill.billStatusDesc === BillStatus.UNPAID).length);
+    setUnpaidBillsCount(newBills.filter((bill) => bill.billStatusCode === BillStatus.UNPAID).length);
     return newData;
   };
 
@@ -118,7 +118,7 @@ const BillPaymentsScreen: React.FC = () => {
             />
           </IPayView>
         ) : (
-          <IPayBillPaymentNoResultsComponent onPressViewAll={onPressViewAll} />
+          <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />
         )}
       </IPayView>
       <IPayBillPaymentsFooter onPressBillPaymentOption={onPressBillPaymentOption} />

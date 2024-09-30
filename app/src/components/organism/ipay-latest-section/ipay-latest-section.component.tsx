@@ -15,15 +15,17 @@ import { IPayNoResult } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import constants from '@app/constants/constants';
+import { FeatureSections } from '@app/enums';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { FeatureSections } from '@app/enums';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
 
@@ -33,6 +35,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   offersData,
   openBottomSheet,
   openProfileBottomSheet,
+  isLoading,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -44,12 +47,13 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
 
   const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
 
-  const moveToTransactionHistory = () =>
+  const moveToTransactionHistory = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
-      isShowCard: false,
+      isShowCard: true,
       isShowAmount: true,
     });
+  };
 
   // Render the sections dynamically based on the current arrangement
   const renderSection = (section: string) => {
@@ -111,27 +115,30 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                 <IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />
               </IPayPressable>
             </IPayView>
-            {transactionsData?.length ? (
-              <IPayView style={styles.listContainer}>
-                <IPayFlatlist
-                  data={transactionsData}
-                  scrollEnabled={false}
-                  keyExtractor={(_, index) => index.toString()}
-                  renderItem={({ item, index }) => (
-                    <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} />
-                  )}
-                />
-              </IPayView>
-            ) : (
-              <IPayView style={styles.noRecordWrapper}>
-                <IPayNoResult
-                  textColor={colors.natural.natural500}
-                  message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
-                  showIcon
-                  displayInRow
-                />
-              </IPayView>
-            )}
+            <IPayView style={styles.listContainer}>
+              <IPayFlatlist
+                data={transactionsData}
+                scrollEnabled={false}
+                keyExtractor={(_, index) => index.toString()}
+                ListEmptyComponent={
+                  isLoading ? (
+                    <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />
+                  ) : (
+                    <IPayView style={styles.noRecordWrapper}>
+                      <IPayNoResult
+                        textColor={colors.natural.natural500}
+                        message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
+                        showIcon
+                        displayInRow
+                      />
+                    </IPayView>
+                  )
+                }
+                renderItem={({ item, index }) => (
+                  <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} />
+                )}
+              />
+            </IPayView>
           </React.Fragment>
         );
       case FeatureSections.LATEST_OFFERS:

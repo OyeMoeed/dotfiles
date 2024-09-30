@@ -1,4 +1,3 @@
-
 import { fireEvent, render } from '@testing-library/react-native';
 import IPaySelectorInput from './ipay-selector-input.component';
 
@@ -6,8 +5,8 @@ import IPaySelectorInput from './ipay-selector-input.component';
 jest.mock('@app/utilities/enums.util', () => ({
   inputVariants: {
     CURRENCY: 'Currency',
-    PHONE_NUMBER: 'PhoneNumber'
-  }
+    PHONE_NUMBER: 'PhoneNumber',
+  },
 }));
 
 // Mock the useTheme hook
@@ -16,17 +15,17 @@ jest.mock('@app/styles/hooks/theme.hook', () => ({
   default: () => ({
     colors: {
       primary: {
-        primary500: 'blue'
+        primary500: 'blue',
       },
       natural: {
         natural300: 'gray',
         natural500: 'darkgray',
       },
       error: {
-        error500: 'red'
-      }
-    }
-  })
+        error500: 'red',
+      },
+    },
+  }),
 }));
 
 describe('IPaySelectorInput', () => {
@@ -40,11 +39,10 @@ describe('IPaySelectorInput', () => {
       <IPaySelectorInput
         testID="currencyField"
         text=""
-        onChangeText={() => { }}
-        onClearInput={() => { }}
+        onChangeText={() => {}}
+        onClearInput={() => {}}
         variant={MockedEnum.CURRENCY}
         showIcon={false}
-      />,
       />,
     );
     expect(getByText('currency')).toBeTruthy();
@@ -58,11 +56,10 @@ describe('IPaySelectorInput', () => {
         testID="textField"
         text="Enter text..."
         onChangeText={onChangeTextMock}
-        onClearInput={() => { }}
+        onClearInput={() => {}}
         variant={MockedEnum.CURRENCY}
         placeholder="Enter text..."
         showIcon={false}
-      />,
       />,
     );
 
@@ -76,12 +73,11 @@ describe('IPaySelectorInput', () => {
       <IPaySelectorInput
         testID="assistiveTextField"
         text=""
-        onChangeText={() => { }}
-        onClearInput={() => { }}
+        onChangeText={() => {}}
+        onClearInput={() => {}}
         variant={MockedEnum.PHONE_NUMBER}
         assistiveText="Assistive Text"
         showIcon={false}
-      />,
       />,
     );
     expect(getByText('Assistive Text')).toBeTruthy();
@@ -92,13 +88,12 @@ describe('IPaySelectorInput', () => {
       <IPaySelectorInput
         testID="errorField"
         text=""
-        onChangeText={() => { }}
-        onClearInput={() => { }}
+        onChangeText={() => {}}
+        onClearInput={() => {}}
         variant={MockedEnum.PHONE_NUMBER}
         isError
         assistiveText="Error Text"
         showIcon={false}
-      />,
       />,
     );
     expect(getByText('Error Text')).toBeTruthy();
@@ -109,8 +104,8 @@ describe('IPaySelectorInput', () => {
       <IPaySelectorInput
         testID="comboField"
         text=""
-        onChangeText={() => { }}
-        onClearInput={() => { }}
+        onChangeText={() => {}}
+        onClearInput={() => {}}
         variant={MockedEnum.PHONE_NUMBER}
         placeholder="Enter text..."
         containerStyle={{ backgroundColor: 'red' }}
@@ -123,11 +118,9 @@ describe('IPaySelectorInput', () => {
         currency="USD"
         showIcon={false}
       />,
-      />,
     );
 
     expect(getByPlaceholderText('Enter text...')).toBeTruthy();
     expect(getByText('Error occurred')).toBeTruthy();
   });
 });
-
