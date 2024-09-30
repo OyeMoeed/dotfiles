@@ -11,4 +11,5 @@ export interface ChangeCardPinProps {
   onSuccess: (cardInfo?: CardInfo) => void;
   handleOnPressHelp: () => void;
   issuanceDetails: ICardIssuanceDetails;
+  isPhysicalCard: boolean;
 }

@@ -12,6 +12,16 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       gap: moderateScale(4),
     },
+     
+    darkStyle: {
+      color: themeColors.primary.primary900,
+    },
+    remainingText: {
+      color: themeColors.natural.natural700,
+    },
+    currencyTextStyle: {
+      color: themeColors.natural.natural1000,
+    },
     btn: {
       justifyContent: 'center',
       paddingVertical: moderateScale(14),

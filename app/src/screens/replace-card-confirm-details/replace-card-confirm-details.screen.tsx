@@ -19,25 +19,21 @@ import IPayAddressInfoSheet from '@app/components/organism/ipay-address-info-she
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import IssueCardPinCreationScreen from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
-import IssueCardPinCreationScreen from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 
-const DUMMY_DATA = {
-  address: 'Al Olaya, Riyadh',
-  replaceFee: '100',
-  shippingFee: '100',
-  totalFee: '200',
-  balance: '5,200.40',
-};
+
 
 const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -49,10 +45,26 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
 
   const route = useRoute<RouteProps>();
 
+
+
+  const {
+    availableBalance,
+    limitsDetails: { monthlyRemainingOutgoingAmount, monthlyOutgoingLimit },
+  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
   const {
     currentCard: { cardHeaderText, name },
     issuanceDetails,
   } = route.params;
+
+
+    const { address } = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
+
+
+
+  const replacementFee = issuanceDetails?.fees?.feeAmount + issuanceDetails?.fees?.vatAmount + issuanceDetails?.fees?.bankFeeAmount + issuanceDetails?.fees?.bankVatAmount;
+  const deliveryFee = issuanceDetails?.fees?.deliveryFeeAmount  +  issuanceDetails?.fees?.deliveryVatAmount
+  const totalFee = replacementFee + deliveryFee
 
   console.log('issuanceDetails', issuanceDetails);
 
@@ -99,10 +111,17 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
       <IPayHeader title="CARD_OPTIONS.PRINT_CARD" backBtn applyFlex />
       <IPayView style={styles.childContainer}>
         <IPayAccountBalance
+          accountBalanceTextStyle={styles.darkStyle}
+          currentBalanceTextStyle={styles.darkStyle}
+          currencyTextStyle={styles.darkStyle}
+          remainingAmountTextStyle={styles.remainingText}
+          currentAvailableTextStyle={styles.currencyTextStyle}
           showRemainingAmount
-          availableBalance="20,000"
-          balance={DUMMY_DATA.balance}
           onPressTopup={() => {}}
+          balance={availableBalance}
+          gradientWidth={`${getBalancePercentage(Number(monthlyOutgoingLimit), Number(monthlyRemainingOutgoingAmount))}%`}
+          monthlyIncomingLimit={monthlyRemainingOutgoingAmount}
+          availableBalance={monthlyOutgoingLimit}
         />
         <IPayView style={styles.contentContainer}>
           <IPayScrollView showsVerticalScrollIndicator={false}>
@@ -127,7 +146,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 title="REPLACE_CARD.ADDRESS"
                 rightText={
                   <IPayPressable onPress={onClose} style={styles.addressStyle}>
-                    <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
+                    <IPayFootnoteText color={colors.primary.primary800} regular text={address} />
                     <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
                   </IPayPressable>
                 }
@@ -143,7 +162,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${DUMMY_DATA.replaceFee} ${t('COMMON.SAR')}`}
+                    text={`${replacementFee.toString()} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -154,7 +173,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${DUMMY_DATA.shippingFee} ${t('COMMON.SAR')}`}
+                    text={`${deliveryFee.toString()} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -175,7 +194,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
                   regular
-                  text={`${DUMMY_DATA.totalFee} ${t('COMMON.SAR')}`}
+                  text={`${totalFee.toString()} ${t('COMMON.SAR')}`}
                 />
               }
             />
@@ -202,6 +221,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
           onSuccess={onNavigateToSuccess}
           handleOnPressHelp={handleOnPressHelp}
           issuanceDetails={issuanceDetails}
+          isPhysicalCard
         />
       </IPayBottomSheet>
       <IPayBottomSheet

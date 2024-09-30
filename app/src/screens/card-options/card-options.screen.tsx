@@ -13,11 +13,22 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { queryClient } from '@app/network';
+import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
+import { IssueCardFeesRes } from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.interface';
+import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
+import {
+  CardType,
+  ICardIssuanceDetails,
+} from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
 import {
   CardStatus,
   changeStatusProp,
   resetPinCodeProp,
 } from '@app/network/services/core/transaction/transaction.interface';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import {
   changeStatus,
   prepareResetCardPinCode,
@@ -28,24 +39,13 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
+import checkUserAccess from '@app/utilities/check-user-access';
 import { ApiResponseStatusType, CardStatusNumber, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import checkUserAccess from '@app/utilities/check-user-access';
-import { queryClient } from '@app/network';
-import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
-import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
-import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
-import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
-import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
-import {
-  CardType,
-  ICardIssuanceDetails,
-} from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
-import { IssueCardFeesRes } from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.interface';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
@@ -244,15 +244,18 @@ const CardOptionsScreen: React.FC = () => {
 
     // change the card status to stolen
     const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
+    
+    
     if (apiResponse?.status?.type === 'SUCCESS') {
       // get the card issuance details
-      const apiResponseCardInquire = await issueCardInquire(walletInfo?.walletNumber, selectedCardType as CardType);
-      if (apiResponse?.status?.type === 'SUCCESS') {
+      const apiResponseCardInquire = await issueCardInquire(walletInfo?.walletNumber, currentCard.cardType as CardType);
+      if (apiResponseCardInquire?.status?.type === 'SUCCESS') {
         // get the card issuance fees
         const feesApiResponse = await getCardIssuanceFees(
           walletInfo?.walletNumber,
           currentCard.cardType as CardType,
-          apiResponseCardInquire?.response?.transactionType as string,
+          apiResponseCardInquire?.response?.transactionType as string
+         
         );
         if (feesApiResponse?.status?.type === 'SUCCESS') {
           const cardIssuanceDetails: ICardIssuanceDetails = {
@@ -277,9 +280,11 @@ const CardOptionsScreen: React.FC = () => {
       if (currentCard.physicalCard) {
         onReplaceCard();
       } else {
-        navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-          currentCard,
-        });
+      //   navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+      //     currentCard,
+      //   });
+      // }
+        onReplaceCard();
       }
     }
   };
