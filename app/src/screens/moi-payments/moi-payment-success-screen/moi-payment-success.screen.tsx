@@ -28,7 +28,7 @@ import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { moiPaymentDetailes, successMessage, isRefund } = route.params;
+  const { moiPaymentDetailes, successMessage, isRefund, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const { showToast } = useToastContext();
@@ -78,7 +78,13 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       value: moiPaymentDetailes?.serviceProviderFromLOV?.desc,
     };
 
-    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
+    const ref = {
+      id: '6',
+      label: t('COMMON.REF_NUM'),
+      value: subDetails.transactionId,
+      icon: icons.copy,
+    };
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ref]);
   }, [moiPaymentDetailes]);
 
   const onPressPayOtherBill = () => {
