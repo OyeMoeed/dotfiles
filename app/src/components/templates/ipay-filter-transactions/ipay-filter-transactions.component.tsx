@@ -297,6 +297,7 @@ const IPayFilterTransactions = ({
       const CARD_TYPES = [
         'CIN_VISA_CASHBACK',
         'PAY_VCARD_POS_MADA',
+        'PAY_VCARD_POS',
         'PAY_VCARD_POS_VISA',
         'PAY_VCARD_POS_NAQD_MADA',
         'PAY_VCARD_POS_NAQD_VISA',
