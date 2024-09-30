@@ -12,6 +12,7 @@ const beneficiariesDynamicFieldsMock: BeneficiariesFieldsProps = {
     dynamicFields: [
       {
         index: 'BEN.FRST.NAME',
+        integrationTagName: 'BEN.FRST.NAME',
         maxWidth: 35,
         label: 'First Name',
         type: 'englishCharacters',
@@ -19,6 +20,7 @@ const beneficiariesDynamicFieldsMock: BeneficiariesFieldsProps = {
       },
       {
         index: 'BEN.THIRD.NAME',
+        integrationTagName: 'BEN.THIRD.NAME',
         maxWidth: 35,
         label: 'Third Name',
         type: 'englishCharacters',
@@ -26,6 +28,7 @@ const beneficiariesDynamicFieldsMock: BeneficiariesFieldsProps = {
       },
       {
         index: 'BEN.SECOND.NAME',
+        integrationTagName: 'BEN.SECOND.NAME',
         maxWidth: 35,
         label: 'Second Name',
         type: 'englishCharacters',
@@ -33,6 +36,7 @@ const beneficiariesDynamicFieldsMock: BeneficiariesFieldsProps = {
       },
       {
         index: 'BEN.LAST.NAME',
+        integrationTagName: 'BEN.LAST.NAME',
         maxWidth: 35,
         label: 'Last Name',
         type: 'englishCharacters',

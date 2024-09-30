@@ -62,10 +62,12 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   const onSelectCountry = (countryName: string) => {
     const filterCode = beneficiaryMetaData?.find((item) => item?.desc === countryName);
     setCountryCode(filterCode?.code);
+    getWUBeneficiaryCurrenciesData();
   };
 
   const onSelectCurrency = (currency: string) => {
     setCurrencyCode(currency);
+    getWURemittanceTypesData();
   };
 
   const onSelectRemittanceType = (remittance: string) => {
@@ -212,14 +214,6 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   useEffect(() => {
     getWUBeneficiaryMetaDataData();
   }, []);
-
-  useEffect(() => {
-    getWUBeneficiaryCurrenciesData();
-  }, [countryCode]);
-
-  useEffect(() => {
-    getWURemittanceTypesData();
-  }, [currencyCode]);
 
   const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {
     const payload = {
