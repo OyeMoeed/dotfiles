@@ -111,7 +111,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
-  const onGetBillersServices = async (billerID: string) => {
+  const onGetBillersServices = async (billerID: string | number) => {
     try {
       const apiResponse = await getBillersServiceProvider(billerID);
       if (apiResponse.successfulResponse) {
@@ -148,16 +148,16 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       serviceId: selectedService?.serviceId,
       deviceInfo,
     };
-    const apiResponse = await inquireBillService(payload);
+    const apiResponse: any = await inquireBillService(payload);
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         billNickname: values.billName,
         billerName: values.companyName,
-        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId || '001'),
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
         dueDate: apiResponse.response.dueDate,
-        totalAmount: apiResponse.response.dueAmount,
+        totalAmount: apiResponse.response.dueAmount || '0',
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,
@@ -211,11 +211,11 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     }
   };
 
-  const onPressSaveOnly = (values: FormValues, payload: SaveBillPayloadTypes) => {
+  const onPressSaveOnly = (values: FormValues, payload: InquireBillPayloadProps) => {
     const headerAttributes = {
       billNickname: values.billName,
       billerName: values.companyName,
-      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId || '001'),
     };
     const billPaymentInfos = {
       billerId: selectedBiller?.billerId,
@@ -225,7 +225,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       serviceDescription: selectedService?.serviceDesc,
       billerName: values.companyName,
       billNickname: values.billName,
-      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId || '001'),
     };
     const billPaymentData = [
       {
@@ -261,24 +261,19 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       walletNumber,
     };
 
-    const apiResponse = await saveBillService(payload);
+    const inquireBillPayload: InquireBillPayloadProps = {
+      billerId: selectedBiller?.billerId,
+      billAccountNumber: values.accountNumber,
+      serviceId: selectedService?.serviceId,
+      deviceInfo,
+    };
+
+    const apiResponse: any = await saveBillService(payload);
     if (apiResponse.successfulResponse) {
-      onPressSaveOnly(values, payload);
-      return;
-      navigate(ScreenNames.NEW_SADAD_BILL, {
-        billNickname: values.billName,
-        billerName: values.companyName,
-        billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId),
-        serviceType: values.serviceType,
-        billNumOrBillingAcct: values.accountNumber,
-        dueDate: null, // TODO: No Due Date is coming from api response once receive from response will update it
-        totalAmount: '0',
-        billerId: selectedBiller?.billerId,
-        billIdType: selectedBiller?.billIdType,
-        serviceDescription: selectedService?.serviceDesc,
-      });
+      onPressSaveOnly(values, inquireBillPayload);
+    } else {
+      invoiceSheetRef.current.present();
     }
-    invoiceSheetRef.current.present();
   };
 
   return (
@@ -294,6 +289,9 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     >
       {({ handleSubmit, setValue, getValues, control, watch }) => {
         const onSelectValue = (item: SelectedValue) => {
+          setTimeout(() => {
+            selectSheeRef.current.close();
+          }, 350);
           if (sheetType === NewSadadBillType.COMPANY_NAME) {
             setValue(FormFields.COMPANY_NAME, item.text);
             setSelectedImage(item.image);
@@ -304,9 +302,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
             setSelectedService(item);
           }
           setSearch('');
-          requestAnimationFrame(() => {
-            selectSheeRef.current.close();
-          });
         };
 
         const onPressServiceAction = () => {

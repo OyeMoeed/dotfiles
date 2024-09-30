@@ -70,4 +70,5 @@ export interface IPayPortalBottomSheetProps extends CommonPros {
   closeBottomSheetOnDone?: boolean;
   noGradient?: boolean;
   testID?: string;
+  defaultIndex?: number;
 }

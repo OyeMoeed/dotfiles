@@ -1,19 +1,20 @@
-import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { scale } from 'react-native-size-matters';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayPrimaryButton } from '@app/components/molecules';
-import { ForwardedRef, forwardRef, useCallback } from 'react';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import icons from '@app/assets/icons';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
+import { ForwardedRef, forwardRef, useCallback } from 'react';
+import { scale } from 'react-native-size-matters';
 import IPayCardIssuanceSheetStyle from './ipay-card-issaunce-sheet.style';
 
 const IPayCardIssuanceSheet = forwardRef((_, ref: ForwardedRef<BottomSheetModal>) => {
   const { colors } = useTheme();
   const styles = IPayCardIssuanceSheetStyle();
+
   const onDetailsPress = useCallback(() => {
     if (!!ref && 'current' in ref) {
       ref?.current?.close?.();
@@ -34,6 +35,7 @@ const IPayCardIssuanceSheet = forwardRef((_, ref: ForwardedRef<BottomSheetModal>
       bold
       cancelBnt
       isVisible
+      defaultIndex={-1}
     >
       <IPayImage
         image={images.cardIssuance}

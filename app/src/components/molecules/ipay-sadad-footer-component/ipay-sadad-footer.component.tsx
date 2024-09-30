@@ -30,14 +30,18 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   totalAmountText,
   gradientViewStyle,
   shouldTranslateBtnText,
+  amount,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
+  const [warningMessage, setWarningMessage] = useState<string>('');
   const checkIfSelectedCount = selectedItemsCount && selectedItemsCount > 0;
   const totalAmountInSAR = `${totalAmount} ${t('COMMON.SAR')}`;
-  const { availableBalance, limitsDetails } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { monthlyRemainingOutgoingAmount, dailyOutgoingLimit } = limitsDetails;
+  const {
+    availableBalance,
+    limitsDetails: { monthlyRemainingOutgoingAmount, dailyOutgoingLimit },
+  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [warningStatus, setWarningStatus] = useState<string>('');
 
   const getFooterStyles = useCallback(() => {
@@ -45,13 +49,13 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
       return partialPay ? styles.countAndPartialPayStyles : styles.container;
     }
     return totalAmount ? styles.containerConditionalStyles : styles.footerWithWarning;
-  }, [checkIfSelectedCount, totalAmount, warning, partialPay]);
+  }, [checkIfSelectedCount, totalAmount, warning, warningMessage, partialPay]);
 
   if (showButtonOnly) {
     return (
       <IPayButton
         large
-        disabled={btnDisbaled}
+        disabled={!!warningMessage || btnDisbaled}
         btnType={buttonVariants.PRIMARY}
         btnText={btnText}
         leftIcon={btnLeftIcon}
@@ -99,9 +103,18 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         ) : (
           <IPayView />
         )}
+        <IPayView style={warningMessage ? styles.chipView : {}}>
+          <IPayBalanceStatusChip
+            amount={Number(amount || totalAmount)}
+            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+            currentBalance={Number(availableBalance)}
+            setWarningStatus={setWarningMessage}
+            dailySpendingLimit={Number(dailyOutgoingLimit)}
+          />
+        </IPayView>
         <IPayButton
           large
-          disabled={btnDisbaled || !!warningStatus}
+          disabled={!!warningMessage || btnDisbaled}
           btnType={buttonVariants.PRIMARY}
           btnText={btnText}
           leftIcon={btnLeftIcon}

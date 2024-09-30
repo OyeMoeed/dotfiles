@@ -26,4 +26,5 @@ export interface SadadFooterComponentProps {
   showButtonOnly?: boolean;
   shouldTranslateBtnText?: boolean;
   isRefund?: boolean;
+  amount?: string | number;
 }

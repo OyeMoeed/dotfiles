@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
@@ -153,7 +154,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       walletNumber,
       maxRecords: '100',
       offset: '1',
-      trxReqType: 'PAY_WALLET',
+      trxReqType: `${TransactionTypes.PAY_WALLET},${TransactionTypes.COUT_MOBILE}`,
       trxType,
       fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
       toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',

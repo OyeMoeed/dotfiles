@@ -37,13 +37,17 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   const { t } = useTranslation();
 
   const statusVariant = useMemo(() => {
-    switch (billStatusCode) {
-      case BillStatus.UNPAID:
-        return States.NATURAL;
-      case BillStatus.DEACTIVE:
-        return States.ERROR;
-      default:
-        return States.SUCCESS;
+    if (dueDateTime) {
+      switch (billStatusCode) {
+        case BillStatus.UNPAID:
+          return States.NATURAL;
+        case BillStatus.DEACTIVE:
+          return States.ERROR;
+        default:
+          return States.SUCCESS;
+      }
+    } else {
+      return '';
     }
   }, [billStatusCode]);
 
@@ -83,7 +87,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
     return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
   }, [dueDateTime]);
 
-  const billingAmount = `${amount || 0} ${t('COMMON.SAR')}`;
+  const billingAmount = amount ? `${amount || 0} ${t('COMMON.SAR')}` : '';
   const billingDueDate = `${t('SADAD.DUE')} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
 
   const onPressCheckBox = () => {
@@ -109,12 +113,14 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
           <IPayCaption2Text text={billerName} color={colors.natural.natural900} style={styles.vendorText} />
         </IPayView>
         <IPayView style={styles.contentChildView}>
-          <IPayChip
-            containerStyle={styles.chipView}
-            isShowIcon={false}
-            textValue={billStatus}
-            variant={statusVariant}
-          />
+          {dueDateTime && (
+            <IPayChip
+              containerStyle={styles.chipView}
+              isShowIcon={false}
+              textValue={billStatus}
+              variant={statusVariant}
+            />
+          )}
           <IPaySubHeadlineText text={billingAmount} color={billingAmountColor} />
           {billStatusCode === BillStatus.UNPAID && (
             <IPayCaption2Text text={billingDueDate} style={styles.dueDateText} color={dueDateColor} />
