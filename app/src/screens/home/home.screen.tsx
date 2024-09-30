@@ -12,25 +12,25 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
 import getOffers from '@app/network/services/core/offers/offers.service';
+import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
 import { useGetCards } from '@app/network/services/core/transaction/transactions.service';
 import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { CardStatusNumber, CardTypes } from '@app/utilities';
+import { filterCards } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ApiResponse } from '@app/network/services/services.interface';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { CardStatusNumber, CardTypes } from '@app/utilities';
-import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 
+import { setCards } from '@app/store/slices/cards-slice';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -47,7 +47,6 @@ const Home: React.FC = () => {
   const topUpSelectionRef = React.createRef<any>();
   const cardIssuanceSheetRef = useRef<BottomSheetModal>(null);
 
-  const [, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
   const {
     walletNumber,
@@ -55,23 +54,13 @@ const Home: React.FC = () => {
     availableBalance,
     currentBalance,
     limitsDetails,
-    nationalAddressComplete,
-    accountBasicInfoCompleted,
+    // nationalAddressComplete,
+    // accountBasicInfoCompleted,
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
-
-  // const getCardsData = async (cardApiResponse: any) => {
-  //   if (cardApiResponse) {
-  //     const availableCards = filterCards(cardApiResponse?.response?.cards);
-
-  //     if (availableCards?.length) {
-  //       dispatch(setCards(mapCardData(availableCards)));
-  //     }
-  //   }
-  // };
 
   const openProfileBottomSheet = () => {
     dispatch(setProfileSheetVisibility(true));
@@ -205,27 +194,12 @@ const Home: React.FC = () => {
     }
   };
 
-  const getCardsData = async (apiResponse?: ApiResponse<{ cards: CardResponseInterface[] }>) => {
-    if (apiResponse) {
-      let shouldShowIssuance = accountBasicInfoCompleted && nationalAddressComplete && checkUserAccess();
-      const availableCardsForSearch = apiResponse?.response?.cards.filter((card: any) => {
-        if (
-          card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
-          card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
-          card.cardStatus === CardStatusNumber.Freezed
-        ) {
-          shouldShowIssuance = false;
-          return true;
-        }
-        return false;
-      });
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = filterCards(cardApiResponse?.response?.cards);
 
-      if (shouldShowIssuance) {
-        cardIssuanceSheetRef?.current?.present();
-      }
-
-      if (availableCardsForSearch?.length) {
-        setCardsData(mapCardData(availableCardsForSearch));
+      if (availableCards?.length) {
+        dispatch(setCards(mapCardData(availableCards)));
       }
     }
   };
@@ -250,6 +224,7 @@ const Home: React.FC = () => {
       ref.current?.present();
     } else ref.current?.forceClose();
   }, [isFocused]);
+
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
   const { isLoadingWalletInfo } = useGetWalletInfo({
