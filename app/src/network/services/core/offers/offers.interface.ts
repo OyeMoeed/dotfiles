@@ -52,6 +52,7 @@ interface GetOffersPayload {
   toDate?: string;
   id?: string;
   home?: boolean;
+  hideLoader?: boolean;
 }
 
 export { GetOffersPayload, OffersMockProps, WalletNumberProp, OffersResponseDetails, OfferItem };

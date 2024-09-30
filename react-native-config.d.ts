@@ -4,4 +4,6 @@ declare module 'react-native-config' {
   export const REQUEST_TIMEOUT: number;
   export const NAFATH_MANAGE: string;
   export const GOOGE_MAPS_KEY: string;
+  export const PW_APP_ID: string;
+  export const PW_PROJECT_NUMBER: string;
 }

@@ -33,5 +33,6 @@ export interface RouteParams {
     maskedCardNumber?: string;
     cardIndex?: string;
     cardStatus?: string;
+    physicalCard?: boolean;
   };
 }

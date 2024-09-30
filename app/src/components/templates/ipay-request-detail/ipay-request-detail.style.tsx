@@ -69,10 +69,10 @@ const transactionHistoryStyle = (colors: any) =>
     containerToastStyle: {
       ...Platform.select({
         android: {
-          bottom: verticalScale(100),
+          bottom: verticalScale(50),
         },
         ios: {
-          bottom: verticalScale(130),
+          bottom: verticalScale(80),
         },
       }),
     },

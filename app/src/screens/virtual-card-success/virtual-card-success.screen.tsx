@@ -1,6 +1,8 @@
 import { IPayCardSuccess } from '@app/components/molecules';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { queryClient } from '@app/network';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import { isIosOS } from '@app/utilities/constants';
 import { useTranslation } from 'react-i18next';
 
@@ -14,9 +16,11 @@ const VirtualCardSuccessScreen = () => {
       isAddAppleWallet={isIosOS}
       goHomeText="COMMON.HOME"
       handleHomePress={() => {
+        queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
         navigate(ScreenNames.HOME);
       }}
       handleGoToCard={() => {
+        queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
         navigate(ScreenNames.CARDS);
       }}
     />

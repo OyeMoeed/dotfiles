@@ -1,4 +1,7 @@
-const cardsListMock = {
+import { CardResponseInterface } from './transaction.interface';
+import { ApiResponse } from '../../services.interface';
+
+const cardsListMock: ApiResponse<{ cards: CardResponseInterface[] }> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -44,6 +47,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2026-02-06',
           virtualCard: true,
         },
+        physicalCard: false,
       },
       {
         cardIndex: '4298752495053545348485148564853485357',
@@ -77,6 +81,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-04-04',
           virtualCard: true,
         },
+        physicalCard: false,
       },
       {
         cardIndex: '4298752505654555748484855484857515156',
@@ -110,6 +115,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-07-11',
           virtualCard: true,
         },
+        physicalCard: false,
       },
       {
         cardIndex: '4298752505654555748484853495055524853',
@@ -143,6 +149,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-07-11',
           virtualCard: true,
         },
+        physicalCard: true,
       },
       {
         cardIndex: '4298752505654555748484855515552514850',
@@ -176,6 +183,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-07-22',
           virtualCard: true,
         },
+        physicalCard: true,
       },
       {
         cardIndex: '4298752505654555748484848525052515252',
@@ -209,6 +217,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-09-25',
           virtualCard: true,
         },
+        physicalCard: true,
       },
       {
         cardIndex: '4298752505654555748484857535655495249',
@@ -242,6 +251,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-09-25',
           virtualCard: true,
         },
+        physicalCard: true,
       },
       {
         cardIndex: '4298752505654555748484856514955514848',
@@ -275,6 +285,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-09-25',
           virtualCard: true,
         },
+        physicalCard: true,
       },
       {
         cardIndex: '4298752505654555748484855565250535549',
@@ -308,6 +319,7 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-09-25',
           virtualCard: true,
         },
+        physicalCard: true,
       },
       {
         cardIndex: '4298752505654555748484848575757495049',
@@ -341,8 +353,9 @@ const cardsListMock = {
           nextAnnualFeesDueDate: '2025-09-25',
           virtualCard: true,
         },
+        physicalCard: true,
       },
-    ],
+    ] as CardResponseInterface[],
   },
   successfulResponse: true,
 };

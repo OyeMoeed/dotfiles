@@ -4,19 +4,19 @@ import transactionMock from '@app/network/services/core/transaction/transaction.
 import { APIResponseType } from '@app/utilities/enums.util';
 import apiCall from '@network/services/api-call.service';
 import CORE_URLS from '../core.urls';
-import cardsListMock from './cards-list.mock';
 import {
-  CardsProp,
   TransactionsProp,
   changeStatusProp,
+  generateInvoiceProps,
   getCardDetailsProp,
   prepareRenewCardProp,
   prepareShowDetailsProp,
   renewCardProp,
   resetPinCodeProp,
+  TransactionsMockProps,
 } from './transaction.interface';
 
-const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
+const getTransactions = async (payload: TransactionsProp): Promise<TransactionsMockProps> => {
   if (constants.MOCK_API_RESPONSE) {
     return transactionMock;
   }
@@ -25,38 +25,21 @@ const getTransactions = async (payload: TransactionsProp): Promise<unknown> => {
     endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
     method: requestType.GET,
     headers: {
-      hide_spinner_loading: !!payload?.cardIndex,
+      hide_spinner_loading: true,
     },
   });
   return apiResponse;
 };
 
-const getTransactionTypes = async (): Promise<unknown> => {
+const getTransactionTypes = async ({ hideSpinner }: { hideSpinner?: boolean }): Promise<unknown> => {
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
     method: requestType.GET,
+    headers: {
+      hide_spinner_loading: hideSpinner,
+    },
   });
 
-  return apiResponse;
-};
-
-const getCards = async (payload: CardsProp): Promise<any> => {
-  if (constants.MOCK_API_RESPONSE) {
-    return cardsListMock;
-  }
-
-  const header = {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    'api-version': 'v2',
-    hide_error_response: payload.hideError ?? false,
-    hide_spinner_loading: payload.hideSpinner ?? false,
-  };
-
-  const apiResponse = await apiCall({
-    endpoint: CORE_URLS.GET_CARDS(payload?.walletNumber),
-    method: requestType.GET,
-    headers: header,
-  });
   return apiResponse;
 };
 
@@ -153,9 +136,24 @@ const prepareRenewCard = async (payload: prepareRenewCardProp): Promise<any> => 
   }
 };
 
+const generateInvoice = async (payload: generateInvoiceProps): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.GENERATE_INVOICE(payload?.walletNumber,payload?.trxId, payload?.trxDate),
+      method: requestType.GET
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+export * from './get-cards';
 export {
   changeStatus,
-  getCards,
   getTransactionTypes,
   getTransactions,
   otpGetCardDetails,
@@ -164,4 +162,5 @@ export {
   prepareResetCardPinCode,
   prepareShowCardDetails,
   resetPinCode,
+  generateInvoice
 };

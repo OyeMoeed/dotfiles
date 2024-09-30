@@ -7,8 +7,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { TrafficVoilationTypes } from '@app/utilities/enums.util';
 import React, { useCallback } from 'react';
 import { Controller } from 'react-hook-form';
+import { useTranslation } from 'react-i18next';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
-
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
 import trafficDetailStyles from './ipay-traffic-detail-form.style';
 
@@ -42,6 +42,7 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   handleFormTabSelect,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = trafficDetailStyles(colors);
   const getInputStyles = useCallback(() => {
     const baseStyle = styles.inputContainerStyle;
@@ -49,17 +50,19 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
 
     return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
   }, [errorMessage, myIdCheck]);
-  const tabs = ['TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER', 'TRAFFIC_VIOLATION.BY_VIOLATION_ID'];
+  const tabs = [t('TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER'), t('TRAFFIC_VIOLATION.BY_VIOLATION_ID')];
 
   return (
     <IPayView style={styles.inputWrapper} testID={`${testID}-traffic-form-page`}>
-      <IPayFootnoteText regular text="TRAFFIC_VIOLATION.SERVICE_TYPE" color={colors.primary.primary600} />
-      <IPaySegmentedControls
-        customStyles={styles.segmentStyles}
-        selectedTab={formSelectedTab}
-        tabs={tabs}
-        onSelect={handleFormTabSelect}
-      />
+      <IPayView style={styles.tabWrapper}>
+        <IPayFootnoteText regular text="TRAFFIC_VIOLATION.SERVICE_TYPE" color={colors.primary.primary600} />
+        <IPaySegmentedControls
+          customStyles={styles.segmentStyles}
+          selectedTab={formSelectedTab}
+          tabs={tabs}
+          onSelect={handleFormTabSelect}
+        />
+      </IPayView>
 
       <Controller
         name={TrafficPaymentFormFields.MY_ID_CHECK}

@@ -4,4 +4,5 @@ export interface IPayOtpInputTextProps {
   isError?: boolean;
   value?: string;
   setValue?: (value: string) => void;
+  autoFocus?: boolean;
 }

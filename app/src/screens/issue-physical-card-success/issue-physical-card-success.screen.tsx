@@ -1,14 +1,16 @@
+import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayCaption2Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
+import IPayAppleWallet from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
 import { IPayPageWrapper } from '@app/components/templates';
-import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
-import icons from '@app/assets/icons';
-import { buttonVariants } from '@app/utilities/enums.util';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import IPayAppleWallet from '@app/components/molecules/ipay-apple-wallet-button/ipay-apple-wallet-button.component';
+import { queryClient } from '@app/network';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
+import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
+import { buttonVariants } from '@app/utilities/enums.util';
+import React, { useState } from 'react';
 import issuePhysicalCardSuccessStyles from './issue-physical-card-success.style';
 
 const IssuePhysicalCardSuccessScreen: React.FC = () => {
@@ -17,9 +19,15 @@ const IssuePhysicalCardSuccessScreen: React.FC = () => {
 
   const [isAdded, setIsAdded] = useState(false); // TODO: will be handle on the basis of api
 
-  const onGoToCards = () => navigate(ScreenNames.CARDS);
+  const onGoToCards = () => {
+    queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
+    navigate(ScreenNames.CARDS);
+  };
 
-  const onGoToHome = () => navigate(ScreenNames.HOME);
+  const onGoToHome = () => {
+    queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
+    navigate(ScreenNames.HOME);
+  };
 
   const onToggleIsAdded = () => setIsAdded((prev) => !prev);
 

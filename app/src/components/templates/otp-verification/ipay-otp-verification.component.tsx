@@ -46,6 +46,8 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
       setOtp,
       setOtpError,
       timeout,
+      otp,
+      onPressConfirm,
     );
 
     const isCounterEnds = counter <= 0;
@@ -94,7 +96,7 @@ const IPayOtpVerification = forwardRef<{}, IPayOtpVerificationProps>(
         </IPayView>
 
         <IPayView style={innerContainerStyle}>
-          <IPayOtpInputText isError={otpError} onChangeText={onChangeText} value={otp} setValue={setOtp} />
+          <IPayOtpInputText isError={otpError} onChangeText={onChangeText} value={otp} setValue={setOtp} autoFocus />
 
           <IPayCaption1Text regular style={styles.timerText} color={colors.natural.natural500}>
             {`${t('COMMON.CODE_EXPIRES_IN')} ${formatTime(counter)}`}

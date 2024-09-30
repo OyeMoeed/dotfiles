@@ -24,6 +24,8 @@ const IPayDatePicker: React.FC<IPayDatePickerProps> = ({
   testID,
   display = 'spinner',
   mode = 'date',
+  maximumDate,
+  minimumDate,
   ...rest
 }) => {
   const { colors } = useTheme();
@@ -33,6 +35,8 @@ const IPayDatePicker: React.FC<IPayDatePickerProps> = ({
         testID={`${testID} - dateTimePicker`}
         onDateChange={onDateChange}
         mode={mode}
+        minimumDate={minimumDate}
+        maximumDate={maximumDate}
         display={display}
         style={Platform.OS !== 'ios' && androidStyle}
         is24Hour={false}

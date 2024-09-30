@@ -8,8 +8,12 @@ import screenNames from '@app/navigation/screen-names.navigation';
 import { ChangePinRefTypes } from '@app/screens/card-options/card-options.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { queryClient } from '@app/network';
 import { CardInfo } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
 import { ICardIssuanceDetails } from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import { useGetCards } from '@app/network/services/core/transaction/get-cards';
+import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
 import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useTypedSelector } from '@app/store/store';
 import { buttonVariants } from '@app/utilities';
@@ -22,23 +26,31 @@ import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipa
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
 import { IPayListItemProps } from './Card-issuance-confirmation-details.interface';
-
-import cardIssuaceConfirmationStyles from './Card-issuance-confirmation-details.styles';
+import cardIssuanceConfirmationStyles from './Card-issuance-confirmation-details.styles';
 
 const CardIssuanceConfirmationScreen = () => {
+  const dispatch = useDispatch();
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: { issuanceDetails: ICardIssuanceDetails } }, 'params'>;
   const { issuanceDetails } = route.params;
-  const { fullName, availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const styles = cardIssuaceConfirmationStyles(colors);
+
+  const { walletNumber, fullName, availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [isOtpVisible, setIsOtpVisible] = useState<boolean>(false);
+  const styles = cardIssuanceConfirmationStyles(colors);
   const [isCheckTermsAndCondition, setIsCheckTermsAndCondition] = useState(false);
   const changePinRef = useRef<ChangePinRefTypes>(null);
-  const openBottomSheet = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
-  const dispatch = useDispatch();
+
+  useGetCards({
+    payload: {
+      walletNumber,
+    },
+    refetchOnWindowFocus: false,
+    enabled: false,
+  });
 
   const renderToast = () => {
     showToast({
@@ -117,7 +129,7 @@ const CardIssuanceConfirmationScreen = () => {
     if (!isCheckTermsAndCondition) {
       renderToast();
     } else if (checkAvailableBalance(+getTotalFees())) {
-      openBottomSheet.current?.present();
+      setIsOtpVisible(true);
     }
   };
   const handleOnCheckPress = () => {
@@ -127,7 +139,7 @@ const CardIssuanceConfirmationScreen = () => {
   const balance = formatNumberWithCommas(availableBalance);
   const onCloseBottomSheet = () => {
     changePinRef.current?.resetInterval();
-    openBottomSheet.current?.close();
+    setIsOtpVisible(false);
   };
 
   const renderItem = ({ item }: IPayListItemProps) => (
@@ -152,7 +164,7 @@ const CardIssuanceConfirmationScreen = () => {
               data={listData}
               contentContainerStyle={styles.listContainer}
               keyExtractor={(item) => item.id}
-              style={styles.flatlist}
+              style={styles.flatList}
               renderItem={renderItem}
             />
           </IPayView>
@@ -175,24 +187,26 @@ const CardIssuanceConfirmationScreen = () => {
           </IPayView>
         </IPayView>
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
+        isVisible={isOtpVisible}
         heading="CARDS.VIRTUAL_CARD"
         enablePanDownToClose
         simpleHeader
         cancelBnt
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={['93%']}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={openBottomSheet}
       >
         <IssueCardPinCreation
           handleOnPressHelp={handleOnPressHelp}
           issuanceDetails={issuanceDetails}
           onSuccess={(cardInfo?: CardInfo) => {
+            queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
+
             onCloseBottomSheet();
             navigate(screenNames.VIRTUAL_CARD_SUCCESS, { cardInfo });
           }}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose

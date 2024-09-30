@@ -171,11 +171,11 @@ react-native-config: Library for accessing configuration variables in React Nati
 react-native-gesture-handler: Gesture recognition library for React Native.
 react-native-reanimated: React Native library for building smooth animations.
 react-native-screens: React Native library for managing screens.
-react-native-vector-icons: Icon library for React Native.
 react-navigation: Routing and navigation library for React Native apps.
 react-redux: Official React bindings for Redux.
 redux-persist: Library for persisting and rehydrating a Redux store.
 yarn: Package manager for JavaScript.
+react-query: Library for caching api
 
 DevDependencies:
 @babel/core: Core Babel functionality for transpiling JavaScript.
@@ -188,7 +188,6 @@ DevDependencies:
 @react-native/metro-config: Metro configuration for React Native projects.
 @react-native/typescript-config: TypeScript configuration for React Native projects.
 @types/react: TypeScript types for React.
-@types/react-native-vector-icons: TypeScript types for react-native-vector-icons.
 @types/react-test-renderer: TypeScript types for React test renderer.
 @typescript-eslint/eslint-plugin: ESLint plugin for TypeScript.
 @typescript-eslint/parser: ESLint parser for TypeScript.

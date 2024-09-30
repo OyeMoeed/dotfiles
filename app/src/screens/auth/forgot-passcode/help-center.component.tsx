@@ -1,5 +1,9 @@
 import { IPayButton } from '@app/components/molecules';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import useGetFaq from '@app/network/services/core/faq/get-faq.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import icons from '@assets/icons';
 import {
   IPayCaption1Text,
@@ -12,10 +16,8 @@ import {
   IPayTitle2Text,
   IPayView,
 } from '@components/atoms';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
-import getFAQ from '@app/network/services/core/faq/faq.service';
-import { buttonVariants } from '@app/utilities';
 import { IPayHelpCenterProps } from './forget-passcode.interface';
 import helpCenterStyles from './help-center.style';
 
@@ -26,19 +28,10 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
   const toggleExpand = (index: number) => {
     setExpandedIndex(expandedIndex === index ? null : index);
   };
-  const [faqsItems, setFaqsItems] = useState([]);
 
-  const fetchFaqItems = async () => {
-    const apiResponse: any = await getFAQ(hideFAQError);
-
-    if (apiResponse?.status?.type === 'SUCCESS') {
-      setFaqsItems(apiResponse?.response?.faqs);
-    }
-  };
-
-  useEffect(() => {
-    fetchFaqItems();
-  }, []);
+  const { isLoading: isFAQLoading, data: faqsItems } = useGetFaq({
+    payload: { hideError: hideFAQError, hideSpinner: true },
+  });
 
   const renderFaqItem = ({ item, index }: { item: { question: string; answer: [] }; index: number }) => (
     <IPayView style={styles.faqItemContainer} testID={testID}>
@@ -83,12 +76,17 @@ const HelpCenterComponent: React.FC<IPayHelpCenterProps> = ({ testID, onPressCon
             <IPayTitle2Text text="FORGOT_PASSCODE.FAQ" style={styles.title} />
             <IPayCaption1Text regular text="FORGOT_PASSCODE.FAQ_DEFINITION" style={styles.subtitle} />
           </IPayView>
-          <IPayFlatlist
-            scrollEnabled={false}
-            data={faqsItems}
-            renderItem={renderFaqItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          {isFAQLoading ? (
+            <IPaySkeletonBuilder isLoading={isFAQLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />
+          ) : (
+            <IPayFlatlist
+              scrollEnabled={false}
+              data={faqsItems}
+              renderItem={renderFaqItem}
+              keyExtractor={(_, index) => index.toString()}
+            />
+          )}
+
           <IPayView style={styles.contactUsContainer}>
             <IPaySubHeadlineText regular style={styles.contactUsText} text="COMMON.ASSISTANCE" />
             <IPayCaption1Text regular style={styles.contactUsSubText} text="COMMON.CONTACT_SERVICE_TEAM" />

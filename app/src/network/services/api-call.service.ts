@@ -36,7 +36,9 @@ const apiCall = async <T>({
     data: payload,
   };
   if (baseURL) config.baseURL = baseURL;
-  if (headers?.hide_error_response) {
+  const hideErrorResponse = headers?.hide_error_response;
+
+  if (hideErrorResponse) {
     axiosClient.defaults.headers.x_hide_error_response = true;
   }
   if (headers?.hide_spinner_loading) {
@@ -53,7 +55,7 @@ const apiCall = async <T>({
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
       await handleAxiosError(response);
-      return undefined;
+      return hideErrorResponse ? undefined : handleApiResponse(response);
     }
     store.dispatch(hideSpinner());
     return handleApiResponse(response);

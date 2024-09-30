@@ -24,6 +24,8 @@ import IPayToggleButton from '@app/components/molecules/ipay-toggle-button/ipay-
 import IPayToggleTitle from '@app/components/molecules/ipay-toggle-button-title/ipay-toggle-button-title.component';
 
 import IPayCardSuccess from '@app/components/molecules/ipay-card-success/ipay-card-success.component';
+
+import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTransactionHistoryDetails from '@app/components/molecules/ipay-transaction-history-details/ipay-transaction-history-details.component';
 import IPayRenewalIdAlert from '@app/components/templates/ipay-id-renewal-sheet/ipay-id-renewal-alert';
 import IPayAnimatedCircularProgress from '@components/molecules/ipay-animated-circular-progress/ipay-animated-circular-progress.component';
@@ -34,7 +36,6 @@ import IPayCalendar from '@components/molecules/ipay-calendar/ipay-calendar.comp
 import IPayFailure from '@components/molecules/ipay-failure/ipay-failure.component';
 import FlipCard from '@components/molecules/ipay-flip-card/ipay-flip-card.component';
 import IPayListView from '@components/molecules/ipay-list-view/ipay-list-view.component';
-import IPayMoiPaymentDetailForm from '@components/molecules/ipay-moi-payment-detail-form/ipay-moi-payment-detail-form.component';
 import IPayNoResult from '@components/molecules/ipay-no-result/ipay-no-result.component';
 import IPayOutlineButton from '@components/molecules/ipay-outline-button/ipay-outline-button.component';
 import IPayPrimaryButton from '@components/molecules/ipay-primary-button/ipay-primary-button.components';
@@ -44,7 +45,6 @@ import IPayStepIndicator from '@components/molecules/ipay-step-indicator/ipay-st
 import IPaySuccess from '@components/molecules/ipay-success/ipay-success.component';
 import IPayTextInput from '@components/molecules/ipay-textinput/ipay-textinput.component';
 import IPayToast from '@components/molecules/ipay-toast/ipay-toast.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayToastContainer from '@components/molecules/ipay-toast/ipay-toast.helper';
 import IPayTopbar from '@components/molecules/ipay-topbar/ipay-topbar.component';
 import IPayAccountBalance from './ipay-account-balance/ipay-account-balance.component';
@@ -107,7 +107,6 @@ export {
   IPayList,
   IPayListView,
   IPayMerchantCard,
-  IPayMoiPaymentDetailForm,
   IPayNoResult,
   IPayOrdersCard,
   IPayOtpInputText,

@@ -2,14 +2,15 @@ import icons from '@app/assets/icons';
 import { IPayButton, IPayList } from '@app/components/molecules';
 import IPayAddAppleWalletButton from '@app/components/molecules/ipay-add-apple-wallet-button/ipay-add-apple-wallet-button.component';
 import IPayCardStatusIndication from '@app/components/molecules/ipay-card-status-indication/ipay-card-status-indication.component';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
-import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+import checkUserAccess from '@app/utilities/check-user-access';
 import {
   buttonVariants,
   CardActiveStatus,
@@ -27,22 +28,18 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@components/atoms';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
 
-const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
-  testID,
-  onOpenOTPSheet,
-  currentCard,
-  cards,
-  setCards,
-}) => {
+const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = cardBalanceSectionStyles(colors);
+  const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+
   const actionSheetRef = useRef<any>(null);
   const [activeCardStatus, setActiveCardStatus] = useState(CardActiveStatus.FREEZE);
   const [statusIndication, setStatusIndication] = useState<CardStatusIndication.ANNUAL | CardStatusIndication.EXPIRY>();
@@ -72,9 +69,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   }, [currentCard]);
 
-  const [isCardPrinted, setIsCardPrinted] = useState();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
 
   const showActionSheet = () => {
     actionSheetRef.current.show();
@@ -87,60 +82,72 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
       text: activeCardStatus === CardActiveStatus.FREEZE ? t('CARDS.FREEZE_CARD') : t('CARDS.UNFREEZE_CARD'),
       key: '1',
       onPress: showActionSheet,
+      hidden: false,
     },
     {
       icon: icons.setting_21,
       text: t('CARDS.CARD_OPTIONS'),
       key: '2',
       onPress: () => navigate(ScreenNames.CARD_OPTIONS, { currentCard }),
+      hidden: false,
     },
     {
       icon: icons.info_circle1,
       text: t('CARDS.CARD_DETAILS'),
       key: '3',
       onPress: onOpenOTPSheet,
+      hidden: currentCard?.frozen,
     },
   ];
 
-  const getTransactionsData = async () => {
-    const payload: TransactionsProp = {
+  const { isLoadingTransactions, transactionsData } = useGetTransactions({
+    payload: {
       walletNumber: walletInfo.walletNumber,
       maxRecords: '10',
       offset: '1',
       cardIndex: currentCard?.cardIndex,
       fromDate: '',
       toDate: '',
-    };
-    const apiResponse: any = await getTransactions(payload);
-
-    if (apiResponse) {
-      setTransactionsData(apiResponse?.response?.transactions);
-    }
-  };
+    },
+  });
 
   useEffect(() => {
-    getTransactionsData();
-    setActiveCardStatus(currentCard.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
+    setActiveCardStatus(currentCard?.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
   }, [currentCard]);
 
-  const renderItem = (item: Option) => (
-    <IPayPressable onPress={item.onPress}>
-      <IPayView style={styles.cardOptionWrapper}>
-        <IPayView style={styles.cardOption}>
-          <IPayIcon icon={item.icon} size={28} color={colors.primary.primary500} />
+  const renderItem = (item: Option) => {
+    if (item?.hidden) {
+      return null;
+    }
+
+    return (
+      <IPayPressable onPress={item.onPress}>
+        <IPayView style={styles.cardOptionWrapper}>
+          <IPayView style={styles.cardOption}>
+            <IPayIcon icon={item.icon} size={28} color={colors.primary.primary500} />
+          </IPayView>
+          <IPayCaption2Text style={styles.optionText}>{item.text}</IPayCaption2Text>
         </IPayView>
-        <IPayCaption2Text style={styles.optionText}>{item.text}</IPayCaption2Text>
-      </IPayView>
-    </IPayPressable>
-  );
+      </IPayPressable>
+    );
+  };
+
+  const ListEmptyComponent = useCallback(() => {
+    if (isLoadingTransactions) {
+      return <IPaySkeletonBuilder variation={IPaySkeletonEnums.TRANSACTION_LIST} isLoading={isLoadingTransactions} />;
+    }
+    return null;
+  }, [isLoadingTransactions]);
 
   return (
     <IPayView testID={testID} style={styles.mainContainer}>
       {statusIndication && (
         <IPayCardStatusIndication
-          currentCard={currentCard}
           onPress={() => {
-            navigate(ScreenNames.CARD_RENEWAL, { currentCard, statusIndication });
+            const hasAccess = checkUserAccess();
+            if (hasAccess) {
+              navigate(ScreenNames.CARD_RENEWAL, { statusIndication });
+            }
           }}
           cardStatusType={cardStatusType}
           statusIndication={statusIndication}
@@ -166,7 +173,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         leftIconContainerStyles={styles.leftIconStyles}
         rightText={
           <IPaySubHeadlineText style={styles.listText} regular={false} shouldTranslate={false}>
-            {currentCard.totalCashbackAmt || '100'} <IPayFootnoteText text="COMMON.SAR" />
+            {currentCard?.totalCashbackAmt || '100'} <IPayFootnoteText text="COMMON.SAR" />
           </IPaySubHeadlineText>
         }
       />
@@ -179,16 +186,19 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           keyExtractor={(item) => item.key.toString()}
           contentContainerStyle={styles.flatlistContainerStyle}
         />
-        {!isCardPrinted && (
+        {!currentCard?.physicalCard && (
           <IPayButton
             onPress={() => {
-              setIsCardPrinted((prevState: any) => ({
-                ...prevState,
-                [currentCard.id]: true,
-              }));
-              navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-                currentCard,
-              });
+              const hasAccess = checkUserAccess();
+              if (hasAccess) {
+                // setIsCardPrinted((prevState: any) => ({
+                //   ...prevState,
+                //   [currentCard?.cardIndex || '']: true,
+                // }));
+                navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+                  currentCard,
+                });
+              }
             }}
             btnType={buttonVariants.PRIMARY}
             leftIcon={<IPayIcon size={18} color={colors.natural.natural0} icon={icons.card} />}
@@ -204,7 +214,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         </IPayView>
         <IPayButton
           onPress={() =>
-            navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, cards, isShowAmount: false })
+            navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, isShowAmount: false })
           }
           btnType={buttonVariants.LINK_BUTTON}
           hasRightIcon
@@ -221,14 +231,9 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
         scrollEnabled={false}
         keyExtractor={(_, index) => index.toString()}
         renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
+        ListEmptyComponent={ListEmptyComponent}
       />
-      <IPayFreezeConfirmationSheet
-        currentCard={currentCard}
-        cards={cards}
-        setCards={setCards}
-        ref={actionSheetRef}
-        setActiveCardStatus={setActiveCardStatus}
-      />
+      <IPayFreezeConfirmationSheet ref={actionSheetRef} setActiveCardStatus={setActiveCardStatus} />
     </IPayView>
   );
 };

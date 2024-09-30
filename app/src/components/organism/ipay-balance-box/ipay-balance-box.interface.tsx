@@ -27,6 +27,8 @@ export interface IPayBalanceBoxProps {
   monthlyRemainingOutgoingAmount: string;
 
   monthlyOutgoingLimit: string;
+  isLoading?: boolean;
+  totalBalance: string;
 }
 
 export interface CarouselItem {

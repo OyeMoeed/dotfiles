@@ -12,15 +12,13 @@ import { UpdateBiomatricStatusProps } from '@app/network/services/core/update-bi
 import updateBiomatricStatus from '@app/network/services/core/update-biomatric-status/update-biomatric-status.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { setAllowEyeIconFunctionality, setAppData, setNotificationSettings } from '@app/store/slices/app-data-slice';
-import { LanguageState } from '@app/store/slices/language-slice.interface';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { LanguageCode, ToastTypes } from '@app/utilities/enums.util';
 import { IPayCaption1Text, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@components/atoms';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.screen';
-import NewPasscode from '../auth/confirm-reset/new-passcode.screen';
+import ConfirmPasscode from '../auth/confirm-reset/confirm-reset.component';
+import NewPasscode from '../auth/confirm-reset/new-passcode.component';
 import IPayResetPasscode from '../auth/reset-passcode/reset-passcode.screen';
 import { PasscodeTypes } from './settings.interface';
 import settingStyles from './settings.styles';
@@ -29,7 +27,7 @@ import useSettings from './use-settings.hook';
 const Settings: React.FC = () => {
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const { allowEyeIconFunctionality, notificationSettings } = appData;
   const [biomatricToggle, setBioMatricToggle] = useState<boolean>(false);
   const styles = settingStyles(colors);
@@ -99,9 +97,7 @@ const Settings: React.FC = () => {
     dispatch(setAllowEyeIconFunctionality(!appData.allowEyeIconFunctionality));
   };
 
-  const selectedLanguage =
-    useSelector((state: { languageReducer: LanguageState }) => state.languageReducer.selectedLanguage) ||
-    LanguageCode.EN;
+  const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage) || LanguageCode.EN;
 
   const updateBiomatricStatusOnServer = async (bioRecognition: boolean) => {
     try {
@@ -266,7 +262,7 @@ const Settings: React.FC = () => {
       </IPayView>
 
       <IPayBottomSheet
-        heading="Change Passcode"
+        heading="SETTINGS.CHANGE_PASSCODE"
         enablePanDownToClose
         simpleHeader
         cancelBnt
