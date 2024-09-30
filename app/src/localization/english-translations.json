@@ -328,6 +328,8 @@
   },
 
   "SETTINGS": {
+    "CHANGE_LANGUAGE": "Change Language",
+    "CHANGE_LANGUAGE_DESCRIPTION": "Are you sure you want to change the language?",
     "SECURITY_SETTINGS": "Security and Privacy Settings",
     "PASSCODE": "Passcode",
     "CHANGE": "Change",
