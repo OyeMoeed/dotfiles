@@ -17,6 +17,13 @@ export const SLICE_NAMES = {
   RESET_STATE_SLICE: 'resetStateSlice',
   BOTTOM_SHEET_SLICE: 'bottomSheetSlice',
   FORCE_UPDATE_SLICE: 'forceUpdateSlice',
+  RATING_SLICE: 'ratingSlice',
 };
 
-export const WHITELISTED_DATA = ['appDataReducer', 'languageReducer', 'rearrangement', 'walletInfoReducer'];
+export const WHITELISTED_DATA = [
+  'appDataReducer',
+  'languageReducer',
+  'rearrangement',
+  'walletInfoReducer',
+  'ratingSlice',
+];

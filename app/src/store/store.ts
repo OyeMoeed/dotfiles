@@ -20,6 +20,7 @@ import spinnerReducer from './slices/spinner.slice';
 import themeReducer from './slices/theme-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
 import forceUpdateReducer from './slices/app-force-update-slice';
+import ratingReducer from './slices/rating.slice';
 
 import reactotron from '../../../ReactotronConfig';
 
@@ -41,6 +42,7 @@ const reducers = {
   bottomSheetReducer,
   cardsReducer,
   forceUpdateReducer,
+  ratingReducer,
 };
 
 /**
