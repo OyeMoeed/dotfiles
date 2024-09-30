@@ -1,6 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 /**
+ * @description used to unify key name accross the app avoiding keys typo issues
+ */
+enum StorageKeys {
+  ENV = 'currentAppEnv',
+}
+/**
  * Function to set value to AsyncStorage.
  * It requires two parameters: a key and a value to set the data in AsyncStorage.
  * If the value is set successfully, it will return true. If it catches any error, it will return false.
@@ -59,4 +65,10 @@ const clearAsyncStorage = async () => {
   }
 };
 
-export { clearAsyncStorage, getValueFromAsyncStorage, removeValueFromAsyncStorage, setValueToAsyncStorage };
+export {
+  StorageKeys,
+  clearAsyncStorage,
+  getValueFromAsyncStorage,
+  removeValueFromAsyncStorage,
+  setValueToAsyncStorage,
+};

@@ -6,6 +6,7 @@ import {
   getValueFromAsyncStorage,
   removeValueFromAsyncStorage,
   setValueToAsyncStorage,
+  StorageKeys,
 } from './storage-helper.util';
 import openPhoneNumber from './open-phone-number.util';
 import copyText from './clip-board.util';
@@ -27,6 +28,7 @@ export {
   getValueFromAsyncStorage,
   removeValueFromAsyncStorage,
   setValueToAsyncStorage,
+  StorageKeys,
   openPhoneNumber,
   copyText,
   getCustomSheetThreshold,

@@ -23,9 +23,6 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    data?.find((item) => item[valueKey] === selectedValue)?.[labelKey] ?? '',
-  );
 
   const listCheckIcon = (
     <IPayIcon
@@ -42,7 +39,6 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   };
 
   const handleSelectItem = (item: ListItem) => {
-    setSelectedItem(item[labelKey]);
     if (onSelectListItem) {
       onSelectListItem(item[valueKey]);
     }
@@ -55,7 +51,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         testID={testID}
         label={label}
         editable={false}
-        value={selectedItem}
+        value={selectedValue}
         containerStyle={[styles.inputContainerStyle, disabled && styles.disabledInput]}
         showRightIcon
         customIcon={listCheckIcon}
@@ -67,7 +63,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         data={data}
         isSearchable={isSearchable}
         onSelectItem={handleSelectItem}
-        selectedItem={selectedItem || ''}
+        selectedItem={selectedValue || ''}
         snapPoints={[SNAP_POINT.MEDIUM_LARGE[1]]}
         heading={label}
         isVisible={isVisible}

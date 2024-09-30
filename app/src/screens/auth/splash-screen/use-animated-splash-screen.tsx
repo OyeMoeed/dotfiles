@@ -10,10 +10,10 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { showForceUpdate } from '@app/store/slices/app-force-update-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities';
-import { useNavigation } from '@react-navigation/native';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-native';
+import { updateBaseURL } from '@app/network/utilities/base-url';
 
 const useSplashAnimations = () => {
   const { ready: isTranslationsLoaded } = useTranslation(undefined, {
@@ -23,13 +23,12 @@ const useSplashAnimations = () => {
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.5)).current;
   const blurAnim = useRef(new Animated.Value(0)).current;
-  const navigation = useNavigation();
   const animationDurations = constants.ANIMATION_DURATIONS;
   const dispatch = useTypedDispatch();
   useLocation();
   const { isFirstTime, isLinkedDevice, isAuthenticated } = useTypedSelector((state) => state.appDataReducer.appData);
 
-  const splashPrepareApi = async () => {
+  const splashPrepareApi = useCallback(async () => {
     const deviceInfo = await getDeviceInfo();
     const prepareLoginPayload: DeviceInfoProps = {
       ...deviceInfo,
@@ -40,8 +39,9 @@ const useSplashAnimations = () => {
     if (apiResponse?.status?.code === 'E430995') {
       dispatch(showForceUpdate());
     }
-  };
-  const handleNavigation = async () => {
+  }, [dispatch]);
+
+  const handleNavigation = useCallback(async () => {
     const skipLoginAfterChange = await getValueFromAsyncStorage('skipLoginAfterLogin');
 
     if (skipLoginAfterChange === 'true') {
@@ -60,26 +60,29 @@ const useSplashAnimations = () => {
     } else {
       navigateAndReset(screenNames.MOBILE_IQAMA_VERIFICATION);
     }
+  }, [dispatch, isAuthenticated, isFirstTime, isLinkedDevice]);
+
+  const checkForPreviousSelectedEnv = () => {
+    updateBaseURL();
   };
 
+  const runAnimations = useCallback(async () => {
+    const { duration2000, duration1000, duration500 } = animationDurations;
+    parallelAnimations([fadeIn(opacityAnim, duration2000), scale(scaleAnim, 1, duration1000)]).start();
+
+    if (isTranslationsLoaded) {
+      splashPrepareApi();
+
+      fadeIn(blurAnim, duration500).start(async () => {
+        await handleNavigation();
+      });
+    }
+  }, [animationDurations, blurAnim, handleNavigation, isTranslationsLoaded, opacityAnim, scaleAnim, splashPrepareApi]);
+
   useEffect(() => {
-    const runAnimations = async () => {
-      await parallelAnimations([
-        fadeIn(opacityAnim, animationDurations.duration2000),
-        scale(scaleAnim, 1, animationDurations.duration1000),
-      ]).start();
-
-      if (isTranslationsLoaded) {
-        splashPrepareApi();
-
-        await fadeIn(blurAnim, animationDurations.duration500).start(async () => {
-          await handleNavigation();
-        });
-      }
-    };
-
+    checkForPreviousSelectedEnv();
     runAnimations();
-  }, [dispatch, isLinkedDevice, opacityAnim, scaleAnim, blurAnim, navigation, isTranslationsLoaded]);
+  }, [runAnimations]);
 
   return { opacityAnim, scaleAnim, blurAnim };
 };
