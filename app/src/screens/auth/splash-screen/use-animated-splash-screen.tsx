@@ -34,7 +34,7 @@ const useSplashAnimations = () => {
       locationDetails: {},
     };
 
-    const apiResponse: any = await prepareLogin(prepareLoginPayload);
+    const apiResponse: any = await prepareLogin(prepareLoginPayload, true);
     if (apiResponse?.status?.code === 'E430995') {
       dispatch(showForceUpdate());
     }

@@ -1,7 +1,7 @@
 import { FC, useCallback, useEffect, useRef } from 'react';
 
 import icons from '@app/assets/icons';
-import { MAIN_APP_STORE_LINKS } from '@app/constants/constants';
+import constants, { MAIN_APP_STORE_LINKS } from '@app/constants/constants';
 import { useTypedSelector } from '@app/store/store';
 import { openAppOrStore } from '@app/utilities/linking-utils';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -11,7 +11,7 @@ import { IPayUpdateComponentSheetProps } from './ipay-update-bottom-sheet.interf
 
 const IPayUpdateBottomSheet: FC<IPayUpdateComponentSheetProps> = () => {
   const shouldForceUpdate = useTypedSelector((state) => state.forceUpdateReducer.visible);
-
+  const canForceUpdateClose = constants.CAN_FORCE_UPDATE_CLOSE;
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {
@@ -40,7 +40,7 @@ const IPayUpdateBottomSheet: FC<IPayUpdateComponentSheetProps> = () => {
       btnTitle="UPDATE.BUTTON_TITLE"
       onBtnPress={onPressAppUpdate}
       headerTitle="UPDATE.HEADER"
-      isForceAlert
+      isForceAlert={canForceUpdateClose}
       title="UPDATE.TITLE"
       subtitle="UPDATE.SUBTITLE"
       icon={icons.danger_light}

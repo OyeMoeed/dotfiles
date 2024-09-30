@@ -85,16 +85,6 @@ const LoginViaPasscode: React.FC = () => {
   const contactUsRef = useRef<any>(null);
   const [location, setLocation] = useState<GeoCoordinates | null>(null);
 
-  const renderToast = (apiErrorValue: string) => {
-    setPasscodeError(true);
-    showToast({
-      title: 'COMMON.INCORRECT_CODE',
-      subTitle: apiErrorValue || 'CARDS.VERIFY_CODE_ACCURACY',
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
   const onPressForgetPassword = () => {
     setComponentToRender('');
     setShowForgotSheet(true);
@@ -231,12 +221,9 @@ const LoginViaPasscode: React.FC = () => {
         );
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
-      } else {
-        renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
     } catch (error) {
       setPasscodeError(true);
-      renderToast('ERROR.SOMETHING_WENT_WRONG');
     }
   };
 

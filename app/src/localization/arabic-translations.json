@@ -1349,5 +1349,10 @@
     "TITLE": "",
     "SUBTITLE": "",
     "BUTTON_TITLE": ""
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "يمكنك الآن",
+    "BOLD_TITLE": "الإصدار السريع للمعاملات",
+    "DESCRIPTION": "اكتشف أنواع رائعة و مميزات متوفرة عبر تطبيق ألما باي!"
   }
 }

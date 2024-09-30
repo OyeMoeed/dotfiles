@@ -1534,7 +1534,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 240925;
+				CURRENT_PROJECT_VERSION = 240929;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				ENABLE_BITCODE = NO;
@@ -1544,7 +1544,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.240925;
+				MARKETING_VERSION = 0.0.240929;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1573,7 +1573,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 240925;
+				CURRENT_PROJECT_VERSION = 240929;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				INFOPLIST_FILE = "AlinmaPayUat-Info.plist";
@@ -1582,7 +1582,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.240925;
+				MARKETING_VERSION = 0.0.240929;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

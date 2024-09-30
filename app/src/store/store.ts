@@ -10,6 +10,7 @@ import alertReducer from './slices/alert-slice';
 import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
 import bottomSheetReducer from './slices/bottom-sheets-slice';
+import cardsReducer from './slices/cards-slice';
 import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
 import permissionAlertReducer from './slices/permission-alert-slice';
@@ -19,6 +20,7 @@ import spinnerReducer from './slices/spinner.slice';
 import themeReducer from './slices/theme-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
 import forceUpdateReducer from './slices/app-force-update-slice';
+import ratingReducer from './slices/rating.slice';
 
 import reactotron from '../../../ReactotronConfig';
 
@@ -38,7 +40,9 @@ const reducers = {
   permissionAlertReducer,
   resetStateSlice: ResetStateSlice,
   bottomSheetReducer,
+  cardsReducer,
   forceUpdateReducer,
+  ratingReducer,
 };
 
 /**

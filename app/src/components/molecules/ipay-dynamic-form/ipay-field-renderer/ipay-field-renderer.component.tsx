@@ -1,4 +1,4 @@
-import { IPayDatePicker } from '@app/components/atoms';
+import { IPayCaption2Text, IPayDatePicker } from '@app/components/atoms';
 import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
 import { DateFieldTypes } from '@app/utilities';
@@ -31,7 +31,7 @@ const DYNAMIC_FIELDS_CONFIGS = {
     keyboardType: 'numeric',
   },
 };
-const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleChange }) => {
+const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleParentLovChange }) => {
   const renderField = () => {
     // Replace "." with "_" to flatten the name
     const flatKey = field.index.replace(/\./g, '_');
@@ -66,6 +66,15 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             )}
           />
         );
+      case DYNAMIC_FIELDS_TYPES.LABEL:
+        return (
+          <Controller
+            name={flatKey} // Use the flattened key
+            control={control}
+            defaultValue={field.value}
+            render={({ field: { value } }) => <IPayCaption2Text regular text={value} />}
+          />
+        );
 
       case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE_WITH_OTHER_OPTION:
       case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE:
@@ -81,13 +90,13 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                 label={field.label}
                 onSelectListItem={(selectedItem: string) => {
                   onChange(selectedItem);
-                  if (handleChange) handleChange(field.dependsOn, selectedItem);
+                  if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
                 }}
                 isSearchable
                 testID={`${flatKey}-dropdown`}
                 labelKey="desc"
                 valueKey="code"
-                disabled={field.disable}
+                disabled={field.lovList === null ? true : field.lovList.length === 0}
                 errorMessage={errorMessage as string}
               />
             )}
@@ -127,14 +136,13 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
           <Controller
             name={flatKey}
             control={control}
-            defaultValue={field.value} // Converting the value to boolean
+            defaultValue={field.value}
             render={({ field: { value, onChange } }) => (
               <IPayCheckboxTitle
                 heading={field.label}
                 isCheck={value}
                 onPress={() => {
-                  onChange(!value); // Toggle checkbox state
-                  if (handleChange) handleChange(field.dependsOn, !value);
+                  onChange(!value);
                 }}
               />
             )}
