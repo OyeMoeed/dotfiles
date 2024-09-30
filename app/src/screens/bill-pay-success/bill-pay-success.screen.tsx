@@ -27,7 +27,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   const {
     isSaveOnly,
     isPayOnly,
-    isPayPartially,
+    isPayPartially = true,
     totalAmount,
     billPaymentInfos,
     billPaymentData,
@@ -59,7 +59,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     {
       id: '3',
       label: t('COMMON.DATE'),
-      value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
+      value: getDateFormate(new Date(), dateTimeFormat.DateMonthYearWithoutSpace),
     },
     {
       id: '4',
@@ -70,12 +70,12 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   ];
 
   const onInquireBill = async () => {
-    const apiResponse = await inquireBillService(inquireBillPayload);
+    const apiResponse: any = await inquireBillService(inquireBillPayload);
     if (apiResponse.successfulResponse) {
       navigate(ScreenNames.NEW_SADAD_BILL, {
         ...billPaymentInfos,
-        dueDate: apiResponse?.response?.dueDate,
-        totalAmount: apiResponse?.response?.dueAmount,
+        dueDate: apiResponse?.response?.dueDate || '',
+        totalAmount: apiResponse?.response?.dueAmount || '0',
         isSaveOnly,
       });
     }

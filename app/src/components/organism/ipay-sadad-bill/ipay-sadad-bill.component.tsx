@@ -37,13 +37,17 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   const { t } = useTranslation();
 
   const statusVariant = useMemo(() => {
-    switch (billStatusCode) {
-      case BillStatus.UNPAID:
-        return States.NATURAL;
-      case BillStatus.DEACTIVE:
-        return States.ERROR;
-      default:
-        return States.SUCCESS;
+    if (dueDateTime) {
+      switch (billStatusCode) {
+        case BillStatus.UNPAID:
+          return States.NATURAL;
+        case BillStatus.DEACTIVE:
+          return States.ERROR;
+        default:
+          return States.SUCCESS;
+      }
+    } else {
+      return null;
     }
   }, [billStatusCode]);
 
@@ -53,22 +57,26 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
 
   const billStatus = useMemo(() => {
     let key: string | undefined = '';
-    switch (billStatusCode) {
-      case BillStatus.DEACTIVE:
-        key = getEnumKeyByValue(BillStatus, BillStatus.DEACTIVE);
-        return `BILL_PAYMENTS.${key}`;
-      case BillStatus.UNPAID:
-        key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
-        return `BILL_PAYMENTS.${key}`;
-      case BillStatus.PARTIALLY_PAID:
-        key = getEnumKeyByValue(BillStatus, BillStatus.PARTIALLY_PAID);
-        return `BILL_PAYMENTS.${key}`;
-      case BillStatus.OVER_PAID:
-        key = getEnumKeyByValue(BillStatus, BillStatus.OVER_PAID);
-        return `BILL_PAYMENTS.${key}`;
-      default:
-        key = getEnumKeyByValue(BillStatus, BillStatus.PAID);
-        return `BILL_PAYMENTS.${key}`;
+    if (dueDateTime) {
+      switch (billStatusCode) {
+        case BillStatus.DEACTIVE:
+          key = getEnumKeyByValue(BillStatus, BillStatus.DEACTIVE);
+          return `BILL_PAYMENTS.${key}`;
+        case BillStatus.UNPAID:
+          key = getEnumKeyByValue(BillStatus, BillStatus.UNPAID);
+          return `BILL_PAYMENTS.${key}`;
+        case BillStatus.PARTIALLY_PAID:
+          key = getEnumKeyByValue(BillStatus, BillStatus.PARTIALLY_PAID);
+          return `BILL_PAYMENTS.${key}`;
+        case BillStatus.OVER_PAID:
+          key = getEnumKeyByValue(BillStatus, BillStatus.OVER_PAID);
+          return `BILL_PAYMENTS.${key}`;
+        default:
+          key = getEnumKeyByValue(BillStatus, BillStatus.PAID);
+          return `BILL_PAYMENTS.${key}`;
+      }
+    } else {
+      return '';
     }
   }, [billStatusCode]);
 
@@ -83,7 +91,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
     return currentDate.isAfter(parsedDueDate) ? colors.error.error500 : colors.natural.natural500;
   }, [dueDateTime]);
 
-  const billingAmount = `${amount || 0} ${t('COMMON.SAR')}`;
+  const billingAmount = amount ? `${amount || 0} ${t('COMMON.SAR')}` : '';
   const billingDueDate = `${t('SADAD.DUE')} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
 
   const onPressCheckBox = () => {
