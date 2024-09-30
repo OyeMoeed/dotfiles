@@ -28,6 +28,7 @@ const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
   boxHeight,
   onPinCodeSheet,
   isLoadingCards,
+  resetOnDataChange = false,
 }) => {
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
@@ -71,6 +72,7 @@ const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
             loop={false}
             height={verticalScale(350)}
             onChangeIndex={onChangeIndex}
+            resetOnDataChange={resetOnDataChange}
             renderItem={({ item }) =>
               (item as { newCard?: boolean }).newCard ? (
                 <IPayView style={styles.newCardWrapper}>

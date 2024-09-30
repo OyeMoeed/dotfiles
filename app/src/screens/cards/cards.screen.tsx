@@ -65,6 +65,7 @@ const CardsScreen: React.FC = () => {
   const otpVerificationRef: any = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
   const [cardDetails, setCardDetails] = useState<any>({});
+  const [resetOnDataChange, setResetOnDataChange] = useState(false);
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
@@ -236,10 +237,12 @@ const CardsScreen: React.FC = () => {
     if (cardsData.length) {
       setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
       dispatch(setCurrentCard(cardsData[0]));
+      setResetOnDataChange(true);
     } else {
       setCardsCurrentState(CardScreenCurrentState.NO_DATA);
       dispatch(setCurrentCard(undefined));
     }
+    setResetOnDataChange(false);
   }, [cardsData]);
 
   return (
@@ -265,6 +268,7 @@ const CardsScreen: React.FC = () => {
         boxHeight={boxHeight}
         onPinCodeSheet={onPinCodeSheet}
         isLoadingCards={isLoadingCards}
+        resetOnDataChange={resetOnDataChange}
       />
       <IPayPortalBottomSheet
         heading="CARD_OPTIONS.CARD_DETAILS"

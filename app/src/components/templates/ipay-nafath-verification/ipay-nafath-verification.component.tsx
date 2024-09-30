@@ -307,7 +307,7 @@ const IPayNafathVerification: React.FC<IPayNafathVerificationProps> = ({ testID,
         ) : (
           <>
             <IPayPageDescriptionText heading="SETTINGS.VALIDATE_THROUGH_NAFAH" />
-            <IPayPressable style={styles.stepper}>
+            <IPayPressable onPress={goToNafathApp} style={styles.stepper}>
               {renderStep('1')}
               <IPayFootnoteText regular={false} style={styles.downloadText} text="SETTINGS.OPEN_NAFATH_APP" />
               <IPayIcon icon={icons.export_3} size={24} color={colors.primary.primary500} />
