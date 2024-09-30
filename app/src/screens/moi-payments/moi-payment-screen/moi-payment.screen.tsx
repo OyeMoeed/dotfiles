@@ -3,6 +3,7 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayContentNotFound, IPayHeader } from '@app/components/molecules';
 import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
 import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
+import useParentLovChange from '@app/components/molecules/ipay-dynamic-form/useParentLovChange.hook';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -184,6 +185,8 @@ const MoiPaymentScreen: React.FC = () => {
     fetchFields(serviceProviderValue, serviceTypeValue);
   };
 
+  const handleParentLovChange = useParentLovChange(fields, setFields);
+
   return (
     <>
       <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
@@ -263,7 +266,12 @@ const MoiPaymentScreen: React.FC = () => {
 
                 <IPayView style={styles.contentContainer}>
                   <IPayView style={styles.dynamicFieldContainer}>
-                    <DynamicFormComponent errors={errors} control={control} fields={fields} />
+                    <DynamicFormComponent
+                      handleParentLovChange={handleParentLovChange}
+                      errors={errors}
+                      control={control}
+                      fields={fields}
+                    />
                   </IPayView>
                   <IPayButton
                     btnText="NEW_SADAD_BILLS.INQUIRY"

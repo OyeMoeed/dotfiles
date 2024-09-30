@@ -17,11 +17,12 @@ import { IPayPageWrapper } from '@app/components/templates';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
 import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
+import { copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
@@ -53,6 +54,8 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   };
 
   const onPressHome = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    toggleAppRating();
     resetNavigation(ScreenNames.HOME_BASE);
   };
 
@@ -79,6 +82,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   };
 
   const onPressPayOtherBill = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
     resetNavigation(ScreenNames.MOI_PAYMENT_SCREEN);
   };
 
