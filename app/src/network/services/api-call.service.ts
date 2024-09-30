@@ -1,5 +1,7 @@
 import { hideSpinner, showSpinner } from '@app/store/slices/spinner.slice';
 import { store } from '@app/store/store';
+import { getValueFromAsyncStorage } from '@app/utilities';
+
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosClient from '../client';
 import onRequestFulfilled from '../interceptors/request';
@@ -44,6 +46,10 @@ const apiCall = async <T>({
   if (headers?.hide_spinner_loading) {
     axiosClient.defaults.headers.x_hide_spinner_loading = true;
   }
+
+  const asyncStorageAuthorization = await getValueFromAsyncStorage('Authorization');
+
+  axiosClient.defaults.headers.Authorization = asyncStorageAuthorization;
 
   try {
     // show Spinner

@@ -3,7 +3,6 @@
 /* eslint-disable max-lines-per-function */
 import icons from '@app/assets/icons';
 import {
-  IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
   IPayPressable,
@@ -21,18 +20,15 @@ import { copyText } from '@app/utilities';
 import { isIosOS } from '@app/utilities/constants';
 import { formatSlashDateTime } from '@app/utilities/date-helper.util';
 import { ApiResponseStatusType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
-import transactionHistoryStyle from './ipay-transaction-history.style';
 import { generateInvoiceProps } from '@app/network/services/core/transaction/transaction.interface';
 import { generateInvoice } from '@app/network/services/core/transaction/transactions.service';
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
 import Share from 'react-native-share';
-import { ExportIcon, Send2Icon } from '@app/assets/svgs';
-import ScreenNames from '@app/navigation/screen-names.navigation';
-import { resetNavigation } from '@app/navigation/navigation-service.navigation';
+import transactionHistoryStyle from './ipay-transaction-history.style';
+import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
 
 const MultiTransactions: React.FC<MultiTransactionsProps> = ({
   transaction,
@@ -80,11 +76,10 @@ const IPayShareableOtherView = ({
   onPressShare,
   isBeneficiaryHistory,
   onPressDownloadInvoice,
-  transactionData
+  transactionData,
 }: any) => {
   const { colors } = useTheme();
   const styles = transactionHistoryStyle(colors);
-
 
   return (
     <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
@@ -138,9 +133,8 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const [isShareable, setIsShareable] = useState<boolean>(false);
   const { showToast } = useToastContext();
   const transactionRequestType = transaction?.transactionRequestType;
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [, setIsLoading] = useState<boolean>(false);
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
 
   const initiatedWallet = transaction?.walletTransactionStatus?.toLowerCase() === TransactionsStatus.INITIATED;
   const isCountMusaned = transactionRequestType === TransactionTypes.COUT_MUSANED ?? false;
@@ -158,15 +152,12 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const showSplitButton = isPayBill || isCountExpress;
   const isNotPayVCardVisa = transactionRequestType !== TransactionTypes.PAY_VCARD_ECOM_VISA ?? false;
 
-  const [downloadsFolder, setDownloadsFolder] = useState('');
-  const [documentsFolder, setDocumentsFolder] = useState('');
-  
   const transactionJustification =
     transaction?.transactionDescription &&
     transaction?.transactionJustfication !== '0' &&
     transaction?.transactionJustfication !== '2';
 
-  const renderToast = (value: string) => {
+  const renderToast = () => {
     showToast({
       title: t('TOP_UP.COPIED'),
       subTitle: '',
@@ -175,12 +166,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
       toastType: ToastTypes.SUCCESS,
     });
   };
-
-
-  useEffect(() => {
-    setDownloadsFolder(RNFS.DownloadDirectoryPath);
-    setDocumentsFolder(RNFS.DocumentDirectoryPath);
-  }, []);
 
   const getDate = (tisoDate?: any) => {
     const date = new Date(tisoDate)?.toISOString()?.replace(/T.*/, '')?.split('-').reverse().join('/');
@@ -201,34 +186,29 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     if (onCloseBottomSheet) onCloseBottomSheet();
   };
 
-
   const onPressDownloadInvoice = async () => {
-
     setIsLoading(true);
     if (onCloseBottomSheet) onCloseBottomSheet();
     const payload: generateInvoiceProps = {
       walletNumber,
       trxId: transaction?.transactionRefNumber,
-      trxDate: transaction?.transactionDateTime.split('T')[0]
+      trxDate: transaction?.transactionDateTime.split('T')[0],
     };
 
     const apiResponse: any = await generateInvoice(payload);
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-
       const pdfData = apiResponse?.response.invoice;
 
       const path = `${
-        Platform.OS === 'android'
-          ? RNFS.DownloadDirectoryPath
-          : RNFS.DocumentDirectoryPath
+        Platform.OS === 'android' ? RNFS.DownloadDirectoryPath : RNFS.DocumentDirectoryPath
       }/${apiResponse?.response?.docName}.pdf`;
 
       try {
         // Convert the ArrayBuffer to base64 string
-        let contentType = "application/pdf";
+        const contentType = 'application/pdf';
 
-        const base64Data = atob(pdfData)
+        const base64Data = atob(pdfData);
         await RNFS.writeFile(path, base64Data, 'base64');
         const fileExists = await RNFS.exists(path);
 
@@ -241,14 +221,11 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
             });
           }
         } else {
-          console.error('File not found after saving:', path);
           return;
         }
       } catch (writeError) {
-        console.error('Error writing file:', writeError);
         return;
       }
-      
     }
     setIsLoading(false);
   };
@@ -993,8 +970,9 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
                   'TRANSACTION_HISTORY.TOTAL_AMOUNT',
                   `${transaction?.amount}  ${t('TRANSACTION_HISTORY.SAUDI_RIYAL')}`,
                 )}
-                {!isBeneficiaryHistory && transaction?.cardNumber &&
-                renderHistory('TRANSACTION_HISTORY.CARD_NUMBER', transaction?.cardNumber || '' )}
+              {!isBeneficiaryHistory &&
+                transaction?.cardNumber &&
+                renderHistory('TRANSACTION_HISTORY.CARD_NUMBER', transaction?.cardNumber || '')}
               {!isBeneficiaryHistory &&
                 renderHistory('TRANSACTION_HISTORY.DATE_AND_TIME', getDate(transaction?.transactionDateTime || ''))}
             </IPayView>
