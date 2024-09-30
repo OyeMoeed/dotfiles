@@ -1,4 +1,5 @@
 // Import necessary interfaces if they exist in your project
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
 import { DeviceInfoProps, MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.interface';
 
 // Define the MOIBillPaymentResponse interface
@@ -38,6 +39,7 @@ interface MOIBillPaymentPayloadProps {
   serviceId?: string; // e.g., "002"
   groupPaymentId?: string; // e.g., "10694728"
   paymentId?: string; // e.g., "3000612224"
+  dynamicFields?: DynamicField[]; // Array of dynamic fields
 }
 
 // Export the interface
