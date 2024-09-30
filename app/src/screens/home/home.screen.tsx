@@ -1,5 +1,4 @@
 import icons from '@app/assets/icons';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayRearrangeSheet from '@app/components/molecules/ipay-re-arrange-sheet/ipay-re-arrange-sheet.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayTopbar from '@app/components/molecules/ipay-topbar/ipay-topbar.component';
@@ -11,14 +10,16 @@ import { DURATIONS, SNAP_POINT } from '@app/constants/constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
 import getOffers from '@app/network/services/core/offers/offers.service';
-import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
 import { useGetCards } from '@app/network/services/core/transaction/transactions.service';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
+import { setCards } from '@app/store/slices/cards-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { CardStatusNumber, CardTypes } from '@app/utilities';
+import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
@@ -62,6 +63,16 @@ const Home: React.FC = () => {
 
   const { showToast } = useToastContext();
 
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = filterCards(cardApiResponse?.response?.cards);
+
+      if (availableCards?.length) {
+        dispatch(setCards(mapCardData(availableCards)));
+      }
+    }
+  };
+
   const openProfileBottomSheet = () => {
     dispatch(setProfileSheetVisibility(true));
   };
@@ -82,7 +93,7 @@ const Home: React.FC = () => {
     });
   };
 
-  const { transactionsData, isLoadingTransactions } = useGetTransactions({
+  const { transactionsData } = useGetTransactions({
     payload: {
       walletNumber,
       maxRecords: '3',
@@ -300,8 +311,6 @@ const Home: React.FC = () => {
               offersData={offersData}
               openBottomSheet={openBottomSheet}
               openProfileBottomSheet={openProfileBottomSheet}
-              cards={cardsData}
-              isLoading={isLoadingTransactions}
             />
           </IPayCustomSheet>
         )}
