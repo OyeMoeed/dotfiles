@@ -33,8 +33,6 @@ import { AddressInfoRefTypes } from '../issue-new-card-confirm-details/issue-new
 import { OTPVerificationRefTypes, RouteParams } from './replace-card-confirm-details.interface';
 import replaceCardStyles from './replace-card-confirm-details.style';
 
-
-
 const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -44,8 +42,6 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const route = useRoute<RouteProps>();
-
-
 
   const {
     availableBalance,
@@ -57,16 +53,22 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
     issuanceDetails,
   } = route.params;
 
+  const { address } = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo.address);
 
-    const { address } = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
+  const calculateFee = (amount: string | number): number => parseFloat(amount as string) || 0;
 
+  const replacementFee =
+    calculateFee(issuanceDetails?.fees?.feeAmount) +
+    calculateFee(issuanceDetails?.fees?.vatAmount) +
+    calculateFee(issuanceDetails?.fees?.bankFeeAmount) +
+    calculateFee(issuanceDetails?.fees?.bankVatAmount);
 
+  const deliveryFee =
+    calculateFee(issuanceDetails?.fees?.deliveryFeeAmount) + calculateFee(issuanceDetails?.fees?.deliveryVatAmount);
 
-  const replacementFee = issuanceDetails?.fees?.feeAmount + issuanceDetails?.fees?.vatAmount + issuanceDetails?.fees?.bankFeeAmount + issuanceDetails?.fees?.bankVatAmount;
-  const deliveryFee = issuanceDetails?.fees?.deliveryFeeAmount  +  issuanceDetails?.fees?.deliveryVatAmount
-  const totalFee = replacementFee + deliveryFee
+  const totalFee = replacementFee + deliveryFee;
 
-  console.log('issuanceDetails', issuanceDetails);
+  const formattedTotalFee = totalFee.toFixed(2);
 
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
@@ -162,7 +164,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${replacementFee.toString()} ${t('COMMON.SAR')}`}
+                    text={`${replacementFee.toFixed(2)} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -173,7 +175,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                   <IPaySubHeadlineText
                     color={colors.primary.primary800}
                     regular
-                    text={`${deliveryFee.toString()} ${t('COMMON.SAR')}`}
+                    text={`${deliveryFee.toFixed(2)} ${t('COMMON.SAR')}`}
                   />
                 }
               />
@@ -194,7 +196,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
                 <IPaySubHeadlineText
                   color={colors.primary.primary800}
                   regular
-                  text={`${totalFee.toString()} ${t('COMMON.SAR')}`}
+                  text={`${formattedTotalFee} ${t('COMMON.SAR')}`}
                 />
               }
             />
