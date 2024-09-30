@@ -20,7 +20,7 @@ import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
 import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 import { ItemProps } from './moi-payment-success.interface';
@@ -59,7 +59,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     resetNavigation(ScreenNames.HOME_BASE);
   };
 
-  const getDataToRender = () => {
+  const getDataToRender = useCallback(() => {
     const updatedPaymentDetails = moiPaymentDetailes?.dynamicFields?.filter((item: { id: string }) => item.id !== '1');
 
     const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
@@ -79,7 +79,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     };
 
     setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
-  };
+  }, [moiPaymentDetailes]);
 
   const onPressPayOtherBill = () => {
     customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
