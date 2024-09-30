@@ -16,6 +16,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import constants, { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import useLocation from '@app/hooks/location.hook';
+import useDelinkDevice from '@app/hooks/useDeviceDelink';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
@@ -26,8 +27,6 @@ import prepareLogin from '@app/network/services/authentication/prepare-login/pre
 import useBiometricService from '@app/network/services/core/biometric/biometric-service';
 import { IconfirmForgetPasscodeOtpReq } from '@app/network/services/core/forget-passcode/forget-passcode.interface';
 import forgetPasscode from '@app/network/services/core/forget-passcode/forget-passcode.service';
-import { WalletNumberProp } from '@app/network/services/core/get-wallet/get-wallet.interface';
-import getWalletInfo from '@app/network/services/core/get-wallet/get-wallet.service';
 import { ApiResponse, DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import useActionSheetOptions from '@app/screens/delink/use-delink-options';
@@ -41,7 +40,6 @@ import { APIResponseType } from '@app/utilities/enums.util';
 import icons from '@assets/icons';
 import React, { useCallback, useRef, useState } from 'react';
 import { TextStyle } from 'react-native';
-import useDelinkDevice from '@app/hooks/useDeviceDelink';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -71,7 +69,6 @@ const LoginViaPasscode: React.FC = () => {
   const { colors } = useTheme();
   const styles = loginViaPasscodeStyles(colors);
   const actionSheetRef = useRef<any>(null);
-  const [, setPasscode] = useState<string>('');
   const [passcodeError, setPasscodeError] = useState<boolean>(false);
 
   const [showForgotSheet, setShowForgotSheet] = useState<boolean>(false);
@@ -87,16 +84,6 @@ const LoginViaPasscode: React.FC = () => {
   const contactUsRef = useRef<any>(null);
 
   const { fetchLocation } = useLocation();
-
-  const renderToast = (apiErrorValue: string) => {
-    setPasscodeError(true);
-    showToast({
-      title: 'COMMON.INCORRECT_CODE',
-      subTitle: apiErrorValue || 'CARDS.VERIFY_CODE_ACCURACY',
-      borderColor: colors.error.error25,
-      leftIcon: <IPayIcon icon={icons.warning3} size={24} color={colors.natural.natural0} />,
-    });
-  };
 
   const onPressForgetPassword = () => {
     setComponentToRender('');
@@ -169,20 +156,6 @@ const LoginViaPasscode: React.FC = () => {
     }
   };
 
-  const getWalletInformation = async (idExpired?: boolean, resWalletNumber?: string) => {
-    const payload: WalletNumberProp = {
-      walletNumber: resWalletNumber as string,
-    };
-
-    const apiResponse: any = await getWalletInfo(payload);
-
-    if (apiResponse) {
-      dispatch(setWalletInfo(apiResponse?.response));
-      saveProfileImage(apiResponse?.response);
-      redirectToHome();
-    }
-  };
-
   const loginUsingPasscode = async (
     prepareLoginApiResponse: ApiResponse<PrePareLoginApiResponseProps>,
     passcode: string,
@@ -212,8 +185,11 @@ const LoginViaPasscode: React.FC = () => {
         }),
       );
       saveProfileImage(loginApiResponse?.response);
-      await getWalletInformation(loginApiResponse?.response?.idExpired, loginApiResponse?.response?.walletNumber);
+      redirectToHome();
+      return;
     }
+
+    setPasscodeError(true);
   };
 
   const login = async (passcode: string) => {
@@ -242,6 +218,7 @@ const LoginViaPasscode: React.FC = () => {
       };
 
       const prepareLoginApiResponse: any = await prepareLogin(prepareLoginPayload);
+
       if (prepareLoginApiResponse?.status.type === APIResponseType.SUCCESS) {
         dispatch(
           setAppData({
@@ -251,11 +228,9 @@ const LoginViaPasscode: React.FC = () => {
         );
         setToken(prepareLoginApiResponse?.headers?.authorization);
         await loginUsingPasscode(prepareLoginApiResponse, passcode);
-      } else {
-        renderToast('ERROR.SOMETHING_WENT_WRONG');
       }
     } catch (error) {
-      renderToast('ERROR.SOMETHING_WENT_WRONG');
+      setPasscodeError(true);
     }
   };
 
@@ -270,7 +245,6 @@ const LoginViaPasscode: React.FC = () => {
   const onEnterPassCode = (newCode: string) => {
     if (newCode.length <= 4) {
       if (passcodeError) setPasscodeError(false);
-      setPasscode(newCode);
       if (newCode.length === 4) login(newCode);
     }
   };

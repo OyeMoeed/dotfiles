@@ -1,20 +1,23 @@
 import { useCustomQuery } from '@app/network/hooks';
-import getCards from './get-cards.service';
+import { ApiResponse } from '@app/network/services/services.interface';
+import { CardResponseInterface, CardsProp } from '../transaction.interface';
 import TRANSACTION_QUERY_KEYS from '../transaction.query-keys';
-import { CardsProp } from '../transaction.interface';
+import getCards from './get-cards.service';
 
 interface UseCardProps {
   payload: CardsProp;
-  onSuccess?: ((data?: object | undefined) => void) | undefined;
-  onError?: ((data?: object | undefined) => void) | undefined;
+  onSuccess?: ((data?: ApiResponse<{ cards: CardResponseInterface[] }>) => void) | undefined;
+  onError?: (() => void) | undefined;
+  refetchOnMount?: boolean;
 }
 
-const useGetCards = ({ payload, onSuccess, onError }: UseCardProps) =>
+const useGetCards = ({ payload, onSuccess, onError, refetchOnMount }: UseCardProps) =>
   useCustomQuery({
     queryFn: () => getCards(payload),
     queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS],
     onSuccess,
     onError,
+    refetchOnMount,
   });
 
 export default useGetCards;

@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayLinearGradientView, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader, IPayList, SadadFooterComponent } from '@app/components/molecules';
+import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -8,18 +8,18 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPayOtpVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities';
 import { useRoute } from '@react-navigation/core';
+import { t } from 'i18next';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
-import { t } from 'i18next';
-import ScreenNames from '@app/navigation/screen-names.navigation';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
   const {
@@ -99,15 +99,6 @@ const TrafficViolationPaymentScreen: React.FC = () => {
 
   const topUpSelectionRef = React.createRef<any>();
 
-  const topupItemSelected = (routeName: string, params: {}) => {
-    closeBottomSheetTopUp();
-    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
-      navigateTOAktharPoints();
-    } else {
-      navigate(routeName, params);
-    }
-  };
-
   const navigateTOAktharPoints = async () => {
     const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
     if (
@@ -120,6 +111,14 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     }
   };
 
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
+  };
 
   const topUpSelectionBottomSheet = () => {
     // dispatch(setProfileSheetVisibility(false));
@@ -137,7 +136,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           monthlyIncomingLimit={balance ?? 0}
           topUpBtnStyle={styles.topUpButton}
           onPressTopup={topUpSelectionBottomSheet}
-          />
+        />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
             <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
@@ -148,9 +147,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         </IPayScrollView>
       </IPayView>
       <IPayLinearGradientView style={styles.gradientBg} gradientColors={colors.appGradient.buttonBackground}>
-        {renderChip ? (
-          renderChip
-        ) : (
+        {renderChip || (
           <IPayList
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
             detailTextStyle={{ color: colors.primary.primary900 }}
@@ -210,24 +207,24 @@ const TrafficViolationPaymentScreen: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayPortalBottomSheet
-          noGradient
-          heading="TOP_UP.ADD_MONEY_USING"
-          onCloseBottomSheet={closeBottomSheetTopUp}
-          customSnapPoint={SNAP_POINT.XS_SMALL}
-          ref={topUpSelectionRef}
-          enablePanDownToClose
-          simpleHeader
-          simpleBar
-          bold
-          cancelBnt
-          isVisible={topUpOptionsVisible}
-        >
-          <IPayTopUpSelection
-            testID="topUp-selection"
-            closeBottomSheet={closeBottomSheetTopUp}
-            topupItemSelected={topupItemSelected}
-          />
-        </IPayPortalBottomSheet>
+        noGradient
+        heading="TOP_UP.ADD_MONEY_USING"
+        onCloseBottomSheet={closeBottomSheetTopUp}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
+        ref={topUpSelectionRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={topUpOptionsVisible}
+      >
+        <IPayTopUpSelection
+          testID="topUp-selection"
+          closeBottomSheet={closeBottomSheetTopUp}
+          topupItemSelected={topupItemSelected}
+        />
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

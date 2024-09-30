@@ -14,13 +14,13 @@ import { IPayNoResult } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPayLatestOfferCard from '@app/components/molecules/ipay-latest-offers-card/ipay-latest-offers-card.component';
 import constants from '@app/constants/constants';
+import { FeatureSections } from '@app/enums';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { FeatureSections } from '@app/enums';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
@@ -39,7 +39,6 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   offersData,
   openBottomSheet,
   openProfileBottomSheet,
-  cards,
   isLoading,
 }) => {
   const { t } = useTranslation();
@@ -74,7 +73,6 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const moveToTransactionHistory = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
       transactionsData,
-      cards,
       isShowCard: true,
       isShowAmount: true,
     });

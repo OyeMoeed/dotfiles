@@ -50,6 +50,8 @@ const CORE_URLS = {
     `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin/prepare`,
   PREPARE_SHOW_DETAILS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/showNumber/prepare`,
   PREPARE_RENEW_CARD: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/card-annual-fees/prepare`,
+  GENERATE_INVOICE: (walletNumber?: string, trxId?: string, trxDate?: string) =>
+    `core-management/v1/transaction/${walletNumber}/vat-invoice?transaction-id=${trxId}&transaction-date=${trxDate}`,
   RESET_PINCODE: (walletNumber?: string, cardIndex?: string) =>
     `cards-management/v1/${walletNumber}/cards/${cardIndex}/card-pin`,
   OTP_GET_CARD_DETAILS: (walletNumber?: string) => `cards-management/v1/${walletNumber}/cards/showNumber/confirm`,

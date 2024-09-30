@@ -194,7 +194,7 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
 
   return (
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientPrimary50}>
-      <IPayHeader backBtn title="TRANSFER_SUMMARY.TITLE" applyFlex />
+      <IPayHeader backBtn title="REQUEST_SUMMARY.SUMMARY" applyFlex />
       <IPayView style={styles.container}>
         <IPayView style={styles.scrollViewContainer}>
           <IPayScrollView>

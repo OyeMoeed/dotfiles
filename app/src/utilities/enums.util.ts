@@ -13,6 +13,10 @@ enum States {
   PRIMARY = 'primary',
   ERROR = 'error',
 }
+enum PaymentType {
+  MOI = 'moi',
+  REFUND = 'moi-refund',
+}
 
 enum TabBase {
   Natural = 'Natural',
@@ -48,7 +52,7 @@ enum alertType {
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-enum spinnerVariant {
+enum SpinnerVariant {
   TEXT = 'text',
   DEFAULT = 'default',
 }
@@ -365,7 +369,9 @@ export {
   LanguageCode,
   MoiPaymentTypes,
   PayChannel,
+  PaymentType,
   PickerVariant,
+  SpinnerVariant,
   States,
   TabBase,
   ToastTypes,
@@ -377,5 +383,4 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
-  spinnerVariant,
 };

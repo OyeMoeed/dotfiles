@@ -7,6 +7,7 @@ import CORE_URLS from '../core.urls';
 import {
   TransactionsProp,
   changeStatusProp,
+  generateInvoiceProps,
   getCardDetailsProp,
   prepareRenewCardProp,
   prepareShowDetailsProp,
@@ -30,10 +31,13 @@ const getTransactions = async (payload: TransactionsProp): Promise<TransactionsM
   return apiResponse;
 };
 
-const getTransactionTypes = async (): Promise<unknown> => {
+const getTransactionTypes = async ({ hideSpinner }: { hideSpinner?: boolean }): Promise<unknown> => {
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
     method: requestType.GET,
+    headers: {
+      hide_spinner_loading: hideSpinner,
+    },
   });
 
   return apiResponse;
@@ -132,6 +136,21 @@ const prepareRenewCard = async (payload: prepareRenewCardProp): Promise<any> => 
   }
 };
 
+const generateInvoice = async (payload: generateInvoiceProps): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.GENERATE_INVOICE(payload?.walletNumber, payload?.trxId, payload?.trxDate),
+      method: requestType.GET,
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
 export * from './get-cards';
 export {
   changeStatus,
@@ -143,4 +162,5 @@ export {
   prepareResetCardPinCode,
   prepareShowCardDetails,
   resetPinCode,
+  generateInvoice,
 };

@@ -55,6 +55,9 @@ const getOffers = async (payload: GetOffersPayload): Promise<OffersResponseDetai
       payload.home,
     ),
     method: requestType.GET,
+    headers: {
+      hide_spinner_loading: payload?.hideLoader || false,
+    },
   });
 
   return apiResponse;

@@ -65,8 +65,9 @@ const SendMoneyRequest: React.FC = () => {
   }, []);
 
   const handleAmountChange = (id: number, value: string) => {
+    const filteredValue = value.replace(/[^0-9.]/g, '');
     setFormInstances((prevInstances) =>
-      prevInstances.map((instance) => (instance.id === id ? { ...instance, amount: value } : instance)),
+      prevInstances.map((instance) => (instance.id === id ? { ...instance, amount: filteredValue } : instance)),
     );
   };
 
