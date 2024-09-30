@@ -7,11 +7,11 @@ import { ConfirmIdRenewalProp, PrepareIdRenewalProp } from '@app/network/service
 import { confirmRenewId, prepareRenewId } from '@app/network/services/core/id-renewal/id-renewal.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
-import { closeIdRenewalSheet } from '@app/store/slices/wallet-info-slice';
+import { setIdRenewalSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import colors from '@app/styles/colors.const';
 import { isIosOS } from '@app/utilities/constants';
-import { buttonVariants, IdRenewalState } from '@app/utilities/enums.util';
+import { IdRenewalState, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
@@ -28,6 +28,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const [isHelpBottomSheetVisible, setIsHelpBottomSheetVisible] = useState(false);
   const [customSnapPoints, setCustomSnapPoints] = useState<string[]>(['60%', '60%']); // Initial snap points
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const {
     aboutToExpire: isAboutToExpire,
     remainingNumberOfDaysToExpire,
@@ -35,15 +36,13 @@ const IPayIdRenewalSheet: React.FC = () => {
     idExpired,
     walletNumber,
     mobileNumber,
-  } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  } = walletInfo;
   const [renewalAlertVisible, setRenewalAlertVisible] = useState(false);
 
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const dispatch = useTypedDispatch();
-  const isIdRenewalSheetVisible = useTypedSelector(
-    (state) => state.walletInfoReducer.walletInfo.isIdRenewalSheetVisible,
-  );
+  const isIdRenewalSheetVisible = useTypedSelector((state) => state.bottomSheetReducer.isIdRenewalSheetVisible);
 
   const resetBottomSheet = () => {
     setIsHelpBottomSheetVisible(false);
@@ -83,7 +82,7 @@ const IPayIdRenewalSheet: React.FC = () => {
   const closeBottomSheet = () => {
     closeOTPSheet();
     if (isIdRenewalSheetVisible) {
-      dispatch(closeIdRenewalSheet());
+      dispatch(setIdRenewalSheetVisibility(false));
     }
   };
 
@@ -213,7 +212,7 @@ const IPayIdRenewalSheet: React.FC = () => {
             <IPayTitle2Text style={styles.titleTextStyle}>
               {isAboutToExpire && !idExpired ? ID_ABOUT_EXPIRE.title : title}
             </IPayTitle2Text>
-            <IPayCaption1Text style={styles.captionTextStyle}>{formattedSubtitle}</IPayCaption1Text>
+            <IPayCaption1Text style={styles.captionTextStyle} text={formattedSubtitle} />
             <IPayButton
               large
               onPress={handleRenewalId}

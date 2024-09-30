@@ -9,7 +9,7 @@ const merchantCardStyles = (theme: typeof colors) =>
       backgroundColor: theme.natural.natural0,
       borderRadius: scaleSize(20),
       padding: scaleSize(10),
-      width: moderateScale(98),
+      width: moderateScale(100),
       height: moderateScale(130),
       gap: scaleSize(12),
     },

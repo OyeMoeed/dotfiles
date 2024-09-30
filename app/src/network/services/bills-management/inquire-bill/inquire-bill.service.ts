@@ -1,18 +1,18 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
-import apiCall from '@network/services/api-call.service';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
+import apiCall from '@network/services/api-call.service';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
-import { InquireBillResponseTypes, InquireBillPayloadTypes } from './inquire-bill.interface';
-import inquireBillMockResponse from './inquire-bill.mock';
+import { InquireBillPayloadProps } from './inquire-bill.interface';
+import saveBillMock from './inquire-bill.mock';
 
-const inquireBillService = async (payload: InquireBillPayloadTypes): Promise<InquireBillResponseTypes> => {
+const inquireBillService = async (payload: InquireBillPayloadProps): Promise<unknown> => {
   if (constants.MOCK_API_RESPONSE) {
-    return inquireBillMockResponse;
+    return saveBillMock;
   }
   try {
-    const apiResponse: InquireBillResponseTypes = await apiCall({
-      endpoint: BILLS_MANAGEMENT_URLS.inquire_bill(),
+    const apiResponse: any = await apiCall({
+      endpoint: BILLS_MANAGEMENT_URLS.IQUIRE_BILL(payload),
       method: requestType.POST,
       payload,
     });

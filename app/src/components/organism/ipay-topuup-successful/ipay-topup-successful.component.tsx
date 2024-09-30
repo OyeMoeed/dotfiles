@@ -20,9 +20,10 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { useTranslation } from 'react-i18next';
-import { copyText, dateTimeFormat, formatDateAndTime } from '@app/utilities';
+import { copyText, customInvalidateQuery, dateTimeFormat, formatDateAndTime, toggleAppRating } from '@app/utilities';
 import { TopupStatus, buttonVariants, PayChannel } from '@app/utilities/enums.util';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import IpayTopupSuccessProps, { PayData } from './ipay-topup-successful.interface';
 import { TopUpSuccessStyles } from './ipay-topup-successful.styles';
 import useData from './use-data';
@@ -45,24 +46,33 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
   const penddingGradientColors = [colors.critical.critical500, colors.backgrounds.yellowish];
   const renderToast = () => {
     showToast({
-      title: topupChannel === PayChannel.ORDER ? t('ORDER_SCREEN.COPY') : t('TOP_UP.COPIED'),
+      title: topupChannel === PayChannel.ORDER ? 'ORDER_SCREEN.COPY' : 'TOP_UP.COPIED',
       // subTitle: subTitle,
       isShowRightIcon: false,
       leftIcon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
       containerStyle: topupChannel === PayChannel.ORDER ? styles.orderToast : styles.toastContainer,
     });
   };
+
+  const navigateHome = useCallback(() => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    if (completionStatus !== TopupStatus.FAILED) {
+      toggleAppRating();
+    }
+    navigate(screenNames.HOME);
+  }, [completionStatus]);
+
   const [cardPayDetails] = useState<any>([
     {
       id: '1',
-      label: t('TOP_UP.TOPUP_TYPE'),
+      label: 'TOP_UP.TOPUP_TYPE',
       value: t('TOP_UP.CARDS'),
       icon: icons.cards,
       color: colors.primary.primary800,
     },
     {
       id: '3',
-      label: t('TOP_UP.REF_NUMBER'),
+      label: 'TOP_UP.REF_NUMBER',
       value: summaryData?.response?.transactionId,
       detailsText: summaryData?.response?.transactionId,
       icon: icons.copy,
@@ -70,8 +80,8 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
     },
     {
       id: '4',
-      label: t('TOP_UP.TOPUP_DATE'),
-      value: formatDateAndTime(summaryData?.response?.transactionTime, dateTimeFormat.TimeAndDate),
+      label: 'TOP_UP.TOPUP_DATE',
+      value: formatDateAndTime(new Date(), dateTimeFormat.DateAndTime),
       icon: null,
     },
   ]);
@@ -190,7 +200,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
           <IPayPressable style={styles.newTopup} onPress={goBack}>
             <IPayIcon icon={icons.refresh_48} size={14} color={colors.primary.primary500} />
             <IPaySubHeadlineText
-              text={topupChannel === PayChannel.APPLE ? t('TOP_UP.NEW_TOP_UP') : t('TOP_UP.NEW_TRANSFER')}
+              text={topupChannel === PayChannel.APPLE ? 'TOP_UP.NEW_TOP_UP' : 'TOP_UP.NEW_TRANSFER'}
               style={styles.newTopupText}
               regular
             />
@@ -273,7 +283,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
             textStyle={styles.text}
             hasLeftIcon
             leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.primary.primary500} />}
-            onPress={() => navigate(screenNames.HOME)}
+            onPress={navigateHome}
             btnStyle={styles.home}
           />
         </IPayView>
@@ -404,7 +414,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
                   btnColor={colors.primary.primary500}
                   hasLeftIcon
                   leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
-                  onPress={() => navigate(screenNames.HOME)}
+                  onPress={navigateHome}
                   textStyle={styles.text}
                 />
               </IPayView>

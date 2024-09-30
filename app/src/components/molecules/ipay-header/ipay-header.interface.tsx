@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleProp, TextStyle } from 'react-native';
+import { StyleProp, TextStyle, ViewStyle } from 'react-native';
 
 interface IPayHeaderProps {
   testID?: string;
@@ -74,6 +74,7 @@ interface IPayHeaderProps {
   menu?: boolean;
   contactUs?: boolean;
   customRightComponent?: React.ReactNode;
+  containerStyle?: StyleProp<ViewStyle>;
 }
 
 interface IPayLanguageSelectorButtonProps {

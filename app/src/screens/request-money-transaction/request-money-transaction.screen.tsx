@@ -4,7 +4,8 @@ import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
-import { IPayActionSheet, IPayBottomSheet, IPayFilterBottomSheet } from '@app/components/organism';
+import { IPayActionSheet, IPayFilterBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayMoneyRequestList from '@app/components/organism/ipay-money-request-list/ipay-money-request-list.component';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
@@ -16,6 +17,7 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
+import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
@@ -24,7 +26,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { FilterSelectedValue } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { formatDate } from '@app/utilities/date-helper.util';
-import { ApiResponseStatusType, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -35,7 +37,6 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const { t } = useTranslation();
   const styles = requestMoneyStyles(colors);
   const { requestMoneyFilterData, requestMoneyBottomFilterData, requestMoneyFilterDefaultValues } = useConstantData();
-  const requestdetailRef = React.createRef<bottomSheetTypes>();
   const rejectRequestRef = React.createRef<bottomSheetTypes>();
   const cancelRequestRef = React.createRef<bottomSheetTypes>();
   const [sentRequestsPage, setSentRequestsPage] = useState(1);
@@ -48,7 +49,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>(SEND_REQUESTS_TABS[0]);
   const [requestDetail, setRequestDetail] = useState<IPayRequestMoneyProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
-
+  const [showDetailSheet, setShowDetailSheet] = useState<boolean>(false);
   const { showToast } = useToastContext();
 
   // // states
@@ -146,6 +147,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   };
 
   const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
+    setShowDetailSheet(false);
     try {
       if (UpdateRequestType === UpdateRequestTypes.reject) {
         rejectRequestRef.current?.hide();
@@ -231,18 +233,16 @@ const RequestMoneyTransactionScreen: React.FC = () => {
   };
 
   const closeRequestDetailsBottomSheet = () => {
-    requestdetailRef.current?.forceClose();
+    setShowDetailSheet(false);
   };
 
   // function to open reject action sheet
   const showRejectActionSheet = () => {
-    closeRequestDetailsBottomSheet();
     rejectRequestRef.current?.show();
   };
 
   // function to open cancel action sheet
   const showCancelActionSheet = () => {
-    closeRequestDetailsBottomSheet();
     cancelRequestRef.current?.show();
   };
 
@@ -269,44 +269,44 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         return {
           ...baseMapping,
           payment_date: item.payment_date,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       case MoneyRequestStatus.PENDING:
         return {
           ...baseMapping,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       case MoneyRequestStatus.REJECTED:
         return {
           ...baseMapping,
           rejection_date: item.rejection_date,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       default:
         return baseMapping;
     }
   };
-  const openBottomSheet = (item: IPayRequestMoneyProps) => {
-    const calculatedSnapPoint = ['1%', heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
+  const openBottomSheet = (item: RequestItem) => {
+    const calculatedSnapPoint = [heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
 
     // Map the item keys
     const mappedItem = mapTransactionKeys(item);
 
     setRequestDetail(mappedItem);
-
-    requestdetailRef.current?.present();
+    setShowDetailSheet(true);
   };
 
   const createRequest = () => {
     navigate(ScreenNames.WALLET_TRANSFER, {
       from: TRANSFERTYPE.REQUEST_MONEY,
       heading: t('REQUEST_MONEY.CREATE_REQUEST'),
+      qrErrorMessage: t('ERROR.INVALID_QRCODE'),
       showHistory: false,
     });
   };
 
-  const renderItem = ({ item }: { item: IPayRequestMoneyProps }) => {
+  const renderItem = ({ item }: { item: RequestItem }) => {
     const { transactionTime, targetFullName, transactionState, targetAmount } = item;
     return (
       <IPayView style={styles.listView}>
@@ -327,12 +327,22 @@ const RequestMoneyTransactionScreen: React.FC = () => {
       <IPayNoResult
         textColor={colors.primary.primary800}
         iconColor={colors.primary.primary800}
-        message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${selectedTab.split(' ')[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
+        message={`${t('REQUEST_MONEY.YOU_HAVE_NO')} ${t(selectedTab).split(' ')?.[0].toLowerCase()} ${t('REQUEST_MONEY.MONEY_REQUESTS')}`}
         showIcon
         containerStyle={styles.noResultContent}
         iconSize={40}
         icon={icons.money_time}
       />
+      {selectedTab === SEND_REQUESTS && (
+        <IPayButton
+          btnType={buttonVariants.PRIMARY}
+          small
+          onPress={createRequest}
+          btnText="REQUEST_MONEY.CREATE_REQUEST"
+          btnStyle={styles.requestNoResultButton}
+          leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
+        />
+      )}
     </IPayView>
   );
 
@@ -391,9 +401,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         <IPayPaginatedFlatlist
           showsVerticalScrollIndicator={false}
           externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
-          keyExtractor={(index: number) => {
-            index.toString(); // Convert the index to a string
-          }}
+          keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`} // Convert the index to a string
           renderItem={renderItem}
           fetchData={(page, pageSize) =>
             getRequestsData(selectedTab === SEND_REQUESTS ? sentRequestsPage : receivedRequestsPage, pageSize)
@@ -402,7 +410,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           data={dataForPaginatedFLatlist}
           ListEmptyComponent={noResult}
         />
-        {selectedTab === SEND_REQUESTS ? (
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === SEND_REQUESTS && (
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             large
@@ -411,7 +419,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             btnStyle={styles.requestButton}
             leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
           />
-        ) : (
+        )}
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === RECEIVED_REQUESTS && (
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             large
@@ -442,15 +451,15 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         showCancel
         onPress={onPressCancelActionSheet}
       />
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="REQUEST_MONEY.REQUEST_DETAILS"
-        onCloseBottomSheet={closeRequestDetailsBottomSheet}
-        customSnapPoint={snapPoint}
-        ref={requestdetailRef}
         simpleHeader
         simpleBar
         cancelBnt
         bold
+        customSnapPoint={snapPoint}
+        onCloseBottomSheet={closeRequestDetailsBottomSheet}
+        isVisible={showDetailSheet}
       >
         <IPayRequestDetails
           transaction={requestDetail}
@@ -458,7 +467,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           showRejectActionSheet={showRejectActionSheet}
           showCancelActionSheet={showCancelActionSheet}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
       <IPayFilterBottomSheet
         heading="TRANSACTION_HISTORY.FILTER"
         defaultValues={requestMoneyFilterDefaultValues}

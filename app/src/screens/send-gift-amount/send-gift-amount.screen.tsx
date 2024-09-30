@@ -10,7 +10,15 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import {
+  IPayAmountInput,
+  IPayBalanceStatusChip,
+  IPayButton,
+  IPayChip,
+  IPayHeader,
+  IPayList,
+  IPayTopUpBox,
+} from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -27,8 +35,8 @@ import { regex } from '@app/styles/typography.styles';
 import { alertType, alertVariant, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
 import { useEffect, useState } from 'react';
-import { Contact } from 'react-native-contacts';
 import { useTranslation } from 'react-i18next';
+import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
 const defaultValue = '0.00';
@@ -40,18 +48,23 @@ const SendGiftAmountScreen = ({ route }) => {
   const MAX_CONTACTS = 5;
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
-  const GIFT_TABS = [t('SEND_GIFT.EQUALLY'), t('SEND_GIFT.SPLIT'), t('SEND_GIFT.MANUAL')];
+  const GIFT_TABS = [
+    t('SEND_GIFT.EQUALLY'),
+    ...(contacts.length > 1 ? [t('SEND_GIFT.SPLIT')] : []),
+    t('SEND_GIFT.MANUAL'),
+  ];
 
   const [alertVisible, setAlertVisible] = useState<boolean>(false);
   const { colors } = useTheme();
-  const styles = sendGiftAmountStyles(colors);
+  const styles = sendGiftAmountStyles(colors, GIFT_TABS.length);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { currentBalance } = walletInfo; // TODO replace with original data
+  const { availableBalance } = walletInfo;
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
   const [chipValue, setChipValue] = useState('');
   const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
+  const [warningStatus, setWarningStatus] = useState<string>('');
 
   useEffect(() => {
     setContacts(selectedContacts);
@@ -116,10 +129,19 @@ const SendGiftAmountScreen = ({ route }) => {
     Object.values(contactAmounts)
       .reduce((total, amount) => total + (amount ? parseFloat(amount) : 0), 0)
       .toFixed(2);
+
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
     setContacts((prevContacts) => {
       const updatedContacts = prevContacts.filter((contact) => contact.recordID !== contactId);
+
+      if (selectedTab === t('SEND_GIFT.MANUAL')) {
+        const calculateTotalManualAmountValue = updatedContacts.reduce((acc, contact) => {
+          const amount = contactAmounts[contact.recordID];
+          return { ...acc, [contact.recordID]: amount };
+        }, {});
+        setContactAmounts(calculateTotalManualAmountValue);
+      }
 
       // If no contacts are left, navigate back
       if (updatedContacts.length === 0) {
@@ -358,11 +380,11 @@ const SendGiftAmountScreen = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader title="SEND_GIFT.TITLE" applyFlex backBtn />
-      <IPayScrollView>
+      <IPayScrollView nestedScrollEnabled keyboardShouldPersistTaps="handled">
         <IPayView style={styles.container}>
           <IPayView>
             <IPayTopUpBox
-              availableBalance={formatNumberWithCommas(currentBalance)}
+              availableBalance={formatNumberWithCommas(availableBalance)}
               isShowTopup
               isShowRemaining
               isShowProgressBar
@@ -373,25 +395,39 @@ const SendGiftAmountScreen = ({ route }) => {
           <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualComponent : styles.amountComponent}>
             <IPayView style={styles.header}>
               <IPayFootnoteText text="SEND_GIFT.SELECT_METHOD" color={colors.primary.primary600} />
-              <IPaySegmentedControls tabs={GIFT_TABS} onSelect={handleSelectedTab} selectedTab={selectedTab} />
+              <IPaySegmentedControls
+                tabs={GIFT_TABS}
+                onSelect={handleSelectedTab}
+                selectedTab={selectedTab}
+                selectedTabStyle={styles.tabs}
+                unselectedTabStyle={styles.tabs}
+              />
             </IPayView>
             {renderAmountInput()}
           </IPayView>
           <IPayView style={selectedTab === t('SEND_GIFT.MANUAL') ? styles.manualContactList : styles.contactList}>
             {getContactInfoText()}
             <IPayFlatlist
-              scrollEnabled
+              scrollEnabled={false}
+              keyExtractor={(item, index) => `${item.recordID}-${index}`}
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
+              keyboardShouldPersistTaps="always"
               ListFooterComponent={<ListFooterContacts />}
-              keyExtractor={(item) => item.recordID}
               showsVerticalScrollIndicator={false}
             />
           </IPayView>
         </IPayView>
       </IPayScrollView>
       <IPayView style={styles.buttonContainer}>
+        <IPayBalanceStatusChip
+          monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+          currentBalance={Number(availableBalance)}
+          amount={Number(amountToShow || topUpAmount)}
+          setWarningStatus={setWarningStatus}
+          dailySpendingLimit={Number(dailyOutgoingLimit)}
+        />
         {selectedTab === t('SEND_GIFT.MANUAL') && (
           <IPayList
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
@@ -406,7 +442,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnText="SEND_GIFT.SEND"
           btnIconsDisabled
           onPress={getW2WActiveFriends}
-          disabled={isDisabled}
+          disabled={isDisabled || !!warningStatus}
           btnStyle={styles.btnText}
         />
       </IPayView>

@@ -30,6 +30,7 @@ const transactionItemStyles = (colors: any) =>
       color: colors.natural.natural900,
       fontSize: FONT_SIZE_12,
       width: moderateScale(146, 0.35),
+      textAlign: 'left',
     },
     trasnactionTypeInternationalTransfer: {
       marginTop: verticalScale(3),
@@ -63,6 +64,7 @@ const transactionItemStyles = (colors: any) =>
       color: colors.natural.natural900,
       lineHeight: moderateScale(18),
       width: moderateScale(146, 0.35),
+      textAlign: 'left',
     },
     benficiaryInternationalTransfer: {
       color: colors.natural.natural900,

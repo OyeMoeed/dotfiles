@@ -26,8 +26,8 @@ import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util
 import { openGoogleMaps, openURL } from '@app/utilities/linking-utils';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
-import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { dateTimeFormat } from '@app/utilities';
+import { formatDateAndTime } from '@app/utilities/date-helper.util';
 import { useTranslation } from 'react-i18next';
 import { NearestStoreSheetTypes } from './offer-details.interface';
 import offerDetailsStyles from './offer-details.style';
@@ -48,7 +48,7 @@ const OfferDetailsScreen: React.FC = () => {
 
   type RouteProps = RouteProp<{ params: { id: string } }, 'params'>;
   const route = useRoute<RouteProps>();
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const { showToast } = useToastContext();
   const [apiError, setAPIError] = useState<string>('');
@@ -232,7 +232,11 @@ const OfferDetailsScreen: React.FC = () => {
                   color={colors.natural.natural900}
                   text="COMMON.TERMS_AND_CONDITIONS"
                 />
-                <IPayCaption1Text color={colors.natural.natural500} text={offersData[0]?.termsDetailsEn} />
+                <IPayCaption1Text
+                  shouldTranslate={false}
+                  color={colors.natural.natural500}
+                  text={`\u2022 ${offersData[0]?.termsDetailsEn}`}
+                />
               </IPayView>
             </>
           </IPayScrollView>

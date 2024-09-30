@@ -42,7 +42,7 @@ const Profile = () => {
   const [kycVisible, setKycVisible] = useState<boolean>(false);
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const dispatch = useTypedDispatch();
   const { selectedImage, showActionSheet, IPayActionSheetComponent, IPayAlertComponent } = useChangeImage();
   const { showToast } = useToastContext();

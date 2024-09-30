@@ -41,21 +41,26 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import Contacts, { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { useTranslation } from 'react-i18next';
-import walletTransferStyles from './wallet-to-wallet-transfer.style';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
+import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
 const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
-  const { heading, from = TRANSFERTYPE.SEND_MONEY, showHistory = true, giftDetails } = route?.params || {};
+  const {
+    heading,
+    from = TRANSFERTYPE.SEND_MONEY,
+    showHistory = true,
+    giftDetails,
+    qrErrorMessage = '',
+  } = route?.params || {};
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
   const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
-  const unsavedBottomSheetRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');
@@ -81,12 +86,28 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
-        navigate(ScreenNames.SEND_MONEY_FORM, {
-          activeFriends: apiResponse.response?.friends,
-          selectedContacts,
-          heading: t('HOME.SEND_MONEY'),
-          showReason: true,
-        });
+        switch (from) {
+          case TRANSFERTYPE.SEND_MONEY:
+            navigate(ScreenNames.SEND_MONEY_FORM, {
+              activeFriends: apiResponse.response?.friends,
+              selectedContacts,
+              setSelectedContacts,
+              heading: t('HOME.SEND_MONEY'),
+              showReason: true,
+            });
+            break;
+          case TRANSFERTYPE.REQUEST_MONEY:
+            navigate(ScreenNames.SEND_MONEY_REQUEST, {
+              selectedContacts,
+              setSelectedContacts,
+              heading: t('REQUEST_MONEY.CREATE_REQUEST'),
+              from: TRANSFERTYPE.REQUEST_MONEY,
+              showHistory: false,
+            });
+            break;
+          default:
+            break;
+        }
       }
     }
   };
@@ -105,14 +126,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
       case ScreenNames.SEND_GIFT_AMOUNT:
         setSelectedContacts([]);
         break;
-
       case TRANSFERTYPE.REQUEST_MONEY:
-        navigate(ScreenNames.SEND_MONEY_REQUEST, {
-          selectedContacts,
-          heading: t('REQUEST_MONEY.CREATE_REQUEST'),
-          from: TRANSFERTYPE.REQUEST_MONEY,
-          showHistory: false,
-        });
+        getW2WActiveFriends();
         break;
       default:
         break;
@@ -172,7 +187,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     });
   };
 
-  const handleSelect = (contact: Contact) => {
+  const handleSelect = (contact: Contact, isQR?: boolean) => {
     // Corrected 'lenght' to 'length'
     setSelectedContacts((prevSelectedContacts) => {
       const isAlreadySelected = prevSelectedContacts.some(
@@ -181,7 +196,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
       if (isAlreadySelected) {
         // Remove the contact if it's already selected
-        return prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
+        return isQR
+          ? prevSelectedContacts
+          : prevSelectedContacts.filter((selectedContact) => selectedContact.recordID !== contact.recordID);
       }
 
       // Add the contact if the limit is not exceeded
@@ -262,7 +279,9 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const addUnsavedNumber = ({ mobileNumber }: AddPhoneFormValues) => {
     if (selectedContacts.length === 5) {
-      unsavedBottomSheetRef.current.close();
+      requestAnimationFrame(() => {
+        setUnSavedVisible(false);
+      });
       Keyboard.dismiss();
       renderToast();
     } else {
@@ -300,22 +319,25 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const qrCodeCallBack = (mobileNumber: string) => {
     if (mobileNumber) {
-      handleSelect({
-        givenName: mobileNumber,
-        recordID: mobileNumber,
-        phoneNumbers: [
-          {
-            label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
-            number: mobileNumber,
-          },
-        ],
-      } as Contact);
+      handleSelect(
+        {
+          givenName: mobileNumber,
+          recordID: mobileNumber,
+          phoneNumbers: [
+            {
+              label: t('WALLET_TO_WALLET.UNSAVED_NUMBER'),
+              number: mobileNumber,
+            },
+          ],
+        } as Contact,
+        true,
+      );
     }
   };
-  const { mobileNumberSchema } = getValidationSchemas(t);
+  const { unsavedMobileNumberSchema } = getValidationSchemas(t);
 
   const validationSchema = Yup.object().shape({
-    mobileNumber: mobileNumberSchema,
+    mobileNumber: unsavedMobileNumberSchema,
   });
 
   const onCloseSaveContact = () => {
@@ -372,6 +394,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             onPress={() =>
               navigate(ScreenNames.SEND_MONEY_QRCODE_SCANNER, {
                 onGoBack: qrCodeCallBack,
+                qrErrorMessage,
               })
             }
           >
@@ -449,8 +472,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         enablePanDownToClose
         simpleBar
         isVisible={unSavedVisible}
-        ref={unsavedBottomSheetRef}
-        customSnapPoint={isKeyboardOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XX_SMALL}
+        // customSnapPoint={isKeyboardWillOpen ? SNAP_POINT.MEDIUM : SNAP_POINT.XX_SMALL}
+        customSnapPoint={SNAP_POINT.MEDIUM}
         bold
         cancelBnt
         onCloseBottomSheet={onCloseSaveContact}
@@ -466,6 +489,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
                 containerStyle={styles.phoneInputStyle}
                 mainContainerStyles={styles.phoneInputStyleMain}
                 maxLength={constants.UNSAVED_NUMBER_LENGTH}
+                autoFocus
               />
               <IPayButton
                 btnStyle={styles.padding}

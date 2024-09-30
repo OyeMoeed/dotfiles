@@ -18,8 +18,6 @@ const cardStyles = (themeColors: typeof colors) =>
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',
-      // TO KEEP BUTTONS PRESSABLE WHEN THE SHEET IS OPEN
-      zIndex: 2,
     },
     noResultContainer: {
       flex: 1,

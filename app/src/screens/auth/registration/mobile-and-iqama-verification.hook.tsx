@@ -13,7 +13,7 @@ import prepareLogin from '@app/network/services/authentication/prepare-login/pre
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
 import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -21,8 +21,8 @@ import { APIResponseType } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { Keyboard } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { Keyboard } from 'react-native';
 import { FormValues } from './mobile-and-iqama-verification.interface';
 
 const useMobileAndIqamaVerification = () => {
@@ -30,7 +30,7 @@ const useMobileAndIqamaVerification = () => {
   const dispatch = useTypedDispatch();
   const { showToast } = useToastContext();
   const { t } = useTranslation();
-  const { appData } = useTypedSelector((state) => state.appDataReducer);
+  const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [otpRef, setOtpRef] = useState<string>('');
   const [transactionId, setTransactionId] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);

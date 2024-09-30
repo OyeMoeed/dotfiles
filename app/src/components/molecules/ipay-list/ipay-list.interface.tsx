@@ -196,4 +196,12 @@ export interface IPayListProps {
    * Need translate the subTitle
    */
   shouldTranslateSubTitle?: boolean;
+  /**
+   * show right detail text in next line
+   */
+  showTextInNextLine?: boolean;
+  /**
+   * custom style for subTitle container
+   */
+  subTitleContainerStyle?: StyleProp<ViewStyle>;
 }

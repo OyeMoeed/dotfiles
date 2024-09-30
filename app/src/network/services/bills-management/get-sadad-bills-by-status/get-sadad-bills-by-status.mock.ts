@@ -15,7 +15,7 @@ const sadadBillsByStatusMock: SadadBillsByStatusMockProps = {
   response: {
     paymentInfoList: [
       {
-        amount: '-5850.00',
+        amount: '700.00',
         dueDateTime: '09-07-2020',
         billCycle: '4253001',
         billId: 'BILL23352CW03ZYZ',
@@ -33,7 +33,7 @@ const sadadBillsByStatusMock: SadadBillsByStatusMockProps = {
         svcType: 'GOVT',
       },
       {
-        amount: '-195.00',
+        amount: '750.00',
         dueDateTime: '09-07-2020',
         billCycle: '512325',
         billId: 'BILL2335253RFTP3',
@@ -46,9 +46,18 @@ const sadadBillsByStatusMock: SadadBillsByStatusMockProps = {
         checkDigit: null,
         billDesc: 'test zain',
         serviceDescription: null,
-        billStatusCode: 'BillOverPd',
-        billStatusDesc: 'billOverPaid',
+        billStatusCode: 'BillUnpaid',
+        billStatusDesc: 'billUnpaidPaid',
         svcType: 'GOVT',
+      },
+      {
+        billCycle: '4751231',
+        billId: 'BILL23352LKN9F3X',
+        billIdType: '0',
+        billNumOrBillingAcct: '54678905318',
+        billerId: '001',
+        billerName: '001 - STC',
+        billDesc: 'arwa test',
       },
       {
         amount: '-60.00',

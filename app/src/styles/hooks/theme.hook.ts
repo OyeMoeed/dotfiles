@@ -10,7 +10,7 @@ const useTheme = () => {
   /**
    * Selects the current theme from the Redux store.
    */
-  const { appTheme } = useTypedSelector((state) => state.themeReducer);
+  const appTheme = useTypedSelector((state) => state.themeReducer.appTheme);
 
   /**
    * Retrieves the current theme object from the theme index.

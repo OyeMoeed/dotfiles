@@ -30,7 +30,7 @@ import westernUnionTransfer from '@app/network/services/international-transfer/w
 import getDeviceInfo from '@app/network/utilities/device-info-helper';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import beneficiaryKeysMapping from '@app/screens/international-transfer-info/international-transfer-info.constant';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -39,6 +39,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import Flag from 'react-native-round-flags';
 import { useDispatch } from 'react-redux';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';

@@ -2,7 +2,6 @@ import { IPayHeader } from '@app/components/molecules';
 import IPayAmount from '@app/components/organism/ipay-amount-component/ipay-amount-component';
 import { IPaySafeAreaView } from '@app/components/templates';
 
-import screenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import { useRoute } from '@react-navigation/native';
 import React, { useState } from 'react';
@@ -46,7 +45,7 @@ const TopUpScreen = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn title={screenNames.TOP_UP} applyFlex />
+      <IPayHeader backBtn title="COMMON.TOP_UP" applyFlex />
       <IPayAmount
         onPressAddCards={openAddCardBottomSheet}
         channel={variant}

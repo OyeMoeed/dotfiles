@@ -1,11 +1,11 @@
-import { spinnerVariant } from '@app/utilities/enums.util';
+import { SpinnerVariant } from '@app/utilities/enums.util';
 
 interface IPaySpinnerProps {
   testID?: string;
   // TestId used for testing purposes
   text?: string;
   // Displays the text if the text variant is called
-  variant?: spinnerVariant;
+  variant?: SpinnerVariant;
   // variants of the spinner, influencing the visual appearence
   color?: string;
   // color of the activity spinner

@@ -76,12 +76,24 @@ const navigateAndReset = (routeName: string, params?: object): void => {
  */
 const replace = (routeName: string, params?: object): void => {
   if (navigator) {
-    navigator.dispatch(
-      StackActions.replace({
-        name: routeName,
-        params,
-      }),
-    );
+    navigator.dispatch(StackActions.replace(routeName, params));
+  }
+};
+
+/**
+ * Pops the last `n` screens and replaces them with a new screen.
+ *
+ * @param {string} routeName - The name of the new route to navigate to.
+ * @param {number} n - The number of screens to pop.
+ * @param {object} [params] - Parameters to pass to the new route.
+ */
+const popAndReplace = (routeName: string, n: number, params?: object): void => {
+  if (navigator) {
+    // First pop the last n screens
+    navigator.dispatch(StackActions.pop(n));
+
+    // Then replace the current screen with the new one
+    navigator.dispatch(StackActions.replace(routeName, params));
   }
 };
 
@@ -125,6 +137,7 @@ export {
   goBack,
   navigate,
   navigateAndReset,
+  popAndReplace,
   popToTop,
   push,
   replace,

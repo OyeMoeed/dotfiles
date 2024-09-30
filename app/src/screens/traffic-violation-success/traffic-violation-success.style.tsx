@@ -20,6 +20,7 @@ const trafficViolationSuccessStyles = (colors: typeof themeColors) =>
     },
     minFlex: {
       flex: 0,
+      paddingHorizontal: moderateScale(15),
     },
     bottomView: {
       paddingVertical: verticalScale(8),

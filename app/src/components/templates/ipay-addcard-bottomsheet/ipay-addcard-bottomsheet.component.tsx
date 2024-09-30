@@ -17,7 +17,6 @@ import {
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { JSX, useState } from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { useTranslation } from 'react-i18next';
 import { IPayAddCardBottomsheetProps } from './ipay-addcard-bottomsheet.interface';
 import addCardBottomSheetStyles from './ipay-addcard-bottomsheet.styles'; // Adjust the path as per your project structure
 
@@ -34,7 +33,6 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
   expiryOnPress,
 }: IPayAddCardBottomsheetProps): JSX.Element => {
   const { colors } = useTheme();
-  const { t } = useTranslation();
   const styles = addCardBottomSheetStyles(colors);
   const [cardNumber, setCardNumber] = useState(selectedCard?.cardNumber);
   const [cvv, setCvv] = useState('');
@@ -92,7 +90,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
         <IPayView style={styles.cardRow}>
           <IPayIcon icon={icons.cards} color={colors.primary.primary900} />
           <IPayFootnoteText
-            text={isEditingMode ? t('MENU.EDIT_CARD') : t('CARDS.ENTER_CARD_DETAILS')}
+            text={isEditingMode ? 'MENU.EDIT_CARD' : 'CARDS.ENTER_CARD_DETAILS'}
             style={styles.icongap}
           />
         </IPayView>
@@ -117,7 +115,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
           type="credit-card"
           label="COMMON.CARD_NUMBER"
           containerStyle={[styles.inputField, isCardNumberError && { borderColor: colors.error.error500 }]}
-          assistiveText={isCardNumberError ? t('TOP_UP.INCORRECT_CARD_NUMBER') : ''}
+          assistiveText={isCardNumberError ? 'TOP_UP.INCORRECT_CARD_NUMBER' : ''}
           maxLength={19}
           isError={isCardNumberError}
           rightIcon={<IPayIcon icon={icons.master_card} size={22} />}
@@ -166,7 +164,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
               }
               editable
               isError={isCvvError}
-              assistiveText={isCvvError ? t('TOP_UP.INVALID_CVV') : ''}
+              assistiveText={isCvvError ? 'TOP_UP.INVALID_CVV' : ''}
               onChangeText={handleCvvChange}
             />
           )}
@@ -201,7 +199,7 @@ const IPayAddCardBottomsheet: React.FC<IPayAddCardBottomsheetProps> = ({
 
       <IPayButton
         btnType={buttonVariants.PRIMARY}
-        btnText={savedScreen ? t('TOP_UP.PAY') : t('COMMON.SAVE')}
+        btnText={savedScreen ? 'TOP_UP.PAY' : 'COMMON.SAVE'}
         btnColor={buttonColor('button')}
         textColor={buttonColor('text')}
         large

@@ -11,7 +11,7 @@ const transactionHistoryStyle = (colors: any) =>
     container: {
       flex: 1,
       marginBottom: isIosOS ? moderateScale(100) : 0,
-      marginTop: moderateScale(30),
+      marginTop: moderateScale(10),
     },
     amountSection: {
       justifyContent: 'center',
@@ -19,10 +19,15 @@ const transactionHistoryStyle = (colors: any) =>
       gap: 12,
       marginBottom: moderateScale(8),
     },
+    fieldsSection: {
+      alignItems: 'center',
+    },
     footnoteBoldTitleTextStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
       fontSize: FONT_SIZE_17,
       color: colors.primary.primary900,
+      width: '90%',
+      textAlign: 'center',
     },
     footnoteBoldTextStyle: {
       fontWeight: FONT_WEIGHT_BOLD,
@@ -64,10 +69,10 @@ const transactionHistoryStyle = (colors: any) =>
     containerToastStyle: {
       ...Platform.select({
         android: {
-          bottom: verticalScale(100),
+          bottom: verticalScale(50),
         },
         ios: {
-          bottom: verticalScale(130),
+          bottom: verticalScale(80),
         },
       }),
     },

@@ -1,11 +1,12 @@
-import { scaleSize } from '@app/styles/mixins';
+import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
 
 const onboardingStyles = (colors: any) =>
   createStyleSheet({
     container: {
-      flex: 1,
+      width: SCREEN_WIDTH,
+      height: '100%',
       paddingHorizontal: scaleSize(30),
     },
     headerStyles: {

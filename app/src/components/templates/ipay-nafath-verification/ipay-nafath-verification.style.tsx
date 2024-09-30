@@ -1,15 +1,19 @@
-import { typography } from '@app/components/atoms/ipay-text/utilities/typography-helper.util';
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { SCALE_13, spacing } from '@app/styles/spacing.const';
+import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { WINDOW_WIDTH } from '@gorhom/bottom-sheet';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const nafathVerificationStyles = (colors: any) =>
   createStyleSheet({
     container: {
       flex: 1,
+    },
+    contentContainerStyle: {
+      flexGrow: 1,
       marginTop: spacing.SCALE_12,
-      gap: spacing.SCALE_10,
+      maxWidth: WINDOW_WIDTH,
     },
     logoWrapper: {
       alignItems: 'center',
@@ -23,7 +27,8 @@ const nafathVerificationStyles = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-      marginBottom: spacing.SCALE_10,
+      marginBottom: spacing.SCALE_12,
+      marginTop: 'auto',
       backgroundColor: colors.natural.natural0,
       paddingVertical: spacing.SCALE_12,
       paddingLeft: spacing.SCALE_18,
@@ -41,7 +46,6 @@ const nafathVerificationStyles = (colors: any) =>
       paddingLeft: spacing.SCALE_16,
       paddingRight: spacing.SCALE_24,
       borderRadius: spacing.CUSTOME_SCALE(28),
-      marginBottom: spacing.SCALE_100,
       marginHorizontal: scaleSize(24),
     },
     stepper: {
@@ -50,6 +54,7 @@ const nafathVerificationStyles = (colors: any) =>
       backgroundColor: colors.natural.natural0,
       padding: spacing.SCALE_16,
       borderRadius: spacing.SCALE_28,
+      marginVertical: spacing.SCALE_12,
     },
     flexRow: {
       flexDirection: 'row',
@@ -68,7 +73,7 @@ const nafathVerificationStyles = (colors: any) =>
     },
     sectionText: {
       fontSize: SCALE_13,
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
       color: colors.primary.primary800,
     },
     stepIndicator: {
@@ -82,7 +87,7 @@ const nafathVerificationStyles = (colors: any) =>
     },
     stepNoText: {
       fontSize: SCALE_13,
-      fontWeight: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontWeight: FONT_WEIGHT_BOLD,
     },
     verifiedCodeContainer: {
       flex: 1,
@@ -101,7 +106,7 @@ const nafathVerificationStyles = (colors: any) =>
     },
     linearGradientText: {
       fontSize: spacing.SCALE_50,
-      fontFamily: typography.BOLD_TEXT_STYLES.fontWeight,
+      fontFamily: FONT_WEIGHT_BOLD,
     },
     gradientTextSvg: {
       width: '100%',
@@ -123,6 +128,11 @@ const nafathVerificationStyles = (colors: any) =>
     },
     btnStyle: {
       marginHorizontal: scaleSize(24),
+      marginBottom: 'auto',
+    },
+    refreshIcon: {
+      width: moderateScale(20),
+      height: moderateScale(20),
     },
   });
 

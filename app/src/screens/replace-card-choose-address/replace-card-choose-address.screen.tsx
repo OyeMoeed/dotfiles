@@ -9,19 +9,19 @@ import {
   IPayScrollView,
   IPayView,
 } from '@app/components/atoms';
+import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
 import IPayCardDetails from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { IPayButton, IPayHeader, IPayList } from '@app/components/molecules';
+import { buttonVariants } from '@app/utilities';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { buttonVariants } from '@app/utilities';
 import IPayReplaceCardChooseCityListComponent from './replace-card-choose-address-citylist.component';
 import { RouteParams } from './replace-card-choose-address.interface';
 import replaceCardStyles from './replace-card-choose-address.style';

@@ -17,17 +17,24 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { useRoute, RouteProp } from '@react-navigation/native';
-import { useTranslation } from 'react-i18next';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
-import React, { useRef, useState } from 'react';
-
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import React, { useRef, useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useTypedSelector } from '@app/store/store';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useDispatch } from 'react-redux';
-import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
-
+import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
+import { CardType } from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import printCardPrepareService from '@app/network/services/physical-card/print-card-prepare/print-card-prepare.service';
+import { PrintCardPreparePayloadTypes } from '@app/network/services/physical-card/print-card-prepare/print-card-prepare.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import printCardService from '@app/network/services/physical-card/print-card/print-card.service';
+import { PrintCardPayloadTypes } from '@app/network/services/physical-card/print-card/print-card.interface';
+import { IssueCardFeesRes } from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.interface';
 import { AddressInfoRefTypes, OTPVerificationRefTypes, RouteParams } from './print-card-confirmation.interface';
 import printCardConfirmationStyles from './print-card-confirmation.style';
+import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 
 const DUMMY_DATA = {
   address: 'Al Olaya, Riyadh, SA',
@@ -44,11 +51,17 @@ const PrintCardConfirmationScreen: React.FC = () => {
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);
   const [otp, setOtp] = useState('');
   const [otpError, setOtpError] = useState<boolean>(false);
+  const [otpRef, setOtpRef] = useState('');
   type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
+
+  const [shippingFee, setShippingFee] = useState<string | undefined>('0');
+  const { address } = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const route = useRoute<RouteProps>();
 
   const {
+    currentCard,
     currentCard: { cardHeaderText, name },
   } = route.params;
 
@@ -78,9 +91,17 @@ const PrintCardConfirmationScreen: React.FC = () => {
     });
   };
 
-  const onPressConfirm = () => {
+  const onPressConfirm = async () => {
     if (checkTermsAndConditions) {
-      veriyOTPSheetRef.current?.present();
+      const payload: PrintCardPreparePayloadTypes = {
+        deviceInfo: await getDeviceInfo(),
+        cardIndex: currentCard.cardIndex,
+      };
+      const apiResponse = await printCardPrepareService(walletInfo.walletNumber, payload);
+      if (apiResponse.successfulResponse) {
+        setOtpRef(apiResponse.response.otpRef);
+        veriyOTPSheetRef.current?.present();
+      }
     } else {
       renderToast();
     }
@@ -98,12 +119,48 @@ const PrintCardConfirmationScreen: React.FC = () => {
 
   const toggleTermsAndConditions = () => setCheckTermsAndConditions((prev) => !prev);
 
-  const onNavigateToSuccess = () => {
-    onCloseBottomSheet();
-    navigate(ScreenNames.PRINT_CARD_SUCCESS);
+  const onNavigateToSuccess = async () => {
+    // call otp confirmation api
+    const payload: PrintCardPayloadTypes = {
+      otp,
+      otpRef,
+      deviceInfo: await getDeviceInfo(),
+      cardIndex: currentCard.cardIndex,
+    };
+    const apiResponse = await printCardService(walletInfo.walletNumber, payload);
+    if (apiResponse.successfulResponse) {
+      onCloseBottomSheet();
+      navigate(ScreenNames.PRINT_CARD_SUCCESS);
+    }
   };
 
-  const onResendCodePress = () => {};
+  const onResendCodePress = () => {
+    onCloseBottomSheet();
+    setTimeout(() => {
+      onPressConfirm();
+    }, 1000);
+  };
+
+  const getTotalFees = (fees: IssueCardFeesRes) => {
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    const totalFees = +fees?.bankFeeAmount + +fees?.bankVatAmount + +fees?.feeAmount + +fees?.vatAmount;
+    return totalFees.toString();
+  };
+
+  const onPressIsssueCard = async () => {
+    const feesApiResponse = await getCardIssuanceFees(
+      walletInfo?.walletNumber,
+      currentCard.cardType as CardType,
+      'CARD_VCB_ISSUE',
+    );
+    if (feesApiResponse?.successfulResponse === true) {
+      setShippingFee(getTotalFees(feesApiResponse?.response));
+    }
+  };
+
+  useEffect(() => {
+    onPressIsssueCard();
+  }, []);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -140,7 +197,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
                 onPress={() => addressInfoSheetRef.current?.showAddressInfoSheet()}
                 style={styles.addressStyle}
               >
-                <IPayFootnoteText color={colors.primary.primary800} regular text={DUMMY_DATA.address} />
+                <IPayFootnoteText color={colors.primary.primary800} regular text={address} />
                 <IPayView style={styles.iconStyle}>
                   <IPayIcon icon={icons.infoIcon} size={16} color={colors.primary.primary500} />
                 </IPayView>
@@ -158,7 +215,7 @@ const PrintCardConfirmationScreen: React.FC = () => {
               <IPaySubHeadlineText
                 color={colors.primary.primary800}
                 regular
-                text={`${DUMMY_DATA.replaceFee} ${t('COMMON.SAR')}`}
+                text={`${shippingFee} ${t('COMMON.SAR')}`}
               />
             }
           />

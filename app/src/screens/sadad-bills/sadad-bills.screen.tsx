@@ -10,6 +10,8 @@ import { BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { InActivateBillProps } from '@app/network/services/bills-management/activate-bill/activate-bill.interface';
+import activateBill from '@app/network/services/bills-management/activate-bill/activate-bill.service';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import deleteBill from '@app/network/services/bills-management/delete-bill/delete-bill.service';
 import {
@@ -48,16 +50,16 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const [selectedBillsCount, setSelectedBillsCount] = useState<number>(0);
   const sadadActionSheetRef = useRef<any>(null);
   const billToEditRef = useRef<any>({});
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const { showToast } = useToastContext();
-  const tabs = ['SADAD.ACTIVE_BILLS', 'SADAD.INACTIVE_BILLS'];
+  const tabs = [t('SADAD.ACTIVE_BILLS'), t('SADAD.INACTIVE_BILLS')];
 
   const getSelectedBillsCount = (billsData: BillsProps[]) => {
     const count = billsData.filter((bill) => bill.selected).length;
     setSelectedBillsCount(count);
   };
 
-  const multipleBillsSelected = selectedBillsCount > 1;
+  const multipleBillsSelected = selectedBillsCount >= 1;
 
   const onPressAddNewBill = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS);
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
@@ -93,17 +95,23 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   useEffect(() => {
-    setActiveBillsData(sadadBills);
-    getSelectedBillsCount(sadadBills);
+    if (sadadBills) {
+      setActiveBillsData(sadadBills);
+      getSelectedBillsCount(sadadBills);
+    } else {
+      getBills(BillsStatusTypes.ACTIVE_BILLS);
+    }
   }, []);
 
   const renderButtonText = () => {
-    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount), 0);
+    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
 
     return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
   };
 
-  const onPressPartialPay = () => navigate(ScreenNames.ADD_NEW_SADAD_BILLS, { selectedBills, isPayPartially: true });
+  /// TODO there is API dependency for this and that is in progress, this will be update as soon as the API issue gets resolved.
+  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
+  const onPressPartialPay = () => navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true });
 
   const renderButtonRightIcon = () =>
     !multipleBillsSelected ? (
@@ -131,25 +139,96 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
     const apiResponse: any = await deleteBill(prepareLoginPayload);
     if (apiResponse.status.type === APIResponseType.SUCCESS) {
-      setActiveBillsData((prevBillsData) => {
-        const billToDelete = prevBillsData.find((bill) => bill.billId === selectedBillsId);
-        const updatedBillsData = prevBillsData.filter((bill) => bill.billId !== selectedBillsId);
-
+      const billToDelete = activeBillsData.find((bill) => bill.billId === selectedBillsId);
+      getBills(selectedTab).then(() => {
         renderToast({
           title: 'SADAD.BILL_HAS_BEEN_DELETED',
           subTitle: billToDelete?.billDesc,
           toastType: ToastTypes.SUCCESS,
         });
-
-        return updatedBillsData;
       });
     }
   };
 
+  const redirectToBillActivation = (selectedBill: PaymentInfoProps) => {
+    const {
+      billNumOrBillingAcct,
+      billerName,
+      billIdType,
+      billerId,
+      billDesc,
+      serviceDescription,
+      svcType,
+      dueDateTime,
+      amount,
+    } = selectedBill;
+    const headerAttributes = {
+      title: billDesc,
+      companyDetails: billerName,
+      companyImage: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId),
+    };
+    const billPaymentInfos = {
+      billerId,
+      billNumOrBillingAcct,
+      serviceType: svcType,
+      billIdType,
+      serviceDescription,
+      billerName,
+      billNickname: billDesc,
+      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(billerId),
+    };
+    const billPaymentData = [
+      {
+        id: '1',
+        label: 'PAY_BILL.SERVICE_TYPE',
+        value: svcType,
+      },
+      {
+        id: '2',
+        label: 'PAY_BILL.ACCOUNT_NUMBER',
+        value: billNumOrBillingAcct,
+      },
+      {
+        id: '3',
+        label: 'COMMON.DUE_DATE',
+        value: dueDateTime,
+      },
+      {
+        id: '4',
+        label: 'PAY_BILL.AMOUNT',
+        value: amount,
+      },
+    ];
+
+    sadadActionSheetRef?.current?.hide();
+    navigate(ScreenNames.BILL_ACTIVATION, {
+      headerAttributes,
+      billPaymentInfos,
+      billPaymentData,
+    });
+  };
+
+  const activeteSelectedBill = async (selectedBill: PaymentInfoProps) => {
+    const { billNumOrBillingAcct, billerName, billIdType, billerId, billDesc } = selectedBill;
+    const deviceInfo = await getDeviceInfo();
+    const payload: InActivateBillProps = {
+      deviceInfo,
+      billNumOrBillingAcct,
+      billIdType,
+      billerId,
+      billerName,
+      walletNumber,
+      billNickname: billDesc,
+    };
+    const apiResponse: any = await activateBill(payload);
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+      redirectToBillActivation(selectedBill);
+    }
+  };
+
   const handleActionSheetPress = (index: number) => {
-    if (index === 0 && selectedTab === BillsStatusTypes.INACTIVE_BILLS) {
-      sadadActionSheetRef?.current?.hide();
-      navigate(ScreenNames.BILL_ACTIVATION);
+    if (index === 0 && t(selectedTab) === BillsStatusTypes.INACTIVE_BILLS) {
+      activeteSelectedBill(billToEditRef.current);
       return;
     }
     if (index === 0) {
@@ -241,10 +320,10 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     const billPaymentDetails = selectedBills?.map((bill) => ({
       billerId: bill.billerId,
       billNumOrBillingAcct: bill.billNumOrBillingAcct,
-      amount: Number(bill.amount),
+      amount: Number(bill.amount || 0),
       dueDateTime: bill.dueDateTime,
-      billIdType: bill.billIdType, // TODO: not receiving this value from response
-      billingCycle: bill.billCycle, // TODO: need to confirm where can I get this value
+      billIdType: bill.billIdType,
+      billingCycle: bill.billCycle,
       billIndex: bill.billId,
       serviceDescription: bill.serviceDescription,
       billerName: bill.billerName,
@@ -255,7 +334,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
 
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
-      showBalanceBox: false,
+      showBalanceBox: true,
       billPaymentInfos: billPaymentDetails,
     });
   };
@@ -351,8 +430,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}
-                partialPay={multipleBillsSelected}
-                onPressPartialPay={onPressPartialPay}
+                // partialPay={multipleBillsSelected}    TODO
+                // onPressPartialPay={onPressPartialPay}  TODO
               />
             </IPayView>
           )}

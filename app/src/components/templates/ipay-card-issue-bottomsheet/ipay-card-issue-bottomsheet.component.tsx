@@ -28,8 +28,15 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
           title="CARD_ISSUE.VIRTUAL_CARD"
           isShowSubTitle
           subTitle="CARD_ISSUE.VIRTUAL_DEATAILS"
+          subTitleContainerStyle={styles.subTitleContainerStyle}
           isShowIcon={selectedCard === CardOptions.VIRTUAL}
-          icon={selectedCard === CardOptions.VIRTUAL && <IPayIcon icon={icons.tick_check_mark_default} />}
+          icon={
+            selectedCard === CardOptions.VIRTUAL ? (
+              <IPayIcon icon={icons.tick_check_mark_default} />
+            ) : (
+              <IPayView style={styles.placeholder} />
+            )
+          }
           onPress={() => handleCardSelection(CardOptions.VIRTUAL)}
         />
         <IPayList
@@ -38,12 +45,20 @@ const IPayCardIssueBottomSheet: React.FC<IPayCardIssueProps> = ({
           isShowSubTitle
           subTitle="CARD_ISSUE.PHYSICAL_DETAILS"
           isShowIcon={selectedCard === CardOptions.PHYSICAL}
-          icon={selectedCard === CardOptions.PHYSICAL && <IPayIcon icon={icons.tick_check_mark_default} />}
+          subTitleContainerStyle={styles.subTitleContainerStyle}
+          icon={
+            selectedCard === CardOptions.PHYSICAL ? (
+              <IPayIcon icon={icons.tick_check_mark_default} />
+            ) : (
+              <IPayView style={styles.placeholder} />
+            )
+          }
           onPress={() => handleCardSelection(CardOptions.PHYSICAL)}
         />
       </IPayView>
       <IPayView style={styles.buttonContainer}>
         <IPayButton
+          disabled={!selectedCard}
           btnType={buttonVariants.PRIMARY}
           large
           hasRightIcon

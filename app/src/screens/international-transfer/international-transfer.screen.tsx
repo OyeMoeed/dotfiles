@@ -486,7 +486,7 @@ const InternationalTransferScreen: React.FC = () => {
                 placeholder="COMMON.SEARCH"
                 rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
                 simpleInput
-                showLeftIcon={search}
+                showLeftIcon={!!search}
                 style={styles.inputStyle}
                 leftIcon={<IPayIcon icon={icons.crossIcon} color={colors.natural.natural700} size={20} />}
                 containerStyle={styles.searchInputStyle}
@@ -499,7 +499,7 @@ const InternationalTransferScreen: React.FC = () => {
             </IPayView>
             {filteredBeneficiaryData?.length ? (
               <IPayView style={styles.listWrapper}>
-                <IPayScrollView showsVerticalScrollIndicator={false}>
+                <IPayScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
                   <IPayView
                     style={[
                       styles.activeInactiveListWrapper,
@@ -508,8 +508,10 @@ const InternationalTransferScreen: React.FC = () => {
                   >
                     {!!getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length && (
                       <IPayFlatlist
+                        scrollEnabled={false}
                         data={listBeneficiaries(viewAllState.active, InternationalBeneficiaryStatus.ACTIVE)}
                         renderItem={renderBeneficiaryDetails}
+                        keyExtractor={(item, index) => `${item.fullName}-active-status-${index}`}
                         ListHeaderComponent={() =>
                           renderListHeader(
                             InternationalBeneficiaryStatus.ACTIVE,
@@ -527,9 +529,10 @@ const InternationalTransferScreen: React.FC = () => {
                     )}
                     {!!getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length && (
                       <IPayFlatlist
+                        scrollEnabled={false}
                         data={listBeneficiaries(viewAllState.inactive, InternationalBeneficiaryStatus.INACTIVE)}
                         renderItem={renderBeneficiaryDetails}
-                        keyExtractor={(item) => item.id}
+                        keyExtractor={(item, index) => `${item.fullName}-inactive-status-${index}`}
                         ListHeaderComponent={() =>
                           renderListHeader(
                             InternationalBeneficiaryStatus.INACTIVE,
