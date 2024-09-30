@@ -187,14 +187,14 @@ const MoiPaymentScreen: React.FC = () => {
   return (
     <>
       <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
-        {({ control, formState: { errors }, handleSubmit, reset }) => {
+        {({ control, formState: { errors, isDirty }, handleSubmit, reset }) => {
           const {
             [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
             [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
           } = useWatch({ control });
           setServiceProviderValue(serviceProviderValue);
           setServiceTypeValue(serviceTypeValue);
-
+          const isFormValid = !!serviceProviderValue && !!serviceTypeValue;
           const onSubmit = async (data: any) => {
             const excludedIndices = [
               MoiPaymentFormFields.SERVICE_TYPE,
@@ -268,9 +268,10 @@ const MoiPaymentScreen: React.FC = () => {
                   <IPayButton
                     btnText="NEW_SADAD_BILLS.INQUIRY"
                     btnType={buttonVariants.PRIMARY}
-                    onPress={isInquired ? handleSubmit(onSubmit, reset) : handleInquiry}
+                    onPress={isInquired ? handleSubmit(onSubmit) : handleInquiry}
                     btnStyle={styles.inquiryBtn}
                     large
+                    disabled={!isFormValid || !isDirty}
                     btnIconsDisabled
                   />
                 </IPayView>
