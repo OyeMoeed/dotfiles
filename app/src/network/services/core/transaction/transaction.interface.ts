@@ -243,5 +243,5 @@ export {
   prepareRenewCardProp,
   renewCardProp,
   generateInvoiceProps,
-  CardResponseInterface
+  CardResponseInterface,
 };
