@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { ArrangeSquare2 } from '@app/assets/svgs';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -22,7 +21,7 @@ import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FeatureSections } from '@app/enums';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
@@ -58,15 +57,16 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
 
-  const openTransactionHistoryDetails = (item: IPayTransactionItemProps) => {
-    let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
-    if (heightMapping[item.transactionRequestType]) {
-      calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
-    }
-    setSnapPoint(calculatedSnapPoint);
-    setTransaction(item);
-    transactionRef.current?.present();
-  };
+  const openTransactionHistoryDetails = useCallback(
+    (item: IPayTransactionItemProps) => {
+      let calculatedSnapPoint = ['95%', '100%'];
+      setSnapPoint(calculatedSnapPoint);
+      setTransaction(item);
+      transactionRef.current?.present();
+    },
+    [setSnapPoint, setTransaction, transactionRef],
+  );
+
   const closeBottomSheet = () => {
     transactionRef.current?.forceClose();
   };
@@ -216,7 +216,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
         <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
           <IPayText style={styles.subheadingTextStyle} text="COMMON.RE_ARRANGE_SECTIONS" />
           <IPayPressable onPress={openBottomSheet}>
-            <ArrangeSquare2 color={colors.primary.primary600} style={styles.rearrangeIcon} />
+            <IPayIcon icon={icons.arrange_square_2} size={18} color={colors.primary.primary600} />
           </IPayPressable>
         </IPayView>
       </IPayView>
