@@ -22,7 +22,7 @@ const IPayLocationPermissionSheet: FC<IPayLocationPermissionSheetProps> = ({ onL
       } else {
         bottomSheetModalRef?.current?.close();
       }
-    }, 50);
+    }, 400);
   }, [handleClosePress, handlePresentSheet, modalVisible]);
 
   return (
