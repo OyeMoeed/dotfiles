@@ -81,7 +81,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     const ref = {
       id: '6',
       label: t('COMMON.REF_NUM'),
-      value: subDetails.transactionId,
+      value: subDetails?.transactionId,
       icon: icons.copy,
     };
     setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ref]);

@@ -9,7 +9,6 @@ import { useTranslation } from 'react-i18next';
 import { ValidateBillRes } from '../moi-payment-screen/moi-payment.interface';
 
 
-// TODO will be replaced by API
 const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');
