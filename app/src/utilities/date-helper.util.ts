@@ -45,7 +45,7 @@ function minutesToSeconds(minutes: string | number) {
 
 const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
 
-const getDateFormate = (date: string, dateFormate: string) => moment(date).format(dateFormate);
+const getDateFormate = (date: string | Date, dateFormate: string) => moment(date).format(dateFormate);
 
 /**
  * Format date string to 'DD/MM/YYYY - HH:mm'

@@ -1,56 +1,79 @@
-import icons from '@app/assets/icons';
-import { IPayIcon, IPayView } from '@app/components/atoms';
+import { IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
-import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.interface';
-import moiBillPayment from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.service';
-import { PrepareBillPayloadProps } from '@app/network/services/bill-managment/moi/prepare-bill/prepare-bill.interface';
-import prepareBill from '@app/network/services/bill-managment/moi/prepare-bill/prepare-bill.service';
+import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-bill/prepare-moi-bill.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.component';
 import { useTypedSelector } from '@app/store/store';
-import colors from '@app/styles/colors.const';
-import { ApiResponseStatusType } from '@app/utilities/enums.util';
-import React, { useMemo, useRef, useState } from 'react';
+import { PaymentType } from '@app/utilities';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { MOIItemProps } from '../moi-payment-refund-screen/moi-payment-refund.interface';
 import useMoiPaymentConfirmation from './moi-payment-confirmation-details.hook';
 import moiPaymentConfirmationStyls from './moi-payment-confirmation.styles';
 
 const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
-  const { moiBillData } = route.params || {};
   const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { showToast } = useToastContext();
-  const { availableBalance, currentBalance, userContactInfo } = walletInfo;
+  const { availableBalance, limitsDetails, userContactInfo } = walletInfo;
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
-  const { moiPaymentDetailes, otp, setOtp, isLoading, otpError, setOtpError, setAPIError, otpVerificationRef } =
-    useMoiPaymentConfirmation();
-  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const { billData, isRefund } = route?.params || {};
+  const [warning, setWarning] = useState<string>('');
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (billData?.totalFeeAmount > availableBalance) setWarning('COMMON.INSUFFICIENT_BALANCE_COMMON');
+    else if (billData?.totalFeeAmount > limitsDetails.dailyRemainingOutgoingAmount)
+      setWarning('SADAD.DAILY_LIMIT_REACHED');
+    else if (billData?.totalFeeAmount > limitsDetails.monthlyRemainingOutgoingAmount)
+      setWarning('SADAD.MONTLY_LIMIT_REACHED');
+    else setWarning('');
+  }, [warning]);
+
+  const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
+    useMoiPaymentConfirmation(billData, isRefund);
+  const [paymentDetails, setPaymentDetails] = useState<MOIItemProps[]>([]);
   const { otpConfig } = useConstantData();
-  const otpBottomSheetRef = useRef<any>(null);
+
   const helpCenterRef = useRef<any>(null);
-  const [otpRef, setOtpRef] = useState<string>('');
 
-  // temporary TODO
-  // const totalAmount = '500';
+  const getDataToRender = useCallback(() => {
+    const updatedPaymentDetails = billData?.dynamicFields?.filter((item: { id: string }) => item.id !== '1');
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
+    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
+      ...item,
+      id: (index + 1).toString(),
+    }));
+
+    const serviceType = {
+      id: (updatedPaymentDetailsWithNewIds.length + 1).toString(),
+      label: t('PAY_BILL.SERVICE_TYPE'),
+      value: billData?.serviceTypeFromLOV?.desc,
+    };
+    const serviceProvider = {
+      id: (updatedPaymentDetailsWithNewIds.length + 2).toString(),
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
+      value: billData?.serviceProviderFromLOV?.desc,
+    };
+
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
+  }, [billData]);
+
+  useEffect(() => {
+    getDataToRender();
+  }, [billData]);
 
   const onCloseBottomSheet = () => {
-    otpBottomSheetRef?.current?.close();
+    setOtpSheetVisible(false);
+    setOtpError(false);
   };
 
   const onPressHelp = () => {
@@ -58,87 +81,19 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
     helpCenterRef?.current?.present();
   };
 
-  const openOptModal = () => {
-    otpBottomSheetRef?.current?.present();
-  };
-
   const onPressCompletePayment = async () => {
-    try {
-      const deviceInfo = await getDeviceInfo();
-      const payload: PrepareBillPayloadProps = {
-        deviceInfo,
-        walletNumber,
-        showLoader: true,
-      };
-      const apiResponse: any = await prepareBill(payload, 'moi');
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS: {
-          setOtpRef(apiResponse?.response?.otpRef);
-          openOptModal();
-          break;
-        }
-        case apiResponse?.apiResponseNotOk:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderToast(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    const deviceInfo = await getDeviceInfo();
+    const payLoad = {
+      deviceInfo,
+      walletNumber,
+    };
+    const paymentType = isRefund ? PaymentType.REFUND : PaymentType.MOI;
+    const apiResponse = await prepareMoiBill(paymentType, payLoad);
+    if (apiResponse?.successfulResponse) {
+      setOtpRef(apiResponse?.response.otpRef);
+      setOtpSheetVisible(true);
     }
   };
-
-  const verifyOtp = async () => {
-    try {
-      const deviceInfo = await getDeviceInfo();
-
-      const payload: MOIBillPaymentPayloadProps = {
-        deviceInfo,
-        otp,
-        otpRef,
-        walletNumber,
-        moiBillPaymentType: 'Payment',
-        billerId: '',
-        billNumOrBillingAcct: '',
-        dueDateTime: '',
-        billIdType: '',
-        billingCycle: '',
-        serviceDescription: '',
-      };
-
-      const apiResponse: any = await moiBillPayment(payload);
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        if (apiResponse?.response) {
-          onCloseBottomSheet();
-          // redirectToSuccess();
-        }
-      } else {
-        renderToast(t('ERROR.API_ERROR_RESPONSE'));
-        setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-      }
-    } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  const onConfirmOtp = () => {
-    if (otp === '' || otp.length < 4) {
-      setOtpError(true);
-      otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
-    } else {
-      verifyOtp();
-    }
-  };
-
-  const totalAmount = useMemo(
-    () =>
-      moiBillData?.find((item: { label: string }) => item.label === 'BILL_PAYMENTS.DUE_AMOUNT')?.value.split(' ')[0] ||
-      null,
-    [moiBillData],
-  );
 
   return (
     <IPaySafeAreaView>
@@ -146,40 +101,41 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       <IPayView style={styles.container}>
         <IPayAccountBalance
           balance={availableBalance}
-          availableBalance={currentBalance}
+          availableBalance={limitsDetails.monthlyOutgoingLimit}
+          monthlyIncomingLimit={limitsDetails.monthlyRemainingOutgoingAmount}
           showRemainingAmount
           topUpBtnStyle={styles.topUpButton}
         />
-        <IPayBillDetailsOption
-          data={moiPaymentDetailes}
-          showHeader={false}
-          optionsStyles={styles.moiPaymentDetailesTab}
-        />
+        <IPayBillDetailsOption data={paymentDetails} showHeader={false} optionsStyles={styles.moiPaymentDetailesTab} />
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
-          btnText="SADAD.PAY"
-          totalAmount={totalAmount}
+          btnText={isRefund ? 'COMMON.CONFIRM' : 'SADAD.PAY'}
+          totalAmount={warning ? '' : billData?.totalFeeAmount ?? 0}
           backgroundGradient={['transparent', 'transparent']}
           gradientViewStyle={styles.sadadFooterGradient}
           btnStyle={styles.sadadBtn}
           disableBtnIcons
+          warning={warning}
+          btnDisbaled={warning}
+          totalAmountText={isRefund && 'LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND'}
         />
       </IPayView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
+        ref={otpBottomSheetRef}
         heading="BILL_PAYMENTS.NEW_MOI_BILL"
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '97%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={otpBottomSheetRef}
+        isVisible={isOtpSheetVisible}
         bold
         cancelBnt
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
-          onPressConfirm={onConfirmOtp}
+          onPressConfirm={handlePay}
           mobileNumber={mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
@@ -189,8 +145,10 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}
+          toastContainerStyle={styles.toastContainerStyle}
+          onResendCodePress={() => otpVerificationRef.current?.resetInterval()}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
 
       <IPayBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"

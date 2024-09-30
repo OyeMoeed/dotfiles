@@ -20,6 +20,7 @@ interface BillPaymentInfosTypes {
   billerIcon: string;
   transactionId?: string;
   billPayDetailsArr?: BillPayDetailsArr;
+  serviceType?: string;
 }
 
 interface MultiPaymentBillPayloadTypes {

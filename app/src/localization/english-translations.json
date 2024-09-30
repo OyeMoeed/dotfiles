@@ -556,6 +556,7 @@
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
     "DATE_AND_TIME": "Transaction Date",
+    "CARD_NUMBER": "Card Number",
     "ACCOUNT": "Account",
     "REASON_OF_TRANSFER": "Reason of Transfer",
     "SALARY": "Salary",
@@ -1170,6 +1171,8 @@
     "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
   "SADAD": {
+    "MONTLY_LIMIT_REACHED": "Monthly Limit reached",
+    "DAILY_LIMIT_REACHED": "Daily Limit reached",
     "SADAD_BILLS": "SADAD Bills",
     "ACTIVE_BILLS": "Active Bills",
     "INACTIVE_BILLS": "Inactive Bills",
@@ -1231,6 +1234,7 @@
     "AMOUNT": "Amount"
   },
   "BILL_PAYMENTS": {
+    "ANOTHER_REFUND": "Another Refund",
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
     "NEW_MOI_BILL": "New MOI Bill",

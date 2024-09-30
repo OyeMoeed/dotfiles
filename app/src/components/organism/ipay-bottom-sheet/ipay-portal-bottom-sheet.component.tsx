@@ -40,6 +40,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
       noGradient,
       isVisible = false,
       onDone,
+      defaultIndex,
     },
     ref,
   ) => {
@@ -125,6 +126,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
           enablePanDownToClose={enablePanDownToClose}
           enableContentPanningGesture={isPanningGesture}
           handleComponent={handleComponent}
+          index={defaultIndex}
         >
           <IPayLinearGradientView
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
