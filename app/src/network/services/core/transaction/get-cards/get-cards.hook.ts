@@ -1,8 +1,8 @@
 import { useCustomQuery } from '@app/network/hooks';
 import { ApiResponse } from '@app/network/services/services.interface';
-import getCards from './get-cards.service';
-import TRANSACTION_QUERY_KEYS from '../transaction.query-keys';
 import { CardResponseInterface, CardsProp } from '../transaction.interface';
+import TRANSACTION_QUERY_KEYS from '../transaction.query-keys';
+import getCards from './get-cards.service';
 
 interface UseCardProps {
   payload: CardsProp;

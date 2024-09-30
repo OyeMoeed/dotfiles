@@ -76,7 +76,7 @@ const useDynamicForm = (fetchedFields: DynamicField[]) => {
           break;
         case DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE:
           if (required) {
-            schema = Yup.boolean().oneOf([true], t('VALIDATION.CHECKBOX_REQUIRED').replace('{label}', label));
+            schema = Yup.boolean().oneOf([true], t('VALIDATION.REQUIRED').replace('{label}', label));
           }
           break;
 

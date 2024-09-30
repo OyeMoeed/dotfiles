@@ -1170,6 +1170,8 @@
     "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
   "SADAD": {
+    "MONTLY_LIMIT_REACHED": "Monthly Limit reached",
+    "DAILY_LIMIT_REACHED": "Daily Limit reached",
     "SADAD_BILLS": "SADAD Bills",
     "ACTIVE_BILLS": "Active Bills",
     "INACTIVE_BILLS": "Inactive Bills",
@@ -1231,6 +1233,7 @@
     "AMOUNT": "Amount"
   },
   "BILL_PAYMENTS": {
+    "ANOTHER_REFUND": "Another Refund",
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
     "NEW_MOI_BILL": "New MOI Bill",
@@ -1540,5 +1543,10 @@
     "TITLE": "Update Required",
     "SUBTITLE": "This is an old version of the app, and you cannot continue or log in using it. You will need to update the app to access your account.",
     "BUTTON_TITLE": "Update Now"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "You can now",
+    "BOLD_TITLE": "Easily Issue Cards",
+    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
   }
 }

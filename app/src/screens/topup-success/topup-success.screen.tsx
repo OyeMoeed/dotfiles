@@ -2,6 +2,8 @@ import IPayTopupSuccess from '@app/components/organism/ipay-topuup-successful/ip
 import { IPaySafeAreaView } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
+import { customInvalidateQuery } from '@app/utilities';
 import { PayChannel } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/native';
 
@@ -13,6 +15,7 @@ const TopUpSuccessScreen = () => {
   };
 
   const handleNavigation = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
     if (topupChannel === PayChannel.WALLET) {
       navigate(screenNames.WALLET_TRANSFER);
     } else if (topupChannel === PayChannel.GIFT) {

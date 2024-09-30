@@ -6,6 +6,7 @@ import { moderateScale, verticalScale } from 'react-native-size-matters';
 const dropdownStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
+      flex: 1,
       width: '100%',
       paddingHorizontal: moderateScale(24, 0.3),
     },
@@ -38,7 +39,7 @@ const dropdownStyles = (colors: typeof themeColors) =>
       backgroundColor: colors.natural.natural0,
       paddingHorizontal: moderateScale(18, 0.3),
       height: moderateScale(48),
-      borderRadius: moderateScale(16),
+      borderRadius: moderateScale(20),
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
@@ -49,7 +50,14 @@ const dropdownStyles = (colors: typeof themeColors) =>
     noResultsView: {
       alignItems: 'center',
     },
-    flexStyles: { flex: 0 },
+    flexStyles: {
+      height: moderateScale(30),
+      width: '100%',
+    },
+    searchIcon: {
+      height: moderateScale(20),
+      width: moderateScale(20),
+    },
   });
 
 export default dropdownStyles;

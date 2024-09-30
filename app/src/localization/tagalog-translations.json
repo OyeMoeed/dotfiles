@@ -256,5 +256,10 @@
     "SATISFACTION": "Paano ka nakakasagot sa iyong pagkakaantig",
     "ALINMA_PAY_APP": "sa Alinma Pay app?",
     "RATE_APP_NOW": "Isama natin sa rating"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "Kaya nyo na",
+    "BOLD_TITLE": "Mabilis na Isyu ng Kartang",
+    "DESCRIPTION": "Tingnan ang mga mapapanood at mga feature sa AlinmaPay!"
   }
 }

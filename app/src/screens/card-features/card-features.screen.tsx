@@ -7,16 +7,16 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import IPayCardDetail from '@app/components/organism/ipay-card-details/ipay-card-details.component';
 import IPayCardSegment from '@app/components/templates/ipay-card-segment/ipay-card-segment.component';
 import { CardType } from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { CardOptions } from '@app/utilities/enums.util';
-import { useRoute } from '@react-navigation/native';
 import useVirtualCardData from '../virtual-card/use-virtual-card-data';
 import cardFeaturesStyles from './card-features.style';
 
 const CardFeaturesScreen: React.FC = () => {
-  const route = useRoute();
-  const { currentCard } = route?.params as { currentCard: { cardType: 'VPPC' } };
-  const CURRENT_CARD_TYPE: CardType = currentCard.cardType;
+  const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+  const CURRENT_CARD_TYPE: CardType = currentCard?.cardType || 'VPPC';
+
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const { colors } = useTheme();
   const styles = cardFeaturesStyles(colors);
