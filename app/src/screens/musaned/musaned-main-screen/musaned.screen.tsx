@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Share from 'react-native-share';
 
@@ -38,6 +38,8 @@ const MusanedScreen: React.FC = () => {
   const refBottomSheet = useRef(null);
   const { showToast } = useToastContext();
 
+  const [sentRequestsPage] = useState(1);
+  const [receivedRequestsPage] = useState(1);
   const [sentRequestsData, setSentRequestsData] = useState([]);
   const [recivedRequestsData, setRecivedRequestsData] = useState([]);
 
@@ -99,10 +101,6 @@ const MusanedScreen: React.FC = () => {
 
     return { data: [], hasMore: false };
   };
-
-  useEffect(() => {
-    getRequestsData();
-  }, []);
 
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
@@ -232,6 +230,9 @@ const MusanedScreen: React.FC = () => {
             externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
             keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`} // Convert the index to a string
             renderItem={renderItem}
+            fetchData={(page, pageSize) =>
+              getRequestsData(selectedTab === ALINMA_PAY_USERS ? sentRequestsPage : receivedRequestsPage, pageSize)
+            } // Pass fetchData for pagination
             pageSize={10}
             data={dataForPaginatedFLatlist}
             ListEmptyComponent={noResult}
