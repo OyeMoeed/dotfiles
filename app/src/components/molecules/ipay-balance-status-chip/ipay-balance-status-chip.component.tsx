@@ -3,6 +3,7 @@ import { States } from '@app/utilities/enums.util';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { FC, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { IPayView } from '@app/components/atoms';
 import IPayChip from '../ipay-chip/ipay-chip.component';
 import { BalanceStatusVariants, IPayBalanceStatusChipProps } from './ipay-balance-chip-status.interface';
 
@@ -103,7 +104,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
       fullWidth
     />
   ) : (
-    <></>
+    <IPayView />
   );
 };
 

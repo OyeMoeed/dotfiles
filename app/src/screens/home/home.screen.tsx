@@ -19,16 +19,14 @@ import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice
 import { setCards } from '@app/store/slices/cards-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { filterCards, mapCardData } from '@app/utilities/cards.utils';
+import { filterCards } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
-import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
 import { ApiResponse } from '@app/network/services/services.interface';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import homeStyles from './home.style';
@@ -63,15 +61,15 @@ const Home: React.FC = () => {
 
   const { showToast } = useToastContext();
 
-  const getCardsData = async (cardApiResponse: any) => {
-    if (cardApiResponse) {
-      const availableCards = filterCards(cardApiResponse?.response?.cards);
+  // const getCardsData = async (cardApiResponse: any) => {
+  //   if (cardApiResponse) {
+  //     const availableCards = filterCards(cardApiResponse?.response?.cards);
 
-      if (availableCards?.length) {
-        dispatch(setCards(mapCardData(availableCards)));
-      }
-    }
-  };
+  //     if (availableCards?.length) {
+  //       dispatch(setCards(mapCardData(availableCards)));
+  //     }
+  //   }
+  // };
 
   const openProfileBottomSheet = () => {
     dispatch(setProfileSheetVisibility(true));
