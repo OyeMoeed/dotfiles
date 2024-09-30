@@ -71,6 +71,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const getTransactionsData = async (filtersData?: any) => {
     setIsLoading(true);
+    setFilteredData([]);
 
     let cardIndex = '';
     if (currentCard) {
@@ -107,7 +108,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
 
   const getW2WTransactionsData = async (trxType: 'DR' | 'CR', filterData?: FilterFormDataProp) => {
     setIsLoading(true);
-    setTransactionsData([]);
     setFilteredData([]);
 
     const payload: TransactionsProp = {
@@ -124,7 +124,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     const apiResponse: any = await getTransactions(payload);
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       setTransactionsData(apiResponse?.response?.transactions);
-      setFilteredData(apiResponse?.response?.transactions);
     }
 
     setIsLoading(false);
@@ -205,6 +204,10 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       applyFilters({ transaction_type: selectedTab });
     }
   }, [selectedTab]);
+
+  useEffect(() => {
+    setFilteredData(transactionsData);
+  }, [transactionsData]);
 
   useEffect(() => {
     setNoFilterResult(false);

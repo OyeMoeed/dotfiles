@@ -139,7 +139,7 @@ const IPayFilterTransactions = ({
     () =>
       contacts?.map((item: any, index: any) => ({
         id: index,
-        key: index,
+        key: item?.phoneNumbers[0]?.number,
         displayValue: item?.givenName,
         value: item?.phoneNumbers[0]?.number,
         description: item?.phoneNumbers[0]?.number,
@@ -235,6 +235,12 @@ const IPayFilterTransactions = ({
       const bankName = bankList?.find((bank: ListItem) => bank?.key === data?.beneficiaryBankName)?.value;
       if (bankName) mapFilterTags.set(bankName, { beneficiaryBankName: '' });
 
+      const contactName = mappedContacts?.find(
+        (contact: ListItem) => contact?.key === data?.contactNumber,
+      )?.displayValue;
+
+      if (contactName) mapFilterTags.set(contactName, { contactNumber: '' });
+
       const transactionType = transactionTypes?.find((type: ListItem) => type?.key === data?.transactionType)?.value;
       if (transactionType) mapFilterTags.set(transactionType, { transactionType: '' });
 
@@ -283,6 +289,23 @@ const IPayFilterTransactions = ({
   const onSelectDateFilter = (dateType: FiltersType) => {
     if (!getValues(dateType)) {
       setValue(dateType, moment(new Date()).format(FORMAT_1));
+    }
+  };
+
+  const handleSelectType = (selectedItem: string) => {
+    if (showCardFilter && cards) {
+      const CARD_TYPES = [
+        'CIN_VISA_CASHBACK',
+        'PAY_VCARD_POS_MADA',
+        'PAY_VCARD_POS_VISA',
+        'PAY_VCARD_POS_NAQD_MADA',
+        'PAY_VCARD_POS_NAQD_VISA',
+        'PAY_VCARD_POS_NAQD',
+        'PAY_VCARD_ECOM_MADA',
+        'PAY_VCARD_ECOM_VISA',
+      ];
+      const foundItem: any = CARD_TYPES.find((cardType: string) => cardType === selectedItem) || null;
+      setIsCardFilterVisible(!!foundItem);
     }
   };
 
@@ -477,21 +500,8 @@ const IPayFilterTransactions = ({
               selectedValue={value}
               label="TRANSACTION_HISTORY.TRANSACTION_TYPE"
               onSelectListItem={(selectedItem: string) => {
-                if (showCardFilter) {
-                  const CARD_TYPES = [
-                    'CIN_VISA_CASHBACK',
-                    'PAY_VCARD_POS_MADA',
-                    'PAY_VCARD_POS_VISA',
-                    'PAY_VCARD_POS_NAQD_MADA',
-                    'PAY_VCARD_POS_NAQD_VISA',
-                    'PAY_VCARD_POS_NAQD',
-                    'PAY_VCARD_ECOM_MADA',
-                    'PAY_VCARD_ECOM_VISA',
-                  ];
-                  const foundItem: any = CARD_TYPES.find((cardType: string) => cardType === selectedItem) || null;
-                  setIsCardFilterVisible(!!foundItem);
-                }
-                onChange(selectedItem);
+                handleSelectType(selectedItem);
+                onChange();
               }}
               testID="transactionTypes-dropdown"
               labelKey="value"
