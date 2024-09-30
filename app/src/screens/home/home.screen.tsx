@@ -12,15 +12,19 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import useGetWalletInfo from '@app/network/services/core/get-wallet/useGetWalletInfo';
 import getOffers from '@app/network/services/core/offers/offers.service';
+import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
 import { useGetCards } from '@app/network/services/core/transaction/transactions.service';
 import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
+import { ApiResponse } from '@app/network/services/services.interface';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setProfileSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { setRearrangedItems } from '@app/store/slices/rearrangement-slice';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { CardStatusNumber, CardTypes } from '@app/utilities';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayIcon, IPayView } from '@components/atoms';
+import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
@@ -61,16 +65,6 @@ const Home: React.FC = () => {
   const [tempreArrangedItems, setTempReArrangedItems] = useState<string[]>([]);
 
   const { showToast } = useToastContext();
-
-  // const getCardsData = async (cardApiResponse: any) => {
-  //   if (cardApiResponse) {
-  //     const availableCards = filterCards(cardApiResponse?.response?.cards);
-
-  //     if (availableCards?.length) {
-  //       dispatch(setCards(mapCardData(availableCards)));
-  //     }
-  //   }
-  // };
 
   const openProfileBottomSheet = () => {
     dispatch(setProfileSheetVisibility(true));
@@ -249,6 +243,7 @@ const Home: React.FC = () => {
       ref.current?.present();
     } else ref.current?.forceClose();
   }, [isFocused]);
+
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
   const { isLoadingWalletInfo } = useGetWalletInfo({

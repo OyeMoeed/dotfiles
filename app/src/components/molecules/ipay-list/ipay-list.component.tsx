@@ -47,6 +47,7 @@ const IPayList: React.FC<IPayListProps> = ({
   containerStyle,
   isShowSaveQRButton,
   subTextStyle,
+  subTitleContainerStyle,
   onPressSaveQR,
   centerContainerStyles,
   leftIconContainerStyles,
@@ -99,7 +100,7 @@ const IPayList: React.FC<IPayListProps> = ({
             </IPayView>
           )}
           {isShowSubTitle && (
-            <IPayView style={dynamicStyles.flexRow}>
+            <IPayView style={[dynamicStyles.flexRow, subTitleContainerStyle]}>
               <IPayCaption1Text
                 numberOfLines={subTitleLines}
                 style={[dynamicStyles.subTitleStyle, subTextStyle]}
