@@ -22,14 +22,11 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { t } = useTranslation();
   const styles = moiPaymentConfirmationStyls();
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { limitsDetails, userContactInfo } = walletInfo;
+  const { availableBalance, limitsDetails, userContactInfo } = walletInfo;
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
   const { billData, isRefund } = route?.params || {};
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-
-  const { availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
   const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
     useMoiPaymentConfirmation(billData, isRefund);
   const [paymentDetails, setPaymentDetails] = useState<MOIItemProps[]>([]);
