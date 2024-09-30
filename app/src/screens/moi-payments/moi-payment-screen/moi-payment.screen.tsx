@@ -84,7 +84,7 @@ const MoiPaymentScreen: React.FC = () => {
           integrationTagName: MoiPaymentFormFields.SERVICE_TYPE,
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
-          disable: !serviceProviderValue,
+          disable: true,
         },
       ];
       setFields(updatedFields);
@@ -151,58 +151,11 @@ const MoiPaymentScreen: React.FC = () => {
       setFields(updatedFields);
     }
   };
-  const resetFields = () => {
+  const resetFields = (reset: () => void) => {
     setIsInquired(false);
     setFields([]);
     onGetBillers();
-    if (serviceProviderValue) handleChange(serviceProviderValue);
-  };
-
-  const onSubmit = async (data: any) => {
-    const excludedIndices = [MoiPaymentFormFields.SERVICE_TYPE, MoiPaymentFormFields.SERVICE_PROVIDER, benLabel, useID];
-
-    const dynamicFields = fields
-      .map((item) => {
-        const { label, index, value } = item;
-        const fieldValueFromData = data[index.replace(/\./g, '_')]; // Matching the index from data with its flat key form
-
-        return {
-          label,
-          index,
-          value: fieldValueFromData !== undefined ? fieldValueFromData : value, // Use value from data if available
-          description: label,
-          isFormValid: !!fieldValueFromData, // Set form validation flag based on field value availability
-        };
-      })
-      .filter((field) => field.value !== undefined && !excludedIndices.includes(field.index));
-    const isRefund = selectedTab === MoiPaymentTypes.REFUND;
-    const payLoad = {
-      dynamicFields,
-      walletNumber,
-      refund: isRefund,
-    };
-    const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
-    if (apiResponse?.response) {
-      const serviceTypeField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_TYPE);
-      const serviceProviderField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_PROVIDER);
-      const serviceProviderFromLOV = serviceProviderField?.lovList?.find(
-        (lov) => lov?.billerId === serviceProviderValue,
-      );
-      const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
-      resetFields();
-      navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
-        billData: {
-          ...apiResponse.response,
-          dynamicFields,
-          serviceTypeFromLOV,
-          serviceProviderFromLOV,
-        },
-        isRefund,
-      });
-    } else {
-      invoiceSheetRef.current?.present();
-      resetFields();
-    }
+    reset();
   };
 
   const handleChange = async (selectedValue: string) => {
@@ -234,13 +187,67 @@ const MoiPaymentScreen: React.FC = () => {
   return (
     <>
       <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
-        {({ control, formState: { errors }, handleSubmit }) => {
+        {({ control, formState: { errors }, handleSubmit, reset }) => {
           const {
             [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
             [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
           } = useWatch({ control });
           setServiceProviderValue(serviceProviderValue);
           setServiceTypeValue(serviceTypeValue);
+
+          const onSubmit = async (data: any) => {
+            const excludedIndices = [
+              MoiPaymentFormFields.SERVICE_TYPE,
+              MoiPaymentFormFields.SERVICE_PROVIDER,
+              benLabel,
+              useID,
+            ];
+
+            const dynamicFields = fields
+              .map((item) => {
+                const { label, index, value } = item;
+                const fieldValueFromData = data[index.replace(/\./g, '_')]; // Matching the index from data with its flat key form
+
+                return {
+                  label,
+                  index,
+                  value: fieldValueFromData !== undefined ? fieldValueFromData : value, // Use value from data if available
+                  description: label,
+                  isFormValid: !!fieldValueFromData, // Set form validation flag based on field value availability
+                };
+              })
+              .filter((field) => field.value !== undefined && !excludedIndices.includes(field.index));
+            const isRefund = selectedTab === MoiPaymentTypes.REFUND;
+            const payLoad = {
+              dynamicFields,
+              walletNumber,
+              refund: isRefund,
+            };
+            const apiResponse = await validateBill(selectedBiller, selectedServiceType, payLoad);
+            if (apiResponse?.response) {
+              const serviceTypeField = fields.find((field) => field.index === MoiPaymentFormFields.SERVICE_TYPE);
+              const serviceProviderField = fields.find(
+                (field) => field.index === MoiPaymentFormFields.SERVICE_PROVIDER,
+              );
+              const serviceProviderFromLOV = serviceProviderField?.lovList?.find(
+                (lov) => lov?.billerId === serviceProviderValue,
+              );
+              const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
+              resetFields(reset);
+              navigate(ScreenNames.MOI_PAYMENT_CONFIRMATION, {
+                billData: {
+                  ...apiResponse.response,
+                  dynamicFields,
+                  serviceTypeFromLOV,
+                  serviceProviderFromLOV,
+                },
+                isRefund,
+              });
+            } else {
+              invoiceSheetRef.current?.present();
+              resetFields(reset);
+            }
+          };
 
           return (
             <IPaySafeAreaView>
@@ -261,7 +268,7 @@ const MoiPaymentScreen: React.FC = () => {
                   <IPayButton
                     btnText="NEW_SADAD_BILLS.INQUIRY"
                     btnType={buttonVariants.PRIMARY}
-                    onPress={isInquired ? handleSubmit(onSubmit) : handleInquiry}
+                    onPress={isInquired ? handleSubmit(onSubmit, reset) : handleInquiry}
                     btnStyle={styles.inquiryBtn}
                     large
                     btnIconsDisabled
