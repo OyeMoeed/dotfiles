@@ -167,7 +167,7 @@ const IPayGiftTransferSuccess: React.FC<IGiftTransferSuccessProps> = ({ transfer
           otherView={
             <IPayButton
               btnType={buttonVariants.LINK_BUTTON}
-              btnText="TOP_UP.SHARE"
+              btnText={t('TOP_UP.SHARE')}
               leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
             />
           }

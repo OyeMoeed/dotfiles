@@ -153,7 +153,7 @@ const TransferSuccessScreen = () => {
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText="TOP_UP.SHARE"
+                  btnText={t('TOP_UP.SHARE')}
                 />
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}

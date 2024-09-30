@@ -41,6 +41,7 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({
   const styles = transactionHistoryStyle(colors);
   const fullName = useTypedSelector((state) => state.walletInfoReducer.walletInfo.fullName);
 
+
   const multiTransactionTypes =
     (transaction?.transactionRequestType === TransactionTypes.COUT_SARIE ||
       transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA ||
@@ -80,6 +81,7 @@ const IPayShareableOtherView = ({
 }: any) => {
   const { colors } = useTheme();
   const styles = transactionHistoryStyle(colors);
+  const { t } = useTranslation();
 
   return (
     <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
@@ -97,7 +99,7 @@ const IPayShareableOtherView = ({
         <IPayButton
           btnType={buttonVariants.OUTLINED}
           onPress={onPressShare}
-          btnText="TOP_UP.SHARE"
+          btnText={t('TOP_UP.SHARE')}
           medium
           btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
           leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
