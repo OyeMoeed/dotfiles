@@ -29,10 +29,9 @@ import { ApiResponse } from '@app/network/services/services.interface';
 import { BottomSheetModal } from '@gorhom/bottom-sheet';
 import { CardStatusNumber, CardTypes } from '@app/utilities';
 import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 
-import homeStyles from './home.style';
 import { setCards } from '@app/store/slices/cards-slice';
+import homeStyles from './home.style';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -48,7 +47,6 @@ const Home: React.FC = () => {
   const topUpSelectionRef = React.createRef<any>();
   const cardIssuanceSheetRef = useRef<BottomSheetModal>(null);
 
-  const [, setCardsData] = useState<CardInterface[]>([]);
   const dispatch = useTypedDispatch();
   const {
     walletNumber,
