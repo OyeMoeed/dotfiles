@@ -21,12 +21,12 @@ import { useTranslation } from 'react-i18next';
 import React, { useEffect, useRef, useState } from 'react';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { heightMapping } from '../../components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import { IPayTransactionItemProps } from './component/ipay-transaction.interface';
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 import { BeneficiaryTransactionItemProps } from '../beneficiary-transaction-history/beneficiary-transaction-history.interface';
-import { TransactionTypes } from '@app/enums/transaction-types.enum';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { isW2WTransactions, isShowTabs = false, currentCard, contacts, isShowAmount = true } = route.params;

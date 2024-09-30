@@ -139,8 +139,8 @@ const prepareRenewCard = async (payload: prepareRenewCardProp): Promise<any> => 
 const generateInvoice = async (payload: generateInvoiceProps): Promise<any> => {
   try {
     const apiResponse = await apiCall({
-      endpoint: CORE_URLS.GENERATE_INVOICE(payload?.walletNumber,payload?.trxId, payload?.trxDate),
-      method: requestType.GET
+      endpoint: CORE_URLS.GENERATE_INVOICE(payload?.walletNumber, payload?.trxId, payload?.trxDate),
+      method: requestType.GET,
     });
     if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
       return apiResponse;
@@ -162,5 +162,5 @@ export {
   prepareResetCardPinCode,
   prepareShowCardDetails,
   resetPinCode,
-  generateInvoice
+  generateInvoice,
 };

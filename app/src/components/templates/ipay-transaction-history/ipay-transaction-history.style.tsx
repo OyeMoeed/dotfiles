@@ -112,7 +112,7 @@ const transactionHistoryStyle = (colors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'space-between',
-    }
+    },
   });
 
 export default transactionHistoryStyle;

@@ -140,6 +140,7 @@ const NewSadadBillScreen: React.FC = () => {
             disableBtnIcons
             warning={warningMessage}
             onPressBtn={onNavigateToConfirm}
+            amount={amount || totalAmount}
           />
         ) : (
           <IPayButton
