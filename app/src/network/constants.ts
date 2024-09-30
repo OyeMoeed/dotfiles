@@ -13,19 +13,15 @@ const constants = {
   MAX_RECORD: 'max-record',
   API_ENV: [
     {
-      id: 0,
       title: 'preProd',
     },
     {
-      id: 1,
       title: 'uat',
     },
     {
-      id: 2,
       title: 'sit',
     },
     {
-      id: 3,
       title: 'dev',
     },
   ],
