@@ -9,6 +9,7 @@ import {
   CardsProp,
   TransactionsProp,
   changeStatusProp,
+  generateInvoiceProps,
   getCardDetailsProp,
   prepareRenewCardProp,
   prepareShowDetailsProp,
@@ -153,6 +154,23 @@ const prepareRenewCard = async (payload: prepareRenewCardProp): Promise<any> => 
   }
 };
 
+const generateInvoice = async (payload: generateInvoiceProps): Promise<any> => {
+  try {
+    const apiResponse = await apiCall({
+      endpoint: CORE_URLS.GENERATE_INVOICE(payload?.walletNumber,payload?.trxId, payload?.trxDate),
+      method: requestType.GET
+    });
+    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+      return apiResponse;
+    }
+    return { apiResponseNotOk: true };
+  } catch (error: any) {
+    return { error: error.message || 'Unknown error' };
+  }
+};
+
+
+
 export {
   changeStatus,
   getCards,
@@ -164,4 +182,5 @@ export {
   prepareResetCardPinCode,
   prepareShowCardDetails,
   resetPinCode,
+  generateInvoice
 };
