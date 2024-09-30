@@ -1,3 +1,5 @@
+import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
+
 const getDynamicFieldsMockResponse = {
   response: {
     billNumberLabel: 'Iqama ID',

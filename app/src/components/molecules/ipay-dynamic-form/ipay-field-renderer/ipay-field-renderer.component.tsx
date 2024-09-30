@@ -83,25 +83,23 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             name={flatKey}
             control={control}
             defaultValue={field.value}
-            render={({ field: { value, onChange } }) => {
-              return (
-                <IPayDropdownSelect
-                  data={field.lovList}
-                  selectedValue={value}
-                  label={field.label}
-                  onSelectListItem={(selectedItem: string) => {
-                    onChange(selectedItem);
-                    if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
-                  }}
-                  isSearchable={true}
-                  testID={`${flatKey}-dropdown`}
-                  labelKey="desc"
-                  valueKey="code"
-                  disabled={field.lovList === null ? true : field.lovList.length === 0}
-                  errorMessage={errorMessage as string}
-                />
-              );
-            }}
+            render={({ field: { value, onChange } }) => (
+              <IPayDropdownSelect
+                data={field.lovList}
+                selectedValue={value}
+                label={field.label}
+                onSelectListItem={(selectedItem: string) => {
+                  onChange(selectedItem);
+                  if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
+                }}
+                isSearchable
+                testID={`${flatKey}-dropdown`}
+                labelKey="desc"
+                valueKey="code"
+                disabled={field.lovList === null ? true : field.lovList.length === 0}
+                errorMessage={errorMessage as string}
+              />
+            )}
           />
         );
       case DYNAMIC_FIELDS_TYPES.DATE:
@@ -139,17 +137,15 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             name={flatKey}
             control={control}
             defaultValue={field.value}
-            render={({ field: { value, onChange } }) => {
-              return (
-                <IPayCheckboxTitle
-                  heading={field.label}
-                  isCheck={value}
-                  onPress={() => {
-                    onChange(!value);
-                  }}
-                />
-              );
-            }}
+            render={({ field: { value, onChange } }) => (
+              <IPayCheckboxTitle
+                heading={field.label}
+                isCheck={value}
+                onPress={() => {
+                  onChange(!value);
+                }}
+              />
+            )}
           />
         );
 

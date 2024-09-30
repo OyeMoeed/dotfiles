@@ -12,4 +12,3 @@ interface PrepareMoiBillResponse {
   status: MockAPIStatusProps;
 }
 export { PrepareMoiBillPayload, PrepareMoiBillResponse };
-

@@ -78,6 +78,5 @@ export {
   IApiStatus,
   MockAPIDataProps,
   MockAPIOkProp,
-  MockAPIStatusProps
+  MockAPIStatusProps,
 };
-

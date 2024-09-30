@@ -66,7 +66,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
       dynamicFields: billData?.dynamicFields,
       billIdType: '',
       moiBillPaymentType: isRefund ? 'REFUND' : 'PAYMENT',
-      amount:isRefund?'': billData.totalFeeAmount,
+      amount: isRefund ? '' : billData.totalFeeAmount,
       serviceDescription: billData?.serviceTypeFromLOV?.desc,
       applyTax: 'N',
       groupPaymentId: billData.groupPaymentId,

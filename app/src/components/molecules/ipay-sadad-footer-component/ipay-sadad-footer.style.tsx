@@ -38,7 +38,7 @@ const sadadFooterComponentStyles = (colors: any) =>
     },
     chipView: {
       marginBottom: moderateScale(16, 0.3),
-      width:'100%'
+      width: '100%',
     },
   });
 

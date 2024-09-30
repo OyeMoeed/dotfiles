@@ -34,7 +34,7 @@ const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
   const [serviceProviderValue, setServiceProviderValue] = useState<string | null>(null);
-  const [serviceTypeValue, setServiceTypeValue] = useState<string | null>(null);
+  const [, setServiceTypeValue] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [selectedBiller, setSelectedBiller] = useState<string>('');
   const [isInquired, setIsInquired] = useState<boolean>(false);
@@ -110,7 +110,7 @@ const MoiPaymentScreen: React.FC = () => {
     return null;
   };
 
-  const fetchFields = async (selectedBiller: string, selectedServiceType: string) => {
+  const fetchFields = async () => {
     setSelectedBiller(selectedBiller);
     setSelectedServiceType(selectedServiceType);
     const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
@@ -182,7 +182,7 @@ const MoiPaymentScreen: React.FC = () => {
 
   const handleInquiry = () => {
     setIsInquired(true);
-    fetchFields(serviceProviderValue, serviceTypeValue);
+    fetchFields();
   };
 
   const handleParentLovChange = useParentLovChange(fields, setFields);
@@ -192,11 +192,14 @@ const MoiPaymentScreen: React.FC = () => {
       <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
         {({ control, formState: { errors, isDirty }, handleSubmit, reset }) => {
           const {
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
+            // eslint-disable-next-line @typescript-eslint/no-shadow
             [MoiPaymentFormFields.SERVICE_TYPE]: serviceTypeValue,
+            // eslint-disable-next-line react-hooks/rules-of-hooks
           } = useWatch({ control });
-          setServiceProviderValue(serviceProviderValue);
-          setServiceTypeValue(serviceTypeValue);
+          setServiceProviderValue(serviceProviderValue || '');
+          setServiceTypeValue(serviceTypeValue || '');
           const isFormValid = !!serviceProviderValue && !!serviceTypeValue;
           const onSubmit = async (data: any) => {
             const excludedIndices = [
