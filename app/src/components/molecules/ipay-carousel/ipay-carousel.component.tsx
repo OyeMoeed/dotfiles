@@ -46,7 +46,7 @@ const IPayCarousel = <T,>({
       onChangeIndex?.(0);
       setCurrentIndex(0);
     }
-  }, [data]);
+  }, [data, resetOnDataChange]);
 
   return (
     <IPayView style={[styles.defaultCarousel, carouselContainerStyle]}>
