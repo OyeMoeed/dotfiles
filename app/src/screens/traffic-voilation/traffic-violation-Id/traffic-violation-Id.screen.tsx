@@ -21,7 +21,8 @@ const TrafficViolationIDScreen: React.FC = () => {
   const { violationDetails, dynamicFields } = route.params;
   const { billsData, selectedBillsCount, onSelectBill, selectAllBills, deselectAllBills } = useTrafficViolation();
 
-  const violations = billsData?.length === 1 && t('TRAFFIC_VIOLATION.VIOLATIONS');
+  const violations = billsData?.length > 1 ? t('TRAFFIC_VIOLATION.VIOLATIONS') : t('TRAFFIC_VIOLATION.VIOLATION');
+  const violationsCount = violationDetails ? 1 : billsData?.length;
 
   const onHandlePayButton = () => {
     navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: true, violationDetails, dynamicFields });
@@ -33,7 +34,7 @@ const TrafficViolationIDScreen: React.FC = () => {
       <IPayView style={styles.rowStyles}>
         <IPayList
           title="TRAFFIC_VIOLATION.VIOLATOR_ID"
-          detailText={`${1} ${violations}`}
+          detailText={`${violationsCount} ${violationDetails ? t('TRAFFIC_VIOLATION.VIOLATION') : violations}`}
           subTitle={violationDetails?.violatorId}
           isShowSubTitle
           showDetail

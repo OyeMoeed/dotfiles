@@ -113,15 +113,16 @@ const TrafficVoilationCasesScreen: React.FC = () => {
       return invoiceSheetRef.current?.present();
     }
     if (apiResponse?.successfulResponse) {
+      const violationNum = isRefund ? data.BeneficiaryId_OfficialId : data.TrafficViolationsByViolationID_ViolationID;
       const violationDetails = {
         serviceId: trafficService?.serviceId,
         serviceDescription: trafficService?.serviceDesc,
         applyTax: trafficService?.applyTax,
         billerId: trafficViolationsData?.billerId,
         moiBillPaymentType: fields[0]?.requiredInPaymentOrRefund,
-        amount: apiResponse?.response?.totalFeeAmount,
+        amount: apiResponse?.response?.totalFeeAmount ?? 0,
         violatorId: data.BeneficiaryId_OfficialId ?? '',
-        violationNo: data.BeneficiaryId_OfficialNumber ?? '',
+        violationNo: violationNum ?? '',
         serviceProvider: BillPaymentOptions.TRAFFIC_VIOLATION,
         serviceType: formSelectedTab,
         groupPaymentId: apiResponse?.response?.groupPaymentId,
