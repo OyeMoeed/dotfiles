@@ -10,6 +10,7 @@ import alertReducer from './slices/alert-slice';
 import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
 import bottomSheetReducer from './slices/bottom-sheets-slice';
+import cardsReducer from './slices/cards-slice';
 import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
 import permissionAlertReducer from './slices/permission-alert-slice';
@@ -38,6 +39,7 @@ const reducers = {
   permissionAlertReducer,
   resetStateSlice: ResetStateSlice,
   bottomSheetReducer,
+  cardsReducer,
   forceUpdateReducer,
 };
 

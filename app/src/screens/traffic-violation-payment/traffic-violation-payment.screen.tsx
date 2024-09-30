@@ -8,18 +8,18 @@ import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ip
 import { IPayOtpVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States, buttonVariants } from '@app/utilities';
 import { useRoute } from '@react-navigation/core';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { t } from 'i18next';
-import ScreenNames from '@app/navigation/screen-names.navigation';
-import { navigate } from '@app/navigation/navigation-service.navigation';
-import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
-import billPaymentStyles from './traffic-violation-payment.styles';
-import useBillPaymentConfirmation from './traffic-violation-payment.hook';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
+import useBillPaymentConfirmation from './traffic-violation-payment.hook';
+import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
   const {

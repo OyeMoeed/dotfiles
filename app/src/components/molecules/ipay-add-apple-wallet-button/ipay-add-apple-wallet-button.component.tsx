@@ -109,7 +109,7 @@ const IPayAddAppleWalletButton: React.FC<IPayAddAppleWalletProps> = ({ selectedC
           nonce: data[0],
           nonceSig: data[1],
           certificates: data[2],
-          primaryAccountNumberPrefix: selectedCard.cardNumber.slice(0, 6),
+          primaryAccountNumberPrefix: selectedCard?.cardNumber.slice(0, 6),
           networkName: getCardNetworkName(),
           cardIndex,
         };

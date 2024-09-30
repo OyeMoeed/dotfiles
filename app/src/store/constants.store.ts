@@ -9,6 +9,7 @@ export const SLICE_NAMES = {
   AUTH_SLICE: 'authSlice',
   APP_DATA_SLICE: 'appDataSlice',
   WALLET_INFO_SLICE: 'walletInfoSlice',
+  CARDS_SLICE: 'cardsSlice',
   ALERT_SLICE: 'alertSlice',
   SPINNER_SLICE: 'spinnerSlice',
   DROPDOWN_SLICE: 'dropdownSlice',
