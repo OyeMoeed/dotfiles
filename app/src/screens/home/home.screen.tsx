@@ -29,10 +29,6 @@ import { useFocusEffect, useIsFocused } from '@react-navigation/native';
 import { useTypedDispatch, useTypedSelector } from '@store/store';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { ApiResponse } from '@app/network/services/services.interface';
-import { BottomSheetModal } from '@gorhom/bottom-sheet';
-import { CardStatusNumber, CardTypes } from '@app/utilities';
-import { CardResponseInterface } from '@app/network/services/core/transaction/transaction.interface';
 
 import { setCards } from '@app/store/slices/cards-slice';
 import homeStyles from './home.style';
