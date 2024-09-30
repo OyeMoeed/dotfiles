@@ -16,19 +16,19 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPayPageWrapper } from '@app/components/templates';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import { copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
+import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
-import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { moiPaymentDetailes, successMessage, subDetails, isRefund } = route.params;
+  const { moiPaymentDetailes, successMessage, isRefund } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const { showToast } = useToastContext();
@@ -159,16 +159,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 <IPayView style={styles.dataTopView}>
                   <IPayFlatlist
                     data={paymentDtails}
-                    keyExtractor={(_, index) => index.toString()}
-                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={renderItem}
-                    scrollEnabled={false}
-                  />
-                </IPayView>
-                <IPayView style={styles.dataBottomView}>
-                  <IPayFlatlist
-                    data={subDetails}
                     keyExtractor={(_, index) => index.toString()}
                     itemSeparatorStyle={styles.itemSeparatorStyle}
                     showsVerticalScrollIndicator={false}
