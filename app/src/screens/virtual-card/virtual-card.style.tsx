@@ -55,7 +55,6 @@ const virtualCardStyles = (colors: typeof themeColors) =>
       alignSelf: 'center',
     },
     heightedView: { height: moderateScale(600) },
-    collapsedView: { backgroundColor: colors.natural.natural100 },
   });
 
 export default virtualCardStyles;
