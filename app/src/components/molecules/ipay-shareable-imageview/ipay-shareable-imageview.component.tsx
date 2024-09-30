@@ -7,7 +7,7 @@ import useShareableImage from './ipay-shareable-imageview.hook';
 import IPayShareableImageViewProps from './ipay-shareable-imageview.interface';
 import shareableViewStyles from './ipay-shareable-imageview.style';
 
-const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ children, otherView, style, testID }) => {
+const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ children, otherView, style, testID , isShareable}) => {
   const { t } = useTranslation();
   const { viewShotRef, shareImage } = useShareableImage();
   const { colors } = useTheme();
@@ -18,15 +18,11 @@ const IPayShareableImageView: React.FC<IPayShareableImageViewProps> = ({ childre
     if (React.isValidElement(element)) {
       const isShareButton = element.props.btnText === t('TOP_UP.SHARE');
 
-      if (isShareButton) {
-        return React.cloneElement(element, {
-          onPress: () => {
-            shareImage();
-            setTimeout(() => {
-              element?.props?.onPress?.();
-            }, 300);
-          },
-        });
+      if (isShareable) {
+        shareImage();
+        setTimeout(() => {
+          element?.props?.onPress?.();
+        }, 300);
       }
 
       // If the element has children, apply the function recursively to each child
