@@ -262,6 +262,7 @@ const MoiPaymentScreen: React.FC = () => {
             if (serviceProviderValue) {
               resetField(MoiPaymentFormFields.SERVICE_TYPE);
               setIsInquired(false);
+              setFields(serviceFields)
             }
           }, [serviceProviderValue]);
 
