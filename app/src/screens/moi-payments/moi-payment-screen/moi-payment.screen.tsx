@@ -40,6 +40,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [isInquired, setIsInquired] = useState<boolean>(false);
   const [selectedServiceType, setSelectedServiceType] = useState<string>('');
   const [fields, setFields] = useState<DynamicField[]>([]);
+  const [serviceFields, setServiceFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -88,6 +89,8 @@ const MoiPaymentScreen: React.FC = () => {
           disable: true,
         },
       ];
+      setServiceFields(updatedFields);
+
       setFields(updatedFields);
     }
   };
@@ -147,8 +150,7 @@ const MoiPaymentScreen: React.FC = () => {
         );
       });
 
-      const updatedFields = [...fields, ...beneficiaryLabel, ...filteredFields];
-
+      const updatedFields = [...serviceFields, ...beneficiaryLabel, ...filteredFields];
       setFields(updatedFields);
     }
   };
@@ -185,7 +187,7 @@ const MoiPaymentScreen: React.FC = () => {
   return (
     <>
       <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
-        {({ control, formState: { errors, isDirty }, handleSubmit, reset }) => {
+        {({ control, formState: { errors, isDirty }, handleSubmit, reset, resetField }) => {
           const {
             // eslint-disable-next-line @typescript-eslint/no-shadow
             [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
@@ -254,6 +256,14 @@ const MoiPaymentScreen: React.FC = () => {
             setIsInquired(true);
             fetchFields(serviceProviderValue, serviceTypeValue);
           };
+
+          // Function to reset SERVICE_TYPE and set isInquired to false when SERVICE_PROVIDER changes
+          useEffect(() => {
+            if (serviceProviderValue) {
+              resetField(MoiPaymentFormFields.SERVICE_TYPE);
+              setIsInquired(false);
+            }
+          }, [serviceProviderValue]);
 
           return (
             <IPaySafeAreaView>
