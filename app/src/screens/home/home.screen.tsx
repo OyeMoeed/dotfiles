@@ -32,6 +32,7 @@ import { CardResponseInterface } from '@app/network/services/core/transaction/tr
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 
 import homeStyles from './home.style';
+import { setCards } from '@app/store/slices/cards-slice';
 
 const Home: React.FC = () => {
   const { colors } = useTheme();
@@ -225,7 +226,7 @@ const Home: React.FC = () => {
       }
 
       if (availableCardsForSearch?.length) {
-        setCardsData(mapCardData(availableCardsForSearch));
+        dispatch(setCards(mapCardData(availableCardsForSearch)));
       }
     }
   };

@@ -91,6 +91,28 @@ const transactionHistoryStyle = (colors: any) =>
       flex: 1,
       textAlign: 'right',
     },
+    imageStyle: {
+      width: scaleSize(27),
+      height: moderateScale(18),
+    },
+    iconStyle: {
+      width: moderateScale(14),
+      height: moderateScale(14),
+    },
+    footerView: {
+      width: '100%',
+      paddingTop: moderateScale(8),
+    },
+    linkButtonsView: {
+      width: '100%',
+      paddingStart: moderateScale(24, 0.3),
+      paddingEnd: moderateScale(8, 0.3),
+      marginBottom: moderateScale(14),
+      alignSelf: 'center',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+    }
   });
 
 export default transactionHistoryStyle;

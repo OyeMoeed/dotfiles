@@ -26,6 +26,7 @@ import { IPayTransactionItemProps } from './component/ipay-transaction.interface
 import FiltersArrayProps from './transaction-history.interface';
 import transactionsStyles from './transaction-history.style';
 import { BeneficiaryTransactionItemProps } from '../beneficiary-transaction-history/beneficiary-transaction-history.interface';
+import { TransactionTypes } from '@app/enums/transaction-types.enum';
 
 const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const { isW2WTransactions, isShowTabs = false, currentCard, contacts, isShowAmount = true } = route.params;
@@ -153,7 +154,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       walletNumber,
       maxRecords: '100',
       offset: '1',
-      trxReqType: 'PAY_WALLET',
+      trxReqType: `${TransactionTypes.PAY_WALLET},${TransactionTypes.COUT_MOBILE}`,
       trxType,
       fromDate: filterData?.dateFrom ? moment(filterData?.dateFrom, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',
       toDate: filterData?.dateTo ? moment(filterData?.dateTo, 'DD/MM/YYYY').format('DD-MM-YYYY') : '',

@@ -148,6 +148,12 @@ interface prepareRenewCardProp {
   };
 }
 
+interface generateInvoiceProps {
+  walletNumber?: string;
+  trxId?: string;
+  trxDate?: string;
+}
+
 interface changeStatusProp {
   walletNumber?: string;
   body?: {
@@ -236,5 +242,6 @@ export {
   getCardDetailsProp,
   prepareRenewCardProp,
   renewCardProp,
-  CardResponseInterface,
+  generateInvoiceProps,
+  CardResponseInterface
 };
