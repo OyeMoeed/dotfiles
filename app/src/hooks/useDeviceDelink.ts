@@ -9,7 +9,7 @@ import { useTypedSelector } from '@app/store/store';
 
 const useDelinkDevice = ({ shouldNavigate }: { shouldNavigate?: boolean }) => {
   const { resetBiometricConfig } = useBiometricService();
-  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const delinkDevice = async () => {
     const delinkReqBody = await getDeviceInfo();

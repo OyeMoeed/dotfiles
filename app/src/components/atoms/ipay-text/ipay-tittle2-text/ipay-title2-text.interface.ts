@@ -35,4 +35,5 @@ export interface IPayTitle2TextProps {
    * Need translate the text.
    */
   shouldTranslate?: boolean;
+  isLoading?: boolean;
 }

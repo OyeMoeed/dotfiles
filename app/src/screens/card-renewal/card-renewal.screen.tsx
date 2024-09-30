@@ -22,9 +22,9 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { CardStatusIndication, buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPaySafeAreaView } from '@components/templates';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import useConstantData from '@app/constants/use-constants';
 import { prepareRenewCardProp, renewCardProp } from '@app/network/services/core/transaction/transaction.interface';
@@ -38,7 +38,6 @@ import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import OtpVerificationComponent from '../auth/forgot-passcode/otp-verification.component';
 import { OTPVerificationRefTypes } from '../issue-new-card-confirm-details/issue-new-card-confirm-details.interface';
-import { RouteParams } from './card-renewal.screen.interface';
 import cardRenewalStyles from './card-renewal.style';
 
 const DUMMY_DATA = {
@@ -51,13 +50,10 @@ const CardRenewalScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
-  const route = useRoute<RouteProps>();
-  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
-  const {
-    currentCard: { cardType, cardHeaderText, name, nextAnnualFeeAmt, nextAnnualFeeVAT, maskedCardNumber, cardIndex },
-    statusIndication,
-  } = route?.params || {};
+  const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+  const { cardType, cardHeaderText, name, nextAnnualFeeAmt, nextAnnualFeeVAT, maskedCardNumber, cardIndex } =
+    currentCard as CardInterface;
 
   const otpVerificationRef = useRef<OTPVerificationRefTypes>(null);
   const { walletNumber, availableBalance, limitsDetails } = useTypedSelector(
@@ -73,8 +69,9 @@ const CardRenewalScreen: React.FC = () => {
   const [otpRef, setOtpRef] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
+  const [statusIndication] = useState();
 
-  const lastFourDigit = maskedCardNumber?.slice(-4);
+  const lastFourDigit = maskedCardNumber?.slice(-4) || '';
 
   const styles = cardRenewalStyles(colors);
   const [checkTermsAndConditions, setCheckTermsAndConditions] = useState<boolean>(false);

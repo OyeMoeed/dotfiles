@@ -43,7 +43,7 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({
 }) => {
   const { colors } = useTheme();
   const styles = transactionHistoryStyle(colors);
-  const { fullName } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const fullName = useTypedSelector((state) => state.walletInfoReducer.walletInfo.fullName);
 
   const multiTransactionTypes =
     (transaction?.transactionRequestType === TransactionTypes.COUT_SARIE ||

@@ -193,6 +193,40 @@ enum CardStatus {
   DISABLE = '700',
 }
 
+interface CardResponseInterface {
+  cardIndex: string;
+  cardNumber: string;
+  cardStatus: string;
+  cardStatusDesc: string;
+  cardTypeId: string;
+  cardTypeDesc: string;
+  cardClassId: string;
+  cardClassDesc: string;
+  expiryDate: string;
+  maskedCardNumber: string;
+  cvv2: string;
+  linkedName: {
+    title: string;
+    embossingName: string;
+    firstName: string;
+    lastName: string;
+  };
+  issueDate: string;
+  expiryDateMonthYear: string;
+  creditCardDetails: {
+    dueAmount: string;
+    availableBalance: string;
+    cashAvailableBalance: string;
+    extraBalance: string;
+    totalOutstanding: string;
+    creditLimit: string;
+    cashLimit: string;
+    statementIssuanceDate: string;
+    nextAnnualFeesDueDate: string;
+    virtualCard: true;
+  };
+}
+
 export {
   CardListItem,
   CardListResponse,
@@ -208,5 +242,6 @@ export {
   getCardDetailsProp,
   prepareRenewCardProp,
   renewCardProp,
-  generateInvoiceProps
+  generateInvoiceProps,
+  CardResponseInterface
 };

@@ -22,7 +22,7 @@ export interface IPayFilterProps {
 
   onSubmit: (event: FilterSelectedValue) => void;
   onWatch: (event: any, name: any, type: any) => void;
-  onReset:(event: boolean) => void;
+  onReset: (event: boolean) => void;
   /**
    * prop for showing amount filter
    */

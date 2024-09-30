@@ -39,4 +39,5 @@ export interface IPayFootnoteTextProps {
    * Need translate the text.
    */
   shouldTranslate?: boolean;
+  isLoading?: boolean;
 }

@@ -97,7 +97,7 @@ const useVirtualCardData = () => {
     {
       key: CardTypes.CLASSIC,
       type: t('VIRTUAL_CARD.CLASSIC_DEBIT_CARD'),
-      description: t('VIRTUAL_CARD.MADA_DETAILS'),
+      description: t('VIRTUAL_CARD.CLASSIC_DETAILS'),
       backgroundImage: images.classicBackground,
     },
     {

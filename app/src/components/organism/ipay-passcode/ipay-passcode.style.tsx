@@ -1,4 +1,5 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { isArabic } from '@app/utilities/constants';
 import { moderateScale } from 'react-native-size-matters';
 
 const ipayPasscodeStyles = (theme: any) =>
@@ -40,7 +41,7 @@ const ipayPasscodeStyles = (theme: any) =>
       height: moderateScale(18),
     },
     pinContainer: {
-      flexDirection: 'row',
+      flexDirection: isArabic ? 'row-reverse' : 'row',
       marginBottom: moderateScale(40),
     },
     pinBox: {

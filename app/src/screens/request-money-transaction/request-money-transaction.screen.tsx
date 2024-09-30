@@ -17,6 +17,7 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
+import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
@@ -268,24 +269,24 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         return {
           ...baseMapping,
           payment_date: item.payment_date,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       case MoneyRequestStatus.PENDING:
         return {
           ...baseMapping,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       case MoneyRequestStatus.REJECTED:
         return {
           ...baseMapping,
           rejection_date: item.rejection_date,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       default:
         return baseMapping;
     }
   };
-  const openBottomSheet = (item: IPayRequestMoneyProps) => {
+  const openBottomSheet = (item: RequestItem) => {
     const calculatedSnapPoint = [heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
     setSnapPoint(calculatedSnapPoint);
 
@@ -300,11 +301,12 @@ const RequestMoneyTransactionScreen: React.FC = () => {
     navigate(ScreenNames.WALLET_TRANSFER, {
       from: TRANSFERTYPE.REQUEST_MONEY,
       heading: t('REQUEST_MONEY.CREATE_REQUEST'),
+      qrErrorMessage: t('ERROR.INVALID_QRCODE'),
       showHistory: false,
     });
   };
 
-  const renderItem = ({ item }: { item: IPayRequestMoneyProps }) => {
+  const renderItem = ({ item }: { item: RequestItem }) => {
     const { transactionTime, targetFullName, transactionState, targetAmount } = item;
     return (
       <IPayView style={styles.listView}>
@@ -331,6 +333,16 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         iconSize={40}
         icon={icons.money_time}
       />
+      {selectedTab === SEND_REQUESTS && (
+        <IPayButton
+          btnType={buttonVariants.PRIMARY}
+          small
+          onPress={createRequest}
+          btnText="REQUEST_MONEY.CREATE_REQUEST"
+          btnStyle={styles.requestNoResultButton}
+          leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
+        />
+      )}
     </IPayView>
   );
 
@@ -389,9 +401,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         <IPayPaginatedFlatlist
           showsVerticalScrollIndicator={false}
           externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
-          keyExtractor={(index: number) => {
-            index.toString(); // Convert the index to a string
-          }}
+          keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`} // Convert the index to a string
           renderItem={renderItem}
           fetchData={(page, pageSize) =>
             getRequestsData(selectedTab === SEND_REQUESTS ? sentRequestsPage : receivedRequestsPage, pageSize)
@@ -400,7 +410,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           data={dataForPaginatedFLatlist}
           ListEmptyComponent={noResult}
         />
-        {selectedTab === SEND_REQUESTS ? (
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === SEND_REQUESTS ? (
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             large

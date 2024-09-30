@@ -158,9 +158,7 @@ const NearestAtmScreen: React.FC = () => {
         await getFilterKeys({ latitude: position.coords.latitude, longitude: position.coords.longitude });
         await getCities();
       },
-      (error) => {
-        
-      },
+      () => {},
       { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 },
     );
   }, []);

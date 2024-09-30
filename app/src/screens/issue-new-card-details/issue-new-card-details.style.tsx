@@ -19,6 +19,7 @@ const issueNewCardDetailsStyles = (colors: typeof themeColors) =>
       justifyContent: 'flex-start',
     },
     animatedContainer: {
+      marginTop: moderateScale(10),
       backgroundColor: colors.natural.natural100,
       flex: 1,
     },

@@ -78,7 +78,7 @@ const transactionHistoryStyle = (colors: any) =>
       width: scaleSize(24),
     },
     listWrapper: {
-      paddingHorizontal: scale(24),
+      paddingHorizontal: scale(16),
     },
     beneficiaryTitleStyle: {
       fontWeight: FONT_WEIGHT_BOLD,

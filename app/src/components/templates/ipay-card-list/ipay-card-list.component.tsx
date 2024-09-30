@@ -40,7 +40,7 @@ const IPayCardList: React.FC<IPayCardListProps> = ({ selectedCardType, segmentTy
 
   return (
     <IPayView style={styles.flatListContainer} testID={testID}>
-      {data.map(renderItem)}
+      {data?.map(renderItem)}
     </IPayView>
   );
 };

@@ -12,7 +12,6 @@ import { buttonVariants, CardOptions, CardTypes } from '@app/utilities/enums.uti
 import React, { useCallback, useEffect, useState } from 'react';
 import { Easing, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
-import { useTranslation } from 'react-i18next';
 import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
 import { useTypedSelector } from '@app/store/store';
 import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
@@ -27,7 +26,6 @@ import virtualCardStyles from './virtual-card.style';
 import useVirtualCardData from './use-virtual-card-data';
 
 const VirtualCardScreen: React.FC = () => {
-  const { t } = useTranslation();
   const { CARD_CHIP_DATA, VIRTUAL_CARD_DATA } = useVirtualCardData();
   const [tabs, setTabs] = useState<string[]>([]);
   const { colors } = useTheme();
@@ -160,7 +158,7 @@ const VirtualCardScreen: React.FC = () => {
           btnStyle={isExpanded ? styles.expandedButtonStyles : styles.outStyles}
           btnType={buttonVariants.LINK_BUTTON}
           onPress={toggleAnimation}
-          btnText={isExpanded ? t('VIRTUAL_CARD.CLOSE_DETAILS') : t('VIRTUAL_CARD.VIEW_DETAILS')}
+          btnText={isExpanded ? 'VIRTUAL_CARD.CLOSE_DETAILS' : 'VIRTUAL_CARD.VIEW_DETAILS'}
           btnIconsDisabled
         />
       </IPayAnimatedView>
