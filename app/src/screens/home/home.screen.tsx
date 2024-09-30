@@ -239,6 +239,7 @@ const Home: React.FC = () => {
       ref.current?.present();
     } else ref.current?.forceClose();
   }, [isFocused]);
+
   const maxHeight = isAndroidOS ? '94%' : '85%';
 
   const { isLoadingWalletInfo } = useGetWalletInfo({
