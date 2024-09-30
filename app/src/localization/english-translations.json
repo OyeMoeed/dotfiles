@@ -1540,5 +1540,10 @@
     "TITLE": "Update Required",
     "SUBTITLE": "This is an old version of the app, and you cannot continue or log in using it. You will need to update the app to access your account.",
     "BUTTON_TITLE": "Update Now"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "You can now",
+    "BOLD_TITLE": "Easily Issue Cards",
+    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
   }
 }
