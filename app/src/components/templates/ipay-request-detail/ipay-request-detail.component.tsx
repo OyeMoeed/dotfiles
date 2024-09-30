@@ -153,11 +153,7 @@ const IPayRequestDetails: React.FC<IPayRequestDetailProps> = ({
               {value}
             </IPaySubHeadlineText>
           )}
-          {copiableItems.includes(field) ? (
-            <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />
-          ) : (
-            <IPayView />
-          )}
+          {copiableItems.includes(field) && <IPayIcon icon={icons.copy} size={18} color={colors.primary.primary500} />}
         </IPayPressable>
       </IPayView>
     );
