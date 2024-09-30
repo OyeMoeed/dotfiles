@@ -110,15 +110,14 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
       </IPayView>
       <IPayView style={styles.footerView}>
         <SadadFooterComponent
+          showAmount={warning ? false : true}
           onPressBtn={onPressCompletePayment}
           btnText={isRefund ? 'COMMON.CONFIRM' : 'SADAD.PAY'}
-          totalAmount={warning ? '' : billData?.totalFeeAmount ?? 0}
+          totalAmount={billData?.totalFeeAmount ?? 0}
           backgroundGradient={['transparent', 'transparent']}
           gradientViewStyle={styles.sadadFooterGradient}
           btnStyle={styles.sadadBtn}
           disableBtnIcons
-          warning={warning}
-          btnDisbaled={warning}
           totalAmountText={isRefund && 'LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND'}
         />
       </IPayView>

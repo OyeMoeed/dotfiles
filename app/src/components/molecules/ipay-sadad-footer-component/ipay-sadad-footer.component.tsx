@@ -31,6 +31,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   gradientViewStyle,
   shouldTranslateBtnText,
   amount,
+  showAmount=true
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -80,7 +81,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         ) : (
           <IPayView />
         )}
-        {totalAmount ? (
+        {totalAmount && showAmount ? (
           <IPayView style={styles.totalAmountView}>
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText
