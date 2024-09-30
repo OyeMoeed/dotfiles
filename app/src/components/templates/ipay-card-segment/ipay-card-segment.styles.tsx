@@ -7,7 +7,7 @@ const cardSegmentStyles = (colors: typeof themeColors) =>
   createStyleSheet({
     container: {
       paddingHorizontal: moderateScale(24),
-      backgroundColor: colors.natural.natural100,
+      backgroundColor: colors.transparent,
     },
     flatlist: {
       flex: 0,
