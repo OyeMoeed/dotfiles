@@ -23,12 +23,9 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { REGEX } from '@app/constants/app-validations';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
-import { PermissionTypes, PermissionsStatus } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks';
-import usePermissions from '@app/hooks/permissions.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
@@ -40,12 +37,14 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import useContacts from '@app/hooks/use-contacts';
+import { customInvalidateQuery, toggleAppRating } from '@app/utilities';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -60,7 +59,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const { showToast } = useToastContext();
-  const { isKeyboardOpen, isKeyboardWillOpen } = useKeyboardStatus();
+  const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const [search, setSearch] = useState<string>('');
@@ -86,6 +85,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
+        customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+        toggleAppRating();
         switch (from) {
           case TRANSFERTYPE.SEND_MONEY:
             navigate(ScreenNames.SEND_MONEY_FORM, {

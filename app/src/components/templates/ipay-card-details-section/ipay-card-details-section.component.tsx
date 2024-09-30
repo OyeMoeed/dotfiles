@@ -73,7 +73,6 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
     }
   }, [currentCard]);
 
-  const [isCardPrinted, setIsCardPrinted] = useState();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const showActionSheet = () => {
@@ -183,15 +182,11 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({
           keyExtractor={(item) => item.key.toString()}
           contentContainerStyle={styles.flatlistContainerStyle}
         />
-        {!isCardPrinted && (
+        {!currentCard.physicalCard && (
           <IPayButton
             onPress={() => {
               const hasAccess = checkUserAccess();
               if (hasAccess) {
-                setIsCardPrinted((prevState: any) => ({
-                  ...prevState,
-                  [currentCard?.id]: true,
-                }));
                 navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
                   currentCard,
                 });
