@@ -12,7 +12,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
 const MusanedHistoryScreen: React.FC = () => {
   const { colors } = useTheme();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [, setIsLoading] = useState<boolean>(false);
   const [filters, setFilters] = useState<Array<string>>([]);
   const filterRef = useRef<bottomSheetTypes>(null);
 
@@ -29,10 +29,6 @@ const MusanedHistoryScreen: React.FC = () => {
     });
   }, []);
 
-  // Function to apply filters dynamically
-
-  // Function to apply remove filters dynamically
-
   const onPressFilters = () => {
     filterRef.current?.showFilters();
   };
@@ -43,7 +39,7 @@ const MusanedHistoryScreen: React.FC = () => {
     setFilters([]);
   };
 
-  const handleCallbackForFilters = (sheetName: string) => {};
+  const handleCallbackForFilters = () => {};
 
   return (
     <IPaySafeAreaView>

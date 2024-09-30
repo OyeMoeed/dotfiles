@@ -1,3 +1,3 @@
-import getMusanedInquiry from './musaned-inquiry.service';
+import getMusanedInquiryList from './musaned-inquiry.service';
 
-export default getMusanedInquiry;
+export default getMusanedInquiryList;

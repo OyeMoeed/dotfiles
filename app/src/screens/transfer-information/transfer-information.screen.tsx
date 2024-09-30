@@ -24,12 +24,12 @@ import { regex } from '@app/styles/typography.styles';
 import { ApiResponseStatusType, APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import { removeCommas } from '@app/utilities/number-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
-import transferInformationStyles from './transfer-information.style';
-import { ReasonListItem } from './trasnfer-information.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
+import transferInformationStyles from './transfer-information.style';
+import { ReasonListItem } from './trasnfer-information.interface';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
@@ -243,15 +243,6 @@ const TransferInformation: React.FC = () => {
 
   const topUpSelectionRef = createRef<any>();
 
-  const topupItemSelected = (routeName: string, params: {}) => {
-    closeBottomSheetTopUp();
-    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
-      navigateTOAktharPoints();
-    } else {
-      navigate(routeName, params);
-    }
-  };
-
   const navigateTOAktharPoints = async () => {
     const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
@@ -261,6 +252,15 @@ const TransferInformation: React.FC = () => {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
     } else {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
     }
   };
 
@@ -324,24 +324,24 @@ const TransferInformation: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayPortalBottomSheet
-          noGradient
-          heading="TOP_UP.ADD_MONEY_USING"
-          onCloseBottomSheet={closeBottomSheetTopUp}
-          customSnapPoint={SNAP_POINT.XS_SMALL}
-          ref={topUpSelectionRef}
-          enablePanDownToClose
-          simpleHeader
-          simpleBar
-          bold
-          cancelBnt
-          isVisible={topUpOptionsVisible}
-        >
-          <IPayTopUpSelection
-            testID="topUp-selection"
-            closeBottomSheet={closeBottomSheetTopUp}
-            topupItemSelected={topupItemSelected}
-          />
-        </IPayPortalBottomSheet>
+        noGradient
+        heading="TOP_UP.ADD_MONEY_USING"
+        onCloseBottomSheet={closeBottomSheetTopUp}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
+        ref={topUpSelectionRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={topUpOptionsVisible}
+      >
+        <IPayTopUpSelection
+          testID="topUp-selection"
+          closeBottomSheet={closeBottomSheetTopUp}
+          topupItemSelected={topupItemSelected}
+        />
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

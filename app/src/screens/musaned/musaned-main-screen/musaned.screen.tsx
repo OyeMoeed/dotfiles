@@ -1,16 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Share from 'react-native-share';
 
 import icons from '@app/assets/icons';
-import {
-  IPayIcon,
-  IPayPaginatedFlatlist,
-  IPayPressable,
-  IPaySubHeadlineText,
-  IPayText,
-  IPayView,
-} from '@app/components/atoms';
+import { IPayIcon, IPayPaginatedFlatlist, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -24,7 +17,7 @@ import { useNavigation } from '@react-navigation/core';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IPayBottomSheet, IPayMusanedAlinmaUser, IPayMusanedNonAlinmaUserList } from '@app/components/organism';
 import { buttonVariants } from '@app/utilities';
-import getMusanedInquiry from '@app/network/services/musaned/musaned-inquiry';
+import getMusanedInquiryList from '@app/network/services/musaned/musaned-inquiry';
 import { shareOptions } from '@app/utilities/shared.util';
 
 import musanedStyle from './musaned.styles';
@@ -45,8 +38,6 @@ const MusanedScreen: React.FC = () => {
   const refBottomSheet = useRef(null);
   const { showToast } = useToastContext();
 
-  const [sentRequestsPage, setSentRequestsPage] = useState(1);
-  const [receivedRequestsPage, setReceivedRequestsPage] = useState(1);
   const [sentRequestsData, setSentRequestsData] = useState([]);
   const [recivedRequestsData, setRecivedRequestsData] = useState([]);
 
@@ -68,8 +59,7 @@ const MusanedScreen: React.FC = () => {
 
   const getRequestsData = async (): Promise<{ data: Notification[]; hasMore: boolean }> => {
     try {
-      // call getAllRecivedRequests if tab is recevied other wise call getAllSentRequests
-      const apiResponse = await getMusanedInquiry({
+      const apiResponse = await getMusanedInquiryList({
         walletNumber: walletInfo.walletNumber,
       });
 
@@ -80,7 +70,6 @@ const MusanedScreen: React.FC = () => {
           const alinmaPayUsers = data.filter((value) => value.haveWalletFlag);
           const nonAlinmaPayUsers = data.filter((value) => !value.haveWalletFlag);
 
-          // set data according to the tabs
           if (selectedTab === ALINMA_PAY_USERS) {
             setSentRequestsData(alinmaPayUsers);
           } else {
@@ -111,6 +100,10 @@ const MusanedScreen: React.FC = () => {
     return { data: [], hasMore: false };
   };
 
+  useEffect(() => {
+    getRequestsData();
+  }, []);
+
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
   };
@@ -140,15 +133,9 @@ const MusanedScreen: React.FC = () => {
             {index === 0 ? (
               <IPayChip
                 fullWidth
-                containerStyle={{
-                  marginBottom: 12,
-                  backgroundColor: colors.natural.natural100,
-                }}
-                textValue="Laborers not using AlinmaPay have to create one to receive their salaries"
-                headingStyles={{
-                  paddingVertical: 12,
-                  width: '90%',
-                }}
+                containerStyle={styles.chipContainer}
+                textValue="MUSANED.NOT_ALINMA_USERS_MESSAGE"
+                headingStyles={styles.chipHeading}
               />
             ) : null}
             <IPayMusanedNonAlinmaUserList
@@ -209,6 +196,12 @@ const MusanedScreen: React.FC = () => {
       bottomSheetShare();
     }
   };
+
+  const onPressDetails = () => {
+    refBottomSheet.current?.close?.();
+
+    navigate(ScreenNames.MUSANED_USER_DETAILS);
+  };
   return (
     <>
       <IPaySafeAreaView style={styles.container}>
@@ -239,10 +232,7 @@ const MusanedScreen: React.FC = () => {
             externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
             keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`} // Convert the index to a string
             renderItem={renderItem}
-            fetchData={(page, pageSize) =>
-              getRequestsData(selectedTab === ALINMA_PAY_USERS ? sentRequestsPage : receivedRequestsPage, pageSize)
-            } // Pass fetchData for pagination
-            pageSize={10} // Optional: Set page size for pagination
+            pageSize={10}
             data={dataForPaginatedFLatlist}
             ListEmptyComponent={noResult}
           />
@@ -259,7 +249,7 @@ const MusanedScreen: React.FC = () => {
             withArrow={false}
           />
         ) : (
-          <IPayView style={{ width: '90%' }}>
+          <IPayView style={styles.secondButton}>
             <IPayMusanedNonAlinmaUserList
               date={requestDetail?.poiExperationDate}
               titleText={requestDetail?.name}
@@ -274,11 +264,7 @@ const MusanedScreen: React.FC = () => {
           btnType={buttonVariants.PRIMARY}
           btnText={selectedTab === ALINMA_PAY_USERS ? 'MUSANED.PAY_SALARY' : 'MUSANED.INVITE_NOW'}
           rightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.natural.natural0} />}
-          btnStyle={{
-            width: '90%',
-            marginTop: 32,
-            marginBottom: 8,
-          }}
+          btnStyle={styles.primaryButton}
           large
           onPress={onPressPrimary}
         />
@@ -286,9 +272,8 @@ const MusanedScreen: React.FC = () => {
           btnType={buttonVariants.OUTLINED}
           btnText="MUSANED.VIEW_DETAILS"
           rightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.primary.primary500} />}
-          btnStyle={{
-            width: '90%',
-          }}
+          btnStyle={styles.secondButton}
+          onPress={onPressDetails}
           large
         />
       </IPayBottomSheet>

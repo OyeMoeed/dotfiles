@@ -50,12 +50,12 @@ const musanedStyle = (colors: typeof themeColors) =>
       marginTop: moderateScale(24),
     },
     chipContainer: {
-      marginLeft: moderateScale(10),
-      backgroundColor: colors.secondary.secondary100,
+      marginBottom: 12,
+      backgroundColor: colors.natural.natural100,
     },
     chipHeading: {
-      gap: moderateScale(10),
-      color: colors.secondary.secondary500,
+      paddingVertical: 12,
+      width: '90%',
     },
     rejectThisRequestBtn: {
       height: moderateScale(48, 0.3),
@@ -72,6 +72,14 @@ const musanedStyle = (colors: typeof themeColors) =>
     headerRightContent: {
       flexDirection: 'row',
       gap: moderateScale(4),
+    },
+    primaryButton: {
+      width: '90%',
+      marginTop: 32,
+      marginBottom: 8,
+    },
+    secondButton: {
+      width: '90%',
     },
   });
 

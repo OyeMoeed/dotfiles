@@ -1,11 +1,14 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayHeader } from '@app/components/molecules';
+
+import musanedPaySalary from './musaned-pay-salary.style';
 
 const MusanedPaySalaryScreen = () => {
+  const styles = musanedPaySalary();
   return (
-    <View>
-      <Text>MusanedPaySalaryScreen</Text>
-    </View>
+    <IPaySafeAreaView style={styles.container}>
+      <IPayHeader testID="musaned-user-details-header" backBtn title="MUSANED.HEADER" applyFlex />
+    </IPaySafeAreaView>
   );
 };
 

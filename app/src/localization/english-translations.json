@@ -1562,8 +1562,9 @@
     "PAID": "Paid",
     "SELECT": "Select",
     "PAY_SALARY": "Pay Salary",
-    "VIEW_DETAILS":"View Details",
+    "VIEW_DETAILS": "View Details",
     "INVITE_NOW": "Invite now",
-    "INVITE_LABORER": "Invite laborer"
+    "INVITE_LABORER": "Invite laborer",
+    "NOT_ALINMA_USERS_MESSAGE": "Laborers not using AlinmaPay have to create one to receive their salaries"
   }
 }

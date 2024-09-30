@@ -5,7 +5,7 @@ import apiCall from '../../api-call.service';
 import MUSANED_URLS from '../musaned.urls';
 import { ApiResponse } from '../../services.interface';
 
-const getMusanedInquiry = async (params: MusanedInquiryReqParams): Promise<MusanedInquiryMockProps> => {
+const getMusanedInquiryList = async (params: MusanedInquiryReqParams): Promise<MusanedInquiryMockProps> => {
   const { walletNumber } = params;
   if (constants.MOCK_API_RESPONSE) {
     return musanedInquiryMock;
@@ -26,4 +26,4 @@ const getMusanedInquiry = async (params: MusanedInquiryReqParams): Promise<Musan
   }
 };
 
-export default getMusanedInquiry;
+export default getMusanedInquiryList;

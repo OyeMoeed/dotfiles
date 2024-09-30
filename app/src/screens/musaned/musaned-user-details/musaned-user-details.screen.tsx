@@ -1,11 +1,13 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayHeader } from '@app/components/molecules';
+import musanedUserDetailsStyles from './musaned-user-details.style';
 
 const MusanedUserDetails = () => {
+  const styles = musanedUserDetailsStyles();
   return (
-    <View>
-      <Text>MusanedUserDetails</Text>
-    </View>
+    <IPaySafeAreaView style={styles.container}>
+      <IPayHeader testID="musaned-user-details-header" backBtn title="MUSANED.HEADER" applyFlex />
+    </IPaySafeAreaView>
   );
 };
 
