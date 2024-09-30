@@ -3,24 +3,41 @@ import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
-import { ACTIVE_SADAD_BILLS } from '@app/constants/constants';
-import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { InquireBillPayloadProps } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
+import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
+import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
+import { getDeviceInfo } from '@app/network/utilities';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { BillActivateSuccessProps } from './bill-activation.interface';
 import ipayBillActivationStyles from './bill-activation.style';
 
-const BillActivationScreen: React.FC = () => {
+const BillActivationScreen: React.FC<BillActivateSuccessProps> = ({ route }) => {
+  const { headerAttributes, billPaymentInfos, billPaymentData } = route.params;
+
   const { colors } = useTheme();
   const styles = ipayBillActivationStyles(colors);
-  const { activeBillDetails, billHeaderDetail } = useConstantData();
 
-  const onPressPayBill = () => {
-    navigate(ScreenNames.ADD_NEW_SADAD_BILLS, {
-      selectedBills: [ACTIVE_SADAD_BILLS[0]],
-    });
+  const onPressPayBill = async () => {
+    const { billerId, billNumOrBillingAcct, serviceType }: BillPaymentInfosTypes = billPaymentInfos;
+    const deviceInfo = await getDeviceInfo();
+    const payload: InquireBillPayloadProps = {
+      billerId,
+      billAccountNumber: billNumOrBillingAcct,
+      serviceId: serviceType,
+      deviceInfo,
+    };
+    const apiResponse = await inquireBillService(payload);
+    if (apiResponse.successfulResponse) {
+      navigate(ScreenNames.NEW_SADAD_BILL, {
+        ...billPaymentInfos,
+        dueDate: apiResponse?.response?.dueDate,
+        totalAmount: apiResponse?.response?.dueAmount,
+      });
+    }
   };
 
   return (
@@ -34,8 +51,8 @@ const BillActivationScreen: React.FC = () => {
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <IPayView style={styles.conatinerStyles}>
             <IPayBillDetailsOption
-              headerData={billHeaderDetail}
-              data={activeBillDetails}
+              headerData={headerAttributes}
+              data={billPaymentData}
               style={styles.billContainer}
               optionsStyles={styles.optionsStyle}
             />

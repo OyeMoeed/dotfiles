@@ -6,7 +6,7 @@ import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
 import { GetBillersServicesResponseTypes } from './get-billers-services.interface';
 import getBillersServicesMockResponse from './get-billers-services.mock';
 
-const getBillersServiceProvider = async (billerID: string): Promise<GetBillersServicesResponseTypes> => {
+const getBillersServiceProvider = async (billerID: string | number): Promise<GetBillersServicesResponseTypes> => {
   if (constants.MOCK_API_RESPONSE) {
     return getBillersServicesMockResponse;
   }
