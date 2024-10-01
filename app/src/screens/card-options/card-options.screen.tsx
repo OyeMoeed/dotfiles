@@ -7,6 +7,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 
 import { IPayFootnoteText, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayList } from '@app/components/molecules';
+import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayActionSheet, IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -37,34 +38,30 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
+import { setCards } from '@app/store/slices/cards-slice';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { ApiResponseStatusType, CardStatusNumber, ToastTypes } from '@app/utilities/enums.util';
+import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
-import { RouteProp, useRoute } from '@react-navigation/native';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IPayChangeCardPin from '../change-card-pin';
 import IPayCardOptionsIPayListDescription from './card-options-ipaylist-description';
 import IPayCardOptionsIPayListToggle from './card-options-ipaylist-toggle';
-import { ChangePinRefTypes, DeleteCardSheetRefTypes, RouteParams } from './card-options.interface';
+import { ChangePinRefTypes, DeleteCardSheetRefTypes } from './card-options.interface';
 import cardOptionsStyles from './card-options.style';
 
 const CardOptionsScreen: React.FC = () => {
   const { colors } = useTheme();
   const dispatch = useDispatch();
-  const route = useRoute<RouteProps>();
-  type RouteProps = RouteProp<{ params: RouteParams }, 'params'>;
 
   const { cashWithdrawalCardsList } = useTypedSelector((state) => state.walletInfoReducer);
-
-  const {
-    currentCard,
-    currentCard: { cardType, cardHeaderText, name, maskedCardNumber },
-  } = route.params;
+  const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+  const { cardType, cardHeaderText, name, maskedCardNumber } = currentCard as CardInterface;
 
   const cardLastFourDigit = maskedCardNumber?.slice(-4);
 
@@ -95,16 +92,27 @@ const CardOptionsScreen: React.FC = () => {
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [pin, setPin] = useState('');
 
-  const { refetch } = useGetCards({
+  const getCardsData = async (cardApiResponse: any) => {
+    if (cardApiResponse) {
+      const availableCards = filterCards(cardApiResponse?.response?.cards);
+
+      if (availableCards?.length) {
+        dispatch(setCards(mapCardData(availableCards)));
+      }
+    }
+  };
+
+  useGetCards({
     payload: {
       walletNumber,
     },
+    onSuccess: getCardsData,
     refetchOnWindowFocus: false,
     enabled: false,
   });
 
   const initOnlinePurchase = () => {
-    if (currentCard.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
+    if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
       // check if online purchase is enabled
       setIsOnlinePurchase(true);
     } else {
@@ -113,7 +121,7 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    const isATMWithDrawEnabled = cashWithdrawalCardsList?.includes(currentCard.cardIndex || '');
+    const isATMWithDrawEnabled = cashWithdrawalCardsList?.includes(currentCard?.cardIndex || '');
     setIsATMWithDraw(isATMWithDrawEnabled);
     initOnlinePurchase();
   }, []);
@@ -171,10 +179,10 @@ const CardOptionsScreen: React.FC = () => {
 
   const toggleATMWithdraw = (isOn: boolean) => {
     if (isOn) {
-      const newCardList = new Set<string>([...cashWithdrawalCardsList, currentCard.cardIndex || '']);
+      const newCardList = new Set<string>([...cashWithdrawalCardsList, currentCard?.cardIndex || '']);
       dispatch(setCashWithdrawalCardsList([...newCardList]));
     } else {
-      const newCardList = cashWithdrawalCardsList?.filter((cardIndex: string) => cardIndex !== currentCard.cardIndex);
+      const newCardList = cashWithdrawalCardsList?.filter((cardIndex: string) => cardIndex !== currentCard?.cardIndex);
       dispatch(setCashWithdrawalCardsList([...new Set<string>(newCardList)]));
     }
 
@@ -206,7 +214,6 @@ const CardOptionsScreen: React.FC = () => {
 
     if (apiResponse) {
       queryClient.invalidateQueries({ queryKey: [TRANSACTION_QUERY_KEYS.GET_CARDS] });
-      refetch();
       navigate(ScreenNames.CARDS);
       renderToast('CARD_OPTIONS.CARD_HAS_BEEN_DELETED', true, icons.trash, true);
     }
@@ -252,12 +259,12 @@ const CardOptionsScreen: React.FC = () => {
         // get the card issuance fees
         const feesApiResponse = await getCardIssuanceFees(
           walletInfo?.walletNumber,
-          currentCard.cardType as CardType,
+          currentCard?.cardType as CardType,
           apiResponseCardInquire?.response?.transactionType as string,
         );
         if (feesApiResponse?.status?.type === 'SUCCESS') {
           const cardIssuanceDetails: ICardIssuanceDetails = {
-            cardType: currentCard.cardType as CardType,
+            cardType: currentCard?.cardType as CardType,
             transactionType: apiResponseCardInquire?.response?.transactionType as string,
             fees: feesApiResponse?.response as IssueCardFeesRes,
             cardIndex: apiResponseCardInquire?.response?.cardIndex as string,
@@ -275,7 +282,7 @@ const CardOptionsScreen: React.FC = () => {
   const onNavigateToChooseAddress = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
-      if (currentCard.physicalCard) {
+      if (currentCard?.physicalCard) {
         onReplaceCard();
       } else {
         navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
@@ -411,15 +418,15 @@ const CardOptionsScreen: React.FC = () => {
             rightIcon={icons.arrow_right_1}
             title="CARD_OPTIONS.CARD_FEATURES"
             subTitle="CARD_OPTIONS.LEARN_MORE_ABOUT_FEATURE"
-            onPress={() => navigate(ScreenNames.CARD_FEATURES, { currentCard })}
+            onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
 
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}
-            title={currentCard.physicalCard ? 'CARD_OPTIONS.REPLACE_THE_CARD' : 'CARDS.PRINT_CARD'}
+            title={currentCard?.physicalCard ? 'CARD_OPTIONS.REPLACE_THE_CARD' : 'CARDS.PRINT_CARD'}
             subTitle={
-              currentCard.physicalCard ? 'CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES' : 'CARD_OPTIONS.ISSUE_A_PHSYICAL'
+              currentCard?.physicalCard ? 'CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES' : 'CARD_OPTIONS.ISSUE_A_PHSYICAL'
             }
             onPress={onNavigateToChooseAddress}
           />

@@ -8,7 +8,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, customInvalidateQuery, shortString, States, toggleAppRating } from '@app/utilities';
+import { buttonVariants, customInvalidateQuery, shortString, States } from '@app/utilities';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import React from 'react';
@@ -60,7 +60,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     {
       id: '3',
       label: t('COMMON.DATE'),
-      value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
+      value: getDateFormate(new Date(), dateTimeFormat.DateMonthYearWithoutSpace),
     },
     {
       id: '4',
@@ -71,14 +71,13 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   ];
 
   const onInquireBill = async () => {
-    const apiResponse = await inquireBillService(inquireBillPayload);
+    const apiResponse: any = await inquireBillService(inquireBillPayload);
     if (apiResponse.successfulResponse) {
       customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
-      toggleAppRating();
       navigate(ScreenNames.NEW_SADAD_BILL, {
         ...billPaymentInfos,
-        dueDate: apiResponse?.response?.dueDate,
-        totalAmount: apiResponse?.response?.dueAmount,
+        dueDate: apiResponse?.response?.dueDate || '',
+        totalAmount: apiResponse?.response?.dueAmount || '0',
         isSaveOnly,
       });
     }
@@ -179,7 +178,6 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
               btnStyle={styles.btnStyle}
               onPress={() => {
                 customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
-                toggleAppRating();
                 navigate(ScreenNames.BILL_PAYMENTS_SCREEN, { sadadBills: null });
               }}
             />
@@ -192,7 +190,6 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 btnText="PAY_BILL.PAY_ANOTHER_BILL"
                 onPress={() => {
                   customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
-                  toggleAppRating();
                   popAndReplace(ScreenNames.SADAD_BILLS, 3, { sadadBills: null });
                 }}
               />

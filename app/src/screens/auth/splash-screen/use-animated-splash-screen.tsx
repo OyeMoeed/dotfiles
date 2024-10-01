@@ -9,11 +9,12 @@ import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import { showForceUpdate } from '@app/store/slices/app-force-update-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
-import { getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities';
+import { APIResponseType, getValueFromAsyncStorage, setValueToAsyncStorage } from '@app/utilities';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated } from 'react-native';
+import { setToken } from '@app/network/client';
 
 const useSplashAnimations = () => {
   const { ready: isTranslationsLoaded } = useTranslation(undefined, {
@@ -30,13 +31,17 @@ const useSplashAnimations = () => {
   const { isFirstTime, isLinkedDevice, isAuthenticated } = useTypedSelector((state) => state.appDataReducer.appData);
 
   const splashPrepareApi = async () => {
+    const skipLoginAfterChange = await getValueFromAsyncStorage('skipLoginAfterLogin');
     const deviceInfo = await getDeviceInfo();
     const prepareLoginPayload: DeviceInfoProps = {
       ...deviceInfo,
       locationDetails: {},
     };
 
-    const apiResponse: any = await prepareLogin(prepareLoginPayload);
+    const apiResponse: any = await prepareLogin(prepareLoginPayload, true);
+    if (apiResponse?.status.type === APIResponseType.SUCCESS && skipLoginAfterChange === 'false') {
+      setToken(apiResponse?.headers?.authorization);
+    }
     if (apiResponse?.status?.code === 'E430995') {
       dispatch(showForceUpdate());
     }

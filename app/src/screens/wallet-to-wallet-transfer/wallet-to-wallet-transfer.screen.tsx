@@ -23,12 +23,9 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { REGEX } from '@app/constants/app-validations';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
-import { PermissionTypes, PermissionsStatus } from '@app/enums';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks';
-import usePermissions from '@app/hooks/permissions.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
@@ -40,13 +37,12 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import Contacts, { Contact } from 'react-native-contacts';
+import { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { customInvalidateQuery, toggleAppRating } from '@app/utilities';
-import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
+import useContacts from '@app/hooks/use-contacts';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -64,9 +60,8 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const { isKeyboardOpen } = useKeyboardStatus();
   const remainingLimitRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
-  const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
   const [search, setSearch] = useState<string>('');
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const contacts = useContacts();
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
@@ -88,8 +83,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
     if (apiResponse.status.type === 'SUCCESS') {
       if (apiResponse.response?.friends) {
-        customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
-        toggleAppRating();
         switch (from) {
           case TRANSFERTYPE.SEND_MONEY:
             navigate(ScreenNames.SEND_MONEY_FORM, {
@@ -138,48 +131,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
     }
   };
 
-  const formatMobileNumber = (mobile: string): string => {
-    const mobileWithoutSpaces = mobile.replace(/ /g, '');
-    if (REGEX.longSaudiMobileNumber.test(mobileWithoutSpaces)) {
-      return `0${mobileWithoutSpaces.substr(3)}`;
-    }
-    if (REGEX.longSaudiMobileNumber2.test(mobileWithoutSpaces)) {
-      return `0${mobileWithoutSpaces.substr(4)}`;
-    }
-    if (REGEX.longSaudiMobileNumber3.test(mobileWithoutSpaces)) {
-      return `0${mobileWithoutSpaces.substr(5)}`;
-    }
-    return mobileWithoutSpaces;
-  };
-
-  useEffect(() => {
-    if (permissionStatus === PermissionsStatus.GRANTED) {
-      Contacts.getAll().then((contactsList: Contact[]) => {
-        const flattenedArray = contactsList.reduce((acc, obj) => {
-          const mappedValues = obj.phoneNumbers.map((item) => ({
-            ...obj,
-            phoneNumbers: [
-              {
-                ...item,
-                number: formatMobileNumber(item.number),
-              },
-            ],
-          }));
-          return acc.concat(mappedValues);
-        }, []);
-        const saudiNumbers = flattenedArray.filter((item: Contact) => {
-          const isSaudiNumber = REGEX.saudiMobileNumber.test(item?.phoneNumbers[0]?.number);
-          return isSaudiNumber;
-        });
-        const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
-          ...item,
-          givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
-          recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
-        }));
-        setContacts(listWithUniqueId);
-      });
-    }
-  }, [permissionStatus]);
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
 
   const renderToast = () => {

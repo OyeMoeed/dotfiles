@@ -40,7 +40,7 @@ const VirtualCardScreen: React.FC = () => {
   const toggleAnimation = () => {
     const toValue = isExpanded ? 0 : -verticalScale(205);
     translateY.value = withTiming(toValue, {
-      duration: ANIMATION_DURATION.duration300,
+      duration: isExpanded ? ANIMATION_DURATION.duration200 : ANIMATION_DURATION.duration300,
       easing: Easing.inOut(Easing.ease),
     });
     setIsExpanded(!isExpanded);
@@ -138,7 +138,7 @@ const VirtualCardScreen: React.FC = () => {
       <IPayImage image={backgroundImage} style={styles.background as StyleProp<ImageStyle>} />
       <IPayAnimatedView
         animationStyles={animatedStyles}
-        style={[styles.animatedContainer, isExpanded && styles.expandedBorderRadius]}
+        style={[styles.animatedContainer, isExpanded ? styles.expandedBorderRadius : styles.collapsedView]}
       >
         <IPayView>
           <IPayCardDetail
@@ -162,6 +162,7 @@ const VirtualCardScreen: React.FC = () => {
           btnIconsDisabled
         />
       </IPayAnimatedView>
+
       <IPayView style={styles.bottomContainer}>
         <IPayButton
           btnType={buttonVariants.PRIMARY}

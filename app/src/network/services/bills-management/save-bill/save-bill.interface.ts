@@ -10,9 +10,9 @@ interface SaveBillResponseTypes {
 }
 
 interface SaveBillPayloadTypes {
-  billerId: string;
+  billerId?: string;
   billNumOrBillingAcct: string;
-  billIdType: string;
+  billIdType?: string;
   billerName: string;
   deviceInfo: {
     hashCode: string;

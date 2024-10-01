@@ -1,5 +1,7 @@
 import { hideSpinner, showSpinner } from '@app/store/slices/spinner.slice';
 import { store } from '@app/store/store';
+import { getValueFromAsyncStorage } from '@app/utilities';
+
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosClient from '../client';
 import onRequestFulfilled from '../interceptors/request';
@@ -45,6 +47,10 @@ const apiCall = async <T>({
     axiosClient.defaults.headers.x_hide_spinner_loading = true;
   }
 
+  const asyncStorageAuthorization = await getValueFromAsyncStorage('Authorization');
+
+  axiosClient.defaults.headers.Authorization = asyncStorageAuthorization;
+
   try {
     // show Spinner
     if (!headers?.hide_spinner_loading) {
@@ -55,17 +61,14 @@ const apiCall = async <T>({
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
       await handleAxiosError(response);
-      return hideErrorResponse ? undefined : handleApiResponse(response);
     }
     store.dispatch(hideSpinner());
     return handleApiResponse(response);
   } catch (error: any) {
     await handleAxiosError(error);
+    store.dispatch(hideSpinner());
+    return error;
   }
-
-  // Hide Spinner
-  store.dispatch(hideSpinner());
-  return undefined;
 };
 
 export default apiCall;

@@ -17,13 +17,14 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
+import { copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
 import React from 'react';
 import { buttonVariants } from '@app/utilities/enums.util';
 import ViewShot from 'react-native-view-shot';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useShareableImage from '@app/components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.hook';
 import { useTranslation } from 'react-i18next';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import { IW2WTransferSuccessProps, PayData } from './ipay-w2w-transfer-successful.interface';
 import { TopUpSuccessStyles } from './ipay-w2w-transfer-successful.styles';
 
@@ -180,6 +181,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
     <IPayPressable
       style={styles.newTopup}
       onPress={() => {
+        customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
         if (variant === TransactionTypes.PAYMENT_REQUEST) {
           navigate(screenNames.REQUEST_MONEY);
         } else {
@@ -260,7 +262,11 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
               btnText="COMMON.HOME"
               hasLeftIcon
               leftIcon={<IPayIcon icon={icons.HOME_2} size={20} color={colors.natural.natural0} />}
-              onPress={() => navigate(screenNames.HOME)}
+              onPress={() => {
+                customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+                toggleAppRating();
+                navigate(screenNames.HOME);
+              }}
               textStyle={styles.text}
             />
           </IPayView>
