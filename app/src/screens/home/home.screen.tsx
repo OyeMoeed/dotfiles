@@ -157,13 +157,13 @@ const Home: React.FC = () => {
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
       case CardTypes.PLATINUM:
-        return 'CARDS.PLATINUM_CASHBACK_PREPAID_CARD';
+        return t('CARDS.PLATINUM_CASHBACK_PREPAID_CARD');
 
       case CardTypes.SIGNATURE:
-        return 'CARDS.SIGNATURE_PREPAID_CARD';
+        return t('CARDS.SIGNATURE_PREPAID_CARD');
 
       case CardTypes.CLASSIC:
-        return 'CARDS.CLASSIC_DEBIT_CARD';
+        return t('CARDS.CLASSIC_DEBIT_CARD');
 
       default:
         return '';

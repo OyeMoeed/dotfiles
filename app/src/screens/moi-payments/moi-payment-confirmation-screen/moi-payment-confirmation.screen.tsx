@@ -26,18 +26,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { mobileNumber } = userContactInfo;
   const { billData, isRefund } = route?.params || {};
-  const [warning, setWarning] = useState<string>('');
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (billData?.totalFeeAmount > availableBalance) setWarning('COMMON.INSUFFICIENT_BALANCE_COMMON');
-    else if (billData?.totalFeeAmount > limitsDetails.dailyRemainingOutgoingAmount)
-      setWarning('SADAD.DAILY_LIMIT_REACHED');
-    else if (billData?.totalFeeAmount > limitsDetails.monthlyRemainingOutgoingAmount)
-      setWarning('SADAD.MONTLY_LIMIT_REACHED');
-    else setWarning('');
-  }, [warning]);
-
   const { handlePay, setOtp, otp, isLoading, otpError, setOtpError, otpVerificationRef, setOtpRef, otpBottomSheetRef } =
     useMoiPaymentConfirmation(billData, isRefund);
   const [paymentDetails, setPaymentDetails] = useState<MOIItemProps[]>([]);
@@ -112,13 +101,11 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
           btnText={isRefund ? 'COMMON.CONFIRM' : 'SADAD.PAY'}
-          totalAmount={warning ? '' : billData?.totalFeeAmount ?? 0}
+          totalAmount={billData?.totalFeeAmount ?? 0}
           backgroundGradient={['transparent', 'transparent']}
           gradientViewStyle={styles.sadadFooterGradient}
           btnStyle={styles.sadadBtn}
           disableBtnIcons
-          warning={warning}
-          btnDisbaled={warning}
           totalAmountText={isRefund && 'LOCAL_TRANSFER.AMOUNT_TO_BE_REFUND'}
         />
       </IPayView>
