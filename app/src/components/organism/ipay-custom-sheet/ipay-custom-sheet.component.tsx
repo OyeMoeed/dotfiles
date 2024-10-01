@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { ScrollView, TouchableWithoutFeedback, View } from 'react-native';
 import icons from '@app/assets/icons';
 import { LogoIcon } from '@app/assets/svgs';
 import {
@@ -50,6 +50,7 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
   const THRESHOLD = getCustomSheetThreshold();
   const TOP_TRANSLATE_Y = -WINDOW_HEIGHT + (boxHeight + THRESHOLD);
   const MAX_TRANSLATE_Y = -WINDOW_HEIGHT + topScale;
+  const scrollRef = useRef<ScrollView>(null);
 
   const translateY = useSharedValue(TOP_TRANSLATE_Y);
   const styles = customSheetStyles(colors);
@@ -58,12 +59,13 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
 
   const closeSheet = useCallback(() => {
     translateY.value = withTiming(TOP_TRANSLATE_Y, ANIMATION_CONFIG);
-    runOnJS(setIsSheetOpen)(false);
+    setIsSheetOpen(false);
+    scrollRef?.current?.scrollTo({ y: 0 });
   }, [TOP_TRANSLATE_Y, translateY]);
 
   const openSheet = useCallback(() => {
     translateY.value = withTiming(MAX_TRANSLATE_Y, ANIMATION_CONFIG);
-    runOnJS(setIsSheetOpen)(true);
+    setIsSheetOpen(true);
   }, [MAX_TRANSLATE_Y, translateY]);
 
   const panGestureHandler = Gesture.Pan()
@@ -131,6 +133,7 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
                 isGHScrollView
                 pinchGestureEnabled
                 scrollEnabled={isSheetOpen}
+                ref={scrollRef}
               >
                 {children}
               </IPayScrollView>

@@ -61,4 +61,6 @@ export interface OnboardingScreenProps {
   type?: OnboardingSteps;
 
   bottomButtonViewStyle?: ViewStyle;
+
+  runAnimation: boolean;
 }
