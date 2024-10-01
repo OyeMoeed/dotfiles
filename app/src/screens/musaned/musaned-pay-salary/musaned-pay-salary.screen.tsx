@@ -61,6 +61,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const [selectedReason, setSelectedReason] = useState({});
   const [apiError, setAPIError] = useState<string>('');
   const [expiryDate, setExpiryDate] = useState('');
+  const [deductFlag, setDeductFlag] = useState(false);
+  const [payExtraFlag, setPayExtraFlag] = useState(false);
 
   const refBottomSheet = useRef(null);
   const salaryTypeBottomSheetRef = useRef(null);
@@ -175,55 +177,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     return total;
   };
 
-  const onLocalTransferPrepare = async () => {
-    if (transferAmount && selectedReason?.id && walletNumber) {
-      const transferFees = await getTransferFee();
-      if (transferFees) {
-        try {
-          const deviceInfo = await getDeviceInfo();
-          const payload: LocalTransferPreparePayloadTypes = {
-            beneficiaryCode,
-            transferPurpose: selectedReason?.id,
-            feesAmount: transferFees.feeAmount,
-            vatAmount: transferFees.vatAmount,
-            bankFeesAmount: transferFees.bankFeeAmount,
-            bankVatAmount: transferFees.bankVatAmount,
-            amount: transferAmount,
-            bankCode,
-            transferNetwork,
-            deviceInfo: {
-              platform: deviceInfo?.platform,
-              platformVersion: deviceInfo?.platformVersion,
-              deviceName: deviceInfo?.deviceName,
-              deviceId: deviceInfo?.deviceId,
-            },
-          };
-          const apiResponse = await localTransferPrepare(walletNumber, payload);
-          if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-            navigate(ScreenNames.TRANSFER_CONFIRMATION, {
-              amount: transferAmount,
-              beneficiaryNickName,
-              transferPurpose: selectedReason?.text,
-              instantTransferType: t('TRANSFER_SUMMARY.SARIE'),
-              otpRef: apiResponse.response.otpRef,
-              feesAmount: transferFees.feeAmount,
-              vatAmount: transferFees.vatAmount,
-              totalAmount: getTotal(transferFees.feeAmount, transferFees.vatAmount, transferAmount),
-              authentication: apiResponse?.authentication,
-              bankDetails,
-            });
-          } else if (apiResponse?.apiResponseNotOk) {
-            setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          } else {
-            setAPIError(apiResponse?.error);
-          }
-        } catch (error) {
-          setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-          renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-        }
-      }
-    }
-  };
+  const onLocalTransferPrepare = async () => {};
 
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
@@ -262,6 +216,14 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     refBottomSheet.current?.present();
   };
 
+  const onPressDeductFlag = () => {
+    setDeductFlag(!deductFlag);
+  };
+
+  const onPressPayExtraFlag = () => {
+    setPayExtraFlag(!payExtraFlag);
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="TRANSFER.TRANSFER_INFRORMATION" />
@@ -280,32 +242,30 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               fullName={name?.slice(0, 18)}
               subtitle={isArabic ? occupationAr : occupationEn}
               style={styles.transferContainer}
-              amount={transferAmount}
-              setAmount={setAmount}
               selectedItem={selectedReason?.text}
-              chipValue={chipValue}
               openReason={onPressSelectReason}
               inputFieldStyle={styles.inputFieldStyle}
               onPressDatePicker={openDatePicker}
+              onPressDeductFlag={onPressDeductFlag}
+              onPressPayExtraFlag={onPressPayExtraFlag}
+              payExtraFlag={payExtraFlag}
+              deductFlag={deductFlag}
+              amount={payrollAmount}
             />
           </IPayView>
         </IPayView>
       </IPayScrollView>
-      {!isKeyboardOpen ? (
-        <IPayView style={styles.buttonContainer}>
-          <IPayButton
-            onPress={onLocalTransferPrepare}
-            btnType={buttonVariants.PRIMARY}
-            large
-            disabled={isTransferButtonDisabled() || Boolean(chipValue)}
-            btnIconsDisabled
-            btnText="COMMON.NEXT"
-            btnStyle={styles.nextBtn}
-          />
-        </IPayView>
-      ) : (
-        <IPayView />
-      )}
+      <IPayView style={styles.buttonContainer}>
+        <IPayButton
+          onPress={onLocalTransferPrepare}
+          btnType={buttonVariants.PRIMARY}
+          large
+          btnIconsDisabled
+          btnText="COMMON.NEXT"
+          btnStyle={styles.nextBtn}
+        />
+      </IPayView>
+
       <IPayBottomSheet
         heading="MUSANED.SALARY_TYPE"
         onCloseBottomSheet={onCloseSheet}

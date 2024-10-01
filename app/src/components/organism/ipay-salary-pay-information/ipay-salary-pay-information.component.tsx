@@ -1,9 +1,12 @@
 import React from 'react';
+import { StyleSheet } from 'react-native';
+import { useTranslation } from 'react-i18next';
+
 import icons from '@app/assets/icons';
-import { IPayCheckbox, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayCheckbox, IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayList } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { StyleSheet } from 'react-native';
+
 import IPaySalaryPayInformationProps from './ipay-salary-pay-information.interface';
 import transferInfoStyles from './ipay-salary-pay-information.style';
 
@@ -16,24 +19,34 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   inputFieldStyle,
   fullName,
   onPressDatePicker,
+  onPressDeductFlag,
+  onPressPayExtraFlag,
+  deductFlag,
+  payExtraFlag,
+  amount,
 }) => {
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
+  const { t } = useTranslation();
 
   return (
     <IPayView testID={`${testID}-transfer-information`} style={[styles.gradientView, style]}>
-      <IPayView>
-        <IPayList
-          textStyle={styles.titleText}
-          title={fullName}
-          subTextStyle={StyleSheet.flatten(styles.subtitleText)}
-          isShowSubTitle
-          subTitle={subtitle}
-          isShowLeftIcon
-          leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
-          containerStyle={StyleSheet.flatten(styles.headerContainer)}
-        />
-      </IPayView>
+      <IPayList
+        textStyle={styles.titleText}
+        title={fullName}
+        subTextStyle={StyleSheet.flatten(styles.subtitleText)}
+        isShowSubTitle
+        subTitle={subtitle}
+        isShowLeftIcon
+        rightText={
+          <IPayView>
+            <IPayCaption1Text text="MUSANED.BASIC_SALARY" />
+            <IPayText text={`${amount} ${t('COMMON.SAR')}`} />
+          </IPayView>
+        }
+        leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
+        containerStyle={StyleSheet.flatten(styles.headerContainer)}
+      />
 
       <IPayPressable onPress={openReason} style={styles.reasonsView}>
         <IPayAnimatedTextInput
@@ -69,7 +82,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
         />
       </IPayPressable>
 
-      <IPayPressable onPress={onPressDatePicker} style={styles.reasonsView}>
+      <IPayPressable onPress={onPressDeductFlag} style={styles.reasonsView}>
         <IPayAnimatedTextInput
           pointerEvents="none"
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
@@ -78,10 +91,10 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           value={selectedItem}
           editable={false}
           showRightIcon
-          customIcon={<IPayCheckbox isCheck />}
+          customIcon={<IPayCheckbox isCheck={deductFlag} onPress={onPressDeductFlag} />}
         />
       </IPayPressable>
-      <IPayPressable onPress={onPressDatePicker} style={styles.reasonsView}>
+      <IPayPressable onPress={onPressPayExtraFlag} style={styles.reasonsView}>
         <IPayAnimatedTextInput
           pointerEvents="none"
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
@@ -90,7 +103,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           value={selectedItem}
           editable={false}
           showRightIcon
-          customIcon={<IPayCheckbox isCheck />}
+          customIcon={<IPayCheckbox isCheck={payExtraFlag} onPress={onPressPayExtraFlag} />}
         />
       </IPayPressable>
     </IPayView>

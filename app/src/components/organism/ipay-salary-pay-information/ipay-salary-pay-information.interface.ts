@@ -10,6 +10,11 @@ interface IPaySalaryPayInformationProps {
   inputFieldStyle?: ViewStyle;
   fullName: string;
   onPressDatePicker: () => void;
+  onPressDeductFlag: () => void;
+  onPressPayExtraFlag: () => void;
+  deductFlag: boolean;
+  payExtraFlag: boolean;
+  amount: string;
 }
 
 export default IPaySalaryPayInformationProps;

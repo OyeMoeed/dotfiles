@@ -1572,6 +1572,7 @@
     "BONUS_SALARY": "Bonus Salary",
     "SELECT_MONTH": "Select Month",
     "DEDUCT_FROM_AMOUNT": "Deduct from amount",
-    "PAY_EXTRA": "Pay Extra"
+    "PAY_EXTRA": "Pay Extra",
+    "BASIC_SALARY": "Basic Salary"
   }
 }
