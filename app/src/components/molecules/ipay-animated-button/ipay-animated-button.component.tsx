@@ -17,6 +17,7 @@ const IPayAnimatedButton: React.FC<IPayAnimatedButtonProps> = ({
   skipText = '',
   nextText = '',
   testID,
+  runAnimation,
 }) => {
   const buttonTranslation = useSharedValue(100);
   const buttonWidth = useSharedValue(50); //   half width to use with reanimated
@@ -24,12 +25,19 @@ const IPayAnimatedButton: React.FC<IPayAnimatedButtonProps> = ({
   const styles = onboardingStyles(colors);
 
   React.useEffect(() => {
-    if (type === OnboardingSteps.OpportunitiesStep) {
-      animateValue(buttonTranslation, 0);
-    } else if (type === OnboardingSteps.PurchasesStep) {
-      animateValue(buttonWidth, 100);
+    if (runAnimation) {
+      if (type === OnboardingSteps.OpportunitiesStep) {
+        animateValue(buttonTranslation, 0);
+      } else if (type === OnboardingSteps.PurchasesStep) {
+        animateValue(buttonWidth, 100);
+      }
     }
-  }, [type]);
+
+    return () => {
+      buttonTranslation.value = 100;
+      buttonWidth.value = 50;
+    };
+  }, [buttonTranslation, buttonWidth, runAnimation, type]);
 
   const animatedBtnStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: buttonTranslation.value }],
