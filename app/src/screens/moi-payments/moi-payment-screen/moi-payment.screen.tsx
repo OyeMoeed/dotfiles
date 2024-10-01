@@ -187,7 +187,7 @@ const MoiPaymentScreen: React.FC = () => {
   return (
     <>
       <IPayFormProvider validationSchema={validationSchema} defaultValues={defaultValues}>
-        {({ control, formState: { errors, isDirty }, handleSubmit, reset, resetField }) => {
+        {({ control, formState: { errors, isDirty }, handleSubmit, reset }) => {
           const {
             // eslint-disable-next-line @typescript-eslint/no-shadow
             [MoiPaymentFormFields.SERVICE_PROVIDER]: serviceProviderValue,
@@ -259,7 +259,6 @@ const MoiPaymentScreen: React.FC = () => {
 
           useEffect(() => {
             if (serviceProviderValue) {
-              resetField(MoiPaymentFormFields.SERVICE_TYPE);
               setIsInquired(false);
               setFields(serviceFields);
             }
