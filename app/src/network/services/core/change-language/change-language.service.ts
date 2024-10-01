@@ -5,7 +5,7 @@ import CORE_URLS from '../core.urls';
 import { ChangeLangPayloadProps } from './change-language.interface';
 import changeLanguageMock from './change-language.mock';
 
-const changeLanguage = async (payload: ChangeLangPayloadProps, hideError: boolean): Promise<object | undefined> => {
+const changeLanguage = async (payload: ChangeLangPayloadProps): Promise<object | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return changeLanguageMock;
   }
@@ -15,7 +15,7 @@ const changeLanguage = async (payload: ChangeLangPayloadProps, hideError: boolea
     method: requestType.POST,
     payload: payload?.body,
     headers: {
-      hide_error_response: hideError,
+      hide_error_response: true,
     },
   });
 

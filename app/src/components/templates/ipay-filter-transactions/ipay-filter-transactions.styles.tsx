@@ -1,42 +1,43 @@
 import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
-import themeColors from '@app/styles/theming/theme-colors';
-import { FONT_SIZE_13, FONT_SIZE_8, FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
+import { FONT_SIZE_13, FONT_SIZE_17, FONT_SIZE_8, FONT_WEIGHT_BOLD, fonts } from '@app/styles/typography.styles';
 import { isIosOS } from '@app/utilities/constants';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
-const filtersStyles = (colors: typeof themeColors) =>
+const IPayFilterTransactionsStyles = (colors) =>
   createStyleSheet({
     filtersContainer: {
       flex: 1,
     },
     inputContainer: {
-      flex: 1,
       width: '96%',
+      flex: 1,
       alignSelf: 'center',
+      paddingRight: moderateScale(20),
+      paddingLeft: moderateScale(10),
     },
     actionButtonStyle: {
       width: scaleSize(110),
     },
     listStyle: {
-      marginBottom: spacing.CUSTOME_SCALE(8),
+      marginBottom: moderateScale(8),
     },
     inputContainerStyle: {
       width: '100%',
-      marginTop: spacing.CUSTOME_SCALE(12),
-      paddingLeft: spacing.CUSTOME_SCALE(20),
-      paddingRight: spacing.CUSTOME_SCALE(50),
-      borderRadius: spacing.CUSTOME_SCALE(22),
+      paddingHorizontal: moderateScale(40),
+      marginTop: moderateScale(12),
+      borderRadius: moderateScale(22),
       backgroundColor: colors.natural.natural0,
     },
     input: {
       borderRadius: moderateScale(24),
     },
     buttonWrapper: {
-      width: '90%',
-      marginTop: spacing.CUSTOME_SCALE(8),
-      marginBottom: isIosOS ? spacing.CUSTOME_SCALE(80) : spacing.CUSTOME_SCALE(16),
+      width: '100%',
+      justifyContent: 'center',
+      marginTop: moderateScale(8),
+      marginBottom: isIosOS ? moderateScale(80) : moderateScale(16),
     },
     applyButton: {
       borderRadius: moderateScale(16),
@@ -50,7 +51,7 @@ const filtersStyles = (colors: typeof themeColors) =>
     date: {
       width: scaleSize(130),
       fontSize: FONT_SIZE_8,
-      height: verticalScale(55),
+      height: verticalScale(54),
       borderRadius: moderateScale(16, 0.3),
     },
     amountCard: {
@@ -81,6 +82,7 @@ const filtersStyles = (colors: typeof themeColors) =>
     dropdownIcon: {
       paddingLeft: scaleSize(2),
     },
+    datePicker: {},
     datePickerContainer: {
       marginRight: scaleSize(-20),
     },
@@ -91,7 +93,6 @@ const filtersStyles = (colors: typeof themeColors) =>
     valuesContainer: {
       flex: 1,
       minHeight: '100%',
-      marginHorizontal: moderateScale(24),
     },
     bankImage: {
       width: scaleSize(24),
@@ -116,6 +117,19 @@ const filtersStyles = (colors: typeof themeColors) =>
       gap: moderateScale(12),
       width: scaleSize(150),
     },
+    inputStyle: {
+      fontSize: FONT_SIZE_17,
+      paddingBottom: 0,
+    },
+    inputStyleAndroid: {
+      paddingBottom: moderateScale(5),
+      height: verticalScale(40),
+    },
+    topMargin: {
+      top: verticalScale(4),
+    },
+    textInputContainerStyle: {
+      marginVertical: verticalScale(-12),
+    },
   });
-
-export default filtersStyles;
+export default IPayFilterTransactionsStyles;

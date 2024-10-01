@@ -9,6 +9,8 @@ interface UseCardProps {
   onSuccess?: ((data?: ApiResponse<{ cards: CardResponseInterface[] }>) => void) | undefined;
   onError?: (() => void) | undefined;
   refetchOnMount?: boolean;
+  refetchOnWindowFocus?: boolean;
+  enabled?: boolean;
 }
 
 const useGetCards = ({ payload, onSuccess, onError, refetchOnMount }: UseCardProps) =>
