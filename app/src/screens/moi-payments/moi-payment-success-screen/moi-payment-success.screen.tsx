@@ -16,19 +16,19 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPayPageWrapper } from '@app/components/templates';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import { copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
-import React, { useEffect, useState } from 'react';
+import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
-import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { moiPaymentDetailes, successMessage, subDetails, isRefund } = route.params;
+  const { moiPaymentDetailes, successMessage, isRefund, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const { showToast } = useToastContext();
@@ -59,7 +59,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     resetNavigation(ScreenNames.HOME_BASE);
   };
 
-  const getDataToRender = () => {
+  const getDataToRender = useCallback(() => {
     const updatedPaymentDetails = moiPaymentDetailes?.dynamicFields?.filter((item: { id: string }) => item.id !== '1');
 
     const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
@@ -78,8 +78,14 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       value: moiPaymentDetailes?.serviceProviderFromLOV?.desc,
     };
 
-    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds]);
-  };
+    const ref = {
+      id: '6',
+      label: t('COMMON.REF_NUM'),
+      value: subDetails?.transactionId,
+      icon: icons.copy,
+    };
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ref]);
+  }, [moiPaymentDetailes]);
 
   const onPressPayOtherBill = () => {
     customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
@@ -159,16 +165,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 <IPayView style={styles.dataTopView}>
                   <IPayFlatlist
                     data={paymentDtails}
-                    keyExtractor={(_, index) => index.toString()}
-                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={renderItem}
-                    scrollEnabled={false}
-                  />
-                </IPayView>
-                <IPayView style={styles.dataBottomView}>
-                  <IPayFlatlist
-                    data={subDetails}
                     keyExtractor={(_, index) => index.toString()}
                     itemSeparatorStyle={styles.itemSeparatorStyle}
                     showsVerticalScrollIndicator={false}

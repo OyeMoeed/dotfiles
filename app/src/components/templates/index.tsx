@@ -12,6 +12,7 @@ import IPayCardIssueBottomSheet from './ipay-card-issue-bottomsheet/ipay-card-is
 import IPayCountryCurrencyBox from './ipay-country-currency-box/ipay-country-currency-box.component';
 import IPayExpBottomSheet from './ipay-cvv-bottomsheet/ipay-exp-bottomsheet.component';
 import IPayTopUpSelection from './ipay-topup-selection/ipay-topup-selection.component';
+import IPayFilterTransactions from './ipay-filter-transactions/ipay-filter-transactions.component';
 import IPayCardIssuanceSheet from './ipay-card-issaunce-sheet/ipay-card-issaunce-sheet.component';
 
 export { default as IPayAddCardBottomsheet } from './ipay-addcard-bottomsheet/ipay-addcard-bottomsheet.component';
@@ -28,5 +29,6 @@ export {
   IPaySafeAreaView,
   IPayTopUpSelection,
   IPayTransactionHistory,
+  IPayFilterTransactions,
   IPayCardIssuanceSheet,
 };

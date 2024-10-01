@@ -115,8 +115,8 @@ android {
         applicationId rootProject.ext.packageName
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 240929
-        versionName "0.0.240929"
+        versionCode 240930
+        versionName "0.0.240930"
         resValue "string", "build_config_package", rootProject.ext.packageName
         missingDimensionStrategy 'react-native-camera', 'general'
     }

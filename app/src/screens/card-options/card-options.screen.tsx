@@ -103,7 +103,7 @@ const CardOptionsScreen: React.FC = () => {
   });
 
   const initOnlinePurchase = () => {
-    if (currentCard.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
+    if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
       // check if online purchase is enabled
       setIsOnlinePurchase(true);
     } else {
@@ -112,7 +112,7 @@ const CardOptionsScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    const isATMWithDrawEnabled = cashWithdrawalCardsList?.includes(currentCard.cardIndex || '');
+    const isATMWithDrawEnabled = cashWithdrawalCardsList?.includes(currentCard?.cardIndex || '');
     setIsATMWithDraw(isATMWithDrawEnabled);
     initOnlinePurchase();
   }, []);
@@ -170,10 +170,10 @@ const CardOptionsScreen: React.FC = () => {
 
   const toggleATMWithdraw = (isOn: boolean) => {
     if (isOn) {
-      const newCardList = new Set<string>([...cashWithdrawalCardsList, currentCard.cardIndex || '']);
+      const newCardList = new Set<string>([...cashWithdrawalCardsList, currentCard?.cardIndex || '']);
       dispatch(setCashWithdrawalCardsList([...newCardList]));
     } else {
-      const newCardList = cashWithdrawalCardsList?.filter((cardIndex: string) => cardIndex !== currentCard.cardIndex);
+      const newCardList = cashWithdrawalCardsList?.filter((cardIndex: string) => cardIndex !== currentCard?.cardIndex);
       dispatch(setCashWithdrawalCardsList([...new Set<string>(newCardList)]));
     }
 
@@ -367,7 +367,7 @@ const CardOptionsScreen: React.FC = () => {
             onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
 
-          {!currentCard.physicalCard && (
+          {!currentCard?.physicalCard && (
             <IPayCardOptionsIPayListDescription
               leftIcon={icons.card_pos}
               rightIcon={icons.arrow_right_1}

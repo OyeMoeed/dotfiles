@@ -62,11 +62,6 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       paddingRight: moderateScale(50),
       backgroundColor: themeColors.natural.natural0,
     },
-    nationalFlag: {
-      width: scaleSize(24),
-      height: verticalScale(24),
-      resizeMode: 'contain',
-    },
     nextBtn: {
       marginBottom: moderateScale(24),
       marginTop: moderateScale(20),
