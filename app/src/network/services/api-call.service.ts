@@ -61,17 +61,14 @@ const apiCall = async <T>({
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
       await handleAxiosError(response);
-      return hideErrorResponse ? undefined : handleApiResponse(response);
     }
     store.dispatch(hideSpinner());
     return handleApiResponse(response);
   } catch (error: any) {
     await handleAxiosError(error);
+    store.dispatch(hideSpinner());
+    return error;
   }
-
-  // Hide Spinner
-  store.dispatch(hideSpinner());
-  return undefined;
 };
 
 export default apiCall;
