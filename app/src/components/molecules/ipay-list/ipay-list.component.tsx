@@ -82,7 +82,7 @@ const IPayList: React.FC<IPayListProps> = ({
         >
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <IPayView />}
         </IPayView>
-        <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
+        <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles, dynamicStyles.leftTitle]}>
           {title && (
             <IPayView style={dynamicStyles.flexRow}>
               <IPayFootnoteText
@@ -133,12 +133,7 @@ const IPayList: React.FC<IPayListProps> = ({
             hasRightComponent() && !showTextInNextLine && dynamicStyles.rightIconContainerMargin,
           ]}
         >
-          <IPayView
-            style={[
-              dynamicStyles.rightIconWrapper,
-              isDetailsMoreThan30 && !showTextInNextLine ? dynamicStyles.detailTextConditionalStyle : {},
-            ]}
-          >
+          <IPayView style={dynamicStyles.rightIconWrapper}>
             {isShowIcon ? (
               (icon && (
                 <IPayButton
