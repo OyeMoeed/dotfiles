@@ -264,6 +264,13 @@ const MoiPaymentScreen: React.FC = () => {
             }
           }, [serviceProviderValue]);
 
+          useEffect(() => {
+            if (serviceTypeValue) {
+              setIsInquired(false);
+              setFields(serviceFields);
+            }
+          }, [serviceTypeValue]);
+
           return (
             <IPaySafeAreaView>
               <IPayHeader
