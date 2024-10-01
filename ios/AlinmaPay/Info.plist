@@ -34,6 +34,7 @@
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>itms-apps</string>
+		<string>nafath</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>App requires the camera access</string>

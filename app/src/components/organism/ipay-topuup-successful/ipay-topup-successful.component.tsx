@@ -301,7 +301,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
         />
         <IPayButton
           btnType={buttonVariants.LINK_BUTTON}
-          btnText="TOP_UP.SHARE"
+          btnText={t('TOP_UP.SHARE')}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>
@@ -312,7 +312,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={[styles.cardButton, styles.margins]}>
         <IPayButton
           btnType={buttonVariants.LINK_BUTTON}
-          btnText="TOP_UP.SHARE"
+          btnText={t('TOP_UP.SHARE')}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>
@@ -323,7 +323,7 @@ const IPayTopupSuccess: React.FC<IpayTopupSuccessProps> = ({
       <IPayView style={styles.shareBackground}>
         <IPayButton
           btnType={buttonVariants.LINK_BUTTON}
-          btnText="TOP_UP.SHARE"
+          btnText={t('TOP_UP.SHARE')}
           leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
         />
       </IPayView>

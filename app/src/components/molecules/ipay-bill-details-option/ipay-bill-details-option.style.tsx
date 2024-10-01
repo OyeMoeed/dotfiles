@@ -15,7 +15,7 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
       padding: moderateScale(16, 0.3),
       borderRadius: moderateScale(28),
       backgroundColor: colors.natural.natural50,
-      gap: moderateScale(16),
+      // gap: moderateScale(16),
       flex: 1,
     },
     detailsFlex: {
@@ -41,6 +41,7 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
       flexDirection: 'row',
       gap: moderateScale(8),
       alignItems: 'center',
+      marginBottom: moderateScale(8),
     },
     detailsText: {
       color: colors.primary.primary800,

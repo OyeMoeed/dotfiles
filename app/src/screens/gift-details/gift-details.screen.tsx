@@ -157,7 +157,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
       btnType={buttonVariants.LINK_BUTTON}
       small
       onPress={shareImage}
-      btnText="TOP_UP.SHARE"
+      btnText={t('TOP_UP.SHARE')}
       leftIcon={<IPayIcon icon={icons.share} size={20} color={colors.primary.primary500} />}
     />
   );

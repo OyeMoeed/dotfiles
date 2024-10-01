@@ -959,7 +959,7 @@
     "PHONE_NUMBER": "رقم الهاتف",
     "REASON_OF_TRANSFER": "سبب التحويل",
     "AMOUNT_SAR": "المبلغ (ريال سعودي)",
-    "AMOUNT_EGP": "المبلغ (جنيه مصري)",
+    "AMOUNT_BEN": "المبلغ",
     "EXCHANGE_RATE": "سعر الصرف",
     "VAT": "ضريبة القيمة المضافة (15%)",
     "FEES": "الرسوم",
