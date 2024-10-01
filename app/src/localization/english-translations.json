@@ -1566,6 +1566,8 @@
     "INVITE_NOW": "Invite now",
     "INVITE_LABORER": "Invite laborer",
     "NOT_ALINMA_USERS_MESSAGE": "Laborers not using AlinmaPay have to create one to receive their salaries",
-    "SALARY_TYPE": "Salary Type"
+    "SALARY_TYPE": "Salary Type",
+    "LABORER_DETAILS": "Laborer Details",
+    "BASIC_SALARY": "Basic Salary"
   }
 }
