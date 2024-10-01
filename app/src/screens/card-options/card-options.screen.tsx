@@ -244,8 +244,7 @@ const CardOptionsScreen: React.FC = () => {
 
     // change the card status to stolen
     const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
-    
-    
+
     if (apiResponse?.status?.type === 'SUCCESS') {
       // get the card issuance details
       const apiResponseCardInquire = await issueCardInquire(walletInfo?.walletNumber, currentCard.cardType as CardType);
@@ -254,8 +253,7 @@ const CardOptionsScreen: React.FC = () => {
         const feesApiResponse = await getCardIssuanceFees(
           walletInfo?.walletNumber,
           currentCard.cardType as CardType,
-          apiResponseCardInquire?.response?.transactionType as string
-         
+          apiResponseCardInquire?.response?.transactionType as string,
         );
         if (feesApiResponse?.status?.type === 'SUCCESS') {
           const cardIssuanceDetails: ICardIssuanceDetails = {
@@ -280,11 +278,9 @@ const CardOptionsScreen: React.FC = () => {
       if (currentCard.physicalCard) {
         onReplaceCard();
       } else {
-      //   navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-      //     currentCard,
-      //   });
-      // }
-        onReplaceCard();
+        navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+          currentCard,
+        });
       }
     }
   };

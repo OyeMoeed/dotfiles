@@ -53,7 +53,7 @@ const ReplaceCardConfirmDetailsScreen: React.FC = () => {
     issuanceDetails,
   } = route.params;
 
-  const { address } = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo.address);
+  const address = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo.address);
 
   const calculateFee = (amount: string | number): number => parseFloat(amount as string) || 0;
 
