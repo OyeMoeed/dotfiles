@@ -68,6 +68,7 @@ import IPaySadadBillDetailForm from './ipay-sadad-bill-detail/ipay-sadad-bill-de
 import IPaySectionHeader from './ipay-section-header/ipay-section-header.component';
 import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-terms-and-condition-banner.component';
 import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar.component';
+import IPayContactsPermission from './ipay-contacts-permission-sheet/ipay-contacts-permission-sheet.component';
 
 export {
   FlipCard,
@@ -134,4 +135,5 @@ export {
   IPayUserAvatar,
   SadadFooterComponent,
   useToastContext,
+  IPayContactsPermission,
 };

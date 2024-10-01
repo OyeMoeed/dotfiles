@@ -22,6 +22,7 @@ const IPayCommonAlertSheet = forwardRef<{}, IPayCommonAlertSheetProps>(
       titleStyle,
       withCancelBtn,
       onCloseBottomSheet,
+      buttonRightIcon,
     },
     ref,
   ) => {
@@ -73,6 +74,7 @@ const IPayCommonAlertSheet = forwardRef<{}, IPayCommonAlertSheetProps>(
             btnColor={colors.primary.primary500}
             btnText={btnTitle}
             onPress={onBtnPress}
+            rightIcon={buttonRightIcon}
           />
         </IPayView>
       </IPayBottomSheet>
