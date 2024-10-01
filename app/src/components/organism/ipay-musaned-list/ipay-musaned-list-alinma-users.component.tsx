@@ -41,23 +41,26 @@ const IPayMusanedAlinmaUser: React.FC<IPayMusanedListProps> = ({
           color: colors.natural.natural700,
           text: 'MUSANED.UNPAID',
           backgroundColor: colors.natural.natural100,
+          type: MusanedStatus.UNPAIED,
         };
       case MusanedStatus.PAID:
         return {
           color: colors.tertiary.tertiary500,
           text: 'MUSANED.PAID',
           backgroundColor: colors.success.success25,
+          type: MusanedStatus.PAID,
         };
       default:
         return {
           color: colors.natural.natural700,
           text: 'MUSANED.UNPAID',
           backgroundColor: colors.natural.natural100,
+          type: MusanedStatus.UNPAIED,
         };
     }
   };
 
-  const { color, text, backgroundColor } = getStatusStyles();
+  const { color, text, backgroundColor, type } = getStatusStyles();
 
   const showDate = moment(date).format('MM/YYYY');
 
@@ -86,8 +89,14 @@ const IPayMusanedAlinmaUser: React.FC<IPayMusanedListProps> = ({
         <IPayView style={styles.leftContainer}>
           <IPayCaption2Text text={details} color={colors.natural.natural500} />
           <IPayFootnoteText shouldTranslate={false}>
-            <IPayCaption1Text color={colors.error.error500} text={`Date: ${showDate}`} />
-            <IPayFootnoteText text="  |  " />
+            {type !== MusanedStatus.PAID ? (
+              <>
+                <IPayCaption1Text color={colors.error.error500} text={`Date: ${showDate}`} />
+                <IPayFootnoteText text="  |  " />
+              </>
+            ) : (
+              <IPayView />
+            )}
             <IPayFootnoteText
               color={colors.natural.natural900}
               regular={false}
