@@ -5,16 +5,21 @@ import React from 'react';
 import { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
 import { IPayAnimatedHeaderProps } from './ipay-animated-header.interface';
 
-const IPayAnimatedHeader: React.FC<IPayAnimatedHeaderProps> = ({ type, children, testID }) => {
+const IPayAnimatedHeader: React.FC<IPayAnimatedHeaderProps> = ({ type, children, testID, runAnimation }) => {
   const headerTranslationX = useSharedValue(100);
   const headerTranslationY = useSharedValue(100);
 
   React.useEffect(() => {
-    if (type === OnboardingSteps.OpportunitiesStep) {
+    if (type === OnboardingSteps.OpportunitiesStep && runAnimation) {
       animateValue(headerTranslationY, 0);
       animateValue(headerTranslationX, 0);
     }
-  }, [type]);
+
+    return () => {
+      headerTranslationY.value = 100;
+      headerTranslationX.value = 100;
+    };
+  }, [headerTranslationX, headerTranslationY, runAnimation, type]);
 
   const headerAnimatedStyle = useAnimatedStyle(() => ({
     transform: [{ translateY: headerTranslationY.value }, { translateX: headerTranslationX.value }],
