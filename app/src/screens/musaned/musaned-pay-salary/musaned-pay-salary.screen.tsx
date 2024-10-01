@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayMonthYearPicker, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -59,9 +59,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const [chipValue, setChipValue] = useState<string>('');
   const [transferAmount, setTransferAmount] = useState<string>('');
   const [selectedReason, setSelectedReason] = useState({});
-  const [notes, setNotes] = useState<string>('');
-  const salaryTypeBottomSheetRef = useRef(null);
   const [apiError, setAPIError] = useState<string>('');
+  const [expiryDate, setExpiryDate] = useState('');
+
+  const refBottomSheet = useRef(null);
+  const salaryTypeBottomSheetRef = useRef(null);
+
   const salaryTypes = [
     { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
     { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
@@ -186,7 +189,6 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
             bankFeesAmount: transferFees.bankFeeAmount,
             bankVatAmount: transferFees.bankVatAmount,
             amount: transferAmount,
-            note: notes,
             bankCode,
             transferNetwork,
             deviceInfo: {
@@ -203,7 +205,6 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               beneficiaryNickName,
               transferPurpose: selectedReason?.text,
               instantTransferType: t('TRANSFER_SUMMARY.SARIE'),
-              note: notes,
               otpRef: apiResponse.response.otpRef,
               feesAmount: transferFees.feeAmount,
               vatAmount: transferFees.vatAmount,
@@ -257,6 +258,10 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     }
   };
 
+  const openDatePicker = () => {
+    refBottomSheet.current?.present();
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn applyFlex title="TRANSFER.TRANSFER_INFRORMATION" />
@@ -276,16 +281,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               subtitle={isArabic ? occupationAr : occupationEn}
               style={styles.transferContainer}
               amount={transferAmount}
-              currencyStyle={[styles.currency, transferAmount && styles.inputActiveStyle]}
               setAmount={setAmount}
               selectedItem={selectedReason?.text}
-              setNotes={setNotes}
-              notes={notes}
               chipValue={chipValue}
-              transferInfo
-              transferInfoData={bankDetails}
               openReason={onPressSelectReason}
               inputFieldStyle={styles.inputFieldStyle}
+              onPressDatePicker={openDatePicker}
             />
           </IPayView>
         </IPayView>
@@ -337,6 +338,9 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
           topupItemSelected={topupItemSelected}
         />
       </IPayPortalBottomSheet>
+      <IPayBottomSheet simpleBar heading="MUSANED.SELECT_MONTH" ref={refBottomSheet} isVisible={true} cancelBnt>
+        <IPayMonthYearPicker onDateChange={setExpiryDate} value={expiryDate} minimumDate={new Date()} />
+      </IPayBottomSheet>
     </IPaySafeAreaView>
   );
 };

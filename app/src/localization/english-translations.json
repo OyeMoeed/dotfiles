@@ -1569,6 +1569,9 @@
     "SALARY_TYPE": "Salary Type",
     "MONTHLY_SALARY":"Monthly salary",
     "ADVANCED_SALARY": "Advance Salary",
-    "BONUS_SALARY": "Bonus Salary"
+    "BONUS_SALARY": "Bonus Salary",
+    "SELECT_MONTH": "Select Month",
+    "DEDUCT_FROM_AMOUNT": "Deduct from amount",
+    "PAY_EXTRA": "Pay Extra"
   }
 }
