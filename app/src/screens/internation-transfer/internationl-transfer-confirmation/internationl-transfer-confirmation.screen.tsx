@@ -44,7 +44,6 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { TransferService } from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import beneficiaryKeysMapping from '@app/screens/international-transfer-info/international-transfer-info.constant';
 import { InternationalTransferSuccessData } from '@app/screens/international-transfer-success/international-transfer-success.interface';
-import { setTermsConditionsVisibility } from '@app/store/slices/nafath-verification';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -53,8 +52,9 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Flag from 'react-native-round-flags';
 import { useDispatch } from 'react-redux';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
+import IPayFlag from '@app/components/atoms/ipay-flag/ipay-flag.component';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import {
   FeesInquiryData,
@@ -78,8 +78,8 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   const { getDataByKey } = useInternationalTransferData();
   const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
-  const { walletNumber } = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
   // TODO
@@ -337,7 +337,7 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
             </IPayView>
 
             <IPayView style={styles.receiverInfoContainer}>
-              <Flag code={beneficiaryData?.countryCode} style={styles.countryFlagImg} />
+              <IPayFlag countryCode={beneficiaryData?.countryCode} style={styles.countryFlagImg} />
               <IPayView style={styles.receiverInfoView}>
                 <IPayFootnoteText
                   regular={false}

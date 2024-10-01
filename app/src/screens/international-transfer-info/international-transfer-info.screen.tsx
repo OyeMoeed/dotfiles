@@ -39,7 +39,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import Flag from 'react-native-round-flags';
+import IPayFlag from '@app/components/atoms/ipay-flag/ipay-flag.component';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
 import beneficiaryKeysMapping from './international-transfer-info.constant';
 import {
@@ -193,8 +193,8 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const handleAmountInputChange = (text: string) => {
     const exchangeRate = 12.8; // TODO need to update with correct rate
     setRemitterCurrencyAmount(text);
-    const egpAmount = Number(text) * exchangeRate;
-    setBeneficiaryCurrencyAmount(egpAmount?.toFixed(2));
+    const foreignAmount = Number(text) * exchangeRate;
+    setBeneficiaryCurrencyAmount(foreignAmount?.toFixed(2));
   };
 
   const transferFees = t('LOCAL_TRANSFER.FEES');
@@ -233,7 +233,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                 adjacentSubTitle={transferData?.remittanceTypeDesc}
                 isShowSubTitle
                 isShowLeftIcon
-                leftIcon={<Flag code={transferData?.countryCode} style={styles.nationalFlag} />}
+                leftIcon={<IPayFlag countryCode={transferData?.countryCode} style={styles.nationalFlag} />}
                 rightText={
                   <IPayButton
                     btnIconsDisabled
