@@ -29,6 +29,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   errorMessageViewStyle,
   errorMessageStyle,
   suffix,
+  pointerEvents,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -76,7 +77,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   };
 
   return (
-    <IPayView testID={`${testID}-animated-input`}>
+    <IPayView testID={`${testID}-animated-input`} pointerEvents={pointerEvents}>
       <IPayView
         style={[
           styles.container,

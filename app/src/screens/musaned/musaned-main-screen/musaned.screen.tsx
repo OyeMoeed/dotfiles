@@ -189,7 +189,10 @@ const MusanedScreen: React.FC = () => {
     refBottomSheet.current?.close?.();
 
     if (selectedTab === ALINMA_PAY_USERS) {
-      navigate(ScreenNames.MUSANED_PAY_SALARY);
+      navigate(ScreenNames.MUSANED_PAY_SALARY, {
+        ...requestDetail,
+        type: selectedTab,
+      });
     } else {
       bottomSheetShare();
     }

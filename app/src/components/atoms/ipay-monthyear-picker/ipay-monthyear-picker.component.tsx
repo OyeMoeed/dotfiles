@@ -53,7 +53,7 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
       <Picker
         style={[styles.picker, Platform.OS !== 'ios' && androidStyle]}
         selectedValue={selectedMonth}
-        pickerData={constants.months}
+        pickerData={constants.monthsString}
         onValueChange={(index: string) => handleMonthChange(index)}
         textColor={colors.primary.primary500}
         accentColor={colors.primary.primary500}

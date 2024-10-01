@@ -30,6 +30,7 @@ import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.compo
 import IPayRatingSheet from './ipay-rating-sheet/ipay-rating-sheet.component';
 
 export * from './ipay-musaned-list';
+export { default as IPaySalaryPayInformation } from './ipay-salary-pay-information/ipay-salary-pay-information.component';
 
 export {
   IPayActionSheet,
