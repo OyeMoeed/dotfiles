@@ -33,6 +33,7 @@ import activateLocalBeneficiary from '@app/network/services/local-transfer/local
 import LocalTransferBeneficiariesMockProps from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.interface';
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { isIosOS } from '@app/utilities/constants';
 import {
   ApiResponseStatusType,
   BeneficiaryTypes,
@@ -54,7 +55,7 @@ import localTransferStyles from './local-transfer.style';
 const LocalTransferScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { isKeyboardWillOpen } = useKeyboardStatus();
+  const { isKeyboardOpen, isKeyboardWillOpen } = useKeyboardStatus();
   const styles = localTransferStyles(colors);
   const beneficiariesToShow = 4;
   const [selectedBeneficiary, setselectedBeneficiary] = useState<BeneficiaryDetails>();
@@ -590,7 +591,7 @@ const LocalTransferScreen: React.FC = () => {
         enablePanDownToClose
         cancelBnt
         bold
-        customSnapPoint={isKeyboardWillOpen ? SNAP_POINT.SMALL : SNAP_POINT.XX_SMALL}
+        customSnapPoint={(isIosOS ? isKeyboardWillOpen : isKeyboardOpen) ? SNAP_POINT.SMALL : SNAP_POINT.XX_SMALL}
         isVisible={showEditSheet}
       >
         <IPayView style={styles.editStyles}>

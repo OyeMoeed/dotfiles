@@ -21,6 +21,7 @@ interface IPayBillDetailsOptionProps {
   showHeader?: boolean;
   isShowIcon?: boolean;
   showDetail?: boolean;
+  showShareBtn?: boolean;
 }
 
 interface OptionItem {
