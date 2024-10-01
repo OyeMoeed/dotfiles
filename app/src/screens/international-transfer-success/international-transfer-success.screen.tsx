@@ -24,7 +24,12 @@ import { copyText } from '@app/utilities';
 import { alertType, alertVariant, buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { InternationalTransferSuccessProps, OptionItem } from './international-transfer-success.interface';
+import IPayFlag from '@app/components/atoms/ipay-flag/ipay-flag.component';
+import {
+  InternationalTransferSuccessData,
+  InternationalTransferSuccessProps,
+  OptionItem,
+} from './international-transfer-success.interface';
 import internationalSuccessStyles from './international-transfer-success.style';
 
 const InternationalTransferSuccessScreen: React.FC<InternationalTransferSuccessProps> = ({ route }) => {
@@ -89,7 +94,7 @@ const InternationalTransferSuccessScreen: React.FC<InternationalTransferSuccessP
             />
             {(icon || countryCodeValue) &&
               (countryCodeValue ? (
-                <Flag code={countryCodeValue} style={styles.listImage} />
+                <IPayFlag countryCode={countryCodeValue} style={styles.listImage} />
               ) : (
                 <IPayPressable style={styles.icon} onPress={() => onPressCopy(value)}>
                   <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />
