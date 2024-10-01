@@ -1,10 +1,11 @@
-import { IPayBodyText, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayBodyText, IPayIcon, IPayImage, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
 import { IPayPrimaryButtonProps } from './ipay-primary-button.interface';
 import generatedStyles from './ipay-primary-button.style';
+import images from '@app/assets/images';
 
 const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   disabled,
@@ -24,6 +25,7 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   textColor,
   textStyle,
   shouldTranslateBtnText,
+  withAlinmaLogo = false,
 }) => {
   const { colors } = useTheme();
   const styles = generatedStyles();
@@ -71,6 +73,9 @@ const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
       <IPayView style={[styles.childContainer, justifyContent]}>
         {!btnIconsDisabled &&
           (leftIcon || (!rightIcon && <IPayIcon icon={icons.LeftArrow} size={20} color={arrowColor} />))}
+        {withAlinmaLogo && (
+          <IPayImage style={styles.logoIcon} resizeMode="contain" testID="alinmaPx3" image={images.alinmaPx3} />
+        )}
         <IPayView style={styles.btnTextView}>{ButtonText}</IPayView>
         {!btnIconsDisabled &&
           (rightIcon || (!leftIcon && <IPayIcon icon={icons.rightArrow} size={20} color={arrowColor} />))}

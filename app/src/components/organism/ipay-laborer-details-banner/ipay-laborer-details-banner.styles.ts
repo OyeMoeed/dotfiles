@@ -16,6 +16,9 @@ const laborerDetailsStyles = (theme: typeof colors) =>
     },
     detailsBannerContainer: {
       borderRadius: moderateScale(20),
+      marginHorizontal: moderateScale(16),
+      marginTop: moderateScale(20),
+      marginBottom: moderateScale(16),
     },
     iconBackground: {
       backgroundColor: theme.primary.primary10,

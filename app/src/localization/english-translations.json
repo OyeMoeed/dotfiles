@@ -1574,6 +1574,14 @@
     "BONUS_SALARY": "Bonus Salary",
     "SELECT_MONTH": "Select Month",
     "DEDUCT_FROM_AMOUNT": "Deduct from amount",
-    "PAY_EXTRA": "Pay Extra"
+    "PAY_EXTRA": "Pay Extra",
+    "MOBILE_NUMBER":"Mobile Number",
+    "NATIONALITY": "Nationality",
+    "LABORER_ID": "Laborer ID",
+    "IQAMA_EXPIRY_DATE": "Iqama Expiry Date",
+    "LABORER_INFO": "Laborer Info",
+    "PAY": "Pay",
+    "PAYMENT_STATUS": "Payment Status",
+    "LAST_PAYMENT": "Last Payment"
   }
 }

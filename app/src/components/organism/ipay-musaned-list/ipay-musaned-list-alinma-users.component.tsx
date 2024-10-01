@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import images from '@app/assets/images';
 import {
   IPayCaption1Text,
   IPayCaption2Text,
@@ -9,14 +10,14 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
+import { getStatusStyles } from '@app/screens/musaned/musaned.utils';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import images from '@app/assets/images';
 import { MusanedStatus } from '@app/utilities';
 import moment from 'moment';
-import moneyRequestListStyles from './ipay-musaned-list.style';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { IPayMusanedListProps } from './ipay-musaned-list.interface';
+import moneyRequestListStyles from './ipay-musaned-list.style';
 
 const IPayMusanedAlinmaUser: React.FC<IPayMusanedListProps> = ({
   date,
@@ -33,34 +34,7 @@ const IPayMusanedAlinmaUser: React.FC<IPayMusanedListProps> = ({
   const { colors } = useTheme();
   const styles = moneyRequestListStyles(colors);
 
-  // this function should change the color of the status of the gift
-  const getStatusStyles = () => {
-    switch (status) {
-      case MusanedStatus.UNPAIED:
-        return {
-          color: colors.natural.natural700,
-          text: 'MUSANED.UNPAID',
-          backgroundColor: colors.natural.natural100,
-          type: MusanedStatus.UNPAIED,
-        };
-      case MusanedStatus.PAID:
-        return {
-          color: colors.tertiary.tertiary500,
-          text: 'MUSANED.PAID',
-          backgroundColor: colors.success.success25,
-          type: MusanedStatus.PAID,
-        };
-      default:
-        return {
-          color: colors.natural.natural700,
-          text: 'MUSANED.UNPAID',
-          backgroundColor: colors.natural.natural100,
-          type: MusanedStatus.UNPAIED,
-        };
-    }
-  };
-
-  const { color, text, backgroundColor, type } = getStatusStyles();
+  const { color, text, backgroundColor, type } = getStatusStyles(colors, status);
 
   const showDate = moment(date).format('MM/YYYY');
 

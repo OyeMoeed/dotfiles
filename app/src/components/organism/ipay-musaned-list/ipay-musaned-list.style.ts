@@ -27,12 +27,13 @@ const moneyRequestListStyles = (theme: typeof colors) =>
       gap: moderateScale(4),
       flexDirection: 'row',
       justifyContent: 'space-between',
-      marginTop: 8,
+      marginTop: moderateScale(2),
     },
     textContainer: {
       flexDirection: 'row',
       gap: moderateScale(4),
       justifyContent: 'space-between',
+      alignItems: 'center',
     },
     logoIcon: {
       height: scaleSize(22.5),
