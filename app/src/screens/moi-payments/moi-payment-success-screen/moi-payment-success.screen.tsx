@@ -83,7 +83,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       value: subDetails?.transactionId,
       icon: icons.copy,
     };
-    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ref]);
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ...(!isRefund ? [ref] : [])]);
   }, [moiPaymentDetailes]);
 
   const onPressPayOtherBill = () => {
