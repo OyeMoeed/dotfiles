@@ -86,15 +86,22 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.MOI_PAYMENT" titleStyle={styles.screenTitle} />
+      <IPayHeader
+        backBtn
+        applyFlex
+        title={isRefund ? 'BILL_PAYMENTS.REFUND_BILLS' : 'BILL_PAYMENTS.MOI_PAYMENT'}
+        titleStyle={styles.screenTitle}
+      />
       <IPayView style={styles.container}>
-        <IPayAccountBalance
-          balance={availableBalance}
-          availableBalance={limitsDetails.monthlyOutgoingLimit}
-          monthlyIncomingLimit={limitsDetails.monthlyRemainingOutgoingAmount}
-          showRemainingAmount
-          topUpBtnStyle={styles.topUpButton}
-        />
+        {!isRefund && (
+          <IPayAccountBalance
+            balance={availableBalance}
+            availableBalance={limitsDetails.monthlyOutgoingLimit}
+            monthlyIncomingLimit={limitsDetails.monthlyRemainingOutgoingAmount}
+            showRemainingAmount
+            topUpBtnStyle={styles.topUpButton}
+          />
+        )}
         <IPayBillDetailsOption data={paymentDetails} showHeader={false} optionsStyles={styles.moiPaymentDetailesTab} />
       </IPayView>
       <IPayView style={styles.footerView}>

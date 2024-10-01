@@ -34,7 +34,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { showToast } = useToastContext();
   const [paymentDtails, setPaymentDetails] = useState<ItemProps[]>([]);
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
-  const totalTransferedAmount = `500 ${t('COMMON.SAR')}`;
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -127,7 +126,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPaySuccess
           headingText={successMessage}
-          subHeadingText={totalTransferedAmount}
+          subHeadingText={moiPaymentDetailes.totalFeeAmount}
           style={StyleSheet.flatten(styles.headerView)}
         />
 
