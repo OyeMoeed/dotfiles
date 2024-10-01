@@ -166,6 +166,7 @@ const SendMoneyRequest: React.FC = () => {
             formInstances={formInstances}
             notes=""
             setNotes={handleNotesChange}
+            maxLength={70}
           />
           {!isKeyboardWillOpen && !isKeyboardOpen && (
             <IPayView style={styles.buttonBackground}>
