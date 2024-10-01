@@ -299,7 +299,7 @@ const SendMoneyFormScreen: React.FC = () => {
       contacts: selectedContacts,
     });
   };
-  const btnText = from === TRANSFERTYPE.REQUEST_MONEY ? 'REQUEST_MONEY.SENT_REQUEST' : 'COMMON.TRANSFER';
+  const btnText = from === TRANSFERTYPE.REQUEST_MONEY ? 'REQUEST_MONEY.SENT_REQUEST' : 'LOCAL_TRANSFER.TRANSFER';
   return (
     <IPaySafeAreaView style={styles.container}>
       <>

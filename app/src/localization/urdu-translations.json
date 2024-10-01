@@ -171,7 +171,8 @@
     "EDIT_CARD": "کارڈ میں ترمیم کریں۔",
     "CALL_WITHIN_SA": "سعودی عرب میں کال کریں۔",
     "CALL_OUTSIDE_SA": "سعودی عرب کے باہر سے کال کریں۔",
-    "CALL": "کال کریں۔"
+    "CALL": "کال کریں۔",
+    "APP_TERMS_AND_CONDITIONS": "ایپ کی شرائط اور ضوابط"
   },
   "TOP_UP": {
     "APPLE_PAY": "ایپل پے",
@@ -323,6 +324,8 @@
     "TERMS_AND_CONDITIONS_VALIDATION": "آگے بڑھنے سے پہلے آپ کو شرائط و ضوابط سے اتفاق کرنا ہوگا",
     "TERMS_AND_CONDITIONS_HEADING": "شرائط و ضوابط اور ان کی ضرورت کب ہے",
     "TERMS_AND_CONDITIONS": "شرائط و ضوابط",
+    "FOR_OPENING_NEW_WALLET": "نیا بٹوا کھولنے کے لیے",
+    "FOR_ALINMAPAY_CARDS": "AlinmaPay کارڈز کے لیے",
     "INCORRECT_MOBILE_NUMBER": "غلط موبائل نمبر",
     "TERMS_AND_CONDITIONS_TEXT": "ہماری شرائط و ضوابط سے اتفاق کریں",
     "ENTER_VALID_ID_OR_IQAMA": "براہ کرم اپنا شناختی یا اقامہ نمبر درج کریں، تاکہ ہم آپ کے اکاؤنٹ کی تصدیق کر سکیں",
@@ -917,5 +920,16 @@
     "PAY": "ادا کریں",
     "REJECT": "مسترد کریں",
     "REJECT_THIS_REQUEST": "اس درخواست کو مسترد کریں"
+  },
+  "RATING": {
+    "APP_RATING": "تطبيق کی درجہ بندی",
+    "SATISFACTION": "آپ کس درجے تک سنیاسی ہیں",
+    "ALINMA_PAY_APP": "کے بارے میں Alinma Pay اپ?",
+    "RATE_APP_NOW": "آپ کو راٹنگ"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "اب آپ",
+    "BOLD_TITLE": "بہت آسانی سے کارڈ جاری کریں",
+    "DESCRIPTION": "الیما پی اپ کے ذریعہ دستیاب مختلف اقسام اور خصوصیات کو دریافت کریں!"
   }
 }

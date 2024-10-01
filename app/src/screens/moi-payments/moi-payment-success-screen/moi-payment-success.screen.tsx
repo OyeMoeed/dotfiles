@@ -16,22 +16,22 @@ import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-to
 import { IPayPageWrapper } from '@app/components/templates';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
-import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
-import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { copyText, customInvalidateQuery, toggleAppRating } from '@app/utilities';
+import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 import { ItemProps } from './moi-payment-success.interface';
 import moiPaymentSuccessStyles from './moi-payment-success.styles';
 
 const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { t } = useTranslation();
-  const { moiPaymentDetailes, successMessage, refund, subDetails } = route.params;
+  const { moiPaymentDetailes, successMessage, isRefund, subDetails } = route.params;
   const { colors } = useTheme();
   const styles = moiPaymentSuccessStyles(colors);
   const { showToast } = useToastContext();
-  const [isShareable, setIsShareable] = useState<boolean>(false);
   const [paymentDtails, setPaymentDetails] = useState<ItemProps[]>([]);
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
   const totalTransferedAmount = `500 ${t('COMMON.SAR')}`;
@@ -53,39 +53,42 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
     renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
   };
 
-  const onPressShare = () => {
-    setIsShareable(true);
-  };
-
   const onPressHome = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+    toggleAppRating();
     resetNavigation(ScreenNames.HOME_BASE);
   };
 
-  const getDataToRender = () => {
-    // Step 1: Remove the object with id "1"
-    const updatedDetails = moiPaymentDetailes.filter((item: { id: string }) => item.id !== '1');
+  const getDataToRender = useCallback(() => {
+    const updatedPaymentDetails = moiPaymentDetailes?.dynamicFields?.filter((item: { id: string }) => item.id !== '1');
 
-    // Step 2: Update ids to maintain sequential order
-    const reorderedDetails = updatedDetails.map((item: ItemProps, index: number) => ({
+    const updatedPaymentDetailsWithNewIds = updatedPaymentDetails?.map((item: any, index: number) => ({
       ...item,
       id: (index + 1).toString(),
     }));
 
-    // Step 3: Add the new object with id "6" TODO
-    const newItem = {
-      id: '6',
-      label: 'Ref. Number',
-      value: 'FTA35346',
-      icon: icons.copy,
+    const serviceType = {
+      id: (updatedPaymentDetailsWithNewIds.length + 1).toString(),
+      label: t('PAY_BILL.SERVICE_TYPE'),
+      value: moiPaymentDetailes?.serviceTypeFromLOV?.desc,
+    };
+    const serviceProvider = {
+      id: (updatedPaymentDetailsWithNewIds.length + 2).toString(),
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
+      value: moiPaymentDetailes?.serviceProviderFromLOV?.desc,
     };
 
-    // Adding the new item and re-sorting the array
-    const detailsWithNewItem = refund ? reorderedDetails : [...reorderedDetails, newItem];
-    const finalDetails = detailsWithNewItem.sort((a: { id: number }, b: { id: number }) => a.id - b.id);
-    setPaymentDetails(finalDetails);
-  };
+    const ref = {
+      id: '6',
+      label: t('COMMON.REF_NUM'),
+      value: subDetails?.transactionId,
+      icon: icons.copy,
+    };
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ref]);
+  }, [moiPaymentDetailes]);
 
   const onPressPayOtherBill = () => {
+    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
     resetNavigation(ScreenNames.MOI_PAYMENT_SCREEN);
   };
 
@@ -129,7 +132,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
         />
 
         <IPayShareableImageView
-          isShareable={isShareable}
           otherView={
             <IPayView style={styles.footerView}>
               <IPayView style={styles.linkButtonsView}>
@@ -138,14 +140,13 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                   small
                   onPress={onPressPayOtherBill}
                   leftIcon={<Refresh2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText="BILL_PAYMENTS.PAY_ANOTHER_BILL"
+                  btnText={isRefund ? 'BILL_PAYMENTS.ANOTHER_REFUND' : 'BILL_PAYMENTS.PAY_ANOTHER_BILL'}
                 />
                 <IPayButton
-                  onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText="TOP_UP.SHARE"
+                  btnText={t('TOP_UP.SHARE')}
                 />
               </IPayView>
               <IPayButton
@@ -164,16 +165,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
                 <IPayView style={styles.dataTopView}>
                   <IPayFlatlist
                     data={paymentDtails}
-                    keyExtractor={(_, index) => index.toString()}
-                    itemSeparatorStyle={styles.itemSeparatorStyle}
-                    showsVerticalScrollIndicator={false}
-                    renderItem={renderItem}
-                    scrollEnabled={false}
-                  />
-                </IPayView>
-                <IPayView style={styles.dataBottomView}>
-                  <IPayFlatlist
-                    data={subDetails}
                     keyExtractor={(_, index) => index.toString()}
                     itemSeparatorStyle={styles.itemSeparatorStyle}
                     showsVerticalScrollIndicator={false}

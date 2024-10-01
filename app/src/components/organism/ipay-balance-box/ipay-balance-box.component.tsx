@@ -24,6 +24,7 @@ import React, { useCallback } from 'react';
 import { scale, verticalScale } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
 import { openBrowser } from '@swan-io/react-native-browser';
+import { View } from 'react-native';
 import useCarouselData from './ipay-balance-box.data';
 import { CarouselItem, IPayBalanceBoxProps } from './ipay-balance-box.interface';
 import genratedStyles from './ipay-balance-box.styles';
@@ -49,6 +50,7 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
   setBoxHeight,
   monthlyRemainingOutgoingAmount,
   monthlyOutgoingLimit,
+  isLoading,
 }) => {
   const carouselData = useCarouselData();
   const { colors } = useTheme();
@@ -158,18 +160,21 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
             </IPayPressable>
           )}
         </IPayView>
-        <IPayPressable onPress={walletInfoPress}>
-          <IPayView style={styles.eyeCon}>
-            <IPayFootnoteText style={styles.walletTextStyle} text="HOME.WALLET_INFO" />
-            <IPayGradientIcon icon={icons.info_fetch} size={16} />
-          </IPayView>
+        <IPayPressable style={styles.eyeCon} onPress={walletInfoPress} disabled={isLoading}>
+          <IPayFootnoteText style={styles.walletTextStyle} text="HOME.WALLET_INFO" isLoading={isLoading} />
+          {!isLoading ? <IPayGradientIcon icon={icons.info_fetch} size={16} /> : <View />}
         </IPayPressable>
       </IPayView>
 
       <IPayView style={[styles.commonContainer, styles.gap]}>
         <IPayView style={styles.balanceContainer}>
-          <IPayTitle2Text style={styles.balanceTextStyle} text={balanceValue} shouldTranslate={false} />
-          <IPayFootnoteText style={styles.currencyStyle} text="COMMON.SAR" />
+          <IPayTitle2Text
+            style={styles.balanceTextStyle}
+            text={balanceValue}
+            shouldTranslate={false}
+            isLoading={isLoading}
+          />
+          {!isLoading && <IPayFootnoteText style={styles.currencyStyle} text="COMMON.SAR" />}
         </IPayView>
         <IPayButton
           onPress={topUpPress}
@@ -177,11 +182,12 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
           leftIcon={<IPayIcon icon={icons.add_bold} size={18} color={colors.natural.natural0} />}
           btnText="COMMON.TOP_UP"
           btnStyle={styles.btnStyle}
+          disabled={isLoading}
         />
       </IPayView>
       <IPayView style={styles.gap}>
         <IPayProgressBar
-          gradientWidth={`${balancePercentage(monthlySpendingLimit, remainingSpendingLimit)}%`}
+          gradientWidth={isLoading ? 0 : `${balancePercentage(monthlySpendingLimit, remainingSpendingLimit)}%`}
           colors={colors.gradientSecondary}
         />
       </IPayView>
@@ -189,16 +195,21 @@ const IPayBalanceBox: React.FC<IPayBalanceBoxProps> = ({
       <IPayView style={[styles.gap, styles.commonContainer]}>
         <IPayCaption2Text style={styles.remainingAmountText} text="HOME.REMAINING_AMOUNT" />
         <IPayView style={styles.eyeCon}>
-          <IPayCaption2Text style={styles.textBold} text={formatNumberWithCommas(remainingSpendingLimit)} />
-
           <IPayCaption2Text
-            style={styles.textRegular}
-            text={` ${t('HOME.OF')} ${formatNumberWithCommas(monthlySpendingLimit)}`}
-            shouldTranslate={false}
+            style={styles.textBold}
+            text={formatNumberWithCommas(remainingSpendingLimit)}
+            isLoading={isLoading}
           />
+
+          {!isLoading && (
+            <IPayCaption2Text
+              style={styles.textRegular}
+              text={` ${t('HOME.OF')} ${formatNumberWithCommas(monthlySpendingLimit)}`}
+              shouldTranslate={false}
+            />
+          )}
         </IPayView>
       </IPayView>
-
       <IPayView style={styles.lineBorderStyle} />
 
       <IPayCarousel

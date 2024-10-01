@@ -8,7 +8,7 @@ import prepareLoginMock from './prepare-login.mock';
 
 type LoginPrepareResponse = ApiResponse<PrePareLoginApiResponseProps> | undefined;
 
-const prepareLogin = async (payload: DeviceInfoProps): Promise<LoginPrepareResponse> => {
+const prepareLogin = async (payload: DeviceInfoProps, hideValue: boolean = false): Promise<LoginPrepareResponse> => {
   if (constants.MOCK_API_RESPONSE) {
     const mockResponse = prepareLoginMock;
     return mockResponse;
@@ -17,6 +17,10 @@ const prepareLogin = async (payload: DeviceInfoProps): Promise<LoginPrepareRespo
     endpoint: AUTHENTICATION_URLS.PREPARE_LOGIN,
     method: requestType.POST,
     payload,
+    headers: {
+      hide_spinner_loading: hideValue,
+      hide_error_response: hideValue,
+    },
   });
   return apiResponse;
 };

@@ -100,6 +100,8 @@
     "TERMS_AND_CONDITIONS_VALIDATION": "You must agree to the Terms and Conditions before proceeding",
     "TERMS_AND_CONDITIONS_HEADING": "The Terms and Conditions and When Are They Needed",
     "TERMS_AND_CONDITIONS": "Terms and Conditions",
+    "FOR_OPENING_NEW_WALLET": "for opening new wallet",
+    "FOR_ALINMAPAY_CARDS": "for AlinmaPay Cards",
     "INCORRECT_MOBILE_NUMBER": "Incorrect mobile number",
     "INCORRECT_IQAMA_NUMBER": "Incorrect ID / Iqama Number",
     "VERIFY_NUMBER_ACCURACY": "Please verify the accuracy of the  number.",
@@ -224,6 +226,7 @@
     "FAQ_ANSWERS": "You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity."
   },
   "HOME": {
+    "EHSAN": "Ehsan Donation",
     "CASHBACK_PROMO": "Cashback Promo",
     "RECEIVED_MONEY": "Received money",
     "POS_PURSHASE": "POS Purchase",
@@ -325,6 +328,8 @@
   },
 
   "SETTINGS": {
+    "CHANGE_LANGUAGE": "Change Language",
+    "CHANGE_LANGUAGE_DESCRIPTION": "Are you sure you want to change the language?",
     "SECURITY_SETTINGS": "Security and Privacy Settings",
     "PASSCODE": "Passcode",
     "CHANGE": "Change",
@@ -362,7 +367,8 @@
     "EDIT_CARD": "Edit Card",
     "CALL_WITHIN_SA": "Call within Saudi Arabia",
     "CALL_OUTSIDE_SA": "Call from outside Saudi Arabia",
-    "CALL": "Call"
+    "CALL": "Call",
+    "APP_TERMS_AND_CONDITIONS": "App Terms and Conditions"
   },
   "TOP_UP": {
     "OCCASION": "Occasion",
@@ -552,41 +558,42 @@
     "ITEM_PRICE": "Item price",
     "TOTAL": "Total",
     "DATE_AND_TIME": "Transaction Date",
+    "CARD_NUMBER": "Card Number",
     "ACCOUNT": "Account",
     "REASON_OF_TRANSFER": "Reason of Transfer",
-    "SALARY":"Salary",
-    "MUSANED":"Musaned",
-    "WALLET_TRANSFER":"Wallet transfer",
-    "QR_WITHDRAWAL":"QR Withdrawal",
-    "WU_TRANSFER":"WU Transfer",
-    "ALINMA_TRANSFER":"Alinma Transfer",
-    "ADD_MONEY":"Add Money",
-    "MADA_CARD":"Mada Card",
-    "VISA_CARD":"Visa Card",
-    "MASTER_CARD":"Master Card",
-    "TRANSFER_REVERSAL":"Transfer Reversal",
-    "BILL_PAYMENT":"bill Payment",
-    "SADAD":"SADAD",
-    "CARD_ISSUANCE":"Card Issuance",
-    "CARD_REISSUANCE":"Card Reissuance",
-    "CARD_REPLACEMENT":"Card Replacement",
-    "CARD_PURCHASE":"Card Purchase",
-    "INTERNET_PURCHASE":"Internet Purchase",
-    "MOI_PAYMENT":"MOI Payment",
-    "WALLET_CREDIT":"Wallet Credit",
-    "INTERNAL_TRANSFER":"Internal Transfer",
-    "LOCAL_TRANSFER_REVERSAL":"Local Transfer reversal",
-    "CASH_BACK":"Cash back",
-    "ALINMA_DIRECT_TRANSFER":"Alinma Direct Transfer",
-    "INTERNET_PURCHASE_OR_POS_PURCHASE":"Internet Purchase or POS Purchase",
-    "GIFT":"Gift",
-    "REVERSE_INCOMING_TRANSFER":"Reverse Incoming Transfer",
-    "SWIFT_TRANSFER":"Swift Transfer",
-    "BILL_REFUND_REVERSAL":"Bill Refund Reversal",
-    "PROMO_CASHBACK":"Promo Cashback",
-    "CARD_CASHBACK":"Card Cashback",
-    "MARKETPLACE_PURCHASE":"Marketplace Purchase",
-    "MONEY_REQUEST":"Money Request"
+    "SALARY": "Salary",
+    "MUSANED": "Musaned",
+    "WALLET_TRANSFER": "Wallet transfer",
+    "QR_WITHDRAWAL": "QR Withdrawal",
+    "WU_TRANSFER": "WU Transfer",
+    "ALINMA_TRANSFER": "Alinma Transfer",
+    "ADD_MONEY": "Add Money",
+    "MADA_CARD": "Mada Card",
+    "VISA_CARD": "Visa Card",
+    "MASTER_CARD": "Master Card",
+    "TRANSFER_REVERSAL": "Transfer Reversal",
+    "BILL_PAYMENT": "bill Payment",
+    "SADAD": "SADAD",
+    "CARD_ISSUANCE": "Card Issuance",
+    "CARD_REISSUANCE": "Card Reissuance",
+    "CARD_REPLACEMENT": "Card Replacement",
+    "CARD_PURCHASE": "Card Purchase",
+    "INTERNET_PURCHASE": "Internet Purchase",
+    "MOI_PAYMENT": "MOI Payment",
+    "WALLET_CREDIT": "Wallet Credit",
+    "INTERNAL_TRANSFER": "Internal Transfer",
+    "LOCAL_TRANSFER_REVERSAL": "Local Transfer reversal",
+    "CASH_BACK": "Cash back",
+    "ALINMA_DIRECT_TRANSFER": "Alinma Direct Transfer",
+    "INTERNET_PURCHASE_OR_POS_PURCHASE": "Internet Purchase or POS Purchase",
+    "GIFT": "Gift",
+    "REVERSE_INCOMING_TRANSFER": "Reverse Incoming Transfer",
+    "SWIFT_TRANSFER": "Swift Transfer",
+    "BILL_REFUND_REVERSAL": "Bill Refund Reversal",
+    "PROMO_CASHBACK": "Promo Cashback",
+    "CARD_CASHBACK": "Card Cashback",
+    "MARKETPLACE_PURCHASE": "Marketplace Purchase",
+    "MONEY_REQUEST": "Money Request"
   },
   "TRANSFER_SUMMARY": {
     "NAME": "Name",
@@ -659,7 +666,8 @@
     "GO_TO_CARD": "Go to Card",
     "CARD_HAS_BEEN_DELETED": "The card has been deleted",
     "CHANGE_PIN": "Change pincode",
-    "CARD_DETAILS": "Card Details"
+    "CARD_DETAILS": "Card Details",
+    "ISSUE_A_PHSYICAL": "Issue a Physical card for this virtual card"
   },
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
@@ -1165,6 +1173,8 @@
     "BENEFECIARY_ACTIVATED": "Beneficiary Activated Successfully"
   },
   "SADAD": {
+    "MONTLY_LIMIT_REACHED": "Monthly Limit reached",
+    "DAILY_LIMIT_REACHED": "Daily Limit reached",
     "SADAD_BILLS": "SADAD Bills",
     "ACTIVE_BILLS": "Active Bills",
     "INACTIVE_BILLS": "Inactive Bills",
@@ -1211,7 +1221,7 @@
   },
   "PAY_BILL": {
     "HEADER": "Pay Bill",
-    "SERVICE_TYPE": "Service Type",
+    "SERVICE_TYPE": "Service type",
     "ACCOUNT_NUMBER": "Account Number",
     "PAYMENT_FAILED": "Payment Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
@@ -1226,6 +1236,7 @@
     "AMOUNT": "Amount"
   },
   "BILL_PAYMENTS": {
+    "ANOTHER_REFUND": "Another Refund",
     "MOI_PAYMENT": "MOI Payment",
     "DUE_AMOUNT": "Due Amount",
     "NEW_MOI_BILL": "New MOI Bill",
@@ -1296,7 +1307,7 @@
     "INQUIRE_ANOTHER": "Inquire Another",
     "MY_TRAFFIC_VIOLATION": "My Traffic violation",
     "AMOUNT": "Amount",
-    "SERVICE_PROVIDER": "Service Provider",
+    "SERVICE_PROVIDER": "Service provider",
     "SERVICE_TYPE": "Service type",
     "VIOLATOR_ID": "Violator ID",
     "VIOLATION_NUMBER_FULL": "Violation Number",
@@ -1523,5 +1534,22 @@
     "REQUIRED": "{label} is required",
     "MUST_BE_TEXT": "{label} must be valid text",
     "MUST_BE_SELECTED": "{label} must be selected"
+  },
+  "RATING": {
+    "APP_RATING": "App Rating",
+    "SATISFACTION": "How satisfied are you",
+    "ALINMA_PAY_APP": "with the AlinmaPay app?",
+    "RATE_APP_NOW": "Rate Us"
+  },
+  "UPDATE": {
+    "HEADER": "Update the app",
+    "TITLE": "Update Required",
+    "SUBTITLE": "This is an old version of the app, and you cannot continue or log in using it. You will need to update the app to access your account.",
+    "BUTTON_TITLE": "Update Now"
+  },
+  "CARD_ISSUANCE_SHEET": {
+    "REGULAR_TITLE": "You can now",
+    "BOLD_TITLE": "Easily Issue Cards",
+    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
   }
 }

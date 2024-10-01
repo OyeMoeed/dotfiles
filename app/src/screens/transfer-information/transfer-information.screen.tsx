@@ -5,12 +5,12 @@ import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/i
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { useKeyboardStatus } from '@app/hooks';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { createRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import getSarieTransferFees from '@app/network/services/cards-management/get-sarie-transfer-fees/get-sarie-transfer-fees.service';
 import { IGetCoreLovPayload } from '@app/network/services/core/lov/get-lov.interface';
@@ -27,6 +27,9 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
 import transferInformationStyles from './transfer-information.style';
 import { ReasonListItem } from './trasnfer-information.interface';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { SNAP_POINT } from '@app/constants/constants';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
@@ -228,7 +231,38 @@ const TransferInformation: React.FC = () => {
     getTransferReasons();
   }, []);
 
-  const onPressTopup = () => navigate(ScreenNames.WALLET);
+  const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
+
+  const topUpSelectionBottomSheet = () => {
+    setTopUpOptionsVisible(true);
+  };
+
+  const closeBottomSheetTopUp = () => {
+    setTopUpOptionsVisible(false);
+  };
+
+  const topUpSelectionRef = createRef<any>();
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
+  };
+
+  const navigateTOAktharPoints = async () => {
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
 
   return (
     <IPaySafeAreaView>
@@ -240,7 +274,7 @@ const TransferInformation: React.FC = () => {
             availableBalance={currentBalance}
             hideBalance={appData?.hideBalance}
             showRemainingAmount
-            onPressTopup={onPressTopup}
+            onPressTopup={topUpSelectionBottomSheet}
           />
 
           <IPayView style={styles.bankDetailsView}>
@@ -288,6 +322,26 @@ const TransferInformation: React.FC = () => {
       >
         <IPayListView list={transferReason} onPressListItem={onPressListItem} selectedListItem={selectedReason?.text} />
       </IPayBottomSheet>
+
+      <IPayPortalBottomSheet
+          noGradient
+          heading="TOP_UP.ADD_MONEY_USING"
+          onCloseBottomSheet={closeBottomSheetTopUp}
+          customSnapPoint={SNAP_POINT.XS_SMALL}
+          ref={topUpSelectionRef}
+          enablePanDownToClose
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+          isVisible={topUpOptionsVisible}
+        >
+          <IPayTopUpSelection
+            testID="topUp-selection"
+            closeBottomSheet={closeBottomSheetTopUp}
+            topupItemSelected={topupItemSelected}
+          />
+        </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

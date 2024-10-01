@@ -9,12 +9,21 @@ export const SLICE_NAMES = {
   AUTH_SLICE: 'authSlice',
   APP_DATA_SLICE: 'appDataSlice',
   WALLET_INFO_SLICE: 'walletInfoSlice',
+  CARDS_SLICE: 'cardsSlice',
   ALERT_SLICE: 'alertSlice',
   SPINNER_SLICE: 'spinnerSlice',
   DROPDOWN_SLICE: 'dropdownSlice',
   PERMISSION_ALERT_SLICE: 'permissionAlertSlice',
   RESET_STATE_SLICE: 'resetStateSlice',
   BOTTOM_SHEET_SLICE: 'bottomSheetSlice',
+  FORCE_UPDATE_SLICE: 'forceUpdateSlice',
+  RATING_SLICE: 'ratingSlice',
 };
 
-export const WHITELISTED_DATA = ['appDataReducer', 'languageReducer', 'rearrangement', 'walletInfoReducer'];
+export const WHITELISTED_DATA = [
+  'appDataReducer',
+  'languageReducer',
+  'rearrangement',
+  'walletInfoReducer',
+  'ratingSlice',
+];

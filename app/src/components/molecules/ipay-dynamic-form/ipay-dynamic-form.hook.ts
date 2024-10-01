@@ -36,6 +36,7 @@ const useDynamicForm = (fetchedFields: DynamicField[]) => {
       const { type, required, minWidth, maxWidth, label, integrationTagName } = field;
       const flatKey = integrationTagName.replace(/\./g, '_');
       let schema = Yup.string();
+
       if (required) {
         schema = schema.required(t('VALIDATION.REQUIRED').replace('{label}', label));
       }
@@ -72,6 +73,11 @@ const useDynamicForm = (fetchedFields: DynamicField[]) => {
             );
           }
 
+          break;
+        case DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE:
+          if (required) {
+            schema = Yup.boolean().oneOf([true], t('VALIDATION.REQUIRED').replace('{label}', label));
+          }
           break;
 
         default:

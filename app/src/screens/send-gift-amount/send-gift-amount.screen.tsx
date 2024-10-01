@@ -10,7 +10,15 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { IPayAmountInput, IPayButton, IPayChip, IPayHeader, IPayList, IPayTopUpBox } from '@app/components/molecules';
+import {
+  IPayAmountInput,
+  IPayBalanceStatusChip,
+  IPayButton,
+  IPayChip,
+  IPayHeader,
+  IPayList,
+  IPayTopUpBox,
+} from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -56,6 +64,7 @@ const SendGiftAmountScreen = ({ route }) => {
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
   const [chipValue, setChipValue] = useState('');
   const [contactToRemove, setContactToRemove] = useState<Contact | null>(null);
+  const [warningStatus, setWarningStatus] = useState<string>('');
 
   useEffect(() => {
     setContacts(selectedContacts);
@@ -120,10 +129,19 @@ const SendGiftAmountScreen = ({ route }) => {
     Object.values(contactAmounts)
       .reduce((total, amount) => total + (amount ? parseFloat(amount) : 0), 0)
       .toFixed(2);
+
   // Handle removing the contact from recipient
   const handleRemoveContact = (contactId: string) => {
     setContacts((prevContacts) => {
       const updatedContacts = prevContacts.filter((contact) => contact.recordID !== contactId);
+
+      if (selectedTab === t('SEND_GIFT.MANUAL')) {
+        const calculateTotalManualAmountValue = updatedContacts.reduce((acc, contact) => {
+          const amount = contactAmounts[contact.recordID];
+          return { ...acc, [contact.recordID]: amount };
+        }, {});
+        setContactAmounts(calculateTotalManualAmountValue);
+      }
 
       // If no contacts are left, navigate back
       if (updatedContacts.length === 0) {
@@ -362,7 +380,7 @@ const SendGiftAmountScreen = ({ route }) => {
   return (
     <IPaySafeAreaView>
       <IPayHeader title="SEND_GIFT.TITLE" applyFlex backBtn />
-      <IPayScrollView nestedScrollEnabled>
+      <IPayScrollView nestedScrollEnabled keyboardShouldPersistTaps="handled">
         <IPayView style={styles.container}>
           <IPayView>
             <IPayTopUpBox
@@ -395,6 +413,7 @@ const SendGiftAmountScreen = ({ route }) => {
               data={contacts}
               extraData={contacts}
               renderItem={renderItem}
+              keyboardShouldPersistTaps="always"
               ListFooterComponent={<ListFooterContacts />}
               showsVerticalScrollIndicator={false}
             />
@@ -402,6 +421,13 @@ const SendGiftAmountScreen = ({ route }) => {
         </IPayView>
       </IPayScrollView>
       <IPayView style={styles.buttonContainer}>
+        <IPayBalanceStatusChip
+          monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+          currentBalance={Number(availableBalance)}
+          amount={Number(amountToShow || topUpAmount)}
+          setWarningStatus={setWarningStatus}
+          dailySpendingLimit={Number(dailyOutgoingLimit)}
+        />
         {selectedTab === t('SEND_GIFT.MANUAL') && (
           <IPayList
             title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
@@ -416,7 +442,7 @@ const SendGiftAmountScreen = ({ route }) => {
           btnText="SEND_GIFT.SEND"
           btnIconsDisabled
           onPress={getW2WActiveFriends}
-          disabled={isDisabled}
+          disabled={isDisabled || !!warningStatus}
           btnStyle={styles.btnText}
         />
       </IPayView>

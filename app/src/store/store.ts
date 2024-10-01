@@ -4,12 +4,13 @@ import { setupListeners } from '@reduxjs/toolkit/query';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE, persistStore } from 'redux-persist';
 import persistReducer from 'redux-persist/es/persistReducer';
-import reactotron from '../../../ReactotronConfig';
 import { WHITELISTED_DATA } from './constants.store';
+
 import alertReducer from './slices/alert-slice';
 import appDataReducer from './slices/app-data-slice';
 import authReducer from './slices/auth-slice';
 import bottomSheetReducer from './slices/bottom-sheets-slice';
+import cardsReducer from './slices/cards-slice';
 import dropdownReducer from './slices/dropdown-slice';
 import languageReducer from './slices/language-slice';
 import permissionAlertReducer from './slices/permission-alert-slice';
@@ -18,6 +19,10 @@ import ResetStateSlice from './slices/reset-state-slice';
 import spinnerReducer from './slices/spinner.slice';
 import themeReducer from './slices/theme-slice';
 import walletInfoReducer from './slices/wallet-info-slice';
+import forceUpdateReducer from './slices/app-force-update-slice';
+import ratingReducer from './slices/rating.slice';
+
+import reactotron from '../../../ReactotronConfig';
 
 /**
  * Object containing all the reducers used in the application.
@@ -35,6 +40,9 @@ const reducers = {
   permissionAlertReducer,
   resetStateSlice: ResetStateSlice,
   bottomSheetReducer,
+  cardsReducer,
+  forceUpdateReducer,
+  ratingReducer,
 };
 
 /**

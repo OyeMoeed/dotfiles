@@ -1,4 +1,5 @@
 import icons from '@app/assets/icons';
+import { SearchNormalIcon } from '@app/assets/svgs';
 import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -53,7 +54,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
 
   const renderNoResults = () => (
     <IPayView style={styles.noResultsView}>
-      <IPayFootnoteText text={'COMMON.NO_RESULTS_FOUND'} />
+      <IPayFootnoteText text="COMMON.NO_RESULTS_FOUND" />
     </IPayView>
   );
 
@@ -71,11 +72,12 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
       <IPayView style={styles.container}>
         {isSearchable && (
           <IPayView style={styles.searchBarView}>
-            <IPayIcon icon={icons.search1} size={20} color={colors.primary.primary500} />
+            <SearchNormalIcon style={styles.searchIcon} color={colors.primary.primary500} />
             <IPayInput
               onChangeText={setSearchText}
               text={searchText}
-              placeholder={'COMMON.SEARCH'}
+              placeholder="COMMON.SEARCH"
+              placeholderTextColor={colors.natural.natural500}
               style={styles.searchInputText}
             />
           </IPayView>
@@ -88,7 +90,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
             data={filteredListItems}
             keyExtractor={(_, index) => index.toString()}
             renderItem={renderListItems}
-            style={styles.flexStyles}
+            ListFooterComponent={<IPayView style={styles.flexStyles} />}
             itemSeparatorStyle={styles.itemSeparatorStyle}
           />
         )}

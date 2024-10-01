@@ -17,6 +17,7 @@ import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
+import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import { getAllSentRequests } from '@app/network/services/request-management/sent-requests/sent-requests.service';
 import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
@@ -29,7 +30,6 @@ import { ApiResponseStatusType, ToastTypes, buttonVariants } from '@app/utilitie
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import requestMoneyStyles from './request-money-transaction.style';
 
 const RequestMoneyTransactionScreen: React.FC = () => {
@@ -269,18 +269,18 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         return {
           ...baseMapping,
           payment_date: item.payment_date,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       case MoneyRequestStatus.PENDING:
         return {
           ...baseMapping,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       case MoneyRequestStatus.REJECTED:
         return {
           ...baseMapping,
           rejection_date: item.rejection_date,
-          ref_number: item.realTransactionRefNumber,
+          ref_number: item.transactionId,
         };
       default:
         return baseMapping;
@@ -410,28 +410,25 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           data={dataForPaginatedFLatlist}
           ListEmptyComponent={noResult}
         />
-        {dataForPaginatedFLatlist?.length > 0 && (
-          <>
-            {selectedTab === SEND_REQUESTS ? (
-              <IPayButton
-                btnType={buttonVariants.PRIMARY}
-                large
-                onPress={createRequest}
-                btnText="REQUEST_MONEY.CREATE_REQUEST"
-                btnStyle={styles.requestButton}
-                leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
-              />
-            ) : (
-              <IPayButton
-                btnType={buttonVariants.PRIMARY}
-                large
-                onPress={createRequest}
-                btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
-                btnStyle={styles.requestButton}
-                leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
-              />
-            )}
-          </>
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === SEND_REQUESTS && (
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            onPress={createRequest}
+            btnText="REQUEST_MONEY.CREATE_REQUEST"
+            btnStyle={styles.requestButton}
+            leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
+          />
+        )}
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === RECEIVED_REQUESTS && (
+          <IPayButton
+            btnType={buttonVariants.PRIMARY}
+            large
+            onPress={createRequest}
+            btnText="REQUEST_MONEY.MAKE_NEW_REQUEST"
+            btnStyle={styles.requestButton}
+            leftIcon={<IPayIcon icon={icons.add} color={colors.natural.natural0} />}
+          />
         )}
       </IPayView>
       <IPayActionSheet
