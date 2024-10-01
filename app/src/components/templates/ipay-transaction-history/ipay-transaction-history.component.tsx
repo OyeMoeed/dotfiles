@@ -41,7 +41,6 @@ const MultiTransactions: React.FC<MultiTransactionsProps> = ({
   const styles = transactionHistoryStyle(colors);
   const fullName = useTypedSelector((state) => state.walletInfoReducer.walletInfo.fullName);
 
-
   const multiTransactionTypes =
     (transaction?.transactionRequestType === TransactionTypes.COUT_SARIE ||
       transaction?.transactionRequestType === TransactionTypes.COUT_ALINMA ||
@@ -132,7 +131,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = transactionHistoryStyle(colors);
-  const [isShareable, setIsShareable] = useState<boolean>(false);
   const { showToast } = useToastContext();
   const transactionRequestType = transaction?.transactionRequestType;
   const [, setIsLoading] = useState<boolean>(false);
@@ -179,12 +177,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     renderToast(value);
   };
 
-  const onPressPrint = () => {
-    setIsShareable(false);
-  };
-
   const onPressShare = () => {
-    setIsShareable(true);
     if (onCloseBottomSheet) onCloseBottomSheet();
   };
 
@@ -264,12 +257,10 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView style={styles.scroll}>
         <IPayShareableImageView
-          isShareable={isShareable}
           otherView={
             <IPayShareableOtherView
               isBKFTransfer={isBKFTransfer}
               isBeneficiaryHistory={isBeneficiaryHistory}
-              onPressPrint={onPressPrint}
               onPressShare={onPressShare}
               onPressDownloadInvoice={onPressDownloadInvoice}
               showSplitButton={showSplitButton}
