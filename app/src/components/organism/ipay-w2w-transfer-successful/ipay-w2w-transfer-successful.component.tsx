@@ -216,7 +216,7 @@ const IPayW2WTransferSuccess: React.FC<IW2WTransferSuccessProps> = ({ transferDe
           <IPayButton
             btnType={buttonVariants.LINK_BUTTON}
             onPress={viewShot}
-            text="TOP_UP.SHARE"
+            btnText={t('TOP_UP.SHARE')}
             leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
           />
         </IPayView>

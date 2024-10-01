@@ -19,6 +19,12 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   valueKey = 'id', // Default key for value
   selectedValue,
   errorMessage,
+  placeholder,
+  customIcon,
+  editable,
+  containerStyle,
+  customSnapPoints,
+  rightIcon,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -58,21 +64,24 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
       <IPayAnimatedTextInput
         testID={testID}
         label={label}
-        editable={false}
+        editable={editable ?? false}
         value={selectedItem}
-        containerStyle={[styles.inputContainerStyle, disabled && styles.disabledInput]}
+        containerStyle={[containerStyle ?? styles.inputContainerStyle, disabled && styles.disabledInput]}
         showRightIcon
-        customIcon={listCheckIcon}
+        customIcon={customIcon ?? listCheckIcon}
         onClearInput={handlePresentDropdown}
         assistiveText={errorMessage}
         isError={!!errorMessage}
+        placeholderTextColor={colors.natural.natural500}
+        placeholder={placeholder ?? ''}
+        rightIcon={rightIcon}
       />
       <IPayDropdownSheet
         data={data}
         isSearchable={isSearchable}
         onSelectItem={handleSelectItem}
         selectedItem={selectedItem || ''}
-        snapPoints={[SNAP_POINT.MEDIUM_LARGE[1]]}
+        snapPoints={customSnapPoints ?? SNAP_POINT.MEDIUM_LARGE}
         heading={label}
         isVisible={isVisible}
         labelKey={labelKey}
