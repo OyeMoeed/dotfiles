@@ -8,24 +8,25 @@ import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
+import { IPayMusanedAlinmaUser } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
+import ScreenNames from '@app/navigation/screen-names.navigation';
+import getMusanedInquiryList from '@app/network/services/musaned/musaned-inquiry';
+import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
-import { useNavigation } from '@react-navigation/core';
-import ScreenNames from '@app/navigation/screen-names.navigation';
-import { IPayBottomSheet, IPayMusanedAlinmaUser, IPayMusanedNonAlinmaUserList } from '@app/components/organism';
 import { buttonVariants } from '@app/utilities';
-import getMusanedInquiryList from '@app/network/services/musaned/musaned-inquiry';
 import { shareOptions } from '@app/utilities/shared.util';
 
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import IPayLaborerDetailsBanner from '@app/components/organism/ipay-laborer-details-banner/ipay-laborer-details-banner.component';
+import { navigate } from '@app/navigation/navigation-service.navigation';
 import musanedStyle from './musaned.styles';
 
 const MusanedScreen: React.FC = () => {
   const { colors } = useTheme();
   const { t } = useTranslation();
-  const { navigate } = useNavigation();
   const styles = musanedStyle(colors);
 
   const ALINMA_PAY_USERS = 'MUSANED.ALINMA_PAY_USERS';
@@ -35,7 +36,7 @@ const MusanedScreen: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<string>(MUSANED_USERS_TABS[0]);
   const [requestDetail, setRequestDetail] = useState<IPayRequestMoneyProps | null>(null);
   const [showDetailSheet, setShowDetailSheet] = useState<boolean>(false);
-  const refBottomSheet = useRef(null);
+  const refBottomSheet = useRef<any>(null);
   const { showToast } = useToastContext();
 
   const [sentRequestsPage] = useState(1);
@@ -109,7 +110,7 @@ const MusanedScreen: React.FC = () => {
   const openBottomSheet = (item: RequestItem) => {
     setRequestDetail(item);
     setShowDetailSheet(true);
-    refBottomSheet.current.present();
+    refBottomSheet?.current?.present();
   };
 
   const renderItem = ({ item, index }: { item: RequestItem; index: number }) => {
@@ -136,14 +137,13 @@ const MusanedScreen: React.FC = () => {
                 headingStyles={styles.chipHeading}
               />
             ) : null}
-            <IPayMusanedNonAlinmaUserList
-              date={poiExperationDate}
+            <IPayLaborerDetailsBanner
               titleText={name}
-              status={paymentStatus}
               amount={payrollAmount}
               onPress={() => openBottomSheet(item)}
               details={occupationEn}
               shouldTranslateTitle={false}
+              withArrow
             />
           </>
         )}
@@ -203,6 +203,11 @@ const MusanedScreen: React.FC = () => {
 
     navigate(ScreenNames.MUSANED_USER_DETAILS);
   };
+
+  const onCloseBottomSheet = () => {
+    refBottomSheet?.current?.close();
+  };
+
   return (
     <>
       <IPaySafeAreaView style={styles.container}>
@@ -242,7 +247,15 @@ const MusanedScreen: React.FC = () => {
           />
         </IPayView>
       </IPaySafeAreaView>
-      <IPayBottomSheet simpleBar heading="MUSANED.SELECT" ref={refBottomSheet} isVisible={showDetailSheet} cancelBnt>
+      <IPayPortalBottomSheet
+        simpleBar
+        heading="MUSANED.SELECT"
+        ref={refBottomSheet}
+        isVisible={showDetailSheet}
+        cancelBnt
+        onCloseBottomSheet={onCloseBottomSheet}
+        customSnapPoint={['43%']}
+      >
         {selectedTab === ALINMA_PAY_USERS ? (
           <IPayMusanedAlinmaUser
             date={requestDetail?.poiExperationDate}
@@ -254,13 +267,10 @@ const MusanedScreen: React.FC = () => {
           />
         ) : (
           <IPayView style={styles.secondButton}>
-            <IPayMusanedNonAlinmaUserList
-              date={requestDetail?.poiExperationDate}
+            <IPayLaborerDetailsBanner
               titleText={requestDetail?.name}
-              status={requestDetail?.paymentStatus}
               amount={requestDetail?.payrollAmount}
               details={requestDetail?.occupationEn}
-              withArrow={false}
             />
           </IPayView>
         )}
@@ -280,7 +290,7 @@ const MusanedScreen: React.FC = () => {
           onPress={onPressDetails}
           large
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </>
   );
 };
