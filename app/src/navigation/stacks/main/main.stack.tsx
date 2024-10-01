@@ -120,6 +120,7 @@ import {
   MusanedPaySalaryScreen,
   MusanedUserDetails,
   MusanedPaySalaryConfirmScreen,
+  MusanedPaymentSuccessfulScreen,
 } from '@app/screens/musaned';
 import { IPayRatingSheet } from '@app/components/organism';
 
@@ -303,6 +304,7 @@ const MainStackNavigator = () => {
           <MainStack.Screen name={screenNames.MUSANED_HISTORY} component={MusanedHistoryScreen} />
           <MainStack.Screen name={screenNames.MUSANED_PAY_SALARY} component={MusanedPaySalaryScreen} />
           <MainStack.Screen name={screenNames.MUSANED_PAY_SALARY_CONFIRM} component={MusanedPaySalaryConfirmScreen} />
+          <MainStack.Screen name={screenNames.MUSANED_PAYMENT_SUCCESSFUL} component={MusanedPaymentSuccessfulScreen} />
           <MainStack.Screen name={screenNames.MUSANED_USER_DETAILS} component={MusanedUserDetails} />
         </MainStack.Group>
       </MainStack.Navigator>
