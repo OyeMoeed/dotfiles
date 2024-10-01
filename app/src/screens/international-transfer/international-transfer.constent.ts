@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
-import { BeneficiaryFields } from '../edit-international-beneficiary-transfer/edit-international-beneficiary-transfer.interface';
 import { BeneficiaryDetailsProps } from './international-transfer.interface';
 
 const internationalBeneficiaryData: BeneficiaryDetailsProps[] = [
