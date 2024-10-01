@@ -49,6 +49,18 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(22),
       paddingTop: moderateScale(12),
     },
+    deductInputContainer: {
+      justifyContent: 'center',
+      paddingHorizontal: moderateScale(20),
+    },
+    deductAmountInput: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderWidth: moderateScale(1),
+      borderColor: themeColors.primary.primary100,
+      borderRadius: moderateScale(22),
+      paddingTop: moderateScale(12),
+    },
     focusedContainer: {
       alignItems: 'center',
       justifyContent: 'center',
@@ -89,10 +101,11 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     btnText: {
       color: themeColors.primary.primary500,
     },
-    chipContainer: {
-      marginBottom: moderateScale(10),
-      marginTop: moderateScale(-2),
-      alignSelf: 'center',
+    deductChipContainer: {
+      marginVertical: moderateScale(8),
+    },
+    payExtraChipContainer: {
+      padding: 14,
     },
     amountInput: {
       paddingBottom: moderateScale(8),

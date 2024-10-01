@@ -16,6 +16,14 @@ interface IPaySalaryPayInformationProps {
   payExtraFlag: boolean;
   amount: string;
   selectedDate: string;
+  onPressDeductionShow: () => void;
+  deductionAmount: string;
+  setDeductionAmount: (value: string) => void;
+  payExtraAmount: string;
+  setPayExtraAmount: (value: string) => void;
+  selectedDeductionReason?: { text: string };
+  payExtraNote: string;
+  setPayExtraNote: (value: string) => void;
 }
 
 export default IPaySalaryPayInformationProps;

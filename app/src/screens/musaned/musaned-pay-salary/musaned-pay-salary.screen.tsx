@@ -18,8 +18,9 @@ import getAktharPoints from '@app/network/services/cards-management/mazaya-topup
 import { isArabic } from '@app/utilities/constants';
 import { BalanceStatusVariants } from '@app/components/templates/ipay-bill-balance/ipay-bill-balance.interface';
 import { AccountBalanceStatus } from '@app/enums';
+import { MusnaedInqueryRecords } from '@app/network/services/musaned';
 
-import { MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
+import { DeductionReasons, MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
 import musanedPaySalary from './musaned-pay-salary.style';
 
 const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
@@ -29,24 +30,11 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   type RouteProps = RouteProp<any>;
   const { params } = useRoute<RouteProps>();
   const {
-    borderNumber = '3085307282',
-    contractNumber = '',
-    countryCode = 'PK',
-    haveWalletFlag = true,
-    lastPaidSalaryDate = '',
     name = 'FAISAL SARWAR MUHAMMAD SARWAR',
-    nationality = 'باكستان',
-    nationalityAr = 'باكستان',
-    nationalityEn = 'Pakistan',
-    occupation = 'عامل منزلي',
     occupationAr = 'عامل منزلي',
     occupationEn = 'Domestic worker',
     payrollAmount = '1300',
-    poiExperationDate = '2026-03-21',
-    poiNumber = '2516472335',
-    salarySource = '',
-    type = 'MUSANED.ALINMA_PAY_USERS',
-  } = params || {};
+  } = (params as MusnaedInqueryRecords) || {};
 
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -56,12 +44,17 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const [chipValue, setChipValue] = useState<string>('');
   const [transferAmount, setTransferAmount] = useState<string>('');
   const [selectedReason, setSelectedReason] = useState({});
+  const [selectedDeductionReason, setDeductionSelectedReason] = useState({});
+  const [deductionAmount, setDeductionAmount] = useState('');
+  const [payExtraAmount, setPayExtraAmount] = useState('');
+  const [payExtraNote, setPayExtraNote] = useState('');
   const [selectedFromDate, setSelectedFromDate] = useState('');
   const [deductFlag, setDeductFlag] = useState(false);
   const [payExtraFlag, setPayExtraFlag] = useState(false);
 
   const refBottomSheet = useRef(null);
   const salaryTypeBottomSheetRef = useRef(null);
+  const deductionReasonBottomSheetRef = useRef(null);
 
   const balanceStatusVariants: BalanceStatusVariants = {
     insufficient: {
@@ -93,6 +86,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     { id: SalaryCategories.Bonus_Salary, text: 'MUSANED.BONUS_SALARY' },
   ];
 
+  const deductReasonsTypes = [
+    { id: DeductionReasons.Rent, text: 'MUSANED.DEDUCT_RENT' },
+    { id: DeductionReasons.Loan, text: 'MUSANED.DEDUCT_LOAN' },
+    { id: DeductionReasons.Other, text: 'MUSANED.DEDUCT_OTHER' },
+  ];
+
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
 
@@ -114,13 +113,25 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     salaryTypeBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (item: ReasonListItem) => {
-    setSelectedReason(item);
-    onCloseSheet();
+  const onDeductionReasonCloseSheet = () => {
+    deductionReasonBottomSheetRef?.current?.close();
   };
 
   const onPressSelectReason = () => {
     salaryTypeBottomSheetRef?.current?.present();
+  };
+  const onPressListItem = (item) => {
+    setSelectedReason(item);
+    onCloseSheet();
+  };
+
+  const onPressDeductionReasonItem = (item) => {
+    setDeductionSelectedReason(item);
+    onDeductionReasonCloseSheet();
+  };
+
+  const onPressDeductionShow = () => {
+    deductionReasonBottomSheetRef?.current?.present();
   };
 
   const onLocalTransferPrepare = async () => {
@@ -209,6 +220,14 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               deductFlag={deductFlag}
               amount={payrollAmount}
               selectedDate={selectedFromDate}
+              onPressDeductionShow={onPressDeductionShow}
+              deductionAmount={deductionAmount}
+              setDeductionAmount={setDeductionAmount}
+              payExtraAmount={payExtraAmount}
+              setPayExtraAmount={setPayExtraAmount}
+              selectedDeductionReason={selectedDeductionReason}
+              payExtraNote={payExtraNote}
+              setPayExtraNote={setPayExtraNote}
             />
           </IPayView>
         </IPayView>
@@ -247,6 +266,22 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         bold
       >
         <IPayListView list={salaryTypes} onPressListItem={onPressListItem} selectedListItem={selectedReason?.text} />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading="MUSANED.SALARY_TYPE"
+        onCloseBottomSheet={onCloseSheet}
+        customSnapPoint={['20%', '65%']}
+        ref={deductionReasonBottomSheetRef}
+        simpleHeader
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayListView
+          list={deductReasonsTypes}
+          onPressListItem={onPressDeductionReasonItem}
+          selectedListItem={selectedDeductionReason?.text}
+        />
       </IPayBottomSheet>
 
       <IPayPortalBottomSheet

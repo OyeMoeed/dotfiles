@@ -1573,8 +1573,14 @@
     "ADVANCED_SALARY": "Advance Salary",
     "BONUS_SALARY": "Bonus Salary",
     "SELECT_MONTH": "Select Month",
+    "DEDUCTION_REASON": "Deduction Reason",
+    "ENTER_DEDUCTION_AMOUNT": "Enter deduction amount",
     "DEDUCT_FROM_AMOUNT": "Deduct from amount",
     "PAY_EXTRA": "Pay Extra",
-    "BASIC_SALARY": "Basic Salary"
+    "DEDUCT_RENT": "Rent/Housing",
+    "DEDUCT_LOAN": "Loan",
+    "DEDUCT_OTHER": "Other",
+    "DEDUCTION_AMOUNT_NOTE": "Deduction Amount must be less than the salary amount.",
+    "NOTE": "Note"
   }
 }
