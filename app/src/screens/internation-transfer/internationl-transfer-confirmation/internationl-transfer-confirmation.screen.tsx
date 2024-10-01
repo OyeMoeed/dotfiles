@@ -4,6 +4,7 @@ import {
   IPayCaption1Text,
   IPayCaption2Text,
   IPayCheckbox,
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
@@ -15,14 +16,16 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { ValidateWUTransferPayload } from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.interface';
+import {
+  ValidateWUTransferPayload,
+  ValidateWUTransferResponse,
+} from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.interface';
 import wuValidateTransfer from '@app/network/services/international-transfer/wu-transfer-validate/wu-transfer-validate.service';
 import { WUTransferPayload } from '@app/network/services/international-transfer/wu-transfer/wu-transfer.interface';
 import westernUnionTransfer from '@app/network/services/international-transfer/wu-transfer/wu-transfer.service';
@@ -33,13 +36,15 @@ import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-sl
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import Flag from 'react-native-round-flags';
 import { useDispatch } from 'react-redux';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { SNAP_POINT } from '@app/constants/constants';
+import { ImageStyle } from 'react-native';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import { InternationalTransferDataLabels } from './internationl-tranfer-confirmation.constant';
 import internationalTransferConfirmationStyles from './internationl-transfer-confirmation.style';
@@ -53,13 +58,14 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
-  const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { getDataByKey } = useInternationalTransferData();
   const { getValues, control, setValue } = useForm();
   const promoCodeText = getValues('promo_code');
-  const userInfo = useTypedSelector((state) => state.userInfoReducer.userInfo);
+  const userInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo.userContactInfo);
 
   const contentViewBg = [colors.primary.primary100, colors.secondary.secondary100];
   // TODO
@@ -68,14 +74,11 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   const dummyPromo = '1234';
   const dispatch = useDispatch();
 
-  const [apiError, setAPIError] = useState<string>('');
-  const [validateBeneficiaryData, setValidateBeneficiaryData] = useState({});
+  const [validateBeneficiaryData, setValidateBeneficiaryData] = useState<ValidateWUTransferResponse>();
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
 
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-
-  const { showToast } = useToastContext();
 
   const { otpConfig } = useConstantData();
 
@@ -124,8 +127,11 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   }, [promoMatchSuccessfuly]);
 
   const totalAmount = () => {
-    const amount = getDataByKey(InternationalTransferDataLabels.total_amount)?.value;
-    return `${amount} ${t('COMMON.SAR')}`;
+    const total =
+      Number(feesInquiryData?.vatAmount) +
+      Number(feesInquiryData?.feeAmount) +
+      Number(feesInquiryData?.remitterCurrencyAmount);
+    return `${total ?? 0} ${t('COMMON.SAR')}`;
   };
 
   const getWidth = (): string[] => {
@@ -136,31 +142,21 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
   };
 
   const onCloseBottomSheet = () => {
-    otpBottomSheetRef?.current?.close();
+    setOtpSheetVisible(false);
   };
 
   const onPressHelp = () => {
-    helpCenterRef?.current?.present();
+    setHelpCenterVisible(true);
   };
 
   const getGeneratedBeneficiaryFees = () => {
-    const checkIncludeFees = (key) => (feesInquiryData[key] ? t('COMMON.YES') : t('COMMON.NO'));
+    const checkIncludeFees = (key: string) => (feesInquiryData[key] ? t('COMMON.YES') : t('COMMON.NO'));
     return Object.keys(feesInquiryData)
       ?.map((key) => ({
         label: key,
         value: key === 'isIncludeFees' ? checkIncludeFees(key) : feesInquiryData[key],
       }))
       ?.filter((key) => beneficiaryKeysMapping[BeneficiariesDetails.FEES].includes(key?.label));
-  };
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
   };
 
   const validateWUBeneficiary = async () => {
@@ -176,55 +172,36 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
       promoCode: promoCodeText,
       deviceInfo: await getDeviceInfo(),
     };
-    try {
-      const apiResponse = await wuValidateTransfer(payload, beneficiaryData?.beneficiaryCode);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setValidateBeneficiaryData(apiResponse?.response);
-          otpBottomSheetRef?.current?.present();
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+
+    const apiResponse = await wuValidateTransfer(payload, beneficiaryData?.beneficiaryCode);
+    if (apiResponse?.response) {
+      setValidateBeneficiaryData(apiResponse.response);
+      setOtpSheetVisible(true);
     }
   };
 
   const transferWesternUnion = async () => {
     const payload: WUTransferPayload = {
-      authentication: validateBeneficiaryData?.transactionId,
-      otpRef: validateBeneficiaryData?.otpRef,
+      authentication: { transactionId: validateBeneficiaryData?.transactionId ?? '' },
+      otpRef: validateBeneficiaryData?.otpRef ?? '',
       otp,
       deviceInfo: await getDeviceInfo(),
     };
-    try {
-      const apiResponse = await westernUnionTransfer(beneficiaryData?.beneficiaryCode, payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          onCloseBottomSheet();
-          navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    const apiResponse = await westernUnionTransfer(beneficiaryData?.beneficiaryCode, payload);
+    if (apiResponse) {
+      onCloseBottomSheet();
+      navigate(ScreenNames.INTERNATIONAL_TRANSFER_SUCCESS);
     }
+  };
+
+  const getLabelSuffix = (label: string) => {
+    const labelMappedText = t(
+      `INTERNATIONAL_TRANSFER.${LocalizationKeysMapping[label as keyof typeof LocalizationKeysMapping]}`,
+    );
+    if (label === 'beneficiaryCurrencyAmount') {
+      return `${labelMappedText} (${feesInquiryData?.principleCurrency ?? ''})`;
+    }
+    return labelMappedText;
   };
 
   return (
@@ -239,7 +216,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
             </IPayView>
 
             <IPayView style={styles.receiverInfoContainer}>
-              <Flag code={beneficiaryData?.countryCode} style={styles.countryFlagImg} />
+              <IPayFlag countryCode={beneficiaryData?.countryCode} />
               <IPayView style={styles.receiverInfoView}>
                 <IPayFootnoteText
                   regular={false}
@@ -283,11 +260,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
               itemSeparatorStyle={styles.itemSeparatorStyle}
               renderItem={({ item: { label, value } }) => (
                 <IPayView style={styles.listedContent}>
-                  <IPaySubHeadlineText
-                    regular
-                    text={t(`INTERNATIONAL_TRANSFER.${LocalizationKeysMapping[label]}`)}
-                    color={colors.natural.natural900}
-                  />
+                  <IPaySubHeadlineText regular text={getLabelSuffix(label)} color={colors.natural.natural900} />
                   <IPaySubHeadlineText
                     regular
                     text={label === 'feeAmount' || label === 'vatAmount' ? `${value} ${t('COMMON.SAR')}` : value}
@@ -305,7 +278,7 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           >
             <IPayImageBackground
               image={promoMatchSuccessfuly ? images.promoCodeBgGreen : images.promoCodeBg}
-              style={styles.imageBackground}
+              style={styles.imageBackground as ImageStyle}
             >
               <IPayView
                 style={[styles.promocodeContainer, promoMatchSuccessfuly && styles.promocodeContainerContitional]}
@@ -404,43 +377,44 @@ const InternationalTransferConfirmation: React.FC = ({ route }: any) => {
           />
         </IPayView>
       </IPayBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         testID="otp-bottom-sheet"
         heading="LOCAL_TRANSFER.TRANSFER"
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '99%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={otpBottomSheetRef}
         bold
         cancelBnt
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={onCloseBottomSheet}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={transferWesternUnion}
           mobileNumber={userInfo?.mobileNumber}
           setOtp={setOtp}
+          otp={otp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}
           onResendCodePress={() => otpVerificationRef?.current?.resetInterval()}
         />
-      </IPayBottomSheet>
-
-      <IPayBottomSheet
+      </IPayPortalBottomSheet>
+      <IPayPortalBottomSheet
         testID="help-center-bottom-sheet"
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         ref={helpCenterRef}
+        isVisible={isHelpCenterVisible}
+        onCloseBottomSheet={() => {}}
       >
         <HelpCenterComponent />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

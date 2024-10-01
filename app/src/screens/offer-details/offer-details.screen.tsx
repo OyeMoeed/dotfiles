@@ -244,7 +244,7 @@ const OfferDetailsScreen: React.FC = () => {
         <IPayView style={styles.bottomButtonContainer}>
           <IPayButton
             onPress={() => openURL('https://www.google.com')} // TODO: added dummy URL for now
-            medium
+            large
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.export_2} color={colors.primary.primary500} />}
             btnText="OFFERS.VISIT_WEBSITE"
@@ -252,7 +252,7 @@ const OfferDetailsScreen: React.FC = () => {
           />
           <IPayButton
             onPress={() => nearestStoreSheetRef.current.show()}
-            medium
+            large
             btnType={buttonVariants.OUTLINED}
             leftIcon={<IPayIcon icon={icons.location1} color={colors.primary.primary500} />}
             btnText="OFFERS.NEAREST_STORE"

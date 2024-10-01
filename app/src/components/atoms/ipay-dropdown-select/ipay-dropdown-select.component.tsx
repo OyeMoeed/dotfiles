@@ -1,9 +1,9 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
-import { SNAP_POINT } from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useState } from 'react';
+import { SNAP_POINT } from '@app/constants/constants';
 import IPayDropdownSheet from './ipay-dropdown-select-sheet.component';
 import { IPayDropdownSelectProps, ListItem } from './ipay-dropdown-select.interface';
 import dropdownStyles from './ipay-dropdown-select.styles';
@@ -19,6 +19,12 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   valueKey = 'id', // Default key for value
   selectedValue,
   errorMessage,
+  placeholder,
+  customIcon,
+  editable,
+  containerStyle,
+  customSnapPoints,
+  rightIcon,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -50,21 +56,24 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
       <IPayAnimatedTextInput
         testID={testID}
         label={label}
-        editable={false}
+        editable={editable ?? false}
         value={selectedValue}
-        containerStyle={[styles.inputContainerStyle, disabled && styles.disabledInput]}
+        containerStyle={[containerStyle ?? styles.inputContainerStyle, disabled && styles.disabledInput]}
         showRightIcon
-        customIcon={listCheckIcon}
+        customIcon={customIcon ?? listCheckIcon}
         onClearInput={handlePresentDropdown}
         assistiveText={errorMessage}
         isError={!!errorMessage}
+        placeholderTextColor={colors.natural.natural500}
+        placeholder={placeholder ?? ''}
+        rightIcon={rightIcon}
       />
       <IPayDropdownSheet
         data={data}
         isSearchable={isSearchable}
         onSelectItem={handleSelectItem}
         selectedItem={selectedValue || ''}
-        snapPoints={[SNAP_POINT.MEDIUM_LARGE[1]]}
+        snapPoints={customSnapPoints ?? SNAP_POINT.MEDIUM_LARGE}
         heading={label}
         isVisible={isVisible}
         labelKey={labelKey}

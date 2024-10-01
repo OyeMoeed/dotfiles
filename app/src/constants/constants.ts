@@ -703,6 +703,7 @@ export enum DYNAMIC_FIELDS_TYPES {
   ALPHA_NO_DIGITS = 'alphaNoDigits',
   ENGLISH_CHARACTERS = 'englishCharacters',
   ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+  LABEL = 'LABEL',
 }
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:
@@ -733,7 +734,7 @@ const BILL_STATUS_CODE = ['BillPaid', 'BillPartialPd', 'BillOverPd', 'BillUnpaid
 const NAFATH_APP = {
   ANDROID: 'sa.gov.nic.myid',
   IOS: 'nafath://home',
-  IOS_ID: 'id1598909871',
+  IOS_ID: '1598909871',
 };
 
 const MAIN_APP_STORE_LINKS = Platform.select({

@@ -3,8 +3,8 @@ import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from 
 import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { IPayFilterBottomSheet, IPayGiftTransactionList } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayGiftTransactionList } from '@app/components/organism';
+import { IPayFilterTransactions, IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { GiftStatus } from '@app/enums/gift-status.enum';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
@@ -17,12 +17,13 @@ import getWalletToWalletTransfers from '@app/network/services/transfers/wallet-t
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, FiltersType, buttonVariants } from '@app/utilities/enums.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { useIsFocused } from '@react-navigation/core';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import useContacts from '@app/hooks/use-contacts';
 import sendGiftStyles from './send-gift-list.style';
+import FiltersArrayProps from '../transaction-history/transaction-history.interface';
 
 const SendGiftListScreen: React.FC = () => {
   const { t } = useTranslation();
@@ -30,41 +31,57 @@ const SendGiftListScreen: React.FC = () => {
   const isFocused = useIsFocused();
   const styles = sendGiftStyles(colors);
   const GIFT_TABS = [t('SEND_GIFT.SENT'), t('SEND_GIFT.RECEIVED')];
-  const { sendGiftFilterData, sendGiftFilterDefaultValues, sendGiftBottomFilterData } = useConstantData();
-  const filterRef = useRef<bottomSheetTypes>(null);
-  const [filters, setFilters] = useState<Array<string>>([]);
-  const [walletTransferData, setWalletTransferData] = useState({});
+  const { sendGiftFilterDefaultValues } = useConstantData();
+  const [filterTags, setFilterTags] = useState<Map<any, any>>();
+  const [appliedFilters, setAppliedFilters] = useState<FiltersArrayProps | null>(null);
+
+  const [walletTransferData, setWalletTransferData] = useState<any>();
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
 
-  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
-
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [isFilterSheetVisible, setIsFilterSheetVisible] = useState<boolean>(false);
+  const contacts = useContacts();
   const { showToast } = useToastContext();
 
   const handleSelectedTab = (tab: string) => {
     setSelectedTab(tab);
   };
-  const handleSubmit = (data: SubmitEvent) => {
-    let filtersArray: string[] = [];
-    if (Object.keys(data)?.length) {
-      const { contactNumber, amountFrom, amountTo, dateFrom, dateTo, status, occasion } = data;
-      const amountRange = `${amountFrom} - ${amountTo} ${t('COMMON.SAR')}`;
-      const dateRange = `${dateFrom} - ${dateTo}`;
 
-      filtersArray = [contactNumber, amountRange, dateRange, status, occasion];
-    } else {
-      filtersArray = [];
-    }
-
-    setFilters(filtersArray);
+  const handleFiltersShow = () => {
+    // filterRef.current?.showFilters();
+    setIsFilterSheetVisible(true);
   };
 
+  const handleSubmit = (data: any, filterTagsToRender: Map<any, any>) => {
+    setFilterTags(filterTagsToRender);
+    setAppliedFilters(data);
+    // TODO : implement apply filter
+    // applyFilters(data);
+  };
+
+  const removeFilter = (filter: string) => {
+    const filterTagKeys = filterTags;
+    const deletedFilterValues = filterTagKeys?.get(filter);
+
+    filterTagKeys?.delete(filter);
+
+    let updatedFilters = { ...appliedFilters };
+
+    updatedFilters = {
+      ...updatedFilters,
+      ...deletedFilterValues,
+    };
+
+    setAppliedFilters(updatedFilters);
+    // TODO : implement apply filter
+    //  applyFilters(updatedFilters);
+    setFilterTags(filterTagKeys);
+  };
   const onPressClose = (text: string) => {
-    const deletedFilter = filters.filter((value) => value !== text);
-    setFilters(deletedFilter);
-  };
-  const applyFilter = () => {
-    filterRef.current?.showFilters();
+    if (filterTags && filterTags?.size > 0) {
+      removeFilter(text);
+    }
   };
 
   const sendGiftNow = () => {
@@ -99,20 +116,10 @@ const SendGiftListScreen: React.FC = () => {
       trxId: giftDetails?.requestID ?? '',
       deviceInfo: await getDeviceInfo(),
     };
-    try {
-      const apiResponse: ExecuteGiftMockProps = await executeGift(walletNumber, payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: giftDetails, isSend, giftCategory });
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+
+    const apiResponse: ExecuteGiftMockProps = await executeGift(walletNumber, payload);
+    if (apiResponse) {
+      navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: giftDetails, isSend, giftCategory });
     }
   };
 
@@ -156,7 +163,7 @@ const SendGiftListScreen: React.FC = () => {
     congrat: t('SEND_GIFT.CONGRATULATIONS'),
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item: any }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount, receiverMobile, senderMobile } = item;
     const isSend = selectedTab === t('SEND_GIFT.SENT');
 
@@ -176,6 +183,9 @@ const SendGiftListScreen: React.FC = () => {
           onPress={() => sendGiftDetail(item, isSend, giftCategory)}
           titleWrapper={styles.titleWrapper}
           tab={selectedTab}
+          headingStyle={undefined}
+          titleStyle={undefined}
+          footTextStyle={undefined}
         />
       </IPayView>
     );
@@ -191,11 +201,11 @@ const SendGiftListScreen: React.FC = () => {
         title="SEND_GIFT.GIFTS"
         applyFlex
         rightComponent={
-          <IPayPressable onPress={applyFilter}>
+          <IPayPressable onPress={handleFiltersShow}>
             <IPayIcon
-              icon={filters.length ? icons.filter_edit_purple : icons.filter}
+              icon={filterTags && filterTags.size > 0 ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={filters.length ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filterTags && filterTags.size > 0 ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }
@@ -207,23 +217,24 @@ const SendGiftListScreen: React.FC = () => {
         customStyles={styles.tabs}
         unselectedTabStyle={styles.unselectedTab}
       />
-      {filters?.length ? (
+      {filterTags && filterTags?.size > 0 ? (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {filters?.map((text) => (
-              <IPayChip
-                testID="filter-chip"
-                key={`${text}-ipay-chip`}
-                containerStyle={styles.chipContainer}
-                headingStyles={styles.chipHeading}
-                textValue={text}
-                icon={
-                  <IPayPressable onPress={() => onPressClose(text)}>
-                    <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                  </IPayPressable>
-                }
-              />
-            ))}
+            <IPayView>
+              {Array.from(filterTags?.keys()).map((key) => (
+                <IPayChip
+                  key={key as string}
+                  containerStyle={styles.chipContainer}
+                  headingStyles={styles.chipHeading}
+                  textValue={key as string}
+                  icon={
+                    <IPayPressable onPress={() => onPressClose(key as string)}>
+                      <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                    </IPayPressable>
+                  }
+                />
+              ))}
+            </IPayView>
           </IPayScrollView>
         </IPayView>
       ) : (
@@ -266,17 +277,17 @@ const SendGiftListScreen: React.FC = () => {
           )}
         </IPayView>
       )}
-      <IPayFilterBottomSheet
+      <IPayFilterTransactions
+        // ref={filterRef}
         heading="TRANSACTION_HISTORY.FILTER"
-        defaultValues={sendGiftFilterDefaultValues}
         showAmountFilter
         showDateFilter
-        ref={filterRef}
+        showGiftFilters
+        contacts={contacts ?? []}
         onSubmit={handleSubmit}
-        filters={sendGiftFilterData}
-        isBottomDropdowns
-        bottomFilters={sendGiftBottomFilterData}
-        applySearchOn={[FiltersType.CONTACT_NUMBER]}
+        defaultValues={sendGiftFilterDefaultValues}
+        isVisible={isFilterSheetVisible}
+        onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
       />
     </IPaySafeAreaView>
   );

@@ -15,7 +15,7 @@ interface CountryCurrencyBoxProps {
   isChecked?: boolean; // Optional boolean to indicate if the box is checked.
   remitterCurrencyAmount?: string; // Optional value for the sender's input field.
   beneficiaryCurrencyAmount?: string; // Optional value for the receiver's input field.
-  onRemitterAmountChange?: () => void; // Optional callback function for when the sender's value changes.
+  onRemitterAmountChange?: (amount: string) => void; // Optional callback function for when the sender's value changes.
   onBeneficiaryAmountChange?: () => void; // Optional callback function for when the receiver's value changes.
   onTransferMethodChange?: () => void; // Optional callback function for when the checked state changes.
 }

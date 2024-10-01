@@ -1,4 +1,4 @@
-import { GetAllRequestsMockProps, CreateMoneyRequestResponseTypes } from './sent-requests.interface';
+import { CreateMoneyRequestResponseTypes, GetAllRequestsMockProps } from './sent-requests.interface';
 
 const getAllRequestsMock: GetAllRequestsMockProps = {
   status: {
@@ -61,6 +61,7 @@ const getAllRequestsMock: GetAllRequestsMockProps = {
         realTransactionTotalPaidAmount: null,
         realTransactionNumberOfPaymentRequests: null,
         targetProfileImage: null,
+        realTransactionRefNumber: 'FTA35346',
       },
       {
         transactionId: 'EPY08099REJECTED',
@@ -107,4 +108,4 @@ const createMoneyRequestMockResponse: CreateMoneyRequestResponseTypes = {
   successfulResponse: true,
 };
 
-export { getAllRequestsMock, createMoneyRequestMockResponse };
+export { createMoneyRequestMockResponse, getAllRequestsMock };

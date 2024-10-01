@@ -1,5 +1,5 @@
 import React from 'react';
-import { SectionListRenderItem, StyleProp, ViewStyle } from 'react-native';
+import { DefaultSectionT, SectionListData, SectionListRenderItem, StyleProp, ViewStyle } from 'react-native';
 
 interface Section {
   id: string | number;
@@ -14,7 +14,7 @@ interface IPaySectionListProps {
   refreshControl?: React.ReactElement;
   showsVerticalScrollIndicator?: boolean;
   renderItem: SectionListRenderItem<any>;
-  renderSectionHeader: (info: { section: Section }) => React.ReactNode;
+  renderSectionHeader?: (info: { section: SectionListData<Section, DefaultSectionT> }) => React.ReactElement;
   itemSeparatorStyle?: StyleProp<ViewStyle>;
 }
 

@@ -9,8 +9,9 @@ import {
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText } from '@app/utilities';
-import { ToastTypes } from '@app/utilities/enums.util';
+import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import React from 'react';
+import IPayButton from '../ipay-button/ipay-button.component';
 import IPayList from '../ipay-list/ipay-list.component';
 import { useToastContext } from '../ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '../ipay-toast/ipay-toast.interface';
@@ -27,6 +28,7 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   showHeader = true,
   isShowIcon = true,
   showDetail,
+  showShareBtn,
 }) => {
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
@@ -96,6 +98,14 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
         showsVerticalScrollIndicator={false}
         renderItem={renderOption}
       />
+      {showShareBtn && (
+        <IPayButton
+          medium
+          btnType={buttonVariants.LINK_BUTTON}
+          leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
+          btnText="COMMON.SHARE"
+        />
+      )}
     </IPayView>
   );
 };
