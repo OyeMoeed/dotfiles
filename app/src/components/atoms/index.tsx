@@ -37,6 +37,7 @@ import IPayProgressBar from '@components/atoms/ipay-progressbar/ipay-progressbar
 import IPayScrollView from '@components/atoms/ipay-scrollview/ipay-scrollview.component';
 import IPayDropdown from './ipay-dropdown/ipay-dropdown.component';
 import IPayFallbackImg from './ipay-fallbackimg/ipay-fallbackimg.component';
+import IPayFlag from './ipay-flag/ipay-flag.component';
 import IPayMaskedInput from './ipay-masked-input/ipay-masked-input';
 import IPayWebView from './ipay-web-view/ipay-web-view.component';
 import IPayDropdownSheet from './ipay-dropdown-select/ipay-dropdown-select-sheet.component';
@@ -52,6 +53,7 @@ export {
   IPayDropdown,
   IPayDropdownSheet,
   IPayFallbackImg,
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayHeadlineText,

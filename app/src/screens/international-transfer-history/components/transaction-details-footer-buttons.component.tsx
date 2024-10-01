@@ -5,6 +5,7 @@ import { TransactionsStatus } from '@app/enums/transaction-types.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import transactionDetailsCompStyles from './transaction-details-component.style';
 import { TransactionDetailsFooterButtonsProps } from './transction-details-component.interface';
 
@@ -17,6 +18,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
 }) => {
   const { colors } = useTheme();
   const styles = transactionDetailsCompStyles(colors);
+  const { t } = useTranslation();
 
   switch (transactionStatus) {
     case TransactionsStatus.PAID:
@@ -35,7 +37,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
             btnType={buttonVariants.OUTLINED}
             medium
             leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
-            btnText="TOP_UP.SHARE"
+            btnText={t('TOP_UP.SHARE')}
             btnStyle={styles.btnStyles}
           />
         </IPayView>
@@ -69,7 +71,7 @@ const TransactionDetailsFooterButtons: React.FC<TransactionDetailsFooterButtonsP
             btnType={buttonVariants.OUTLINED}
             large
             leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
-            btnText="TOP_UP.SHARE"
+            btnText={t('TOP_UP.SHARE')}
             btnStyle={styles.shareBtn}
           />
         </IPayView>
