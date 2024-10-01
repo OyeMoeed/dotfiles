@@ -16,7 +16,6 @@ import LocalBeneficiaryMetaMockProps, {
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import validateIBAN from '@app/network/services/local-transfer/validate-iban/validate-iban.service';
 import { getValidationSchemas } from '@app/services';
-import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { getBankIconByCode } from '@app/utilities';
 import { AddBeneficiary, AddBeneficiaryKey, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
@@ -50,7 +49,7 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   const countryCode = 'SA';
 
   const { beneficiaryNameSchema, ibanSchema, beneficiaryNickNameSchema, bankNameSchema } = getValidationSchemas(t);
-  const { firstName = '', fatherName = '' } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
   const validationSchema = Yup.object().shape({
     beneficiaryName: beneficiaryNameSchema,
     iban: ibanSchema,
@@ -99,10 +98,15 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   }, []);
 
   const onSubmitData = async (values: FormValues) => {
+    const beneficiaryName = values?.beneficiaryName;
+    const nameSplit = beneficiaryName?.split(' ');
+    const firstName = nameSplit[0];
+    const lastName = nameSplit.length > 1 ? nameSplit[nameSplit.length - 1] : '';
+
     const payload: BeneficiaryInfo = {
       beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo,
       fullName: values?.beneficiaryName,
-      nickname: values?.beneficiaryNickName ? values?.beneficiaryNickName : `${firstName} ${fatherName}`,
+      nickname: values?.beneficiaryNickName ? values?.beneficiaryNickName : `${firstName} ${lastName}`,
       beneficiaryBankDetail: {
         bankCode: beneficiaryBankDetails?.bankCode,
         bankName: beneficiaryBankDetails?.bankName,
