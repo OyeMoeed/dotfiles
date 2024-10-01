@@ -198,6 +198,13 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     setBeneficiaryCurrencyAmount(foreignAmount?.toFixed(2));
   };
 
+  const handleBeneficiaryAmountChange = (text: string) => {
+    const exchangeRate = Number(wuFeesInquiryData?.exchangeRate);
+    setBeneficiaryCurrencyAmount(text);
+    const localAmount = Number(text) / exchangeRate;
+    setRemitterCurrencyAmount(localAmount?.toFixed(2));
+  };
+
   const transferFees = t('LOCAL_TRANSFER.FEES');
   const feeAmount = `${wuFeesInquiryData?.bankFeeAmount ?? ''} ${t('COMMON.SAR')}`;
   const transferVat = t('COMMON.AND_VAT');
@@ -263,6 +270,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                       onRemitterAmountChange={handleAmountInputChange}
                       remitterCurrencyAmount={remitterCurrencyAmount}
                       beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
+                      onBeneficiaryAmountChange={handleBeneficiaryAmountChange}
                       onTransferMethodChange={() => onTransferGateway(transferMethod?.transferMethodName, index)}
                     />
                   );

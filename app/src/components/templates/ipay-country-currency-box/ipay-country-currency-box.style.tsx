@@ -16,8 +16,12 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
     pointsAmountConversion: {
       flexDirection: 'row',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'space-between',
+      width: '100%',
       gap: moderateScale(24),
+    },
+    switchConversion: {
+      flexDirection: 'row-reverse',
     },
     amountInputLabel: {
       marginBottom: moderateScale(3),
@@ -111,6 +115,25 @@ const countryCurrencyStyles = (themeColors: typeof colors) =>
     },
     darkStyle: {
       color: themeColors.primary.primary900,
+    },
+    sendInputWrapper: {
+      width: '36%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    width50: {
+      width: '50%',
+    },
+    receiveInputWrapper: {
+      width: '40%',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    switchIconWrapper: {
+      position: 'absolute',
+      top: '50%',
+      left: '36%',
+      zIndex: 1,
     },
   });
 
