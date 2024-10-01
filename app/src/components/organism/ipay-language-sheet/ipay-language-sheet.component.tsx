@@ -58,7 +58,7 @@ const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((
         deviceInfo,
       },
     };
-    await changeLanguage(payLoad, true);
+    await changeLanguage(payLoad);
 
     handleLanguagePress(language, isRTL, code);
   };
