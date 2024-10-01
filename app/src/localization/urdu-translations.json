@@ -395,10 +395,19 @@
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "تاریخ",
-    "SEND_TO_UNSAVED_NUMBER": "محفوظ نہ ہونے والے نمبر پر بھیجیں",
-    "UNSAVED_NUMBER": "محفوظ نہ ہونے والا نمبر",
-    "TYPE_MOBILE_NUMBER": "موبائل نمبر درج کریں",
-    "CONTACTS": "رابطے"
+    "SEND_TO_UNSAVED_NUMBER": "نンバー کو بھیجنا جو اب تک نہیں محفوظ کیا گیا",
+    "UNSAVED_NUMBER": "محفوظ نہیں کیا گیا نمبر",
+    "TYPE_MOBILE_NUMBER": "موبائل نمبر کو دائیں کریں",
+    "CONTACTS": "کٹاکٹس",
+    "CONTACT_NUMBER_OR_NAME": "فون نمبر یا نام",
+    "CONTACT_NAME": "نام کٹاکٹو",
+    "NO_RESULTS_FOUND": "کوئی نتائج نہیں ملی",
+    "CONTACT_LIMIT_REACHED": "کٹاکٹو کی حد پہنچ گئی",
+    "CONTACT_LIMIT": "کٹاکٹو کی حد پہنچی",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "کٹاکٹو کے Access کو محدود کریں",
+    "CONTACTS_PERMISSION_TITLE": "کسی بھی طرح سے کٹاکٹو کو Access دینے کا مطالبہ کریں",
+    "CONTACTS_PERMISSION_DESCRIPTION": "پیسہ بھیجنا چاہتے ہوئے اگر آپ نے اپنے کٹاکٹو تک رسائی نہیں دی تو آپ اس کو کر سکتے ہیں",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "کٹاکٹو کی Access کو اجازت دینی"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "کارڈ کے اختیارات",
