@@ -1569,7 +1569,7 @@
     "SALARY_TYPE": "Salary Type",
     "LABORER_DETAILS": "Laborer Details",
     "BASIC_SALARY": "Basic Salary",
-    "MONTHLY_SALARY":"Monthly salary",
+    "MONTHLY_SALARY": "Monthly salary",
     "ADVANCED_SALARY": "Advance Salary",
     "BONUS_SALARY": "Bonus Salary",
     "SELECT_MONTH": "Select Month",
@@ -1581,6 +1581,14 @@
     "DEDUCT_LOAN": "Loan",
     "DEDUCT_OTHER": "Other",
     "DEDUCTION_AMOUNT_NOTE": "Deduction Amount must be less than the salary amount.",
-    "NOTE": "Note"
+    "NOTE": "Note",
+    "MOBILE_NUMBER": "Mobile Number",
+    "NATIONALITY": "Nationality",
+    "LABORER_ID": "Laborer ID",
+    "IQAMA_EXPIRY_DATE": "Iqama Expiry Date",
+    "LABORER_INFO": "Laborer Info",
+    "PAY": "Pay",
+    "PAYMENT_STATUS": "Payment Status",
+    "LAST_PAYMENT": "Last Payment"
   }
 }

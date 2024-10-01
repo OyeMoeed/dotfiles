@@ -201,7 +201,7 @@ const MusanedScreen: React.FC = () => {
   const onPressDetails = () => {
     refBottomSheet.current?.close?.();
 
-    navigate(ScreenNames.MUSANED_USER_DETAILS);
+    navigate(ScreenNames.MUSANED_USER_DETAILS, { userInfo: requestDetail });
   };
 
   const onCloseBottomSheet = () => {
@@ -257,14 +257,16 @@ const MusanedScreen: React.FC = () => {
         customSnapPoint={['43%']}
       >
         {selectedTab === ALINMA_PAY_USERS ? (
-          <IPayMusanedAlinmaUser
-            date={requestDetail?.poiExperationDate}
-            titleText={requestDetail?.name}
-            status={requestDetail?.paymentStatus}
-            amount={requestDetail?.payrollAmount}
-            details={requestDetail?.occupationEn}
-            withArrow={false}
-          />
+          <IPayView style={styles.secondButton}>
+            <IPayMusanedAlinmaUser
+              date={requestDetail?.poiExperationDate}
+              titleText={requestDetail?.name}
+              status={requestDetail?.paymentStatus}
+              amount={requestDetail?.payrollAmount}
+              details={requestDetail?.occupationEn}
+              withArrow={false}
+            />
+          </IPayView>
         ) : (
           <IPayView style={styles.secondButton}>
             <IPayLaborerDetailsBanner

@@ -3,7 +3,7 @@ import { MusanedStatus } from '@app/utilities';
 export interface IPayMusanedListProps {
   date: string;
   titleText: string;
-  status: typeof MusanedStatus;
+  status: MusanedStatus;
   amount: number;
   onPress?: () => void;
   testID?: string;
