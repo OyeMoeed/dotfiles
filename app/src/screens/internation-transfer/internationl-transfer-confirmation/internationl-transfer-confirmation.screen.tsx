@@ -4,6 +4,7 @@ import {
   IPayCaption1Text,
   IPayCaption2Text,
   IPayCheckbox,
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
@@ -54,7 +55,8 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
-import IPayFlag from '@app/components/atoms/ipay-flag/ipay-flag.component';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { SNAP_POINT } from '@app/constants/constants';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import {
   FeesInquiryData,
@@ -72,8 +74,9 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
+  const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
-  const otpBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
   const { getDataByKey } = useInternationalTransferData();
   const { getValues, control, setValue } = useForm();
@@ -147,8 +150,11 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   }, [promoMatchSuccessfuly]);
 
   const totalAmount = () => {
-    const amount = getDataByKey(InternationalTransferDataLabels.total_amount)?.value;
-    return `${amount} ${t('COMMON.SAR')}`;
+    const total =
+      Number(feesInquiryData?.vatAmount) +
+      Number(feesInquiryData?.feeAmount) +
+      Number(feesInquiryData?.remitterCurrencyAmount);
+    return `${total ?? 0} ${t('COMMON.SAR')}`;
   };
 
   const successDetailsData: InternationalTransferSuccessData = {
@@ -175,11 +181,11 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   };
 
   const onCloseBottomSheet = () => {
-    otpBottomSheetRef?.current?.close();
+    setOtpSheetVisible(false);
   };
 
   const onPressHelp = () => {
-    helpCenterRef?.current?.present();
+    setHelpCenterVisible(true);
   };
 
   const getGeneratedBeneficiaryFees = () => {
@@ -220,7 +226,7 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           setValidateBeneficiaryData(apiResponse?.response);
-          otpBottomSheetRef?.current?.present();
+          setOtpSheetVisible(true);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(t('ERROR.API_ERROR_RESPONSE'));
@@ -300,7 +306,7 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
           setValidateBeneficiaryData(apiResponse?.response);
-          otpBottomSheetRef?.current?.present();
+          setOtpSheetVisible(true);
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(t('ERROR.API_ERROR_RESPONSE'));
@@ -323,6 +329,12 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
     } else {
       validateWUBeneficiary();
     }
+  };
+  const getLabelSuffix = (label: string) => {
+    if (label === 'beneficiaryCurrencyAmount') {
+      return `${t(`INTERNATIONAL_TRANSFER.${LocalizationKeysMapping[label]}`)} (${feesInquiryData?.principleCurrency ?? ''})`;
+    }
+    return t(`INTERNATIONAL_TRANSFER.${LocalizationKeysMapping[label]}`);
   };
 
   return (
@@ -381,11 +393,7 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
               itemSeparatorStyle={styles.itemSeparatorStyle}
               renderItem={({ item: { label, value } }) => (
                 <IPayView style={styles.listedContent}>
-                  <IPaySubHeadlineText
-                    regular
-                    text={t(`INTERNATIONAL_TRANSFER.${LocalizationKeysMapping[label]}`)}
-                    color={colors.natural.natural900}
-                  />
+                  <IPaySubHeadlineText regular text={getLabelSuffix(label)} color={colors.natural.natural900} />
                   <IPaySubHeadlineText
                     regular
                     text={label === 'feeAmount' || label === 'vatAmount' ? `${value} ${t('COMMON.SAR')}` : value}
@@ -502,43 +510,43 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
           />
         </IPayView>
       </IPayBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         testID="otp-bottom-sheet"
         heading="LOCAL_TRANSFER.TRANSFER"
         enablePanDownToClose
         simpleBar
-        customSnapPoint={['1%', '99%']}
-        onCloseBottomSheet={onCloseBottomSheet}
-        ref={otpBottomSheetRef}
         bold
         cancelBnt
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        onCloseBottomSheet={onCloseBottomSheet}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
           onPressConfirm={confirmTransfer}
           mobileNumber={userInfo?.mobileNumber}
           setOtp={setOtp}
+          otp={otp}
           setOtpError={setOtpError}
           otpError={otpError}
-          apiError={apiError}
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={onPressHelp}
           onResendCodePress={() => otpVerificationRef?.current?.resetInterval()}
         />
-      </IPayBottomSheet>
-
-      <IPayBottomSheet
+      </IPayPortalBottomSheet>
+      <IPayPortalBottomSheet
         testID="help-center-bottom-sheet"
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={['1%', '100%']}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         ref={helpCenterRef}
+        isVisible={isHelpCenterVisible}
       >
         <HelpCenterComponent />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };
