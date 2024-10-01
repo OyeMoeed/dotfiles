@@ -7,4 +7,5 @@ export interface IPayAnimatedTextProps {
   title: string;
   description: string;
   style?: StyleProp<ViewStyle>;
+  runAnimation: boolean;
 }

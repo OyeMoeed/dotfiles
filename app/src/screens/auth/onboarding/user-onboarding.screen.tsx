@@ -5,8 +5,8 @@ import { scaleSize } from '@app/styles/mixins';
 import { isIosOS } from '@app/utilities/constants';
 import images from '@assets/images';
 import { FlatList, NativeScrollEvent, NativeSyntheticEvent, ViewStyle } from 'react-native';
-import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import { IPayFlatlist } from '@app/components/atoms';
+import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
 import OnboardingSteps from './onboarding-enum.util';
 import OnboardingScreen from './onboarding.component'; // Adjust the import path as needed
 
@@ -81,6 +81,7 @@ const UserOnBoarding: React.FC = () => {
         nextText={info?.item?.nextText}
         type={info?.item?.type}
         bottomButtonViewStyle={info?.item?.bottomButtonViewStyle}
+        runAnimation={info?.index === currentStep}
       />
     ),
     [currentStep, handleNext, skip],
@@ -96,7 +97,7 @@ const UserOnBoarding: React.FC = () => {
   );
   const handleMomentumScrollEnd = useCallback(
     (event: NativeSyntheticEvent<NativeScrollEvent>) => {
-      const nextIndex = Math.floor(event.nativeEvent.contentOffset.x / SCREEN_WIDTH);
+      const nextIndex = Math.round(event.nativeEvent.contentOffset.x / SCREEN_WIDTH);
       handleNext(nextIndex, true);
     },
     [handleNext],

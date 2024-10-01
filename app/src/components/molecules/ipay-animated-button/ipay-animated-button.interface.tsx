@@ -10,4 +10,5 @@ export interface IPayAnimatedButtonProps {
   skipText?: string;
   nextText?: string;
   styles?: StyleProp<ViewStyle> | StyleProp<ViewStyle>[];
+  runAnimation: boolean;
 }

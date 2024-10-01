@@ -5,23 +5,30 @@ import { animateValue } from '@app/ipay-animations/ipay-animations';
 import OnboardingSteps from '@app/screens/auth/onboarding/onboarding-enum.util';
 import { IPayAnimatedImageProps } from './ipay-animated-image.interface';
 
-const IPayAnimatedImage: React.FC<IPayAnimatedImageProps> = ({ type, image, styles, testID }) => {
+const IPayAnimatedImage: React.FC<IPayAnimatedImageProps> = ({ type, image, styles, testID, runAnimation }) => {
   const scale = useSharedValue(0.5);
   const scaleOnboarding2 = useSharedValue(1.5);
 
   React.useEffect(() => {
-    switch (type) {
-      case OnboardingSteps.OpportunitiesStep:
-      case OnboardingSteps.PurchasesStep:
-        animateValue(scale, 1);
-        break;
-      case OnboardingSteps.SendAndReceiveStep:
-        animateValue(scaleOnboarding2, 1);
-        break;
-      default:
-        break;
+    if (runAnimation) {
+      switch (type) {
+        case OnboardingSteps.OpportunitiesStep:
+        case OnboardingSteps.PurchasesStep:
+          animateValue(scale, 1);
+          break;
+        case OnboardingSteps.SendAndReceiveStep:
+          animateValue(scaleOnboarding2, 1);
+          break;
+        default:
+          break;
+      }
     }
-  }, [type]);
+
+    return () => {
+      scale.value = 0.5;
+      scaleOnboarding2.value = 1.5;
+    };
+  }, [type, runAnimation, scale, scaleOnboarding2]);
 
   const animatedImageStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],

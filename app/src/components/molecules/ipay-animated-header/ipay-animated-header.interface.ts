@@ -5,4 +5,5 @@ export interface IPayAnimatedHeaderProps {
   testID?: string;
   type: OnboardingSteps;
   children: React.ReactNode;
+  runAnimation: boolean;
 }
