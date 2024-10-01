@@ -123,7 +123,9 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     salaryTypeBottomSheetRef?.current?.present();
   };
 
-  const onLocalTransferPrepare = async () => {};
+  const onLocalTransferPrepare = async () => {
+    navigate(ScreenNames.MUSANED_PAY_SALARY_CONFIRM);
+  };
 
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
@@ -172,6 +174,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
 
   const onPressSelectDate = () => {
     if (selectedFromDate) {
+      //
     } else {
       setSelectedFromDate('01/2024');
     }
@@ -179,7 +182,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
 
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title="TRANSFER.TRANSFER_INFRORMATION" />
+      <IPayHeader backBtn applyFlex title="MUSANED.HEADER" />
       <IPayScrollView>
         <IPayView style={styles.container}>
           <IPayAccountBalance
@@ -215,7 +218,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         <SadadFooterComponent
           btnText="COMMON.NEXT"
           disableBtnIcons
-          btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
+          // btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
+          btnDisbaled={false}
           testID="ipay-bill"
           showTopMessage
           totalAmountText={balanceStatusVariants[accountBalanceStatus]?.warningText}
