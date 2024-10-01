@@ -19,12 +19,14 @@ const isErrorResponse = (response: AxiosResponse | ApiResponse<unknown>) => {
 
 const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
   const { auth, alertReducer } = store.getState();
-  if ((error as AxiosError)?.response?.status === constants.ERROR_CODES.UNAUTHORIZED) {
+  const responseStatus = (error as AxiosError)?.response?.status || '';
+
+  if (responseStatus === constants.ERROR_CODES.UNAUTHORIZED) {
     if (auth?.isAuthorized) {
       await clearSession(false);
     }
   }
-  if ((error as AxiosError)?.response?.status === constants.ERROR_CODES.FORBIDDEN) {
+  if (responseStatus === constants.ERROR_CODES.FORBIDDEN) {
     if (auth?.isAuthorized) {
       store.dispatch(showSessionTimeoutAlert());
       return;
