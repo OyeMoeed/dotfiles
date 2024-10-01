@@ -1,11 +1,11 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, scale } from 'react-native-size-matters';
 
 const commonAlertSheet = () =>
   createStyleSheet({
     container: {
       alignItems: 'center',
-      paddingHorizontal: 24,
+      paddingHorizontal: scale(24),
       marginBottom: 16,
       flex: 1,
     },

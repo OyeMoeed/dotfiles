@@ -634,7 +634,7 @@
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
     "CONTACT_LIMIT": "Contacts limit reached",
     "CONTACTS_PERMISSION_SHEET_TITLE": "Contacts Access Restriction",
-    "CONTACTS_PERMISSION_TITLE": "Please enable Contacts access to continue",
+    "CONTACTS_PERMISSION_TITLE": "Please enable Contacts access to continue",
     "CONTACTS_PERMISSION_DESCRIPTION": "You won't be able to select contacts to send money to without permission to access your contacts.",
     "CONTACTS_PERMISSION_BUTTON_TITLE": "Allow contacts permission"
   },
