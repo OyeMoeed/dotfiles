@@ -15,6 +15,7 @@ interface IPaySalaryPayInformationProps {
   deductFlag: boolean;
   payExtraFlag: boolean;
   amount: string;
+  selectedDate: string;
 }
 
 export default IPaySalaryPayInformationProps;

@@ -8,7 +8,7 @@ import apiCall from '../../api-call.service';
 import MUSANED_URLS from '../musaned.urls';
 import { ApiResponse } from '../../services.interface';
 
-const transferToLMusanedPrepare = async (
+const transferToMusanedPrepare = async (
   params: TransferToMusanedPrepareReqParams,
 ): Promise<TransferToMusanedPrepareMockProps> => {
   const { walletNumber } = params;
@@ -31,4 +31,4 @@ const transferToLMusanedPrepare = async (
   }
 };
 
-export default transferToLMusanedPrepare;
+export default transferToMusanedPrepare;

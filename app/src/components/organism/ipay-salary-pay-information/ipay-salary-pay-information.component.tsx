@@ -24,6 +24,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   deductFlag,
   payExtraFlag,
   amount,
+  selectedDate,
 }) => {
   const { colors } = useTheme();
   const styles = transferInfoStyles(colors);
@@ -54,7 +55,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
           label="MUSANED.SALARY_TYPE"
-          value={selectedItem}
+          value={t(selectedItem || '')}
           editable={false}
           showRightIcon
           customIcon={
@@ -70,7 +71,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
           label="MUSANED.SELECT_MONTH"
-          value={selectedItem}
+          value={selectedDate}
           editable={false}
           showRightIcon
           customIcon={

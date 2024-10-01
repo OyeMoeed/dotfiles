@@ -40,6 +40,7 @@ const sadadFooterComponentStyles = (colors: any) =>
       marginBottom: moderateScale(16, 0.3),
       width: '100%',
     },
+    iconAmountContainer: { marginRight: 8 },
   });
 
 export default sadadFooterComponentStyles;
