@@ -35,7 +35,6 @@ import {
   WuFeesInquiryProps,
 } from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.interface';
 import westerUnionFeesInquiry from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.service';
-import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
@@ -45,7 +44,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
 import beneficiaryKeysMapping from './international-transfer-info.constant';
-import InternationalBeneficiariesDetails from './international-transfer-info.interface';
+import {
+  InternationalBeneficiariesDetails,
+  SelectedReason,
+  TransferGateway,
+} from './international-transfer-info.interface';
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
@@ -58,10 +61,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const beneficiaryDetailsRef = useRef<any>(null);
   const { transferMethods } = useTransferMethodsData();
   const [isIncludeFees, setIsIncludeFees] = useState<boolean>(false);
-  const [selectedReason, setSelectedReason] = useState<string>('');
+  const [selectedReason, setSelectedReason] = useState<SelectedReason>();
   const [remitterCurrencyAmount, setRemitterCurrencyAmount] = useState<string>('');
   const [beneficiaryCurrencyAmount, setBeneficiaryCurrencyAmount] = useState<string>('');
-  const [transferGateway, setTransferGateway] = useState<{} | null>(null);
+  const [transferGateway, setTransferGateway] = useState<TransferGateway>();
   const [apiError, setAPIError] = useState<string>('');
   const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
   const [wuFeesInquiryData, setWUFeesInquiryData] = useState({});
@@ -116,7 +119,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         selectedReason,
         transferGateway: transferGateway?.transferMethod,
       },
-      feesInquiryData: { beneficiaryCurrencyAmount, remitterCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
+      feesInquiryData: { remitterCurrencyAmount, beneficiaryCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
     });
 
   const renderToast = (toastMsg: string) => {
@@ -157,7 +160,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     const payload: FeesInquiryPayload = {
       amount,
       amountCurrency,
-      promoCode: null
+      promoCode: null,
     };
     try {
       const apiResponse: WuFeesInquiryProps = await westerUnionFeesInquiry(payload, transferData?.beneficiaryCode);
@@ -189,10 +192,17 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   }, []);
 
   const handleAmountInputChange = (text: string) => {
-    const exchangeRate = Number(wuFeesInquiryData?.exchangeRate)
+    const exchangeRate = Number(wuFeesInquiryData?.exchangeRate);
     setRemitterCurrencyAmount(text);
     const foreignAmount = Number(text) * exchangeRate;
     setBeneficiaryCurrencyAmount(foreignAmount?.toFixed(2));
+  };
+
+  const handleBeneficiaryAmountChange = (text: string) => {
+    const exchangeRate = Number(wuFeesInquiryData?.exchangeRate);
+    setBeneficiaryCurrencyAmount(text);
+    const localAmount = Number(text) / exchangeRate;
+    setRemitterCurrencyAmount(localAmount?.toFixed(2));
   };
 
   const transferFees = t('LOCAL_TRANSFER.FEES');
@@ -250,11 +260,17 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                   const isCheck = transferGateway?.index === index;
                   return (
                     <IPayCountryCurrencyBox
-                      transferMethod={{...transferMethod, beneficiaryAmount: wuFeesInquiryData?.exchangeRate ?? '', beneficiaryCurrency: wuFeesInquiryData?.principleCurrency ?? '', fee: wuFeesInquiryData?.bankFeeAmount ?? ''}}
+                      transferMethod={{
+                        ...transferMethod,
+                        beneficiaryAmount: wuFeesInquiryData?.exchangeRate ?? '',
+                        beneficiaryCurrency: wuFeesInquiryData?.principleCurrency ?? '',
+                        fee: wuFeesInquiryData?.bankFeeAmount ?? '',
+                      }}
                       isChecked={isCheck}
                       onRemitterAmountChange={handleAmountInputChange}
                       remitterCurrencyAmount={remitterCurrencyAmount}
                       beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
+                      onBeneficiaryAmountChange={handleBeneficiaryAmountChange}
                       onTransferMethodChange={() => onTransferGateway(transferMethod?.transferMethodName, index)}
                     />
                   );
