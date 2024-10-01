@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import {
+  IPayFlag,
   IPayFlatlist,
   IPayFootnoteText,
   IPayIcon,
@@ -40,7 +41,6 @@ import { ApiResponseStatusType, ToastTypes, alertType, alertVariant, buttonVaria
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Flag from 'react-native-round-flags';
 import { useTranslation } from 'react-i18next';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
@@ -243,7 +243,7 @@ const InternationalTransferScreen: React.FC = () => {
         centerContainerStyles={styles.listCenterContainer}
         adjacentSubTitle={remittanceTypeDesc}
         regularTitle={false}
-        leftIcon={<Flag code={country} style={styles.countryImage} />}
+        leftIcon={<IPayFlag countryCode={country} />}
         rightText={
           <IPayView style={styles.moreButton}>
             <IPayButton

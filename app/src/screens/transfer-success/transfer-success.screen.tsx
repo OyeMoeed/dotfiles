@@ -35,7 +35,6 @@ const TransferSuccessScreen = () => {
   const styles = transferSuccessStyles(colors);
   const { t } = useTranslation();
   const { showToast } = useToastContext();
-  const [isShareable, setIsShareable] = useState<boolean>(false);
   const gradientColors = [colors.natural.natural50, colors.natural.natural50];
   const [beneficiaryDetails, setBeneficiaryDetails] = useState([]);
 
@@ -75,10 +74,6 @@ const TransferSuccessScreen = () => {
   const onPressCopy = (refNo: string) => {
     copyText(refNo);
     renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
-  };
-
-  const onPressShare = () => {
-    setIsShareable(true);
   };
 
   const onPressHome = () => {
@@ -144,16 +139,14 @@ const TransferSuccessScreen = () => {
         />
 
         <IPayShareableImageView
-          isShareable={isShareable}
           otherView={
             <IPayView style={styles.footerView}>
               <IPayView style={styles.linkButtonsView}>
                 <IPayButton
-                  onPress={onPressShare}
                   btnType={buttonVariants.LINK_BUTTON}
                   small
                   leftIcon={<Send2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
-                  btnText="TOP_UP.SHARE"
+                  btnText={t('TOP_UP.SHARE')}
                 />
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}

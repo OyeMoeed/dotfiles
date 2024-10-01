@@ -130,6 +130,8 @@ const enum ScreenNames {
   MUSANED = 'Musaned',
   MUSANED_HISTORY = 'MusanedHistory',
   MUSANED_PAY_SALARY = 'MusanedPaySalary',
+  MUSANED_PAY_SALARY_CONFIRM = 'MusanedPaySalaryConfirm',
+  MUSANED_PAYMENT_SUCCESSFUL = 'MusanedPaymentSuccessful',
   MUSANED_USER_DETAILS = 'MusanedUserDetails',
 }
 

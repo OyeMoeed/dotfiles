@@ -80,6 +80,7 @@ const IPayShareableOtherView = ({
 }: any) => {
   const { colors } = useTheme();
   const styles = transactionHistoryStyle(colors);
+  const { t } = useTranslation();
 
   return (
     <IPayView style={[styles.buttonWrapper, showSplitButton && styles.conditionButtonWrapper]}>
@@ -97,7 +98,7 @@ const IPayShareableOtherView = ({
         <IPayButton
           btnType={buttonVariants.OUTLINED}
           onPress={onPressShare}
-          btnText="TOP_UP.SHARE"
+          btnText={t('TOP_UP.SHARE')}
           medium
           btnStyle={[styles.button, showSplitButton && styles.conditionButton]}
           leftIcon={<IPayIcon icon={icons.share} size={18} color={colors.primary.primary500} />}
@@ -130,7 +131,6 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = transactionHistoryStyle(colors);
-  const [isShareable, setIsShareable] = useState<boolean>(false);
   const { showToast } = useToastContext();
   const transactionRequestType = transaction?.transactionRequestType;
   const [, setIsLoading] = useState<boolean>(false);
@@ -177,12 +177,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     renderToast(value);
   };
 
-  const onPressPrint = () => {
-    setIsShareable(false);
-  };
-
   const onPressShare = () => {
-    setIsShareable(true);
     if (onCloseBottomSheet) onCloseBottomSheet();
   };
 
@@ -262,12 +257,10 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView style={styles.scroll}>
         <IPayShareableImageView
-          isShareable={isShareable}
           otherView={
             <IPayShareableOtherView
               isBKFTransfer={isBKFTransfer}
               isBeneficiaryHistory={isBeneficiaryHistory}
-              onPressPrint={onPressPrint}
               onPressShare={onPressShare}
               onPressDownloadInvoice={onPressDownloadInvoice}
               showSplitButton={showSplitButton}

@@ -1,37 +1,33 @@
+import React, { createRef, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayMonthYearPicker, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
+import { IPayMonthYearPicker, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayHeader, IPayListView, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPaySalaryPayInformation } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
-import { useKeyboardStatus } from '@app/hooks';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
-import React, { createRef, useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import getSarieTransferFees from '@app/network/services/cards-management/get-sarie-transfer-fees/get-sarie-transfer-fees.service';
-import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.interface';
-import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
-import { getDeviceInfo } from '@app/network/utilities';
 import colors from '@app/styles/colors.const';
-import { regex } from '@app/styles/typography.styles';
-import { APIResponseType, buttonVariants } from '@app/utilities/enums.util';
-import { removeCommas } from '@app/utilities/number-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
-import musanedPaySalary from './musaned-pay-salary.style';
-import { MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
 import { isArabic } from '@app/utilities/constants';
+import { BalanceStatusVariants } from '@app/components/templates/ipay-bill-balance/ipay-bill-balance.interface';
+import { AccountBalanceStatus } from '@app/enums';
+
+import { MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
+import musanedPaySalary from './musaned-pay-salary.style';
 
 const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const styles = musanedPaySalary();
   const { t } = useTranslation();
 
-  const { params } = useRoute();
+  type RouteProps = RouteProp<any>;
+  const { params } = useRoute<RouteProps>();
   const {
     borderNumber = '3085307282',
     contractNumber = '',
@@ -55,15 +51,41 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { walletNumber } = walletInfo;
+  const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
 
   const [chipValue, setChipValue] = useState<string>('');
   const [transferAmount, setTransferAmount] = useState<string>('');
   const [selectedReason, setSelectedReason] = useState({});
-  const [apiError, setAPIError] = useState<string>('');
-  const [expiryDate, setExpiryDate] = useState('');
+  const [selectedFromDate, setSelectedFromDate] = useState('');
+  const [deductFlag, setDeductFlag] = useState(false);
+  const [payExtraFlag, setPayExtraFlag] = useState(false);
 
   const refBottomSheet = useRef(null);
   const salaryTypeBottomSheetRef = useRef(null);
+
+  const balanceStatusVariants: BalanceStatusVariants = {
+    insufficient: {
+      warningText: t('NEW_SADAD_BILLS.INSUFFICIENT_BALANCE'),
+      disabledBtn: true,
+      gradientWidth: '54%',
+      progressBarBg: styles.progressBarBg,
+      gradient: colors.gradientSecondary,
+    },
+    noRemainingAmount: {
+      warningText: t('NEW_SADAD_BILLS.NO_REMAINING_AMOUNT'),
+      disabledBtn: true,
+      gradientWidth: '1%',
+      progressBarBg: styles.redProgressBarBg,
+      gradient: colors.redGradient,
+    },
+    accountBalance: {
+      warningText: '',
+      disabledBtn: false,
+      gradientWidth: '90%',
+      progressBarBg: styles.progressBarBg,
+      gradient: colors.gradientSecondary,
+    },
+  };
 
   const salaryTypes = [
     { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
@@ -71,31 +93,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     { id: SalaryCategories.Bonus_Salary, text: 'MUSANED.BONUS_SALARY' },
   ];
 
-  const { showToast } = useToastContext();
-
-  type RouteProps = RouteProp<any>;
-  const route = useRoute<RouteProps>();
-  const {
-    beneficiaryBankDetail,
-    nickname: beneficiaryNickName,
-    beneficiaryCode,
-    fullName,
-    beneficiaryAccountNumber,
-  } = route?.params?.beneficiaryDetails || {};
-  const { bankCode, bankName } = beneficiaryBankDetail || {};
-
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
-
-  const { isKeyboardOpen } = useKeyboardStatus();
-  const bankDetails = {
-    icon: bankCode ?? '',
-    bankName,
-    title: fullName ?? '',
-    accountNumber: beneficiaryAccountNumber ?? '',
-  };
-
-  const transferNetwork = 'IPS'; // TODO need to replace.
 
   useEffect(() => {
     const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
@@ -111,19 +110,6 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     }
   }, [transferAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
 
-  const setAmount = (text: string | number) => {
-    const newAmount = removeCommas(text.toString());
-    const reg = regex.AMOUNT;
-    if (reg.test(newAmount.toString()) || newAmount === '') {
-      setTransferAmount?.(newAmount.toString());
-    }
-  };
-
-  const isTransferButtonDisabled = () => {
-    const hasValidAmount = parseFloat(transferAmount) > 0 || parseFloat(transferAmount);
-    const hasValidReason = selectedReason?.text?.trim() !== '';
-    return !hasValidAmount || !hasValidReason;
-  };
   const onCloseSheet = () => {
     salaryTypeBottomSheetRef?.current?.close();
   };
@@ -137,92 +123,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     salaryTypeBottomSheetRef?.current?.present();
   };
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
-  const getTransferFee = async () => {
-    if (walletNumber) {
-      try {
-        const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
-        if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-          return apiResponse?.response;
-        }
-        if (apiResponse?.apiResponseNotOk) {
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          return null;
-        }
-        setAPIError(apiResponse?.error);
-        return null;
-      } catch (error) {
-        setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-        renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-        return null;
-      }
-    } else {
-      return null;
-    }
-  };
-
-  const getTotal = (feesAmount: string, vatAmount: string, amount: string) => {
-    const total = Number(vatAmount) + Number(feesAmount) + Number(amount);
-    return total;
-  };
-
   const onLocalTransferPrepare = async () => {
-    if (transferAmount && selectedReason?.id && walletNumber) {
-      const transferFees = await getTransferFee();
-      if (transferFees) {
-        try {
-          const deviceInfo = await getDeviceInfo();
-          const payload: LocalTransferPreparePayloadTypes = {
-            beneficiaryCode,
-            transferPurpose: selectedReason?.id,
-            feesAmount: transferFees.feeAmount,
-            vatAmount: transferFees.vatAmount,
-            bankFeesAmount: transferFees.bankFeeAmount,
-            bankVatAmount: transferFees.bankVatAmount,
-            amount: transferAmount,
-            bankCode,
-            transferNetwork,
-            deviceInfo: {
-              platform: deviceInfo?.platform,
-              platformVersion: deviceInfo?.platformVersion,
-              deviceName: deviceInfo?.deviceName,
-              deviceId: deviceInfo?.deviceId,
-            },
-          };
-          const apiResponse = await localTransferPrepare(walletNumber, payload);
-          if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-            navigate(ScreenNames.TRANSFER_CONFIRMATION, {
-              amount: transferAmount,
-              beneficiaryNickName,
-              transferPurpose: selectedReason?.text,
-              instantTransferType: t('TRANSFER_SUMMARY.SARIE'),
-              otpRef: apiResponse.response.otpRef,
-              feesAmount: transferFees.feeAmount,
-              vatAmount: transferFees.vatAmount,
-              totalAmount: getTotal(transferFees.feeAmount, transferFees.vatAmount, transferAmount),
-              authentication: apiResponse?.authentication,
-              bankDetails,
-            });
-          } else if (apiResponse?.apiResponseNotOk) {
-            setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          } else {
-            setAPIError(apiResponse?.error);
-          }
-        } catch (error) {
-          setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-          renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-        }
-      }
-    }
+    navigate(ScreenNames.MUSANED_PAY_SALARY_CONFIRM);
   };
 
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
@@ -262,9 +164,25 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     refBottomSheet.current?.present();
   };
 
+  const onPressDeductFlag = () => {
+    setDeductFlag(!deductFlag);
+  };
+
+  const onPressPayExtraFlag = () => {
+    setPayExtraFlag(!payExtraFlag);
+  };
+
+  const onPressSelectDate = () => {
+    if (selectedFromDate) {
+      //
+    } else {
+      setSelectedFromDate('01/2024');
+    }
+  };
+
   return (
     <IPaySafeAreaView>
-      <IPayHeader backBtn applyFlex title="TRANSFER.TRANSFER_INFRORMATION" />
+      <IPayHeader backBtn applyFlex title="MUSANED.HEADER" />
       <IPayScrollView>
         <IPayView style={styles.container}>
           <IPayAccountBalance
@@ -273,6 +191,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
             hideBalance={appData?.hideBalance}
             showRemainingAmount
             onPressTopup={topUpSelectionBottomSheet}
+            monthlyIncomingLimit=""
           />
 
           <IPayView style={styles.bankDetailsView}>
@@ -280,32 +199,43 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               fullName={name?.slice(0, 18)}
               subtitle={isArabic ? occupationAr : occupationEn}
               style={styles.transferContainer}
-              amount={transferAmount}
-              setAmount={setAmount}
               selectedItem={selectedReason?.text}
-              chipValue={chipValue}
               openReason={onPressSelectReason}
               inputFieldStyle={styles.inputFieldStyle}
               onPressDatePicker={openDatePicker}
+              onPressDeductFlag={onPressDeductFlag}
+              onPressPayExtraFlag={onPressPayExtraFlag}
+              payExtraFlag={payExtraFlag}
+              deductFlag={deductFlag}
+              amount={payrollAmount}
+              selectedDate={selectedFromDate}
             />
           </IPayView>
         </IPayView>
       </IPayScrollView>
-      {!isKeyboardOpen ? (
-        <IPayView style={styles.buttonContainer}>
-          <IPayButton
-            onPress={onLocalTransferPrepare}
-            btnType={buttonVariants.PRIMARY}
-            large
-            disabled={isTransferButtonDisabled() || Boolean(chipValue)}
-            btnIconsDisabled
-            btnText="COMMON.NEXT"
-            btnStyle={styles.nextBtn}
-          />
-        </IPayView>
-      ) : (
-        <IPayView />
-      )}
+
+      <IPayView style={styles.buttonContainer}>
+        <SadadFooterComponent
+          btnText="COMMON.NEXT"
+          disableBtnIcons
+          // btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
+          btnDisbaled={false}
+          testID="ipay-bill"
+          showTopMessage
+          totalAmountText={balanceStatusVariants[accountBalanceStatus]?.warningText}
+          totalAmountStyle={{
+            backgroundColor: colors.critical.critical25,
+            justifyContent: 'flex-start',
+          }}
+          totalAmountLeftIcon={{
+            icon: icons.sheild_cross,
+            color: colors.natural.natural1000,
+          }}
+          onPressBtn={onLocalTransferPrepare}
+          partialPay
+        />
+      </IPayView>
+
       <IPayBottomSheet
         heading="MUSANED.SALARY_TYPE"
         onCloseBottomSheet={onCloseSheet}
@@ -338,8 +268,17 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
           topupItemSelected={topupItemSelected}
         />
       </IPayPortalBottomSheet>
-      <IPayBottomSheet simpleBar heading="MUSANED.SELECT_MONTH" ref={refBottomSheet} isVisible={true} cancelBnt>
-        <IPayMonthYearPicker onDateChange={setExpiryDate} value={expiryDate} minimumDate={new Date()} />
+      <IPayBottomSheet
+        doneBtn
+        doneText="COMMON.DONE"
+        onDone={onPressSelectDate}
+        simpleBar
+        heading="MUSANED.SELECT_MONTH"
+        ref={refBottomSheet}
+        isVisible
+        cancelBnt
+      >
+        <IPayMonthYearPicker onDateChange={setSelectedFromDate} value={selectedFromDate} minimumDate={new Date()} />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

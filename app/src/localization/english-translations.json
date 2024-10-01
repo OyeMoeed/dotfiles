@@ -1110,7 +1110,7 @@
     "PHONE_NUMBER": "Phone Number",
     "REASON_OF_TRANSFER": "Reason of Transfer",
     "AMOUNT_SAR": "Amount (SAR)",
-    "AMOUNT_EGP": "Amount (EGP)",
+    "AMOUNT_BEN": "Amount",
     "EXCHANGE_RATE": "Exchange Rate",
     "VAT": "VAT (15%)",
     "FEES": "Fees",

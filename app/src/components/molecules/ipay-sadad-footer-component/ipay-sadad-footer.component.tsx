@@ -1,4 +1,10 @@
-import { IPayFootnoteText, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import {
+  IPayFootnoteText,
+  IPayIcon,
+  IPayLinearGradientView,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -31,11 +37,14 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   gradientViewStyle,
   shouldTranslateBtnText,
   amount,
+  showTopMessage,
+  totalAmountStyle,
+  totalAmountLeftIcon,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
-  const [warningMessage, setWarningMessage] = useState<string>('');
+  const [warningMessage, setWarningMessage] = useState<string>('asdasd');
   const checkIfSelectedCount = selectedItemsCount && selectedItemsCount > 0;
   const totalAmountInSAR = `${totalAmount} ${t('COMMON.SAR')}`;
   const {
@@ -47,7 +56,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     if (checkIfSelectedCount) {
       return partialPay ? styles.countAndPartialPayStyles : styles.container;
     }
-    return totalAmount ? styles.containerConditionalStyles : styles.footerWithWarning;
+    return totalAmount || showTopMessage ? styles.containerConditionalStyles : styles.footerWithWarning;
   }, [checkIfSelectedCount, totalAmount, warning, warningMessage, partialPay]);
 
   if (showButtonOnly) {
@@ -80,12 +89,19 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         ) : (
           <IPayView />
         )}
-        {totalAmount ? (
-          <IPayView style={styles.totalAmountView}>
+        {totalAmount || showTopMessage ? (
+          <IPayView style={[styles.totalAmountView, totalAmountStyle]}>
+            {totalAmountLeftIcon?.icon ? (
+              <IPayView style={styles.iconAmountContainer}>
+                <IPayIcon color={totalAmountLeftIcon?.color} icon={totalAmountLeftIcon?.icon} />
+              </IPayView>
+            ) : (
+              <IPayView />
+            )}
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText
               regular
-              text={totalAmountInSAR}
+              text={totalAmount ? totalAmountInSAR : ''}
               color={colors.primary.primary800}
               shouldTranslate={false}
             />

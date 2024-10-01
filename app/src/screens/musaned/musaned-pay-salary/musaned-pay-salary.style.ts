@@ -1,6 +1,7 @@
 import { moderateScale } from 'react-native-size-matters';
 
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import themeColors from '@app/styles/theming/theme-colors';
 
 const musanedPaySalary = () =>
   createStyleSheet({
@@ -18,13 +19,20 @@ const musanedPaySalary = () =>
       marginHorizontal: moderateScale(24, 0.3),
     },
     buttonContainer: {
-      paddingTop: moderateScale(32),
+      marginBottom: 30,
+      marginHorizontal: 24,
     },
     transferContainer: {
       marginTop: moderateScale(4),
     },
     inputFieldStyle: {
       borderRadius: moderateScale(16),
+    },
+    progressBarBg: {
+      backgroundColor: themeColors.success.success25,
+    },
+    redProgressBarBg: {
+      backgroundColor: themeColors.error.error25,
     },
   });
 
