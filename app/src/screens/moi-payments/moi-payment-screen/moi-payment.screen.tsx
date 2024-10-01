@@ -86,7 +86,6 @@ const MoiPaymentScreen: React.FC = () => {
           integrationTagName: MoiPaymentFormFields.SERVICE_TYPE,
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
-          disable: true,
         },
       ];
       setServiceFields(updatedFields);
@@ -176,6 +175,7 @@ const MoiPaymentScreen: React.FC = () => {
     });
 
     setFields(updatedFields);
+    setServiceFields(updatedFields);
   };
 
   useEffect(() => {
@@ -257,12 +257,11 @@ const MoiPaymentScreen: React.FC = () => {
             fetchFields(serviceProviderValue, serviceTypeValue);
           };
 
-          // Function to reset SERVICE_TYPE and set isInquired to false when SERVICE_PROVIDER changes
           useEffect(() => {
             if (serviceProviderValue) {
               resetField(MoiPaymentFormFields.SERVICE_TYPE);
               setIsInquired(false);
-              setFields(serviceFields)
+              setFields(serviceFields);
             }
           }, [serviceProviderValue]);
 
