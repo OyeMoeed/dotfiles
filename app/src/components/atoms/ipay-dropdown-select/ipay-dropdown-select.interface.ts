@@ -18,6 +18,13 @@ export interface IPayDropdownSelectProps {
   // Selected value
   selectedValue?: any;
   errorMessage?: string;
+
+  placeholder?: string;
+  customIcon?: any;
+  editable?: boolean;
+  customSnapPoints?: any[];
+  containerStyle?: any;
+  rightIcon?: any;
 }
 
 export interface ListItem {
@@ -25,6 +32,7 @@ export interface ListItem {
 }
 
 export interface IPayDropdownComponentSheetProps {
+  testID?: string;
   data: ListItem[];
   isSearchable: boolean;
   onSelectItem: (item: ListItem) => void;

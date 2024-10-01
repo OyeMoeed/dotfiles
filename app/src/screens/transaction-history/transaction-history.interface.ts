@@ -3,8 +3,8 @@ interface FiltersArrayProps {
   amountTo?: string;
   dateFrom?: string;
   dateTo?: string;
-  transactionType?: any;
-  card?: any;
+  transactionType?: string;
+  card?: string;
 }
 
 export default FiltersArrayProps;
