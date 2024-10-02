@@ -19,7 +19,6 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
   name,
   disabled,
   onSelectListItem,
-  showLeftIcon = false,
   rightIcon,
 }) => {
   const { colors } = useTheme();
@@ -66,7 +65,6 @@ const IPayDropdown: React.FC<IPayDropdownComponentProps> = ({
       onClearInput={() => {
         if (!disabled) showActionSheet();
       }}
-      showLeftIcon={showLeftIcon}
       rightIcon={rightIcon}
     />
   );

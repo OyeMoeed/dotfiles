@@ -15,13 +15,13 @@ interface IPayDropdownComponentProps {
   size: string[];
   name: string;
   disabled?: boolean;
-  showLeftIcon?: boolean;
   rightIcon?: ReactElement<any> | undefined;
 }
 
 interface ListItem {
   id: number;
   title: string;
+  countryCode?: string;
 }
 interface IPayDropdownComponentSheetProps {
   present?: () => void;
