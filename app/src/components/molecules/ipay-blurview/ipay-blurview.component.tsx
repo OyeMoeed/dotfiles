@@ -1,5 +1,5 @@
 // IPayBlurView.tsx
-import useAppState from '@app/hooks/use-appstate.hook';
+import { useAppState } from '@app/hooks/use-appstate.hook';
 import { BlurView } from '@react-native-community/blur';
 import React from 'react';
 import IPayBlurViewProps from './ipay-blurview.interface';
@@ -11,7 +11,7 @@ const IPayBlurView: React.FC<IPayBlurViewProps> = ({
   reducedTransparencyFallbackColor = 'white',
   testID,
 }) => {
-  const appState = useAppState();
+  const { appState } = useAppState();
   // Only render the BlurView if the app is not active
   if (appState === 'active') {
     return null;

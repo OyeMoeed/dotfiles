@@ -24,11 +24,13 @@ import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { FieldValues, UseFormHandleSubmit } from 'react-hook-form';
+import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
+import { GeoCoordinates } from 'react-native-geolocation-service';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook';
 import { FormValues } from './mobile-and-iqama-verification.interface';
@@ -52,6 +54,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     otp,
     isHelpSheetVisible,
     onCloseHelpSheet,
+    setLocationData,
   } = useMobileAndIqamaVerification();
 
   const { t } = useTranslation();
@@ -90,6 +93,13 @@ const MobileAndIqamaVerification: React.FC = () => {
   const handleSubmitMethod = async (handleSubmit: UseFormHandleSubmit<FormValues, undefined>) => {
     await handleSubmit(onSubmit, onInvalidFormValues)();
   };
+
+  const onLocationSelected = useCallback(
+    (position: GeoCoordinates) => {
+      setLocationData(position);
+    },
+    [setLocationData],
+  );
 
   return (
     <IPayFormProvider<FormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '', iqamaId: '' }}>
@@ -193,6 +203,7 @@ const MobileAndIqamaVerification: React.FC = () => {
             >
               <HelpCenterComponent hideFAQError />
             </IPayPortalBottomSheet>
+            <IPayLocationPermissionSheet onLocationSelected={onLocationSelected} />
           </>
         </IPaySafeAreaView>
       )}

@@ -613,6 +613,10 @@
     "SARIE": "Sarie"
   },
   "LOCATION": {
+    "LOCATION_ACCESS": "Location Access",
+    "ALLOW_LOCATION_ACCESS": "Allow Location Access",
+    "ALLOW_ALINMAPAY_LOCATION_ACCESS": "Allow “AlinmaPay” to \n access your location",
+    "PLEASE_ENABLE_LOCATION_ACCESS": "To ensure the security of your account, please enable location access for verification purposes",
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_REQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",

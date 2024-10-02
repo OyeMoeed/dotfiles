@@ -1,36 +1,28 @@
 // src/store/alertshowPermissionpermissionAlertSlice.ts
 
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 interface PermissionAlertState {
-  visible: boolean;
-  title?: string;
-  description?: string;
+  modalVisible?: boolean;
 }
 
 const initialState: PermissionAlertState = {
-  visible: false,
-  title: '',
-  description: '',
+  modalVisible: false,
 };
 
 const permissionAlertSlice = createSlice({
   name: 'permissionAlertSlice',
   initialState,
   reducers: {
-    showPermissionAlert: (state, action: PayloadAction<{ title: string; description: string }>) => {
-      state.visible = true;
-      state.title = action.payload.title;
-      state.description = action.payload.description;
+    showPermissionModal: (state) => {
+      state.modalVisible = true;
     },
-    hidePermissionAlert: (state) => {
-      state.visible = false;
-      state.title = '';
-      state.description = '';
+    hidePermissionModal: (state) => {
+      state.modalVisible = false;
     },
   },
 });
 
-export const { showPermissionAlert, hidePermissionAlert } = permissionAlertSlice.actions;
+export const { showPermissionModal, hidePermissionModal } = permissionAlertSlice.actions;
 
 export default permissionAlertSlice.reducer;
