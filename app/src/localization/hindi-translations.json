@@ -87,6 +87,22 @@
     "CARDS": "पत्ते",
     "MORE": "अधिक"
   },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "इतिहास",
+    "SEND_TO_UNSAVED_NUMBER": "अनसेव नंबर पर भेजें",
+    "UNSAVED_NUMBER": "अनसेव नंबर",
+    "TYPE_MOBILE_NUMBER": "मोबाइल नंबर दर्ज करें",
+    "CONTACTS": "संपर्क",
+    "CONTACT_NUMBER_OR_NAME": "संपर्क संख्या या नाम",
+    "CONTACT_NAME": "संपर्क नाम",
+    "NO_RESULTS_FOUND": "कोई परिणाम नहीं पाया गया",
+    "CONTACT_LIMIT_REACHED": "संपर्क लिमिट पहुंच गई",
+    "CONTACT_LIMIT": "संपर्क सीमा पहुंच गई ",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "अपने संपर्कों की पहुंच को अनुमति दें",
+    "CONTACTS_PERMISSION_TITLE": "कृपया अपने संपर्कों तक पहुँचने की अनुमति देने के लिए जारी रखे",
+    "CONTACTS_PERMISSION_DESCRIPTION": "आप मुद्रा भेजने के लिए संपर्क चुन सकते हैं बिना आपके संपर्क तक पहुंच की अनुमति के.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "संपर्क अनुमति दें"
+  },
   "ID_RENEWAL": {
     "TITLE": "आईडी नवीनीकरण",
     "ID_ABOUT_EXPIRE": "आपकी आईडी समाप्त होने वाली है!",

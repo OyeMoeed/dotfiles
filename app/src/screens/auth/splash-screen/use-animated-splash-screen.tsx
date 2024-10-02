@@ -1,5 +1,4 @@
 import constants from '@app/constants/constants';
-import useLocation from '@app/hooks/location.hook';
 import { fadeIn, parallelAnimations, scale } from '@app/ipay-animations/ipay-animations';
 import { navigateAndReset } from '@app/navigation/navigation-service.navigation';
 import screenNames from '@app/navigation/screen-names.navigation';
@@ -27,7 +26,6 @@ const useSplashAnimations = () => {
   const navigation = useNavigation();
   const animationDurations = constants.ANIMATION_DURATIONS;
   const dispatch = useTypedDispatch();
-  useLocation();
   const { isFirstTime, isLinkedDevice, isAuthenticated } = useTypedSelector((state) => state.appDataReducer.appData);
 
   const splashPrepareApi = async () => {

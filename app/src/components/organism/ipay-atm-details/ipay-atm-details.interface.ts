@@ -1,16 +1,12 @@
 import { ViewStyle } from 'react-native';
-
-interface LocationProps {
-  latitude?: number;
-  longitude?: number;
-}
+import { GeoCoordinates } from 'react-native-geolocation-service';
 
 interface AtmDetailsProps {
   type?: string;
   title?: string;
   address?: string;
   distance?: string;
-  location?: LocationProps;
+  location?: GeoCoordinates;
 }
 
 interface IPayAtmDetailsProps {
@@ -20,4 +16,4 @@ interface IPayAtmDetailsProps {
   openGoogleMapsWeb: (latitude: number, longitude: number) => void;
 }
 
-export { AtmDetailsProps, IPayAtmDetailsProps, LocationProps };
+export { AtmDetailsProps, IPayAtmDetailsProps };
