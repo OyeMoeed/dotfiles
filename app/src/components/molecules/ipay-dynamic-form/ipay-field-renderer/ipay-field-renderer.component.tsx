@@ -102,7 +102,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                 testID={`${flatKey}-dropdown`}
                 labelKey="desc"
                 valueKey="code"
-                disabled={field.lovList === null ? true : field.lovList.length === 0}
+                disabled={!field?.lovList ? true : field?.lovList?.length === 0}
                 errorMessage={errorMessage as string}
               />
             )}

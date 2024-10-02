@@ -98,10 +98,15 @@ const IPayCreateBeneficiary: React.FC<IPayCreateBeneficiaryProps> = ({ testID })
   }, []);
 
   const onSubmitData = async (values: FormValues) => {
+    const beneficiaryName = values?.beneficiaryName;
+    const nameSplit = beneficiaryName?.split(' ');
+    const firstName = nameSplit[0];
+    const lastName = nameSplit.length > 1 ? nameSplit[nameSplit.length - 1] : '';
+
     const payload: BeneficiaryInfo = {
       beneficiaryAccountNumber: beneficiaryBankDetails?.beneficiaryAccountNo,
       fullName: values?.beneficiaryName,
-      nickname: values?.beneficiaryNickName ? values?.beneficiaryNickName : values?.beneficiaryName,
+      nickname: values?.beneficiaryNickName ? values?.beneficiaryNickName : `${firstName} ${lastName}`,
       beneficiaryBankDetail: {
         bankCode: beneficiaryBankDetails?.bankCode,
         bankName: beneficiaryBankDetails?.bankName,

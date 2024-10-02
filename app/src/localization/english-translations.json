@@ -613,6 +613,10 @@
     "SARIE": "Sarie"
   },
   "LOCATION": {
+    "LOCATION_ACCESS": "Location Access",
+    "ALLOW_LOCATION_ACCESS": "Allow Location Access",
+    "ALLOW_ALINMAPAY_LOCATION_ACCESS": "Allow “AlinmaPay” to \n access your location",
+    "PLEASE_ENABLE_LOCATION_ACCESS": "To ensure the security of your account, please enable location access for verification purposes",
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_REQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
@@ -630,7 +634,11 @@
     "CONTACT_NAME": "Contact Name",
     "NO_RESULTS_FOUND": "No Results Found",
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
-    "CONTACT_LIMIT": "Contacts limit reached"
+    "CONTACT_LIMIT": "Contacts limit reached",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "Contacts Access Restriction",
+    "CONTACTS_PERMISSION_TITLE": "Please enable Contacts access to continue",
+    "CONTACTS_PERMISSION_DESCRIPTION": "You won't be able to select contacts to send money to without permission to access your contacts.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "Allow contacts permission"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
