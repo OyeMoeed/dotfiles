@@ -1,4 +1,4 @@
-import { IPayIcon, IPayText, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -22,6 +22,7 @@ const IPayCommonAlertSheet = forwardRef<{}, IPayCommonAlertSheetProps>(
       titleStyle,
       withCancelBtn,
       onCloseBottomSheet,
+      buttonRightIcon,
     },
     ref,
   ) => {
@@ -63,8 +64,8 @@ const IPayCommonAlertSheet = forwardRef<{}, IPayCommonAlertSheetProps>(
       >
         <IPayView style={styles.container}>
           <IPayIcon icon={icon} size={85} />
-          <IPayTitle2Text text={title} style={[styles.mainText, titleStyle]} />
-          <IPayText style={styles.subTitleText} text={subtitle} />
+          <IPayTitle2Text text={title} regular={false} style={[styles.mainText, titleStyle]} />
+          <IPayCaption1Text color={colors.primary.primary800} style={styles.subTitleText} text={subtitle} />
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             medium
@@ -73,6 +74,7 @@ const IPayCommonAlertSheet = forwardRef<{}, IPayCommonAlertSheetProps>(
             btnColor={colors.primary.primary500}
             btnText={btnTitle}
             onPress={onBtnPress}
+            rightIcon={buttonRightIcon}
           />
         </IPayView>
       </IPayBottomSheet>
