@@ -44,7 +44,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const { walletNumber } = walletInfo;
   const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
 
-  const salaryTypes = [
+  const salaryTypes: SelectedValue[] = [
     { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
     { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
     { id: SalaryCategories.Bonus_Salary, text: 'MUSANED.BONUS_SALARY' },
@@ -55,24 +55,26 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     { id: DeductionReasons.Other, text: 'MUSANED.DEDUCT_OTHER' },
   ];
 
-  const [chipValue, setChipValue] = useState<string>('');
-  const [transferAmount, setTransferAmount] = useState<string>('');
-  const [salaryType, setSalaryType] = useState(salaryTypes[0]);
+  const [, setChipValue] = useState<string>('');
+  const [transferAmount] = useState<string>('');
+  const [salaryType, setSalaryType] = useState<SelectedValue>(salaryTypes[0]);
   const [selectedDeductionReason, setDeductionSalaryType] = useState<{ text?: string }>({});
   const [deductionAmount, setDeductionAmount] = useState<string | number>('');
   const [payExtraAmount, setPayExtraAmount] = useState<string | number>('');
   const [payExtraNote, setPayExtraNote] = useState('');
-  const [selectedFromDate, setSelectedFromDate] = useState('');
-  const [selectedToDate, setSelectedToDate] = useState('');
+  const [selectedPrevDate, setSelectedPrevDate] = useState<Date | string | null>('');
+  const [selectedFromDate, setSelectedFromDate] = useState<Date | string | null>('');
+  const [selectedToDate, setSelectedToDate] = useState<Date | string | null>('');
   const [bonusAmount, setBonusAmount] = useState<string | number>('');
   const [deductFlag, setDeductFlag] = useState(false);
   const [payExtraFlag, setPayExtraFlag] = useState(false);
-  const [selectedDateType, setSelectedDateType] = useState('');
+  const [selectedDateType, setSelectedDateType] = useState<'FROM_DATE' | 'TO_DATE'>('FROM_DATE');
 
-  const refBottomSheet = useRef(null);
+  const refBottomSheet = useRef<any>(null);
   const salaryTypeBottomSheetRef = useRef<any>(null);
   const deductionReasonBottomSheetRef = useRef<any>(null);
 
+  const isAdvanceSalary = salaryType.id === SalaryCategories.Advanced_Salary;
   const balanceStatusVariants: BalanceStatusVariants = {
     insufficient: {
       warningText: t('NEW_SADAD_BILLS.INSUFFICIENT_BALANCE'),
@@ -189,10 +191,22 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onPressSelectDate = () => {
+    const currentYear = moment().format('YYYY');
+    const currentMonthData = moment().format('M');
+
     if (selectedFromDate) {
-      //
+      setSelectedPrevDate(selectedFromDate);
     } else {
-      setSelectedFromDate('01/2024');
+      setSelectedPrevDate(`${currentMonthData}/${currentYear}`);
+    }
+  };
+
+  const disabledBtn = () => {
+    switch (salaryType.id) {
+      case SalaryCategories.Monthly_Salary:
+        return !(selectedPrevDate && deductFlag ? deductionAmount : true);
+      default:
+        return false;
     }
   };
 
@@ -225,7 +239,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               payExtraFlag={payExtraFlag}
               deductFlag={deductFlag}
               amount={payrollAmount}
-              selectedDate={selectedFromDate}
+              selectedFromDate={selectedPrevDate}
+              selectedToDate={selectedToDate}
               onPressDeductionShow={onPressDeductionShow}
               deductionAmount={deductionAmount}
               setDeductionAmount={setDeductionAmount}
@@ -236,6 +251,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               setPayExtraNote={setPayExtraNote}
               bonusAmount={bonusAmount}
               setBonusAmount={setBonusAmount}
+              setDeductionSalaryType={setDeductionSalaryType}
             />
           </IPayView>
         </IPayView>
@@ -245,7 +261,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         <SadadFooterComponent
           btnText="COMMON.NEXT"
           disableBtnIcons
-          btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
+          btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn || disabledBtn()}
           testID="ipay-bill"
           showTopMessage
           totalAmountText={balanceStatusVariants[accountBalanceStatus]?.warningText}
@@ -318,32 +334,18 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         isVisible
         cancelBnt
       >
-        <IPayMonthYearPicker
-          onDateChange={setSelectedFromDate}
-          value={selectedFromDate}
-          minimumDate={new Date()}
-          withYear20
-          withLongMonth
-        />
-      </IPayBottomSheet>
-      <IPayBottomSheet
-        doneBtn
-        doneText="COMMON.DONE"
-        onDone={onPressSelectDate}
-        simpleBar
-        heading="MUSANED.SELECT_MONTH"
-        ref={refBottomSheet}
-        isVisible
-        cancelBnt
-      >
-        <IPaySalaryPayDateSelector
-          isAdvanceSalary
-          onPressDatePicker={(value) => setSelectedDateType(value)}
-          selectedDate={selectedFromDate}
-          selectedToDate={selectedToDate}
-          inputFieldStyleFromDate={selectedDateType === 'FROM_DATE' ? styles.inputDateFieldStyle : {}}
-          inputFieldStyleToDate={selectedDateType === 'TO_DATE' ? styles.inputDateFieldStyle : {}}
-        />
+        {isAdvanceSalary ? (
+          <IPaySalaryPayDateSelector
+            isAdvanceSalary
+            onPressDatePicker={(value) => setSelectedDateType(value || 'FROM_DATE')}
+            selectedDate={selectedFromDate}
+            selectedToDate={selectedToDate}
+            inputFieldStyleFromDate={selectedDateType === 'FROM_DATE' ? styles.inputDateFieldStyle : {}}
+            inputFieldStyleToDate={selectedDateType === 'TO_DATE' ? styles.inputDateFieldStyle : {}}
+          />
+        ) : (
+          <IPayView />
+        )}
         <IPayMonthYearPicker
           onDateChange={(date) => {
             const selectedDateValue = moment(`02/${date}`, 'DD/MM/YYYY');
@@ -354,13 +356,13 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
             }
             if (selectedDateType === 'FROM_DATE') {
               setSelectedFromDate(date);
+              return;
             }
             if (selectedDateType === 'TO_DATE') {
               setSelectedToDate(date);
             }
           }}
           value={selectedFromDate}
-          minimumDate={new Date()}
           withYear20
           withLongMonth
         />

@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from 'react';
 import { ViewStyle } from 'react-native';
 
 interface IPaySalaryPayInformationProps {
@@ -5,7 +6,7 @@ interface IPaySalaryPayInformationProps {
   style?: ViewStyle;
   openReason?: () => void;
   salaryType?: string;
-  salaryId: string;
+  salaryId: number | string;
   notes?: string;
   subtitle?: string;
   inputFieldStyle?: ViewStyle;
@@ -16,7 +17,8 @@ interface IPaySalaryPayInformationProps {
   deductFlag: boolean;
   payExtraFlag: boolean;
   amount: string;
-  selectedDate: Date;
+  selectedFromDate: Date | string | null;
+  selectedToDate: Date | string | null;
   onPressDeductionShow: () => void;
   deductionAmount: string | number;
   setDeductionAmount: (value: string | number) => void;
@@ -27,14 +29,16 @@ interface IPaySalaryPayInformationProps {
   setPayExtraNote: (value: string) => void;
   bonusAmount: string | number;
   setBonusAmount: (value: string | number) => void;
+  setDeductionSalaryType: Dispatch<SetStateAction<{ text?: string | undefined }>>;
 }
 
 export interface IPaySalaryPayDateSelectorProps {
   onPressDatePicker: (value?: 'FROM_DATE' | 'TO_DATE') => void;
   isAdvanceSalary: boolean;
-  selectedDate: Date;
+  selectedDate: Date | string | null;
+  selectedToDate: Date | string | null;
   inputFieldStyleFromDate?: ViewStyle;
   inputFieldStyleToDate?: ViewStyle;
-  selectedToDate: Date;
+  isNotMainScreen?: boolean;
 }
 export default IPaySalaryPayInformationProps;

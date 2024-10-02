@@ -29,7 +29,7 @@ export interface IPayMonthYearPickerProps {
   /**
    * value for the date picker to test the element.
    */
-  value?: Date;
+  value?: Date | string | null;
 
   display?: string;
 

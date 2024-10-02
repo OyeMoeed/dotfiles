@@ -33,6 +33,8 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
   const { colors } = useTheme();
 
   const currentYear = moment().format('YYYY');
+  const currentMonthData = moment().format('M');
+
   const generateYears = (startYear: number) => {
     const endYear = 2040;
     const years = [];
@@ -43,10 +45,14 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
     return years;
   };
 
-  const initialDate = (value || '')?.split('/');
+  const initialDate = ((value || '') as string)?.split('/');
   const years = generateYears(Number(currentYear));
   const [selectedMonth, setSelectedMonth] = useState(initialDate[0] || '01');
   const [selectedYear, setSelectedYear] = useState(`20${initialDate[1] || currentYear}`);
+
+  const checkCurrentYear =
+    currentYear === selectedYear ? constants.monthsString.slice(Number(currentMonthData) - 1) : constants.monthsString;
+  const pickerData = withLongMonth ? checkCurrentYear : constants.months;
 
   const handleMonthChange = (month: string) => {
     const mainIndex = constants.monthsString.indexOf(month);
@@ -72,7 +78,7 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
       <Picker
         style={[styles.picker, Platform.OS !== 'ios' && androidStyle]}
         selectedValue={selectedMonth}
-        pickerData={withLongMonth ? constants.monthsString : constants.months}
+        pickerData={pickerData}
         onValueChange={(index: string) => handleMonthChange(index)}
         textColor={colors.primary.primary500}
         accentColor={colors.primary.primary500}

@@ -18,6 +18,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
   onPressDatePicker,
   selectedDate,
   selectedToDate,
+  isNotMainScreen = false,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -28,7 +29,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
   );
   const isToDateLessThanFromDate = dateFromNow < 0;
   const isToDateMoreThan6 = dateFromNow > 6;
-  const toDateError = isToDateMoreThan6 || isToDateLessThanFromDate;
+  const toDateError = selectedToDate ? isToDateMoreThan6 || isToDateLessThanFromDate : false;
   const errorMessage = isToDateMoreThan6 ? 'MUSANED.MAXIMUM_DURATION_MESSAGE' : 'MUSANED.ENSURE_CORRECT_DATE';
 
   const onPressDatePickerData = (value: 'FROM_DATE' | 'TO_DATE') => {
@@ -82,7 +83,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
           {toDateError ? <IPayCaption1Text color={colors.error.error500} text={errorMessage} /> : <IPayView />}
         </IPayPressable>
       ) : null}
-      {dateFromNow > 0 && dateFromNow < 7 ? (
+      {isNotMainScreen && selectedToDate && dateFromNow > 0 && dateFromNow < 7 ? (
         <IPayList
           title="MUSANED.SELECTED_MONTH"
           isShowIcon
