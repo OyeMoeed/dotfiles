@@ -5,16 +5,7 @@ import Flag from 'react-native-round-flags';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FC } from 'react';
 import laborerInfoStyles from './ipay-laborer-info.styles';
-
-interface Item {
-  text: string;
-  details: string;
-  key?: string;
-}
-
-interface IPayLaborerInfoProps {
-  userData: Item[];
-}
+import { IPayLaborerInfoProps, Item } from './ipay-laborer-info.interface';
 
 const IPayLaborerInfo: FC<IPayLaborerInfoProps> = ({ userData }) => {
   const { colors } = useTheme();
