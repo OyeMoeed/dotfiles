@@ -1,6 +1,7 @@
 import { ApiError, DeviceInfoProps, MockAPIStatusProps } from '../../services.interface';
 
 interface AETransferPrepareDetails {
+  transactionId?: string;
   otpRef: string;
 }
 

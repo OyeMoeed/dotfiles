@@ -59,7 +59,7 @@ const SendMoneyFormScreen: React.FC = () => {
   const reasonBottomRef = useRef<bottomSheetTypes>(null);
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
 
-  const [selectedItem, setSelectedItem] = useState<string>('');
+  const [, setSelectedItem] = useState<string>('');
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
   const [selectedId, setSelectedId] = useState<number | string>('');
   const [warningStatus, setWarningStatus] = useState<string>('');
@@ -171,7 +171,7 @@ const SendMoneyFormScreen: React.FC = () => {
     setSelectedId('');
   };
 
-  const openReason = (id: number) => {
+  const openReason = (id: string | number) => {
     reasonBottomRef?.current?.present();
     setSelectedId(id);
   };
@@ -338,9 +338,7 @@ const SendMoneyFormScreen: React.FC = () => {
               showRemoveFormOption={showRemoveFormOption}
               addForm={addForm}
               formInstances={formInstances}
-              notes=""
               setNotes={handleNotesChange}
-              selectedItem={selectedItem}
               setSelectedItem={setSelectedItem}
             />
           ) : (
@@ -352,9 +350,7 @@ const SendMoneyFormScreen: React.FC = () => {
               showRemoveFormOption={showRemoveFormOption}
               addForm={addForm}
               formInstances={formInstances}
-              notes=""
               setNotes={handleNotesChange}
-              selectedItem={selectedItem}
               setSelectedItem={setSelectedItem}
             />
           )}
@@ -419,7 +415,6 @@ const SendMoneyFormScreen: React.FC = () => {
             list={transferReason}
             onPressListItem={onPressListItem}
             selectedListItem={getSelectedItem()}
-            cardContainerStyle={styles.reasonItemStyle}
             cardStyles={styles.reasonItemCardStyle}
           />
         </IPayBottomSheet>

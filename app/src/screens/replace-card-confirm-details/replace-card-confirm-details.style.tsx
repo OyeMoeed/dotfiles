@@ -12,7 +12,7 @@ const replaceCardStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       gap: moderateScale(4),
     },
-     
+
     darkStyle: {
       color: themeColors.primary.primary900,
     },

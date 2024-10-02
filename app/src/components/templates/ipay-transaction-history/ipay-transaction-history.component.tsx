@@ -5,6 +5,7 @@ import icons from '@app/assets/icons';
 import {
   IPayFootnoteText,
   IPayIcon,
+  IPayImage,
   IPayPressable,
   IPayScrollView,
   IPaySubHeadlineText,
@@ -27,6 +28,7 @@ import { generateInvoice } from '@app/network/services/core/transaction/transact
 import RNFS from 'react-native-fs';
 import { Platform } from 'react-native';
 import Share from 'react-native-share';
+import images from '@app/assets/images';
 import transactionHistoryStyle from './ipay-transaction-history.style';
 import { IPayTransactionProps, MultiTransactionsProps } from './ipay-transaction-history.interface';
 
@@ -253,6 +255,17 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
     </IPayFootnoteText>
   );
 
+  const renderTransferByLogo = () => {
+    switch (transactionRequestType) {
+      case TransactionTypes.COUT_ALINMA:
+        return <IPayImage image={images.alinmaPayDirectLogo} resizeMode="contain" style={styles.alinmaBankLogo} />;
+      case TransactionTypes.COUT_SARIE || TransactionTypes.COUT_IPS:
+        return <IPayImage image={images.sarie} resizeMode="contain" style={styles.sarieLogo} />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <IPayView testID={testID} style={styles.container}>
       <IPayScrollView style={styles.scroll}>
@@ -373,7 +386,7 @@ const IPayTransactionHistory: React.FC<IPayTransactionProps> = ({
               {(transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (
                 <IPayView style={styles.cardStyle}>
                   {renderFootnote('TRANSACTION_HISTORY.TRANSFER_BY')}
-                  <IPaySubHeadlineText regular color={colors.primary.primary800} numberOfLines={2} />
+                  {renderTransferByLogo()}
                 </IPayView>
               )}
               {(transactionRequestType === TransactionTypes.COUT_ALINMA || isBeneficiaryHistory) && (

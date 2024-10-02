@@ -113,6 +113,8 @@ const transactionHistoryStyle = (colors: any) =>
       alignItems: 'center',
       justifyContent: 'space-between',
     },
+    alinmaBankLogo: { width: scaleSize(20), height: verticalScale(20) },
+    sarieLogo: { width: scaleSize(25), height: verticalScale(20) },
   });
 
 export default transactionHistoryStyle;

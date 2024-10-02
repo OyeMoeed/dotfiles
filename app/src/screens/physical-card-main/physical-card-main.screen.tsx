@@ -120,13 +120,7 @@ const PhysicalCardMainScreen: React.FC = () => {
   );
 
   return cardsData.length === 0 ? (
-    <PhysicalCardMainNoCardScreen
-      onPressIssueNewCard={() =>
-        navigate(ScreenNames.ISSUE_NEW_CARD_DETAILS, {
-          currentCard,
-        })
-      }
-    />
+    <PhysicalCardMainNoCardScreen onPressIssueNewCard={() => navigate(ScreenNames.VIRTUAL_CARD)} />
   ) : (
     <IPaySafeAreaView testID="ipay-safearea">
       <IPayHeader title="CARD_OPTIONS.PHYSICAL_CARD" backBtn applyFlex />
