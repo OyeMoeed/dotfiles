@@ -7,15 +7,18 @@ export interface LocalTransferPreparePayloadTypes {
   vatAmount: string;
   bankFeesAmount: string;
   bankVatAmount: string;
-  amountCurrency: string;
+  amountCurrency?: string;
   amount: string;
-  deductFeesFromAmount: boolean;
+  deductFeesFromAmount?: boolean;
   deviceInfo: {
     platformVersion: string;
     deviceId: string;
     deviceName: string;
     platform: string;
   };
+  note?: string;
+  bankCode?: string;
+  transferNetwork?: string;
 }
 
 export interface LocalTransferPrepareResponseTypes {

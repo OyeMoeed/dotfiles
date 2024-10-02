@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { PermissionsStatus, PermissionTypes } from '@app/enums';
 import Contacts, { Contact } from 'react-native-contacts';
 import { REGEX } from '@app/constants/app-validations';
@@ -26,7 +26,7 @@ const useContacts = () => {
     (async () => {
       if (permissionStatus === PermissionsStatus.GRANTED) {
         await Contacts.getAll().then((contactsList: Contact[]) => {
-          const flattenedArray = contactsList.reduce((acc, obj) => {
+          const flattenedArray = contactsList.reduce((acc: Contact[], obj) => {
             const mappedValues = obj.phoneNumbers.map((item) => ({
               ...obj,
               phoneNumbers: [
@@ -42,7 +42,7 @@ const useContacts = () => {
             const isSaudiNumber = REGEX.saudiMobileNumber.test(item?.phoneNumbers[0]?.number);
             return isSaudiNumber;
           });
-          const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
+          const listWithUniqueId: any = saudiNumbers.map((item: Contact) => ({
             ...item,
             givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
             recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,

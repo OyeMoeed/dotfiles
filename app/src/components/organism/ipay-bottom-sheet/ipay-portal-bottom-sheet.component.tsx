@@ -96,8 +96,8 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
         doneText={doneText}
         onPressCancel={closeBottomSheet}
         onPressDone={() => {
-          onDone && onDone();
-          closeBottomSheet && closeBottomSheet();
+          onDone?.();
+          closeBottomSheet();
         }}
         bold={bold}
         bgGradientColors={
