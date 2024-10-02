@@ -20,6 +20,7 @@ const laborerInfoStyles = (theme: typeof colors) =>
     personalInfoCardTitleText: {
       color: theme.natural.natural900,
       width: '40%',
+      textAlign: 'left',
     },
     cardStyle: {
       flexDirection: 'row',

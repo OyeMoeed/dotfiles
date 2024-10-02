@@ -13,13 +13,16 @@ export interface TransferToMusanedPrepareMockProps {
 }
 
 export interface TransferToMusanedPrepareReqPayload {
-  employeePoi: string;
-  transferJustificationType: string;
-  salaryMonth: string;
-  amountWithDeduction: string;
-  transferJustificationDescription: string;
-  transactionDescription: string;
+  amountWithDeduction?: string;
+  bonusAmount?: number | string;
   deviceInfo: DeviceInfoProps;
+  employeePoi: string;
+  salaryMonth?: number | string;
+  transactionDescription?: string;
+  transferJustificationDescription?: string;
+  transferJustificationType?: string;
+  fromMonth?: Date | string | null;
+  toMonth?: Date | string | null;
 }
 
 export interface TransferToMusanedPrepareReqParams {

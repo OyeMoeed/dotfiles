@@ -24,6 +24,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 
 import { DeductionReasons, MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
 import musanedPaySalary from './musaned-pay-salary.style';
+import { MusanedPaySalaryConfirmPaymentInfo } from '../musaned-pay-salary-confirm/musaned-pay-salary-confirm.interface';
 
 const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const { colors } = useTheme();
@@ -37,13 +38,14 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     occupationAr = 'عامل منزلي',
     occupationEn = 'Domestic worker',
     payrollAmount = '1300',
+    lastPaidSalaryDate,
   } = (params as MusnaedInqueryRecords) || {};
 
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { walletNumber } = walletInfo;
   const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
-
+  const minDatePaid = `${lastPaidSalaryDate?.split(':')[1]}/${lastPaidSalaryDate?.split(':')[0]}`;
   const salaryTypes: SelectedValue[] = [
     { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
     { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
@@ -169,7 +171,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onLocalTransferPrepare = async () => {
-    const paymentInfoData = {
+    const paymentInfoData: MusanedPaySalaryConfirmPaymentInfo = {
       fromDate: selectedPrevDate,
       toDate: selectedPrevToDate,
       totalSalary: payrollAmount,
@@ -181,6 +183,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
       vat: 15,
       deductionAmount,
       deductionReason: selectedDeductionReason.text,
+      salaryType,
     };
 
     navigate(ScreenNames.MUSANED_PAY_SALARY_CONFIRM, {
@@ -427,7 +430,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               setSelectedToDate(date);
             }
           }}
-          value={selectedFromDate}
+          value={minDatePaid || selectedFromDate}
           withYear20
           withLongMonth
         />

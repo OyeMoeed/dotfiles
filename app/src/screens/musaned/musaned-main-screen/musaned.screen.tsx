@@ -10,15 +10,15 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayMusanedAlinmaUser } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getMusanedInquiryList from '@app/network/services/musaned/musaned-inquiry';
 import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities';
+import { buttonVariants, MusanedStatus } from '@app/utilities';
 import { shareOptions } from '@app/utilities/shared.util';
 import { isArabic } from '@app/utilities/constants';
+import { MusnaedInqueryRecords } from '@app/network/services/musaned';
 
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayLaborerDetailsBanner from '@app/components/organism/ipay-laborer-details-banner/ipay-laborer-details-banner.component';
@@ -35,18 +35,19 @@ const MusanedScreen: React.FC = () => {
   const MUSANED_USERS_TABS = [ALINMA_PAY_USERS, OTHER_USERS];
 
   const [selectedTab, setSelectedTab] = useState<string>(MUSANED_USERS_TABS[0]);
-  const [requestDetail, setRequestDetail] = useState<IPayRequestMoneyProps | null>(null);
+  const [requestDetail, setRequestDetail] = useState<MusnaedInqueryRecords | null>(null);
   const [showDetailSheet, setShowDetailSheet] = useState<boolean>(false);
   const refBottomSheet = useRef<any>(null);
   const { showToast } = useToastContext();
 
   const [sentRequestsPage] = useState(1);
   const [receivedRequestsPage] = useState(1);
-  const [sentRequestsData, setSentRequestsData] = useState([]);
-  const [recivedRequestsData, setRecivedRequestsData] = useState([]);
+  const [sentRequestsData, setSentRequestsData] = useState<Array<MusnaedInqueryRecords>>([]);
+  const [recivedRequestsData, setRecivedRequestsData] = useState<Array<MusnaedInqueryRecords>>([]);
 
   const dataForPaginatedFLatlist = selectedTab === ALINMA_PAY_USERS ? sentRequestsData : recivedRequestsData;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const detailsData = isArabic ? requestDetail?.occupationAr : requestDetail?.occupationEn;
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -108,13 +109,13 @@ const MusanedScreen: React.FC = () => {
     setSelectedTab(tab);
   };
 
-  const openBottomSheet = (item: RequestItem) => {
+  const openBottomSheet = (item: MusnaedInqueryRecords) => {
     setRequestDetail(item);
     setShowDetailSheet(true);
     refBottomSheet?.current?.present();
   };
 
-  const renderItem = ({ item, index }: { item: RequestItem; index: number }) => {
+  const renderItem = ({ item, index }: { item: MusnaedInqueryRecords; index: number }) => {
     const { poiExperationDate, name, paymentStatus, payrollAmount, occupationEn, occupationAr } = item;
     return (
       <IPayView style={styles.listView}>
@@ -122,7 +123,7 @@ const MusanedScreen: React.FC = () => {
           <IPayMusanedAlinmaUser
             date={poiExperationDate}
             titleText={name}
-            status={paymentStatus}
+            status={paymentStatus || MusanedStatus.UNPAIED}
             amount={payrollAmount}
             onPress={() => openBottomSheet(item)}
             shouldTranslateTitle={false}
@@ -142,7 +143,7 @@ const MusanedScreen: React.FC = () => {
               titleText={name}
               amount={payrollAmount}
               onPress={() => openBottomSheet(item)}
-              details={occupationEn}
+              details={isArabic ? occupationAr : occupationEn}
               shouldTranslateTitle={false}
               withArrow
             />
@@ -260,20 +261,20 @@ const MusanedScreen: React.FC = () => {
         {selectedTab === ALINMA_PAY_USERS ? (
           <IPayView style={styles.secondButton}>
             <IPayMusanedAlinmaUser
-              date={requestDetail?.poiExperationDate}
-              titleText={requestDetail?.name}
-              status={requestDetail?.paymentStatus}
-              amount={requestDetail?.payrollAmount}
-              details={requestDetail?.occupationEn}
+              date={requestDetail?.poiExperationDate || ''}
+              titleText={requestDetail?.name || ''}
+              status={requestDetail?.paymentStatus || MusanedStatus.UNPAIED}
+              amount={requestDetail?.payrollAmount || ''}
+              details={detailsData || ''}
               withArrow={false}
             />
           </IPayView>
         ) : (
           <IPayView style={styles.secondButton}>
             <IPayLaborerDetailsBanner
-              titleText={requestDetail?.name}
+              titleText={requestDetail?.name || ''}
               amount={requestDetail?.payrollAmount}
-              details={requestDetail?.occupationEn}
+              details={detailsData || ''}
             />
           </IPayView>
         )}

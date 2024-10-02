@@ -37,7 +37,7 @@ const IPayLaborerInfo: FC<IPayLaborerInfoProps> = ({ userData }) => {
         testID="laborer-details"
         data={userData}
         renderItem={renderInfo}
-        keyExtractor={(item) => item.key}
+        keyExtractor={(item, index) => `${item.key}-${index}-LABORER-INFO`}
       />
     </IPayView>
   );

@@ -6,7 +6,7 @@ import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates
 import { IPayFlatlist, IPayFootnoteText, IPayScrollView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayLaborerDetailsBanner from '@app/components/organism/ipay-laborer-details-banner/ipay-laborer-details-banner.component';
-import constants, { SNAP_POINT } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -17,22 +17,34 @@ import checkUserAccess from '@app/utilities/check-user-access';
 import { isArabic } from '@app/utilities/constants';
 import { useRoute } from '@react-navigation/core';
 import { useTranslation } from 'react-i18next';
+import {
+  transferToMusanedConfirm,
+  TransferToMusanedConfirmReqPayload,
+  transferToMusanedPrepare,
+} from '@app/network/services/musaned';
+import { getDeviceInfo } from '@app/network/utilities';
+import { TransferToMusanedPrepareReqPayload } from '@app/network/services/musaned/transfer-to-musaned-prepare/transfer-to-musaned-prepare.interface';
+import { ApiResponseStatusType, APIResponseType } from '@app/utilities';
+
 import { getPaymentSalaryConfirmationData } from '../musaned.utils';
 import {
   MusanedPayConfirmationRouteProps,
   MusanedPaySalaryConfirmScreenProps,
 } from './musaned-pay-salary-confirm.interface';
 import musanedPaySalaryConfirm from './musaned-pay-salary-confirm.style';
+import { SalaryCategories } from '../musaned-pay-salary/musaned-pay-salary.interface';
 
 const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps> = () => {
   const { params } = useRoute<MusanedPayConfirmationRouteProps>();
+  const { salaryType, basicSalary, bonusAmount, fromDate, toDate, extraAmount } = params?.paymentInfo || {};
+  const { name, occupationAr, occupationEn, poiNumber } = params.userInfo || {};
+
   const { t } = useTranslation();
   const { colors } = useTheme();
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { otpConfig } = useConstantData();
   const styles = musanedPaySalaryConfirm(colors);
 
-  const { name, occupationAr, occupationEn } = params.userInfo || {};
   const detailsInfo = getPaymentSalaryConfirmationData(params?.paymentInfo, params.userInfo);
 
   const otpVerificationRef = useRef<any>(null);
@@ -41,7 +53,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-  const [, setOtpRef] = useState<string>('');
+  const [responsePrepare, setResponsePrepare] = useState<{ otpRef?: string; transactionId?: string }>({});
 
   const onHelpCenterCloseBottomSheet = () => {
     helpCenterRef?.current?.close();
@@ -55,18 +67,53 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
   const prepareOtp = async (showOtpSheet: boolean) => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
-      if (constants.MOCK_API_RESPONSE) {
-        setOtpRef('1111');
+      let payload: TransferToMusanedPrepareReqPayload = {
+        deviceInfo: await getDeviceInfo(),
+        employeePoi: String(poiNumber),
+      };
+
+      switch (salaryType.id) {
+        case SalaryCategories.Monthly_Salary:
+          payload = {
+            ...payload,
+            transferJustificationType: SalaryCategories.TRX_JUSTIFICATION_Type_Monthly_Salary,
+            salaryMonth: basicSalary,
+            bonusAmount: extraAmount || '',
+          };
+          break;
+        case SalaryCategories.Advanced_Salary:
+          payload = {
+            ...payload,
+            transferJustificationType: SalaryCategories.TRX_JUSTIFICATION_Type_Advanced_Salary,
+            fromMonth: fromDate,
+            toMonth: (toDate as string)?.split('/').join('-'),
+            bonusAmount: extraAmount || '',
+          };
+          break;
+        case SalaryCategories.Bonus_Salary:
+          payload = {
+            ...payload,
+            transferJustificationType: SalaryCategories.TRX_JUSTIFICATION_Type_Bonus_Salary,
+            bonusAmount: bonusAmount || '',
+          };
+          break;
+        default:
+          break;
+      }
+
+      const prepareMusaned = await transferToMusanedPrepare({ walletNumber: walletInfo.walletNumber }, payload);
+      if (prepareMusaned?.status?.type === ApiResponseStatusType.SUCCESS) {
         if (showOtpSheet) {
+          setResponsePrepare({
+            otpRef: prepareMusaned.response.otpRef,
+            transactionId: prepareMusaned.authentication.transactionId,
+          });
           setOtpSheetVisible(true);
+
           otpVerificationRef?.current?.present();
         }
         otpVerificationRef?.current?.resetInterval();
-        return;
       }
-
-      // TODO: Add same mock logic when API is ready
-      otpVerificationRef?.current?.resetInterval();
     }
   };
 
@@ -76,9 +123,28 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
     setOtp('');
   };
 
-  const confirmMusanedTransfer = () => {
-    onOtpCloseBottomSheet();
-    navigate(ScreenNames.MUSANED_PAYMENT_SUCCESSFUL);
+  const confirmMusanedTransfer = async () => {
+    const confirmPayload: TransferToMusanedConfirmReqPayload = {
+      otpRef: responsePrepare.otpRef || '',
+      otp: 'otp',
+      deviceInfo: await getDeviceInfo(),
+      authentication: {
+        transactionId: responsePrepare.transactionId || '',
+      },
+    };
+    const apiConfirmationResponse = await transferToMusanedConfirm(
+      { walletNumber: walletInfo.walletNumber },
+      confirmPayload,
+    );
+
+    if (apiConfirmationResponse.status.type === APIResponseType.SUCCESS) {
+      onOtpCloseBottomSheet();
+      navigate(ScreenNames.MUSANED_PAYMENT_SUCCESSFUL, {
+        ...params,
+      });
+    } else {
+      setOtpError(true);
+    }
   };
 
   const onConfirmOtp = () => {

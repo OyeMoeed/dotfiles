@@ -1,3 +1,8 @@
+import React from 'react';
+import { useTranslation } from 'react-i18next';
+import { ImageStyle } from 'react-native';
+import { isArabic } from '@app/utilities/constants';
+
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import {
@@ -10,14 +15,12 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
-import { useTranslation } from 'react-i18next';
-import { ImageStyle } from 'react-native';
+
 import laborerDetailsStyles from './ipay-laborer-details-banner.styles';
 
 interface IPayLaborerDetailsBannerProps {
   titleText: string;
-  amount?: number;
+  amount?: string | number;
   testID?: string;
   onPress?: () => void;
   shouldTranslateTitle?: boolean;
@@ -60,14 +63,15 @@ const IPayLaborerDetailsBanner: React.FC<IPayLaborerDetailsBannerProps> = ({
           <IPayView style={styles.textContainer}>
             <IPaySubHeadlineText
               regular={false}
-              text={titleText.substring(0, 15)}
+              style={styles.titleStyle}
+              text={titleText.substring(0, isArabic ? 12 : 15)}
               color={isDetailsBanner ? colors.natural.natural900 : colors.primary.primary900}
               shouldTranslate={shouldTranslateTitle}
             />
             <IPayCaption2Text
               text={details}
               color={colors.natural.natural500}
-              style={isDetailsBanner ? styles.laborerPosition : {}}
+              style={isDetailsBanner ? styles.laborerPosition : styles.titleStyle}
             />
           </IPayView>
         </IPayView>

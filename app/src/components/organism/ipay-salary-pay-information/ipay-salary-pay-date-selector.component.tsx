@@ -6,6 +6,7 @@ import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/compon
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayAnimatedTextInput, IPayList } from '@app/components/molecules';
 import icons from '@app/assets/icons';
+import { isArabic } from '@app/utilities/constants';
 
 import salaryPayInformation from './ipay-salary-pay-information.style';
 import { IPaySalaryPayDateSelectorProps } from './ipay-salary-pay-information.interface';
@@ -48,6 +49,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
           value={String(selectedDate)}
           editable={false}
           showRightIcon
+          textAlign={isArabic ? 'right' : 'left'}
           customIcon={
             <IPayPressable onPress={() => onPressDatePickerData('FROM_DATE')}>
               <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
@@ -72,6 +74,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
             value={String(selectedToDate)}
             editable={false}
             showRightIcon
+            textAlign={isArabic ? 'right' : 'left'}
             customIcon={
               <IPayPressable onPress={() => onPressDatePickerData('TO_DATE')}>
                 <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />

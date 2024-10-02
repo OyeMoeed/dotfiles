@@ -4,7 +4,7 @@ export interface IPayMusanedListProps {
   date: string;
   titleText: string;
   status: MusanedStatus;
-  amount: number;
+  amount: string | number;
   onPress?: () => void;
   testID?: string;
   shouldTranslateTitle?: boolean;

@@ -1,6 +1,7 @@
+import { MusanedStatus } from '@app/utilities';
 import { MockAPIStatusProps } from '../../services.interface';
 
-export interface MusnaedInqueryRecords {
+interface MusnaedInqueryRecords {
   borderNumber: string;
   contractNumber: string;
   countryCode: string;
@@ -18,12 +19,12 @@ export interface MusnaedInqueryRecords {
   poiNumber: string;
   salarySource: string;
   type?: string;
-  paymentStatus?: string;
+  paymentStatus?: MusanedStatus;
   mobileNumber?: string;
   walletNumber?: string;
 }
 
-export interface MusanedInquiryMockProps {
+interface MusanedInquiryMockProps {
   status: MockAPIStatusProps;
   successfulResponse: boolean;
   response: {
@@ -35,6 +36,8 @@ export interface MusanedInquiryMockProps {
   };
 }
 
-export interface MusanedInquiryReqParams {
+interface MusanedInquiryReqParams {
   walletNumber: string;
 }
+
+export { MusnaedInqueryRecords, MusanedInquiryMockProps, MusanedInquiryReqParams };

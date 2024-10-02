@@ -17,6 +17,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities';
 import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
 import { getColorsStyle } from '@app/components/molecules/ipay-chip/ipay-chip.style';
+import { isArabic } from '@app/utilities/constants';
 
 import IPaySalaryPayInformationProps from './ipay-salary-pay-information.interface';
 import salaryPayInformation from './ipay-salary-pay-information.style';
@@ -160,6 +161,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             labelColor={colors.natural.natural500}
             label="MUSANED.DEDUCTION_REASON"
             value={t(selectedDeductionReason?.text || '')}
+            textAlign={isArabic ? 'right' : 'left'}
             editable={false}
             showRightIcon
             customIcon={
@@ -210,6 +212,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           label="MUSANED.NOTE"
           value={payExtraNote}
           onChangeText={(text) => setPayExtraNote(text)}
+          textAlign={isArabic ? 'right' : 'left'}
         />
       </IPayView>
     ) : null;
@@ -242,6 +245,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           value={t(salaryType || '')}
           editable={false}
           showRightIcon
+          textAlign={isArabic ? 'right' : 'left'}
           customIcon={
             <IPayPressable onPress={openReason}>
               <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
@@ -276,6 +280,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             label="MUSANED.NOTE"
             value={bonusAmountNote}
             onChange={(value) => setBonusAmountNote(String(value))}
+            textAlign={isArabic ? 'right' : 'left'}
           />
         </IPayView>
       ) : (
@@ -301,6 +306,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               showRightIcon
               customIcon={<IPayCheckbox isCheck={deductFlag} onPress={onPressDeductFlag} />}
               extraComponent={<DeductExtraComponent />}
+              textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>
           <IPayPressable onPress={onPressPayExtraFlag} style={styles.reasonsView}>
@@ -313,6 +319,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               showRightIcon
               customIcon={<IPayCheckbox isCheck={payExtraFlag} onPress={onPressPayExtraFlag} />}
               extraComponent={<PayExtraComponent />}
+              textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>
         </>

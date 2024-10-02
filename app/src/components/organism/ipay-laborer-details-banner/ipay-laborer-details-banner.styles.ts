@@ -65,6 +65,9 @@ const laborerDetailsStyles = (theme: typeof colors) =>
       marginTop: moderateScale(4),
       textAlign: 'left',
     },
+    titleStyle: {
+      textAlign: 'left',
+    },
   });
 
 export default laborerDetailsStyles;
