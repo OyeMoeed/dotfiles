@@ -109,6 +109,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
           type: billerItem.billerTypeDesc,
         })),
       );
+      onGetBillersCategory();
     }
   };
 
@@ -129,7 +130,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   useEffect(() => {
-    onGetBillersCategory();
     onGetBillers();
   }, []);
 
