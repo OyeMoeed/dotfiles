@@ -36,7 +36,8 @@ import { SalaryCategories } from '../musaned-pay-salary/musaned-pay-salary.inter
 
 const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps> = () => {
   const { params } = useRoute<MusanedPayConfirmationRouteProps>();
-  const { salaryType, basicSalary, bonusAmount, fromDate, toDate, extraAmount } = params?.paymentInfo || {};
+  const { salaryType, basicSalary, bonusAmount, fromDate, toDate, extraAmount, deductionAmount } =
+    params?.paymentInfo || {};
   const { name, occupationAr, occupationEn, poiNumber } = params.userInfo || {};
 
   const { t } = useTranslation();
@@ -76,9 +77,12 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
         case SalaryCategories.Monthly_Salary:
           payload = {
             ...payload,
-            transferJustificationType: SalaryCategories.TRX_JUSTIFICATION_Type_Monthly_Salary,
-            salaryMonth: basicSalary,
+            transferJustificationType: deductionAmount
+              ? SalaryCategories.TRX_JUSTIFICATION_Type_Deducted_Salary
+              : SalaryCategories.TRX_JUSTIFICATION_Type_Monthly_Salary,
+            salaryMonth: String(fromDate).split('/').reverse().join(':'),
             bonusAmount: extraAmount,
+            amountWithDeduction: deductionAmount ? String(Number(basicSalary) - Number(deductionAmount)) : '0',
           };
           break;
         case SalaryCategories.Advanced_Salary:
@@ -88,6 +92,8 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
             fromMonth: fromDate,
             toMonth: (toDate as string)?.split('/').join('-'),
             bonusAmount: extraAmount,
+            // TODO: Check with the BE and PO
+            // amountWithDeduction: deductionAmount ? String(Number(basicSalary) - Number(deductionAmount)) : '0',
           };
           break;
         case SalaryCategories.Bonus_Salary:

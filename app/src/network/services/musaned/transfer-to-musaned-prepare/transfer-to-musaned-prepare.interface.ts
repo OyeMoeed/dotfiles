@@ -13,7 +13,7 @@ export interface TransferToMusanedPrepareMockProps {
 }
 
 export interface TransferToMusanedPrepareReqPayload {
-  amountWithDeduction?: string;
+  amountWithDeduction?: number | string;
   bonusAmount?: number | string;
   deviceInfo: DeviceInfoProps;
   employeePoi: string;

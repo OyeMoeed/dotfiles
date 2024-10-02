@@ -255,7 +255,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const disabledBtn = () => {
-    const checkPayExtra = payExtraFlag ? payExtraAmount && payExtraNote : true;
+    const checkPayExtra = payExtraFlag ? payExtraAmount : true;
     const checkDeduction = deductFlag ? deductionAmount && selectedDeductionReason.text : true;
 
     switch (salaryType.id) {
@@ -264,6 +264,9 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
       }
       case SalaryCategories.Advanced_Salary: {
         return !(selectedPrevDate && checkDeduction && checkPayExtra);
+      }
+      case SalaryCategories.Bonus_Salary: {
+        return !bonusAmount;
       }
       default:
         return false;

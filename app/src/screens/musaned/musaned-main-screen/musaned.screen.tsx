@@ -12,7 +12,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ApiResponseStatusType, buttonVariants, MusanedStatus } from '@app/utilities';
+import { buttonVariants, MusanedStatus } from '@app/utilities';
 import { shareOptions } from '@app/utilities/shared.util';
 import { isArabic } from '@app/utilities/constants';
 import { MusnaedInqueryRecords } from '@app/network/services/musaned';
@@ -49,15 +49,13 @@ const MusanedScreen: React.FC = () => {
       walletNumber: walletInfo.walletNumber,
     },
     onSuccess: (apiResponse) => {
-      if (apiResponse?.status?.code === ApiResponseStatusType.SUCCESS) {
-        const data = apiResponse?.response?.laborersInfoList || [];
+      const data = apiResponse?.response?.laborersInfoList || [];
 
-        const alinmaPayUsers = data.filter((value) => value.haveWalletFlag);
-        const nonAlinmaPayUsers = data.filter((value) => !value.haveWalletFlag);
+      const alinmaPayUsers = data.filter((value) => value.haveWalletFlag);
+      const nonAlinmaPayUsers = data.filter((value) => !value.haveWalletFlag);
 
-        setAlinmaPayData(alinmaPayUsers);
-        setNonAlinmaPayData(nonAlinmaPayUsers);
-      }
+      setAlinmaPayData(alinmaPayUsers);
+      setNonAlinmaPayData(nonAlinmaPayUsers);
     },
   });
 
