@@ -50,7 +50,7 @@ const filtersStyles = (colors: typeof themeColors) =>
     date: {
       width: scaleSize(130),
       fontSize: FONT_SIZE_8,
-      height: verticalScale(54),
+      height: verticalScale(55),
       borderRadius: moderateScale(16, 0.3),
     },
     amountCard: {

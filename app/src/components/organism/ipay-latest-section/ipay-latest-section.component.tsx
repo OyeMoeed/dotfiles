@@ -1,6 +1,5 @@
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
-import { ArrangeSquare2 } from '@app/assets/svgs';
 import {
   IPayCaption2Text,
   IPayFlatlist,
@@ -22,12 +21,17 @@ import IPayTransactionItem from '@app/screens/transaction-history/component/ipay
 import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 import sectionStyles from './ipay-latest-section.style';
+import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
+import { isAndroidOS } from '@app/utilities/constants';
+import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
+import { IPayBottomSheet } from '@app/components/organism';
+import { IPayTransactionHistory } from '@app/components/templates';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -46,6 +50,25 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const arrangement = useTypedSelector((state) => state.rearrangement.items);
 
   const isLastItem = (dataLength: number, index: number) => dataLength > 1 && index === dataLength - 1;
+
+  const transactionRef = React.createRef<any>();
+
+  const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
+
+  const openTransactionHistoryDetails = useCallback(
+    (item: IPayTransactionItemProps) => {
+      let calculatedSnapPoint = ['95%', '100%'];
+      setSnapPoint(calculatedSnapPoint);
+      setTransaction(item);
+      transactionRef.current?.present();
+    },
+    [setSnapPoint, setTransaction, transactionRef],
+  );
+
+  const closeBottomSheet = () => {
+    transactionRef.current?.forceClose();
+  };
 
   const moveToTransactionHistory = () => {
     navigate(ScreenNames.TRANSACTIONS_HISTORY, {
@@ -135,7 +158,8 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   )
                 }
                 renderItem={({ item, index }) => (
-                  <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} />
+                  <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} 
+                    onPressTransaction={openTransactionHistoryDetails}/>
                 )}
               />
             </IPayView>
@@ -184,15 +208,29 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   };
 
   return (
-    <IPayView testID={testID} style={styles.container}>
-      {arrangement?.map((section) => renderSection(section))}
-      <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
-        <IPayText style={styles.subheadingTextStyle} text="COMMON.RE_ARRANGE_SECTIONS" />
-        <IPayPressable onPress={openBottomSheet}>
-          <ArrangeSquare2 color={colors.primary.primary600} style={styles.rearrangeIcon} />
-        </IPayPressable>
+    <>
+      <IPayView testID={testID} style={styles.container}>
+        {arrangement?.map((section) => renderSection(section))}
+        <IPayView style={[styles.commonContainerStyle, styles.rearrangeContainerStyle]}>
+          <IPayText style={styles.subheadingTextStyle} text="COMMON.RE_ARRANGE_SECTIONS" />
+          <IPayPressable onPress={openBottomSheet}>
+            <IPayIcon icon={icons.arrange_square_2} size={18} color={colors.primary.primary600} />
+          </IPayPressable>
+        </IPayView>
       </IPayView>
-    </IPayView>
+      <IPayBottomSheet
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
+        onCloseBottomSheet={closeBottomSheet}
+        customSnapPoint={snapPoint}
+        ref={transactionRef}
+        simpleHeader
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
+      </IPayBottomSheet>
+    </>
   );
 };
 

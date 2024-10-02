@@ -1,5 +1,6 @@
 {
   "COMMON": {
+    "NO": "لا",
     "KYC_CHANGE": "تم تحديث نموذج معرفة العميل!",
     "BENEFECIARY_COUNTRY": "بلد المستفيد",
     "RELATIONSHIP": "العلاقة",
@@ -318,6 +319,8 @@
     "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
   },
   "SETTINGS": {
+    "CHANGE_LANGUAGE": "تغيير اللغة",
+    "CHANGE_LANGUAGE_DESCRIPTION": "هل انت متآكد من تغيير اللغة؟",
     "SECURITY_SETTINGS": "إعدادات الأمان والخصوصية",
     "PASSCODE": "الرمز السري",
     "CHANGE": "تغيير",
@@ -461,6 +464,7 @@
     "CLEAR_FILTERS": "إزالة الفلاتر",
     "CLEAR_FILTER": "إزالة الفلاتر",
     "FILTERS": "فلاتر",
+    "FILTER": "فلاتر",
     "BY_AMOUNT": "حسب المبلغ",
     "FROM": "من",
     "TO_INPUT": "إلى",
@@ -963,7 +967,7 @@
     "PHONE_NUMBER": "رقم الهاتف",
     "REASON_OF_TRANSFER": "سبب التحويل",
     "AMOUNT_SAR": "المبلغ (ريال سعودي)",
-    "AMOUNT_EGP": "المبلغ (جنيه مصري)",
+    "AMOUNT_BEN": "المبلغ",
     "EXCHANGE_RATE": "سعر الصرف",
     "VAT": "ضريبة القيمة المضافة (15%)",
     "FEES": "الرسوم",

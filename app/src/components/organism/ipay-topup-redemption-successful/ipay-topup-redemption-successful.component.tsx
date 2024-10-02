@@ -139,7 +139,7 @@ const IPayTopupRedemptionSuccess: React.FC<IPayTopUpSuccessProps> = ({ variants,
                     />
                     <IPayButton
                       btnType={buttonVariants.LINK_BUTTON}
-                      btnText="TOP_UP.SHARE"
+                      btnText={t('TOP_UP.SHARE')}
                       leftIcon={<IPayIcon icon={icons.share} size={14} color={colors.primary.primary500} />}
                     />
                   </IPayView>

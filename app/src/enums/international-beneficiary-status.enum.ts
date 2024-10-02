@@ -34,8 +34,8 @@ enum LocalizationKeysMapping {
   city = 'CITY_NAME',
   remittanceTypeDesc = 'DELIVERY_TYPE',
   currency = 'CURRENCY',
-  beneficiaryCurrencyAmount = 'AMOUNT_SAR',
-  remitterCurrencyAmount = 'AMOUNT_EGP',
+  beneficiaryCurrencyAmount = 'AMOUNT_BEN',
+  remitterCurrencyAmount = 'AMOUNT_SAR',
   vatAmount = 'VAT',
   feeAmount = 'FEES',
   isIncludeFees = 'INCLUDE_FEES',
@@ -53,4 +53,17 @@ enum BeneficiariesDetails {
   FEES = 'FEES',
 }
 
-export { BeneficiariesDetails, InternationalBeneficiaryStatus, LabelKey, LocalizationKeysMapping, TransferGatewayType };
+enum BeneficiaryDetailKeys {
+  TRANSACTION_ID = 'transactionId',
+  COUNTRY = 'country',
+  TOTAL_AMOUNT = 'totalAmount',
+}
+
+export {
+  BeneficiariesDetails,
+  BeneficiaryDetailKeys,
+  InternationalBeneficiaryStatus,
+  LabelKey,
+  LocalizationKeysMapping,
+  TransferGatewayType,
+};

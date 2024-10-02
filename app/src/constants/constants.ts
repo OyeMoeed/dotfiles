@@ -733,7 +733,7 @@ const BILL_STATUS_CODE = ['BillPaid', 'BillPartialPd', 'BillOverPd', 'BillUnpaid
 const NAFATH_APP = {
   ANDROID: 'sa.gov.nic.myid',
   IOS: 'nafath://home',
-  IOS_ID: 'id1598909871',
+  IOS_ID: '1598909871',
 };
 
 const MAIN_APP_STORE_LINKS = Platform.select({

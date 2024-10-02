@@ -1,4 +1,3 @@
-import icons from '@app/assets/icons';
 import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
 
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -9,15 +8,7 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ValidateBillRes } from '../moi-payment-screen/moi-payment.interface';
 
-interface MoiPaymentDetail {
-  id: string;
-  label: string;
-  value: string;
-  icon?: string;
-  onPress?: () => void;
-}
 
-// TODO will be replaced by API
 const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');
@@ -29,35 +20,6 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
   const [isLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const { walletNumber, mobileNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-
-  const moiPayBillSubList: MoiPaymentDetail[] = [
-    {
-      id: '1',
-      label: t('BILL_PAYMENTS.BILL_TYPE'),
-      value: 'Traffic Violation',
-    },
-    {
-      id: '2',
-      label: t('BILL_PAYMENTS.TRAFFIC_NUMBER'),
-      value: '1965873233',
-    },
-    {
-      id: '5',
-      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
-      value: '14/03/2023 - 15:30',
-    },
-    {
-      id: '3',
-      label: t('BILL_PAYMENTS.DUE_AMOUNT'),
-      value: '500 SAR',
-    },
-    {
-      id: '6',
-      label: t('COMMON.REF_NUM'),
-      value: 'FAT35346',
-      icon: icons.copy,
-    },
-  ];
 
   const onConfirm = async () => {
     const payLoad = {
@@ -84,7 +46,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
         moiPaymentDetailes: billData,
         successMessage: isRefund ? 'BILL_PAYMENTS.PAYMENT_REFUND_SUCCESS' : 'BILL_PAYMENTS.PAYMENT_SUCCESS_MESSAGE',
-        subDetails: moiPayBillSubList,
+        subDetails: apiResponse.response,
         isRefund,
       });
     }
@@ -101,7 +63,6 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
 
   return {
     otpBottomSheetRef,
-    moiPayBillSubList,
     handlePay,
     setOtp,
     otp,

@@ -410,7 +410,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
           data={dataForPaginatedFLatlist}
           ListEmptyComponent={noResult}
         />
-        {dataForPaginatedFLatlist?.length > 0 && selectedTab === SEND_REQUESTS ? (
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === SEND_REQUESTS && (
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             large
@@ -419,7 +419,8 @@ const RequestMoneyTransactionScreen: React.FC = () => {
             btnStyle={styles.requestButton}
             leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} />}
           />
-        ) : (
+        )}
+        {dataForPaginatedFLatlist?.length > 0 && selectedTab === RECEIVED_REQUESTS && (
           <IPayButton
             btnType={buttonVariants.PRIMARY}
             large

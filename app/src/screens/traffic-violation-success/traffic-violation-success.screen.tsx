@@ -51,6 +51,7 @@ const TrafficViolationSuccessScreen: React.FC = () => {
               data={billPayDetailes}
               style={styles.conatinerStyles}
               optionsStyles={styles.optionsStyle}
+              showShareBtn
             />
           </>
         </IPayScrollView>

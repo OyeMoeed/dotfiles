@@ -7,15 +7,22 @@ import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import useKeyboardStatus from '@app/hooks/use-keyboard-status';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import { IW2WActiveFriends } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
+import {
+  IW2WActiveFriends,
+  IW2WCheckActiveReq,
+} from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
 import getTotalAmount from '@app/utilities/total-amount-utils';
 import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-request.interface';
+import { getDeviceInfo } from '@app/network/utilities';
+import { DeviceInfoProps } from '@app/network/services/services.interface';
+import walletToWalletCheckActive from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.service';
+import { useTypedSelector } from '@app/store/store';
 import sendMoneyFormStyles from './send-money-request.styles';
+import { SendMoneyFormSheet, SendMoneyFormType } from './send-money-request.interface';
 
 const SendMoneyRequest: React.FC = () => {
   const { colors } = useTheme();
@@ -27,6 +34,7 @@ const SendMoneyRequest: React.FC = () => {
   const { selectedContacts, heading, setSelectedContacts, activeFriends } = route.params as any;
   const [selectedId, setSelectedId] = useState<number | string>('');
   const [warningStatus] = useState<string>('');
+  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const removeFormRef = useRef<SendMoneyFormSheet>(null);
 
@@ -117,14 +125,27 @@ const SendMoneyRequest: React.FC = () => {
     onPress: handleActionSheetPress,
   };
 
+  const getActiveFriends = async () => {
+    const payload: IW2WCheckActiveReq = {
+      deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      mobileNumbers: formInstances.map((item) => item.mobileNumber),
+    };
+    const apiResponse = await walletToWalletCheckActive(walletInfo.walletNumber as string, payload);
+    if (apiResponse.status.type === 'SUCCESS') {
+      if (apiResponse.response?.friends) {
+        navigate(ScreenNames.CREATE_MONEY_REQUEST_SUMMARY, {
+          variant: TransactionTypes.PAYMENT_REQUEST,
+          data: {
+            transfersDetails: { formInstances, activeFriends: apiResponse.response?.friends },
+            totalAmount: getTotalAmount(formInstances),
+          },
+        });
+      }
+    }
+  };
+
   const onConfirm = async () => {
-    navigate(ScreenNames.CREATE_MONEY_REQUEST_SUMMARY, {
-      variant: TransactionTypes.PAYMENT_REQUEST,
-      data: {
-        transfersDetails: { formInstances },
-        totalAmount: getTotalAmount(formInstances),
-      },
-    });
+    getActiveFriends();
   };
 
   const getContactInfoText = () => {
@@ -166,6 +187,7 @@ const SendMoneyRequest: React.FC = () => {
             formInstances={formInstances}
             notes=""
             setNotes={handleNotesChange}
+            maxLength={70}
           />
           {!isKeyboardWillOpen && !isKeyboardOpen && (
             <IPayView style={styles.buttonBackground}>

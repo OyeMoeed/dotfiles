@@ -40,6 +40,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [isInquired, setIsInquired] = useState<boolean>(false);
   const [selectedServiceType, setSelectedServiceType] = useState<string>('');
   const [fields, setFields] = useState<DynamicField[]>([]);
+  const [serviceFields, setServiceFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -85,9 +86,10 @@ const MoiPaymentScreen: React.FC = () => {
           integrationTagName: MoiPaymentFormFields.SERVICE_TYPE,
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
-          disable: true,
         },
       ];
+      setServiceFields(updatedFields);
+
       setFields(updatedFields);
     }
   };
@@ -110,10 +112,10 @@ const MoiPaymentScreen: React.FC = () => {
     return null;
   };
 
-  const fetchFields = async () => {
-    setSelectedBiller(selectedBiller);
+  const fetchFields = async (serviceProviderValue: string, selectedServiceType: string) => {
+    setSelectedBiller(serviceProviderValue);
     setSelectedServiceType(selectedServiceType);
-    const response = await getDynamicFieldsService(selectedBiller, selectedServiceType, walletNumber);
+    const response = await getDynamicFieldsService(serviceProviderValue, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
 
@@ -147,8 +149,7 @@ const MoiPaymentScreen: React.FC = () => {
         );
       });
 
-      const updatedFields = [...fields, ...beneficiaryLabel, ...filteredFields];
-
+      const updatedFields = [...serviceFields, ...beneficiaryLabel, ...filteredFields];
       setFields(updatedFields);
     }
   };
@@ -174,16 +175,12 @@ const MoiPaymentScreen: React.FC = () => {
     });
 
     setFields(updatedFields);
+    setServiceFields(updatedFields);
   };
 
   useEffect(() => {
     if (serviceProviderValue) handleChange(serviceProviderValue);
   }, [serviceProviderValue]);
-
-  const handleInquiry = () => {
-    setIsInquired(true);
-    fetchFields();
-  };
 
   const handleParentLovChange = useParentLovChange(fields, setFields);
 
@@ -254,6 +251,25 @@ const MoiPaymentScreen: React.FC = () => {
               resetFields(reset);
             }
           };
+
+          const handleInquiry = () => {
+            setIsInquired(true);
+            fetchFields(serviceProviderValue, serviceTypeValue);
+          };
+
+          useEffect(() => {
+            if (serviceProviderValue) {
+              setIsInquired(false);
+              setFields(serviceFields);
+            }
+          }, [serviceProviderValue]);
+
+          useEffect(() => {
+            if (serviceTypeValue) {
+              setIsInquired(false);
+              setFields(serviceFields);
+            }
+          }, [serviceTypeValue]);
 
           return (
             <IPaySafeAreaView>

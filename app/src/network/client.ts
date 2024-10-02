@@ -1,5 +1,7 @@
 import axios from 'axios';
 import Config from 'react-native-config';
+import { setValueToAsyncStorage } from '@app/utilities';
+
 import getDefaultAxiosHeaders from './utilities/axios-header-helper';
 
 const { BASE_URL, REQUEST_TIMEOUT } = Config;
@@ -10,8 +12,9 @@ const axiosClient = axios.create({
   headers: getDefaultAxiosHeaders(),
 });
 
-export const setToken = (token: string | undefined) => {
+export const setToken = async (token: string | undefined) => {
   axiosClient.defaults.headers.common.Authorization = token;
+  await setValueToAsyncStorage('Authorization', token || '');
 };
 
 export const setHeadersLang = (langKey: string) => {

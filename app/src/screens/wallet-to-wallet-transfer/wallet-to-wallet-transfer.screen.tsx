@@ -24,7 +24,6 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { REGEX } from '@app/constants/app-validations';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks';
@@ -42,9 +41,10 @@ import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
-import Contacts, { Contact } from 'react-native-contacts';
+import { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
 import { IPayContactsPermissionRefType } from '@app/components/molecules/ipay-contacts-permission-sheet/ipay-contacts-permission-sheet.interface';
+import useContacts from '@app/hooks/use-contacts';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -63,7 +63,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const remainingLimitRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const [search, setSearch] = useState<string>('');
-  const [contacts, setContacts] = useState<Contact[]>([]);
+  const contacts = useContacts();
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
@@ -98,6 +98,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             break;
           case TRANSFERTYPE.REQUEST_MONEY:
             navigate(ScreenNames.SEND_MONEY_REQUEST, {
+              activeFriends: apiResponse.response?.friends,
               selectedContacts,
               setSelectedContacts,
               heading: t('REQUEST_MONEY.CREATE_REQUEST'),

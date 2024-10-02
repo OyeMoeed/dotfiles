@@ -16,6 +16,7 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
       gap: moderateScale(8),
       marginBottom: moderateScale(20),
       marginTop: moderateScale(13),
+      alignSelf: 'center',
     },
     center: {
       alignItems: 'center',
@@ -44,11 +45,10 @@ const offerDetailsStyles = (colors: typeof themeColors) =>
       flex: 1,
     },
     flexStyle: {
-      // flex: 1,
-      height: verticalScale(22),
+      flex: 1,
       borderRadius: moderateScale(16),
       paddingHorizontal: moderateScale(20),
-      // paddingVertical: moderateScale(14),
+      paddingVertical: moderateScale(14),
     },
     lineImageStyle: {
       height: '85%',

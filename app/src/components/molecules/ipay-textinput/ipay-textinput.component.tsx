@@ -49,7 +49,7 @@ const IPayTextInput: React.FC<IPayTextInputProps> = ({
   const { colors } = useTheme();
   const styles = textInputStyles(colors);
   const [isFocused, setIsFocused] = useState<boolean>(false);
-  const shouldRenderLabel = isFocused || text || !editable;
+  const shouldRenderLabel = isFocused || text;
   const handleFocus = () => {
     setIsFocused(true);
     if (onFocus) onFocus();

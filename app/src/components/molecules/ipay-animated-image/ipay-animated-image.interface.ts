@@ -6,4 +6,5 @@ export interface IPayAnimatedImageProps {
   type: OnboardingSteps;
   image: string; // Assuming the image is a string representing the image source
   styles?: ImageStyle; // Using ImageStyle from 'react-native' to specify image styles
+  runAnimation: boolean;
 }

@@ -13,6 +13,7 @@ import {
   IPayView,
 } from '@app/components/atoms';
 import { FlipCard, IPayButton, IPayHeader } from '@app/components/molecules';
+import useShareableImage from '@app/components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.hook';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -20,13 +21,12 @@ import { GiftLocalizationKeys, GiftStatus, GiftTransactionKey } from '@app/enums
 import useTheme from '@app/styles/hooks/theme.hook';
 import { copyText, dateTimeFormat } from '@app/utilities';
 import { formatTimeAndDate } from '@app/utilities/date-helper.util';
-import { buttonVariants, GiftCardDetailsKey, ToastTypes } from '@app/utilities/enums.util';
+import { GiftCardDetailsKey, ToastTypes, buttonVariants } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
-import Share from 'react-native-share';
 import { useTranslation } from 'react-i18next';
+import Share from 'react-native-share';
 import ViewShot from 'react-native-view-shot';
-import useShareableImage from '@app/components/molecules/ipay-shareable-imageview/ipay-shareable-imageview.hook';
 import { darkCards, giftsCardData } from '../send-gift-card/send-gift-card.constants';
 import { GiftDetails, GiftsCardDataProps } from '../send-gift-card/send-gift-card.interface';
 import { GiftDetailsProps, ItemProps } from './gift-details.interface';
@@ -106,7 +106,6 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
   const getDynamicStyles = (stylesValue, dataDetails, item) => [
     stylesValue.subTitle,
-    dataDetails[item]?.length > 20 && stylesValue.condtionalWidthSubtitle,
     item === GiftCardDetailsKey.AMOUNT && dataDetails?.status === GiftStatus.FAILED && stylesValue.textStyle,
     item === GiftCardDetailsKey.AMOUNT && stylesValue.currencyStyle,
   ];
@@ -157,7 +156,7 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
       btnType={buttonVariants.LINK_BUTTON}
       small
       onPress={shareImage}
-      btnText="TOP_UP.SHARE"
+      btnText={t('TOP_UP.SHARE')}
       leftIcon={<IPayIcon icon={icons.share} size={20} color={colors.primary.primary500} />}
     />
   );
@@ -225,8 +224,14 @@ const GiftDetailsScreen: React.FC<GiftDetailsProps> = ({ route }) => {
 
   const renderCardDetails = ({ item }: ItemProps) => (
     <IPayView style={styles.dataCardView}>
-      <IPayFootnoteText regular text={t(`SEND_GIFT.${GiftLocalizationKeys[item]}`)} color={colors.natural.natural900} />
-      <IPayView style={styles.transactionDetailsView}>
+      <IPayView style={styles.keyContainer}>
+        <IPayFootnoteText
+          regular
+          text={t(`SEND_GIFT.${GiftLocalizationKeys[item]}`)}
+          color={colors.natural.natural900}
+        />
+      </IPayView>
+      <IPayView style={styles.valueContainer}>
         <IPayView style={styles.detailsView}>
           <IPaySubHeadlineText
             regular
