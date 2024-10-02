@@ -18,6 +18,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
 import { shareOptions } from '@app/utilities/shared.util';
+import { isArabic } from '@app/utilities/constants';
 
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayLaborerDetailsBanner from '@app/components/organism/ipay-laborer-details-banner/ipay-laborer-details-banner.component';
@@ -114,7 +115,7 @@ const MusanedScreen: React.FC = () => {
   };
 
   const renderItem = ({ item, index }: { item: RequestItem; index: number }) => {
-    const { poiExperationDate, name, paymentStatus, payrollAmount, occupationEn } = item;
+    const { poiExperationDate, name, paymentStatus, payrollAmount, occupationEn, occupationAr } = item;
     return (
       <IPayView style={styles.listView}>
         {selectedTab === ALINMA_PAY_USERS ? (
@@ -125,7 +126,7 @@ const MusanedScreen: React.FC = () => {
             amount={payrollAmount}
             onPress={() => openBottomSheet(item)}
             shouldTranslateTitle={false}
-            details={occupationEn}
+            details={isArabic ? occupationAr : occupationEn}
           />
         ) : (
           <>

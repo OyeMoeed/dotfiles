@@ -177,12 +177,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
     payExtraFlag ? (
       <IPayView style={styles.deductInputContainer}>
         <IPayView style={styles.deductAmountInput}>
-          <IPayFootnoteText
-            regular
-            style={styles.text}
-            text="MUSANED.ENTER_DEDUCTION_AMOUNT"
-            color={colors.natural.natural700}
-          />
+          <IPayFootnoteText regular style={styles.text} text="MUSANED.EXTRA_AMOUNT" color={colors.natural.natural700} />
           <IPayAmountInput
             carretHidden={false}
             style={styles.amountInput}

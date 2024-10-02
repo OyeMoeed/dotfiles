@@ -63,6 +63,7 @@ const laborerDetailsStyles = (theme: typeof colors) =>
     laborerPosition: {
       fontSize: moderateScale(14),
       marginTop: moderateScale(4),
+      textAlign: 'left',
     },
   });
 

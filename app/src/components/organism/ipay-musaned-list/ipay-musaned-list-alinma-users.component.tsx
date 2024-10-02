@@ -65,7 +65,7 @@ const IPayMusanedAlinmaUser: React.FC<IPayMusanedListProps> = ({
           <IPayFootnoteText shouldTranslate={false}>
             {type !== MusanedStatus.PAID ? (
               <>
-                <IPayCaption1Text color={colors.error.error500} text={`Date: ${showDate}`} />
+                <IPayCaption1Text color={colors.error.error500} text={`${t('COMMON.DATE')}: ${showDate}`} />
                 <IPayFootnoteText text="  |  " />
               </>
             ) : (

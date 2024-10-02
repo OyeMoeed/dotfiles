@@ -49,7 +49,7 @@ const icons = {
   infoIcon2: 'info-circle',
   messageQuestion: 'message-question',
   arrowDown: 'arrow-down',
-  rightArrow: 'arrow-right',
+  rightArrow: isArabic ? "arrow-left": 'arrow-right',
   LeftArrow: 'arrow-left',
   refresh: 'refresh',
   backBtnIcon: isArabic ? 'arrow-right-1' : 'arrow-left-1',

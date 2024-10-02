@@ -1601,6 +1601,21 @@
     "PAID_SALARY": "Paid Salary",
     "TOTAL_SALARY": "Total Salary",
     "PAYMENT_SUCCESS_MESSAGE": "Payment Successful",
-    "PAY_ANOTHER_LABORER": "Pay Another Laborer"
+    "PAY_ANOTHER_LABORER": "Pay Another Laborer",
+    "EXTRA_AMOUNT": "Extra Amount"
+  },
+  "MONTHS": {
+    "JANUARY": "January",
+    "FEBRUARY": "February",
+    "MARCH": "March",
+    "APRIL": "April",
+    "MAY": "May",
+    "JUNE": "June",
+    "JULY": "July",
+    "AUGUST": "August",
+    "SEPTEMBER": "September",
+    "OCTOBER": "October",
+    "NOVEMBER": "November",
+    "DECEMBER": "December"
   }
 }

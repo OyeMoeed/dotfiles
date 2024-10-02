@@ -31,6 +31,7 @@ const musanedPaySalaryConfirm = (themeColors: typeof colors) =>
     personalInfoCardTitleText: {
       color: themeColors.natural.natural900,
       width: '40%',
+      textAlign: 'left',
     },
     cardStyle: {
       flexDirection: 'row',

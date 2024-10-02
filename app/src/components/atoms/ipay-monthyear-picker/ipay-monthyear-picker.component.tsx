@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Platform } from 'react-native';
 import moment from 'moment';
 import { Picker } from 'react-native-wheel-pick';
+import { useTranslation } from 'react-i18next';
 
 import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -30,6 +31,7 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
   withYear20 = false,
   withLongMonth,
 }) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
 
   const currentYear = moment().format('YYYY');
@@ -50,12 +52,13 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
   const [selectedMonth, setSelectedMonth] = useState(initialDate[0] || '01');
   const [selectedYear, setSelectedYear] = useState(initialDate[1] ? `20${initialDate[1]}` : currentYear);
 
+  const monthsPicker = constants.monthsString(t);
   const checkCurrentYear =
-    currentYear === selectedYear ? constants.monthsString.slice(Number(currentMonthData) - 1) : constants.monthsString;
+    currentYear === selectedYear ? monthsPicker.slice(Number(currentMonthData) - 1) : monthsPicker;
   const pickerData = withLongMonth ? checkCurrentYear : constants.months;
 
   const handleMonthChange = (month: string) => {
-    const mainIndex = constants.monthsString.indexOf(month);
+    const mainIndex = monthsPicker.indexOf(month);
     const currentMonth = withLongMonth ? constants.months[mainIndex] : month;
     const formattedYear = formatYearToLastTwoDigits(selectedYear);
     const formattedYearText = withYear20 ? `20${formattedYear}` : `${formattedYear}`;
