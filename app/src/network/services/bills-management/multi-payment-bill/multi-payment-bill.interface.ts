@@ -1,6 +1,6 @@
 import { MockAPIStatusProps } from '@network/services/services.interface';
 
-interface BillPayDetailsArr {
+interface BillPayDetailsArrProps {
   id?: string;
   label?: string;
   value?: string | null | number;
@@ -19,7 +19,7 @@ interface BillPaymentInfosTypes {
   billNickname: string;
   billerIcon: string;
   transactionId?: string;
-  billPayDetailsArr?: BillPayDetailsArr;
+  billPayDetailsArr?: BillPayDetailsArrProps;
   serviceType?: string;
 }
 
@@ -50,4 +50,10 @@ interface MultiPaymentBillResponseTypes {
   successfulResponse: true;
 }
 
-export { BillPaymentInfosTypes, BillPaymentTypes, MultiPaymentBillPayloadTypes, MultiPaymentBillResponseTypes };
+export {
+  BillPayDetailsArrProps,
+  BillPaymentInfosTypes,
+  BillPaymentTypes,
+  MultiPaymentBillPayloadTypes,
+  MultiPaymentBillResponseTypes,
+};

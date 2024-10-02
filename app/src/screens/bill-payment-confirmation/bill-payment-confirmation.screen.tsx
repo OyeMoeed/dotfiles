@@ -25,7 +25,7 @@ import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
-  const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos } = route.params || {};
+  const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos, saveBill } = route.params || {};
   const {
     walletNumber,
     mobileNumber,
@@ -44,7 +44,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     otpVerificationRef,
     veriyOTPSheetRef,
     setOtpRefAPI,
-  } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos);
+  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billPaymentInfos);
 
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);

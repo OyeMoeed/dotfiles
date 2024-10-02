@@ -9,4 +9,5 @@ export interface NewSadadBillProps {
   billerId: string;
   billIdType: string;
   serviceDescription: string;
+  newBill?: boolean;
 }

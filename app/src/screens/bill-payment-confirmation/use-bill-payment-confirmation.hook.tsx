@@ -3,11 +3,15 @@ import images from '@app/assets/images';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import {
+  BillPayDetailsArrProps,
   BillPaymentInfosTypes,
   MultiPaymentBillPayloadTypes,
   MultiPaymentBillResponseTypes,
 } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import multiPaymentBillService from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.service';
+import { SaveBillPayloadTypes } from '@app/network/services/bills-management/save-bill/save-bill.interface';
+import saveBillService from '@app/network/services/bills-management/save-bill/save-bill.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import { shortString } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRef, useState } from 'react';
@@ -29,8 +33,10 @@ interface HeaderData {
 
 // TODO wiill be replaced by API
 const useBillPaymentConfirmation = (
+  walletNumber: string,
   isPayPartially?: boolean,
   isPayOnly?: boolean,
+  saveBill?: boolean,
   billPaymentInfos?: BillPaymentInfosTypes[],
 ) => {
   const { t } = useTranslation();
@@ -76,6 +82,47 @@ const useBillPaymentConfirmation = (
   const getTransactionIds = (apiResponse: MultiPaymentBillResponseTypes, index: number) =>
     apiResponse.response.billPaymentResponses[index].transactionId;
 
+  const redirectToSuccess = (
+    billPayDetailsArr: BillPayDetailsArrProps[],
+    apiResponse: MultiPaymentBillResponseTypes,
+  ) => {
+    navigate(ScreenNames.PAY_BILL_SUCCESS, {
+      isPayOnly,
+      isPayPartially,
+      billPayDetailes: billPayDetailsArr,
+      totalAmount: billPaymentInfos?.[0].amount,
+      billPaymentInfos: billPaymentInfos?.map((el, index) => ({
+        ...el,
+        transactionId: getTransactionIds(apiResponse, index),
+      })),
+    });
+  };
+
+  const onSaveBill = async (
+    billPayDetailsArr: BillPayDetailsArrProps[],
+    paymentSuccessResponse: MultiPaymentBillResponseTypes,
+  ) => {
+    const { billNumOrBillingAcct, billerId, billIdType, billerName, billNickname }: BillPaymentInfosTypes =
+      billPaymentInfos?.[0] || {};
+    const deviceInfo = await getDeviceInfo();
+    const payload: SaveBillPayloadTypes = {
+      billerId,
+      billNumOrBillingAcct,
+      billIdType,
+      billerName,
+      deviceInfo,
+      billNickname,
+      walletNumber,
+    };
+
+    const apiResponse: any = await saveBillService(payload);
+    if (apiResponse.successfulResponse) {
+      veriyOTPSheetRef.current?.close();
+      otpRef?.current?.close();
+      redirectToSuccess(billPayDetailsArr, paymentSuccessResponse);
+    }
+  };
+
   const onConfirm = async () => {
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
@@ -110,18 +157,13 @@ const useBillPaymentConfirmation = (
 
     setIsLoading(false);
     if (apiResponse.successfulResponse) {
-      veriyOTPSheetRef.current?.close();
-      otpRef?.current?.close();
-      navigate(ScreenNames.PAY_BILL_SUCCESS, {
-        isPayOnly,
-        isPayPartially,
-        billPayDetailes: billPayDetailsArr,
-        totalAmount: billPaymentInfos?.[0].amount,
-        billPaymentInfos: billPaymentInfos?.map((el, index) => ({
-          ...el,
-          transactionId: getTransactionIds(apiResponse, index),
-        })),
-      });
+      if (saveBill) {
+        onSaveBill(billPayDetailsArr, apiResponse);
+      } else {
+        veriyOTPSheetRef.current?.close();
+        otpRef?.current?.close();
+        redirectToSuccess(billPayDetailsArr, apiResponse);
+      }
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));
     }
