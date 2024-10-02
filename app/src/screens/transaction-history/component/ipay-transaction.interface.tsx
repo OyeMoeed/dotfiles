@@ -11,7 +11,7 @@ import { StyleProp, ViewStyle } from 'react-native';
  * Props for the transaction object.
  */
 export interface IPayTransactionItemProps {
-  nickname: string;
+  nickname?: string;
   beneficiaryName?: string;
   transactionRequestType:
     | TransactionTypes.SEND_MONEY
@@ -24,7 +24,6 @@ export interface IPayTransactionItemProps {
     | TransactionTypes.BKF_TRANSFER
     | TransactionTypes.APPLE_PAY_TOP_UP
     | TransactionTypes.LOCAL_TRANSFER
-    | TransactionTypes.APPLE_PAY_TOP_UP
     | TransactionTypes.INTERNATIONAL_TRANSFER
     | TransactionTypes.CASH_PICKUP
     | TransactionTypes.BANK_TRANSFER;
@@ -51,7 +50,7 @@ export interface IPayTransactionItemProps {
   transaction_date?: string;
 }
 interface IPayTransactionItem {
-  [x: string]: TransactionTypes | TransactionOperations;
+  [x: string]: TransactionTypes | TransactionOperations | any;
   transactionRefNumber?: string;
   mtcn: any;
   remittanceRefNumber: any;
@@ -123,7 +122,9 @@ interface IPayTransactionProps {
   /**
    * Callback function called when the pressable is pressed.
    */
-  onPressTransaction?: (transaction: IPayTransactionItem | BeneficiaryTransactionItemProps) => void;
+  onPressTransaction?: (
+    transaction: IPayTransactionItem | BeneficiaryTransactionItemProps | IPayTransactionItemProps,
+  ) => void;
   /**
    * to conditionally render on the basis of beneficiary history
    */

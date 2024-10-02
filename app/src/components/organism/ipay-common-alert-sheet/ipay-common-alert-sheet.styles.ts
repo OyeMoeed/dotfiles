@@ -1,11 +1,11 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, scale } from 'react-native-size-matters';
 
-const forceUpdateStyle = () =>
+const commonAlertSheet = () =>
   createStyleSheet({
     container: {
       alignItems: 'center',
-      paddingHorizontal: 24,
+      paddingHorizontal: scale(24),
       marginBottom: 16,
       flex: 1,
     },
@@ -14,10 +14,10 @@ const forceUpdateStyle = () =>
       marginBottom: 10,
     },
     subTitleText: { fontSize: 14, textAlign: 'center' },
-    updateButton: {
+    button: {
       width: moderateScale(345, 0.5),
       marginTop: 32,
     },
   });
 
-export default forceUpdateStyle;
+export default commonAlertSheet;

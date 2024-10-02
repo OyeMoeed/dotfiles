@@ -3,22 +3,27 @@ import { IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
 import { IPayPageDescriptionText } from '@app/components/molecules';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayPasscode } from '@app/components/organism';
+import { IPayOtpVerification } from '@app/components/templates';
 import constants from '@app/constants/constants';
+import { IConfirmIssueCardReq } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
+import confirmIssueCard from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.service';
+import { IPrepareIssueCardReq } from '@app/network/services/cards-management/issue-card-prepare/issue-card-prepare.interface';
+import prepareIssueCard from '@app/network/services/cards-management/issue-card-prepare/issue-card-prepare.service';
+import { encryptData, getDeviceInfo } from '@app/network/utilities';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
 import { useRef, useState } from 'react';
-import { IPayOtpVerification } from '@app/components/templates';
-import { useTypedSelector } from '@app/store/store';
-import { IPrepareIssueCardReq } from '@app/network/services/cards-management/issue-card-prepare/issue-card-prepare.interface';
-import { getDeviceInfo, encryptData } from '@app/network/utilities';
-import prepareIssueCard from '@app/network/services/cards-management/issue-card-prepare/issue-card-prepare.service';
-import confirmIssueCard from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.service';
-import { IConfirmIssueCardReq } from '@app/network/services/cards-management/issue-card-confirm/issue-card-confirm.interface';
 import { useTranslation } from 'react-i18next';
 import { ChangeCardPinProps, ChangeCardPinViewTypes } from './issue-card-pin-creation.interface';
 import changeCardPinStyles from './issue-card-pin-creation.style';
 
-const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDetails }: ChangeCardPinProps) => {
+const IssueCardPinCreationScreen = ({
+  onSuccess,
+  handleOnPressHelp,
+  issuanceDetails,
+  isPhysicalCard,
+}: ChangeCardPinProps) => {
   const { colors } = useTheme();
   const styles = changeCardPinStyles();
   const { t } = useTranslation();
@@ -128,7 +133,7 @@ const IssueCardPinCreationScreen = ({ onSuccess, handleOnPressHelp, issuanceDeta
       cardType: issuanceDetails?.cardType,
       otp,
       otpRef,
-      physicalCard: false,
+      physicalCard: !!isPhysicalCard,
       transactionType: issuanceDetails.transactionType,
     };
     const apiResponse = await confirmIssueCard(walletNumber, body);

@@ -22,11 +22,10 @@ const addSadadBillStyles = (themeColors: typeof colors) =>
     searchInputStyle: {
       height: verticalScale(36),
       borderRadius: scaleFont(12),
-      minWidth: '100%',
       backgroundColor: themeColors.natural.natural0,
     },
     clearInput: {
-      minWidth: scaleSize(250),
+      width: moderateScale(267, 0.3),
     },
     inputStyle: {
       height: verticalScale(36),

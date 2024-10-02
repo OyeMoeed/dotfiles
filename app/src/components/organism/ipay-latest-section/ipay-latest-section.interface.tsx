@@ -6,7 +6,7 @@ import { OfferItem } from '@app/network/services/core/offers/offers.interface';
 export interface IPayLatestSectionProps {
   testID?: string;
 
-  transactionsData: object[] | null;
+  transactionsData: any[] | null;
   offersData: OfferItem[];
   /**
    * User Rearrange Function

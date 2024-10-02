@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 module.exports = {
   extends: ['@commitlint/config-conventional'],
   rules: {
-    'type-enum': [2, 'always', ['chore', 'feat', 'fix', 'perf', 'build', 'refactor', 'style']],
+    'type-enum': [2, 'always', ['chore', 'feat', 'fix', 'perf', 'build', 'refactor', 'style', 'merge']],
     'body-max-length': [2, 'always', 100],
     'subject-empty': [2, 'never'],
     'subject-min-length': [2, 'always', 1],

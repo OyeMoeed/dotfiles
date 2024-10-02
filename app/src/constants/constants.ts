@@ -717,6 +717,7 @@ export enum DYNAMIC_FIELDS_TYPES {
   ALPHA_NO_DIGITS = 'alphaNoDigits',
   ENGLISH_CHARACTERS = 'englishCharacters',
   ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
+  LABEL = 'LABEL',
 }
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:

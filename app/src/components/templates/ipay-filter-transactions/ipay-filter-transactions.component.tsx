@@ -121,8 +121,8 @@ const IPayFilterTransactions = ({
   // Todo: replace dummy data with real
   const { sendGiftBottomFilterData } = useConstantData();
 
-  const [giftStatus, setGiftStatus] = useState<ListItem[]>(sendGiftBottomFilterData[0].filterValues);
-  const [giftOccasion, setGiftOccasion] = useState<ListItem[]>(sendGiftBottomFilterData[1].filterValues);
+  const [giftStatus] = useState<ListItem[]>(sendGiftBottomFilterData[0].filterValues);
+  const [giftOccasion] = useState<ListItem[]>(sendGiftBottomFilterData[1].filterValues);
 
   const {
     getValues,
@@ -502,7 +502,7 @@ const IPayFilterTransactions = ({
               label="TRANSACTION_HISTORY.TRANSACTION_TYPE"
               onSelectListItem={(selectedItem: string) => {
                 handleSelectType(selectedItem);
-                onChange();
+                onChange(selectedItem);
               }}
               testID="transactionTypes-dropdown"
               labelKey="value"

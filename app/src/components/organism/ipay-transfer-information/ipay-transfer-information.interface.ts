@@ -1,4 +1,4 @@
-import { ViewStyle } from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 interface TransferInfoData {
   icon?: string;
@@ -10,7 +10,7 @@ interface TransferInfoData {
 interface IPayTransferInformationProps {
   showCount?: boolean;
   testID?: string;
-  currencyStyle?: ViewStyle;
+  currencyStyle?: StyleProp<ViewStyle>;
   amount: string | number;
   style?: ViewStyle;
   setAmount: (text: string | number) => void;
