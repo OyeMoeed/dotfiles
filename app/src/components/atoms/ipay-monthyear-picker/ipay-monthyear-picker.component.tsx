@@ -1,9 +1,12 @@
+import React, { useState } from 'react';
+import { Platform } from 'react-native';
+import moment from 'moment';
+import { Picker } from 'react-native-wheel-pick';
+
 import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatYearToLastTwoDigits } from '@app/utilities/date-helper.util';
-import React, { useState } from 'react';
-import { Platform } from 'react-native';
-import { Picker } from 'react-native-wheel-pick';
+
 import IPayView from '../ipay-view/ipay-view.component';
 import { IPayMonthYearPickerProps } from './ipay-monthyear-picker.interface';
 import datePickerStyles from './ipay-monthyear-picker.styles';
@@ -19,8 +22,18 @@ import datePickerStyles from './ipay-monthyear-picker.styles';
  * @param {function} [props.onDateChange] - Callback function invoked when the date picker's date changes.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle, onDateChange, value, testID }) => {
+const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
+  androidStyle,
+  onDateChange,
+  value,
+  testID,
+  withYear20 = false,
+  withLongMonth,
+}) => {
   const { colors } = useTheme();
+
+  const currentYear = moment().format('YYYY');
+  const currentMonthData = moment().format('M');
 
   const generateYears = (startYear: number) => {
     const endYear = 2040;
@@ -32,28 +45,40 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
     return years;
   };
 
-  const initialDate = value?.split('/');
-  const years = generateYears(2024);
-  const [selectedMonth, setSelectedMonth] = useState(initialDate[0]);
-  const [selectedYear, setSelectedYear] = useState(`20${initialDate[1]}`);
+  const initialDate = ((value || '') as string)?.split('/');
+  const years = generateYears(Number(currentYear));
+  const [selectedMonth, setSelectedMonth] = useState(initialDate[0] || '01');
+  const [selectedYear, setSelectedYear] = useState(`20${initialDate[1] || currentYear}`);
+
+  const checkCurrentYear =
+    currentYear === selectedYear ? constants.monthsString.slice(Number(currentMonthData) - 1) : constants.monthsString;
+  const pickerData = withLongMonth ? checkCurrentYear : constants.months;
 
   const handleMonthChange = (month: string) => {
-    setSelectedMonth(month);
-    onDateChange?.(`${month}/${formatYearToLastTwoDigits(selectedYear)}`);
+    const mainIndex = constants.monthsString.indexOf(month);
+    const currentMonth = withLongMonth ? constants.months[mainIndex] : month;
+    const formattedYear = formatYearToLastTwoDigits(selectedYear);
+    const formattedYearText = withYear20 ? `20${formattedYear}` : `${formattedYear}`;
+
+    setSelectedMonth(currentMonth);
+    onDateChange?.(`${currentMonth}/${formattedYearText}`);
   };
 
   const handleYearChange = (year: string) => {
-    const formatedYear = formatYearToLastTwoDigits(year);
-    setSelectedYear(formatedYear);
-    onDateChange?.(`${selectedMonth}/${formatedYear}`);
+    const formattedYear = formatYearToLastTwoDigits(year);
+    const formattedYearText = withYear20 ? `20${formattedYear}` : `${formattedYear}`;
+    setSelectedYear(formattedYearText);
+    onDateChange?.(`${selectedMonth}/${formattedYearText}`);
   };
+
   const styles = datePickerStyles(colors);
+
   return (
-    <IPayView testID={`${testID}-monthyearPicker`} style={styles.pickerContainer}>
+    <IPayView testID={`${testID}-monthYearPicker`} style={styles.pickerContainer}>
       <Picker
         style={[styles.picker, Platform.OS !== 'ios' && androidStyle]}
         selectedValue={selectedMonth}
-        pickerData={constants.monthsString}
+        pickerData={pickerData}
         onValueChange={(index: string) => handleMonthChange(index)}
         textColor={colors.primary.primary500}
         accentColor={colors.primary.primary500}

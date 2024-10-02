@@ -44,7 +44,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = sadadFooterComponentStyles(colors);
-  const [warningMessage, setWarningMessage] = useState<string>('asdasd');
+  const [warningMessage, setWarningMessage] = useState<string>('');
   const checkIfSelectedCount = selectedItemsCount && selectedItemsCount > 0;
   const totalAmountInSAR = `${totalAmount} ${t('COMMON.SAR')}`;
   const {

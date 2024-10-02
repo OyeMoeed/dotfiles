@@ -3,9 +3,9 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import icons from '@assets/icons/index';
 import React, { useMemo } from 'react';
 import { ViewStyle } from 'react-native';
+import images from '@app/assets/images';
 import { IPayPrimaryButtonProps } from './ipay-primary-button.interface';
 import generatedStyles from './ipay-primary-button.style';
-import images from '@app/assets/images';
 
 const IPayPrimaryButton: React.FC<IPayPrimaryButtonProps> = ({
   disabled,

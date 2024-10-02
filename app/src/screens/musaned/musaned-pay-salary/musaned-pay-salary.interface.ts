@@ -8,6 +8,12 @@ enum SalaryCategories {
   TRX_JUSTIFICATION_Type_Bonus_Salary = 'BONUS_SALARY',
 }
 
+enum DeductionReasons {
+  Rent = 'rent',
+  Loan = 'Loan',
+  Other = 'Other',
+}
+
 interface MusanedPaySalaryScreenProps {}
 
-export { SalaryCategories, MusanedPaySalaryScreenProps };
+export { SalaryCategories, MusanedPaySalaryScreenProps, DeductionReasons };

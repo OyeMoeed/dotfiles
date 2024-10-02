@@ -1,16 +1,16 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 import icons from '@app/assets/icons';
 import { IPayMonthYearPicker, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayListView, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayBottomSheet, IPaySalaryPayInformation } from '@app/components/organism';
+import { IPayBottomSheet, IPaySalaryPayDateSelector, IPaySalaryPayInformation } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
-import colors from '@app/styles/colors.const';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
@@ -18,51 +18,63 @@ import getAktharPoints from '@app/network/services/cards-management/mazaya-topup
 import { isArabic } from '@app/utilities/constants';
 import { BalanceStatusVariants } from '@app/components/templates/ipay-bill-balance/ipay-bill-balance.interface';
 import { AccountBalanceStatus } from '@app/enums';
+import { MusnaedInqueryRecords } from '@app/network/services/musaned';
+import { SelectedValue } from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.interface';
+import useTheme from '@app/styles/hooks/theme.hook';
 
-import { MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
+import { DeductionReasons, MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
 import musanedPaySalary from './musaned-pay-salary.style';
 
 const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
-  const styles = musanedPaySalary();
+  const { colors } = useTheme();
+  const styles = musanedPaySalary(colors);
   const { t } = useTranslation();
 
   type RouteProps = RouteProp<any>;
   const { params } = useRoute<RouteProps>();
   const {
-    borderNumber = '3085307282',
-    contractNumber = '',
-    countryCode = 'PK',
-    haveWalletFlag = true,
-    lastPaidSalaryDate = '',
     name = 'FAISAL SARWAR MUHAMMAD SARWAR',
-    nationality = 'باكستان',
-    nationalityAr = 'باكستان',
-    nationalityEn = 'Pakistan',
-    occupation = 'عامل منزلي',
     occupationAr = 'عامل منزلي',
     occupationEn = 'Domestic worker',
     payrollAmount = '1300',
-    poiExperationDate = '2026-03-21',
-    poiNumber = '2516472335',
-    salarySource = '',
-    type = 'MUSANED.ALINMA_PAY_USERS',
-  } = params || {};
+  } = (params as MusnaedInqueryRecords) || {};
 
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { walletNumber } = walletInfo;
   const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
 
-  const [chipValue, setChipValue] = useState<string>('');
-  const [transferAmount, setTransferAmount] = useState<string>('');
-  const [selectedReason, setSelectedReason] = useState({});
-  const [selectedFromDate, setSelectedFromDate] = useState('');
+  const salaryTypes: SelectedValue[] = [
+    { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
+    { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
+    { id: SalaryCategories.Bonus_Salary, text: 'MUSANED.BONUS_SALARY' },
+  ];
+  const deductReasonsTypes = [
+    { id: DeductionReasons.Rent, text: 'MUSANED.DEDUCT_RENT' },
+    { id: DeductionReasons.Loan, text: 'MUSANED.DEDUCT_LOAN' },
+    { id: DeductionReasons.Other, text: 'MUSANED.DEDUCT_OTHER' },
+  ];
+
+  const [, setChipValue] = useState<string>('');
+  const [transferAmount] = useState<string>('');
+  const [salaryType, setSalaryType] = useState<SelectedValue>(salaryTypes[0]);
+  const [selectedDeductionReason, setDeductionSalaryType] = useState<{ text?: string }>({});
+  const [deductionAmount, setDeductionAmount] = useState<string | number>('');
+  const [payExtraAmount, setPayExtraAmount] = useState<string | number>('');
+  const [payExtraNote, setPayExtraNote] = useState('');
+  const [selectedPrevDate, setSelectedPrevDate] = useState<Date | string | null>('');
+  const [selectedFromDate, setSelectedFromDate] = useState<Date | string | null>('');
+  const [selectedToDate, setSelectedToDate] = useState<Date | string | null>('');
+  const [bonusAmount, setBonusAmount] = useState<string | number>('');
   const [deductFlag, setDeductFlag] = useState(false);
   const [payExtraFlag, setPayExtraFlag] = useState(false);
+  const [selectedDateType, setSelectedDateType] = useState<'FROM_DATE' | 'TO_DATE'>('FROM_DATE');
 
-  const refBottomSheet = useRef(null);
-  const salaryTypeBottomSheetRef = useRef(null);
+  const refBottomSheet = useRef<any>(null);
+  const salaryTypeBottomSheetRef = useRef<any>(null);
+  const deductionReasonBottomSheetRef = useRef<any>(null);
 
+  const isAdvanceSalary = salaryType.id === SalaryCategories.Advanced_Salary;
   const balanceStatusVariants: BalanceStatusVariants = {
     insufficient: {
       warningText: t('NEW_SADAD_BILLS.INSUFFICIENT_BALANCE'),
@@ -87,12 +99,6 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     },
   };
 
-  const salaryTypes = [
-    { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
-    { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
-    { id: SalaryCategories.Bonus_Salary, text: 'MUSANED.BONUS_SALARY' },
-  ];
-
   const { limitsDetails, availableBalance, currentBalance } = walletInfo;
   const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
 
@@ -114,13 +120,25 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     salaryTypeBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (item: ReasonListItem) => {
-    setSelectedReason(item);
-    onCloseSheet();
+  const onDeductionReasonCloseSheet = () => {
+    deductionReasonBottomSheetRef?.current?.close();
   };
 
   const onPressSelectReason = () => {
     salaryTypeBottomSheetRef?.current?.present();
+  };
+  const onPressListItem = (item: SelectedValue) => {
+    setSalaryType(item);
+    onCloseSheet();
+  };
+
+  const onPressDeductionReasonItem = (item: SelectedValue) => {
+    setDeductionSalaryType(item);
+    onDeductionReasonCloseSheet();
+  };
+
+  const onPressDeductionShow = () => {
+    deductionReasonBottomSheetRef?.current?.present();
   };
 
   const onLocalTransferPrepare = async () => {
@@ -152,12 +170,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     }
   };
 
-  const topupItemSelected = (routeName: string, params: {}) => {
+  const topupItemSelected = (routeName: string, paramsTopup: {}) => {
     closeBottomSheetTopUp();
     if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
       navigateTOAktharPoints();
     } else {
-      navigate(routeName, params);
+      navigate(routeName, paramsTopup);
     }
   };
 
@@ -174,10 +192,22 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onPressSelectDate = () => {
+    const currentYear = moment().format('YYYY');
+    const currentMonthData = moment().format('M');
+
     if (selectedFromDate) {
-      //
+      setSelectedPrevDate(selectedFromDate);
     } else {
-      setSelectedFromDate('01/2024');
+      setSelectedPrevDate(`${currentMonthData}/${currentYear}`);
+    }
+  };
+
+  const disabledBtn = () => {
+    switch (salaryType.id) {
+      case SalaryCategories.Monthly_Salary:
+        return !(selectedPrevDate && deductFlag ? deductionAmount : true);
+      default:
+        return false;
     }
   };
 
@@ -200,7 +230,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               fullName={name?.slice(0, 18)}
               subtitle={isArabic ? occupationAr : occupationEn}
               style={styles.transferContainer}
-              selectedItem={selectedReason?.text}
+              salaryType={salaryType?.text}
+              salaryId={salaryType?.id}
               openReason={onPressSelectReason}
               inputFieldStyle={styles.inputFieldStyle}
               onPressDatePicker={openDatePicker}
@@ -209,7 +240,19 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               payExtraFlag={payExtraFlag}
               deductFlag={deductFlag}
               amount={payrollAmount}
-              selectedDate={selectedFromDate}
+              selectedFromDate={selectedPrevDate}
+              selectedToDate={selectedToDate}
+              onPressDeductionShow={onPressDeductionShow}
+              deductionAmount={deductionAmount}
+              setDeductionAmount={setDeductionAmount}
+              payExtraAmount={payExtraAmount}
+              setPayExtraAmount={setPayExtraAmount}
+              selectedDeductionReason={selectedDeductionReason}
+              payExtraNote={payExtraNote}
+              setPayExtraNote={setPayExtraNote}
+              bonusAmount={bonusAmount}
+              setBonusAmount={setBonusAmount}
+              setDeductionSalaryType={setDeductionSalaryType}
             />
           </IPayView>
         </IPayView>
@@ -219,15 +262,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         <SadadFooterComponent
           btnText="COMMON.NEXT"
           disableBtnIcons
-          // btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
-          btnDisbaled={false}
+          btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn || disabledBtn()}
           testID="ipay-bill"
           showTopMessage
           totalAmountText={balanceStatusVariants[accountBalanceStatus]?.warningText}
-          totalAmountStyle={{
-            backgroundColor: colors.critical.critical25,
-            justifyContent: 'flex-start',
-          }}
+          totalAmountStyle={styles.nextBtn}
+          showButtonOnly={!balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
           totalAmountLeftIcon={{
             icon: icons.sheild_cross,
             color: colors.natural.natural1000,
@@ -247,7 +287,23 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         cancelBnt
         bold
       >
-        <IPayListView list={salaryTypes} onPressListItem={onPressListItem} selectedListItem={selectedReason?.text} />
+        <IPayListView list={salaryTypes} onPressListItem={onPressListItem} selectedListItem={salaryType?.text} />
+      </IPayBottomSheet>
+      <IPayBottomSheet
+        heading="MUSANED.SALARY_TYPE"
+        onCloseBottomSheet={onCloseSheet}
+        customSnapPoint={['20%', '65%']}
+        ref={deductionReasonBottomSheetRef}
+        simpleHeader
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayListView
+          list={deductReasonsTypes}
+          onPressListItem={onPressDeductionReasonItem}
+          selectedListItem={selectedDeductionReason?.text}
+        />
       </IPayBottomSheet>
 
       <IPayPortalBottomSheet
@@ -279,7 +335,38 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         isVisible
         cancelBnt
       >
-        <IPayMonthYearPicker onDateChange={setSelectedFromDate} value={selectedFromDate} minimumDate={new Date()} />
+        {isAdvanceSalary ? (
+          <IPaySalaryPayDateSelector
+            isAdvanceSalary
+            onPressDatePicker={(value) => setSelectedDateType(value || 'FROM_DATE')}
+            selectedDate={selectedFromDate}
+            selectedToDate={selectedToDate}
+            inputFieldStyleFromDate={selectedDateType === 'FROM_DATE' ? styles.inputDateFieldStyle : {}}
+            inputFieldStyleToDate={selectedDateType === 'TO_DATE' ? styles.inputDateFieldStyle : {}}
+          />
+        ) : (
+          <IPayView />
+        )}
+        <IPayMonthYearPicker
+          onDateChange={(date) => {
+            const selectedDateValue = moment(`02/${date}`, 'DD/MM/YYYY');
+            const selectedToDateValue = moment(`02/${selectedToDate}`, 'DD/MM/YYYY');
+
+            if (selectedDateValue.isBefore(selectedToDateValue)) {
+              //
+            }
+            if (selectedDateType === 'FROM_DATE') {
+              setSelectedFromDate(date);
+              return;
+            }
+            if (selectedDateType === 'TO_DATE') {
+              setSelectedToDate(date);
+            }
+          }}
+          value={selectedFromDate}
+          withYear20
+          withLongMonth
+        />
       </IPayBottomSheet>
     </IPaySafeAreaView>
   );

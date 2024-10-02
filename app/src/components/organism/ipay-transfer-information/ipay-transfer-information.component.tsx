@@ -130,7 +130,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
             containerStyle={styles.chipContainer}
             icon={
               <IPayIcon
-                icon={chipValue === t('TOP_UP.LIMIT_REACHED ? icons.warning : icons.shield_cross')}
+                icon={chipValue === t('TOP_UP.LIMIT_REACHED') ? icons.warning : icons.shield_cross}
                 color={colors.critical.critical800}
                 size={16}
               />
