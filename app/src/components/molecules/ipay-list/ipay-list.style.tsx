@@ -22,7 +22,7 @@ const styles = (colors: any) =>
       marginTop: moderateScale(5),
     },
     centerContainer: {
-      flex: 1,
+      flex: 2,
     },
     font: {
       color: colors.natural.natural900,
@@ -100,6 +100,9 @@ const styles = (colors: any) =>
     },
     detailTextConditionalStyle: {
       width: '60%',
+    },
+    leftTitle: {
+      flex: 1,
     },
   });
 
