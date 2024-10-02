@@ -132,9 +132,6 @@ const giftDetailsStyles = (themeColors: typeof colors) =>
       textAlign: 'right',
       textTransform: 'capitalize',
     },
-    condtionalWidthSubtitle: {
-      width: '50%',
-    },
     icon: {
       marginStart: moderateScale(8, 0.3),
     },
@@ -167,6 +164,13 @@ const giftDetailsStyles = (themeColors: typeof colors) =>
     },
     currencyStyle: {
       textTransform: 'none',
+    },
+    keyContainer: {
+      flex: 1,
+    },
+    valueContainer: {
+      flex: 1.5,
+      alignItems: 'flex-end',
     },
   });
 

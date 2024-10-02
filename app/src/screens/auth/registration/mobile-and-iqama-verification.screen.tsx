@@ -24,7 +24,7 @@ import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -34,6 +34,8 @@ import networkConstants from '@app/network/constants';
 import { getValueFromAsyncStorage, setValueToAsyncStorage, StorageKeys } from '@app/utilities';
 import RNRestart from 'react-native-restart';
 import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
+import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
+import { GeoCoordinates } from 'react-native-geolocation-service';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook';
 import { FormValues } from './mobile-and-iqama-verification.interface';
@@ -57,6 +59,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     otp,
     isHelpSheetVisible,
     onCloseHelpSheet,
+    setLocationData,
   } = useMobileAndIqamaVerification();
 
   const { t } = useTranslation();
@@ -127,6 +130,12 @@ const MobileAndIqamaVerification: React.FC = () => {
         valueKey="title"
       />
     </IPayView>
+  );
+  const onLocationSelected = useCallback(
+    (position: GeoCoordinates) => {
+      setLocationData(position);
+    },
+    [setLocationData],
   );
 
   return (
@@ -232,6 +241,7 @@ const MobileAndIqamaVerification: React.FC = () => {
             >
               <HelpCenterComponent hideFAQError />
             </IPayPortalBottomSheet>
+            <IPayLocationPermissionSheet onLocationSelected={onLocationSelected} />
           </>
         </IPaySafeAreaView>
       )}

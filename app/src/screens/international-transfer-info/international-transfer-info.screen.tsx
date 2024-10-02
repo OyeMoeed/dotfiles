@@ -45,6 +45,7 @@ import { useTranslation } from 'react-i18next';
 import { ImageStyle } from 'react-native';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
 import beneficiaryKeysMapping from './international-transfer-info.constant';
+import { SelectedReason, TransferGateway } from './international-transfer-info.interface';
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
@@ -57,10 +58,10 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const beneficiaryDetailsRef = useRef<any>(null);
   const { transferMethods } = useTransferMethodsData();
   const [isIncludeFees, setIsIncludeFees] = useState<boolean>(false);
-  const [selectedReason, setSelectedReason] = useState<WUTransferReason>();
+  const [selectedReason, setSelectedReason] = useState<SelectedReason>();
   const [remitterCurrencyAmount, setRemitterCurrencyAmount] = useState<string>('');
   const [beneficiaryCurrencyAmount, setBeneficiaryCurrencyAmount] = useState<string>('');
-  const [transferGateway, setTransferGateway] = useState<{ transferMethod: string; index: number } | null>(null);
+  const [transferGateway, setTransferGateway] = useState<TransferGateway>();
   const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
   const [wuFeesInquiryData, setWUFeesInquiryData] = useState<WuFeesInquiryResponse>();
   const amountCurrency = 'SAR';
@@ -112,7 +113,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         selectedReason,
         transferGateway: transferGateway?.transferMethod,
       },
-      feesInquiryData: { beneficiaryCurrencyAmount, remitterCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
+      feesInquiryData: { remitterCurrencyAmount, beneficiaryCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
     });
 
   const getBeneficiariesDetailsData = async () => {
@@ -149,6 +150,13 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
     setRemitterCurrencyAmount(text);
     const foreignAmount = Number(text) * exchangeRate;
     setBeneficiaryCurrencyAmount(foreignAmount?.toFixed(2));
+  };
+
+  const handleBeneficiaryAmountChange = (text: string) => {
+    const exchangeRate = Number(wuFeesInquiryData?.exchangeRate);
+    setBeneficiaryCurrencyAmount(text);
+    const localAmount = Number(text) / exchangeRate;
+    setRemitterCurrencyAmount(localAmount?.toFixed(2));
   };
 
   const transferFees = t('LOCAL_TRANSFER.FEES');
@@ -217,6 +225,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
                       onRemitterAmountChange={handleAmountInputChange}
                       remitterCurrencyAmount={remitterCurrencyAmount}
                       beneficiaryCurrencyAmount={beneficiaryCurrencyAmount}
+                      onBeneficiaryAmountChange={handleBeneficiaryAmountChange}
                       onTransferMethodChange={() => onTransferGateway(transferMethod?.transferMethodName, index)}
                     />
                   );

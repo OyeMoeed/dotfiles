@@ -3,14 +3,15 @@ interface OptionItem {
   value: string; // Value associated with option item
   icon?: string; // Optional icon for visual representation
   image?: string; // Optional image for detailed representation
+  countryCodeValue?: string; // Optional country code
 }
 
-interface InternationalTransferData {
+interface InternationalTransferSuccessData {
   beneficiary: string; // Beneficiary's name
   country: string; // Beneficiary's country
   transactionId: string; // Unique transaction identifier
   bankTransfer: string; // Bank transfer method information
-  iban: string; // Beneficiary's IBAN
+  iban?: string; // Beneficiary's IBAN
   bankName: string; // Beneficiary's bank name
   phoneNumber: string; // Beneficiary's phone number
   reasonOfTransfer: string; // Purpose of the transfer
@@ -19,7 +20,18 @@ interface InternationalTransferData {
   exchangeRate: string; // Applied exchange rate
   vat: string; // Value-added tax on transfer
   fees: string; // Transfer-related fees
-  totalAmount: string; // Total amount including fees
+  totalAmount?: string; // Total amount including fees
 }
 
-export { InternationalTransferData, OptionItem };
+interface Params {
+  successDetailsData: InternationalTransferSuccessData;
+  countryCode: string;
+}
+
+interface InternationalTransferSuccessProps {
+  route: {
+    params: Params;
+  };
+}
+
+export { InternationalTransferSuccessData, InternationalTransferSuccessProps, OptionItem };

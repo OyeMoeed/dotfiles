@@ -87,6 +87,22 @@
     "CARDS": "তাস",
     "MORE": "আরও"
   },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "ইতিহাস",
+    "SEND_TO_UNSAVED_NUMBER": "অনসেভ নম্বরে পাঠান",
+    "UNSAVED_NUMBER": "অনসেভ নম্বর",
+    "TYPE_MOBILE_NUMBER": "মোবাইল নম্বর লিখুন",
+    "CONTACTS": "যোগাযোগ",
+    "CONTACT_NUMBER_OR_NAME": "সংযোগ নম্বর বা নাম",
+    "CONTACT_NAME": "সংযোগ নাম",
+    "NO_RESULTS_FOUND": "কোন ফলাফল পাওয়া যায়নি",
+    "CONTACT_LIMIT_REACHED": "সংযোগের লিমিট পৌঁছেছে",
+    "CONTACT_LIMIT": "সংযোগের সীমা পৌঁছেছে ",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "আপনার সংযোগ দিন",
+    "CONTACTS_PERMISSION_TITLE": "ক্রমাগতভাবে আপনার সংযোগ অনুমতি দিন",
+    "CONTACTS_PERMISSION_DESCRIPTION": "আপনার সংযোগের পরিবর্তে পাঠিয়ে কথা চালানো সম্ভব হবেনি",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "সংযোগ অনুমতি দিন"
+  },
   "ID_RENEWAL": {
     "TITLE": "আইডি নবায়ন",
     "ID_ABOUT_EXPIRE": "আপনার আইডির মেয়াদ শেষ হতে চলেছে!",
