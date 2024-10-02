@@ -169,6 +169,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onLocalTransferPrepare = async () => {
+    // TODO: ADD params for userInfo and paymentInfo
     navigate(ScreenNames.MUSANED_PAY_SALARY_CONFIRM);
   };
 

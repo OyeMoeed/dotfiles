@@ -17,7 +17,7 @@ import laborerDetailsStyles from './ipay-laborer-details-banner.styles';
 
 interface IPayLaborerDetailsBannerProps {
   titleText: string;
-  amount: number;
+  amount?: number;
   testID?: string;
   onPress?: () => void;
   shouldTranslateTitle?: boolean;
@@ -75,22 +75,24 @@ const IPayLaborerDetailsBanner: React.FC<IPayLaborerDetailsBannerProps> = ({
 
       <IPayView style={styles.leftContainer}>
         {isDetailsBanner ? (
-          <IPayView>
-            <IPayCaption2Text
-              text="MUSANED.BASIC_SALARY"
-              color={colors.primary.primary900}
-              style={styles.basicSalaryText}
-              numberOfLines={1}
-            />
-            <IPaySubHeadlineText
-              regular={false}
-              shouldTranslate={false}
-              color={colors.primary.primary900}
-              style={styles.basicSalaryAmount}
-            >
-              {Number(amount)} <IPayFootnoteText style={styles.sarText} text={t('COMMON.SAR')} />
-            </IPaySubHeadlineText>
-          </IPayView>
+          amount && (
+            <IPayView>
+              <IPayCaption2Text
+                text="MUSANED.BASIC_SALARY"
+                color={colors.primary.primary900}
+                style={styles.basicSalaryText}
+                numberOfLines={1}
+              />
+              <IPaySubHeadlineText
+                regular={false}
+                shouldTranslate={false}
+                color={colors.primary.primary900}
+                style={styles.basicSalaryAmount}
+              >
+                {Number(amount)} <IPayFootnoteText style={styles.sarText} text={t('COMMON.SAR')} />
+              </IPaySubHeadlineText>
+            </IPayView>
+          )
         ) : (
           <IPaySubHeadlineText
             regular={false}
