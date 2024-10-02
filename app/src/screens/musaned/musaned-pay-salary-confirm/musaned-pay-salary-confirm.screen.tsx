@@ -78,7 +78,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
             ...payload,
             transferJustificationType: SalaryCategories.TRX_JUSTIFICATION_Type_Monthly_Salary,
             salaryMonth: basicSalary,
-            bonusAmount: extraAmount || '',
+            bonusAmount: extraAmount,
           };
           break;
         case SalaryCategories.Advanced_Salary:
@@ -87,7 +87,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
             transferJustificationType: SalaryCategories.TRX_JUSTIFICATION_Type_Advanced_Salary,
             fromMonth: fromDate,
             toMonth: (toDate as string)?.split('/').join('-'),
-            bonusAmount: extraAmount || '',
+            bonusAmount: extraAmount,
           };
           break;
         case SalaryCategories.Bonus_Salary:

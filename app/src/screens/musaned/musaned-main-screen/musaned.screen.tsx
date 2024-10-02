@@ -3,19 +3,16 @@ import { useTranslation } from 'react-i18next';
 import Share from 'react-native-share';
 
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayPaginatedFlatlist, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayFlatlist, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayMusanedAlinmaUser } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import getMusanedInquiryList from '@app/network/services/musaned/musaned-inquiry';
 import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, MusanedStatus } from '@app/utilities';
+import { ApiResponseStatusType, buttonVariants, MusanedStatus } from '@app/utilities';
 import { shareOptions } from '@app/utilities/shared.util';
 import { isArabic } from '@app/utilities/constants';
 import { MusnaedInqueryRecords } from '@app/network/services/musaned';
@@ -23,6 +20,7 @@ import { MusnaedInqueryRecords } from '@app/network/services/musaned';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayLaborerDetailsBanner from '@app/components/organism/ipay-laborer-details-banner/ipay-laborer-details-banner.component';
 import { navigate } from '@app/navigation/navigation-service.navigation';
+import useGetMusanedInquiry from '@app/network/services/musaned/musaned-inquiry/musaned-inquiry.hook';
 import musanedStyle from './musaned.styles';
 
 const MusanedScreen: React.FC = () => {
@@ -38,76 +36,32 @@ const MusanedScreen: React.FC = () => {
   const [requestDetail, setRequestDetail] = useState<MusnaedInqueryRecords | null>(null);
   const [showDetailSheet, setShowDetailSheet] = useState<boolean>(false);
   const refBottomSheet = useRef<any>(null);
-  const { showToast } = useToastContext();
 
-  const [sentRequestsPage] = useState(1);
-  const [receivedRequestsPage] = useState(1);
-  const [sentRequestsData, setSentRequestsData] = useState<Array<MusnaedInqueryRecords>>([]);
-  const [recivedRequestsData, setRecivedRequestsData] = useState<Array<MusnaedInqueryRecords>>([]);
+  const [alinmaPayData, setAlinmaPayData] = useState<Array<MusnaedInqueryRecords>>([]);
+  const [nonAlinmaPayData, setNonAlinmaPayData] = useState<Array<MusnaedInqueryRecords>>([]);
 
-  const dataForPaginatedFLatlist = selectedTab === ALINMA_PAY_USERS ? sentRequestsData : recivedRequestsData;
+  const dataForPaginatedFLatlist = selectedTab === ALINMA_PAY_USERS ? alinmaPayData : nonAlinmaPayData;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const detailsData = isArabic ? requestDetail?.occupationAr : requestDetail?.occupationEn;
 
-  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
-    showToast(
-      {
-        title,
-        subTitle,
-        toastType,
-        isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
-      },
-      displayTime,
-    );
-  };
+  useGetMusanedInquiry({
+    payload: {
+      walletNumber: walletInfo.walletNumber,
+    },
+    onSuccess: (apiResponse) => {
+      if (apiResponse?.status?.code === ApiResponseStatusType.SUCCESS) {
+        const data = apiResponse?.response?.laborersInfoList || [];
 
-  const getRequestsData = async (): Promise<{ data: Notification[]; hasMore: boolean }> => {
-    try {
-      const apiResponse = await getMusanedInquiryList({
-        walletNumber: walletInfo.walletNumber,
-      });
+        const alinmaPayUsers = data.filter((value) => value.haveWalletFlag);
+        const nonAlinmaPayUsers = data.filter((value) => !value.haveWalletFlag);
 
-      switch (apiResponse?.status?.type) {
-        case 'SUCCESS': {
-          const data = apiResponse?.response?.laborersInfoList || [];
-
-          const alinmaPayUsers = data.filter((value) => value.haveWalletFlag);
-          const nonAlinmaPayUsers = data.filter((value) => !value.haveWalletFlag);
-
-          if (selectedTab === ALINMA_PAY_USERS) {
-            setSentRequestsData(alinmaPayUsers);
-          } else {
-            setRecivedRequestsData(nonAlinmaPayUsers);
-          }
-
-          return { data: '' };
-        }
-
-        case 'apiResponseNotOk':
-          renderToast({
-            title: 'ERROR.API_ERROR_RESPONSE',
-            toastType: 'WARNING',
-          });
-          break;
-
-        case 'FAILURE':
-          renderToast(apiResponse?.error);
-          break;
-
-        default:
-          break;
+        setAlinmaPayData(alinmaPayUsers);
+        setNonAlinmaPayData(nonAlinmaPayUsers);
       }
-    } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
+    },
+  });
 
-    return { data: [], hasMore: false };
-  };
-
-  const handleSelectedTab = (tab: string) => {
-    setSelectedTab(tab);
-  };
+  const handleSelectedTab = (tab: string) => setSelectedTab(tab);
 
   const openBottomSheet = (item: MusnaedInqueryRecords) => {
     setRequestDetail(item);
@@ -235,15 +189,10 @@ const MusanedScreen: React.FC = () => {
           unselectedTabStyle={styles.unselectedTab}
         />
         <IPayView style={styles.listContainer}>
-          <IPayPaginatedFlatlist
+          <IPayFlatlist
             showsVerticalScrollIndicator={false}
-            externalData={dataForPaginatedFLatlist} // Pass externalData for pagination
-            keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`} // Convert the index to a string
+            keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`}
             renderItem={renderItem}
-            fetchData={(page, pageSize) =>
-              getRequestsData(selectedTab === ALINMA_PAY_USERS ? sentRequestsPage : receivedRequestsPage, pageSize)
-            } // Pass fetchData for pagination
-            pageSize={10}
             data={dataForPaginatedFLatlist}
             ListEmptyComponent={noResult}
           />
