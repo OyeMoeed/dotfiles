@@ -169,8 +169,24 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onLocalTransferPrepare = async () => {
-    // TODO: ADD params for userInfo and paymentInfo
-    navigate(ScreenNames.MUSANED_PAY_SALARY_CONFIRM);
+    const paymentInfoData = {
+      fromDate: selectedPrevDate,
+      toDate: selectedPrevToDate,
+      totalSalary: payrollAmount,
+      basicSalary: payrollAmount,
+      extraAmount: payExtraAmount,
+      bonusAmount,
+      note: payExtraNote || bonusAmountNote,
+      fees: 0,
+      vat: 15,
+      deductionAmount,
+      deductionReason: selectedDeductionReason.text,
+    };
+
+    navigate(ScreenNames.MUSANED_PAY_SALARY_CONFIRM, {
+      userInfo: params,
+      paymentInfo: paymentInfoData,
+    });
   };
 
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);

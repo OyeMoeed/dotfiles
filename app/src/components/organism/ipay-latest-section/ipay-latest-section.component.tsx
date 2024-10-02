@@ -25,13 +25,12 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
-import { IPayLatestSectionProps } from './ipay-latest-section.interface';
-import sectionStyles from './ipay-latest-section.style';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { isAndroidOS } from '@app/utilities/constants';
-import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayTransactionHistory } from '@app/components/templates';
+import sectionStyles from './ipay-latest-section.style';
+import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -58,7 +57,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
 
   const openTransactionHistoryDetails = useCallback(
     (item: IPayTransactionItemProps) => {
-      let calculatedSnapPoint = ['95%', '100%'];
+      const calculatedSnapPoint = ['95%', '100%'];
       setSnapPoint(calculatedSnapPoint);
       setTransaction(item);
       transactionRef.current?.present();
@@ -158,8 +157,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   )
                 }
                 renderItem={({ item, index }) => (
-                  <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} 
-                    onPressTransaction={openTransactionHistoryDetails}/>
+                  <IPayTransactionItem
+                    key={`transaction-${index + 1}`}
+                    transaction={item || []}
+                    onPressTransaction={openTransactionHistoryDetails}
+                  />
                 )}
               />
             </IPayView>

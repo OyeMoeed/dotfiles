@@ -32,7 +32,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
   const { otpConfig } = useConstantData();
   const styles = musanedPaySalaryConfirm(colors);
 
-  const { name, occupationAr, occupationEn } = params.userInfo;
+  const { name, occupationAr, occupationEn } = params.userInfo || {};
   const detailsInfo = getPaymentSalaryConfirmationData(params?.paymentInfo, params.userInfo);
 
   const otpVerificationRef = useRef<any>(null);

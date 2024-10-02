@@ -48,7 +48,7 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
   const initialDate = ((value || '') as string)?.split('/');
   const years = generateYears(Number(currentYear));
   const [selectedMonth, setSelectedMonth] = useState(initialDate[0] || '01');
-  const [selectedYear, setSelectedYear] = useState(`20${initialDate[1] || currentYear}`);
+  const [selectedYear, setSelectedYear] = useState(initialDate[1] ? `20${initialDate[1]}` : currentYear);
 
   const checkCurrentYear =
     currentYear === selectedYear ? constants.monthsString.slice(Number(currentMonthData) - 1) : constants.monthsString;
