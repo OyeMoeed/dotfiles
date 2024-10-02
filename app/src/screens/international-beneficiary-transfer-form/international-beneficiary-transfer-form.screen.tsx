@@ -1,15 +1,8 @@
 import icons from '@app/assets/icons';
-import {
-  IPayCaption1Text,
-  IPayIcon,
-  IPayImage,
-  IPayTitle2Text,
-  IPayView,
-} from '@app/components/atoms';
-import {
-  IPayButton,
-  IPayHeader,
-} from '@app/components/molecules';
+import { IPayCaption1Text, IPayIcon, IPayImage, IPayTitle2Text, IPayView } from '@app/components/atoms';
+import { IPayButton, IPayHeader } from '@app/components/molecules';
+import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
+import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -23,26 +16,24 @@ import {
   AlinmaExpressBanks,
 } from '@app/network/services/international-transfer/ae-beneficiary-banks/ae-beneficiary-banks.interface';
 import getAEBeneficiaryBanks from '@app/network/services/international-transfer/ae-beneficiary-banks/ae-beneficiary-banks.service';
-import { AddWUBeneficiaryProps, AddWUBeneficiaryReq } from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.interface';
+import {
+  AddWUBeneficiaryProps,
+  AddWUBeneficiaryReq,
+} from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.interface';
 import addWUbeneficiary from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import {
-  BeneficiaryTransferFormValues,
-  TransferService,
-} from './international-beneficiary-transfer-form.interface';
+import { BeneficiaryTransferFormValues, TransferService } from './international-beneficiary-transfer-form.interface';
 import beneficiaryTransferStyles from './international-beneficiary-transfer-form.style';
-import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
-import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
 
 const IBeneficiaryTransferScreen: React.FC = () => {
   const route = useRoute();
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { transferService, dynamicFieldsData } = route?.params;
+  const { transferService, dynamicFieldsData } = route.params;
   const styles = beneficiaryTransferStyles(colors);
   const [apiError, setAPIError] = useState<string>('');
   const [beneficiariesAERes, setBeneficiariesAERes] = useState();
@@ -151,14 +142,9 @@ const IBeneficiaryTransferScreen: React.FC = () => {
       return [];
     });
     const payload = {
-      beneficiaryBankDetail: {
-        bankCode: '',
-        // TODO need to update
-        correspondingBankCode: '',
-      },
-      beneficiaryType: transferService?.beneficiaryType ?? '',
-      countryCode: transferService?.countryCode ?? '',
-      nickname: data?.beneficiaryNickName ?? '',
+      beneficiaryType: transferService?.beneficiaryType,
+      countryCode: transferService?.countryCode,
+      nickname: data?.beneficiaryNickName,
       dynamicFields,
       currency: transferService?.currencyCode ?? '',
       remittanceType: transferService?.remittanceType ?? '',
@@ -171,10 +157,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
   };
 
   return (
-    <IPayFormProvider<BeneficiaryTransferFormValues>
-      validationSchema={validationSchema}
-      defaultValues={defaultValues}
-    >
+    <IPayFormProvider<BeneficiaryTransferFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
       {({ control, formState: { errors }, handleSubmit }) => (
         <IPaySafeAreaView>
           <IPayHeader backBtn title="NEW_BENEFICIARY.NEW_BENEFICIARY" applyFlex />
@@ -185,11 +168,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
               style={styles.caption}
             />
             <IPayTitle2Text text={transferService.serviceName} style={styles.heading} />
-            <DynamicFormComponent
-              errors={errors}
-              control={control}
-              fields={dynamicFieldsData}
-            />
+            <DynamicFormComponent errors={errors} control={control} fields={dynamicFieldsData} />
             <IPayButton
               onPress={handleSubmit(onSubmit)}
               large

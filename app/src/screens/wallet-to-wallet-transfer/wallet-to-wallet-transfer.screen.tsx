@@ -95,6 +95,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             break;
           case TRANSFERTYPE.REQUEST_MONEY:
             navigate(ScreenNames.SEND_MONEY_REQUEST, {
+              activeFriends: apiResponse.response?.friends,
               selectedContacts,
               setSelectedContacts,
               heading: t('REQUEST_MONEY.CREATE_REQUEST'),

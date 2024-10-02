@@ -20,7 +20,7 @@ import { useToastContext } from '@app/components/molecules/ipay-toast/context/ip
 import { IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -57,8 +57,6 @@ import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
-import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { SNAP_POINT } from '@app/constants/constants';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import {
   FeesInquiryData,
@@ -76,7 +74,6 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
-  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
