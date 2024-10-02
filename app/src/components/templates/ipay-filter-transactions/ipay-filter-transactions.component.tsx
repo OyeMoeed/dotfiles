@@ -502,7 +502,7 @@ const IPayFilterTransactions = ({
               label="TRANSACTION_HISTORY.TRANSACTION_TYPE"
               onSelectListItem={(selectedItem: string) => {
                 handleSelectType(selectedItem);
-                onChange();
+                onChange(selectedItem);
               }}
               testID="transactionTypes-dropdown"
               labelKey="value"

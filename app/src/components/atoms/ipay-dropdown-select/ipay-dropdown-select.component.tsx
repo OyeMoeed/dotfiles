@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { SNAP_POINT } from '@app/constants/constants';
 import IPayDropdownSheet from './ipay-dropdown-select-sheet.component';
 import { IPayDropdownSelectProps, ListItem } from './ipay-dropdown-select.interface';
@@ -51,13 +51,18 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
     setIsVisible(false);
   };
 
+  const getDisplayedValue = useMemo(
+    () => data.find((item) => item[valueKey] === selectedValue)?.[labelKey],
+    [data, labelKey, selectedValue, valueKey],
+  );
+
   return (
     <>
       <IPayAnimatedTextInput
         testID={testID}
         label={label}
         editable={editable ?? false}
-        value={selectedValue}
+        value={getDisplayedValue}
         containerStyle={[containerStyle ?? styles.inputContainerStyle, disabled && styles.disabledInput]}
         showRightIcon
         customIcon={customIcon ?? listCheckIcon}
@@ -72,7 +77,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         data={data}
         isSearchable={isSearchable}
         onSelectItem={handleSelectItem}
-        selectedItem={selectedValue || ''}
+        selectedItem={getDisplayedValue || ''}
         snapPoints={customSnapPoints ?? SNAP_POINT.MEDIUM_LARGE}
         heading={label}
         isVisible={isVisible}
