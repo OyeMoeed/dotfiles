@@ -12,6 +12,9 @@ const appConfigurations = async (): Promise<object | undefined> => {
   const apiResponse = await apiCall({
     endpoint: CORE_URLS.APP_CONFIGURATIONS,
     method: requestType.POST,
+    headers: {
+      hide_spinner_loading: true,
+    },
   });
 
   return apiResponse;

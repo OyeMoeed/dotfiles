@@ -7,7 +7,7 @@ const CORE_URLS = {
   VALIDATE_OTP_FORGET_PASSCODE: 'core-management/v1/user/forget-password/validate-otp',
   CONFIRM_OTP_FORGET_PASSCODE: 'core-management/v1/user/forget-password/confirm',
   FORGET_PASSCODE: 'core/v1/user/forget-password/confirm',
-  APP_CONFIGURATIONS: 'core/v1/appConfigurations',
+  APP_CONFIGURATIONS: 'core-management/v1/appConfigurations',
   GET_WALLET_INFO: 'core/v1/wallet',
   GET_LOV: 'transfer-management/common/lov/inquiry',
   GET_CORE_LOV: 'transfer-management/common/lov/inquiry',

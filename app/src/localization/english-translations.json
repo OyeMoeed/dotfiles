@@ -1558,6 +1558,11 @@
   "CARD_ISSUANCE_SHEET": {
     "REGULAR_TITLE": "You can now",
     "BOLD_TITLE": "Easily Issue Cards",
-    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
+    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
+  },
+  "DISABLED_MODULES": {
+    "TITLE": "Service disabled",
+    "UNAVAILABLE_FEATURE": "The feature you are trying to access is currently unavailable",
+    "UNAVAILABLE_FEATURE_DESCRIPTION": "You may try this feature again later.\nThank you for your understanding."
   }
 }
