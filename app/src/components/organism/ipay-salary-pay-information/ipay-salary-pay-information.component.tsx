@@ -166,15 +166,16 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             isEditable
           />
         </IPayView>
-        {payExtraAmount && (
+        {payExtraAmount ? (
           <IPayChip
             textValue={`${t('MUSANED.PAY_SALARY')} ${Number(amount) + Number(payExtraAmount)}`}
             variant={States.NATURAL}
             isShowIcon={false}
             fullWidth
             headingStyles={styles.payExtraChipContainer}
+            shouldTranslatedText={false}
           />
-        )}
+        ) : null}
         <IPayAnimatedTextInput
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
