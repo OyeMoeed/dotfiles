@@ -47,6 +47,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { TransferService } from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import beneficiaryKeysMapping from '@app/screens/international-transfer-info/international-transfer-info.constant';
 import { InternationalTransferSuccessData } from '@app/screens/international-transfer-success/international-transfer-success.interface';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -56,7 +57,6 @@ import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import {
   FeesInquiryData,
@@ -189,7 +189,7 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   };
 
   const getGeneratedBeneficiaryFees = () => {
-    const checkIncludeFees = (key) => (feesInquiryData[key] ? t('COMMON.YES') : t('COMMON.NO'));
+    const checkIncludeFees = (key: string) => (feesInquiryData[key] ? t('COMMON.YES') : t('COMMON.NO'));
     return Object.keys(feesInquiryData)
       ?.map((key) => ({
         label: key,

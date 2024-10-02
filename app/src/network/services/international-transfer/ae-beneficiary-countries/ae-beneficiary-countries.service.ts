@@ -15,12 +15,12 @@ const getAEBeneficiaryCountries = async (
   }
   try {
     const apiResponse: ApiResponse<AEBeneficiaryCountriesProps> = await apiCall({
-      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.alinma_express()}/${alinmaExpressType}/countries`,
+      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.alinma_express()}/alinma-express-types/${alinmaExpressType}/countries`,
       method: requestType.GET,
     });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
+    if (apiResponse?.successfulResponse) {
+      return apiResponse;
     }
     return { apiResponseNotOk: true, ...apiResponse?.response };
   } catch (error) {

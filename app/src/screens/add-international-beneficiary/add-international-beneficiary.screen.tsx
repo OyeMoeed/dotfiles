@@ -63,8 +63,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   });
 
   const onSelectCountry = (countryName: string) => {
-    const filterCode = beneficiaryMetaData?.find((item) => item?.desc === countryName);
-    setCountryCode(filterCode?.code);
+    const filterBeneficiary = beneficiaryMetaData?.find((item) => item?.desc === countryName);
+    setCountryCode(filterBeneficiary?.code);
   };
 
   const onSelectCurrency = (currency: string) => {
@@ -72,8 +72,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   };
 
   const onSelectRemittanceType = (remittance: string) => {
-    const filterCode = remittanceTypeData?.find((item) => item?.desc === remittance);
-    setRemittanceType(filterCode?.code);
+    const filterRemittanceType = remittanceTypeData?.find((item) => item?.desc === remittance);
+    setRemittanceType(filterRemittanceType?.code);
   };
 
   const getCountriesData = () => beneficiaryMetaData?.map((item, idx) => ({ id: idx + 1, title: item?.desc }));
@@ -138,11 +138,18 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   };
 
   const getWUBeneficiaryMetaDataData = async () => {
+    const isWestern = selectedService?.serviceName === TransferService.WESTERN_UNIION;
     try {
-      const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData();
+      const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData(
+        isWestern ? 'wu' : 'alinma-express',
+      );
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryMetaData(apiResponse?.response?.westernUnionCountryList);
+          if (isWestern) {
+            setBeneficiaryMetaData(apiResponse?.response?.westernUnionCountryList);
+          } else {
+            setBeneficiaryMetaData(apiResponse?.response?.alinmaExpressTypeList);
+          }
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(t('ERROR.API_ERROR_RESPONSE'));
@@ -211,7 +218,9 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   };
 
   const getAEBeneficiaryCountriesData = async () => {
-    const payload = {};
+    const payload = {
+      alinmaExpressType: remittanceType,
+    };
     try {
       const apiResponse: AEBeneficiaryCountriesProps = await getAEBeneficiaryCountries(payload);
       switch (apiResponse?.status?.type) {
@@ -234,14 +243,11 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   };
 
   useEffect(() => {
-    if (selectedService?.serviceName === TransferService.WESTERN_UNIION) {
-      getWUBeneficiaryMetaDataData();
-      getWUBeneficiaryCurrenciesData();
-      getWURemittanceTypesData();
-    } else {
+    if (selectedService?.serviceName === TransferService.ALINMAPAY_DIRECT) {
       getAEBeneficiaryCountriesData();
     }
-  }, [selectedService]);
+    getWUBeneficiaryMetaDataData();
+  }, [selectedService?.serviceName]);
 
   useEffect(() => {
     getWUBeneficiaryCurrenciesData();
