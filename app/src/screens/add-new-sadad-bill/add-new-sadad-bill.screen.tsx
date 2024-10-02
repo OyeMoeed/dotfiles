@@ -21,6 +21,7 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayBillBalance, IPaySafeAreaView } from '@app/components/templates';
 import { FormFields, NewSadadBillType } from '@app/enums/bill-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -53,7 +54,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = addSadadBillStyles(colors);
-  const selectSheeRef = useRef<any>(null);
   const invoiceSheetRef = useRef<any>(null);
   const [selectedImage, setSelectedImage] = useState<string>('');
   const [sheetType, setSheetType] = useState<string>('');
@@ -67,6 +67,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const [services, setServices] = useState<BillersService[]>([]);
   const [selectedService, setSelectedService] = useState<BillersService>();
+  const [billerBottomSheetVisible, setBillerBottomSheetVisible] = useState<boolean>(false);
   const { showToast } = useToastContext();
 
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
@@ -108,6 +109,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
           type: billerItem.billerTypeDesc,
         })),
       );
+      onGetBillersCategory();
     }
   };
 
@@ -128,7 +130,6 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
   };
 
   useEffect(() => {
-    onGetBillersCategory();
     onGetBillers();
   }, []);
 
@@ -169,7 +170,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
 
   const onOpenSheet = (type: string) => {
     setSheetType(type);
-    selectSheeRef.current.present();
+    setBillerBottomSheetVisible(true);
   };
 
   const onSelect = (tabObject: BillersCategoryType) => {
@@ -289,9 +290,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     >
       {({ handleSubmit, setValue, getValues, control, watch }) => {
         const onSelectValue = (item: SelectedValue) => {
-          setTimeout(() => {
-            selectSheeRef.current.close();
-          }, 350);
+          setBillerBottomSheetVisible(false);
           if (sheetType === NewSadadBillType.COMPANY_NAME) {
             setValue(FormFields.COMPANY_NAME, item.text);
             setSelectedImage(item.image);
@@ -372,17 +371,18 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                 </IPayView>
               </IPayScrollView>
             )}
-            <IPayBottomSheet
+
+            <IPayPortalBottomSheet
               heading={sheetType === NewSadadBillType.COMPANY_NAME ? 'COMMON.COMPANY' : 'NEW_SADAD_BILLS.SERVICE_TYPE'}
-              customSnapPoint={['1%', '90%']}
-              onCloseBottomSheet={() => selectSheeRef.current.close()}
-              ref={selectSheeRef}
+              customSnapPoint={['90%', '90%']}
+              onCloseBottomSheet={() => setBillerBottomSheetVisible(false)}
               simpleBar
               cancelBnt
               bold
               headerContainerStyles={styles.sheetHeader}
               bgGradientColors={colors.sheetGradientPrimary10}
               bottomSheetBgStyles={styles.sheetBackground}
+              isVisible={billerBottomSheetVisible}
             >
               <IPayView style={styles.bottomSheetContainer}>
                 <IPayView style={styles.sheetContainer}>
@@ -454,7 +454,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
                   </IPayView>
                 )}
               </IPayView>
-            </IPayBottomSheet>
+            </IPayPortalBottomSheet>
             <IPayBottomSheet
               heading="NEW_SADAD_BILLS.SADAD_BILLS"
               customSnapPoint={['1%', isAndroidOS ? '43%' : '50%']}

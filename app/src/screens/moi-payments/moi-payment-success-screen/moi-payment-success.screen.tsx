@@ -34,7 +34,6 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
   const { showToast } = useToastContext();
   const [paymentDtails, setPaymentDetails] = useState<ItemProps[]>([]);
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
-  const totalTransferedAmount = `500 ${t('COMMON.SAR')}`;
 
   const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
     showToast(
@@ -84,7 +83,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       value: subDetails?.transactionId,
       icon: icons.copy,
     };
-    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ref]);
+    setPaymentDetails([serviceProvider, serviceType, ...updatedPaymentDetailsWithNewIds, ...(!isRefund ? [ref] : [])]);
   }, [moiPaymentDetailes]);
 
   const onPressPayOtherBill = () => {
@@ -127,7 +126,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPaySuccess
           headingText={successMessage}
-          subHeadingText={totalTransferedAmount}
+          subHeadingText={`${moiPaymentDetailes.totalFeeAmount} ${t('COMMON.SAR')}`}
           style={StyleSheet.flatten(styles.headerView)}
         />
 

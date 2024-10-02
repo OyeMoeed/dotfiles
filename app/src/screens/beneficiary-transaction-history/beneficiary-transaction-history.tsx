@@ -18,9 +18,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { dateTimeFormat } from '@app/utilities';
 import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import moment from 'moment';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SNAP_POINT } from '@app/constants/constants';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
@@ -157,19 +156,17 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     }
   };
 
-  const ListEmptyComponent = useCallback(() => {
-    if (isLoading) {
-      return <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />;
-    }
-    return (
+  const ListEmptyComponent = useCallback(
+    () => (
       <IPayNoResult
         testID="no-results"
         textColor={colors.primary.primary800}
         message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
         showEmptyBox
       />
-    );
-  }, [colors.primary.primary800, isLoading]);
+    ),
+    [],
+  );
 
   return (
     <IPaySafeAreaView testID="transaction-section" style={styles.container}>
@@ -265,7 +262,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         />
       </IPayPortalBottomSheet>
       <IPayFilterTransactions
-        // ref={filterRef}
         heading="TRANSACTION_HISTORY.FILTER"
         showBeneficiaryFilter
         showAmountFilter
@@ -274,7 +270,6 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
         defaultValues={transferHistoryFilterDefaultValues}
         isVisible={isFilterSheetVisible}
         onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
-        // setSelectedCard={(card: any) => setSelectedCard(card)}
       />
     </IPaySafeAreaView>
   );

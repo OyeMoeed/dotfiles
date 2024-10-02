@@ -53,4 +53,17 @@ enum BeneficiariesDetails {
   FEES = 'FEES',
 }
 
-export { BeneficiariesDetails, InternationalBeneficiaryStatus, LabelKey, LocalizationKeysMapping, TransferGatewayType };
+enum BeneficiaryDetailKeys {
+  TRANSACTION_ID = 'transactionId',
+  COUNTRY = 'country',
+  TOTAL_AMOUNT = 'totalAmount',
+}
+
+export {
+  BeneficiariesDetails,
+  BeneficiaryDetailKeys,
+  InternationalBeneficiaryStatus,
+  LabelKey,
+  LocalizationKeysMapping,
+  TransferGatewayType,
+};

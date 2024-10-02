@@ -13,12 +13,14 @@ import {
 import {
   IPayButton,
   IPayChip,
+  IPayContactsPermission,
   IPayHeader,
   IPayLimitExceedBottomSheet,
   IPayNoResult,
   IPayRHFAnimatedTextInput,
   IPayTextInput,
 } from '@app/components/molecules';
+import { IPayContactsPermissionRefType } from '@app/components/molecules/ipay-contacts-permission-sheet/ipay-contacts-permission-sheet.interface';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -38,7 +40,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Contact } from 'react-native-contacts';
@@ -70,6 +72,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const contactsPermissionRef = useRef<IPayContactsPermissionRefType>(null);
 
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
@@ -95,6 +98,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             break;
           case TRANSFERTYPE.REQUEST_MONEY:
             navigate(ScreenNames.SEND_MONEY_REQUEST, {
+              activeFriends: apiResponse.response?.friends,
               selectedContacts,
               setSelectedContacts,
               heading: t('REQUEST_MONEY.CREATE_REQUEST'),
@@ -138,6 +142,47 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         break;
     }
   };
+
+  const formatMobileNumber = (mobile: string): string => {
+    const mobileWithoutSpaces = mobile.replace(/ /g, '');
+    if (REGEX.longSaudiMobileNumber.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(3)}`;
+    }
+    if (REGEX.longSaudiMobileNumber2.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(4)}`;
+    }
+    if (REGEX.longSaudiMobileNumber3.test(mobileWithoutSpaces)) {
+      return `0${mobileWithoutSpaces.substr(5)}`;
+    }
+    return mobileWithoutSpaces;
+  };
+
+  const onPermissionGranted = useCallback(() => {
+    Contacts.getAll().then((contactsList: Contact[]) => {
+      const flattenedArray = contactsList.reduce((acc, obj) => {
+        const mappedValues = obj.phoneNumbers.map((item) => ({
+          ...obj,
+          phoneNumbers: [
+            {
+              ...item,
+              number: formatMobileNumber(item.number),
+            },
+          ],
+        }));
+        return acc.concat(mappedValues);
+      }, []);
+      const saudiNumbers = flattenedArray.filter((item: Contact) => {
+        const isSaudiNumber = REGEX.saudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+        return isSaudiNumber;
+      });
+      const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
+        ...item,
+        givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
+        recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
+      }));
+      setContacts(listWithUniqueId);
+    });
+  }, []);
 
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
 
@@ -466,6 +511,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         </IPayFormProvider>
       </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
+      <IPayContactsPermission ref={contactsPermissionRef} onPermissionGranted={onPermissionGranted} />
     </IPaySafeAreaView>
   );
 };
