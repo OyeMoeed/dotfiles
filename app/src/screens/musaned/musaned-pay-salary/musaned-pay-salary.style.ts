@@ -27,6 +27,10 @@ const musanedPaySalary = (colors) =>
     inputFieldStyle: {
       borderRadius: moderateScale(16),
     },
+    inputDateFieldStyle: {
+      borderWidth: 1,
+      borderColor: colors.primary.primary950,
+    },
     progressBarBg: {
       backgroundColor: themeColors.success.success25,
     },

@@ -30,10 +30,11 @@ interface IPaySalaryPayInformationProps {
 }
 
 export interface IPaySalaryPayDateSelectorProps {
-  onPressDatePicker: () => void;
+  onPressDatePicker: (value?: 'FROM_DATE' | 'TO_DATE') => void;
   isAdvanceSalary: boolean;
   selectedDate: Date;
-  inputFieldStyle?: ViewStyle;
+  inputFieldStyleFromDate?: ViewStyle;
+  inputFieldStyleToDate?: ViewStyle;
   selectedToDate: Date;
 }
 export default IPaySalaryPayInformationProps;

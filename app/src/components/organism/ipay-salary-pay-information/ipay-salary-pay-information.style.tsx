@@ -92,6 +92,12 @@ const salaryPayInformation = (themeColors: typeof colors) =>
       flexWrap: 'wrap',
       justifyContent: 'space-between',
     },
+    titleStyle: {
+      color: themeColors.natural.natural700,
+    },
+    listTextStyle: {
+      color: themeColors.natural.natural700,
+    },
   });
 
 export default salaryPayInformation;

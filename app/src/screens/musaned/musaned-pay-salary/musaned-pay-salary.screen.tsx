@@ -1,5 +1,6 @@
 import React, { createRef, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
 import icons from '@app/assets/icons';
 import { IPayMonthYearPicker, IPayScrollView, IPayView } from '@app/components/atoms';
@@ -62,9 +63,11 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const [payExtraAmount, setPayExtraAmount] = useState<string | number>('');
   const [payExtraNote, setPayExtraNote] = useState('');
   const [selectedFromDate, setSelectedFromDate] = useState('');
+  const [selectedToDate, setSelectedToDate] = useState('');
   const [bonusAmount, setBonusAmount] = useState<string | number>('');
   const [deductFlag, setDeductFlag] = useState(false);
   const [payExtraFlag, setPayExtraFlag] = useState(false);
+  const [selectedDateType, setSelectedDateType] = useState('');
 
   const refBottomSheet = useRef(null);
   const salaryTypeBottomSheetRef = useRef<any>(null);
@@ -164,12 +167,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     }
   };
 
-  const topupItemSelected = (routeName: string, params: {}) => {
+  const topupItemSelected = (routeName: string, paramsTopup: {}) => {
     closeBottomSheetTopUp();
     if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
       navigateTOAktharPoints();
     } else {
-      navigate(routeName, params);
+      navigate(routeName, paramsTopup);
     }
   };
 
@@ -320,6 +323,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
           value={selectedFromDate}
           minimumDate={new Date()}
           withYear20
+          withLongMonth
         />
       </IPayBottomSheet>
       <IPayBottomSheet
@@ -334,15 +338,31 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
       >
         <IPaySalaryPayDateSelector
           isAdvanceSalary
-          onPressDatePicker={() => {}}
-          selectedDate={undefined}
-          selectedToDate={undefined}
+          onPressDatePicker={(value) => setSelectedDateType(value)}
+          selectedDate={selectedFromDate}
+          selectedToDate={selectedToDate}
+          inputFieldStyleFromDate={selectedDateType === 'FROM_DATE' ? styles.inputDateFieldStyle : {}}
+          inputFieldStyleToDate={selectedDateType === 'TO_DATE' ? styles.inputDateFieldStyle : {}}
         />
         <IPayMonthYearPicker
-          onDateChange={setSelectedFromDate}
+          onDateChange={(date) => {
+            const selectedDateValue = moment(`02/${date}`, 'DD/MM/YYYY');
+            const selectedToDateValue = moment(`02/${selectedToDate}`, 'DD/MM/YYYY');
+
+            if (selectedDateValue.isBefore(selectedToDateValue)) {
+              //
+            }
+            if (selectedDateType === 'FROM_DATE') {
+              setSelectedFromDate(date);
+            }
+            if (selectedDateType === 'TO_DATE') {
+              setSelectedToDate(date);
+            }
+          }}
           value={selectedFromDate}
           minimumDate={new Date()}
           withYear20
+          withLongMonth
         />
       </IPayBottomSheet>
     </IPaySafeAreaView>

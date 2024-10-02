@@ -34,5 +34,8 @@ export interface IPayMonthYearPickerProps {
   display?: string;
 
   mode?: string;
+
   withYear20?: boolean;
+
+  withLongMonth?: boolean;
 }

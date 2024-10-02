@@ -1592,6 +1592,8 @@
     "LABORER_INFO": "Laborer Info",
     "PAY": "Pay",
     "PAYMENT_STATUS": "Payment Status",
-    "LAST_PAYMENT": "Last Payment"
+    "LAST_PAYMENT": "Last Payment",
+    "SELECTED_MONTH": "Selected Months",
+    "MONTHS": "Months"
   }
 }
