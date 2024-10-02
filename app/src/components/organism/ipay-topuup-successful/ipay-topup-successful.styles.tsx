@@ -131,7 +131,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
       paddingVertical: moderateScale(12),
       paddingHorizontal: moderateScale(18),
       justifyContent: 'space-between',
-      width: '100%',
+      // width: '100%',
+      flex: 1,
       flexDirection: 'row',
     },
     listDetails: {
@@ -164,7 +165,8 @@ export const TopUpSuccessStyles = (themeColors: typeof colors, topupChannel: str
     detailesFlex: {
       flex: 0,
       backgroundColor: colors.natural.natural0,
-      padding: moderateScale(12),
+      paddingVertical: moderateScale(12),
+      paddingHorizontal: moderateScale(2),
       borderRadius: moderateScale(22),
     },
     topupContainer: {
