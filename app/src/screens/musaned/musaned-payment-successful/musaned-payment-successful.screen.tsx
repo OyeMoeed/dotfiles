@@ -1,108 +1,66 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { useNavigation, useRoute } from '@react-navigation/core';
 
-import icons from '@app/assets/icons';
 import { Home2, Refresh2Icon, Send2Icon } from '@app/assets/svgs';
 import { IPayButton, IPayShareableImageView, IPaySuccess } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
 import { IPayPageWrapper } from '@app/components/templates';
 import { resetNavigation } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { copyText } from '@app/utilities';
-import { ToastTypes, buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import {
   IPayFlatlist,
   IPayFootnoteText,
-  IPayIcon,
   IPayLinearGradientView,
-  IPayPressable,
   IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
 
 import musanedPaymentSuccessful from './musaned-payment-successful.style';
+import { MusanedPayConfirmationRouteProps } from '../musaned-pay-salary-confirm/musaned-pay-salary-confirm.interface';
+import { getPaymentSalaryConfirmationData } from '../musaned.utils';
 
 const MusanedPaymentSuccessfulScreen: React.FC = () => {
   const { t } = useTranslation();
-
-  const successMessage = 'MUSANED.PAYMENT_SUCCESS_MESSAGE';
   const { colors } = useTheme();
   const styles = musanedPaymentSuccessful(colors);
-  const { showToast } = useToastContext();
-  const [paymentDetails, setPaymentDetails] = useState<any[]>([]);
+
+  const { navigate } = useNavigation();
+  const { params } = useRoute<MusanedPayConfirmationRouteProps>();
+  const successMessage = 'MUSANED.PAYMENT_SUCCESS_MESSAGE';
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
   const totalTransferredAmount = `500 ${t('COMMON.SAR')}`;
-
-  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
-    showToast(
-      {
-        title,
-        subTitle,
-        toastType,
-        isShowRightIcon: false,
-        leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
-      },
-      displayTime,
-    );
-  };
-
-  const onPressCopy = (refNo: string) => {
-    copyText(refNo);
-    renderToast({ title: 'TOP_UP.REF_NUMBER_COPIED', toastType: ToastTypes.INFORMATION });
-  };
+  const detailsInfo = getPaymentSalaryConfirmationData(params?.paymentInfo, params.userInfo);
 
   const onPressHome = () => {
     resetNavigation(ScreenNames.HOME_BASE);
   };
 
-  const getDataToRender = useCallback(() => {
-    const serviceType = {
-      id: (1).toString(),
-      label: t('MUSANED.LABORER_ID'),
-      value: 'asd',
-    };
-    const serviceProvider = {
-      id: (2).toString(),
-      label: t('COMMON.DATE'),
-      value: 'asd',
-    };
-
-    setPaymentDetails([serviceType, serviceProvider]);
-  }, []);
-
-  useEffect(() => {
-    getDataToRender();
-  }, []);
-
   const renderItem = ({ item }: any) => {
-    const { label, value, icon } = item;
+    const { text, details } = item;
 
     return (
       <IPayView style={styles.dataCardView}>
-        <IPayFootnoteText regular text={label} color={colors.natural.natural900} />
+        <IPayFootnoteText regular text={text} color={colors.natural.natural900} />
         <IPayView style={styles.transactionDetailsView}>
           <IPayView style={styles.detailsView}>
             <IPaySubHeadlineText
               regular
-              text={value}
+              text={details}
               color={colors.primary.primary800}
               numberOfLines={1}
               style={styles.valueStyle}
             />
-            {icon && (
-              <IPayPressable style={styles.icon} onPress={() => onPressCopy(value)}>
-                <IPayIcon icon={icon} size={18} color={colors.primary.primary500} />
-              </IPayPressable>
-            )}
           </IPayView>
         </IPayView>
       </IPayView>
     );
   };
+
+  const onNavigateMusaned = () => navigate(ScreenNames.MUSANED);
 
   return (
     <IPayPageWrapper>
@@ -122,6 +80,7 @@ const MusanedPaymentSuccessfulScreen: React.FC = () => {
                   small
                   leftIcon={<Refresh2Icon style={styles.iconStyle} color={colors.primary.primary500} />}
                   btnText="MUSANED.PAY_ANOTHER_LABORER"
+                  onPress={onNavigateMusaned}
                 />
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}
@@ -145,7 +104,7 @@ const MusanedPaymentSuccessfulScreen: React.FC = () => {
               <IPayView>
                 <IPayView style={styles.dataTopView}>
                   <IPayFlatlist
-                    data={paymentDetails}
+                    data={detailsInfo}
                     keyExtractor={(_, index) => index.toString()}
                     itemSeparatorStyle={styles.itemSeparatorStyle}
                     showsVerticalScrollIndicator={false}
