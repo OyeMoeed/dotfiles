@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import { StyleProp, ViewStyle } from 'react-native';
 
 interface IPayDropdownComponentProps {
@@ -14,12 +15,13 @@ interface IPayDropdownComponentProps {
   size: string[];
   name: string;
   disabled?: boolean;
+  rightIcon?: ReactElement<any> | undefined;
 }
 
 interface ListItem {
   id: number;
   title: string;
-  code?: string;
+  countryCode?: string;
 }
 interface IPayDropdownComponentSheetProps {
   present?: () => void;

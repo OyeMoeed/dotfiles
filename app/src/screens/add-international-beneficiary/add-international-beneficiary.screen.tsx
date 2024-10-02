@@ -1,5 +1,13 @@
 import icons from '@app/assets/icons';
-import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import {
+  IPayCheckbox,
+  IPayDropdown,
+  IPayFlag,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -76,7 +84,12 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     setRemittanceType(filterRemittanceType?.code);
   };
 
-  const getCountriesData = () => beneficiaryMetaData?.map((item, idx) => ({ id: idx + 1, title: item?.desc }));
+  const getCountriesData = () =>
+    beneficiaryMetaData?.map((item, idx) => ({
+      id: idx + 1,
+      title: item?.desc,
+      countryCode: item?.code,
+    }));
 
   const getCurrenciesData = () => currenciesData?.map((item, idx) => ({ id: idx + 1, title: item?.code }));
 
@@ -104,14 +117,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               label="COMMON.BENEFECIARY_COUNTRY"
               isSearchable
               onSelectListItem={onSelectCountry}
-            />
-            <IPayDropdown
-              dropdownType="NEW_BENEFICIARY.SELECT_DELIVERY_TYPE"
-              data={serviceName === alinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : getRemittancTypeData()}
-              size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
-              name={AddBeneficiaryFields.transferType}
-              label="COMMON.DELIVERY_TYPE"
-              onSelectListItem={onSelectRemittanceType}
+              rightIcon={countryCode ? <IPayFlag countryCode={countryCode} style={styles.flagStyle} /> : <IPayView />}
             />
             <IPayDropdown
               dropdownType="NEW_BENEFICIARY.CHOOSE_CURRENCY"
@@ -120,6 +126,14 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               name={AddBeneficiaryFields.currency}
               label="COMMON.CURRENCY"
               onSelectListItem={onSelectCurrency}
+            />
+            <IPayDropdown
+              dropdownType="NEW_BENEFICIARY.SELECT_DELIVERY_TYPE"
+              data={serviceName === alinmaDirectData.serviceName ? ALINMA_TRANSFER_TYPES : getRemittancTypeData()}
+              size={CUSTOM_SNAP_POINT.EXTRA_SMALL}
+              name={AddBeneficiaryFields.transferType}
+              label="COMMON.DELIVERY_TYPE"
+              onSelectListItem={onSelectRemittanceType}
             />
           </>
         )}
@@ -250,11 +264,11 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   }, [selectedService?.serviceName]);
 
   useEffect(() => {
-    getWUBeneficiaryCurrenciesData();
+    if (countryCode) getWUBeneficiaryCurrenciesData();
   }, [countryCode]);
 
   useEffect(() => {
-    getWURemittanceTypesData();
+    if (currencyCode) getWURemittanceTypesData();
   }, [currencyCode]);
 
   const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {

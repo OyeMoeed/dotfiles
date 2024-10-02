@@ -1,5 +1,13 @@
 import icons from '@app/assets/icons';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
+import {
+  IPayFlag,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayInput,
+  IPayPressable,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayBottomSheet } from '@app/components/organism';
 import { setSelectedType } from '@app/store/slices/dropdown-slice';
 import { useTypedSelector } from '@app/store/store';
@@ -65,9 +73,12 @@ const IPayDropdownSheet = forwardRef<{}, IPayDropdownComponentSheetProps>((_, re
     handleClosePress();
   };
 
-  const renderListItems = ({ item: { title } }: { item: ListItem }) => (
+  const renderListItems = ({ item: { title, countryCode } }: { item: ListItem }) => (
     <IPayPressable style={styles.titleView} onPress={() => onPressListItem(title)}>
-      <IPayFootnoteText text={title} />
+      <IPayView style={styles.titleWrapper}>
+        {countryCode && <IPayFlag countryCode={countryCode} />}
+        <IPayFootnoteText text={title} />
+      </IPayView>
       {selectedListItem === title ? listCheckIcon : <IPayView />}
     </IPayPressable>
   );
