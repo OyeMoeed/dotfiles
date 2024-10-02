@@ -28,8 +28,13 @@ interface IPaySalaryPayInformationProps {
   payExtraNote: string;
   setPayExtraNote: (value: string) => void;
   bonusAmount: string | number;
+  setBonusAmountNote: (value: string) => void;
+  bonusAmountNote: string;
   setBonusAmount: (value: string | number) => void;
-  setDeductionSalaryType: Dispatch<SetStateAction<{ text?: string | undefined }>>;
+  setDeductionReasonsTypes: Dispatch<SetStateAction<{ text?: string | undefined }>>;
+  isToDateLessThanFromDate: boolean;
+  isToDateMoreThan6: boolean;
+  dateFromNow: number;
 }
 
 export interface IPaySalaryPayDateSelectorProps {
@@ -39,6 +44,10 @@ export interface IPaySalaryPayDateSelectorProps {
   selectedToDate: Date | string | null;
   inputFieldStyleFromDate?: ViewStyle;
   inputFieldStyleToDate?: ViewStyle;
-  isNotMainScreen?: boolean;
+  isMainScreen?: boolean;
+  amount?: string;
+  isToDateLessThanFromDate: boolean;
+  isToDateMoreThan6: boolean;
+  dateFromNow: number;
 }
 export default IPaySalaryPayInformationProps;

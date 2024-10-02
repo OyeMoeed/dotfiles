@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import moment from 'moment';
 
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -18,17 +17,16 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
   onPressDatePicker,
   selectedDate,
   selectedToDate,
-  isNotMainScreen = false,
+  isMainScreen = false,
+  amount = 0,
+  isToDateLessThanFromDate,
+  isToDateMoreThan6,
+  dateFromNow,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = salaryPayInformation(colors);
-  const dateFromNow = moment(`02/${selectedToDate}`, 'DD/MM/YYYY').diff(
-    moment(`02/${selectedDate}`, 'DD/MM/YYYY'),
-    'month',
-  );
-  const isToDateLessThanFromDate = dateFromNow < 0;
-  const isToDateMoreThan6 = dateFromNow > 6;
+
   const toDateError = selectedToDate ? isToDateMoreThan6 || isToDateLessThanFromDate : false;
   const errorMessage = isToDateMoreThan6 ? 'MUSANED.MAXIMUM_DURATION_MESSAGE' : 'MUSANED.ENSURE_CORRECT_DATE';
 
@@ -83,7 +81,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
           {toDateError ? <IPayCaption1Text color={colors.error.error500} text={errorMessage} /> : <IPayView />}
         </IPayPressable>
       ) : null}
-      {isNotMainScreen && selectedToDate && dateFromNow > 0 && dateFromNow < 7 ? (
+      {isAdvanceSalary && selectedToDate && dateFromNow > 0 && dateFromNow < 7 ? (
         <IPayList
           title="MUSANED.SELECTED_MONTH"
           isShowIcon
@@ -91,6 +89,18 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
           textStyle={styles.titleStyle}
           detailTextStyle={styles.listTextStyle}
           detailText={`${dateFromNow} ${t('MUSANED.MONTHS')}`}
+          detailIconDisabled
+          shouldTranslateSubTitle={false}
+        />
+      ) : null}
+      {dateFromNow && isMainScreen && isAdvanceSalary ? (
+        <IPayList
+          title="MUSANED.TOTAL_SALARY"
+          isShowIcon
+          isShowDetail
+          textStyle={styles.titleStyle}
+          detailTextStyle={styles.listTextStyle}
+          detailText={`${dateFromNow * Number(amount)} ${t('COMMON.SAR')}`}
           detailIconDisabled
           shouldTranslateSubTitle={false}
         />

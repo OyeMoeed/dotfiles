@@ -1597,6 +1597,7 @@
     "MONTHS": "Months",
     "MAXIMUM_DURATION_MESSAGE": "The maximum duration is 6 months.",
     "ENSURE_CORRECT_DATE": "Ensure the 'To Date' is after the 'From Date'",
-    "PAID_SALARY": "Paid Salary"
+    "PAID_SALARY": "Paid Salary",
+    "TOTAL_SALARY": "Total Salary"
   }
 }

@@ -49,7 +49,12 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   setPayExtraNote,
   bonusAmount,
   setBonusAmount,
-  setDeductionSalaryType,
+  setDeductionReasonsTypes,
+  setBonusAmountNote,
+  bonusAmountNote,
+  isToDateLessThanFromDate,
+  isToDateMoreThan6,
+  dateFromNow,
 }) => {
   const { colors } = useTheme();
   const styles = salaryPayInformation(colors);
@@ -87,7 +92,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   useEffect(() => {
     if (!deductFlag) {
       setDeductionAmount(0);
-      setDeductionSalaryType({});
+      setDeductionReasonsTypes({});
     }
   }, [deductFlag]);
 
@@ -97,6 +102,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
       setPayExtraNote('');
     }
   }, [payExtraFlag]);
+
   const { textStyle, backgroundStyle } = getColorsStyle(colors, States.NATURAL);
   // eslint-disable-next-line react/no-unstable-nested-components
   const DeductExtraComponent = () =>
@@ -208,7 +214,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           labelColor={colors.natural.natural500}
           label="MUSANED.NOTE"
           value={payExtraNote}
-          onChange={(value) => setPayExtraNote(String(value))}
+          onChangeText={(text) => setPayExtraNote(text)}
         />
       </IPayView>
     ) : null;
@@ -273,8 +279,8 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
             labelColor={colors.natural.natural500}
             label="MUSANED.NOTE"
-            value={payExtraNote}
-            onChange={(value) => setPayExtraNote(String(value))}
+            value={bonusAmountNote}
+            onChange={(value) => setBonusAmountNote(String(value))}
           />
         </IPayView>
       ) : (
@@ -282,10 +288,13 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           <IPaySalaryPayDateSelector
             selectedDate={selectedFromDate}
             selectedToDate={selectedToDate}
-            inputFieldStyleFromDate={inputFieldStyle}
             isAdvanceSalary={isAdvanceSalary}
             onPressDatePicker={onPressDatePicker}
-            isNotMainScreen
+            amount={amount}
+            isMainScreen
+            isToDateLessThanFromDate={isToDateLessThanFromDate}
+            isToDateMoreThan6={isToDateMoreThan6}
+            dateFromNow={dateFromNow}
           />
           <IPayPressable onPress={onPressDeductFlag} style={styles.reasonsView}>
             <IPayAnimatedTextInput
