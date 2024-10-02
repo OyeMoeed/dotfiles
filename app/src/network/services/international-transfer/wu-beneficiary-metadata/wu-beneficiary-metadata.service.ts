@@ -16,8 +16,8 @@ const getWUBeneficiaryMetaData = async (): Promise<WUBeneficiaryMetaDataProps> =
       method: requestType.GET,
     });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse.response;
+    if (apiResponse?.successfulResponse) {
+      return apiResponse;
     }
     return { apiResponseNotOk: true, ...apiResponse?.response };
   } catch (error) {

@@ -18,7 +18,7 @@ const INTERNATIONAL_TRANSFERS_URLS = {
   delete_beneficiary: (beneficiaryCode: string) => `transfer-management/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
   activate_beneficiary: () => 'transfer-management/v1/alinma-pay/beneficiaries/activation/mark',
   edit_beneficiary: (beneficiaryCode: string) => `transfer-management/v1/alinma-pay/beneficiaries${beneficiaryCode}`,
-  get_beneficiaries_dynamic_fields: () => 'transfer-management/v1/alinma-pay/beneficiaries/dynamic-fields'
+  get_beneficiaries_dynamic_fields: () => 'transfer-management/v1/alinma-pay/beneficiaries/dynamic-fields',
 };
 
 export default INTERNATIONAL_TRANSFERS_URLS;

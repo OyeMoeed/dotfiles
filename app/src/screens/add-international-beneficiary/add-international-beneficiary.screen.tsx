@@ -1,5 +1,13 @@
 import icons from '@app/assets/icons';
-import { IPayCheckbox, IPayDropdown, IPayFootnoteText, IPayIcon, IPayImage, IPayView } from '@app/components/atoms';
+import {
+  IPayCheckbox,
+  IPayDropdown,
+  IPayFlag,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayImage,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -103,6 +111,8 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
               label="COMMON.BENEFECIARY_COUNTRY"
               isSearchable
               onSelectListItem={onSelectCountry}
+              showLeftIcon
+              rightIcon={<IPayFlag countryCode={countryCode} />}
             />
             <IPayDropdown
               dropdownType="NEW_BENEFICIARY.SELECT_DELIVERY_TYPE"
@@ -214,11 +224,11 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    getWUBeneficiaryCurrenciesData();
+    if (countryCode) getWUBeneficiaryCurrenciesData();
   }, [countryCode]);
 
   useEffect(() => {
-    getWURemittanceTypesData();
+    if (currencyCode) getWURemittanceTypesData();
   }, [currencyCode]);
 
   const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {
