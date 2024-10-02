@@ -1,7 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
-import useLocation from '@app/hooks/location.hook';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { setToken } from '@app/network/client';
@@ -11,9 +10,9 @@ import { OtpVerificationProps } from '@app/network/services/authentication/otp-v
 import otpVerification from '@app/network/services/authentication/otp-verification/otp-verification.service';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
-import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
+import { showPermissionModal } from '@app/store/slices/permission-alert-slice';
 import { setWalletInfo } from '@app/store/slices/wallet-info-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -23,6 +22,7 @@ import { useEffect, useRef, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { Keyboard } from 'react-native';
+import { GeoCoordinates } from 'react-native-geolocation-service';
 import { FormValues } from './mobile-and-iqama-verification.interface';
 
 const useMobileAndIqamaVerification = () => {
@@ -41,10 +41,9 @@ const useMobileAndIqamaVerification = () => {
   const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [resendOtpPayload, setResendOtpPayload] = useState<LoginUserPayloadProps>();
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
+  const [locationData, setLocationData] = useState<GeoCoordinates | null>(null);
 
   const [isHelpSheetVisible, setHelpSheetVisible] = useState(false);
-  const { fetchLocation } = useLocation();
-  const { checkAndHandlePermission } = useLocationPermission();
 
   const onCheckTermsAndConditions = () => {
     setCheckTermsAndConditions(!checkTermsAndConditions);
@@ -177,16 +176,17 @@ const useMobileAndIqamaVerification = () => {
 
   const prepareTheLoginService = async (data: any) => {
     const { mobileNumber, iqamaId } = data;
-    const locationData = await fetchLocation();
     if (!locationData) {
+      dispatch(showPermissionModal());
       return;
     }
+
     setIsLoading(true);
     const deviceInfo: DeviceInfoProps = {
       ...(await getDeviceInfo()),
       locationDetails: {
-        latitude: locationData.latitude,
-        longitude: locationData.longitude,
+        latitude: `${locationData.latitude}`,
+        longitude: `${locationData.longitude}`,
         city: '',
         district: '',
         country: '',
@@ -211,10 +211,6 @@ const useMobileAndIqamaVerification = () => {
   };
 
   const onSubmit: SubmitHandler<FormValues> = async (data) => {
-    const hasLocation = await checkAndHandlePermission();
-    if (!hasLocation) {
-      return;
-    }
     setOtpError(false);
     if (!checkTermsAndConditions) {
       renderToast(t('COMMON.TERMS_AND_CONDITIONS_VALIDATION'));
@@ -275,6 +271,7 @@ const useMobileAndIqamaVerification = () => {
     resendOtp,
     isHelpSheetVisible,
     onCloseHelpSheet,
+    setLocationData,
   };
 };
 

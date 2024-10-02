@@ -260,6 +260,8 @@ const icons = {
   addSquare2: 'add-square2',
   wallet_add_11: 'wallet-add-11',
   HeartGradientIcon,
+  exportIcon: 'export-3',
+  profileIcon: 'profile-2user-filled',
 };
 
 export default icons;

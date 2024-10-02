@@ -170,7 +170,11 @@
     "CONTACT_NUMBER_OR_NAME": "رقم الاتصال أو الاسم",
     "CONTACT_NAME": "اسم جهة الاتصال",
     "NO_RESULTS_FOUND": "لا توجد نتائج",
-    "CONTACT_LIMIT": "تم الوصول إلى حد جهات الاتصال"
+    "CONTACT_LIMIT": "تم الوصول إلى حد جهات الاتصال",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "سماح ب الوصول إلى جهات الاتصال الخاصة بك",
+    "CONTACTS_PERMISSION_TITLE": "يرجى تفعيل الوصول إلى جهات الاتصال",
+    "CONTACTS_PERMISSION_DESCRIPTION": "سوف لا تكون قادرًا على اختيار جهة اتصال لارسال المال لها دون إذن للوصول إلى جهات الاتصال الخاصة بك.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "أذن في وصول جهات اتصال"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "بطاقات غير محدودة،\nفرص غير محدودة",
@@ -564,6 +568,10 @@
     "SARIE": "ساري"
   },
   "LOCATION": {
+    "LOCATION_ACCESS": "الوصول إلى الموقع",
+    "ALLOW_LOCATION_ACCESS": "السماح بالوصول إلى الموقع",
+    "ALLOW_ALINMAPAY_LOCATION_ACCESS": "السماح لتطبيق “AlinmaPay” بالوصول إلى موقعك",
+    "PLEASE_ENABLE_LOCATION_ACCESS": "لضمان أمان حسابك، يرجى تمكين الوصول إلى الموقع لأغراض التحقق",
     "ADDRESS_NOT_FOUND": "لم يتم العثور على العنوان",
     "PERMISSION_REQUIRED": "الموافقة مطلوبة",
     "LOCATION_PERMISSION_REQUIRED": "تتطلب هذه التطبيق إذن الموقع. يرجى تمكينه في الإعدادات الخاصة بك.",
