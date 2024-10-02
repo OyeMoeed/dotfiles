@@ -23,4 +23,11 @@ const updateBaseURL = async () => {
   }
 };
 
-export { isNonProductionEnv, updateBaseURL };
+const isEditableBaseURL = (): boolean => {
+  const { BASE_URL } = Config;
+  const currentEnv = BASE_URL.substring(BASE_URL.indexOf('//') + 2, BASE_URL.indexOf('//') + 5);
+  const editableEnvs = ['sit', 'uat', 'div'];
+  return editableEnvs.includes(currentEnv);
+};
+
+export { isNonProductionEnv, updateBaseURL, isEditableBaseURL };

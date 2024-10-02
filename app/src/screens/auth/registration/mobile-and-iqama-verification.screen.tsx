@@ -29,13 +29,13 @@ import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { FieldValues, UseFormHandleSubmit } from 'react-hook-form';
-import { isNonProductionEnv } from '@app/network/utilities/base-url';
 import networkConstants from '@app/network/constants';
 import { getValueFromAsyncStorage, setValueToAsyncStorage, StorageKeys } from '@app/utilities';
 import RNRestart from 'react-native-restart';
 import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
 import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
 import { GeoCoordinates } from 'react-native-geolocation-service';
+import { isEditableBaseURL } from '@app/network/utilities/base-url';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook';
 import { FormValues } from './mobile-and-iqama-verification.interface';
@@ -189,7 +189,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                     large
                     rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
                   />
-                  {isNonProductionEnv() && renderEnviromentSwitch()}
+                  {isEditableBaseURL() && renderEnviromentSwitch()}
                 </>
               </IPayScrollView>
             </IPayView>
