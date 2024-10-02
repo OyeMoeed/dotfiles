@@ -38,12 +38,11 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isIosOS } from '@app/utilities/constants';
 import { States, buttonVariants } from '@app/utilities/enums.util';
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import { IPayContactsPermissionRefType } from '@app/components/molecules/ipay-contacts-permission-sheet/ipay-contacts-permission-sheet.interface';
 import useContacts from '@app/hooks/use-contacts';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
@@ -63,7 +62,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const remainingLimitRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const [search, setSearch] = useState<string>('');
-  const contacts = useContacts();
+  const { onPermissionGranted, contacts } = useContacts();
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
@@ -72,7 +71,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const [contentWidth, setContentWidth] = useState(0);
   const [containerWidth, setContainerWidth] = useState(0);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const contactsPermissionRef = useRef<IPayContactsPermissionRefType>(null);
 
   const SCROLL_SIZE = 100;
   const ICON_SIZE = 18;
@@ -134,34 +132,6 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         break;
     }
   };
-
-  const onPermissionGranted = useCallback(() => {
-    // TODO: refactor this function as it's return is unused
-    // Contacts.getAll().then((contactsList: Contact[]) => {
-    //   // const flattenedArray = contactsList.reduce((acc: Contact[], obj) => {
-    //   //   const mappedValues = obj.phoneNumbers.map((item) => ({
-    //   //     ...obj,
-    //   //     phoneNumbers: [
-    //   //       {
-    //   //         ...item,
-    //   //         number: formatMobileNumber(item.number),
-    //   //       },
-    //   //     ],
-    //   //   }));
-    //   //   return acc.concat(mappedValues);
-    //   // }, []);
-    //   // const saudiNumbers = flattenedArray.filter((item: Contact) => {
-    //   //   const isSaudiNumber = REGEX.saudiMobileNumber.test(item?.phoneNumbers[0]?.number);
-    //   //   return isSaudiNumber;
-    //   // });
-    //   // const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
-    //   //   ...item,
-    //   //   givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
-    //   //   recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
-    //   // }));
-    //   // setContacts(listWithUniqueId);
-    // });
-  }, []);
 
   const searchIcon = <IPayIcon icon={icons.user_filled} size={20} color={colors.primary.primary500} />;
 
@@ -490,7 +460,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         </IPayFormProvider>
       </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
-      <IPayContactsPermission ref={contactsPermissionRef} onPermissionGranted={onPermissionGranted} />
+      <IPayContactsPermission onPermissionGranted={onPermissionGranted} />
     </IPaySafeAreaView>
   );
 };

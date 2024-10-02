@@ -123,6 +123,7 @@ import {
   MusanedPaymentSuccessfulScreen,
 } from '@app/screens/musaned';
 import { IPayRatingSheet } from '@app/components/organism';
+import { IPayDisabledModulesSheet } from '@app/components/molecules';
 
 const MainStack = createStackNavigator();
 
@@ -309,6 +310,7 @@ const MainStackNavigator = () => {
         </MainStack.Group>
       </MainStack.Navigator>
       <IPayRatingSheet />
+      <IPayDisabledModulesSheet />
     </IPaySafeAreaView>
   );
 };
