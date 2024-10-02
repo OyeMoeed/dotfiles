@@ -1,17 +1,27 @@
 import { TransferToMusanedConfirmMockProps } from './transfer-to-musaned-confirm.interface';
 
 const musanedInquiryMock: TransferToMusanedConfirmMockProps = {
-  otpRef: 'OTP24189P6GYR',
-  otp: '8104',
-  deviceInfo: {
-    platformVersion: '10',
-    deviceName: 'Apple',
-    deviceId: '3EF4A506-B5FF-4956-99ED-51A64B7E4827,Apple,iPhone14,2',
-    platform: 'IOS',
+  status: {
+    code: 'I000000',
+    type: 'SUCCESS',
+    desc: 'retail.msg.default.success',
+    sessionReference: 'SSPAYC8e49f187482f439ebeaae907bfa13650',
+    requestReference: '05884201404937392329',
   },
   authentication: {
-    transactionId: 'TRPAYCbceed9f57e474714aa926eb519501a09',
+    transactionId: 'TRPAYCb1e370a7ef8048bcaec673696bda6bb6',
   },
+  response: {
+    mobileNumber: '1234567890',
+    amount: '100.00',
+    walletNumber: '12346',
+    beneficiaryName: 'John Doe',
+    trxDateTime: '2024-07-17T15:30:00',
+    salaryMonth: 'July 2024',
+    transferJustificationDescription: 'Salary transfer',
+    transactionId: 'XYZ123456789',
+  },
+  successfulResponse: true,
 };
 
 export default musanedInquiryMock;

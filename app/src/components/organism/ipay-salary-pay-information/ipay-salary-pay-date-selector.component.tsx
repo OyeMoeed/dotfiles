@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import moment from 'moment';
 
-import { IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
+import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { IPayAnimatedTextInput, IPayList } from '@app/components/molecules';
 import icons from '@app/assets/icons';
@@ -11,16 +12,24 @@ import salaryPayInformation from './ipay-salary-pay-information.style';
 import { IPaySalaryPayDateSelectorProps } from './ipay-salary-pay-information.interface';
 
 const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
-  onPressDatePicker,
-  isAdvanceSalary,
-  selectedDate,
   inputFieldStyleFromDate,
   inputFieldStyleToDate,
+  isAdvanceSalary,
+  onPressDatePicker,
+  selectedDate,
   selectedToDate,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = salaryPayInformation(colors);
+  const dateFromNow = moment(`02/${selectedToDate}`, 'DD/MM/YYYY').diff(
+    moment(`02/${selectedDate}`, 'DD/MM/YYYY'),
+    'month',
+  );
+  const isToDateLessThanFromDate = dateFromNow < 0;
+  const isToDateMoreThan6 = dateFromNow > 6;
+  const toDateError = isToDateMoreThan6 || isToDateLessThanFromDate;
+  const errorMessage = isToDateMoreThan6 ? 'MUSANED.MAXIMUM_DURATION_MESSAGE' : 'MUSANED.ENSURE_CORRECT_DATE';
 
   const onPressDatePickerData = (value: 'FROM_DATE' | 'TO_DATE') => {
     onPressDatePicker(value);
@@ -53,7 +62,6 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
             )
           }
         />
-        {/* <IPayCaption1Text text="asd" /> */}
       </IPayPressable>
       {isAdvanceSalary ? (
         <IPayPressable onPress={() => onPressDatePickerData('TO_DATE')} style={[styles.reasonsView, styles.width50]}>
@@ -71,19 +79,21 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
               </IPayPressable>
             }
           />
-          {/* <IPayCaption1Text text="asd" /> */}
+          {toDateError ? <IPayCaption1Text color={colors.error.error500} text={errorMessage} /> : <IPayView />}
         </IPayPressable>
       ) : null}
-      <IPayList
-        title="MUSANED.SELECTED_MONTH"
-        isShowIcon
-        isShowDetail
-        textStyle={styles.titleStyle}
-        detailTextStyle={styles.listTextStyle}
-        detailText={`1 ${t('MUSANED.MONTHS')}`}
-        detailIconDisabled
-        shouldTranslateSubTitle={false}
-      />
+      {dateFromNow > 0 && dateFromNow < 7 ? (
+        <IPayList
+          title="MUSANED.SELECTED_MONTH"
+          isShowIcon
+          isShowDetail
+          textStyle={styles.titleStyle}
+          detailTextStyle={styles.listTextStyle}
+          detailText={`${dateFromNow} ${t('MUSANED.MONTHS')}`}
+          detailIconDisabled
+          shouldTranslateSubTitle={false}
+        />
+      ) : null}
     </IPayView>
   );
 };

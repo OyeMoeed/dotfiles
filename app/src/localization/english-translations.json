@@ -1594,6 +1594,8 @@
     "PAYMENT_STATUS": "Payment Status",
     "LAST_PAYMENT": "Last Payment",
     "SELECTED_MONTH": "Selected Months",
-    "MONTHS": "Months"
+    "MONTHS": "Months",
+    "MAXIMUM_DURATION_MESSAGE": "The maximum duration is 6 months.",
+    "ENSURE_CORRECT_DATE": "Ensure the 'To Date' is after the 'From Date'"
   }
 }
