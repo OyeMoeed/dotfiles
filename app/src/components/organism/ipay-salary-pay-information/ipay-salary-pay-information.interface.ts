@@ -4,7 +4,8 @@ interface IPaySalaryPayInformationProps {
   testID?: string;
   style?: ViewStyle;
   openReason?: () => void;
-  selectedItem?: string;
+  salaryType?: string;
+  salaryId: string;
   notes?: string;
   subtitle?: string;
   inputFieldStyle?: ViewStyle;
@@ -15,15 +16,24 @@ interface IPaySalaryPayInformationProps {
   deductFlag: boolean;
   payExtraFlag: boolean;
   amount: string;
-  selectedDate: string;
+  selectedDate: Date;
   onPressDeductionShow: () => void;
-  deductionAmount: string;
-  setDeductionAmount: (value: string) => void;
-  payExtraAmount: string;
-  setPayExtraAmount: (value: string) => void;
-  selectedDeductionReason?: { text: string };
+  deductionAmount: string | number;
+  setDeductionAmount: (value: string | number) => void;
+  payExtraAmount: string | number;
+  setPayExtraAmount: (value: string | number) => void;
+  selectedDeductionReason?: { text?: string };
   payExtraNote: string;
   setPayExtraNote: (value: string) => void;
+  bonusAmount: string | number;
+  setBonusAmount: (value: string | number) => void;
 }
 
+export interface IPaySalaryPayDateSelectorProps {
+  onPressDatePicker: () => void;
+  isAdvanceSalary: boolean;
+  selectedDate: Date;
+  inputFieldStyle?: ViewStyle;
+  selectedToDate: Date;
+}
 export default IPaySalaryPayInformationProps;

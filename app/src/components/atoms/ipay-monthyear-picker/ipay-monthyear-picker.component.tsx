@@ -19,7 +19,13 @@ import datePickerStyles from './ipay-monthyear-picker.styles';
  * @param {function} [props.onDateChange] - Callback function invoked when the date picker's date changes.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle, onDateChange, value, testID }) => {
+const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
+  androidStyle,
+  onDateChange,
+  value,
+  testID,
+  withYear20 = false,
+}) => {
   const { colors } = useTheme();
 
   const generateYears = (startYear: number) => {
@@ -32,7 +38,7 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
     return years;
   };
 
-  const initialDate = value?.split('/');
+  const initialDate = (value || '')?.split('/');
   const years = generateYears(2024);
   const [selectedMonth, setSelectedMonth] = useState(initialDate[0]);
   const [selectedYear, setSelectedYear] = useState(`20${initialDate[1]}`);
@@ -43,11 +49,14 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
   };
 
   const handleYearChange = (year: string) => {
-    const formatedYear = formatYearToLastTwoDigits(year);
-    setSelectedYear(formatedYear);
-    onDateChange?.(`${selectedMonth}/${formatedYear}`);
+    const formattedYear = formatYearToLastTwoDigits(year);
+    const formattedYearText = withYear20 ? `20${formattedYear}` : `${formattedYear}`;
+    setSelectedYear(formattedYearText);
+    onDateChange?.(`${selectedMonth}/${formattedYearText}`);
   };
+
   const styles = datePickerStyles(colors);
+
   return (
     <IPayView testID={`${testID}-monthyearPicker`} style={styles.pickerContainer}>
       <Picker

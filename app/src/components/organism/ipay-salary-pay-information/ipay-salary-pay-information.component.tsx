@@ -15,15 +15,18 @@ import {
 import { IPayAmountInput, IPayAnimatedTextInput, IPayChip, IPayList } from '@app/components/molecules';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities';
+import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
 
 import IPaySalaryPayInformationProps from './ipay-salary-pay-information.interface';
-import transferInfoStyles from './ipay-salary-pay-information.style';
+import salaryPayInformation from './ipay-salary-pay-information.style';
+import IPaySalaryPayDateSelector from './ipay-salary-pay-date-selector.component';
 
 const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   testID,
   style,
   openReason,
-  selectedItem,
+  salaryType,
+  salaryId,
   subtitle,
   inputFieldStyle,
   fullName,
@@ -42,17 +45,21 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   selectedDeductionReason,
   payExtraNote,
   setPayExtraNote,
+  bonusAmount,
+  setBonusAmount,
 }) => {
   const { colors } = useTheme();
-  const styles = transferInfoStyles(colors);
+  const styles = salaryPayInformation(colors);
   const { t } = useTranslation();
   const [chipValue, setChipValue] = useState(false);
 
   const defaultValue: string = '0.00';
+  const isAdvanceSalary = salaryId === SalaryCategories.Advanced_Salary;
+  const isBonusSalary = salaryId === SalaryCategories.Bonus_Salary;
 
-  const validateAmountInput = (value: string) => {
+  const validateAmountInput = (value: string | number = '') => {
     // Split the value by the decimal point
-    const [integerPart, decimalPart] = value.split('.');
+    const [integerPart, decimalPart] = String(value).split('.');
 
     if (integerPart?.length > 5) {
       return amount;
@@ -73,6 +80,18 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
       setChipValue(false);
     }
   }, [amount, deductionAmount]);
+
+  useEffect(() => {
+    if (!deductFlag) {
+      setDeductionAmount(0);
+    }
+  }, [deductFlag]);
+
+  useEffect(() => {
+    if (!payExtraFlag) {
+      setPayExtraAmount(0);
+    }
+  }, [payExtraFlag]);
 
   // eslint-disable-next-line react/no-unstable-nested-components
   const DeductExtraComponent = () =>
@@ -161,7 +180,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           labelColor={colors.natural.natural500}
           label="MUSANED.NOTE"
           value={payExtraNote}
-          onChange={setPayExtraNote}
+          onChange={(value) => setPayExtraNote(String(value))}
         />
       </IPayView>
     ) : null;
@@ -191,7 +210,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
           label="MUSANED.SALARY_TYPE"
-          value={t(selectedItem || '')}
+          value={t(salaryType || '')}
           editable={false}
           showRightIcon
           customIcon={
@@ -201,50 +220,69 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           }
         />
       </IPayPressable>
-      <IPayPressable onPress={onPressDatePicker} style={styles.reasonsView}>
-        <IPayAnimatedTextInput
-          pointerEvents="none"
-          containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
-          labelColor={colors.natural.natural500}
-          label="MUSANED.SELECT_MONTH"
-          value={selectedDate}
-          editable={false}
-          showRightIcon
-          customIcon={
-            <IPayPressable onPress={onPressDatePicker}>
-              <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
-            </IPayPressable>
-          }
-          rightIcon={<IPayIcon fill="currentColor" icon={icons.calendar} size={22} color={colors.primary.primary500} />}
-        />
-      </IPayPressable>
 
-      <IPayPressable onPress={onPressDeductFlag} style={styles.reasonsView}>
-        <IPayAnimatedTextInput
-          pointerEvents={deductFlag ? 'auto' : 'none'}
-          containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
-          labelColor={colors.natural.natural500}
-          label="MUSANED.DEDUCT_FROM_AMOUNT"
-          value={selectedItem}
-          editable={false}
-          showRightIcon
-          customIcon={<IPayCheckbox isCheck={deductFlag} onPress={onPressDeductFlag} />}
-          extraComponent={<DeductExtraComponent />}
-        />
-      </IPayPressable>
-      <IPayPressable onPress={onPressPayExtraFlag} style={styles.reasonsView}>
-        <IPayAnimatedTextInput
-          pointerEvents={payExtraFlag ? 'auto' : 'none'}
-          containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
-          labelColor={colors.natural.natural500}
-          label="MUSANED.PAY_EXTRA"
-          value={selectedItem}
-          editable={false}
-          showRightIcon
-          customIcon={<IPayCheckbox isCheck={payExtraFlag} onPress={onPressPayExtraFlag} />}
-          extraComponent={<PayExtraComponent />}
-        />
-      </IPayPressable>
+      {isBonusSalary ? (
+        <IPayView>
+          <IPayView style={styles.deductAmountInput}>
+            <IPayFootnoteText
+              regular
+              style={styles.text}
+              text="MUSANED.ENTER_BONUS_AMOUNT"
+              color={colors.natural.natural700}
+            />
+            <IPayAmountInput
+              carretHidden={false}
+              style={styles.amountInput}
+              inputStyles={styles.inputText}
+              currencyStyle={[styles.currencyStyle]}
+              defaultValue={defaultValue}
+              amount={bonusAmount}
+              onAmountChange={(value) => setBonusAmount(validateAmountInput(value))}
+              isEditable
+            />
+          </IPayView>
+          <IPayAnimatedTextInput
+            containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
+            labelColor={colors.natural.natural500}
+            label="MUSANED.NOTE"
+            value={payExtraNote}
+            onChange={(value) => setPayExtraNote(String(value))}
+          />
+        </IPayView>
+      ) : (
+        <>
+          <IPaySalaryPayDateSelector
+            selectedDate={selectedDate}
+            inputFieldStyle={inputFieldStyle}
+            isAdvanceSalary={isAdvanceSalary}
+            onPressDatePicker={onPressDatePicker}
+          />
+          <IPayPressable onPress={onPressDeductFlag} style={styles.reasonsView}>
+            <IPayAnimatedTextInput
+              pointerEvents={deductFlag ? 'auto' : 'none'}
+              containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
+              labelColor={colors.natural.natural500}
+              label="MUSANED.DEDUCT_FROM_AMOUNT"
+              editable={false}
+              showRightIcon
+              customIcon={<IPayCheckbox isCheck={deductFlag} onPress={onPressDeductFlag} />}
+              extraComponent={<DeductExtraComponent />}
+            />
+          </IPayPressable>
+          <IPayPressable onPress={onPressPayExtraFlag} style={styles.reasonsView}>
+            <IPayAnimatedTextInput
+              pointerEvents={payExtraFlag ? 'auto' : 'none'}
+              containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
+              labelColor={colors.natural.natural500}
+              label="MUSANED.PAY_EXTRA"
+              editable={false}
+              showRightIcon
+              customIcon={<IPayCheckbox isCheck={payExtraFlag} onPress={onPressPayExtraFlag} />}
+              extraComponent={<PayExtraComponent />}
+            />
+          </IPayPressable>
+        </>
+      )}
     </IPayView>
   );
 };

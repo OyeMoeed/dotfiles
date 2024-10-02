@@ -31,6 +31,7 @@ import IPayRatingSheet from './ipay-rating-sheet/ipay-rating-sheet.component';
 
 export * from './ipay-musaned-list';
 export { default as IPaySalaryPayInformation } from './ipay-salary-pay-information/ipay-salary-pay-information.component';
+export { default as IPaySalaryPayDateSelector } from './ipay-salary-pay-information/ipay-salary-pay-date-selector.component';
 
 export {
   IPayActionSheet,

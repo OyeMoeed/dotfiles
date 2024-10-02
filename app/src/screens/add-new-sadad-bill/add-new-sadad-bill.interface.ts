@@ -2,9 +2,9 @@ import { SadadBillItemProps } from '@app/components/organism/ipay-sadad-bill-det
 
 export interface SelectedValue {
   id: number;
-  image: string;
+  image?: string;
   text: string;
-  type: string;
+  type?: string;
 }
 
 /**

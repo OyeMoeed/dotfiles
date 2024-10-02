@@ -4,16 +4,8 @@ import { FONT_SIZE_16, FONT_SIZE_20 } from '@app/styles/typography.styles';
 import { Platform } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
 
-const transferInfoStyles = (themeColors: typeof colors) =>
+const salaryPayInformation = (themeColors: typeof colors) =>
   createStyleSheet({
-    chipContainerNotWallet: {
-      marginTop: moderateScale(24),
-    },
-    chipColors: {
-      alignSelf: 'stretch',
-      backgroundColor: themeColors.secondary.secondary100,
-      color: themeColors.secondary.secondary500,
-    },
     gradientView: {
       marginTop: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
@@ -25,9 +17,6 @@ const transferInfoStyles = (themeColors: typeof colors) =>
     },
     text: {
       marginBottom: moderateScale(8),
-    },
-    formHeader: {
-      flexDirection: 'row',
     },
     titleText: {
       color: themeColors.primary.primary600,
@@ -41,14 +30,6 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       minWidth: moderateScale(45),
       textAlign: 'right',
     },
-    inputContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: moderateScale(1),
-      borderColor: themeColors.primary.primary100,
-      borderRadius: moderateScale(22),
-      paddingTop: moderateScale(12),
-    },
     deductInputContainer: {
       justifyContent: 'center',
       paddingHorizontal: moderateScale(20),
@@ -61,15 +42,6 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(22),
       paddingTop: moderateScale(12),
     },
-    focusedContainer: {
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: moderateScale(1),
-      borderColor: themeColors.primary.primary500,
-      borderRadius: moderateScale(22),
-      paddingTop: moderateScale(12),
-    },
-
     currencyStyle: {
       fontSize: FONT_SIZE_16,
       ...Platform.select({
@@ -91,16 +63,6 @@ const transferInfoStyles = (themeColors: typeof colors) =>
       borderRadius: moderateScale(22),
       paddingRight: moderateScale(45),
     },
-    focusedField: {
-      backgroundColor: themeColors.natural.natural0,
-      borderColor: themeColors.primary.primary500,
-      borderRadius: moderateScale(22),
-      paddingRight: moderateScale(45),
-    },
-
-    btnText: {
-      color: themeColors.primary.primary500,
-    },
     deductChipContainer: {
       marginVertical: moderateScale(8),
     },
@@ -120,40 +82,16 @@ const transferInfoStyles = (themeColors: typeof colors) =>
         },
       }),
     },
-    alinmaLogo: {
-      wdith: moderateScale(18),
-      height: moderateScale(18),
-    },
-    alinmaContainer: {
-      marginLeft: moderateScale(30),
-    },
     headerContainer: {
       paddingHorizontal: moderateScale(0),
     },
-    headingView: {
+    width50: { width: '49%' },
+    width100: { width: '100%' },
+    datePickerContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: moderateScale(24),
-      marginBottom: moderateScale(8),
-    },
-    bankDetailsView: {
-      marginStart: moderateScale(16, 0.3),
-    },
-    bankTitleView: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    letterCount: {
-      textAlign: 'right',
-      color: colors.natural.natural500,
-    },
-    bankLogo: {
-      width: moderateScale(24),
-      height: moderateScale(24),
-    },
-    btn: {
-      marginTop: moderateScale(10),
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
     },
   });
 
-export default transferInfoStyles;
+export default salaryPayInformation;

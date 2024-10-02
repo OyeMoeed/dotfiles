@@ -3,7 +3,7 @@ import { moderateScale } from 'react-native-size-matters';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 
-const musanedPaySalary = () =>
+const musanedPaySalary = (colors) =>
   createStyleSheet({
     container: {
       flex: 1,
@@ -14,9 +14,8 @@ const musanedPaySalary = () =>
       flex: 1,
     },
     nextBtn: {
-      marginBottom: moderateScale(46),
-      borderRadius: moderateScale(16),
-      marginHorizontal: moderateScale(24, 0.3),
+      backgroundColor: colors.critical.critical25,
+      justifyContent: 'flex-start',
     },
     buttonContainer: {
       marginBottom: 30,
