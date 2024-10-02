@@ -64,7 +64,7 @@ const IPayCardDetailsBannerComponent: React.FC<IPayCardDetailsBannerProps> = ({
           <IPayView style={styles.contentContainer}>
             <IPayView style={styles.nameContainer}>
               <IPayFootnoteText style={cardHolderNameColor} regular={false} text={carHolderName} />
-              <IPayCaption2Text style={cardTypeNameAndCardNoColor} text={`${cardLastFourDigit}`} />
+              <IPayCaption2Text style={cardTypeNameAndCardNoColor} text={`**** ${cardLastFourDigit}`} />
             </IPayView>
             <IPayCaption2Text style={cardTypeNameAndCardNoColor} text={cardTypeName} />
           </IPayView>
