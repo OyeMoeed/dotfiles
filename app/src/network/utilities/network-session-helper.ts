@@ -8,6 +8,7 @@ import { EncryptedService } from '@app/utilities/enum/encrypted-keys.enum';
 import { deleteData } from '@app/utilities/keychain.utils';
 import { clearAsyncStorage } from '@app/utilities/storage-helper.util';
 import { setToken } from '../client';
+import queryClient from '../query-client';
 
 const clearSession = async (isDelink: boolean) => {
   const { dispatch } = store || {};
@@ -27,6 +28,7 @@ const clearSession = async (isDelink: boolean) => {
     );
     dispatch(resetWalletInfo());
     dispatch(setRearrangedItems(DASHBOARD_ITEMS));
+    queryClient.removeQueries();
   }
   dispatch(
     setAppData({

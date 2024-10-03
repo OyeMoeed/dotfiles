@@ -34,7 +34,7 @@ const MusanedPaymentSuccessfulScreen: React.FC = () => {
   const successMessage = 'MUSANED.PAYMENT_SUCCESS_MESSAGE';
   const gradientColors = [colors.primary.primary50, colors.secondary.secondary50];
   const totalTransferredAmount = `500 ${t('COMMON.SAR')}`;
-  const detailsInfo = getPaymentSalaryConfirmationData(params?.paymentInfo, params.userInfo);
+  const detailsInfo = getPaymentSalaryConfirmationData(params?.paymentInfo, params.userInfo, t);
   const { name, occupationAr, occupationEn } = params.userInfo || {};
 
   const onPressHome = () => {

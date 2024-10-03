@@ -94,7 +94,7 @@ const IPayLaborerDetailsBanner: React.FC<IPayLaborerDetailsBannerProps> = ({
               color={colors.primary.primary900}
               style={styles.basicSalaryAmount}
             >
-              {Number(amount)} <IPayFootnoteText style={styles.sarText} text={t('COMMON.SAR')} />
+              {Number(amount)} <IPayFootnoteText style={styles.sarText} text="COMMON.SAR" />
             </IPaySubHeadlineText>
           </IPayView>
         )}

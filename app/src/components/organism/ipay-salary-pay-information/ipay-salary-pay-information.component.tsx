@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { StyleSheet } from 'react-native';
 
 import icons from '@app/assets/icons';
+import { IPayAnimatedTextInput, IPayList } from '@app/components/molecules';
 import {
   IPayCaption2Text,
   IPayCheckbox,
@@ -12,7 +13,6 @@ import {
   IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
-import { IPayAmountInput, IPayAnimatedTextInput, IPayChip, IPayList } from '@app/components/molecules';
 import { getColorsStyle } from '@app/components/molecules/ipay-chip/ipay-chip.style';
 import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -22,6 +22,9 @@ import { isArabic } from '@app/utilities/constants';
 import IPaySalaryPayDateSelector from './ipay-salary-pay-date-selector.component';
 import IPaySalaryPayInformationProps from './ipay-salary-pay-information.interface';
 import salaryPayInformation from './ipay-salary-pay-information.style';
+import payExtraComponent from './ipay-pay-extra.component';
+import deductExtraComponent from './ipay-deduct-extra.component';
+import IPayBonesSalarySection from './ipay-bouns-salary-section.component';
 
 const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   testID,
@@ -55,40 +58,20 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   bonusAmountNote,
   isToDateLessThanFromDate,
   isToDateMoreThan6,
-  dateFromNow,
+  comingMonthsCount,
 }) => {
   const { colors } = useTheme();
   const styles = salaryPayInformation(colors);
   const { t } = useTranslation();
   const [chipValue, setChipValue] = useState(false);
 
-  const dateNow = dateFromNow === 0 ? 1 : dateFromNow;
+  const comingMonthsNow = comingMonthsCount === 0 ? 1 : comingMonthsCount;
   const defaultValue: string = '0.00';
   const isAdvanceSalary = salaryId === SalaryCategories.Advanced_Salary;
   const isBonusSalary = salaryId === SalaryCategories.Bonus_Salary;
 
-  const validateAmountInput = (value: string | number = '') => {
-    // Split the value by the decimal point
-    const [integerPart, decimalPart] = String(value).split('.');
-
-    if (integerPart?.length > 5) {
-      return amount;
-    }
-
-    if (decimalPart?.length > 2) {
-      return amount;
-    }
-
-    // If both checks pass, return the new value
-    return value;
-  };
-
   useEffect(() => {
-    if (Number(deductionAmount) >= Number(amount)) {
-      setChipValue(true);
-    } else {
-      setChipValue(false);
-    }
+    setChipValue(Number(deductionAmount) >= Number(amount));
   }, [amount, deductionAmount]);
 
   useEffect(() => {
@@ -107,117 +90,39 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
 
   const { textStyle, backgroundStyle } = getColorsStyle(colors, States.NATURAL);
 
-  const deductExtraComponent = () =>
-    deductFlag ? (
-      <IPayView style={styles.deductInputContainer}>
-        <IPayView style={styles.deductAmountInput}>
-          <IPayFootnoteText
-            regular
-            style={styles.text}
-            text="MUSANED.ENTER_DEDUCTION_AMOUNT"
-            color={colors.natural.natural700}
-          />
-          <IPayAmountInput
-            carretHidden={false}
-            style={styles.amountInput}
-            inputStyles={styles.inputText}
-            currencyStyle={[styles.currencyStyle]}
-            defaultValue={defaultValue}
-            amount={deductionAmount}
-            onAmountChange={(value) => setDeductionAmount(validateAmountInput(value))}
-            isEditable
-          />
-        </IPayView>
+  const extraComponentPayExtra = payExtraComponent({
+    payExtraFlag,
+    defaultValue,
+    payExtraAmount,
+    setPayExtraAmount,
+    textStyle,
+    backgroundStyle,
+    amount,
+    inputFieldStyle,
+    payExtraNote,
+    setPayExtraNote,
+    t,
+    colors,
+    styles,
+  });
 
-        {chipValue ? (
-          <IPayChip
-            textValue={chipValue ? 'MUSANED.DEDUCTION_AMOUNT_NOTE' : ''}
-            variant={chipValue ? States.WARNING : States.NATURAL}
-            isShowIcon={chipValue}
-            fullWidth
-            containerStyle={styles.deductChipContainer}
-            icon={<IPayIcon icon={icons.shield_cross} color={colors.critical.critical800} size={16} />}
-          />
-        ) : (
-          <IPayList
-            title="MUSANED.PAID_SALARY"
-            isShowIcon
-            isShowDetail
-            textStyle={{
-              ...styles.titleStyle,
-              ...textStyle,
-            }}
-            containerStyle={[backgroundStyle, styles.paidSalaryContainer]}
-            detailTextStyle={styles.listTextStyle}
-            detailText={`${Number(amount) * dateNow - Number(deductionAmount)} ${t('COMMON.SAR')}`}
-            detailIconDisabled
-            shouldTranslateSubTitle={false}
-          />
-        )}
-
-        <IPayPressable onPress={onPressDeductionShow} style={styles.reasonsView}>
-          <IPayAnimatedTextInput
-            withExtraPadding={false}
-            pointerEvents="none"
-            containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
-            labelColor={colors.natural.natural500}
-            label="MUSANED.DEDUCTION_REASON"
-            value={t(selectedDeductionReason?.text || '')}
-            textAlign={isArabic ? 'right' : 'left'}
-            editable={false}
-            showRightIcon
-            customIcon={
-              <IPayPressable onPress={onPressDeductionShow}>
-                <IPayIcon icon={icons.arrow_circle_down} size={20} color={colors.primary.primary500} />
-              </IPayPressable>
-            }
-          />
-        </IPayPressable>
-      </IPayView>
-    ) : null;
-
-  const payExtraComponent = () =>
-    payExtraFlag ? (
-      <IPayView style={styles.deductInputContainer}>
-        <IPayView style={styles.deductAmountInput}>
-          <IPayFootnoteText regular style={styles.text} text="MUSANED.EXTRA_AMOUNT" color={colors.natural.natural700} />
-          <IPayAmountInput
-            carretHidden={false}
-            style={styles.amountInput}
-            inputStyles={styles.inputText}
-            currencyStyle={[styles.currencyStyle]}
-            defaultValue={defaultValue}
-            amount={payExtraAmount}
-            onAmountChange={(value) => setPayExtraAmount(validateAmountInput(value))}
-            isEditable
-          />
-        </IPayView>
-
-        <IPayList
-          title="MUSANED.PAID_SALARY"
-          isShowIcon
-          isShowDetail
-          textStyle={{
-            ...styles.titleStyle,
-            ...textStyle,
-          }}
-          containerStyle={[backgroundStyle, styles.paidSalaryContainer]}
-          detailTextStyle={styles.listTextStyle}
-          detailText={`${Number(amount) + Number(payExtraAmount)} ${t('COMMON.SAR')}`}
-          detailIconDisabled
-          shouldTranslateSubTitle={false}
-        />
-        <IPayAnimatedTextInput
-          withExtraPadding={false}
-          containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
-          labelColor={colors.natural.natural500}
-          label="MUSANED.NOTE"
-          value={payExtraNote}
-          onChangeText={(text) => setPayExtraNote(text)}
-          textAlign={isArabic ? 'right' : 'left'}
-        />
-      </IPayView>
-    ) : null;
+  const extraComponentDeductExtra = deductExtraComponent({
+    deductFlag,
+    defaultValue,
+    deductionAmount,
+    setDeductionAmount,
+    amount,
+    chipValue,
+    comingMonthsNow,
+    onPressDeductionShow,
+    backgroundStyle,
+    inputFieldStyle,
+    textStyle,
+    selectedDeductionReason,
+    styles,
+    colors,
+    t,
+  });
 
   return (
     <IPayView testID={`${testID}-transfer-information`} style={[styles.gradientView, style]}>
@@ -271,35 +176,15 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
       </IPayPressable>
 
       {isBonusSalary ? (
-        <IPayView>
-          <IPayView style={styles.deductAmountInput}>
-            <IPayFootnoteText
-              regular
-              style={styles.text}
-              text="MUSANED.ENTER_BONUS_AMOUNT"
-              color={colors.natural.natural700}
-            />
-            <IPayAmountInput
-              carretHidden={false}
-              style={styles.amountInput}
-              inputStyles={styles.inputText}
-              currencyStyle={[styles.currencyStyle]}
-              defaultValue={defaultValue}
-              amount={bonusAmount}
-              onAmountChange={(value) => setBonusAmount(validateAmountInput(value))}
-              isEditable
-            />
-          </IPayView>
-          <IPayAnimatedTextInput
-            withExtraPadding={false}
-            containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
-            labelColor={colors.natural.natural500}
-            label="MUSANED.NOTE"
-            value={bonusAmountNote}
-            onChange={(value) => setBonusAmountNote(String(value))}
-            textAlign={isArabic ? 'right' : 'left'}
-          />
-        </IPayView>
+        <IPayBonesSalarySection
+          amount={amount}
+          bonusAmount={bonusAmount}
+          bonusAmountNote={bonusAmountNote}
+          defaultValue={defaultValue}
+          inputFieldStyle={inputFieldStyle}
+          setBonusAmount={setBonusAmount}
+          setBonusAmountNote={setBonusAmountNote}
+        />
       ) : (
         <>
           <IPaySalaryPayDateSelector
@@ -311,7 +196,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             isMainScreen
             isToDateLessThanFromDate={isToDateLessThanFromDate}
             isToDateMoreThan6={isToDateMoreThan6}
-            dateFromNow={dateFromNow}
+            comingMonthsCount={comingMonthsCount}
           />
           <IPayPressable onPress={onPressDeductFlag}>
             <IPayAnimatedTextInput
@@ -323,7 +208,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               editable={false}
               showRightIcon
               customIcon={<IPayCheckbox isCheck={deductFlag} onPress={onPressDeductFlag} />}
-              extraComponent={deductExtraComponent()}
+              extraComponent={extraComponentDeductExtra}
               textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>
@@ -337,7 +222,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               editable={false}
               showRightIcon
               customIcon={<IPayCheckbox isCheck={payExtraFlag} onPress={onPressPayExtraFlag} />}
-              extraComponent={payExtraComponent()}
+              extraComponent={extraComponentPayExtra}
               textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>

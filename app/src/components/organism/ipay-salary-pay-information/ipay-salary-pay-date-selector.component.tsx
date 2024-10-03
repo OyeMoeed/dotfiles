@@ -22,7 +22,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
   amount = 0,
   isToDateLessThanFromDate,
   isToDateMoreThan6,
-  dateFromNow,
+  comingMonthsCount,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -86,26 +86,26 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
           {toDateError ? <IPayCaption1Text color={colors.error.error500} text={errorMessage} /> : <IPayView />}
         </IPayPressable>
       ) : null}
-      {isAdvanceSalary && selectedToDate && dateFromNow > 0 && dateFromNow < 7 ? (
+      {isAdvanceSalary && selectedToDate && comingMonthsCount > 0 && comingMonthsCount < 7 ? (
         <IPayList
           title="MUSANED.SELECTED_MONTH"
           isShowIcon
           isShowDetail
           textStyle={styles.titleStyle}
           detailTextStyle={styles.listTextStyle}
-          detailText={`${dateFromNow} ${t('MUSANED.MONTHS')}`}
+          detailText={`${comingMonthsCount} ${t('MUSANED.MONTHS')}`}
           detailIconDisabled
           shouldTranslateSubTitle={false}
         />
       ) : null}
-      {dateFromNow && isMainScreen && isAdvanceSalary ? (
+      {comingMonthsCount && isMainScreen && isAdvanceSalary ? (
         <IPayList
           title="MUSANED.TOTAL_SALARY"
           isShowIcon
           isShowDetail
           textStyle={styles.titleStyle}
           detailTextStyle={styles.listTextStyle}
-          detailText={`${dateFromNow * Number(amount)} ${t('COMMON.SAR')}`}
+          detailText={`${comingMonthsCount * Number(amount)} ${t('COMMON.SAR')}`}
           detailIconDisabled
           shouldTranslateSubTitle={false}
         />

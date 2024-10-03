@@ -8,6 +8,7 @@ import images from '@app/assets/images';
 import { FeatureSections } from '@app/enums';
 import { isArabic } from '@app/utilities/constants';
 import { BillStatus } from '@app/utilities/enums.util';
+import { TFunction } from 'i18next';
 import { Platform } from 'react-native';
 import Share from 'react-native-share';
 
@@ -117,7 +118,7 @@ const constants = {
   UNSAVED_NUMBER_LENGTH: 14,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
-  monthsString: (t) => [
+  monthsString: (t: TFunction<'translation', undefined>) => [
     t('MONTHS.JANUARY'),
     t('MONTHS.FEBRUARY'),
     t('MONTHS.MARCH'),

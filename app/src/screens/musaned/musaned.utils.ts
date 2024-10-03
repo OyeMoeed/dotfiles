@@ -1,4 +1,4 @@
-import i18n from '@app/localization/i18n.localization';
+import { TFunction } from 'i18next';
 import colors from '@app/styles/colors.const';
 import { MusanedStatus } from '@app/utilities';
 import { shareOptions } from '@app/utilities/shared.util';
@@ -34,13 +34,12 @@ const getStatusStyles = (theme: typeof colors, status: MusanedStatus = MusanedSt
   }
 };
 
-const getShareableMessage = i18n.t('MUSANED.INVITE_LABORER');
-
-const bottomSheetShare = async (mobileNumber: string) => {
+const bottomSheetShare = async (mobileNumber: string, t: TFunction<'translation', undefined>) => {
+  const getShareableMessage = t('MUSANED.INVITE_LABORER');
   const otherOptions = {
     subject: 'Wa',
     message: getShareableMessage,
-    title: i18n.t('MUSANED.HEADER'),
+    title: t('MUSANED.HEADER'),
     social: Share.Social.WHATSAPP,
     whatsAppNumber: mobileNumber,
   };
@@ -53,6 +52,7 @@ const bottomSheetShare = async (mobileNumber: string) => {
 const getPaymentSalaryConfirmationData = (
   paymentInfo: MusanedPaySalaryConfirmPaymentInfo,
   userInfo: MusanedUserDetailsData,
+  t: TFunction<'translation', undefined>,
 ) => {
   const {
     fromDate,
@@ -84,27 +84,27 @@ const getPaymentSalaryConfirmationData = (
     },
     {
       text: 'MUSANED.BASIC_SALARY',
-      details: `${basicSalary} ${i18n.t('SAR')}`,
+      details: `${basicSalary} ${t('COMMON.SAR')}`,
       hidden: !basicSalary || Number(basicSalary) === Number(totalSalary),
     },
     {
       text: 'MUSANED.DEDUCTION_AMOUNT',
-      details: `${deductionAmount} ${i18n.t('SAR')}`,
+      details: `${deductionAmount} ${t('COMMON.SAR')}`,
       hidden: !deductionAmount,
     },
     {
       text: 'MUSANED.PAID_BONUS_AMOUNT',
-      details: `${bonusAmount} ${i18n.t('SAR')}`,
+      details: `${bonusAmount} ${t('COMMON.SAR')}`,
       hidden: !bonusAmount,
     },
     {
       text: 'MUSANED.EXTRA_AMOUNT',
-      details: `${extraAmount} ${i18n.t('SAR')}`,
+      details: `${extraAmount} ${t('COMMON.SAR')}`,
       hidden: !extraAmount,
     },
     {
       text: isMonthlySalary ? 'MUSANED.PAID_SALARY' : 'MUSANED.TOTAL_SALARY',
-      details: `${totalSalary} ${i18n.t('SAR')}`,
+      details: `${totalSalary} ${t('COMMON.SAR')}`,
       hidden: !totalSalary,
     },
     {
@@ -119,11 +119,11 @@ const getPaymentSalaryConfirmationData = (
     },
     {
       text: 'ORDER_SUMMARY.FEES',
-      details: `${fees} ${i18n.t('SAR')}`,
+      details: `${fees} ${t('COMMON.SAR')}`,
     },
     {
       text: 'ORDER_SUMMARY.VAT',
-      details: `${vat} ${i18n.t('SAR')}`,
+      details: `${vat} ${t('COMMON.SAR')}`,
     },
     {
       text: 'MUSANED.NOTE',

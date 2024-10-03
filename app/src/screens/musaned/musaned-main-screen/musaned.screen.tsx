@@ -16,12 +16,13 @@ import { buttonVariants, MusanedStatus } from '@app/utilities';
 import { shareOptions } from '@app/utilities/shared.util';
 import { isArabic } from '@app/utilities/constants';
 import { MusnaedInqueryRecords } from '@app/network/services/musaned';
-
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayLaborerDetailsBanner from '@app/components/organism/ipay-laborer-details-banner/ipay-laborer-details-banner.component';
 import { navigate } from '@app/navigation/navigation-service.navigation';
-import useGetMusanedInquiry from '@app/network/services/musaned/musaned-inquiry/musaned-inquiry.hook';
+import { useGetMusanedInquiry } from '@app/network/services/musaned/musaned-inquiry';
+
 import musanedStyle from './musaned.styles';
+import { NonAlinmaUserProps } from './musaned.interface';
 
 const MusanedScreen: React.FC = () => {
   const { colors } = useTheme();
@@ -67,8 +68,31 @@ const MusanedScreen: React.FC = () => {
     refBottomSheet?.current?.present();
   };
 
+  const nonAlinmaUser = ({ index, name, payrollAmount, item, detailsTranslated }: NonAlinmaUserProps) => (
+    <>
+      {index === 0 ? (
+        <IPayChip
+          fullWidth
+          containerStyle={styles.chipContainer}
+          textValue="MUSANED.NOT_ALINMA_USERS_MESSAGE"
+          headingStyles={styles.chipHeading}
+        />
+      ) : null}
+      <IPayLaborerDetailsBanner
+        titleText={name}
+        amount={payrollAmount}
+        onPress={() => openBottomSheet(item)}
+        details={detailsTranslated}
+        shouldTranslateTitle={false}
+        withArrow
+      />
+    </>
+  );
+
   const renderItem = ({ item, index }: { item: MusnaedInqueryRecords; index: number }) => {
     const { poiExperationDate, name, paymentStatus, payrollAmount, occupationEn, occupationAr } = item;
+    const detailsTranslated = isArabic ? occupationAr : occupationEn;
+
     return (
       <IPayView style={styles.listView}>
         {selectedTab === ALINMA_PAY_USERS ? (
@@ -79,27 +103,16 @@ const MusanedScreen: React.FC = () => {
             amount={payrollAmount}
             onPress={() => openBottomSheet(item)}
             shouldTranslateTitle={false}
-            details={isArabic ? occupationAr : occupationEn}
+            details={detailsTranslated}
           />
         ) : (
-          <>
-            {index === 0 ? (
-              <IPayChip
-                fullWidth
-                containerStyle={styles.chipContainer}
-                textValue="MUSANED.NOT_ALINMA_USERS_MESSAGE"
-                headingStyles={styles.chipHeading}
-              />
-            ) : null}
-            <IPayLaborerDetailsBanner
-              titleText={name}
-              amount={payrollAmount}
-              onPress={() => openBottomSheet(item)}
-              details={isArabic ? occupationAr : occupationEn}
-              shouldTranslateTitle={false}
-              withArrow
-            />
-          </>
+          nonAlinmaUser({
+            index,
+            name,
+            payrollAmount,
+            item,
+            detailsTranslated,
+          })
         )}
       </IPayView>
     );
@@ -162,6 +175,15 @@ const MusanedScreen: React.FC = () => {
     refBottomSheet?.current?.close();
   };
 
+  const renderHistory = () => (
+    <IPayPressable onPress={onPressHistory}>
+      <IPayView style={styles.headerRightContent}>
+        <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
+        <IPaySubHeadlineText regular color={colors.primary.primary500} text="COMMON.HISTORY" />
+      </IPayView>
+    </IPayPressable>
+  );
+
   return (
     <>
       <IPaySafeAreaView style={styles.container}>
@@ -170,14 +192,7 @@ const MusanedScreen: React.FC = () => {
           backBtn
           title="MUSANED.HEADER"
           applyFlex
-          rightComponent={
-            <IPayPressable onPress={onPressHistory}>
-              <IPayView style={styles.headerRightContent}>
-                <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
-                <IPaySubHeadlineText regular color={colors.primary.primary500} text="COMMON.HISTORY" />
-              </IPayView>
-            </IPayPressable>
-          }
+          rightComponent={renderHistory()}
         />
         <IPaySegmentedControls
           onSelect={handleSelectedTab}

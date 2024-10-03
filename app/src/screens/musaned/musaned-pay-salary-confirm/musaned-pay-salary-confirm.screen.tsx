@@ -46,7 +46,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
   const { otpConfig } = useConstantData();
   const styles = musanedPaySalaryConfirm(colors);
 
-  const detailsInfo = getPaymentSalaryConfirmationData(params?.paymentInfo, params.userInfo);
+  const detailsInfo = getPaymentSalaryConfirmationData(params?.paymentInfo, params.userInfo, t);
 
   const otpVerificationRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -111,8 +111,8 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
       if (prepareMusaned?.status?.type === ApiResponseStatusType.SUCCESS) {
         if (showOtpSheet) {
           setResponsePrepare({
-            otpRef: prepareMusaned.response.otpRef,
-            transactionId: prepareMusaned.authentication.transactionId,
+            otpRef: prepareMusaned?.response?.otpRef,
+            transactionId: prepareMusaned?.authentication?.transactionId,
           });
           setOtpSheetVisible(true);
 
@@ -143,7 +143,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
       confirmPayload,
     );
 
-    if (apiConfirmationResponse.status.type === APIResponseType.SUCCESS) {
+    if (apiConfirmationResponse?.status?.type === APIResponseType.SUCCESS) {
       onOtpCloseBottomSheet();
       navigate(ScreenNames.MUSANED_PAYMENT_SUCCESSFUL, {
         ...params,

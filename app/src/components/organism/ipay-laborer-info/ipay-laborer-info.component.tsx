@@ -1,6 +1,4 @@
-import { IPayFlatlist, IPayFootnoteText, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
-// @ts-ignore: import of react-native-round-flags types are not supported
-import Flag from 'react-native-round-flags';
+import { IPayFlag, IPayFlatlist, IPayFootnoteText, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FC } from 'react';
@@ -22,7 +20,7 @@ const IPayLaborerInfo: FC<IPayLaborerInfoProps> = ({ userData }) => {
           shouldTranslate={false}
           text={item.details}
         />
-        {item?.key && <Flag code={item?.key} style={styles.countryFlagImg} />}
+        {item?.key && <IPayFlag countryCode={item?.key} style={styles.countryFlagImg} />}
       </IPayView>
     </IPayView>
   );

@@ -12,26 +12,19 @@ import { ApiResponse } from '../../services.interface';
 const transferToMusanedConfirm = async (
   params: TransferToMusanedConfirmReqParams,
   payload: TransferToMusanedConfirmReqPayload,
-): Promise<TransferToMusanedConfirmMockProps> => {
+): Promise<ApiResponse<TransferToMusanedConfirmMockProps> | undefined | TransferToMusanedConfirmMockProps> => {
   const { walletNumber } = params;
   if (constants.MOCK_API_RESPONSE) {
     return musanedInquiryMock;
   }
 
-  try {
-    const apiResponse: ApiResponse<TransferToMusanedConfirmMockProps> = await apiCall({
-      endpoint: MUSANED_URLS.TRANSFER_TO_MUSANED_CONFIRM(walletNumber),
-      method: 'POST',
-      payload,
-    });
+  const apiResponse = await apiCall<TransferToMusanedConfirmMockProps>({
+    endpoint: MUSANED_URLS.TRANSFER_TO_MUSANED_CONFIRM(walletNumber),
+    method: 'POST',
+    payload,
+  });
 
-    if (apiResponse?.status) {
-      return apiResponse;
-    }
-    return { ...apiResponse?.response, apiResponseNotOk: true };
-  } catch (error) {
-    return { error: { error: error.message } || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export default transferToMusanedConfirm;

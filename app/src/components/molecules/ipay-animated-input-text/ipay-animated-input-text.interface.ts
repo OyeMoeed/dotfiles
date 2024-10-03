@@ -120,6 +120,6 @@ export interface AnimatedTextInputProps extends TextInputProps {
   errorMessageStyle?: StyleProp<ViewStyle>;
   suffix?: string;
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto' | undefined;
-  extraComponent?: ReactElement<any> | undefined;
+  extraComponent?: ReactElement<any> | undefined | null;
   withExtraPadding?: boolean;
 }

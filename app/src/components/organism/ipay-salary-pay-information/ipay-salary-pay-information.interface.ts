@@ -1,5 +1,7 @@
+import colors from '@app/styles/colors.const';
+import { TFunction } from 'i18next';
 import { Dispatch, SetStateAction } from 'react';
-import { ViewStyle } from 'react-native';
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 interface IPaySalaryPayInformationProps {
   testID?: string;
@@ -34,7 +36,7 @@ interface IPaySalaryPayInformationProps {
   setDeductionReasonsTypes: Dispatch<SetStateAction<{ text?: string | undefined }>>;
   isToDateLessThanFromDate: boolean;
   isToDateMoreThan6: boolean;
-  dateFromNow: number;
+  comingMonthsCount: number;
 }
 
 export interface IPaySalaryPayDateSelectorProps {
@@ -48,6 +50,51 @@ export interface IPaySalaryPayDateSelectorProps {
   amount?: string;
   isToDateLessThanFromDate: boolean;
   isToDateMoreThan6: boolean;
-  dateFromNow: number;
+  comingMonthsCount: number;
 }
+
+export interface PayExtraComponentProps {
+  payExtraFlag?: boolean;
+  defaultValue: string;
+  payExtraAmount: string | number;
+  setPayExtraAmount: (value: string | number) => void;
+  textStyle: TextStyle;
+  backgroundStyle: ViewStyle;
+  amount: string;
+  inputFieldStyle?: ViewStyle;
+  payExtraNote: string;
+  setPayExtraNote: (value: string) => void;
+  t: TFunction<'translation', undefined>;
+  colors: typeof colors;
+  styles: StyleSheet.NamedStyles<any>;
+}
+
+export interface DeductExtraComponentProps {
+  defaultValue: string;
+  textStyle: TextStyle;
+  backgroundStyle: ViewStyle;
+  amount: string;
+  inputFieldStyle?: ViewStyle;
+  t: TFunction<'translation', undefined>;
+  colors: typeof colors;
+  styles: StyleSheet.NamedStyles<any>;
+  deductFlag: boolean;
+  deductionAmount: string | number;
+  setDeductionAmount: (value: string | number) => void;
+  chipValue: boolean;
+  comingMonthsNow: number;
+  onPressDeductionShow: () => void;
+  selectedDeductionReason?: { text?: string };
+}
+
+export interface IPayBonesSalarySectionProps {
+  setBonusAmountNote: (value: string) => void;
+  bonusAmountNote: string;
+  setBonusAmount: (value: string | number) => void;
+  defaultValue: string;
+  amount: string;
+  bonusAmount: string | number;
+  inputFieldStyle?: ViewStyle;
+}
+
 export default IPaySalaryPayInformationProps;

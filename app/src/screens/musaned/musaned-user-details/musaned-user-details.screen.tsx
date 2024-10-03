@@ -17,6 +17,8 @@ import { buttonVariants } from '@app/utilities';
 import { useRoute } from '@react-navigation/core';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
+import { isArabic } from '@app/utilities/constants';
+
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
 import { MusanedUserDetailsRouteProps } from './musaned-user-details.interface';
 import musanedUserDetailsStyles from './musaned-user-details.style';
@@ -24,9 +26,7 @@ import musanedUserDetailsStyles from './musaned-user-details.style';
 const MusanedUserDetails = () => {
   const { colors } = useTheme();
   const styles = musanedUserDetailsStyles(colors);
-  const { i18n, t } = useTranslation();
-  const currentLanguage = i18n.language;
-  const isArabic = currentLanguage === 'ar';
+  const { t } = useTranslation();
 
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
 
@@ -70,7 +70,7 @@ const MusanedUserDetails = () => {
   };
 
   const onInvitePress = () => {
-    bottomSheetShare(walletInfo?.userContactInfo?.mobileNumber);
+    bottomSheetShare(walletInfo?.userContactInfo?.mobileNumber, t);
   };
 
   return (

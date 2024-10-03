@@ -15,9 +15,19 @@ const musanedStyle = (colors: typeof themeColors) =>
       marginTop: moderateScale(14),
       borderWidth: moderateScale(0),
     },
-    unselectedTab: { backgroundColor: colors.natural.natural0, borderRadius: moderateScale(10) },
-    noResult: { flexGrow: 1, alignItems: 'center', justifyContent: 'center', marginTop: moderateScale(200, 0.3) },
-    noResultContent: { gap: 12 },
+    unselectedTab: {
+      backgroundColor: colors.natural.natural0,
+      borderRadius: moderateScale(10),
+    },
+    noResult: {
+      flexGrow: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: moderateScale(200, 0.3),
+    },
+    noResultContent: {
+      gap: 12,
+    },
     requestButton: {
       backgroundColor: colors.primary.primary500,
       marginVertical: verticalScale(12),
