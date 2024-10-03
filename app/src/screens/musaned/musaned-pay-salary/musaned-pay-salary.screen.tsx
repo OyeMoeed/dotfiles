@@ -173,11 +173,16 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onLocalTransferPrepare = async () => {
+    const dateFromDays = dateFromNow === 0 ? 1 : dateFromNow;
+    const totalSalary =
+      Number(payrollAmount) * (isAdvanceSalary ? dateFromDays : 1) -
+      Number(deductionAmount || 0) +
+      Number(payExtraAmount || 0);
+
     const paymentInfoData: MusanedPaySalaryConfirmPaymentInfo = {
       fromDate: selectedPrevDate,
       toDate: selectedPrevToDate,
-      totalSalary:
-        Number(payrollAmount) * (dateFromNow || 1) - Number(deductionAmount || 0) + Number(payExtraAmount || 0),
+      totalSalary,
       basicSalary: payrollAmount,
       extraAmount: payExtraAmount,
       bonusAmount,
