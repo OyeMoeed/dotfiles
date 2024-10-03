@@ -5,6 +5,9 @@ interface DynamicFieldRendererProps {
   field: DynamicField;
   control: Control;
   errors: FieldErrors;
+  handleChange?: (index?: string, value?: string) => void;
+  myIdValue?: string;
+  myIdCheck?: boolean;
   handleParentLovChange?: (fieldIndex: string, selectedValue: string) => Promise<void>;
 }
 

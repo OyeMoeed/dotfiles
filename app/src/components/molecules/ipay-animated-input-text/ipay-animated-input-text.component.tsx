@@ -31,6 +31,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   suffix,
   pointerEvents,
   extraComponent,
+  withExtraPadding = true,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -79,7 +80,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
 
   return (
     <IPayView testID={`${testID}-animated-input`} pointerEvents={pointerEvents}>
-      <IPayView style={styles.container}>
+      <IPayView style={[styles.container, withExtraPadding ? styles.extraPadding : {}]}>
         <IPayView
           style={[
             styles.containerBox,

@@ -42,6 +42,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
         style={[styles.reasonsView, isAdvanceSalary ? styles.width50 : styles.width100]}
       >
         <IPayAnimatedTextInput
+          withExtraPadding={false}
           pointerEvents="none"
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyleFromDate]}
           labelColor={colors.natural.natural500}
@@ -67,6 +68,7 @@ const IPaySalaryPayDateSelector: FC<IPaySalaryPayDateSelectorProps> = ({
       {isAdvanceSalary ? (
         <IPayPressable onPress={() => onPressDatePickerData('TO_DATE')} style={[styles.reasonsView, styles.width50]}>
           <IPayAnimatedTextInput
+            withExtraPadding={false}
             pointerEvents="none"
             containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyleToDate]}
             labelColor={colors.natural.natural500}

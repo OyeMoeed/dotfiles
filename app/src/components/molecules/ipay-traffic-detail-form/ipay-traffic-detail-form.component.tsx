@@ -1,13 +1,13 @@
-import icons from '@app/assets/icons';
-import { IPayFootnoteText, IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayCheckboxTitle, IPayRHFAnimatedTextInput } from '@app/components/molecules';
+import { IPayFootnoteText, IPayView } from '@app/components/atoms';
 
 import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TrafficVoilationTypes } from '@app/utilities/enums.util';
-import React, { useCallback } from 'react';
+import React from 'react';
+
 import { Controller } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
+import IPayCheckboxTitle from '../ipay-checkbox-title/ipay-chekbox-title.component';
+import DynamicFormComponent from '../ipay-dynamic-form/ipay-dynamic-form.component';
 import IPaySegmentedControls from '../ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayTrafficDetailFormProps } from './ipay-traffic-detail-form.interface';
 import trafficDetailStyles from './ipay-traffic-detail-form.style';
@@ -31,25 +31,18 @@ import trafficDetailStyles from './ipay-traffic-detail-form.style';
 const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
   testID,
   onCheckboxAction,
-  onBeneficiaryIdAction,
-  onIdTypeAction,
   myIdCheck,
   control,
-  onChangeText,
-  errorMessage,
-  clearVoilationNumber,
   formSelectedTab,
   handleFormTabSelect,
+  fields,
+  errors,
+  myIdValue,
 }: IPayTrafficDetailFormProps) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
   const styles = trafficDetailStyles(colors);
-  const getInputStyles = useCallback(() => {
-    const baseStyle = styles.inputContainerStyle;
-    const additionalStyle = (errorMessage && styles.errorStyle) || (myIdCheck && styles.greyInputStyle);
 
-    return additionalStyle ? [baseStyle, additionalStyle] : [baseStyle];
-  }, [errorMessage, myIdCheck]);
   const tabs = [t('TRAFFIC_VIOLATION.BY_VIOLATION_NUMBER'), t('TRAFFIC_VIOLATION.BY_VIOLATION_ID')];
 
   return (
@@ -76,69 +69,13 @@ const IPayTrafficDetailForm: React.FC<IPayTrafficDetailFormProps> = ({
           />
         )}
       />
-
-      <Controller
-        name={TrafficPaymentFormFields.MY_ID}
+      <DynamicFormComponent
+        errors={errors}
         control={control}
-        render={() => (
-          <IPayRHFAnimatedTextInput
-            name={TrafficPaymentFormFields.MY_ID}
-            label={myIdCheck ? 'BILL_PAYMENTS.MY_ID' : 'TRAFFIC_VIOLATION.VIOLATOR_ID'}
-            labelColor={myIdCheck ? colors.natural.natural500 : colors.primary.primary500}
-            showRightIcon={!myIdCheck}
-            editable={!myIdCheck}
-            containerStyle={getInputStyles()}
-            inputStyle={styles.inputStyle}
-            customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
-            onClearInput={onBeneficiaryIdAction}
-            onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
-            assistiveText={errorMessage}
-            isError
-            maxLength={10}
-          />
-        )}
+        fields={fields}
+        myIdValue={myIdValue}
+        myIdCheck={myIdCheck}
       />
-
-      <Controller
-        name={TrafficPaymentFormFields.ID_TYPE}
-        control={control}
-        render={() => (
-          <IPayRHFAnimatedTextInput
-            testID="id-type-input"
-            name={TrafficPaymentFormFields.ID_TYPE}
-            label="BILL_PAYMENTS.ID_TYPE"
-            editable={false}
-            showRightIcon
-            containerStyle={[styles.inputContainerStyle]}
-            inputStyle={styles.inputStyle}
-            customIcon={<IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.primary.primary500} />}
-            onClearInput={onIdTypeAction}
-          />
-        )}
-      />
-
-      {formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM && (
-        <Controller
-          name={TrafficPaymentFormFields.VOILATION_NUMBER}
-          control={control}
-          render={() => (
-            <IPayRHFAnimatedTextInput
-              name={TrafficPaymentFormFields.VOILATION_NUMBER}
-              label="TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL"
-              labelColor={colors.primary.primary500}
-              containerStyle={[styles.inputContainerStyle]}
-              inputStyle={styles.inputStyle}
-              customIcon={<IPayIcon icon={icons.cross_square} size={18} color={colors.natural.natural500} />}
-              onClearInput={clearVoilationNumber}
-              onChange={(event) => onChangeText && onChangeText(event.nativeEvent.text)}
-              assistiveText={errorMessage}
-              showRightIcon
-              isError
-              maxLength={10}
-            />
-          )}
-        />
-      )}
     </IPayView>
   );
 };

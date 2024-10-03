@@ -10,7 +10,7 @@ const ipayAccountBalanceStyles = (themeColors: typeof colors) =>
       borderColor: themeColors.natural.natural0,
       paddingHorizontal: moderateScale(24, 0.3),
       paddingVertical: moderateScale(18),
-      marginBottom: verticalScale(12),
+      marginBottom: verticalScale(13),
       backgroundColor: colors.natural.natural3,
     },
     accountBalanceView: {

@@ -3,23 +3,38 @@ import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayContentNotFound, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
-import IPayTrafficDetailForm from '@app/components/molecules/ipay-traffic-detail-form/ipay-traffic-detail-form.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 
-import { TrafficPaymentFormFields, TrafficPaymentType } from '@app/enums/traffic-payment.enum';
-import { getValidationSchemas } from '@app/services';
+import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { TrafficTabPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
-import React, { useCallback, useRef, useState } from 'react';
-import * as Yup from 'yup';
+import {
+  BillPaymentOptions,
+  MoiPaymentTypes,
+  TrafficTabPaymentTypes,
+  TrafficVoilationTypes,
+  buttonVariants,
+} from '@app/utilities/enums.util';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 
+import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
+import IPayTrafficDetailForm from '@app/components/molecules/ipay-traffic-detail-form/ipay-traffic-detail-form.component';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { BillersService } from '@app/network/services/bill-managment/get-billers-services/get-billers-services.interface';
+import { BillersTypes } from '@app/network/services/bill-managment/get-billers/get-billers.interface';
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import getDynamicFieldsService from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.service';
+import getBillersServiceProvider from '@app/network/services/bills-management/get-billers-services/get-billers-services.service';
+import getBillersService from '@app/network/services/bills-management/get-billers/get-billers.service';
+import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
+import { useTypedSelector } from '@app/store/store';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { UseFormReset } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import TrafficFormValues from './traffic-voilation-case.interface';
+import { TrafficFormValues } from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
@@ -27,121 +42,182 @@ const TrafficVoilationCasesScreen: React.FC = () => {
   const styles = trafficPaymentStyles(colors);
   const { t } = useTranslation();
   const { idTypes } = useConstantData();
-  const [, setSelectedTab] = useState<string>(TrafficTabPaymentTypes.INQUIRE);
-  const [sheetType, setSheetType] = useState<string>('');
-  const [isBtnEnabled, setBtnEnabled] = useState<boolean>(false);
   const [isRefund, setIsRefund] = useState<boolean>(false);
+  const [trafficViolationsData, setTrafficViolationsData] = useState<BillersTypes | undefined>({} as BillersTypes);
+  const [trafficService, setTrafficService] = useState<BillersService>({} as BillersService);
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const selectSheeRef = useRef<any>(null);
-  const invoiceSheetRef = useRef<any>(null);
-  const tabs = ['TRAFFIC_VIOLATION.INQUIRE', 'TRAFFIC_VIOLATION.REFUND'];
+  const selectSheeRef = useRef<bottomSheetTypes>(null);
+  const invoiceSheetRef = useRef<bottomSheetTypes>(null);
+  const [fields, setFields] = useState<DynamicField[]>([]);
+  const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND')];
+  const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [trafficServiceType, setTrafficServiceType] = useState<BillersService[]>([]);
+  const [myIdValue, setMyIdValue] = useState<string>('');
 
-  const { serviceProvider, serviceType, idType, duration, beneficiaryId, myIdInput, myId } = getValidationSchemas(t);
+  const paymentOrRefund = MoiPaymentTypes.PAYMENT;
+
   const [formSelectedTab, setFormSelectedTab] = useState<string>(TrafficVoilationTypes.BY_VIOLATION_NUM);
-  const validationSchema = Yup.object().shape({
-    serviceProvider,
-    serviceType,
-    idType,
-    duration,
-    beneficiaryId,
-    myIdInput,
-    myId,
-  });
 
-  const handleTabSelect = useCallback((tab: string) => {
+  const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(fields);
+
+  useEffect(() => {
+    if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM) {
+      setTrafficService(trafficServiceType?.[0]);
+    } else {
+      setTrafficService(trafficServiceType?.[1]);
+    }
+  }, [formSelectedTab, trafficServiceType]);
+
+  const handleTabSelect = useCallback((tab: string, reset: UseFormReset<TrafficFormValues>) => {
     if (tab === TrafficTabPaymentTypes.REFUND) {
       setIsRefund(true);
     } else {
       setIsRefund(false);
     }
-
-    setSelectedTab(tab);
+    reset();
   }, []);
 
-  const onOpenSheet = (type: string) => {
-    setSheetType(type);
+  const handleFormTabSelect = useCallback((tab: string, reset) => {
+    setFormSelectedTab(tab);
+    reset();
+  }, []);
 
-    selectSheeRef.current.present();
+  const onValidateBills = async (data: any) => {
+    const revertFlatKey = revertFlatKeys(data);
+    const dynamicFields = fields?.map((item) => {
+      if (Object.keys(revertFlatKey).includes(item?.index)) {
+        return {
+          label: item?.label,
+          index: item?.index,
+          value: revertFlatKey[item?.index],
+          description: revertFlatKey[item?.index],
+          isFormValid: false,
+        };
+      }
+      return [];
+    });
+
+    const isViolationID = formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID;
+    const payLoad = {
+      walletNumber,
+      refund: isRefund,
+      dynamicFields,
+    };
+
+    const apiResponse = await validateBill(
+      trafficViolationsData?.billerId ?? '',
+      trafficService?.serviceId ?? '',
+      payLoad,
+    );
+    if (apiResponse?.status.code === 'ERR_E700885') {
+      return invoiceSheetRef.current?.present();
+    }
+    if (apiResponse?.successfulResponse) {
+      const violationNum = isRefund ? data.BeneficiaryId_OfficialId : data.TrafficViolationsByViolationID_ViolationID;
+      const violationDetails = {
+        serviceId: trafficService?.serviceId,
+        serviceDescription: trafficService?.serviceDesc,
+        applyTax: trafficService?.applyTax,
+        billerId: trafficViolationsData?.billerId,
+        moiBillPaymentType: fields[0]?.requiredInPaymentOrRefund,
+        amount: apiResponse?.response?.totalFeeAmount ?? 0,
+        violatorId: data.BeneficiaryId_OfficialId ?? '',
+        violationNo: violationNum ?? '',
+        serviceProvider: BillPaymentOptions.TRAFFIC_VIOLATION,
+        serviceType: formSelectedTab,
+        groupPaymentId: apiResponse?.response?.groupPaymentId,
+        paymentId: apiResponse?.response?.paymentId,
+      };
+      if (isViolationID) {
+        navigate(ScreenNames.TRAFFIC_VOILATION_ID, { violationDetails, isViolationID, dynamicFields });
+      } else {
+        navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, {
+          variant: true,
+          payOnly: false,
+          violationDetails,
+          isViolationID,
+          dynamicFields,
+        });
+      }
+    }
+    return false;
   };
 
-  const handleFormTabSelect = useCallback((tab: string) => {
-    setFormSelectedTab(tab);
+  const onGetBillers = async () => {
+    const apiResponse = await getBillersService();
+    if (apiResponse.successfulResponse) {
+      const trafficViolationObject = apiResponse?.response?.billersList?.find(
+        (item) => item?.billerDesc === BillPaymentOptions.TRAFFIC_VIOLATION,
+      );
+      setTrafficViolationsData(trafficViolationObject);
+    }
+  };
+
+  const fetchFields = async () => {
+    const apiResponse = await getDynamicFieldsService(
+      trafficViolationsData?.billerId ?? '',
+      trafficService?.serviceId ?? '',
+      walletNumber ?? '',
+      formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM,
+    );
+
+    if (apiResponse) {
+      const fetchedFields = apiResponse.response.dynamicFields;
+      const filteredFields: DynamicField[] = fetchedFields.filter(
+        (field) => field.requiredInPaymentOrRefund === paymentOrRefund.toUpperCase(),
+      );
+      setFields(filteredFields);
+      setMyIdValue(apiResponse?.response?.customerIdNumber?.value);
+    }
+  };
+
+  useEffect(() => {
+    if (trafficService?.serviceId) {
+      fetchFields();
+    }
+  }, [trafficService]);
+
+  useEffect(() => {
+    onGetBillers();
   }, []);
+
+  const onGetBillersServices = async (billerID: string) => {
+    const apiResponse = await getBillersServiceProvider(billerID);
+
+    if (apiResponse.successfulResponse) {
+      setTrafficServiceType(apiResponse.response.servicesList);
+    }
+  };
+
+  useEffect(() => {
+    if (trafficViolationsData?.billerId) {
+      onGetBillersServices(trafficViolationsData?.billerId);
+    }
+  }, [trafficViolationsData]);
+
   return (
-    <IPayFormProvider<TrafficFormValues>
-      validationSchema={validationSchema}
-      defaultValues={{
-        idType: '',
-        beneficiaryId: '',
-        voilationNumber: '',
-        myIdInput: '',
-        myId: '',
-      }}
-    >
-      {({ setValue, getValues, control, watch }) => {
+    <IPayFormProvider<TrafficFormValues> validationSchema={validationSchema} defaultValues={defaultValues}>
+      {({ setValue, getValues, control, formState: { errors, isValid }, watch, handleSubmit, reset }) => {
         const myIdChecked = watch(TrafficPaymentFormFields.MY_ID_CHECK); // Watch the checkbox value
 
         const onSelectValue = (item: { id: number; text: string }) => {
           const { text } = item;
 
           setValue(TrafficPaymentFormFields.ID_TYPE, text);
-          selectSheeRef.current.close();
+          selectSheeRef.current?.close();
         };
 
         const onCheckboxAction = () => {
           const currentCheck = !getValues(TrafficPaymentFormFields.MY_ID_CHECK);
 
-          /// TODO will change this
           if (currentCheck) {
-            setValue(TrafficPaymentFormFields.MY_ID, '1243425454'); // Set MY_ID if checkbox is checked
+            setValue('BeneficiaryId_OfficialId', myIdValue); // Set MY_ID if checkbox is checked
           } else {
-            setValue(TrafficPaymentFormFields.MY_ID, ''); // Clear MY_ID if checkbox is unchecked
+            setValue('BeneficiaryId_OfficialId', ''); // Clear MY_ID if checkbox is unchecked
           }
           setValue(TrafficPaymentFormFields.MY_ID_CHECK, currentCheck); // Toggle the checkbox value
 
           setErrorMessage('');
-        };
-
-        const getSelectedValue = () => {
-          switch (sheetType) {
-            case TrafficPaymentType.ID_TYPE:
-              return getValues(TrafficPaymentFormFields.ID_TYPE);
-            default:
-              return getValues(TrafficPaymentFormFields.VOILATION_NUMBER);
-          }
-        };
-
-        const clearBeneficiaryFelid = () => {
-          setErrorMessage('');
-          if (getValues(TrafficPaymentFormFields.MY_ID).length > 0) {
-            setValue(TrafficPaymentFormFields.MY_ID, '');
-          }
-        };
-
-        const clearVoilationNumber = () => {
-          if (getValues(TrafficPaymentFormFields.VOILATION_NUMBER).length > 0) {
-            setValue(TrafficPaymentFormFields.VOILATION_NUMBER, '');
-          }
-        };
-        const onChangeText = (text: string) => {
-          if (text.length > 0) {
-            setBtnEnabled(true);
-          } else {
-            setBtnEnabled(false);
-          }
-          setErrorMessage('');
-        };
-
-        const onSubmit = () => {
-          if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_NUM && isRefund) {
-            navigate(ScreenNames.TRAFFIC_VOILATION_NUM_REFUND);
-          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && isRefund) {
-            navigate(ScreenNames.TRAFFIC_VOILATION_ID_REFUND);
-          } else if (formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID && !isRefund) {
-            navigate(ScreenNames.TRAFFIC_VOILATION_ID);
-          } else {
-            navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT, { variant: ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN });
-          }
         };
 
         return (
@@ -149,27 +225,26 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             <IPaySafeAreaView>
               <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.TRAFFIC_VIOLATIONS" titleStyle={styles.screenTitle} />
               <IPayView style={styles.container}>
-                <IPayTabs customStyles={styles.tabWrapper} tabs={tabs} onSelect={handleTabSelect} />
+                <IPayTabs tabs={tabs} onSelect={(tab) => handleTabSelect(tab, reset)} />
                 <IPayView style={styles.contentContainer}>
                   <IPayTrafficDetailForm
                     formSelectedTab={formSelectedTab}
-                    handleFormTabSelect={handleFormTabSelect}
+                    handleFormTabSelect={(tab) => handleFormTabSelect(tab, reset)}
                     onCheckboxAction={onCheckboxAction}
-                    onBeneficiaryIdAction={clearBeneficiaryFelid}
-                    onIdTypeAction={() => onOpenSheet(TrafficPaymentType.ID_TYPE)}
-                    clearVoilationNumber={clearVoilationNumber}
                     myIdCheck={myIdChecked}
                     control={control}
-                    onChangeText={onChangeText}
                     errorMessage={errorMessage}
+                    fields={fields}
+                    errors={errors}
+                    myIdValue={myIdValue}
                   />
                   <IPayButton
-                    btnText={isRefund ? 'TRAFFIC_VIOLATION.REFUND' : 'NEW_SADAD_BILLS.INQUIRE'}
+                    btnText="NEW_SADAD_BILLS.INQUIRE"
                     btnType={buttonVariants.PRIMARY}
-                    onPress={onSubmit}
+                    onPress={handleSubmit(onValidateBills)}
                     large
                     btnIconsDisabled
-                    disabled={!isBtnEnabled}
+                    disabled={!isValid}
                   />
                 </IPayView>
               </IPayView>
@@ -177,7 +252,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             <IPayBottomSheet
               heading="BILL_PAYMENTS.ID_TYPE"
               customSnapPoint={SNAP_POINTS.SMALL}
-              onCloseBottomSheet={() => selectSheeRef.current.close()}
+              onCloseBottomSheet={() => selectSheeRef.current?.close()}
               ref={selectSheeRef}
               simpleBar
               cancelBnt
@@ -187,13 +262,17 @@ const TrafficVoilationCasesScreen: React.FC = () => {
               bottomSheetBgStyles={styles.sheetBackground}
             >
               <IPayView style={styles.bottomSheetView}>
-                <IPayListView list={idTypes} onPressListItem={onSelectValue} selectedListItem={getSelectedValue()} />
+                <IPayListView
+                  list={idTypes}
+                  onPressListItem={onSelectValue}
+                  selectedListItem={getValues(TrafficPaymentFormFields.VOILATION_NUMBER)}
+                />
               </IPayView>
             </IPayBottomSheet>
             <IPayBottomSheet
               heading="BILL_PAYMENTS.TRAFFIC_VIOLATIONS"
               customSnapPoint={SNAP_POINTS.SMALL}
-              onCloseBottomSheet={() => invoiceSheetRef.current.close()}
+              onCloseBottomSheet={() => invoiceSheetRef.current?.close()}
               ref={invoiceSheetRef}
               simpleBar
               cancelBnt
@@ -208,7 +287,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
                 btnText="COMMON.TRY_AGAIN"
                 isShowButton
                 icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
-                onBtnPress={() => invoiceSheetRef.current.close()}
+                onBtnPress={() => invoiceSheetRef.current?.close()}
               />
             </IPayBottomSheet>
           </>

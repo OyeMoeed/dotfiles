@@ -121,4 +121,5 @@ export interface AnimatedTextInputProps extends TextInputProps {
   suffix?: string;
   pointerEvents?: 'box-none' | 'none' | 'box-only' | 'auto' | undefined;
   extraComponent?: ReactElement<any> | undefined;
+  withExtraPadding?: boolean;
 }

@@ -83,6 +83,9 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       paddingVertical: scaleFont(10),
       paddingLeft: scaleFont(6),
     },
+    extraPadding: {
+      paddingHorizontal: scaleFont(20, 0.3),
+    },
   });
 
 export default inputFieldStyles;
