@@ -17,6 +17,7 @@ const commonAlertSheet = () =>
     mainText: {
       marginTop: 16,
       marginBottom: 10,
+      textAlign: 'center',
     },
     subTitleText: { fontSize: 14, textAlign: 'center' },
     button: {

@@ -262,6 +262,7 @@ const icons = {
   HeartGradientIcon,
   exportIcon: 'export-3',
   profileIcon: 'profile-2user-filled',
+  driverRefresh: 'driver-refresh1',
 };
 
 export default icons;
