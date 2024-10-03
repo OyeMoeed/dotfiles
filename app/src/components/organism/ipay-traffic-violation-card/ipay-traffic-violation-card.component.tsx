@@ -15,8 +15,8 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
   onSelectBill,
   showCheckBox,
 }) => {
-  const { violationNo, violatorId, amount, selected, violation_no } = billDetails;
-  const violationNumber = violationNo || violation_no;
+  const { violationNo, violatorId, amount, selected } = billDetails;
+  const violationNumber = violationNo || billDetails.violation_no;
   const { colors } = useTheme();
   const styles = trafficViolationCardStyles(colors);
   const { t } = useTranslation();
