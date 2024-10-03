@@ -34,13 +34,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
 
   type RouteProps = RouteProp<any>;
   const { params } = useRoute<RouteProps>();
-  const {
-    name = 'FAISAL SARWAR MUHAMMAD SARWAR',
-    occupationAr = 'عامل منزلي',
-    occupationEn = 'Domestic worker',
-    payrollAmount = '1300',
-    lastPaidSalaryDate,
-  } = (params as MusnaedInqueryRecords) || {};
+  const { name, occupationAr, occupationEn, payrollAmount, lastPaidSalaryDate } =
+    (params as MusnaedInqueryRecords) || {};
 
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
