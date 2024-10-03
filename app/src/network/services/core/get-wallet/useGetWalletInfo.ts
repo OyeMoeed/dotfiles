@@ -8,12 +8,13 @@ import { WalletNumberProp } from './get-wallet.interface';
 const useGetWalletInfo = ({ payload }: { payload: WalletNumberProp }) => {
   const dispatch = useTypedDispatch();
   const { isLoading, res, error, refetch, isRefetching } = useCustomQuery({
-    queryKey: WALLET_QUERY_KEYS.GET_WALLET_INFO,
+    queryKey: [WALLET_QUERY_KEYS.GET_WALLET_INFO, payload?.walletNumber],
     queryFn: () => getWalletInfo(payload),
-    onSuccess: (data) => dispatch(setWalletInfo(data?.response)),
+    onSuccess: (data) => {
+      dispatch(setWalletInfo(data?.response));
+    },
     enabled: !!payload?.walletNumber,
   });
-
   return {
     isLoadingWalletInfo: isLoading,
     walletInfo: res?.response,

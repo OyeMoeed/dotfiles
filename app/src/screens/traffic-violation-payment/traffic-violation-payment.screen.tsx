@@ -1,106 +1,122 @@
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayLinearGradientView, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader, IPayList } from '@app/components/molecules';
+import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayHeader, SadadFooterComponent, useToastContext } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
-import { IPayBottomSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
-import { SNAP_POINT, SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { MOIBillPaymentPayloadProps } from '@app/network/services/bill-managment/moi/bill-payment/bill-payment.interface';
+import moiBillPayment from '@app/network/services/bills-management/moi-bill-payment/moi-bill-payment.service';
+import prepareMoiBill from '@app/network/services/bills-management/prepare-moi-bill/prepare-moi-bill.service';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { States, buttonVariants } from '@app/utilities';
+import { APIResponseType } from '@app/utilities';
+import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { useRoute } from '@react-navigation/core';
-import { t } from 'i18next';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import useBillPaymentConfirmation from './traffic-violation-payment.hook';
 import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
-  const {
-    billPayDetailes,
-    balanceData,
-    handlePay,
-    helpCenterRef,
-    otpRef,
-    handleOtpVerification,
-    handleOnPressHelp,
-    setOtp,
-    isLoading,
-    otpError,
-    setOtpError,
-    otp,
-    otpVerificationRef,
-  } = useBillPaymentConfirmation();
+  const { setOtp, isLoading, otpError, setOtpError, otp, otpVerificationRef } = useBillPaymentConfirmation();
   const { otpConfig } = useConstantData();
-  const { availableBalance, balance, calculatedBill } = balanceData;
   const { colors } = useTheme();
-  const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const styles = billPaymentStyles(colors);
-  const route = useRoute();
-  const variant = route?.params?.variant;
-
-  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
-
-  const [chipValue, setChipValue] = useState('');
-
-  const handleOTPVerify = () => {
-    setOtpSheetVisible(true);
-    handleOtpVerification();
-    setOtpError(false);
-  };
-  const { monthlyRemainingOutgoingAmount } = walletInfo.limitsDetails;
-  const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
-
-  const determineChipValue = useCallback(() => {
-    if (balance === 0) {
-      return 'REQUEST_SUMMARY.NO_REMAINING_AMOUNT';
-    }
-    if (parseFloat(calculatedBill) > availableBalance) {
-      return 'REQUEST_SUMMARY.INSUFFICIENT_BALANCE';
-    }
-    return '';
-  }, [monthlyRemaining]);
-
-  const renderChip = useMemo(
-    () =>
-      chipValue && (
-        <IPayChip
-          textValue={determineChipValue()}
-          variant={States.WARNING}
-          isShowIcon
-          containerStyle={styles.chipContainer}
-          icon={
-            <IPayIcon
-              icon={chipValue === 'TOP_UP.LIMIT_REACHED' ? icons.warning : icons.shield_cross}
-              color={colors.critical.critical800}
-              size={16}
-            />
-          }
-        />
-      ),
-    [chipValue, colors, icons], // Ensure all necessary dependencies are included
+  const { walletNumber, mobileNumber, currentBalance, availableBalance, limitsDetails } = useTypedSelector(
+    (state) => state.walletInfoReducer.walletInfo,
   );
-
-  useEffect(() => {
-    setChipValue(determineChipValue());
-  }, [determineChipValue]);
-
+  const styles = billPaymentStyles();
+  const route = useRoute();
+  const [otpRefState, setOtpRefState] = useState<string>('');
+  const [isSheetVisible, setIsSheetVisible] = useState(false);
+  const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
-  const closeBottomSheetTopUp = () => {
-    setTopUpOptionsVisible(false);
+  const { t } = useTranslation();
+  const { variant, payOnly, violationDetails, isViolationID, dynamicFields } = route.params;
+
+  const { showToast } = useToastContext();
+
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const handleOTPVerify = async () => {
+    const deviceInfo = await getDeviceInfo();
+    const payLoad = {
+      deviceInfo,
+      walletNumber,
+    };
+    const paymentType = 'moi';
+    const apiResponse = await prepareMoiBill(paymentType, payLoad);
+    if (apiResponse?.successfulResponse) {
+      setOtpRefState(apiResponse?.response?.otpRef);
+      setIsSheetVisible(true);
+      setOtpError(false);
+    }
+  };
+
+  const verifyOtp = async () => {
+    try {
+      const deviceInfo = await getDeviceInfo();
+
+      const payload: MOIBillPaymentPayloadProps = {
+        deviceInfo,
+        otp,
+        otpRef: otpRefState,
+        walletNumber,
+        billIdType: '',
+        moiBillPaymentType: violationDetails?.moiBillPaymentType ?? '',
+        amount: violationDetails?.amount ?? '',
+        billerId: violationDetails?.billerId ?? '',
+        serviceDescription: violationDetails?.serviceDescription ?? '',
+        applyTax: violationDetails?.applyTax ?? '',
+        serviceId: violationDetails?.serviceId ?? '',
+        groupPaymentId: violationDetails?.groupPaymentId ?? '',
+        paymentId: violationDetails?.paymentId ?? '',
+        dynamicFields,
+      };
+
+      const apiResponse: any = await moiBillPayment(payload);
+
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+        if (apiResponse?.response) {
+          setIsSheetVisible(false);
+          navigate(ScreenNames.TRAFFIC_VOILATION_PAYMENT_SUCCESS, {
+            payOnly: !payOnly,
+            violationDetails,
+            isViolationID,
+          });
+        }
+      } else {
+        renderToast(t('ERROR.API_ERROR_RESPONSE'));
+        navigate(ScreenNames.BILL_PAYMENT_FAILED);
+      }
+    } catch (error: any) {
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
+  const onCloseBottomSheet = () => {
+    setIsSheetVisible(false);
   };
 
   const topUpSelectionRef = React.createRef<any>();
 
   const navigateTOAktharPoints = async () => {
-    const aktharPointsResponse = await getAktharPoints(walletInfo.walletNumber);
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
       aktharPointsResponse?.status?.type === 'SUCCESS' &&
       aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
@@ -109,6 +125,10 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     } else {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
     }
+  };
+
+  const closeBottomSheetTopUp = () => {
+    setTopUpOptionsVisible(false);
   };
 
   const topupItemSelected = (routeName: string, params: {}) => {
@@ -121,9 +141,51 @@ const TrafficViolationPaymentScreen: React.FC = () => {
   };
 
   const topUpSelectionBottomSheet = () => {
-    // dispatch(setProfileSheetVisibility(false));
     setTopUpOptionsVisible(true);
   };
+
+  const handleOnPressHelp = () => {
+    setHelpCenterVisible(true);
+  };
+
+  const onCloseHelpCenter = () => {
+    setHelpCenterVisible(false);
+  };
+
+  const onResendCodePress = () => otpVerificationRef?.current?.resetInterval();
+
+  const billPayDetailsData = [
+    {
+      id: '1',
+      label: t('TRAFFIC_VIOLATION.AMOUNT'),
+      value: violationDetails?.amount ? `${violationDetails?.amount} ${t('COMMON.SAR')}` : '',
+    },
+    {
+      id: '2',
+      label: t('TRAFFIC_VIOLATION.SERVICE_PROVIDER'),
+      value: violationDetails?.serviceProvider ?? '',
+    },
+    {
+      id: '3',
+      label: t('TRAFFIC_VIOLATION.SERVICE_TYPE'),
+      value: violationDetails?.serviceType ?? '',
+    },
+    {
+      id: '4',
+      label: t('TRAFFIC_VIOLATION.VIOLATOR_ID'),
+      value: violationDetails?.violatorId ?? '',
+    },
+    {
+      id: '5',
+      label: t('TRAFFIC_VIOLATION.VIOLATION_NUMBER_FULL'),
+      value: violationDetails?.violationNo ?? '-',
+    },
+    {
+      id: '6',
+      label: t('TRAFFIC_VIOLATION.VIOLATION_DATE'),
+      value: '-',
+    },
+  ];
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -132,55 +194,46 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         <IPayAccountBalance
           availableBalance={availableBalance ?? 0}
           showRemainingAmount
-          balance={balance ?? 0}
-          monthlyIncomingLimit={balance ?? 0}
+          balance={currentBalance ?? 0}
+          monthlyIncomingLimit={limitsDetails?.monthlyIncomingLimit ?? 0}
           topUpBtnStyle={styles.topUpButton}
+          gradientWidth={`${getBalancePercentage(currentBalance, availableBalance)}%`}
           onPressTopup={topUpSelectionBottomSheet}
         />
         <IPayScrollView showsVerticalScrollIndicator={false}>
           <>
-            <IPayBillDetailsOption showHeader={false} data={billPayDetailes} />
+            <IPayBillDetailsOption showHeader={false} data={billPayDetailsData} />
             {!variant && (
-              <IPayBillDetailsOption showHeader={false} data={billPayDetailes} style={styles.listBottomView} />
+              <IPayBillDetailsOption showHeader={false} data={billPayDetailsData} style={styles.listBottomView} />
             )}
           </>
         </IPayScrollView>
       </IPayView>
-      <IPayLinearGradientView style={styles.gradientBg} gradientColors={colors.appGradient.buttonBackground}>
-        {renderChip || (
-          <IPayList
-            title="TRANSACTION_HISTORY.TOTAL_AMOUNT"
-            detailTextStyle={{ color: colors.primary.primary900 }}
-            showDetail
-            detailText={`${calculatedBill ?? 0} ${t('COMMON.SAR')}`}
-          />
-        )}
-
-        <IPayButton
-          btnType={buttonVariants.PRIMARY}
-          // Disabled for now as QA is blocked to test this
-          // disabled={chipValue}
-          medium
-          onPress={handleOTPVerify}
+      <IPayView style={styles.footerContainer}>
+        <SadadFooterComponent
+          onPressBtn={handleOTPVerify}
+          style={styles.margins}
+          totalAmount={violationDetails?.amount ?? 0}
           btnText="COMMON.PAY"
-          btnIconsDisabled
-          btnStyle={styles.confirmButton}
+          disableBtnIcons
+          btnStyle={styles.payBtn}
+          backgroundGradient={colors.appGradient.buttonBackground}
         />
-      </IPayLinearGradientView>
+      </IPayView>
       <IPayPortalBottomSheet
         heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
+        bold
         cancelBnt
         customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
-        onCloseBottomSheet={() => setOtpSheetVisible(false)}
-        isVisible={isOtpSheetVisible}
-        ref={otpRef}
+        onCloseBottomSheet={onCloseBottomSheet}
+        isVisible={isSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
-          onPressConfirm={handlePay}
-          mobileNumber={walletInfo?.mobileNumber}
+          onPressConfirm={verifyOtp}
+          mobileNumber={mobileNumber}
           setOtp={setOtp}
           setOtpError={setOtpError}
           otpError={otpError}
@@ -193,18 +246,20 @@ const TrafficViolationPaymentScreen: React.FC = () => {
           innerContainerStyle={styles.otpInnerContainer}
           toastContainerStyle={styles.toastContainerStyle}
           headingContainerStyle={styles.headingContainerStyle}
+          onResendCodePress={onResendCodePress}
         />
       </IPayPortalBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="FORGOT_PASSCODE.HELP_CENTER"
         enablePanDownToClose
         simpleBar
         backBtn
-        customSnapPoint={SNAP_POINTS.LARGE}
-        ref={helpCenterRef}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+        isVisible={isHelpCenterVisible}
+        onCloseBottomSheet={onCloseHelpCenter}
       >
         <HelpCenterComponent />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
 
       <IPayPortalBottomSheet
         noGradient

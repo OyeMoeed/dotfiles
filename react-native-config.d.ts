@@ -6,4 +6,5 @@ declare module 'react-native-config' {
   export const GOOGE_MAPS_KEY: string;
   export const PW_APP_ID: string;
   export const PW_PROJECT_NUMBER: string;
+  export const ENV_URLS: string;
 }

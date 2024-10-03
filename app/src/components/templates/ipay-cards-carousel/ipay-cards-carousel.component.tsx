@@ -13,7 +13,7 @@ import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import { buttonVariants, CarouselModes } from '@app/utilities';
 import { SCREEN_WIDTH } from '@gorhom/bottom-sheet';
-import { FC } from 'react';
+import { FC, useEffect, useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import IPayCardsCarouselProps from './ipay-cards-carousel.interface';
 
@@ -28,12 +28,22 @@ const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
   boxHeight,
   onPinCodeSheet,
   isLoadingCards,
-  resetOnDataChange = false,
 }) => {
   const THRESHOLD = verticalScale(20);
   const HEIGHT = boxHeight - THRESHOLD;
 
+  const [closeTrigger, setCloseTrigger] = useState(false);
+
+  const carouselRef = useRef<any>(null);
+  const scrollToFirstTrigger = useTypedSelector((state) => state.cardsReducer.scrollToFirstTrigger);
   const currentCard = useTypedSelector((state) => state.cardsReducer.currentCard);
+
+  useEffect(() => {
+    if (scrollToFirstTrigger) {
+      carouselRef.current?.scrollToFirst();
+      setCloseTrigger((prev) => !prev);
+    }
+  }, [scrollToFirstTrigger]);
 
   if (isLoadingCards) {
     return <IPaySkeletonBuilder variation={IPaySkeletonEnums.CARD_WITH_TITLE} isLoading={isLoadingCards} />;
@@ -65,6 +75,7 @@ const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
       <>
         <IPayView style={styles.cardsContainer}>
           <IPayCarousel
+            ref={carouselRef}
             data={[...cardsData, { newCard: true }]}
             modeConfig={{ parallaxScrollingScale: 1, parallaxScrollingOffset: scaleSize(100) }}
             mode={CarouselModes.PARALLAX}
@@ -72,7 +83,6 @@ const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
             loop={false}
             height={verticalScale(350)}
             onChangeIndex={onChangeIndex}
-            resetOnDataChange={resetOnDataChange}
             renderItem={({ item }) =>
               (item as { newCard?: boolean }).newCard ? (
                 <IPayView style={styles.newCardWrapper}>
@@ -90,7 +100,7 @@ const IPayCardsCarousel: FC<IPayCardsCarouselProps> = ({
           />
         </IPayView>
         {boxHeight > 0 && currentCard && (
-          <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200}>
+          <IPayCustomSheet gradientHandler={false} boxHeight={HEIGHT} topScale={200} closeTrigger={closeTrigger}>
             <IPayCardSection onOpenOTPSheet={onPinCodeSheet} />
           </IPayCustomSheet>
         )}

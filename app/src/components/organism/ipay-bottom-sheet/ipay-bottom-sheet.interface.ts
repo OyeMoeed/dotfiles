@@ -71,4 +71,7 @@ export interface IPayPortalBottomSheetProps extends CommonPros {
   noGradient?: boolean;
   testID?: string;
   defaultIndex?: number;
+  overrideContainerStyle?: StyleProp<ViewStyle>;
+  stopCloseBackgroundPress?: boolean;
+  enableOverDrag?: boolean;
 }

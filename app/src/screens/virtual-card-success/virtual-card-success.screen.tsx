@@ -4,7 +4,7 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { queryClient } from '@app/network';
 import { useGetCards } from '@app/network/services/core/transaction/get-cards';
 import TRANSACTION_QUERY_KEYS from '@app/network/services/core/transaction/transaction.query-keys';
-import { setCards, setCurrentCard } from '@app/store/slices/cards-slice';
+import { setCards, setCurrentCard, triggerScrollToFirst } from '@app/store/slices/cards-slice';
 import { useTypedSelector } from '@app/store/store';
 import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import { isIosOS } from '@app/utilities/constants';
@@ -23,6 +23,7 @@ const VirtualCardSuccessScreen = () => {
       if (availableCards?.length) {
         dispatch(setCards(mapCardData(availableCards)));
         dispatch(setCurrentCard(mapCardData(availableCards)[0]));
+        dispatch(triggerScrollToFirst());
       }
     }
   };

@@ -31,6 +31,7 @@ const getColorsStyle = (
   // Initialize textStyle with color property
   let textStyle: TextStyle = {
     color: getForegroundColor(variant, colors),
+    flex:1,
   };
 
   // Handle different types of headingStyles

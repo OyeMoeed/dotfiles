@@ -55,7 +55,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
-  const [selectedCard, setSelectedCard] = useState<any>(currentCard);
+  const [, setSelectedCard] = useState<any>(currentCard);
   const [isFilterSheetVisible, setIsFilterSheetVisible] = useState<boolean>(false);
 
   const headerTitle = currentCard ? 'CARDS.CARD_TRANSACTIONS_HISTORY' : 'COMMON.TRANSACTIONS_HISTORY';
@@ -135,10 +135,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     getTransactionsData(filtersArray);
   };
 
-  const openBottomSheet = (item: IPayTransactionItemProps) => {
+  const openBottomSheet = (item: any) => {
     let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
-    if (heightMapping[item.transactionRequestType]) {
-      calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
+    const height = heightMapping[item.transactionRequestType as keyof typeof heightMapping];
+    if (height) {
+      calculatedSnapPoint = ['1%', height, isAndroidOS ? '95%' : '100%'];
     }
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
@@ -281,19 +282,21 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       {filterTags && filterTags?.size > 0 && (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {Array.from(filterTags?.keys()).map((key) => (
-              <IPayChip
-                key={key as string}
-                containerStyle={styles.chipContainer}
-                headingStyles={styles.chipHeading}
-                textValue={key as string}
-                icon={
-                  <IPayPressable onPress={() => onPressClose(key as string)}>
-                    <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                  </IPayPressable>
-                }
-              />
-            ))}
+            <IPayView>
+              {Array.from(filterTags?.keys()).map((key) => (
+                <IPayChip
+                  key={key as string}
+                  containerStyle={styles.chipContainer}
+                  headingStyles={styles.chipHeading}
+                  textValue={key as string}
+                  icon={
+                    <IPayPressable onPress={() => onPressClose(key as string)}>
+                      <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                    </IPayPressable>
+                  }
+                />
+              ))}
+            </IPayView>
           </IPayScrollView>
         </IPayView>
       )}
