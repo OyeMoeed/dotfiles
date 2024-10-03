@@ -97,7 +97,7 @@ const TransferInformation: React.FC = () => {
 
   const isTransferButtonDisabled = () => {
     const hasValidAmount = parseFloat(transferAmount) > 0 || parseFloat(transferAmount);
-    const hasValidReason = selectedReason?.text?.trim() !== '';
+    const hasValidReason = selectedReason !== undefined ? selectedReason?.text?.trim() !== '' : false;
     return !hasValidAmount || !hasValidReason;
   };
   const onCloseSheet = () => {

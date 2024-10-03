@@ -23,7 +23,7 @@ import {
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
-import { setCards, setCurrentCard } from '@app/store/slices/cards-slice';
+import { setCards, setCurrentCard, triggerScrollToFirst } from '@app/store/slices/cards-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { filterCards, mapCardData } from '@app/utilities/cards.utils';
@@ -65,7 +65,6 @@ const CardsScreen: React.FC = () => {
   const otpVerificationRef: any = useRef(null);
   const [otpRef, setOtpRef] = useState<string>('');
   const [cardDetails, setCardDetails] = useState<any>({});
-  const [resetOnDataChange, setResetOnDataChange] = useState(false);
 
   const [cardsCurrentState, setCardsCurrentState] = useState<CardScreenCurrentState>(CardScreenCurrentState.FETCHING);
 
@@ -148,6 +147,7 @@ const CardsScreen: React.FC = () => {
       if (availableCards?.length) {
         dispatch(setCards(mapCardData(availableCards)));
         dispatch(setCurrentCard(mapCardData(availableCards)[0]));
+        dispatch(triggerScrollToFirst());
         setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
       } else {
         setCardsCurrentState(CardScreenCurrentState.NO_DATA);
@@ -163,6 +163,7 @@ const CardsScreen: React.FC = () => {
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
+    setOtp('');
   };
 
   const prepareCardInfoData = (data: any) => {
@@ -209,6 +210,7 @@ const CardsScreen: React.FC = () => {
       prepareCardInfoData(apiResponse?.response);
       setIsCardDetailsSheetVisible(true);
       cardDetailsSheetRef?.current?.present();
+      setOtp('');
     }
   };
 
@@ -237,12 +239,11 @@ const CardsScreen: React.FC = () => {
     if (cardsData.length) {
       setCardsCurrentState(CardScreenCurrentState.HAS_DATA);
       dispatch(setCurrentCard(cardsData[0]));
-      setResetOnDataChange(true);
+      dispatch(triggerScrollToFirst());
     } else {
       setCardsCurrentState(CardScreenCurrentState.NO_DATA);
       dispatch(setCurrentCard(undefined));
     }
-    setResetOnDataChange(false);
   }, [cardsData]);
 
   return (
@@ -268,7 +269,6 @@ const CardsScreen: React.FC = () => {
         boxHeight={boxHeight}
         onPinCodeSheet={onPinCodeSheet}
         isLoadingCards={isLoadingCards}
-        resetOnDataChange={resetOnDataChange}
       />
       <IPayPortalBottomSheet
         heading="CARD_OPTIONS.CARD_DETAILS"
