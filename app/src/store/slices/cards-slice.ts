@@ -5,11 +5,13 @@ import { SLICE_NAMES } from '../constants.store';
 interface CardsInitialState {
   cards: CardInterface[];
   currentCard?: CardInterface;
+  scrollToFirstTrigger?: boolean;
 }
 
 const initialState: CardsInitialState = {
   cards: [],
   currentCard: undefined,
+  scrollToFirstTrigger: false,
 };
 
 const cardsSlice = createSlice({
@@ -47,9 +49,13 @@ const cardsSlice = createSlice({
         return card;
       });
     },
+    triggerScrollToFirst(state) {
+      state.scrollToFirstTrigger = !state.scrollToFirstTrigger;
+    },
   },
 });
 
-export const { setCards, resetCards, setCardAtmWithdrawal, setCardFrozen, setCurrentCard } = cardsSlice.actions;
+export const { setCards, resetCards, setCardAtmWithdrawal, setCardFrozen, setCurrentCard, triggerScrollToFirst } =
+  cardsSlice.actions;
 
 export default cardsSlice.reducer;

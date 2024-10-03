@@ -34,16 +34,13 @@ import {
   changeStatus,
   prepareResetCardPinCode,
   resetPinCode,
-  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
-import { setCards } from '@app/store/slices/cards-slice';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
 import checkUserAccess from '@app/utilities/check-user-access';
 import { ApiResponseStatusType, CardStatusNumber, ToastTypes } from '@app/utilities/enums.util';
-import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { useTranslation } from 'react-i18next';
@@ -86,30 +83,11 @@ const CardOptionsScreen: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const { otpConfig } = useConstantData();
-  const helpCenterRef = useRef(null);
+  const helpCenterRef = useRef<any>(null);
   const [otpRef, setOtpRef] = useState<string>('');
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [pin, setPin] = useState('');
-
-  const getCardsData = async (cardApiResponse: any) => {
-    if (cardApiResponse) {
-      const availableCards = filterCards(cardApiResponse?.response?.cards);
-
-      if (availableCards?.length) {
-        dispatch(setCards(mapCardData(availableCards)));
-      }
-    }
-  };
-
-  useGetCards({
-    payload: {
-      walletNumber,
-    },
-    onSuccess: getCardsData,
-    refetchOnWindowFocus: false,
-    enabled: false,
-  });
 
   const initOnlinePurchase = () => {
     if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
@@ -242,7 +220,7 @@ const CardOptionsScreen: React.FC = () => {
 
   const onReplaceCard = async () => {
     // get the card index
-    const cardIndex = currentCard?.cardIndex ?? currentCard.cardIndex;
+    const cardIndex = currentCard?.cardIndex;
     const cardStatusPayload: CardStatusReq = {
       status: CardStatusNumber.Stolen,
       cardIndex,
@@ -254,7 +232,10 @@ const CardOptionsScreen: React.FC = () => {
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       // get the card issuance details
-      const apiResponseCardInquire = await issueCardInquire(walletInfo?.walletNumber, currentCard.cardType as CardType);
+      const apiResponseCardInquire = await issueCardInquire(
+        walletInfo?.walletNumber,
+        currentCard?.cardType as CardType,
+      );
       if (apiResponseCardInquire?.status?.type === 'SUCCESS') {
         // get the card issuance fees
         const feesApiResponse = await getCardIssuanceFees(
