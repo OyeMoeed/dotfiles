@@ -1,3 +1,2 @@
-import getMusanedInquiryList from './musaned-inquiry.service';
-
-export default getMusanedInquiryList;
+export { default as getMusanedInquiryList } from './musaned-inquiry.service';
+export { default as useGetMusanedInquiry } from './musaned-inquiry.hook';

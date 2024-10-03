@@ -1,4 +1,4 @@
-import React, { createRef, useEffect, useRef, useState } from 'react';
+import React, { createRef, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
@@ -59,8 +59,6 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     { id: DeductionReasons.Other, text: 'MUSANED.DEDUCT_OTHER' },
   ];
 
-  const [, setChipValue] = useState<string>('');
-  const [transferAmount] = useState<string>('');
   const [salaryType, setSalaryType] = useState<SelectedValue>(salaryTypes[0]);
   const [selectedDeductionReason, setDeductionReasonsTypes] = useState<{ text?: string }>({});
   const [deductionAmount, setDeductionAmount] = useState<string | number>('');
@@ -81,12 +79,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const salaryTypeBottomSheetRef = useRef<any>(null);
   const deductionReasonBottomSheetRef = useRef<any>(null);
 
-  const dateFromNow = moment(`02/${selectedToDate}`, 'DD/MM/YYYY').diff(
+  const comingMonthsCount = moment(`02/${selectedToDate}`, 'DD/MM/YYYY').diff(
     moment(`02/${selectedFromDate}`, 'DD/MM/YYYY'),
     'month',
   );
-  const isToDateLessThanFromDate = dateFromNow < 0;
-  const isToDateMoreThan6 = dateFromNow > 6;
+  const isToDateLessThanFromDate = comingMonthsCount < 0;
+  const isToDateMoreThan6 = comingMonthsCount > 6;
 
   const isAdvanceSalary = salaryType.id === SalaryCategories.Advanced_Salary;
   const balanceStatusVariants: BalanceStatusVariants = {
@@ -113,22 +111,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     },
   };
 
-  const { limitsDetails, availableBalance, currentBalance } = walletInfo;
-  const { monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount, monthlyOutgoingLimit } = limitsDetails;
-
-  useEffect(() => {
-    const monthlyRemaining = parseFloat(monthlyRemainingOutgoingAmount);
-    const monthlyTotalRemainingLimit = parseFloat(monthlyOutgoingLimit);
-    const updatedTopUpAmount = parseFloat(transferAmount.replace(/,/g, ''));
-
-    if (monthlyRemaining === 0 || updatedTopUpAmount > monthlyRemaining) {
-      setChipValue(t('TOP_UP.AMOUNT_EXCEEDS_CURRENT'));
-    } else if (updatedTopUpAmount > monthlyTotalRemainingLimit) {
-      setChipValue(t('TOP_UP.MONTHLY_SPENDING_LIMIT_REACHED'));
-    } else {
-      setChipValue('');
-    }
-  }, [transferAmount, monthlyRemainingOutgoingAmount, dailyRemainingOutgoingAmount]);
+  const { availableBalance, currentBalance } = walletInfo;
 
   const clearData = () => {
     setSelectedFromDate('');
@@ -173,7 +156,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onLocalTransferPrepare = async () => {
-    const dateFromDays = dateFromNow === 0 ? 1 : dateFromNow;
+    const dateFromDays = comingMonthsCount === 0 ? 1 : comingMonthsCount;
     const totalSalary =
       Number(payrollAmount) * (isAdvanceSalary ? dateFromDays : 1) -
       Number(deductionAmount || 0) +
@@ -251,14 +234,10 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     const currentFullDate = `${currentMonthData}/${currentYear}`;
 
     if (selectedToDate) {
-      setSelectedPrevToDate(selectedToDate);
-    } else {
-      setSelectedPrevToDate(currentFullDate);
+      setSelectedPrevToDate(selectedToDate ?? currentFullDate);
     }
     if (selectedFromDate) {
-      setSelectedPrevDate(selectedFromDate);
-    } else {
-      setSelectedPrevDate(currentFullDate);
+      setSelectedPrevDate(selectedFromDate ?? currentFullDate);
     }
   };
 
@@ -327,7 +306,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
               bonusAmountNote={bonusAmountNote}
               isToDateLessThanFromDate={isToDateLessThanFromDate}
               isToDateMoreThan6={isToDateMoreThan6}
-              dateFromNow={dateFromNow}
+              comingMonthsCount={comingMonthsCount}
             />
           </IPayView>
         </IPayView>
@@ -355,7 +334,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
       <IPayBottomSheet
         heading="MUSANED.SALARY_TYPE"
         onCloseBottomSheet={onCloseSalaryTypesSheet}
-        customSnapPoint={['20%', '65%']}
+        customSnapPoint={['1%', '45%']}
         ref={salaryTypeBottomSheetRef}
         simpleHeader
         simpleBar
@@ -420,7 +399,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
             inputFieldStyleToDate={selectedDateType === 'TO_DATE' ? styles.inputDateFieldStyle : {}}
             isToDateLessThanFromDate={isToDateLessThanFromDate}
             isToDateMoreThan6={isToDateMoreThan6}
-            dateFromNow={dateFromNow}
+            comingMonthsCount={comingMonthsCount}
           />
         ) : (
           <IPayView />

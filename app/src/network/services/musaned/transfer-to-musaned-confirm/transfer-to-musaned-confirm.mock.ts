@@ -1,3 +1,4 @@
+import { ApiResponse } from '../../services.interface';
 import { TransferToMusanedConfirmMockProps } from './transfer-to-musaned-confirm.interface';
 
 const musanedInquiryMock: TransferToMusanedConfirmMockProps = {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { ImageStyle } from 'react-native';
-import { isArabic } from '@app/utilities/constants';
 
+import { isArabic } from '@app/utilities/constants';
 import icons from '@app/assets/icons';
 import images from '@app/assets/images';
 import {
@@ -17,17 +17,7 @@ import {
 import useTheme from '@app/styles/hooks/theme.hook';
 
 import laborerDetailsStyles from './ipay-laborer-details-banner.styles';
-
-interface IPayLaborerDetailsBannerProps {
-  titleText: string;
-  amount?: string | number;
-  testID?: string;
-  onPress?: () => void;
-  shouldTranslateTitle?: boolean;
-  withArrow?: boolean;
-  details: string;
-  isDetailsBanner?: boolean;
-}
+import { IPayLaborerDetailsBannerProps } from './ipay-laborer-details-banner.interface';
 
 const IPayLaborerDetailsBanner: React.FC<IPayLaborerDetailsBannerProps> = ({
   titleText,
@@ -93,7 +83,7 @@ const IPayLaborerDetailsBanner: React.FC<IPayLaborerDetailsBannerProps> = ({
                 color={colors.primary.primary900}
                 style={styles.basicSalaryAmount}
               >
-                {Number(amount)} <IPayFootnoteText style={styles.sarText} text={t('COMMON.SAR')} />
+                {Number(amount)} <IPayFootnoteText style={styles.sarText} text="COMMON.SAR" />
               </IPaySubHeadlineText>
             </IPayView>
           )

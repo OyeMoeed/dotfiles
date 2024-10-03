@@ -18,6 +18,7 @@ import customInvalidateQuery from './invalidate-queries';
 
 export { default as shortString } from './string-functions.utils';
 export { default as getBankIconByCode } from './bank-logo';
+export { default as validateAmountInput } from './validate-amount-input';
 
 export * from './date-helper.util';
 export * from './enums.util';

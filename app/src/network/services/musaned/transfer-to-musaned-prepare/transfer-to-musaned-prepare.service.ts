@@ -12,26 +12,19 @@ import { ApiResponse } from '../../services.interface';
 const transferToMusanedPrepare = async (
   params: TransferToMusanedPrepareReqParams,
   payload: TransferToMusanedPrepareReqPayload,
-): Promise<TransferToMusanedPrepareMockProps> => {
+): Promise<ApiResponse<TransferToMusanedPrepareMockProps> | undefined | TransferToMusanedPrepareMockProps> => {
   const { walletNumber } = params;
   if (constants.MOCK_API_RESPONSE) {
     return musanedInquiryMock;
   }
 
-  try {
-    const apiResponse: ApiResponse<TransferToMusanedPrepareMockProps> = await apiCall({
-      endpoint: MUSANED_URLS.TRANSFER_TO_MUSANED_PREPARE(walletNumber),
-      method: 'POST',
-      payload,
-    });
+  const apiResponse = await apiCall<TransferToMusanedPrepareMockProps>({
+    endpoint: MUSANED_URLS.TRANSFER_TO_MUSANED_PREPARE(walletNumber),
+    method: 'POST',
+    payload,
+  });
 
-    if (apiResponse?.status) {
-      return apiResponse;
-    }
-    return { ...apiResponse?.response, apiResponseNotOk: true };
-  } catch (error) {
-    return { error: { error: error.message } || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export default transferToMusanedPrepare;

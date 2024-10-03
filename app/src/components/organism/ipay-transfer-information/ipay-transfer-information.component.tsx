@@ -14,6 +14,7 @@ import { States, buttonVariants } from '@app/utilities/enums.util';
 import React, { useState } from 'react';
 import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { validateAmountInput } from '@app/utilities';
 import { IPayTransferInformationProps } from './ipay-transfer-information.interface';
 import transferInfoStyles from './ipay-transfer-information.style';
 
@@ -53,22 +54,6 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
   const defaultValue: string = '0.00';
 
   const getLetterCount = () => `${notes?.length}/${maxLength}`;
-
-  const validateAmountInput = (value: string) => {
-    // Split the value by the decimal point
-    const [integerPart, decimalPart] = value.split('.');
-
-    if (integerPart?.length > 5) {
-      return amount;
-    }
-
-    if (decimalPart?.length > 2) {
-      return amount;
-    }
-
-    // If both checks pass, return the new value
-    return value;
-  };
 
   return (
     <IPayView testID={`${testID}-transfer-information`} style={[styles.gradientView, style]}>
@@ -119,7 +104,7 @@ const IPayTransferInformation: React.FC<IPayTransferInformationProps> = ({
           defaultValue={defaultValue}
           amount={amount}
           maxLength={null}
-          onAmountChange={(value) => setAmount(validateAmountInput(value))}
+          onAmountChange={(value) => setAmount(validateAmountInput(value, amount))}
           isEditable={isEditable}
         />
         {chipValue && (
