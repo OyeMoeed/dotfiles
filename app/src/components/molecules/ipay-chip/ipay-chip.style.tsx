@@ -51,7 +51,6 @@ const getColorsStyle = (
       backgroundColor: getBackgroundColor(variant, colors),
       ...(styles.container as ViewStyle),
     },
-    
   };
 };
 
