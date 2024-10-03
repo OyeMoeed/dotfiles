@@ -4,15 +4,19 @@ import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import apiCall from '@network/services/api-call.service';
 import BILLS_MANAGEMENT_URLS from '../bills-management.urls';
 import { GetDynamicFieldsResponseTypes } from './dynamic-fields.interface';
-import getDynamicFieldsMockResponse from './dynamic-fields.mock';
+import { getDynamicFieldsMockResponse, getDynamicFieldsMockResponseByID } from './dynamic-fields.mock';
 
 const getDynamicFieldsService = async (
   billerId: string,
   serviceId: string,
   walletNumber: string,
+  payload,
 ): Promise<GetDynamicFieldsResponseTypes | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
-    return getDynamicFieldsMockResponse;
+    if (payload) {
+      return getDynamicFieldsMockResponse;
+    }
+    return getDynamicFieldsMockResponseByID;
   }
   try {
     const apiResponse = await apiCall({
