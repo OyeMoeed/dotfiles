@@ -329,7 +329,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         <SadadFooterComponent
           btnText="COMMON.NEXT"
           disableBtnIcons
-          btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn || disabledBtn()}
+          btnDisabled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn || disabledBtn()}
           testID="ipay-bill"
           showTopMessage
           totalAmountText={balanceStatusVariants[accountBalanceStatus]?.warningText}

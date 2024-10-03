@@ -215,10 +215,10 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
         <SadadFooterComponent
           btnText="COMMON.CONFIRM"
           disableBtnIcons
-          btnDisbaled={false}
+          btnDisabled={false}
           testID="ipay-bill"
           showTopMessage
-          totalAmountText="COMMON.TOTAL_AMOUNT"
+          totalAmountText="MUSANED.TOTAL_AMOUNT"
           onPressBtn={handleOnConfirmPress}
           partialPay
         />

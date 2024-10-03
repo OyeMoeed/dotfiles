@@ -47,7 +47,7 @@ describe('SadadFooterComponent', () => {
         totalAmount="150"
         selectedItemsCount={2}
         btnText="Proceed"
-        btnDisbaled={false}
+        btnDisabled={false}
         onPressBtn={() => {}}
       />,
     );
@@ -66,7 +66,7 @@ describe('SadadFooterComponent', () => {
         totalAmount="150"
         selectedItemsCount={0}
         btnText="Proceed"
-        btnDisbaled={false}
+        btnDisabled={false}
         onPressBtn={() => {}}
       />,
     );
@@ -84,7 +84,7 @@ describe('SadadFooterComponent', () => {
         totalAmount=""
         selectedItemsCount={2}
         btnText="Proceed"
-        btnDisbaled={false}
+        btnDisabled={false}
         onPressBtn={() => {}}
       />,
     );
@@ -104,7 +104,7 @@ describe('SadadFooterComponent', () => {
         totalAmount="150"
         selectedItemsCount={2}
         btnText="Proceed"
-        btnDisbaled={false}
+        btnDisabled={false}
         onPressBtn={onPressBtnMock}
       />,
     );

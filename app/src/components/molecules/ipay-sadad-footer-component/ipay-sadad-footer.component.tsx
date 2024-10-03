@@ -21,7 +21,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   totalAmount,
   selectedItemsCount,
   btnText,
-  btnDisbaled,
+  btnDisabled,
   btnLeftIcon,
   btnRightIcon,
   disableBtnIcons,
@@ -63,7 +63,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     return (
       <IPayButton
         large
-        disabled={!!warningMessage || btnDisbaled}
+        disabled={!!warningMessage || btnDisabled}
         btnType={buttonVariants.PRIMARY}
         btnText={btnText}
         leftIcon={btnLeftIcon}
@@ -120,7 +120,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         </IPayView>
         <IPayButton
           large
-          disabled={!!warningMessage || btnDisbaled}
+          disabled={!!warningMessage || btnDisabled}
           btnType={buttonVariants.PRIMARY}
           btnText={btnText}
           leftIcon={btnLeftIcon}

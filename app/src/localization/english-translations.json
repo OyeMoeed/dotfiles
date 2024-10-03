@@ -1610,7 +1610,9 @@
     "TOTAL_SALARY": "Total Salary",
     "PAYMENT_SUCCESS_MESSAGE": "Payment Successful",
     "PAY_ANOTHER_LABORER": "Pay Another Laborer",
-    "EXTRA_AMOUNT": "Extra Amount"
+    "EXTRA_AMOUNT": "Extra Amount",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PAID_BONUS_AMOUNT": "Paid Bonus amount"
   },
   "MONTHS": {
     "JANUARY": "January",
