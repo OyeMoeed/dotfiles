@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
+import { IPayButton, IPayChip, IPayContactsPermission, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayGiftTransactionList } from '@app/components/organism';
@@ -41,7 +41,7 @@ const SendGiftListScreen: React.FC = () => {
 
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [isFilterSheetVisible, setIsFilterSheetVisible] = useState<boolean>(false);
-  const contacts = useContacts();
+  const { onPermissionGranted, contacts } = useContacts();
   const { showToast } = useToastContext();
 
   const handleSelectedTab = (tab: string) => {
@@ -289,6 +289,7 @@ const SendGiftListScreen: React.FC = () => {
         isVisible={isFilterSheetVisible}
         onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
       />
+      <IPayContactsPermission onPermissionGranted={onPermissionGranted} />
     </IPaySafeAreaView>
   );
 };

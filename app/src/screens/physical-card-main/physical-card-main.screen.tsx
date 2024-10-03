@@ -6,7 +6,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { scaleSize, SCREEN_WIDTH } from '@app/styles/mixins';
 import { buttonVariants, CarouselModes, CardStatusNumber, CardTypes } from '@app/utilities/enums.util';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import icons from '@app/assets/icons';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -14,6 +14,10 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { getCards } from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import { CardsProp, CardListItem } from '@app/network/services/core/transaction/transaction.interface';
+import useGetAppConfigurations, {
+  ModulesNameEnum,
+} from '@app/network/services/core/app-configurations/use-get-app-configurations.hook';
+import { useFocusEffect } from '@react-navigation/core';
 import physicalCardMainStyles from './physical-card-main-style';
 import PhysicalCardMainNoCardScreen from '../physical-card-main-no-card/physical-card-main-no-card.screen';
 
@@ -23,6 +27,15 @@ const PhysicalCardMainScreen: React.FC = () => {
   const [currentCard, setCurrentCard] = useState<CardInterface>();
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [cardsData, setCardsData] = useState<CardInterface[]>([]);
+  const { triggerDisabledSheet, configData } = useGetAppConfigurations({
+    modules: [ModulesNameEnum.PHYSICAL_CARD_ENABLED],
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      triggerDisabledSheet(ModulesNameEnum.PHYSICAL_CARD_ENABLED);
+    }, [triggerDisabledSheet]),
+  );
 
   const getCardDesc = (cardType: CardTypes) => {
     switch (cardType) {
@@ -66,22 +79,24 @@ const PhysicalCardMainScreen: React.FC = () => {
   const CARD_CONTAINER_HEIGHT = 364;
 
   const getCardsData = async () => {
-    const payload: CardsProp = {
-      walletNumber,
-    };
-    const apiResponse: any = await getCards(payload);
+    if (configData?.[ModulesNameEnum.PHYSICAL_CARD_ENABLED]?.isEnabled) {
+      const payload: CardsProp = {
+        walletNumber,
+      };
+      const apiResponse: any = await getCards(payload);
 
-    if (apiResponse) {
-      const availableCards = apiResponse?.response?.cards.filter(
-        (card: any) =>
-          card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
-          card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
-          card.cardStatus === CardStatusNumber.Freezed,
-      );
+      if (apiResponse) {
+        const availableCards = apiResponse?.response?.cards.filter(
+          (card: any) =>
+            card.cardStatus === CardStatusNumber.ActiveWithOnlinePurchase ||
+            card.cardStatus === CardStatusNumber.ActiveWithoutOnlinePurchase ||
+            card.cardStatus === CardStatusNumber.Freezed,
+        );
 
-      if (availableCards?.length) {
-        setCardsData(mapCardData(availableCards));
-        setCurrentCard(mapCardData(availableCards)[0]);
+        if (availableCards?.length) {
+          setCardsData(mapCardData(availableCards));
+          setCurrentCard(mapCardData(availableCards)[0]);
+        }
       }
     }
   };

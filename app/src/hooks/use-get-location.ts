@@ -67,8 +67,8 @@ const useGetLocation = ({
 
   const getLocation = useCallback(() => {
     Geolocation.getCurrentPosition(
-      (position) => {
-        onLocationSelected(position.coords);
+      async (position) => {
+        await onLocationSelected(position.coords);
         handleClosePress();
       },
       openLocationSettings,
