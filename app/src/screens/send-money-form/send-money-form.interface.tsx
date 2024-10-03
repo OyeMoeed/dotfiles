@@ -1,10 +1,10 @@
 type SendMoneyFormType = {
   id: number;
   subtitle?: string;
-  amount?: string;
+  amount: string;
   notes?: string;
   selectedItem?: { id?: string | number; text: string };
-  mobileNumber?: string;
+  mobileNumber: string;
   name?: string;
   hasWallet?: boolean;
 };

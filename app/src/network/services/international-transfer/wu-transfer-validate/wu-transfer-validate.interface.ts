@@ -4,7 +4,7 @@ interface ValidateWUTransferPayload {
   amount: string;
   amountCurrency: string;
   wuTransactionReason: string;
-  transferPurposeCode: string;
+  transferPurposeCode?: string;
   feeAmount: string;
   vatAmount: string;
   bankFeeAmount: string;

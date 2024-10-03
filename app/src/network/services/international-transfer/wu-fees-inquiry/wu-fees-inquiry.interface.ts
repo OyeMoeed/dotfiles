@@ -24,10 +24,10 @@ interface WuFeesInquiryProps {
 interface FeesInquiryPayload {
   amount: string;
   amountCurrency: string;
-  convertedAmountCurrency: string;
-  deductFeesFromAmount: boolean;
+  convertedAmountCurrency?: string;
+  deductFeesFromAmount?: boolean;
   promoCode: string | null;
-  deviceInfo: IDeveiceInfo;
+  deviceInfo?: IDeveiceInfo;
 }
 
 export { FeesInquiryPayload, WuFeesInquiryProps, WuFeesInquiryResponse };
