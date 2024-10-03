@@ -18,11 +18,15 @@ const useGetPermission = ({
 
   const onPermissionGranted = useCallback(() => {
     onSuccess?.();
-    ref?.current?.close();
+    setTimeout(() => {
+      ref?.current?.close();
+    }, 100);
   }, [onSuccess, ref]);
 
   const presentBottomSheet = useCallback(() => {
-    ref?.current?.present();
+    setTimeout(() => {
+      ref?.current?.present();
+    }, 100);
   }, [ref]);
 
   const checkPermission = useCallback(async () => {

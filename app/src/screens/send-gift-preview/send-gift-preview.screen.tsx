@@ -129,7 +129,6 @@ const SendGiftPreview: FC = ({ route }) => {
 
         <IPayBottomSheet
           heading="SEND_GIFT.PREVIEW_GIFT"
-          ref={previewBottomSheetRef}
           customSnapPoint={isIosOS ? SNAP_POINTS.MID_LARGE : SNAP_POINTS.X_SMALL}
           enablePanDownToClose
           cancelBnt

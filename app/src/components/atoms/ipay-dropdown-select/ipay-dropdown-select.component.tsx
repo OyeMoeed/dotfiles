@@ -3,7 +3,7 @@ import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
 import { SNAP_POINT } from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React, { useEffect, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import IPayDropdownSheet from './ipay-dropdown-select-sheet.component';
 import { IPayDropdownSelectProps, ListItem } from './ipay-dropdown-select.interface';
 import dropdownStyles from './ipay-dropdown-select.styles';
@@ -29,13 +29,6 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<string | undefined>(
-    data?.find((item) => item[valueKey] === selectedValue)?.[labelKey] ?? '',
-  );
-
-  useEffect(() => {
-    if (!selectedValue) setSelectedItem('');
-  }, [selectedValue]);
 
   const listCheckIcon = (
     <IPayIcon
@@ -52,12 +45,16 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   };
 
   const handleSelectItem = (item: ListItem) => {
-    setSelectedItem(item[labelKey]);
     if (onSelectListItem) {
       onSelectListItem(item[valueKey]);
     }
     setIsVisible(false);
   };
+
+  const getDisplayedValue = useMemo(
+    () => data.find((item) => item[valueKey] === selectedValue)?.[labelKey],
+    [data, labelKey, selectedValue, valueKey],
+  );
 
   return (
     <>
@@ -65,7 +62,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         testID={testID}
         label={label}
         editable={editable ?? false}
-        value={selectedItem}
+        value={getDisplayedValue}
         containerStyle={[containerStyle ?? styles.inputContainerStyle, disabled && styles.disabledInput]}
         showRightIcon
         customIcon={customIcon ?? listCheckIcon}
@@ -80,7 +77,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         data={data}
         isSearchable={isSearchable}
         onSelectItem={handleSelectItem}
-        selectedItem={selectedItem || ''}
+        selectedItem={getDisplayedValue || ''}
         snapPoints={customSnapPoints ?? SNAP_POINT.MEDIUM_LARGE}
         heading={label}
         isVisible={isVisible}

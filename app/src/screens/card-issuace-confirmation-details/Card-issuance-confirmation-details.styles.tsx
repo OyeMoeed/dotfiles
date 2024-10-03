@@ -52,5 +52,13 @@ const cardIssuanceConfirmationStyles = (themeColors: typeof colors) =>
     flatList: {
       flex: 0,
     },
+    labelDetailsText: {
+      flex: 2,
+      justifyContent: 'flex-end',
+    },
+    labelContainerStyle: {
+      flex: 1,
+      justifyContent: 'space-between',
+    },
   });
 export default cardIssuanceConfirmationStyles;
