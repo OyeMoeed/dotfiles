@@ -2,6 +2,8 @@ import icons from '@app/assets/icons';
 import { IPayFootnoteText, IPayIcon, IPayTitle2Text, IPayView } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import { IPayPageWrapper } from '@app/components/templates';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React from 'react';
@@ -28,6 +30,7 @@ const BillPaymentFailedScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             btnStyle={styles.btnStyle}
+            onPress={() => navigate(ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN)}
           />
           <IPayButton
             leftIcon={<IPayIcon testID="home-2-icon" icon={icons.HOME_2} color={colors.primary.primary500} size={20} />}
@@ -35,6 +38,7 @@ const BillPaymentFailedScreen: React.FC = () => {
             btnType={buttonVariants.LINK_BUTTON}
             large
             btnStyle={styles.btnStyle}
+            onPress={() => navigate(ScreenNames.HOME)}
           />
         </IPayView>
       </IPayView>

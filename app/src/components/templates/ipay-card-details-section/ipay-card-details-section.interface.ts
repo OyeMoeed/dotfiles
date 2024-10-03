@@ -1,7 +1,10 @@
+import { Dispatch, SetStateAction } from 'react';
+
 interface IPayCardDetailsSectionProps {
   testID?: string;
   isCardPrinted?: boolean;
   onOpenOTPSheet?: () => void;
+  setCloseSheetTrigger?: Dispatch<SetStateAction<boolean>>;
 }
 
 interface Option {

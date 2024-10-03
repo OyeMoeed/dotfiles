@@ -68,6 +68,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
           />
         }
         onClearInput={onServiceAction}
+        selection={{ start: 0 }}
       />
       {isServiceValue && (
         <IPayAnimatedTextInput

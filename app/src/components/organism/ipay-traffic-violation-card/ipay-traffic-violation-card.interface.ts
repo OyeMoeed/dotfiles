@@ -12,6 +12,8 @@ interface BillDetailsProps {
   amount: string;
   currency: string;
   description: string;
+  violationNo: string;
+  violatorId?: string;
 }
 
 interface IPaySadadBillProps {
