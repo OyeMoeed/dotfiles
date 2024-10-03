@@ -157,6 +157,7 @@ const CardIssuanceConfirmationScreen = () => {
       rightContainerStyles={styles.labelDetailsText}
       containerStyle={styles.labelContainerStyle}
       showDetail
+      detailsTruncation={false}
     />
   );
 
