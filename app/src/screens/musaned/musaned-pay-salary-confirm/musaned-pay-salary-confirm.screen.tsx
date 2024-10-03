@@ -26,7 +26,7 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { TransferToMusanedPrepareReqPayload } from '@app/network/services/musaned/transfer-to-musaned-prepare/transfer-to-musaned-prepare.interface';
 import { ApiResponseStatusType, APIResponseType } from '@app/utilities';
 
-import { getPaymentSalaryConfirmationData } from '../musaned.utils';
+import { convertToBEDate, getPaymentSalaryConfirmationData } from '../musaned.utils';
 import {
   MusanedPayConfirmationRouteProps,
   MusanedPaySalaryConfirmScreenProps,
@@ -36,7 +36,7 @@ import { SalaryCategories } from '../musaned-pay-salary/musaned-pay-salary.inter
 
 const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps> = () => {
   const { params } = useRoute<MusanedPayConfirmationRouteProps>();
-  const { salaryType, basicSalary, bonusAmount, fromDate, toDate, extraAmount, deductionAmount } =
+  const { salaryType, basicSalary, bonusAmount, fromDate, toDate, extraAmount, deductionAmount, totalSalary } =
     params?.paymentInfo || {};
   const { name, occupationAr, occupationEn, poiNumber } = params.userInfo || {};
 
@@ -80,7 +80,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
             transferJustificationType: deductionAmount
               ? SalaryCategories.TRX_JUSTIFICATION_Type_Deducted_Salary
               : SalaryCategories.TRX_JUSTIFICATION_Type_Monthly_Salary,
-            salaryMonth: String(fromDate).split('/').reverse().join(':'),
+            salaryMonth: convertToBEDate(fromDate || ''),
             bonusAmount: extraAmount,
             amountWithDeduction: deductionAmount ? String(Number(basicSalary) - Number(deductionAmount)) : '0',
           };
@@ -89,7 +89,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
           payload = {
             ...payload,
             transferJustificationType: SalaryCategories.TRX_JUSTIFICATION_Type_Advanced_Salary,
-            fromMonth: fromDate,
+            fromMonth: convertToBEDate(fromDate || ''),
             toMonth: (toDate as string)?.split('/').join('-'),
             bonusAmount: extraAmount,
             // TODO: Check with the BE and PO
@@ -181,13 +181,7 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
     <IPayView style={styles.cardStyle}>
       <IPayFootnoteText style={styles.personalInfoCardTitleText} regular text={item?.text} />
       <IPayView style={styles.detailsContainer}>
-        <IPaySubHeadlineText
-          regular
-          style={styles.subHeadline}
-          numberOfLines={2}
-          shouldTranslate={false}
-          text={item.details}
-        />
+        <IPaySubHeadlineText regular style={styles.subHeadline} numberOfLines={2} text={item.details} />
       </IPayView>
     </IPayView>
   );
@@ -218,9 +212,9 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
           btnDisabled={false}
           testID="ipay-bill"
           showTopMessage
+          totalAmount={totalSalary}
           totalAmountText="MUSANED.TOTAL_AMOUNT"
           onPressBtn={handleOnConfirmPress}
-          partialPay
         />
       </IPayView>
 

@@ -25,6 +25,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { DeductionReasons, MusanedPaySalaryScreenProps, SalaryCategories } from './musaned-pay-salary.interface';
 import musanedPaySalary from './musaned-pay-salary.style';
 import { MusanedPaySalaryConfirmPaymentInfo } from '../musaned-pay-salary-confirm/musaned-pay-salary-confirm.interface';
+import { convertToLocalDate } from '../musaned.utils';
 
 const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const { colors } = useTheme();
@@ -45,7 +46,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const { walletNumber } = walletInfo;
   const accountBalanceStatus = AccountBalanceStatus.ACCOUNT_BALANCE; // TODO will be updated on basis of, API
-  const minDatePaid = `${lastPaidSalaryDate?.split(':')[1]}/${lastPaidSalaryDate?.split(':')[0]}`;
+
+  const minDatePaid = convertToLocalDate(lastPaidSalaryDate);
   const salaryTypes: SelectedValue[] = [
     { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
     { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
@@ -174,13 +176,14 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     const paymentInfoData: MusanedPaySalaryConfirmPaymentInfo = {
       fromDate: selectedPrevDate,
       toDate: selectedPrevToDate,
-      totalSalary: payrollAmount,
+      totalSalary:
+        Number(payrollAmount) * (dateFromNow || 1) - Number(deductionAmount || 0) + Number(payExtraAmount || 0),
       basicSalary: payrollAmount,
       extraAmount: payExtraAmount,
       bonusAmount,
       note: payExtraNote || bonusAmountNote,
       fees: 0,
-      vat: 15,
+      vat: 0,
       deductionAmount,
       deductionReason: selectedDeductionReason.text,
       salaryType,
@@ -419,12 +422,6 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         )}
         <IPayMonthYearPicker
           onDateChange={(date) => {
-            const selectedDateValue = moment(`02/${date}`, 'DD/MM/YYYY');
-            const selectedToDateValue = moment(`02/${selectedToDate}`, 'DD/MM/YYYY');
-
-            if (selectedDateValue.isBefore(selectedToDateValue)) {
-              //
-            }
             if (selectedDateType === 'FROM_DATE') {
               setSelectedFromDate(date);
               return;

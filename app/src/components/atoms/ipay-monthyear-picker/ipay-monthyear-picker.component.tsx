@@ -49,12 +49,12 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
 
   const initialDate = ((value || '') as string)?.split('/');
   const years = generateYears(Number(currentYear));
-  const [selectedMonth, setSelectedMonth] = useState(initialDate[0] || '01');
-  const [selectedYear, setSelectedYear] = useState(initialDate[1] ? `20${initialDate[1]}` : currentYear);
+  const monthValue = initialDate[0] || currentMonthData;
+  const [selectedMonth, setSelectedMonth] = useState(initialDate[0] || currentMonthData);
+  const [selectedYear, setSelectedYear] = useState(initialDate[1] ? initialDate[1] : currentYear);
 
   const monthsPicker = constants.monthsString(t);
-  const checkCurrentYear =
-    currentYear === selectedYear ? monthsPicker.slice(Number(currentMonthData) - 1) : monthsPicker;
+  const checkCurrentYear = currentYear === selectedYear ? monthsPicker.slice(Number(monthValue) - 1) : monthsPicker;
   const pickerData = withLongMonth ? checkCurrentYear : constants.months;
 
   const handleMonthChange = (month: string) => {

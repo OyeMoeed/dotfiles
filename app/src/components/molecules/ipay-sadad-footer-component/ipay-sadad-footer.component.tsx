@@ -95,9 +95,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
               <IPayView style={styles.iconAmountContainer}>
                 <IPayIcon color={totalAmountLeftIcon?.color} icon={totalAmountLeftIcon?.icon} />
               </IPayView>
-            ) : (
-              <IPayView />
-            )}
+            ) : null}
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText
               regular

@@ -62,6 +62,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   const { t } = useTranslation();
   const [chipValue, setChipValue] = useState(false);
 
+  const dateNow = dateFromNow === 0 ? 1 : dateFromNow;
   const defaultValue: string = '0.00';
   const isAdvanceSalary = salaryId === SalaryCategories.Advanced_Salary;
   const isBonusSalary = salaryId === SalaryCategories.Bonus_Salary;
@@ -105,8 +106,9 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   }, [payExtraFlag]);
 
   const { textStyle, backgroundStyle } = getColorsStyle(colors, States.NATURAL);
+
   // eslint-disable-next-line react/no-unstable-nested-components
-  const DeductExtraComponent = () =>
+  const deductExtraComponent = () =>
     deductFlag ? (
       <IPayView style={styles.deductInputContainer}>
         <IPayView style={styles.deductAmountInput}>
@@ -148,7 +150,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             }}
             containerStyle={backgroundStyle}
             detailTextStyle={styles.listTextStyle}
-            detailText={`${Number(amount) - Number(deductionAmount)} ${t('COMMON.SAR')}`}
+            detailText={`${Number(amount) * dateNow - Number(deductionAmount)} ${t('COMMON.SAR')}`}
             detailIconDisabled
             shouldTranslateSubTitle={false}
           />
@@ -175,7 +177,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
     ) : null;
 
   // eslint-disable-next-line react/no-unstable-nested-components
-  const PayExtraComponent = () =>
+  const payExtraComponent = () =>
     payExtraFlag ? (
       <IPayView style={styles.deductInputContainer}>
         <IPayView style={styles.deductAmountInput}>
@@ -305,7 +307,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               editable={false}
               showRightIcon
               customIcon={<IPayCheckbox isCheck={deductFlag} onPress={onPressDeductFlag} />}
-              extraComponent={<DeductExtraComponent />}
+              extraComponent={deductExtraComponent()}
               textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>
@@ -318,7 +320,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               editable={false}
               showRightIcon
               customIcon={<IPayCheckbox isCheck={payExtraFlag} onPress={onPressPayExtraFlag} />}
-              extraComponent={<PayExtraComponent />}
+              extraComponent={payExtraComponent()}
               textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>
