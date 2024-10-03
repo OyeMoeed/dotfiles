@@ -163,6 +163,7 @@ const CardsScreen: React.FC = () => {
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
+    setOtp('');
   };
 
   const prepareCardInfoData = (data: any) => {
@@ -209,6 +210,7 @@ const CardsScreen: React.FC = () => {
       prepareCardInfoData(apiResponse?.response);
       setIsCardDetailsSheetVisible(true);
       cardDetailsSheetRef?.current?.present();
+      setOtp('');
     }
   };
 

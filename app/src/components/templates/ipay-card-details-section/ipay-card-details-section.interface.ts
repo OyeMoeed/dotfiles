@@ -20,10 +20,11 @@ interface SheetOptions {
   subtitle?: string;
   option: string;
   icon?: string;
+  status: string;
   toastType?: string;
 }
 
-type ModifiedSheetOptions = Omit<SheetOptions, 'option'>;
+type ModifiedSheetOptions = Omit<SheetOptions, 'option' | 'status'>;
 
 type SheetVariants = {
   freeze: SheetOptions;
