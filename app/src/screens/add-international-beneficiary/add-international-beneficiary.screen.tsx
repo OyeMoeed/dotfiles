@@ -67,15 +67,6 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
     transferType: required,
   });
 
-  const onSelectCountry = (countryName: string) => {
-    const filterCode = beneficiaryMetaData?.find((item) => item?.desc === countryName);
-    setCountryCode(filterCode?.code);
-  };
-
-  const onSelectCurrency = (currency: string) => {
-    setCurrencyCode(currency);
-  };
-
   const onSelectRemittanceType = (remittance: string) => {
     const filterCode = remittanceTypeData?.find((item) => item?.desc === remittance);
     setRemittanceType(filterCode?.code);
@@ -92,7 +83,139 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
 
   const getRemittancTypeData = () => remittanceTypeData?.map((item, idx) => ({ id: idx + 1, title: item?.desc }));
 
-  // TODO: Fix nested components
+  const renderToast = (toastMsg: string) => {
+    showToast({
+      title: toastMsg,
+      subTitle: apiError,
+      borderColor: colors.error.error25,
+      isShowRightIcon: false,
+      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
+    });
+  };
+
+  const getWUBeneficiaryMetaDataData = async () => {
+    try {
+      const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData();
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setBeneficiaryMetaData(apiResponse?.response?.westernUnionCountryList);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
+          break;
+        default:
+          break;
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
+  const getWUBeneficiaryCurrenciesData = async (code: string) => {
+    const payload = {
+      countryCode: code,
+    };
+    try {
+      const apiResponse: WUBeneficiaryCurrenciesProps = await getWUBeneficiaryCurrencies(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setCurrenciesData(apiResponse?.response?.currencies);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
+          break;
+        default:
+          break;
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
+  const getWURemittanceTypesData = async (code: string) => {
+    const payload = {
+      countryCode,
+      currencyCode: code,
+    };
+    try {
+      const apiResponse: WuRemittanceTypesProps = await getWURemittanceTypes(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          setRemittanceTypeData(apiResponse?.response?.remittanceTypes);
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
+          break;
+        default:
+          break;
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
+  useEffect(() => {
+    getWUBeneficiaryMetaDataData();
+  }, []);
+
+  const onSelectCountry = (countryName: string) => {
+    const filterCode = beneficiaryMetaData?.find((item) => item?.desc === countryName);
+    setCountryCode(filterCode?.code);
+    getWUBeneficiaryCurrenciesData(filterCode?.code);
+  };
+
+  const onSelectCurrency = (currency: string) => {
+    setCurrencyCode(currency);
+    getWURemittanceTypesData(currency);
+  };
+
+  const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {
+    const payload = {
+      beneficiaryType: selectedService?.beneficiaryType,
+      remittanceType,
+      countryCode,
+      currencyCode,
+    };
+    try {
+      const apiResponse: BeneficiariesFieldsProps = await getBeneficiariesDynamicFields(payload);
+      switch (apiResponse?.status?.type) {
+        case ApiResponseStatusType.SUCCESS:
+          navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, {
+            transferService: { ...data, ...selectedService, remittanceType, countryCode, currencyCode },
+            dynamicFieldsData: apiResponse?.response?.dynamicFields,
+          });
+          break;
+        case apiResponse?.apiResponseNotOk:
+          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
+          break;
+        case ApiResponseStatusType.FAILURE:
+          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
+          break;
+        default:
+          break;
+      }
+    } catch (error: any) {
+      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+  };
+
+  const handleBeneficiaryTransfer = (data: AddBeneficiaryValues) => {
+    getBeneficiariesDynamicFieldsData(data);
+  };
+
   // eslint-disable-next-line react/no-unstable-nested-components
   const TransferMethods = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
@@ -138,136 +261,6 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         )}
       </IPayView>
     );
-  };
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
-  const getWUBeneficiaryMetaDataData = async () => {
-    try {
-      const apiResponse: WUBeneficiaryMetaDataProps = await getWUBeneficiaryMetaData();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryMetaData(apiResponse?.response?.westernUnionCountryList);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  const getWUBeneficiaryCurrenciesData = async () => {
-    const payload = {
-      countryCode,
-    };
-    try {
-      const apiResponse: WUBeneficiaryCurrenciesProps = await getWUBeneficiaryCurrencies(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setCurrenciesData(apiResponse?.response?.currencies);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  const getWURemittanceTypesData = async () => {
-    const payload = {
-      countryCode,
-      currencyCode,
-    };
-    try {
-      const apiResponse: WuRemittanceTypesProps = await getWURemittanceTypes(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setRemittanceTypeData(apiResponse?.response?.remittanceTypes);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  useEffect(() => {
-    getWUBeneficiaryMetaDataData();
-  }, []);
-
-  useEffect(() => {
-    if (countryCode) getWUBeneficiaryCurrenciesData();
-  }, [countryCode]);
-
-  useEffect(() => {
-    if (currencyCode) getWURemittanceTypesData();
-  }, [currencyCode]);
-
-  const getBeneficiariesDynamicFieldsData = async (data: AddBeneficiaryValues) => {
-    const payload = {
-      beneficiaryType: selectedService?.beneficiaryType,
-      remittanceType,
-      countryCode,
-      currencyCode,
-    };
-    try {
-      const apiResponse: BeneficiariesFieldsProps = await getBeneficiariesDynamicFields(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, {
-            transferService: { ...data, ...selectedService, remittanceType, countryCode, currencyCode },
-            dynamicFieldsData: apiResponse?.response?.dynamicFields,
-          });
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  const handleBeneficiaryTransfer = (data: AddBeneficiaryValues) => {
-    getBeneficiariesDynamicFieldsData(data);
   };
 
   return (
