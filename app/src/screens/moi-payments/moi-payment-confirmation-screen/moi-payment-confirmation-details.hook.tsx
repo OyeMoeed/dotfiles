@@ -8,7 +8,6 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ValidateBillRes } from '../moi-payment-screen/moi-payment.interface';
 
-
 const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');

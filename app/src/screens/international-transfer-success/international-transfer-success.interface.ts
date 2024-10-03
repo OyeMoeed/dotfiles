@@ -11,7 +11,7 @@ interface InternationalTransferSuccessData {
   country: string; // Beneficiary's country
   transactionId: string; // Unique transaction identifier
   bankTransfer: string; // Bank transfer method information
-  iban: string; // Beneficiary's IBAN
+  iban?: string; // Beneficiary's IBAN
   bankName: string; // Beneficiary's bank name
   phoneNumber: string; // Beneficiary's phone number
   reasonOfTransfer: string; // Purpose of the transfer
