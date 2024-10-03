@@ -1,9 +1,9 @@
 import icons from '@app/assets/icons';
 import { IPayIcon } from '@app/components/atoms';
 import { IPayAnimatedTextInput } from '@app/components/molecules';
+import { SNAP_POINT } from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useMemo, useState } from 'react';
-import { SNAP_POINT } from '@app/constants/constants';
 import IPayDropdownSheet from './ipay-dropdown-select-sheet.component';
 import { IPayDropdownSelectProps, ListItem } from './ipay-dropdown-select.interface';
 import dropdownStyles from './ipay-dropdown-select.styles';

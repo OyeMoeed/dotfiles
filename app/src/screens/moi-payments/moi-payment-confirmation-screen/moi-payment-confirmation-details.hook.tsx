@@ -73,6 +73,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
     setOtpRef,
     isOtpSheetVisible,
     setOtpSheetVisible,
+    onConfirm,
   };
 };
 

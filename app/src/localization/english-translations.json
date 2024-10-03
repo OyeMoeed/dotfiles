@@ -1233,6 +1233,7 @@
     "SERVICE_TYPE": "Service type",
     "ACCOUNT_NUMBER": "Account Number",
     "PAYMENT_FAILED": "Payment Failed",
+    "REFUND_FAILED": "Refund Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
     "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "VIEW_EDIT_DETAILS": "View and edit details",
@@ -1335,7 +1336,8 @@
     "REFUND_VIOLATION": "Refund violation",
     "VIOLATION": "Violation",
     "VIOLATIONS": "Violations",
-    "REF_NUMBER": "Ref. Number"
+    "REF_NUMBER": "Ref. Number",
+    "TRAFFIC_VIOLATION": "Traffic violation"
   },
   "SHOP": {
     "PURCHASED_AT": "Pubrchased at: ",

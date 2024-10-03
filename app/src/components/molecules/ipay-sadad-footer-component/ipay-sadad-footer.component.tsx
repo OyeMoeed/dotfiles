@@ -51,6 +51,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     availableBalance,
     limitsDetails: { monthlyRemainingOutgoingAmount, dailyOutgoingLimit },
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [warningStatus, setWarningStatus] = useState<string>('');
 
   const getFooterStyles = useCallback(() => {
     if (checkIfSelectedCount) {
@@ -89,7 +90,16 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         ) : (
           <IPayView />
         )}
-        {totalAmount || showTopMessage ? (
+        <IPayView style={styles.chipView}>
+          <IPayBalanceStatusChip
+            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+            currentBalance={Number(availableBalance)}
+            amount={Number(totalAmount)}
+            setWarningStatus={setWarningStatus}
+            dailySpendingLimit={Number(dailyOutgoingLimit)}
+          />
+        </IPayView>
+        {(!warningStatus && totalAmount) || showTopMessage ? (
           <IPayView style={[styles.totalAmountView, totalAmountStyle]}>
             {totalAmountLeftIcon?.icon ? (
               <IPayView style={styles.iconAmountContainer}>
