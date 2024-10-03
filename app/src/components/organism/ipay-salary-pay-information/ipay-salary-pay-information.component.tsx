@@ -107,7 +107,6 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
 
   const { textStyle, backgroundStyle } = getColorsStyle(colors, States.NATURAL);
 
-  // eslint-disable-next-line react/no-unstable-nested-components
   const deductExtraComponent = () =>
     deductFlag ? (
       <IPayView style={styles.deductInputContainer}>
@@ -158,6 +157,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
 
         <IPayPressable onPress={onPressDeductionShow} style={styles.reasonsView}>
           <IPayAnimatedTextInput
+            withExtraPadding={false}
             pointerEvents="none"
             containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
             labelColor={colors.natural.natural500}
@@ -176,7 +176,6 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
       </IPayView>
     ) : null;
 
-  // eslint-disable-next-line react/no-unstable-nested-components
   const payExtraComponent = () =>
     payExtraFlag ? (
       <IPayView style={styles.deductInputContainer}>
@@ -209,6 +208,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           shouldTranslateSubTitle={false}
         />
         <IPayAnimatedTextInput
+          withExtraPadding={false}
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
           label="MUSANED.NOTE"
@@ -241,6 +241,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
       <IPayPressable onPress={openReason} style={styles.reasonsView}>
         <IPayAnimatedTextInput
           pointerEvents="none"
+          withExtraPadding={false}
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
           labelColor={colors.natural.natural500}
           label="MUSANED.SALARY_TYPE"
@@ -277,6 +278,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             />
           </IPayView>
           <IPayAnimatedTextInput
+            withExtraPadding={false}
             containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
             labelColor={colors.natural.natural500}
             label="MUSANED.NOTE"
@@ -300,6 +302,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           />
           <IPayPressable onPress={onPressDeductFlag} style={styles.reasonsView}>
             <IPayAnimatedTextInput
+              withExtraPadding={false}
               pointerEvents={deductFlag ? 'auto' : 'none'}
               containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
               labelColor={colors.natural.natural500}
@@ -313,6 +316,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
           </IPayPressable>
           <IPayPressable onPress={onPressPayExtraFlag} style={styles.reasonsView}>
             <IPayAnimatedTextInput
+              withExtraPadding={false}
               pointerEvents={payExtraFlag ? 'auto' : 'none'}
               containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
               labelColor={colors.natural.natural500}
