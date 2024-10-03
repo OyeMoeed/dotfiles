@@ -10,6 +10,11 @@ const musanedPaySalaryConfirm = (themeColors: typeof colors) =>
       marginHorizontal: moderateScale(24, 0.3),
       marginTop: moderateScale(24, 0.3),
     },
+    laborerDetailsBanner: {
+      marginHorizontal: 0,
+      marginTop: 0,
+      marginBottom: 0,
+    },
     buttonContainer: {
       marginBottom: 30,
       marginHorizontal: 24,

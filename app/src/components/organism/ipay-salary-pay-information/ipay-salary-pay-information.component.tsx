@@ -1,19 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayCheckbox, IPayIcon, IPayPressable, IPayText, IPayView } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayList } from '@app/components/molecules';
+import {
+  IPayCaption2Text,
+  IPayCheckbox,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayPressable,
+  IPaySubHeadlineText,
+  IPayView,
+} from '@app/components/atoms';
+import { getColorsStyle } from '@app/components/molecules/ipay-chip/ipay-chip.style';
+import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities';
-import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
-import { getColorsStyle } from '@app/components/molecules/ipay-chip/ipay-chip.style';
 import { isArabic } from '@app/utilities/constants';
 
+import IPaySalaryPayDateSelector from './ipay-salary-pay-date-selector.component';
 import IPaySalaryPayInformationProps from './ipay-salary-pay-information.interface';
 import salaryPayInformation from './ipay-salary-pay-information.style';
-import IPaySalaryPayDateSelector from './ipay-salary-pay-date-selector.component';
 import payExtraComponent from './ipay-pay-extra.component';
 import deductExtraComponent from './ipay-deduct-extra.component';
 import IPayBonesSalarySection from './ipay-bouns-salary-section.component';
@@ -121,21 +129,34 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
       <IPayList
         textStyle={styles.titleText}
         title={fullName}
+        regularTitle={false}
         subTextStyle={StyleSheet.flatten(styles.subtitleText)}
         isShowSubTitle
         subTitle={subtitle}
         isShowLeftIcon
         rightText={
           <IPayView>
-            <IPayCaption1Text text="MUSANED.BASIC_SALARY" />
-            <IPayText text={`${amount} ${t('COMMON.SAR')}`} />
+            <IPayCaption2Text
+              text="MUSANED.BASIC_SALARY"
+              color={colors.primary.primary900}
+              style={styles.basicSalaryText}
+              numberOfLines={1}
+            />
+            <IPaySubHeadlineText
+              regular={false}
+              shouldTranslate={false}
+              color={colors.primary.primary900}
+              style={styles.basicSalaryAmount}
+            >
+              {Number(amount)} <IPayFootnoteText style={styles.sarText} text={t('COMMON.SAR')} />
+            </IPaySubHeadlineText>
           </IPayView>
         }
         leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
         containerStyle={StyleSheet.flatten(styles.headerContainer)}
       />
 
-      <IPayPressable onPress={openReason} style={styles.reasonsView}>
+      <IPayPressable onPress={openReason}>
         <IPayAnimatedTextInput
           pointerEvents="none"
           withExtraPadding={false}
@@ -177,7 +198,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             isToDateMoreThan6={isToDateMoreThan6}
             comingMonthsCount={comingMonthsCount}
           />
-          <IPayPressable onPress={onPressDeductFlag} style={styles.reasonsView}>
+          <IPayPressable onPress={onPressDeductFlag}>
             <IPayAnimatedTextInput
               withExtraPadding={false}
               pointerEvents={deductFlag ? 'auto' : 'none'}
@@ -191,7 +212,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>
-          <IPayPressable onPress={onPressPayExtraFlag} style={styles.reasonsView}>
+          <IPayPressable onPress={onPressPayExtraFlag}>
             <IPayAnimatedTextInput
               withExtraPadding={false}
               pointerEvents={payExtraFlag ? 'auto' : 'none'}

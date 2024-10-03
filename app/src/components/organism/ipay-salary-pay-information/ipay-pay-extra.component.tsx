@@ -46,7 +46,7 @@ const payExtraComponent = ({
           ...styles.titleStyle,
           ...textStyle,
         }}
-        containerStyle={backgroundStyle}
+        containerStyle={[backgroundStyle, styles.paidSalaryContainer]}
         detailTextStyle={styles.listTextStyle}
         detailText={`${Number(amount) + Number(payExtraAmount)} ${t('COMMON.SAR')}`}
         detailIconDisabled

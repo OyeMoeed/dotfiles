@@ -64,7 +64,7 @@ const deductExtraComponent = ({
             ...styles.titleStyle,
             ...textStyle,
           }}
-          containerStyle={backgroundStyle}
+          containerStyle={[backgroundStyle, styles.paidSalaryContainer]}
           detailTextStyle={styles.listTextStyle}
           detailText={`${Number(amount) * comingMonthsNow - Number(deductionAmount)} ${t('COMMON.SAR')}`}
           detailIconDisabled

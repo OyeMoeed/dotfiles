@@ -16,7 +16,7 @@ const arabicDialer = ['3', '2', '1', '6', '5', '4', '9', '8', '7', 'back', '0', 
 const englishDialer = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', 'back'];
 
 const constants = {
-  MOCK_API_RESPONSE: false,
+  MOCK_API_RESPONSE: true,
   ENCRYPTIONS_KEYS: [],
   IDLE_SCREEN_WIDTH: 375,
   RESTART_DELAY_MILISECONDS: 100,

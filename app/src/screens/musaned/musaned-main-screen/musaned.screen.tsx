@@ -237,6 +237,7 @@ const MusanedScreen: React.FC = () => {
               titleText={requestDetail?.name || ''}
               amount={requestDetail?.payrollAmount}
               details={detailsData || ''}
+              onlyAmount
             />
           </IPayView>
         )}

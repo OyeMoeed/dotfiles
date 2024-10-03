@@ -68,6 +68,9 @@ const laborerDetailsStyles = (theme: typeof colors) =>
     titleStyle: {
       textAlign: 'left',
     },
+    userIcon: {
+      marginRight: moderateScale(8),
+    },
   });
 
 export default laborerDetailsStyles;

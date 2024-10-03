@@ -15,6 +15,14 @@ const musanedPaymentSuccessful = (themeColor: typeof colors) =>
       paddingBottom: scaleSize(20),
       paddingHorizontal: moderateScale(20, 0.3),
     },
+    laborerDetailsBanner: {
+      flex: 1,
+      width: '100%',
+      marginHorizontal: 0,
+      marginTop: 0,
+      marginBottom: moderateScale(8),
+      backgroundColor: themeColor.primary.primary10,
+    },
     headerView: {
       flex: 0.4,
       marginBottom: moderateScale(20, 0.3),

@@ -19,6 +19,7 @@ const musanedPaySalary = (colors) =>
     },
     buttonContainer: {
       marginBottom: 30,
+      marginTop: 18,
       marginHorizontal: 24,
     },
     transferContainer: {
