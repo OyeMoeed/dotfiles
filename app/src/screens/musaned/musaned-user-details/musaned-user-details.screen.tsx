@@ -15,6 +15,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
 import { useRoute } from '@react-navigation/core';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
 import { MusanedUserDetailsRouteProps } from './musaned-user-details.interface';
@@ -49,6 +50,9 @@ const MusanedUserDetails = () => {
 
   const { color, text, backgroundColor } = getStatusStyles(colors, paymentStatus);
 
+  const expirationDate = moment(poiExperationDate).format('DD/M/YYYY');
+  const formattedLastPaidSalaryDate = `${lastPaidSalaryDate?.split(':')[1]}/${lastPaidSalaryDate?.split(':')[0]}`;
+
   const userData = [
     // TODO: check for mobile number in the API response
     { text: 'MUSANED.MOBILE_NUMBER', details: borderNumber.toString() },
@@ -58,7 +62,7 @@ const MusanedUserDetails = () => {
       key: countryCode,
     },
     { text: 'MUSANED.LABORER_ID', details: poiNumber.toString() },
-    { text: 'MUSANED.IQAMA_EXPIRY_DATE', details: poiExperationDate },
+    { text: 'MUSANED.IQAMA_EXPIRY_DATE', details: expirationDate },
   ];
 
   const onPayPress = () => {
@@ -80,6 +84,8 @@ const MusanedUserDetails = () => {
         shouldTranslateTitle={false}
         details={isArabic ? occupationAr : occupationEn}
         isDetailsBanner
+        withProfileIcon
+        profileIconStyle={styles.profileIcon}
       />
 
       <IPayScrollView style={styles.contentContainer}>
@@ -95,7 +101,7 @@ const MusanedUserDetails = () => {
                   <IPayFootnoteText regular text="MUSANED.PAYMENT_STATUS" />
                   <IPayCaption1Text
                     regular
-                    text={`${t('MUSANED.LAST_PAYMENT')}: ${lastPaidSalaryDate}`}
+                    text={`${t('MUSANED.LAST_PAYMENT')}: ${formattedLastPaidSalaryDate}`}
                     shouldTranslate={false}
                     color={colors.natural.natural500}
                   />
