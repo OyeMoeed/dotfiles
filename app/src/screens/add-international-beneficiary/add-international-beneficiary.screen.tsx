@@ -95,6 +95,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
 
   const getRemittancTypeData = () => remittanceTypeData?.map((item, idx) => ({ id: idx + 1, title: item?.desc }));
 
+  // eslint-disable-next-line react/no-unstable-nested-components
   const TransferMethods = ({ data }: ServiceDataProps) => {
     const { serviceLogo, recordID, serviceName } = data;
     const isCheck = selectedService?.recordID === recordID;

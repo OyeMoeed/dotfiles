@@ -11,12 +11,6 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { AEAddBeneficiaryProps } from '@app/network/services/international-transfer/ae-add-beneficiary/ae-add-beneficiary.interface';
 import addAEBeneficiary from '@app/network/services/international-transfer/ae-add-beneficiary/ae-add-beneficiary.service';
 import {
-  AEBeneficiaryBanksParam,
-  AEBeneficiaryBanksProps,
-  AlinmaExpressBanks,
-} from '@app/network/services/international-transfer/ae-beneficiary-banks/ae-beneficiary-banks.interface';
-import getAEBeneficiaryBanks from '@app/network/services/international-transfer/ae-beneficiary-banks/ae-beneficiary-banks.service';
-import {
   AddWUBeneficiaryProps,
   AddWUBeneficiaryReq,
 } from '@app/network/services/international-transfer/beneficiaries-wu/beneficiaries-wu.interface';
@@ -24,7 +18,7 @@ import addWUbeneficiary from '@app/network/services/international-transfer/benef
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
 import { useRoute } from '@react-navigation/core';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { BeneficiaryTransferFormValues, TransferService } from './international-beneficiary-transfer-form.interface';
 import beneficiaryTransferStyles from './international-beneficiary-transfer-form.style';
@@ -36,8 +30,6 @@ const IBeneficiaryTransferScreen: React.FC = () => {
   const { transferService, dynamicFieldsData } = route.params;
   const styles = beneficiaryTransferStyles(colors);
   const [apiError, setAPIError] = useState<string>('');
-  const [beneficiariesAERes, setBeneficiariesAERes] = useState();
-  const [alinmaBanks, setAlinmaBanks] = useState<AlinmaExpressBanks[]>([]);
 
   const { showToast } = useToastContext();
   const { defaultValues, validationSchema, revertFlatKeys } = useDynamicForm(dynamicFieldsData);
@@ -51,37 +43,6 @@ const IBeneficiaryTransferScreen: React.FC = () => {
       leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
     });
   };
-
-  const getAEBanks = async () => {
-    const payload: AEBeneficiaryBanksParam = {
-      // TODO need to update
-      alinmaExpressType: '',
-      countryCode: transferService?.countryCode,
-    };
-    try {
-      const apiResponse: AEBeneficiaryBanksProps = await getAEBeneficiaryBanks(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setAlinmaBanks(apiResponse?.response?.banks);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error?.error || t('ERROR.SOMETHING_WENT_WRONG'));
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  useEffect(() => {
-    getAEBanks();
-  }, []);
 
   const addWUBeneficiary = async (payload: AddWUBeneficiaryReq) => {
     try {
@@ -110,7 +71,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
       const apiResponse: AEAddBeneficiaryProps = await addAEBeneficiary(payload);
       switch (apiResponse?.status?.type) {
         case ApiResponseStatusType.SUCCESS:
-          setBeneficiariesAERes(apiResponse);
+          navigate(ScreenNames.ADD_BENEFICIARY_SUCCESS, { type: ScreenNames.INTERNATIONAL_TRANSFER });
           break;
         case apiResponse?.apiResponseNotOk:
           setAPIError(t('ERROR.API_ERROR_RESPONSE'));
