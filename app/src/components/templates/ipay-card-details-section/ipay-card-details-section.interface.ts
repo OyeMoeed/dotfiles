@@ -1,7 +1,10 @@
+import { Dispatch, SetStateAction } from 'react';
+
 interface IPayCardDetailsSectionProps {
   testID?: string;
   isCardPrinted?: boolean;
   onOpenOTPSheet?: () => void;
+  setCloseSheetTrigger?: Dispatch<SetStateAction<boolean>>;
 }
 
 interface Option {
@@ -20,10 +23,11 @@ interface SheetOptions {
   subtitle?: string;
   option: string;
   icon?: string;
+  status: string;
   toastType?: string;
 }
 
-type ModifiedSheetOptions = Omit<SheetOptions, 'option'>;
+type ModifiedSheetOptions = Omit<SheetOptions, 'option' | 'status'>;
 
 type SheetVariants = {
   freeze: SheetOptions;

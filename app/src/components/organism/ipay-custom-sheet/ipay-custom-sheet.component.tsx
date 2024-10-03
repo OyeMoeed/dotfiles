@@ -45,6 +45,7 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
   boxHeight = 300,
   topScale = TOP_SCALE,
   customHandler,
+  closeTrigger = false,
 }) => {
   const { colors } = useTheme();
   const THRESHOLD = getCustomSheetThreshold();
@@ -67,6 +68,10 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
     translateY.value = withTiming(MAX_TRANSLATE_Y, ANIMATION_CONFIG);
     setIsSheetOpen(true);
   }, [MAX_TRANSLATE_Y, translateY]);
+
+  useEffect(() => {
+    closeSheet();
+  }, [closeTrigger]);
 
   const panGestureHandler = Gesture.Pan()
     .onUpdate((event) => {
