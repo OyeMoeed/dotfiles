@@ -199,6 +199,10 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
               shouldTranslateTitle={false}
               details={isArabic ? occupationAr : occupationEn}
               isDetailsBanner
+              containerStyle={styles.laborerDetailsBanner}
+              withProfileIcon
+              withLogoOnRight
+              boldTitle={false}
             />
             <IPayFlatlist style={styles.detailsFlex} scrollEnabled={false} data={detailsInfo} renderItem={renderInfo} />
           </IPayView>
@@ -211,7 +215,6 @@ const MusanedPaySalaryConfirmScreen: React.FC<MusanedPaySalaryConfirmScreenProps
           disableBtnIcons
           btnDisabled={false}
           testID="ipay-bill"
-          showTopMessage
           totalAmount={totalSalary}
           totalAmountText="MUSANED.TOTAL_AMOUNT"
           onPressBtn={handleOnConfirmPress}

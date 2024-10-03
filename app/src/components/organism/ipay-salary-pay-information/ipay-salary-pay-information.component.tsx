@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
 import { useTranslation } from 'react-i18next';
+import { StyleSheet } from 'react-native';
 
 import icons from '@app/assets/icons';
 import {
-  IPayCaption1Text,
+  IPayCaption2Text,
   IPayCheckbox,
   IPayFootnoteText,
   IPayIcon,
   IPayPressable,
-  IPayText,
+  IPaySubHeadlineText,
   IPayView,
 } from '@app/components/atoms';
 import { IPayAmountInput, IPayAnimatedTextInput, IPayChip, IPayList } from '@app/components/molecules';
+import { getColorsStyle } from '@app/components/molecules/ipay-chip/ipay-chip.style';
+import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { States } from '@app/utilities';
-import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
-import { getColorsStyle } from '@app/components/molecules/ipay-chip/ipay-chip.style';
 import { isArabic } from '@app/utilities/constants';
 
+import IPaySalaryPayDateSelector from './ipay-salary-pay-date-selector.component';
 import IPaySalaryPayInformationProps from './ipay-salary-pay-information.interface';
 import salaryPayInformation from './ipay-salary-pay-information.style';
-import IPaySalaryPayDateSelector from './ipay-salary-pay-date-selector.component';
 
 const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
   testID,
@@ -148,7 +148,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               ...styles.titleStyle,
               ...textStyle,
             }}
-            containerStyle={backgroundStyle}
+            containerStyle={[backgroundStyle, styles.paidSalaryContainer]}
             detailTextStyle={styles.listTextStyle}
             detailText={`${Number(amount) * dateNow - Number(deductionAmount)} ${t('COMMON.SAR')}`}
             detailIconDisabled
@@ -202,7 +202,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             ...styles.titleStyle,
             ...textStyle,
           }}
-          containerStyle={backgroundStyle}
+          containerStyle={[backgroundStyle, styles.paidSalaryContainer]}
           detailTextStyle={styles.listTextStyle}
           detailText={`${Number(amount) + Number(payExtraAmount)} ${t('COMMON.SAR')}`}
           detailIconDisabled
@@ -224,21 +224,34 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
       <IPayList
         textStyle={styles.titleText}
         title={fullName}
+        regularTitle={false}
         subTextStyle={StyleSheet.flatten(styles.subtitleText)}
         isShowSubTitle
         subTitle={subtitle}
         isShowLeftIcon
         rightText={
           <IPayView>
-            <IPayCaption1Text text="MUSANED.BASIC_SALARY" />
-            <IPayText text={`${amount} ${t('COMMON.SAR')}`} />
+            <IPayCaption2Text
+              text="MUSANED.BASIC_SALARY"
+              color={colors.primary.primary900}
+              style={styles.basicSalaryText}
+              numberOfLines={1}
+            />
+            <IPaySubHeadlineText
+              regular={false}
+              shouldTranslate={false}
+              color={colors.primary.primary900}
+              style={styles.basicSalaryAmount}
+            >
+              {Number(amount)} <IPayFootnoteText style={styles.sarText} text={t('COMMON.SAR')} />
+            </IPaySubHeadlineText>
           </IPayView>
         }
         leftIcon={<IPayIcon icon={icons.user_filled} color={colors.primary.primary500} />}
         containerStyle={StyleSheet.flatten(styles.headerContainer)}
       />
 
-      <IPayPressable onPress={openReason} style={styles.reasonsView}>
+      <IPayPressable onPress={openReason}>
         <IPayAnimatedTextInput
           pointerEvents="none"
           containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
@@ -298,7 +311,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
             isToDateMoreThan6={isToDateMoreThan6}
             dateFromNow={dateFromNow}
           />
-          <IPayPressable onPress={onPressDeductFlag} style={styles.reasonsView}>
+          <IPayPressable onPress={onPressDeductFlag}>
             <IPayAnimatedTextInput
               pointerEvents={deductFlag ? 'auto' : 'none'}
               containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}
@@ -311,7 +324,7 @@ const IPaySalaryPayInformation: React.FC<IPaySalaryPayInformationProps> = ({
               textAlign={isArabic ? 'right' : 'left'}
             />
           </IPayPressable>
-          <IPayPressable onPress={onPressPayExtraFlag} style={styles.reasonsView}>
+          <IPayPressable onPress={onPressPayExtraFlag}>
             <IPayAnimatedTextInput
               pointerEvents={payExtraFlag ? 'auto' : 'none'}
               containerStyle={[StyleSheet.flatten(styles.inputField), inputFieldStyle]}

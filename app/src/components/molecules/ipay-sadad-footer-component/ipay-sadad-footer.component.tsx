@@ -56,6 +56,11 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     if (checkIfSelectedCount) {
       return partialPay ? styles.countAndPartialPayStyles : styles.container;
     }
+
+    if (warningMessage) {
+      return styles.containerWithWarningStyles;
+    }
+
     return totalAmount || showTopMessage ? styles.containerConditionalStyles : styles.footerWithWarning;
   }, [checkIfSelectedCount, totalAmount, warning, warningMessage, partialPay]);
 

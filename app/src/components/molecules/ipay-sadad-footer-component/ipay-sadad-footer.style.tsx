@@ -9,6 +9,9 @@ const sadadFooterComponentStyles = (colors: any) =>
     containerConditionalStyles: {
       height: moderateScale(170, 0.3),
     },
+    containerWithWarningStyles: {
+      height: moderateScale(200, 0.3),
+    },
     countAndPartialPayStyles: {
       height: moderateScale(168, 0.3),
     },
