@@ -14,6 +14,15 @@ const requestListStyles = createStyleSheet({
   sectionHeader: {
     marginBottom: verticalScale(12),
   },
+  rejectThisRequestBtn: {
+    height: moderateScale(48, 0.3),
+    alignItems: 'center',
+    paddingVertical: moderateScale(0),
+    justifyContent: 'center',
+  },
+  rejectThisRequestCancelBtn: {
+    height: moderateScale(56, 0.3),
+  },
 });
 
 export default requestListStyles;

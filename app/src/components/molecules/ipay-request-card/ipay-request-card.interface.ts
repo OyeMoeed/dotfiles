@@ -5,6 +5,7 @@ export interface PendingRequestProps {
   isPending: true;
   description: string;
   dateTime: string;
+  onPress: () => void;
 }
 
 export interface PreviousRequestProps {
@@ -13,6 +14,7 @@ export interface PreviousRequestProps {
   status: StatusType;
   description: string;
   dateTime: string;
+  onPress?: () => void;
 }
 
 export type IPayRequestCardProps = PendingRequestProps | PreviousRequestProps;

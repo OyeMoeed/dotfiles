@@ -19,8 +19,14 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Notification } from './notification-center.interface';
+import { useDispatch } from 'react-redux';
+import { setNafathSheetVisibility } from '@app/store/slices/bottom-sheets-slice';
+import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
+import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
+import IPayRequestCard from '@app/components/molecules/ipay-request-card/ipay-request-card.component';
+import { formatDate } from '@app/utilities';
 import getNotificationCenterStyles from './notification-center.styles';
+import { Notification } from './notification-center.interface';
 
 /**
  * NoRequestComponent displays a message when there are no pending requests.
@@ -28,12 +34,24 @@ import getNotificationCenterStyles from './notification-center.styles';
  * @param {Object} props.colors - Colors object.
  * @param {Object} props.styles - Styles object.
  */
-const NoRequestComponent: React.FC<{ colors: any; styles: any }> = ({ colors, styles }) => (
+const NoRequestComponent: React.FC<{ colors: any; styles: any; pendingRequests: any; previousRequests: any }> = ({
+  colors,
+  styles,
+  pendingRequests,
+  previousRequests,
+}) => (
   <IPayView style={styles.noRequestContainer}>
     <IPayIcon size={24} icon={icons.empty_box_icon} />
     <IPayCaption1Text style={styles.noRequestText} regular={false} text="NOTIFICATION_CENTER.ALL_CAUGHT_UP" />
     <IPayCaption1Text style={styles.noPendingRequestText} text="NOTIFICATION_CENTER.NO_PENDING_REQUESTS" />
-    <IPayPressable onPress={() => navigate(ScreenNames.REQUEST_LISTING_SCREEN)}>
+    <IPayPressable
+      onPress={() =>
+        navigate(ScreenNames.REQUEST_LISTING_SCREEN, {
+          pendingRequests,
+          previousRequests,
+        })
+      }
+    >
       <IPaySubHeadlineText color={colors.primary.primary500} regular text="NOTIFICATION_CENTER.SHOW_REQUESTS" />
     </IPayPressable>
   </IPayView>
@@ -47,18 +65,20 @@ const NotificationCenterScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { showToast } = useToastContext();
+  const dispatch = useDispatch();
 
   // states
   const [notifications, setNotifications] = useState<Notification[]>([] as Notification[]);
-  const [pendingNotifications] = useState<Notification[]>([]);
+  const [pendingRequests, setPendingRequests] = useState<any[]>([]);
+  const [previousRequests, setPreviousRequests] = useState<any[]>([]);
 
   // selectors
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
+  const isBasicTier = useTypedSelector(isBasicTierSelector);
 
   // variables
-  const pendingNotificationsCount = pendingNotifications.length;
-  const hasPendingRequest = pendingNotificationsCount > 0;
+  const pendingNotificationsCount = pendingRequests.length;
   const hasNotifications = notifications.length > 0;
   const unreadNotificationCount = notifications.filter((notification) => !notification.read).length;
   const notificationSubText =
@@ -80,6 +100,43 @@ const NotificationCenterScreen: React.FC = () => {
     );
   };
 
+  const getAllRecivedRequest = async () => {
+    const payload = {
+      walletNumber: walletInfo.walletNumber,
+      currentPage: 1,
+      pageSize: 20,
+    };
+    try {
+      const apiResponse = await getAllRecivedRequests(payload);
+
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        const data = apiResponse?.response?.requests || [];
+
+        console.log('apiResponse', data);
+
+        if (data.length > 0) {
+          const pendingRequestsData = data.filter((request) => request.transactionState === 'initiated');
+          const previousRequestsData = data.filter((request) => request.transactionState !== 'initiated');
+          setPendingRequests(pendingRequestsData);
+          setPreviousRequests(previousRequestsData);
+        }
+
+        if (apiResponse?.status?.type === 'FAILURE') {
+          renderToast(apiResponse?.error);
+        }
+        if (apiResponse?.status?.type === 'apiResponseNotOk') {
+          renderToast({
+            title: 'ERROR.API_ERROR_RESPONSE',
+            toastType: 'WARNING',
+          });
+        }
+      }
+    } catch (error: any) {
+      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    }
+
+    return { data: [], hasMore: false };
+  };
   /**
    * Handle delete notification
    * @param id - Notification ID
@@ -224,28 +281,47 @@ const NotificationCenterScreen: React.FC = () => {
   // Fetch notifications on component mount with page 1 and page size 10
   useEffect(() => {
     getNotifications(1, 20);
+    getAllRecivedRequest();
   }, []);
 
   return (
     <IPaySafeAreaView style={styles.safeArea}>
       <IPayHeader title="COMMON.NOTIFICATIONS" backBtn applyFlex />
       <IPayView style={styles.bannerContainer}>
-        {hasPendingRequest ? (
-          <>
-            <IPaySectionHeader
-              subText={`( ${pendingNotificationsCount} ${t('NOTIFICATION_CENTER.PENDING')})`}
-              leftText="NOTIFICATION_CENTER.REQUESTS"
-              rightText="NOTIFICATION_CENTER.VIEW_ALL"
-              rightIcon={icons.arrow_right_square}
-              showRightIcon
-            />
-            <IPayBannerAnimation onVerify={() => {}} />
-          </>
-        ) : (
+        <IPaySectionHeader
+          subText={`( ${pendingNotificationsCount} ${t('NOTIFICATION_CENTER.PENDING')})`}
+          leftText="NOTIFICATION_CENTER.REQUESTS"
+          rightText={pendingRequests.length > 0 ? 'NOTIFICATION_CENTER.VIEW_ALL' : undefined}
+          rightIcon={pendingRequests.length > 0 ? icons.arrow_right_square : undefined}
+          onRightOptionPress={() =>
+            navigate(ScreenNames.REQUEST_LISTING_SCREEN, {
+              pendingRequests,
+              previousRequests,
+            })
+          }
+          showRightIcon
+        />
+        {isBasicTier && (
+          <IPayBannerAnimation
+            onVerify={() => {
+              dispatch(setNafathSheetVisibility(true));
+            }}
+          />
+        )}
+        {pendingRequests.length === 0 ? (
           <>
             <IPaySectionHeader leftText="NOTIFICATION_CENTER.REQUESTS" />
             <NoRequestComponent colors={colors} styles={styles} />
           </>
+        ) : (
+          <IPayRequestCard
+            id={pendingRequests[0].transactionId}
+            key={pendingRequests[0].transactionId}
+            isPending={pendingRequests[0].transactionState === 'initiated'}
+            description={`${pendingRequests[0].targetFullName} has requested ${pendingRequests[0].targetAmount} SAR from you `}
+            dateTime={formatDate(pendingRequests[0].transactionTime)}
+            onPress={() => {}}
+          />
         )}
       </IPayView>
       <IPayView style={styles.mainContainer}>
