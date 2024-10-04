@@ -15,6 +15,8 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { retrieveData } from '@app/utilities/keychain.utils';
+import { EncryptedKey, EncryptedService } from '@app/utilities/enum/encrypted-keys.enum';
 import IPayButton from '../ipay-button/ipay-button.component';
 import IPayCardSelectorProps from './ipay-card-selector.interface';
 import IPayCardSelectorStyles from './ipay-card-selector.styles';
@@ -29,7 +31,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = IPayCardSelectorStyles(colors);
-  const [selectedCard, setSelectedCard] = useState<number | null>();
+  const [selectedCard, setSelectedCard] = useState<number | string | null>();
   const [, setSelectedCardObj] = useState<any>({});
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [topupCards, setTopupcards] = useState<any[]>([]);
@@ -64,10 +66,24 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
       ...card,
     }));
 
+  const getDefaultSelectedCard = async () => {
+    const retrievedDefaultCard = await retrieveData(EncryptedService.CARDS, EncryptedKey.DEFAULT_CARD);
+    const isDefaultCardExist =
+      retrievedDefaultCard && !!topupCards?.filter((item) => item.registrationId === retrievedDefaultCard)?.[0];
+
+    if (isDefaultCardExist) {
+      setSelectedCard(retrievedDefaultCard);
+      const selectedCardIndex = topupCards.findIndex((item) => item.registrationId === retrievedDefaultCard);
+      onCardSelect?.(topupCards[selectedCardIndex]);
+    } else {
+      setSelectedCard(topupCards[0]?.registrationId);
+      onCardSelect?.(topupCards[0]);
+    }
+  };
+
   useEffect(() => {
     if (topupCards?.length > 0) {
-      setSelectedCard(topupCards[0]?.key);
-      onCardSelect?.(topupCards[0]);
+      getDefaultSelectedCard();
     }
   }, [topupCards]);
 
@@ -95,7 +111,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
           if (item.expired) {
             openPressExpired?.();
           } else {
-            handleCardSelect(item.key);
+            handleCardSelect(item?.registrationId);
             handleCardSelectObj(item);
           }
         }}
@@ -108,7 +124,7 @@ const IPayCardSelector: React.FC<IPayCardSelectorProps> = ({
             <IPayCaption1Text text={item.subtitle} style={styles.subtitleText} />
           </IPayView>
         </IPayView>
-        {selectedCard === item.key ? (
+        {selectedCard === item.registrationId ? (
           <IPayIcon icon={icons.tick_mark_default} size={18} color={colors.primary.primary500} />
         ) : (
           <IPayView />

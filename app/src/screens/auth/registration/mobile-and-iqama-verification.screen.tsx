@@ -24,11 +24,18 @@ import { getValidationSchemas } from '@app/services';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants, ToastTypes } from '@app/utilities/enums.util';
 import icons from '@assets/icons/index';
-import React, { useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { TextInput } from 'react-native';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
 import { FieldValues, UseFormHandleSubmit } from 'react-hook-form';
+import networkConstants from '@app/network/constants';
+import { getValueFromAsyncStorage, setValueToAsyncStorage, StorageKeys } from '@app/utilities';
+import RNRestart from 'react-native-restart';
+import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
+import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
+import { GeoCoordinates } from 'react-native-geolocation-service';
+import { isEditableBaseURL } from '@app/network/utilities/base-url';
 import HelpCenterComponent from '../forgot-passcode/help-center.component';
 import useMobileAndIqamaVerification from './mobile-and-iqama-verification.hook';
 import { FormValues } from './mobile-and-iqama-verification.interface';
@@ -52,6 +59,7 @@ const MobileAndIqamaVerification: React.FC = () => {
     otp,
     isHelpSheetVisible,
     onCloseHelpSheet,
+    setLocationData,
   } = useMobileAndIqamaVerification();
 
   const { t } = useTranslation();
@@ -70,6 +78,16 @@ const MobileAndIqamaVerification: React.FC = () => {
   });
 
   const { showToast } = useToastContext();
+  const [currentSelectedEnv, setCurrentSelectedEnv] = useState<string>('');
+
+  const getCurrentEnv = async () => {
+    const currentEnv = await getValueFromAsyncStorage(StorageKeys.ENV);
+    if (currentEnv) setCurrentSelectedEnv(currentEnv);
+  };
+
+  useEffect(() => {
+    getCurrentEnv();
+  }, []);
 
   const onInvalidFormValues = (formValues: FieldValues) => {
     const title = formValues.mobileNumber?.message
@@ -90,6 +108,35 @@ const MobileAndIqamaVerification: React.FC = () => {
   const handleSubmitMethod = async (handleSubmit: UseFormHandleSubmit<FormValues, undefined>) => {
     await handleSubmit(onSubmit, onInvalidFormValues)();
   };
+
+  const onChangeEnviroment = async (selected: string) => {
+    if (!selected) return;
+    if (selected !== currentSelectedEnv) {
+      await setValueToAsyncStorage(StorageKeys.ENV, selected);
+      setTimeout(() => {
+        RNRestart.restart();
+      }, 300);
+    }
+  };
+
+  const renderEnviromentSwitch = () => (
+    <IPayView style={styles.inputTextView}>
+      <IPayDropdownSelect
+        onSelectListItem={onChangeEnviroment}
+        data={networkConstants.API_ENV}
+        selectedValue={currentSelectedEnv}
+        label="Switch Enviroment"
+        labelKey="title"
+        valueKey="title"
+      />
+    </IPayView>
+  );
+  const onLocationSelected = useCallback(
+    (position: GeoCoordinates) => {
+      setLocationData(position);
+    },
+    [setLocationData],
+  );
 
   return (
     <IPayFormProvider<FormValues> validationSchema={validationSchema} defaultValues={{ mobileNumber: '', iqamaId: '' }}>
@@ -142,6 +189,7 @@ const MobileAndIqamaVerification: React.FC = () => {
                     large
                     rightIcon={<IPayIcon icon={icons.rightArrow} color={colors.natural.natural0} size={20} />}
                   />
+                  {isEditableBaseURL() && renderEnviromentSwitch()}
                 </>
               </IPayScrollView>
             </IPayView>
@@ -193,6 +241,7 @@ const MobileAndIqamaVerification: React.FC = () => {
             >
               <HelpCenterComponent hideFAQError />
             </IPayPortalBottomSheet>
+            <IPayLocationPermissionSheet onLocationSelected={onLocationSelected} />
           </>
         </IPaySafeAreaView>
       )}

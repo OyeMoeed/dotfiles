@@ -535,7 +535,7 @@
     "REFUND_CAUTION_MESSAGE": "You’re about to refund the following International Transfer",
     "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "You will refund the sent amount excluding Fee and VAT",
     "MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID": "Please make sure the name entered is the exact  same one in the beneficiary’s ID",
-    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nickname ",
     "TRANSFER_BY": "Transfer By",
     "SENDER_NICK_NAME": "Sender Nick Name",
     "TYPE": "Transaction Type",
@@ -613,6 +613,10 @@
     "SARIE": "Sarie"
   },
   "LOCATION": {
+    "LOCATION_ACCESS": "Location Access",
+    "ALLOW_LOCATION_ACCESS": "Allow Location Access",
+    "ALLOW_ALINMAPAY_LOCATION_ACCESS": "Allow “AlinmaPay” to \n access your location",
+    "PLEASE_ENABLE_LOCATION_ACCESS": "To ensure the security of your account, please enable location access for verification purposes",
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_REQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
@@ -630,7 +634,11 @@
     "CONTACT_NAME": "Contact Name",
     "NO_RESULTS_FOUND": "No Results Found",
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
-    "CONTACT_LIMIT": "Contacts limit reached"
+    "CONTACT_LIMIT": "Contacts limit reached",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "Contacts Access Restriction",
+    "CONTACTS_PERMISSION_TITLE": "Please enable Contacts access to continue",
+    "CONTACTS_PERMISSION_DESCRIPTION": "You won't be able to select contacts to send money to without permission to access your contacts.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "Allow contacts permission"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -1025,7 +1033,7 @@
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
     "BENEFECIARY_NAME": "Beneficiary Name",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nick Name (Optional)",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nickname (Optional)",
     "BENEFICIARY_ADDED_SUCCESSFULLY": "Beneficiary Added Successfully",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "You need to activate this Beneficiary before making international transfer",
     "ACTIVATE_BENEFICIARY": "Activate Beneficiary",
@@ -1124,7 +1132,7 @@
     "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page",
     "BENEFECIARY_DETAILS": "Beneficiary Details",
     "BENEFECIARY_INFORMATION": "Beneficiary Information",
-    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nickname",
     "BENEFICIARY_FULL_NAME": "Beneficiary Full Name",
     "RELATION_SHIP": "Relationship",
     "COUNTRY_NAME": "Country Name",
@@ -1138,7 +1146,7 @@
     "DELETE": "Delete",
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
-    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nickname (optional)",
     "NAME_CHANGED": "Beneficiary Nick name has been Changed",
     "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
@@ -1224,6 +1232,7 @@
     "SERVICE_TYPE": "Service type",
     "ACCOUNT_NUMBER": "Account Number",
     "PAYMENT_FAILED": "Payment Failed",
+    "REFUND_FAILED": "Refund Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
     "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "VIEW_EDIT_DETAILS": "View and edit details",
@@ -1326,7 +1335,8 @@
     "REFUND_VIOLATION": "Refund violation",
     "VIOLATION": "Violation",
     "VIOLATIONS": "Violations",
-    "REF_NUMBER": "Ref. Number"
+    "REF_NUMBER": "Ref. Number",
+    "TRAFFIC_VIOLATION": "Traffic violation"
   },
   "SHOP": {
     "PURCHASED_AT": "Pubrchased at: ",
@@ -1550,6 +1560,16 @@
   "CARD_ISSUANCE_SHEET": {
     "REGULAR_TITLE": "You can now",
     "BOLD_TITLE": "Easily Issue Cards",
-    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
+    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
+  },
+  "DISABLED_MODULES": {
+    "TITLE": "Service disabled",
+    "UNAVAILABLE_FEATURE": "The feature you are trying to access is currently unavailable",
+    "UNAVAILABLE_FEATURE_DESCRIPTION": "You may try this feature again later.\nThank you for your understanding."
+  },
+  "MAINTENTANCE_SHEET": {
+    "SHEET_TITLE": "App maintenance",
+    "TITLE": "The app is currently\nundergoing maintenance",
+    "DESCRIPTION": "We appreciate your patience and will be back shortly.\nThank you!"
   }
 }

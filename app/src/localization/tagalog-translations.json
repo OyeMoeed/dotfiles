@@ -54,6 +54,22 @@
     "CONTACT_SERVICE_TEAM": "Makipag-ugnayan sa aming customer service team, 24/7",
     "CONTACT_US": "Makipag-ugnayan sa amin"
   },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "Kasaysayan",
+    "SEND_TO_UNSAVED_NUMBER": "Magpadala sa di-talagang naka-save na numero",
+    "UNSAAVED_NUMBER": "Di-talagang Naka-Save na Numero",
+    "TYPE_MOBILE_NUMBER": "I-type ang bilang ng mobile",
+    "CONTACTS": "Kontakto",
+    "CONTACT_NUMBER_OR_NAME": "Bilang ng Kontakto o Pangalan",
+    "CONTACT_NAME": "Pangalan ng Kontakto",
+    "NO_RESULTS_FOUND": "Walang Matatagpuan na Resulta",
+    "CONTACT_LIMIT_REACHED": "Limitasyon ng Kontakto ay Nakamit na",
+    "CONTACT_LIMIT": "Ang limitasyon ng kontakto ay nakamit na",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "Pagtutulungan sa Pag-access ng Kontakto",
+    "CONTACTS_PERMISSION_TITLE": "Paki-enable ang pag-access sa Kontakto upang magpatuloy",
+    "CONTACTS_PERMISSION_DESCRIPTION": "Hindi ka makakatapos ng mga kontakto upang ipadala ang pera sa pamamagitan ng walang pag-allow para sa access ng iyong kontakto.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "Pahintulutan ang pag-access ng kontakto"
+  },
   "HOME": {
     "WELCOME": "Maligayang pagdating",
     "ACCOUNT_BALANCE": "Balanse ng account",
@@ -261,5 +277,15 @@
     "REGULAR_TITLE": "Kaya nyo na",
     "BOLD_TITLE": "Mabilis na Isyu ng Kartang",
     "DESCRIPTION": "Tingnan ang mga mapapanood at mga feature sa AlinmaPay!"
+  },
+  "DISABLED_MODULES": {
+    "TITLE": "Hindi Kumpleto ang Serbisyo",
+    "UNAVAILABLE_FEATURE": "Ang feature na binabantayan ay hindi kumuha sa kasalukuyan",
+    "UNAVAILABLE_FEATURE_DESCRIPTION": "Maaari mong isang muli pag-subok ng feature na ito sa hinaharap.\nMaraming salamat sa iyong pag-unawa."
+  },
+  "MAINTENTANCE_SHEET": {
+    "SHEET_TITLE": "Pagpapabuti ng App",
+    "TITLE": "Ang app ay nasa\npagpapalaki ngayon",
+    "DESCRIPTION": "Ang mga pasensya para sa inyo at babalik kami kaagad.\nMaraming salamat!"
   }
 }

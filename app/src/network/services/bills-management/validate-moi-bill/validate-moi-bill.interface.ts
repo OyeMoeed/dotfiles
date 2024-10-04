@@ -11,6 +11,14 @@ interface ValidateBillRes {
   paymentMethod: string;
   billerId: string;
   feeList: any;
+  beneficiaryName: string;
+  referenceNumber: string;
+  amount: number | string;
+  serviceProvider: string;
+  serviceType: string;
+  serviceId: string;
+  violationNo: string;
+  violationDate: string;
 }
 
 interface ValidateBillResponse {

@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
+import { IPayButton, IPayChip, IPayContactsPermission, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayGiftTransactionList } from '@app/components/organism';
@@ -35,13 +35,13 @@ const SendGiftListScreen: React.FC = () => {
   const [filterTags, setFilterTags] = useState<Map<any, any>>();
   const [appliedFilters, setAppliedFilters] = useState<FiltersArrayProps | null>(null);
 
-  const [walletTransferData, setWalletTransferData] = useState({});
+  const [walletTransferData, setWalletTransferData] = useState<any>();
 
   const [selectedTab, setSelectedTab] = useState<string>(GIFT_TABS[0]);
 
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [isFilterSheetVisible, setIsFilterSheetVisible] = useState<boolean>(false);
-  const contacts = useContacts();
+  const { onPermissionGranted, contacts } = useContacts();
   const { showToast } = useToastContext();
 
   const handleSelectedTab = (tab: string) => {
@@ -53,14 +53,11 @@ const SendGiftListScreen: React.FC = () => {
     setIsFilterSheetVisible(true);
   };
 
-  const applyFilters = (data: any) => {
-    // apply filters functionality
-  };
-
   const handleSubmit = (data: any, filterTagsToRender: Map<any, any>) => {
     setFilterTags(filterTagsToRender);
     setAppliedFilters(data);
-    applyFilters(data);
+    // TODO : implement apply filter
+    // applyFilters(data);
   };
 
   const removeFilter = (filter: string) => {
@@ -77,7 +74,8 @@ const SendGiftListScreen: React.FC = () => {
     };
 
     setAppliedFilters(updatedFilters);
-    applyFilters(updatedFilters);
+    // TODO : implement apply filter
+    //  applyFilters(updatedFilters);
     setFilterTags(filterTagKeys);
   };
   const onPressClose = (text: string) => {
@@ -118,20 +116,10 @@ const SendGiftListScreen: React.FC = () => {
       trxId: giftDetails?.requestID ?? '',
       deviceInfo: await getDeviceInfo(),
     };
-    try {
-      const apiResponse: ExecuteGiftMockProps = await executeGift(walletNumber, payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: giftDetails, isSend, giftCategory });
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderToast(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+
+    const apiResponse: ExecuteGiftMockProps = await executeGift(walletNumber, payload);
+    if (apiResponse) {
+      navigate(ScreenNames.GIFT_DETAILS_SCREEN, { details: giftDetails, isSend, giftCategory });
     }
   };
 
@@ -175,7 +163,7 @@ const SendGiftListScreen: React.FC = () => {
     congrat: t('SEND_GIFT.CONGRATULATIONS'),
   };
 
-  const renderItem = ({ item }) => {
+  const renderItem = ({ item }: { item: any }) => {
     const { trnsDateTime, senderName, receiverName, userNotes, status, amount, receiverMobile, senderMobile } = item;
     const isSend = selectedTab === t('SEND_GIFT.SENT');
 
@@ -195,6 +183,9 @@ const SendGiftListScreen: React.FC = () => {
           onPress={() => sendGiftDetail(item, isSend, giftCategory)}
           titleWrapper={styles.titleWrapper}
           tab={selectedTab}
+          headingStyle={undefined}
+          titleStyle={undefined}
+          footTextStyle={undefined}
         />
       </IPayView>
     );
@@ -229,19 +220,21 @@ const SendGiftListScreen: React.FC = () => {
       {filterTags && filterTags?.size > 0 ? (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {Array.from(filterTags?.keys()).map((key) => (
-              <IPayChip
-                key={key as string}
-                containerStyle={styles.chipContainer}
-                headingStyles={styles.chipHeading}
-                textValue={key as string}
-                icon={
-                  <IPayPressable onPress={() => onPressClose(key as string)}>
-                    <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                  </IPayPressable>
-                }
-              />
-            ))}
+            <IPayView>
+              {Array.from(filterTags?.keys()).map((key) => (
+                <IPayChip
+                  key={key as string}
+                  containerStyle={styles.chipContainer}
+                  headingStyles={styles.chipHeading}
+                  textValue={key as string}
+                  icon={
+                    <IPayPressable onPress={() => onPressClose(key as string)}>
+                      <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                    </IPayPressable>
+                  }
+                />
+              ))}
+            </IPayView>
           </IPayScrollView>
         </IPayView>
       ) : (
@@ -284,19 +277,6 @@ const SendGiftListScreen: React.FC = () => {
           )}
         </IPayView>
       )}
-      {/* <IPayFilterBottomSheet
-        heading="TRANSACTION_HISTORY.FILTER"
-        defaultValues={sendGiftFilterDefaultValues}
-        showAmountFilter
-        showDateFilter
-        ref={filterRef}
-        onSubmit={handleSubmit}
-        filters={sendGiftFilterData}
-        isBottomDropdowns
-        bottomFilters={sendGiftBottomFilterData}
-        applySearchOn={[FiltersType.CONTACT_NUMBER]}
-      /> */}
-
       <IPayFilterTransactions
         // ref={filterRef}
         heading="TRANSACTION_HISTORY.FILTER"
@@ -309,6 +289,7 @@ const SendGiftListScreen: React.FC = () => {
         isVisible={isFilterSheetVisible}
         onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
       />
+      <IPayContactsPermission onPermissionGranted={onPermissionGranted} />
     </IPaySafeAreaView>
   );
 };

@@ -25,13 +25,13 @@ import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
-import { IPayLatestSectionProps } from './ipay-latest-section.interface';
-import sectionStyles from './ipay-latest-section.style';
 import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
 import { isAndroidOS } from '@app/utilities/constants';
-import { heightMapping } from '@app/components/templates/ipay-transaction-history/ipay-transaction-history.constant';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayTransactionHistory } from '@app/components/templates';
+import { ImageStyle } from 'react-native';
+import sectionStyles from './ipay-latest-section.style';
+import { IPayLatestSectionProps } from './ipay-latest-section.interface';
 
 const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   testID,
@@ -57,8 +57,8 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
 
   const openTransactionHistoryDetails = useCallback(
-    (item: IPayTransactionItemProps) => {
-      let calculatedSnapPoint = ['95%', '100%'];
+    (item: any) => {
+      const calculatedSnapPoint = ['95%', '100%'];
       setSnapPoint(calculatedSnapPoint);
       setTransaction(item);
       transactionRef.current?.present();
@@ -117,7 +117,10 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
               keyExtractor={(_, index) => index.toString()}
               renderItem={({ index }) => (
                 <IPayImage
-                  style={[styles.adImage, isLastItem(sampleData?.length as number, index) && styles.lastItem]}
+                  style={[
+                    styles.adImage as ImageStyle,
+                    isLastItem(sampleData?.length, index) && (styles.lastItem as ImageStyle),
+                  ]}
                   image={images.suggestionAd}
                   key={`suggested-image-${index + 1}`}
                 />
@@ -158,8 +161,11 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   )
                 }
                 renderItem={({ item, index }) => (
-                  <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item || []} 
-                    onPressTransaction={openTransactionHistoryDetails}/>
+                  <IPayTransactionItem
+                    key={`transaction-${index + 1}`}
+                    transaction={item || []}
+                    onPressTransaction={openTransactionHistoryDetails}
+                  />
                 )}
               />
             </IPayView>
@@ -194,7 +200,7 @@ const IPayLatestList: React.FC<IPayLatestSectionProps> = ({
                   }
                   containerStyle={styles.offerContainerStyle}
                   key={`offer-${index + 1}`}
-                  isLastItem={isLastItem(offersData?.length as number, index)}
+                  isLastItem={isLastItem(offersData?.length, index)}
                   offer={item}
                 />
               )}

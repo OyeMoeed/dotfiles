@@ -53,7 +53,7 @@ const sadadFooterComponentStyles = (colors: typeof themeColors) =>
       height: verticalScale(18),
     },
     subText: { color: colors.error.error500 },
-    backgroudStyle: { backgroundColor: colors.error.error25 },
+    backgroudStyle: { backgroundColor: colors.error.error25, marginBottom: moderateScale(8) },
   });
 
 export default sadadFooterComponentStyles;

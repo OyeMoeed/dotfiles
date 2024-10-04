@@ -1,22 +1,15 @@
-import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 
 import icons from '@app/assets/icons';
-import { buttonVariants } from '@app/utilities';
-import useTheme from '@app/styles/hooks/theme.hook';
-import { useTypedSelector } from '@app/store/store';
-import { IPayButton } from '@app/components/molecules';
-import { IPayBottomSheet } from '@app/components/organism';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { IPayIcon, IPayText, IPayTitle2Text, IPayView } from '@app/components/atoms';
-import { openAppOrStore } from '@app/utilities/linking-utils';
 import constants, { MAIN_APP_STORE_LINKS } from '@app/constants/constants';
+import { useTypedSelector } from '@app/store/store';
+import { openAppOrStore } from '@app/utilities/linking-utils';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
+import IPayCommonAlertSheet from '../ipay-common-alert-sheet/ipay-common-alert-sheet.component';
 import { IPayUpdateComponentSheetProps } from './ipay-update-bottom-sheet.interface';
-import forceUpdateStyle from './ipay-update-bottom-sheet.style';
 
-const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, ref) => {
-  const { colors } = useTheme();
-  const styles = forceUpdateStyle();
+const IPayUpdateBottomSheet: FC<IPayUpdateComponentSheetProps> = () => {
   const shouldForceUpdate = useTypedSelector((state) => state.forceUpdateReducer.visible);
   const canForceUpdateClose = constants.CAN_FORCE_UPDATE_CLOSE;
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
@@ -28,11 +21,6 @@ const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, 
   const handleClosePress = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-
-  useImperativeHandle(ref, () => ({
-    present: handlePresentModalPress,
-    close: handleClosePress,
-  }));
 
   useEffect(() => {
     if (shouldForceUpdate) {
@@ -47,38 +35,17 @@ const IPayUpdateBottomSheet = forwardRef<{}, IPayUpdateComponentSheetProps>((_, 
   };
 
   return (
-    <IPayBottomSheet
-      isVisible={false}
-      heading="UPDATE.HEADER"
+    <IPayCommonAlertSheet
       ref={bottomSheetModalRef}
-      simpleHeader
-      simpleBar
-      bold
-      cancelBnt={canForceUpdateClose}
-      closeBottomSheetOnDone={canForceUpdateClose}
-      isPanningGesture={false}
-      enableDynamicSizing={false}
-      enablePanDownToClose={false}
-      enableHandlePanningGesture={false}
-      enableOverDrag={false}
-      stopCloseBackgroundPress={!canForceUpdateClose}
-    >
-      <IPayView style={styles.container}>
-        <IPayIcon icon={icons.danger_light} size={85} />
-        <IPayTitle2Text text="UPDATE.TITLE" style={styles.mainText} />
-        <IPayText style={styles.subTitleText} text="UPDATE.SUBTITLE" />
-        <IPayButton
-          btnType={buttonVariants.PRIMARY}
-          medium
-          btnStyle={styles.updateButton}
-          btnIconsDisabled
-          btnColor={colors.primary.primary500}
-          btnText="UPDATE.BUTTON_TITLE"
-          onPress={onPressAppUpdate}
-        />
-      </IPayView>
-    </IPayBottomSheet>
+      btnTitle="UPDATE.BUTTON_TITLE"
+      onBtnPress={onPressAppUpdate}
+      headerTitle="UPDATE.HEADER"
+      isForceAlert={canForceUpdateClose}
+      title="UPDATE.TITLE"
+      subtitle="UPDATE.SUBTITLE"
+      icon={icons.danger_light}
+    />
   );
-});
+};
 
 export default IPayUpdateBottomSheet;

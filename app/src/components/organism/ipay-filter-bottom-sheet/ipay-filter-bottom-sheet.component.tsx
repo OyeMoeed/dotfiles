@@ -42,8 +42,8 @@ const IPayControlledInput = ({ control, label, message, isError, name, required,
   const styles = filtersStyles(colors);
 
   const handleTextChange = (text: string, onChange: (value: string) => void) => {
-    // Allow only digits and decimal point on pasting
-    const filteredText = text.replace(/[^0-9.]/g, '');
+    // Allow only digits and one decimal point on pasting
+    const filteredText = text.replace(/[^0-9.]/g, '').replace(/(\.\d*)(\.)/g, '$1');
     onChange(filteredText);
   };
 
@@ -102,6 +102,7 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
           assistiveText={isError ? message : ''}
           onChangeText={onChange}
           showFocusStyle={showFocusStyle}
+          style={styles.dateInput}
         />
       )}
     />
