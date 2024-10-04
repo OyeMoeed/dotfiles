@@ -14,7 +14,7 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { shortString } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
-import { getDateFormate } from '@app/utilities/date-helper.util';
+import { checkDateValidation, getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -28,7 +28,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     isPayPartially = false,
     isPayOnly,
     showBalanceBox = true,
-    billPaymentInfos: { billDetailsData, totalAmount },
+    billPaymentInfos: { billPaymentDetails, totalAmount },
     saveBill,
   } = route.params || {};
   const {
@@ -50,7 +50,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     setOtpRefAPI,
     setIsOtpSheetVisible,
     isOtpSheetVisible,
-  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billDetailsData);
+  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billPaymentDetails);
 
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
@@ -80,6 +80,12 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     }
   };
 
+  const dateFormat = (dueDateTime: string) => {
+    const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
+    const formattedDateTime = date.isValid() ? getDateFormate(date, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
+    return formattedDateTime;
+  };
+
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
     {
       id: '1',
@@ -94,7 +100,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     {
       id: '3',
       label: t('COMMON.DUE_DATE'),
-      value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
+      value: dateFormat(item.dueDateTime),
     },
   ];
 
@@ -112,7 +118,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     }
 
     return { warningMsg, disabled };
-  }, [billDetailsData]);
+  }, [billPaymentDetails]);
 
   return (
     <>
@@ -137,7 +143,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           )}
           <IPayFlatlist
             contentContainerStyle={styles.contentContainerStyle}
-            data={billDetailsData}
+            data={billPaymentDetails}
             renderItem={({ item }) => (
               <IPayBillDetailsOption
                 headerData={{

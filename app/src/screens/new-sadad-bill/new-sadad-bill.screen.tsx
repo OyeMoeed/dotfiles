@@ -70,7 +70,7 @@ const NewSadadBillScreen: React.FC = () => {
       isPayOnly: true,
       showBalanceBox: false,
       saveBill: watch(FormFields.SAVE_BILL),
-      billPaymentInfos: { billDetailsData, totalAmount: totalAmountValue },
+      billPaymentInfos: { billPaymentDetails: billDetailsData, totalAmount: totalAmountValue },
     });
   };
 

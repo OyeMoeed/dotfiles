@@ -48,16 +48,18 @@ const IPayBillDetailsOption: React.FC<IPayBillDetailsOptionProps> = ({
   };
 
   const onPressDefault = (item: OptionItem) => {
-    copyText(item.value);
-    renderToast({
-      title: 'TOP_UP.REF_NUMBER_COPIED',
-      icon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
-      toastType: ToastTypes.INFORMATION,
-    });
+    if (item?.icon) {
+      copyText(item.value);
+      renderToast({
+        title: 'TOP_UP.REF_NUMBER_COPIED',
+        icon: <IPayIcon icon={icons.copy_success} size={24} color={colors.natural.natural0} />,
+        toastType: ToastTypes.INFORMATION,
+      });
+    }
   };
 
   const renderOption = ({ item }: { item: OptionItem }) => {
-    const { label, value, icon, onPressIcon = onPressDefault } = item;
+    const { label, value, icon, onPressIcon = () => onPressDefault(item) } = item;
     const isValueExceedsLengthLimit = value && value.length > 24;
 
     return (

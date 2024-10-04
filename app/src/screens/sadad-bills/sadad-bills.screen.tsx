@@ -118,11 +118,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(bill.billerId),
   }));
 
-  const renderButtonText = () => {
-    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
-
-    return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
-  };
+  const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
+  const renderButtonText = () => `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
 
   const onPressPartialPay = () =>
     navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true, billDetailsList: billPaymentDetails });
@@ -334,7 +331,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: true,
-      billPaymentInfos: billPaymentDetails,
+      billPaymentInfos: { billPaymentDetails, totalAmount: selectedBillAmount },
     });
   };
 
