@@ -102,6 +102,7 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
           assistiveText={isError ? message : ''}
           onChangeText={onChange}
           showFocusStyle={showFocusStyle}
+          style={styles.dateInput}
         />
       )}
     />
