@@ -22,6 +22,6 @@ export interface IW2WResRequest {
 export interface IReqRequest {
   mobileNumber: string;
   amount: number;
-  note: string;
+  note?: string;
   transferPurpose: string;
 }

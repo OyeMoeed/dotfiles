@@ -460,6 +460,7 @@ const LocalTransferScreen: React.FC = () => {
                 simpleInput
                 style={styles.inputStyle}
                 containerStyle={styles.searchInputStyle}
+                closeIconStyle={styles.closeIcon}
                 leftIcon={<IPayIcon icon={icons.crossIcon} size={20} color={colors.natural.natural500} />}
                 showLeftIcon={!!search}
                 onClearInput={() => setSearch('')}

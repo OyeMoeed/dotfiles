@@ -13,10 +13,9 @@ const onResponseReject = async (error: AxiosError) => {
 const onResponseFulfilled = async (response: AxiosResponse) => {
   const state = await NetInfo.fetch();
   if (!state.isConnected) {
-    return;
+    return response;
   }
 
-  // eslint-disable-next-line consistent-return
   return response;
 };
 

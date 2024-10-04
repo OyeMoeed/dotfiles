@@ -1,8 +1,8 @@
 // Import necessary interfaces
-import { MockAPIDataProps, MockAPIOkProp } from 'network/services/services.interface';
+import { MockAPIDataProps } from 'network/services/services.interface';
 
 // Define the AppConfigurationsMockResponseDetails interface
-interface AppConfigurationsMockResponseDetails {
+export interface AppConfigurationsMockResponseDetails {
   name: string;
   description: string;
   type: string;
@@ -11,13 +11,8 @@ interface AppConfigurationsMockResponseDetails {
 }
 
 // Define the AppConfigurationsMockDataProps interface that extends MockAPIDataProps with specific response details
-interface AppConfigurationsMockDataProps extends MockAPIDataProps {
+export interface AppConfigurationsMockProps extends MockAPIDataProps {
   response: {
     parameters: AppConfigurationsMockResponseDetails[];
   };
-}
-
-// Extend the AppConfigurationsMockProps interface from AppConfigurationsMockDataProps and MockAPIOkProp
-export interface AppConfigurationsMockProps extends MockAPIOkProp {
-  data: AppConfigurationsMockDataProps;
 }

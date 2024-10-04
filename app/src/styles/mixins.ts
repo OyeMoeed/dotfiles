@@ -4,6 +4,7 @@ import { moderateScale, scale } from 'react-native-size-matters';
 
 import { heightPercentageToDP as hp, widthPercentageToDP as wp } from 'react-native-responsive-screen';
 
+import { hasNotch } from 'react-native-device-info';
 import colors from './colors.const';
 
 const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('screen');
@@ -126,6 +127,12 @@ const StatusBarHeight = Platform.select({
   default: 0,
 });
 
+const BottomBarPadding = Platform.select({
+  ios: hasNotch() ? 30 : 10,
+  android: 10,
+  default: 0,
+});
+
 // Utility function to get width percentage
 const widthPercent = (percentage: Percentage) => wp(percentage);
 
@@ -147,4 +154,5 @@ export {
   scaleFont,
   scaleSize,
   widthPercent,
+  BottomBarPadding,
 };

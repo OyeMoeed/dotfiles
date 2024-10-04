@@ -35,4 +35,8 @@ export interface IPayCustomSheetProps {
    * to add customized handler other than available options
    */
   customHandler?: ReactNode;
+  /**
+   * close trigger for the sheet
+   */
+  closeTrigger?: boolean;
 }

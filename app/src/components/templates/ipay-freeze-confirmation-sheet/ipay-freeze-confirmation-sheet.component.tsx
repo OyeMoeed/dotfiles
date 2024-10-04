@@ -47,12 +47,14 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
         title: t('CARDS.FREEZE_CARD'),
         subtitle: t('CARDS.CARD_FREEZE_INDICATION_MESSAGE'),
         option: t('CARDS.FREEZE'),
+        status: CardActiveStatus.FREEZE,
         icon: icons.cardSlash1,
       },
       unfreeze: {
         title: t('CARDS.UNFREEZE_CARD'),
         subtitle: t('CARDS.CARD_UNFREEZE_INDICATION_MESSAGE'),
         option: t('CARDS.UNFREEZE'),
+        status: CardActiveStatus.UNFREEZE,
         icon: icons.card_tick11,
       },
     };
@@ -76,12 +78,12 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
         },
       };
       showToast({
-        title: toastVariant[type as keyof ToastVariants].title,
+        title: toastVariant[type as keyof ToastVariants]?.title,
         subTitle: toastMsg,
         containerStyle: styles.toast,
         isShowRightIcon: false,
         leftIcon: (
-          <IPayIcon icon={toastVariant[type as keyof ToastVariants].icon} size={24} color={colors.natural.natural0} />
+          <IPayIcon icon={toastVariant[type as keyof ToastVariants]?.icon} size={24} color={colors.natural.natural0} />
         ),
         toastType: toastVariant[type as keyof ToastVariants].toastType,
       });
@@ -149,7 +151,7 @@ const IPayFreezeConfirmationSheet = forwardRef<IPayFreezeConfirmationSheetHandle
         bodyStyle={styles.actionSheetStyle}
         options={[sheetVariant[cardStatus as keyof SheetVariants].option, 'COMMON.CANCEL']}
         cancelButtonIndex={1}
-        onPress={(index) => handleFinalAction(index, sheetVariant[cardStatus as keyof SheetVariants].option)}
+        onPress={(index) => handleFinalAction(index, sheetVariant[cardStatus as keyof SheetVariants].status)}
         showCancel
         testID="action-sheet"
         showIcon

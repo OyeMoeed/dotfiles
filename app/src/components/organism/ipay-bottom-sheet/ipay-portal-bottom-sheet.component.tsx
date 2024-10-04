@@ -41,6 +41,9 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
       isVisible = false,
       onDone,
       defaultIndex,
+      overrideContainerStyle,
+      stopCloseBackgroundPress = false,
+      enableOverDrag = true,
     },
     ref,
   ) => {
@@ -65,7 +68,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
         <BottomSheetBackdrop
           appearsOnIndex={0}
           disappearsOnIndex={-1}
-          pressBehavior="close"
+          pressBehavior={stopCloseBackgroundPress ? 'none' : 'close'}
           {...props}
           opacity={1}
           style={[props.style, styles.overlayStyle]}
@@ -96,8 +99,8 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
         doneText={doneText}
         onPressCancel={closeBottomSheet}
         onPressDone={() => {
-          onDone && onDone();
-          closeBottomSheet && closeBottomSheet();
+          onDone?.();
+          closeBottomSheet();
         }}
         bold={bold}
         bgGradientColors={
@@ -118,7 +121,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
           backdropComponent={renderBackdrop}
           ref={bottomSheetModalRef}
           onClose={onCloseBottomSheet}
-          enableOverDrag
+          enableOverDrag={enableOverDrag}
           snapPoints={customSnapPoint}
           onChange={handleSheetChanges}
           backgroundStyle={[styles.backgroundStyle, bottomSheetBgStyles]}
@@ -132,7 +135,7 @@ const IPayPortalBottomSheet = forwardRef<BottomSheetModal, IPayPortalBottomSheet
             gradientColors={noGradient ? [colors.backgrounds.greyOverlay, colors.backgrounds.greyOverlay] : gradient}
           >
             <ToastProvider>
-              <BottomSheetView style={styles.contentContainer}>{children}</BottomSheetView>
+              <BottomSheetView style={[styles.contentContainer, overrideContainerStyle]}>{children}</BottomSheetView>
             </ToastProvider>
           </IPayLinearGradientView>
         </BottomSheet>

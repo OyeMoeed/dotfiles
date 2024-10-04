@@ -331,6 +331,12 @@ enum BillingStatus {
   NOT_ENABLED = 'NOT_ENABLED',
 }
 
+enum TrafficViolationFields {
+  VIOLATION_NUMBER = 'Violation Number',
+  VIOLATOR_ID = 'Violator ID',
+  ID_TYPE = 'ID Type',
+}
+
 // Export all enums
 export {
   APIResponseType,
@@ -378,6 +384,7 @@ export {
   TopUpStates,
   TopupStatus,
   TrafficTabPaymentTypes,
+  TrafficViolationFields,
   TrafficVoilationTypes,
   TransactionHistoryFilter,
   alertType,

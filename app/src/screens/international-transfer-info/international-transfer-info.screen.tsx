@@ -18,7 +18,6 @@ import {
   IPayList,
   IPayToggleButton,
 } from '@app/components/molecules';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayCountryCurrencyBox, IPaySafeAreaView } from '@app/components/templates';
 import useTransferMethodsData from '@app/components/templates/ipay-country-currency-box/ipay-country-currency-box.constant';
@@ -33,22 +32,20 @@ import getWUBeneficiaryInfoMetaData from '@app/network/services/international-tr
 import {
   FeesInquiryPayload,
   WuFeesInquiryProps,
+  WuFeesInquiryResponse,
 } from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.interface';
 import westerUnionFeesInquiry from '@app/network/services/international-transfer/wu-fees-inquiry/wu-fees-inquiry.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { isAndroidOS } from '@app/utilities/constants';
-import { ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ImageStyle } from 'react-native';
 import { OptionItem } from '../international-transfer-success/international-transfer-success.interface';
 import beneficiaryKeysMapping from './international-transfer-info.constant';
-import {
-  InternationalBeneficiariesDetails,
-  SelectedReason,
-  TransferGateway,
-} from './international-transfer-info.interface';
+import { SelectedReason, TransferGateway } from './international-transfer-info.interface';
 import transferInfoStyles from './international-transfer-info.style';
 
 const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
@@ -65,19 +62,16 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
   const [remitterCurrencyAmount, setRemitterCurrencyAmount] = useState<string>('');
   const [beneficiaryCurrencyAmount, setBeneficiaryCurrencyAmount] = useState<string>('');
   const [transferGateway, setTransferGateway] = useState<TransferGateway>();
-  const [apiError, setAPIError] = useState<string>('');
   const [beneficiaryDetailsData, setBeneficiaryDetailsData] = useState<WUTransferReason[]>([]);
-  const [wuFeesInquiryData, setWUFeesInquiryData] = useState({});
+  const [wuFeesInquiryData, setWUFeesInquiryData] = useState<WuFeesInquiryResponse>();
   const amountCurrency = 'SAR';
   const amount = 1;
-
-  const { showToast } = useToastContext();
 
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
   const renderOption = ({ item }: { item: OptionItem }) => {
     const { label, value, icon, image } = item;
-    const localizationKey = LocalizationKeysMapping[label as keyof InternationalBeneficiariesDetails];
+    const localizationKey = LocalizationKeysMapping[label as keyof typeof LocalizationKeysMapping];
     const localization = localizationKey ? t(`INTERNATIONAL_TRANSFER.${localizationKey}`) : label;
 
     return (
@@ -88,7 +82,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
         detailTextStyle={styles.detailsText}
         isShowIcon
         icon={<IPayIcon icon={icon} color={colors.primary.primary500} />}
-        rightText={image ? <IPayImage image={image} style={styles.listImage} /> : <IPayView />}
+        rightText={image ? <IPayImage image={image} style={styles.listImage as ImageStyle} /> : <IPayView />}
       />
     );
   };
@@ -122,64 +116,24 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
       feesInquiryData: { remitterCurrencyAmount, beneficiaryCurrencyAmount, isIncludeFees, ...wuFeesInquiryData },
     });
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
   const getBeneficiariesDetailsData = async () => {
-    try {
-      const apiResponse: WUBeneficiaryDetailsMetaDataProps = await getWUBeneficiaryInfoMetaData(
-        transferData?.beneficiaryCode,
-      );
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setBeneficiaryDetailsData(apiResponse?.response?.transferReasonList);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    const apiResponse: WUBeneficiaryDetailsMetaDataProps = await getWUBeneficiaryInfoMetaData(
+      transferData?.beneficiaryCode,
+    );
+    if (apiResponse?.response?.transferReasonList) {
+      setBeneficiaryDetailsData(apiResponse?.response?.transferReasonList);
     }
   };
 
   const wuFeesInquiry = async () => {
     const payload: FeesInquiryPayload = {
-      amount,
+      amount: amount.toString(),
       amountCurrency,
       promoCode: null,
     };
-    try {
-      const apiResponse: WuFeesInquiryProps = await westerUnionFeesInquiry(payload, transferData?.beneficiaryCode);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setWUFeesInquiryData(apiResponse?.response);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+    const apiResponse: WuFeesInquiryProps = await westerUnionFeesInquiry(payload, transferData?.beneficiaryCode);
+    if (apiResponse?.response) {
+      setWUFeesInquiryData(apiResponse?.response);
     }
   };
 
@@ -231,6 +185,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
               availableBalance={walletInfo?.availableBalance}
               showRemainingAmount
               onPressTopup={() => {}}
+              monthlyIncomingLimit=""
             />
             <IPayView>
               <IPayList
@@ -255,7 +210,7 @@ const InternationalTransferInfoScreen: React.FC = ({ route }: any) => {
             <IPayView>
               <IPaySectionList
                 ref={sectionListRef}
-                sections={transferMethods}
+                data={transferMethods}
                 renderItem={({ item: transferMethod, index }) => {
                   const isCheck = transferGateway?.index === index;
                   return (

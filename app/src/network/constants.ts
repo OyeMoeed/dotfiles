@@ -11,6 +11,20 @@ const constants = {
   },
   API_VERSION_NAME: 'api-version',
   MAX_RECORD: 'max-record',
+  API_ENV: [
+    {
+      title: 'preProd',
+    },
+    {
+      title: 'uat',
+    },
+    {
+      title: 'sit',
+    },
+    {
+      title: 'dev',
+    },
+  ],
 };
 
 export default constants;
