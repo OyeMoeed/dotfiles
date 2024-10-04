@@ -119,4 +119,5 @@ export interface AnimatedTextInputProps extends TextInputProps {
   errorMessageViewStyle?: StyleProp<ViewStyle>;
   errorMessageStyle?: StyleProp<ViewStyle>;
   suffix?: string;
+  lableNumberOfLines?: number;
 }
