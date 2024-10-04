@@ -1,8 +1,9 @@
-import { IPayFootnoteText, IPayLinearGradientView, IPayView } from '@app/components/atoms';
+import { IPayFootnoteText, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import IPayBalanceStatusChip from '../ipay-balance-status-chip/ipay-balance-status-chip.component';
 import IPayButton from '../ipay-button/ipay-button.component';
 import { SadadFooterComponentProps } from './ipay-sadad-footer.interface';
@@ -28,8 +29,10 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   textColor,
   gradientViewStyle,
   shouldTranslateBtnText,
+  totalAmountText,
 }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = sadadFooterComponentStyles(colors);
   const checkIfSelectedCount = selectedItemsCount && selectedItemsCount > 0;
   const {
@@ -37,6 +40,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     limitsDetails: { monthlyRemainingOutgoingAmount, dailyOutgoingLimit },
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [warningStatus, setWarningStatus] = useState<string>('');
+  const totalAmountInSAR = `${totalAmount} ${t('COMMON.SAR')}`;
 
   const getFooterStyles = useCallback(() => {
     if (checkIfSelectedCount) {
@@ -84,6 +88,19 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
         </IPayView>
+        {!warningStatus && totalAmount ? (
+          <IPayView style={styles.totalAmountView}>
+            <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
+            <IPaySubHeadlineText
+              regular
+              text={totalAmountInSAR}
+              color={colors.primary.primary800}
+              shouldTranslate={false}
+            />
+          </IPayView>
+        ) : (
+          <IPayView />
+        )}
         <IPayButton
           large
           disabled={!!warningStatus || btnDisbaled}
