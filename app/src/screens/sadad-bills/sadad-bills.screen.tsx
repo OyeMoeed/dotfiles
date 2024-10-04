@@ -122,7 +122,12 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const renderButtonText = () => `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
 
   const onPressPartialPay = () =>
-    navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true, billDetailsList: billPaymentDetails });
+    navigate(ScreenNames.NEW_SADAD_BILL, {
+      selectedBills,
+      isPayPartially: true,
+      billDetailsList: billPaymentDetails,
+      totalAmount: selectedBillAmount,
+    });
 
   const renderButtonRightIcon = () =>
     !multipleBillsSelected ? (
