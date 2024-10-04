@@ -151,19 +151,19 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     };
     const apiResponse: any = await inquireBillService(payload);
     if (apiResponse.successfulResponse) {
-      navigate(ScreenNames.NEW_SADAD_BILL, {
+      const billDetailsList = {
         billNickname: values.billName,
         billerName: values.companyName,
         billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId || '001'),
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
         dueDate: apiResponse.response.dueDate,
-        totalAmount: apiResponse.response.dueAmount || '0',
+        amount: apiResponse.response.dueAmount || '0',
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,
-        newBill: true,
-      });
+      };
+      navigate(ScreenNames.NEW_SADAD_BILL, { newBill: true, billDetailsList: [billDetailsList] });
     } else {
       invoiceSheetRef.current.present();
     }

@@ -49,6 +49,7 @@ const NewSadadBillScreen: React.FC = () => {
   const [amountValue, setAmoutValue] = useState(totalAmount);
   const [warningMessage, setWarningMessage] = useState('');
   const [billDetailsData, setBillDetailsData] = useState<BillsProps[]>(billDetailsList || []);
+  const [totalAmountValue, setTotalAmountValue] = useState(0);
 
   const getAmountWarning = () => {
     if (Number(availableBalance) <= 0) {
@@ -69,15 +70,26 @@ const NewSadadBillScreen: React.FC = () => {
       isPayOnly: true,
       showBalanceBox: false,
       saveBill: watch(FormFields.SAVE_BILL),
-      billPaymentInfos: billDetailsData,
+      billPaymentInfos: { billDetailsData, totalAmount: totalAmountValue },
     });
   };
 
-  const onSetAmount = (value: string) => {
+  const onSetAmount = (value: string, index: number) => {
     setAmoutValue(value);
+
+    const newAmount = Number(value);
+
+    const newTotal = billDetailsData.reduce(
+      (acc, item, idx) => acc + (idx === index ? newAmount : Number(item?.amount || 0)),
+      0,
+    );
+    setTotalAmountValue(newTotal);
   };
 
-  const selectedBillAmount = billDetailsData?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
+  useEffect(() => {
+    const initialTotal = billDetailsData?.reduce((acc, item) => acc + Number(item?.amount || 0), 0) || 0;
+    setTotalAmountValue(initialTotal);
+  }, [billDetailsData]);
 
   const renderBillDetails = (data: BillsProps[]) =>
     data?.map(({ billNickname, billerName, billerIcon, amount }) => ({
@@ -125,7 +137,7 @@ const NewSadadBillScreen: React.FC = () => {
                     actionBtnText="COMMON.REMOVE"
                     rightIcon={<IPayIcon icon={icons.trash} size={14} color={colors.primary.primary500} />}
                     handleAmountInputFromOutSide
-                    onChangeAmountOutside={onSetAmount}
+                    onChangeAmountOutside={(val) => onSetAmount(val, index)}
                     showActionBtn={billDetailsData?.length > 1}
                     onPress={() => removeBill(index)}
                   />
@@ -150,7 +162,7 @@ const NewSadadBillScreen: React.FC = () => {
                 warning={warningMessage}
                 onPressBtn={onNavigateToConfirm}
                 amount={amountValue || totalAmount}
-                totalAmount={selectedBillAmount ?? 0}
+                totalAmount={totalAmountValue ?? 0}
               />
             ) : (
               <IPayButton

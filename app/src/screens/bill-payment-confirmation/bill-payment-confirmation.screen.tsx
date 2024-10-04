@@ -24,7 +24,13 @@ import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
 const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
-  const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos, saveBill } = route.params || {};
+  const {
+    isPayPartially = false,
+    isPayOnly,
+    showBalanceBox = true,
+    billPaymentInfos: { billDetailsData, totalAmount },
+    saveBill,
+  } = route.params || {};
   const {
     walletNumber,
     mobileNumber,
@@ -44,7 +50,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     setOtpRefAPI,
     setIsOtpSheetVisible,
     isOtpSheetVisible,
-  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billPaymentInfos);
+  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billDetailsData);
 
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
@@ -59,8 +65,6 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
   const handleOnPressHelp = () => {
     setHelpCenterVisible(true);
   };
-
-  const getTotalAmountToBePiad = () => billPaymentInfos.reduce((sum, item) => sum + item.amount, 0);
 
   const onMultiPaymentPrepareBill = async () => {
     const deviceInfo = await getDeviceInfo();
@@ -94,10 +98,8 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     },
   ];
 
-  const totalAmount = useMemo(() => getTotalAmountToBePiad() || '0', [billPaymentInfos]);
-
   const checkLimit = useMemo(() => {
-    const totalBillingAmount = Number(getTotalAmountToBePiad());
+    const totalBillingAmount = Number(totalAmount);
     let warningMsg = '';
     let disabled = false;
     if (totalBillingAmount > Number(availableBalance)) {
@@ -110,7 +112,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     }
 
     return { warningMsg, disabled };
-  }, [billPaymentInfos]);
+  }, [billDetailsData]);
 
   return (
     <>
@@ -135,7 +137,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           )}
           <IPayFlatlist
             contentContainerStyle={styles.contentContainerStyle}
-            data={billPaymentInfos}
+            data={billDetailsData}
             renderItem={({ item }) => (
               <IPayBillDetailsOption
                 headerData={{
