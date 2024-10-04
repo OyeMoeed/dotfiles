@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayChip, IPayList, IPaySuccess } from '@app/components/molecules';
+import { IPayButton, IPayChip, IPayList, IPayShareableImageView, IPaySuccess } from '@app/components/molecules';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
 import { IPayPageWrapper } from '@app/components/templates';
 import { navigate, popAndReplace } from '@app/navigation/navigation-service.navigation';
@@ -48,8 +48,11 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
 
   const dateFormat = (dueDateTime: string) => {
     const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
-    const formattedDateTime = date.isValid() ? getDateFormate(date, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
-    return formattedDateTime;
+    const isoFormat = checkDateValidation(dueDateTime, dateTimeFormat.ISODate);
+    if (isoFormat.isValid()) {
+      return getDateFormate(isoFormat, dateTimeFormat.DateMonthYearWithoutSpace);
+    }
+    return getDateFormate(date, dateTimeFormat.DateMonthYearWithoutSpace);
   };
 
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
@@ -105,121 +108,129 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
             <IPayChip textValue={billStatus.unpaid} isShowIcon={false} variant={States.ERROR} />
           </IPayView>
         )}
-        <IPayScrollView showsVerticalScrollIndicator={false}>
-          {!isSaveOnly && (
-            <IPayView style={styles.conatinerStyles}>
-              {isPayPartially && (
-                <IPayList
-                  isShowLeftIcon
-                  containerStyle={styles.listContainer}
-                  leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
-                  title="PAY_BILL.DECLINED_TRANSACTION"
-                  isShowSubTitle
-                  subTitle="PAY_BILL.DOES_NOT_ACCEPT_PARTIALLY_PAYMENT"
-                  subTextStyle={{ color: colors.error.error500 }}
-                  textStyle={{ color: colors.error.error500 }}
-                  regularTitle={false}
+        <IPayShareableImageView
+          otherView={
+            <IPayView style={styles.footerView}>
+              {isSaveOnly ? (
+                <IPayButton
+                  medium
+                  btnType={buttonVariants.OUTLINED}
+                  leftIcon={<IPayIcon icon={icons.ARROW_LEFT} color={colors.primary.primary500} size={16} />}
+                  btnText="PAY_BILL.VIEW_SADAD_BILLS"
+                  btnStyle={styles.btnStyle}
+                  onPress={() => {
+                    customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+                    navigate(ScreenNames.BILL_PAYMENTS_SCREEN, { sadadBills: null });
+                  }}
                 />
-              )}
-
-              <IPayFlatlist
-                data={billPaymentInfos}
-                keyExtractor={(item, index) => `${item.billNickname}-${index}-bill-info`}
-                renderItem={({ item }: BillPaymentItemProps) => (
-                  <IPayBillDetailsOption
-                    headerData={{
-                      title: item.billNickname,
-                      companyDetails: item.billerName,
-                      companyImage: item.billerIcon,
+              ) : (
+                <IPayView style={isPayOnly && styles.btnWrapper}>
+                  <IPayButton
+                    medium
+                    btnType={buttonVariants.LINK_BUTTON}
+                    leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
+                    btnText="PAY_BILL.PAY_ANOTHER_BILL"
+                    onPress={() => {
+                      customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
+                      popAndReplace(ScreenNames.SADAD_BILLS, 3, { sadadBills: null });
                     }}
-                    data={getBillInfoArray(item)}
-                    style={styles.billContainer}
-                    optionsStyles={styles.optionsStyle}
+                  />
+                  {isPayOnly && (
+                    <IPayButton
+                      medium
+                      btnType={buttonVariants.LINK_BUTTON}
+                      leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
+                      btnText={t('COMMON.SHARE')}
+                      btnStyle={styles.btnStyle}
+                    />
+                  )}
+                </IPayView>
+              )}
+              <IPayButton
+                onPress={goToHome}
+                large
+                btnType={isSaveOnly ? buttonVariants.LINK_BUTTON : buttonVariants.PRIMARY}
+                leftIcon={
+                  <IPayIcon
+                    icon={icons.HOME}
+                    color={isSaveOnly ? colors.primary.primary500 : colors.natural.natural0}
+                  />
+                }
+                btnText="COMMON.HOME"
+              />
+            </IPayView>
+          }
+        >
+          <IPayScrollView style={styles.successScrollView} showsVerticalScrollIndicator={false}>
+            {!isSaveOnly && (
+              <IPayView style={styles.conatinerStyles}>
+                {isPayPartially && (
+                  <IPayList
+                    isShowLeftIcon
+                    containerStyle={styles.listContainer}
+                    leftIcon={<IPayIcon icon={icons.clipboard_close1} color={colors.error.error500} size={24} />}
+                    title="PAY_BILL.DECLINED_TRANSACTION"
+                    isShowSubTitle
+                    subTitle="PAY_BILL.DOES_NOT_ACCEPT_PARTIALLY_PAYMENT"
+                    subTextStyle={{ color: colors.error.error500 }}
+                    textStyle={{ color: colors.error.error500 }}
+                    regularTitle={false}
                   />
                 )}
-              />
-              {isPayPartially && (
+
+                <IPayFlatlist
+                  data={billPaymentInfos}
+                  keyExtractor={(item, index) => `${item.billNickname}-${index}-bill-info`}
+                  renderItem={({ item }: BillPaymentItemProps) => (
+                    <IPayBillDetailsOption
+                      headerData={{
+                        title: item.billNickname,
+                        companyDetails: item.billerName,
+                        companyImage: item.billerIcon,
+                      }}
+                      data={getBillInfoArray(item)}
+                      style={styles.billContainer}
+                      optionsStyles={styles.optionsStyle}
+                    />
+                  )}
+                />
+                {isPayPartially && (
+                  <IPayButton
+                    medium
+                    btnType={buttonVariants.LINK_BUTTON}
+                    leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
+                    btnText="COMMON.SHARE"
+                    btnStyle={styles.btnStyle}
+                  />
+                )}
+              </IPayView>
+            )}
+            {isSaveOnly && (
+              <IPayView style={[styles.conatinerStyles, isSaveOnly && styles.saveContainer]}>
+                <IPayBillDetailsOption
+                  headerData={{
+                    title: headerAttributes.billNickname,
+                    companyDetails: headerAttributes.billerName,
+                    companyImage: headerAttributes.billerIcon,
+                  }}
+                  showHeader
+                  showDetail
+                  isShowIcon={false}
+                  style={styles.billContainer}
+                  data={billPaymentData.slice(0, 2)}
+                  optionsStyles={styles.optionsStyle}
+                />
                 <IPayButton
                   medium
-                  btnType={buttonVariants.LINK_BUTTON}
-                  leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                  btnText="COMMON.SHARE"
-                  btnStyle={styles.btnStyle}
+                  btnType={buttonVariants.PRIMARY}
+                  btnIconsDisabled
+                  btnText="PAY_BILL.PAY_NOW"
+                  onPress={onInquireBill}
                 />
-              )}
-            </IPayView>
-          )}
-          {isSaveOnly && (
-            <IPayView style={[styles.conatinerStyles, isSaveOnly && styles.saveContainer]}>
-              <IPayBillDetailsOption
-                headerData={{
-                  title: headerAttributes.billNickname,
-                  companyDetails: headerAttributes.billerName,
-                  companyImage: headerAttributes.billerIcon,
-                }}
-                showHeader
-                showDetail
-                isShowIcon={false}
-                style={styles.billContainer}
-                data={billPaymentData.slice(0, 2)}
-                optionsStyles={styles.optionsStyle}
-              />
-              <IPayButton
-                medium
-                btnType={buttonVariants.PRIMARY}
-                btnIconsDisabled
-                btnText="PAY_BILL.PAY_NOW"
-                onPress={onInquireBill}
-              />
-            </IPayView>
-          )}
-        </IPayScrollView>
-        <IPayView style={styles.footerView}>
-          {isSaveOnly ? (
-            <IPayButton
-              medium
-              btnType={buttonVariants.OUTLINED}
-              leftIcon={<IPayIcon icon={icons.ARROW_LEFT} color={colors.primary.primary500} size={16} />}
-              btnText="PAY_BILL.VIEW_SADAD_BILLS"
-              btnStyle={styles.btnStyle}
-              onPress={() => {
-                customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
-                navigate(ScreenNames.BILL_PAYMENTS_SCREEN, { sadadBills: null });
-              }}
-            />
-          ) : (
-            <IPayView style={isPayOnly && styles.btnWrapper}>
-              <IPayButton
-                medium
-                btnType={buttonVariants.LINK_BUTTON}
-                leftIcon={<IPayIcon icon={icons.refresh_48} color={colors.primary.primary500} size={16} />}
-                btnText="PAY_BILL.PAY_ANOTHER_BILL"
-                onPress={() => {
-                  customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
-                  popAndReplace(ScreenNames.SADAD_BILLS, 3, { sadadBills: null });
-                }}
-              />
-              {isPayOnly && (
-                <IPayButton
-                  medium
-                  btnType={buttonVariants.LINK_BUTTON}
-                  leftIcon={<IPayIcon icon={icons.share} color={colors.primary.primary500} size={16} />}
-                  btnText="COMMON.SHARE"
-                  btnStyle={styles.btnStyle}
-                />
-              )}
-            </IPayView>
-          )}
-          <IPayButton
-            onPress={goToHome}
-            large
-            btnType={isSaveOnly ? buttonVariants.LINK_BUTTON : buttonVariants.PRIMARY}
-            leftIcon={
-              <IPayIcon icon={icons.HOME} color={isSaveOnly ? colors.primary.primary500 : colors.natural.natural0} />
-            }
-            btnText="COMMON.HOME"
-          />
-        </IPayView>
+              </IPayView>
+            )}
+          </IPayScrollView>
+        </IPayShareableImageView>
       </IPayView>
     </IPayPageWrapper>
   );

@@ -66,6 +66,7 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
     footerView: {
       marginTop: verticalScale(12),
     },
+    successScrollView: { flex: 0, height: verticalScale(280) },
   });
 
 export default ipayBillSuccessStyles;

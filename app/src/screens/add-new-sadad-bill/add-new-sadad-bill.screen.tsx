@@ -157,7 +157,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId || '001'),
         serviceType: values.serviceType,
         billNumOrBillingAcct: values.accountNumber,
-        dueDate: apiResponse.response.dueDate,
+        dueDateTime: apiResponse.response.dueDate,
         amount: apiResponse.response.dueAmount || '0',
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
