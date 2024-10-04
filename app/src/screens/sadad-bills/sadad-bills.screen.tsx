@@ -103,15 +103,29 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     }
   }, []);
 
+  const billPaymentDetails = selectedBills?.map((bill) => ({
+    billerId: bill.billerId,
+    billNumOrBillingAcct: bill.billNumOrBillingAcct,
+    amount: Number(bill.amount || 0),
+    dueDateTime: bill.dueDateTime,
+    billIdType: bill.billIdType,
+    billingCycle: bill.billCycle,
+    billIndex: bill.billId,
+    serviceDescription: bill.serviceDescription,
+    billerName: bill.billerName,
+    walletNumber,
+    billNickname: bill.billDesc,
+    billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(bill.billerId),
+  }));
+
   const renderButtonText = () => {
     const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
 
     return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
   };
 
-  /// TODO there is API dependency for this and that is in progress, this will be update as soon as the API issue gets resolved.
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const onPressPartialPay = () => navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true });
+  const onPressPartialPay = () =>
+    navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true, billDetailsList: billPaymentDetails });
 
   const renderButtonRightIcon = () =>
     !multipleBillsSelected ? (
@@ -317,21 +331,6 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const onPressFooterBtn = () => {
-    const billPaymentDetails = selectedBills?.map((bill) => ({
-      billerId: bill.billerId,
-      billNumOrBillingAcct: bill.billNumOrBillingAcct,
-      amount: Number(bill.amount || 0),
-      dueDateTime: bill.dueDateTime,
-      billIdType: bill.billIdType,
-      billingCycle: bill.billCycle,
-      billIndex: bill.billId,
-      serviceDescription: bill.serviceDescription,
-      billerName: bill.billerName,
-      walletNumber,
-      billNickname: bill.billDesc,
-      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(bill.billerId),
-    }));
-
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: true,
@@ -430,8 +429,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}
-                // partialPay={multipleBillsSelected}    TODO
-                // onPressPartialPay={onPressPartialPay}  TODO
+                partialPay={multipleBillsSelected}
+                onPressPartialPay={onPressPartialPay}
               />
             </IPayView>
           )}

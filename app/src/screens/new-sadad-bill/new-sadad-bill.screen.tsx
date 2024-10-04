@@ -4,6 +4,7 @@ import { IPayAccountBalance, IPayButton, IPayHeader, SadadFooterComponent } from
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
 import { IPaySadadBillDetailsBox } from '@app/components/organism';
+import { BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { FormFields } from '@app/enums/bill-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -31,7 +32,6 @@ const NewSadadBillScreen: React.FC = () => {
   const { control, watch } = useForm();
 
   const {
-    walletNumber,
     availableBalance,
     limitsDetails: { monthlyRemainingOutgoingAmount, monthlyOutgoingLimit },
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
@@ -44,26 +44,16 @@ const NewSadadBillScreen: React.FC = () => {
     'params'
   >;
 
-  const {
-    billNickname,
-    billerName,
-    billerIcon,
-    totalAmount,
-    billNumOrBillingAcct,
-    dueDate,
-    billerId,
-    billIdType,
-    serviceDescription,
-    newBill,
-  } = route.params;
+  const { totalAmount, newBill, billDetailsList } = route.params;
 
-  const [amount, setAmout] = useState(totalAmount);
+  const [amountValue, setAmoutValue] = useState(totalAmount);
   const [warningMessage, setWarningMessage] = useState('');
+  const [billDetailsData, setBillDetailsData] = useState<BillsProps[]>(billDetailsList || []);
 
   const getAmountWarning = () => {
     if (Number(availableBalance) <= 0) {
       setWarningMessage(t('NEW_SADAD_BILLS.NO_REMAINING_AMOUNT'));
-    } else if (Number(availableBalance) < Number(amount)) {
+    } else if (Number(availableBalance) < Number(amountValue)) {
       setWarningMessage(t('NEW_SADAD_BILLS.INSUFFICIENT_BALANCE'));
     } else {
       setWarningMessage('');
@@ -72,46 +62,33 @@ const NewSadadBillScreen: React.FC = () => {
 
   useEffect(() => {
     getAmountWarning();
-  }, [amount]);
+  }, [amountValue]);
 
   const onNavigateToConfirm = () => {
-    const billPaymentInfos = [
-      {
-        billerId,
-        billNumOrBillingAcct,
-        amount: Number(amount),
-        dueDateTime: dueDate,
-        billIdType,
-        billingCycle: '', // TODO: need to confirm where can I get this value
-        billIndex: '0',
-        serviceDescription,
-        billerName,
-        walletNumber,
-        billNickname,
-        billerIcon,
-      },
-    ];
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: false,
       saveBill: watch(FormFields.SAVE_BILL),
-      billPaymentInfos,
+      billPaymentInfos: billDetailsData,
     });
   };
 
   const onSetAmount = (value: string) => {
-    setAmout(value);
+    setAmoutValue(value);
   };
 
-  const billDetailsList = [
-    {
+  const selectedBillAmount = billDetailsData?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
+
+  const renderBillDetails = (data: BillsProps[]) =>
+    data?.map(({ billNickname, billerName, billerIcon, amount }) => ({
       currency: t('COMMON.SAR'),
       billTitle: billNickname,
       vendor: billerName,
       vendorIcon: billerIcon,
-      billAmount: totalAmount,
-    },
-  ];
+      billAmount: amount,
+    }));
+
+  const removeBill = (index: number) => setBillDetailsData(billDetailsList?.filter((_, idx: number) => idx !== index));
 
   return (
     <IPayFormProvider<FormValues>
@@ -139,7 +116,7 @@ const NewSadadBillScreen: React.FC = () => {
             />
             <IPayFlatlist
               showsVerticalScrollIndicator={false}
-              data={billDetailsList}
+              data={renderBillDetails(billDetailsData)}
               renderItem={({ item, index }) => (
                 <IPayView>
                   <IPaySadadBillDetailsBox
@@ -149,8 +126,10 @@ const NewSadadBillScreen: React.FC = () => {
                     rightIcon={<IPayIcon icon={icons.trash} size={14} color={colors.primary.primary500} />}
                     handleAmountInputFromOutSide
                     onChangeAmountOutside={onSetAmount}
+                    showActionBtn={billDetailsData?.length > 1}
+                    onPress={() => removeBill(index)}
                   />
-                  {index === billDetailsList.length - 1 && newBill && (
+                  {index === billDetailsData.length - 1 && newBill && (
                     <IPaySadadSaveBill
                       saveBillToggle={watch(FormFields.SAVE_BILL) || false}
                       billInputName={FormFields.BILL_NAME}
@@ -170,7 +149,8 @@ const NewSadadBillScreen: React.FC = () => {
                 disableBtnIcons
                 warning={warningMessage}
                 onPressBtn={onNavigateToConfirm}
-                amount={amount || totalAmount}
+                amount={amountValue || totalAmount}
+                totalAmount={selectedBillAmount ?? 0}
               />
             ) : (
               <IPayButton
@@ -178,7 +158,7 @@ const NewSadadBillScreen: React.FC = () => {
                 btnType={buttonVariants.PRIMARY}
                 btnIconsDisabled
                 btnText="TOP_UP.PAY"
-                disabled={Number(amount) === 0}
+                disabled={Number(amountValue) === 0}
                 onPress={onNavigateToConfirm}
                 btnStyle={styles.payBtn}
               />

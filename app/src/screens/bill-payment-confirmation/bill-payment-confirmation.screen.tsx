@@ -2,9 +2,9 @@ import { IPayFlatlist, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
-import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import { MultiPaymentPrepareBillPayloadTypes } from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.interface';
@@ -16,8 +16,7 @@ import { shortString } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
@@ -42,23 +41,23 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     otpError,
     setOtpError,
     otpVerificationRef,
-    veriyOTPSheetRef,
     setOtpRefAPI,
+    setIsOtpSheetVisible,
+    isOtpSheetVisible,
   } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billPaymentInfos);
 
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
-  const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
+  const [helpCenterVisible, setHelpCenterVisible] = useState(false);
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
-    veriyOTPSheetRef.current?.close();
+    setIsOtpSheetVisible(false);
   };
 
   const handleOnPressHelp = () => {
-    veriyOTPSheetRef.current?.close();
-    helpCenterRef?.current?.present();
+    setHelpCenterVisible(true);
   };
 
   const getTotalAmountToBePiad = () => billPaymentInfos.reduce((sum, item) => sum + item.amount, 0);
@@ -73,7 +72,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     const apiResponse = await multiPaymentPrepareBillService(payload);
     if (apiResponse.successfulResponse) {
       setOtpRefAPI(apiResponse.response.otpRef);
-      veriyOTPSheetRef.current?.present();
+      setIsOtpSheetVisible(true);
     }
   };
 
@@ -159,31 +158,32 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           onPressBtn={onMultiPaymentPrepareBill}
         />
 
-        <IPayBottomSheet
+        <IPayPortalBottomSheet
           heading="PAY_BILL.HEADER"
           enablePanDownToClose
           simpleBar
           backBtn
-          customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
-          ref={helpCenterRef}
+          customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+          isVisible={helpCenterVisible}
           headerContainerStyles={styles.sheetHeader}
           bgGradientColors={colors.sheetGradientPrimary10}
           bottomSheetBgStyles={styles.sheetBackground}
+          onCloseBottomSheet={() => setHelpCenterVisible(false)}
         >
           <HelpCenterComponent />
-        </IPayBottomSheet>
+        </IPayPortalBottomSheet>
       </IPaySafeAreaView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={veriyOTPSheetRef}
         headerContainerStyles={styles.sheetHeader}
         bgGradientColors={colors.sheetGradientPrimary10}
         bottomSheetBgStyles={styles.sheetBackground}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
@@ -197,9 +197,9 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
-          onResendCodePress={() => {}}
+          onResendCodePress={() => otpVerificationRef?.current?.resetInterval()}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </>
   );
 };

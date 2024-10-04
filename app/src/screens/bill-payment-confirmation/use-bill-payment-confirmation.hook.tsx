@@ -45,6 +45,7 @@ const useBillPaymentConfirmation = (
   const [otpError, setOtpError] = useState<boolean>(false);
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isOtpSheetVisible, setIsOtpSheetVisible] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
   const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const [otpRefAPI, setOtpRefAPI] = useState<string>('');
@@ -118,6 +119,7 @@ const useBillPaymentConfirmation = (
     const apiResponse: any = await saveBillService(payload);
     if (apiResponse.successfulResponse) {
       veriyOTPSheetRef.current?.close();
+      setIsOtpSheetVisible(false);
       otpRef?.current?.close();
       redirectToSuccess(billPayDetailsArr, paymentSuccessResponse);
     }
@@ -161,6 +163,7 @@ const useBillPaymentConfirmation = (
         onSaveBill(billPayDetailsArr, apiResponse);
       } else {
         veriyOTPSheetRef.current?.close();
+        setIsOtpSheetVisible(false);
         otpRef?.current?.close();
         redirectToSuccess(billPayDetailsArr, apiResponse);
       }
@@ -192,6 +195,8 @@ const useBillPaymentConfirmation = (
     otpVerificationRef,
     veriyOTPSheetRef,
     setOtpRefAPI,
+    isOtpSheetVisible,
+    setIsOtpSheetVisible,
   };
 };
 
