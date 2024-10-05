@@ -21,6 +21,19 @@ const inputFieldStyles = (colors: typeof themeColors) =>
     inputLineHeight: {
       lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
     },
+    containerWithoutPadding: {
+      height: moderateScale(54, 0.35),
+      borderRadius: scaleFont(16),
+      borderWidth: scaleFont(1),
+      borderColor: colors.primary.primary100,
+      paddingHorizontal: scaleFont(20, 0.3),
+      paddingVertical: scaleFont(8),
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      width: '100%',
+      backgroundColor: colors.natural.natural0,
+    },
     container: {
       borderRadius: scaleFont(16),
       borderWidth: scaleFont(1),

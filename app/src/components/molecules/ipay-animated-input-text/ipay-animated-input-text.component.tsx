@@ -78,48 +78,53 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
     if (onChangeText) onChangeText(txt);
   };
 
-  return (
-    <IPayView testID={`${testID}-animated-input`} pointerEvents={pointerEvents}>
-      <IPayView style={[styles.container, withExtraPadding ? styles.extraPadding : {}]}>
-        <IPayView
-          style={[
-            styles.containerBox,
-            isFocused && styles.focusedContainer,
-            !editable && styles.disabledContainer,
-            isError && styles.errorContainer,
-            containerStyle,
-          ]}
-        >
-          <IPayView style={styles.iconAndInputStyles}>
-            {rightIcon}
-            <IPayView style={styles.outerView}>
-              <Animated.Text style={labelStyle}>{t(label)}</Animated.Text>
-              <TextInput
-                {...props}
-                onChangeText={handleOnChangeText}
-                value={value}
-                style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-                blurOnSubmit
-                editable={editable}
-              />
-            </IPayView>
-            {suffix && value && (
-              <IPayView style={styles.suffix}>
-                <IPaySubHeadlineText color={colors.natural.natural900} regular text={suffix} />
-              </IPayView>
-            )}
+  const renderInput = () => (
+    <>
+      <IPayView
+        style={[
+          withExtraPadding ? styles.containerWithoutPadding : styles.containerBox,
+          isFocused && styles.focusedContainer,
+          !editable && styles.disabledContainer,
+          isError && styles.errorContainer,
+          containerStyle,
+        ]}
+      >
+        <IPayView style={styles.iconAndInputStyles}>
+          {rightIcon}
+          <IPayView style={styles.outerView}>
+            <Animated.Text style={labelStyle}>{t(label)}</Animated.Text>
+            <TextInput
+              {...props}
+              onChangeText={handleOnChangeText}
+              value={value}
+              style={[styles.input, multiline && styles.inputLineHeight, inputStyle]}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+              blurOnSubmit
+              editable={editable}
+            />
           </IPayView>
-
-          {showRightIcon && (
-            <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
-              {customIcon || <IPayIcon icon={icons.close} />}
-            </IPayPressable>
+          {suffix && value && (
+            <IPayView style={styles.suffix}>
+              <IPaySubHeadlineText color={colors.natural.natural900} regular text={suffix} />
+            </IPayView>
           )}
         </IPayView>
-        {extraComponent && extraComponent}
+
+        {showRightIcon && (
+          <IPayPressable activeOpacity={1} style={styles.closeIcon} onPressIn={onClearInput}>
+            {customIcon || <IPayIcon icon={icons.close} />}
+          </IPayPressable>
+        )}
       </IPayView>
+      {extraComponent && extraComponent}
+    </>
+  );
+
+  return (
+    <IPayView testID={`${testID}-animated-input`} pointerEvents={pointerEvents}>
+      {!withExtraPadding ? <IPayView style={styles.container}>{renderInput()}</IPayView> : renderInput()}
+
       {assistiveText && (
         <IPayView style={[styles.errorTextView, errorMessageViewStyle]}>
           <IPayCaption1Text
