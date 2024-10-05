@@ -30,6 +30,7 @@ const IPayLaborerDetailsBanner: React.FC<IPayLaborerDetailsBannerProps> = ({
   isDetailsBanner,
   containerStyle,
   withProfileIcon,
+  profileIconStyle,
   onlyAmount,
   withLogoOnRight,
   boldTitle = true,
@@ -48,7 +49,7 @@ const IPayLaborerDetailsBanner: React.FC<IPayLaborerDetailsBannerProps> = ({
       <IPayView style={styles.listContainer}>
         <IPayView style={styles.rightContainer}>
           {withProfileIcon ? (
-            <IPayView style={styles.userIcon}>
+            <IPayView style={[styles.userIcon, profileIconStyle]}>
               <IPayIcon icon={icons?.user1} size={20} />
             </IPayView>
           ) : (

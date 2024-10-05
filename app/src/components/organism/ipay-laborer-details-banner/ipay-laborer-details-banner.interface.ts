@@ -11,6 +11,7 @@ interface IPayLaborerDetailsBannerProps {
   isDetailsBanner?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   withProfileIcon?: boolean;
+  profileIconStyle?: StyleProp<ViewStyle>;
   onlyAmount?: boolean;
   withLogoOnRight?: boolean;
   boldTitle?: boolean;

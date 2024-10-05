@@ -38,6 +38,12 @@ const musanedUserDetailsStyles = (theme: typeof colors) =>
       paddingVertical: moderateScale(2),
       paddingHorizontal: moderateScale(10),
     },
+    profileIcon: {
+      backgroundColor: theme.primary.primary10,
+      padding: moderateScale(10),
+      borderRadius: moderateScale(15),
+      alignSelf: 'center',
+    },
   });
 
 export default musanedUserDetailsStyles;
