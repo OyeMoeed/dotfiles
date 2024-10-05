@@ -1614,7 +1614,8 @@
     "PAY_ANOTHER_LABORER": "Pay Another Laborer",
     "EXTRA_AMOUNT": "Extra Amount",
     "TOTAL_AMOUNT": "Total Amount",
-    "PAID_BONUS_AMOUNT": "Paid Bonus amount"
+    "PAID_BONUS_AMOUNT": "Paid Bonus amount",
+    "LABORER_NAME": "Laborer Name"
   },
   "MONTHS": {
     "JANUARY": "January",

@@ -26,6 +26,7 @@ import { DeductionReasons, MusanedPaySalaryScreenProps, SalaryCategories } from 
 import musanedPaySalary from './musaned-pay-salary.style';
 import { MusanedPaySalaryConfirmPaymentInfo } from '../musaned-pay-salary-confirm/musaned-pay-salary-confirm.interface';
 import { convertToLocalDate } from '../musaned.utils';
+import IPayMusnaedSalaryTypeBottomSheet from '../components/ipay-musaned-salary-type-bottom-sheet';
 
 const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const { colors } = useTheme();
@@ -125,7 +126,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onCloseSalaryTypesSheet = () => {
-    salaryTypeBottomSheetRef?.current?.close();
+    salaryTypeBottomSheetRef?.current?.onHideSalaryType();
   };
 
   const onDeductionReasonCloseSheet = () => {
@@ -133,7 +134,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onPressSelectReason = () => {
-    salaryTypeBottomSheetRef?.current?.present();
+    salaryTypeBottomSheetRef?.current?.onShowSalaryType();
   };
   const onPressSelectSalaryTypeItem = (item: SelectedValue) => {
     setSalaryType(item);
@@ -326,22 +327,12 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         />
       </IPayView>
 
-      <IPayBottomSheet
-        heading="MUSANED.SALARY_TYPE"
-        onCloseBottomSheet={onCloseSalaryTypesSheet}
-        customSnapPoint={['1%', '45%']}
+      <IPayMusnaedSalaryTypeBottomSheet
         ref={salaryTypeBottomSheetRef}
-        simpleHeader
-        simpleBar
-        cancelBnt
-        bold
-      >
-        <IPayListView
-          list={salaryTypes}
-          onPressListItem={onPressSelectSalaryTypeItem}
-          selectedListItem={salaryType?.text}
-        />
-      </IPayBottomSheet>
+        salaryType={salaryType}
+        onPressSelectSalaryTypeItem={onPressSelectSalaryTypeItem}
+      />
+
       <IPayBottomSheet
         heading="MUSANED.SALARY_TYPE"
         onCloseBottomSheet={onDeductionReasonCloseSheet}

@@ -38,9 +38,10 @@ const MusanedScreen: React.FC = () => {
   const [showDetailSheet, setShowDetailSheet] = useState<boolean>(false);
   const refBottomSheet = useRef<any>(null);
 
-  const [alinmaPayData, setAlinmaPayData] = useState<Array<MusnaedInqueryRecords>>([]);
-  const [nonAlinmaPayData, setNonAlinmaPayData] = useState<Array<MusnaedInqueryRecords>>([]);
+  const [savedResponse, setSavedResponse] = useState<Array<MusnaedInqueryRecords>>([]);
 
+  const alinmaPayData = savedResponse.filter((value) => value.haveWalletFlag);
+  const nonAlinmaPayData = savedResponse.filter((value) => !value.haveWalletFlag);
   const dataForPaginatedFLatlist = selectedTab === ALINMA_PAY_USERS ? alinmaPayData : nonAlinmaPayData;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const detailsData = isArabic ? requestDetail?.occupationAr : requestDetail?.occupationEn;
@@ -52,11 +53,7 @@ const MusanedScreen: React.FC = () => {
     onSuccess: (apiResponse) => {
       const data = apiResponse?.response?.laborersInfoList || [];
 
-      const alinmaPayUsers = data.filter((value) => value.haveWalletFlag);
-      const nonAlinmaPayUsers = data.filter((value) => !value.haveWalletFlag);
-
-      setAlinmaPayData(alinmaPayUsers);
-      setNonAlinmaPayData(nonAlinmaPayUsers);
+      setSavedResponse(data);
     },
   });
 
@@ -133,7 +130,9 @@ const MusanedScreen: React.FC = () => {
   );
 
   const onPressHistory = () => {
-    navigate(ScreenNames.MUSANED_HISTORY);
+    navigate(ScreenNames.MUSANED_HISTORY, {
+      musnaedData: savedResponse,
+    });
   };
 
   const getShareableMessage = t('MUSANED.INVITE_LABORER');

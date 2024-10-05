@@ -137,6 +137,8 @@ enum FiltersType {
   OFFER_CATEGORY = 'offerCategory',
   OFFER_AVAILABILITY = 'offerAvailability',
   DELIVERY_TYPE = 'deliveryType',
+  SALARY_TYPE = 'salaryType',
+  LABORER_NAME = 'laborerName',
 }
 
 enum TopupStatus {
