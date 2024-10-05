@@ -28,6 +28,7 @@ import IPayReceiveCall from './ipay-receive-call/ipay-receive-call.component';
 import IPaySadadBillDetailsBox from './ipay-sadad-bill-details-box/ipay-sadad-bill-details-box.component';
 import IPaySendMoneyForm from './ipay-send-money-form/ipay-send-money-form.component';
 import IPayRatingSheet from './ipay-rating-sheet/ipay-rating-sheet.component';
+import IPayMaintentanceSheet from './ipay-maintenance-sheet/ipay-maintenance-sheet.component';
 
 export * from './ipay-musaned-list';
 export { default as IPaySalaryPayInformation } from './ipay-salary-pay-information/ipay-salary-pay-information.component';
@@ -60,4 +61,5 @@ export {
   IPayTermsAndConditions,
   IPayTransferInformation,
   IPayRatingSheet,
+  IPayMaintentanceSheet,
 };

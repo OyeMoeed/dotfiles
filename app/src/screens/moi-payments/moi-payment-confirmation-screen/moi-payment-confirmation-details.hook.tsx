@@ -22,7 +22,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
 
   const onConfirm = async () => {
     const payLoad = {
-      billerId: billData?.billerId,
+      billerId: billData?.serviceProviderFromLOV?.code,
       serviceId: billData?.serviceTypeFromLOV?.code,
       dynamicFields: billData?.dynamicFields,
       billIdType: '',

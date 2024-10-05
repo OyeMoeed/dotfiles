@@ -2,7 +2,7 @@ import IPaySpinnerContainer from '@app/components/atoms/ipay-spinner/ipay-spinne
 import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
-import { IPayLanguageSheet } from '@app/components/organism';
+import { IPayLanguageSheet, IPayMaintentanceSheet } from '@app/components/organism';
 import IPayServiceErrorToast from '@app/components/organism/ipay-service-error-toast/ipay-service-error-toast.component';
 import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
@@ -91,6 +91,7 @@ const MainNavigation: React.FC = () => {
 
       <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />
       <IPayUpdateBottomSheet />
+      <IPayMaintentanceSheet />
     </>
   );
 };

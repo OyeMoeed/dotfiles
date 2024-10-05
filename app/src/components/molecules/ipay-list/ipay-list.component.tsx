@@ -67,6 +67,7 @@ const IPayList: React.FC<IPayListProps> = ({
   shouldDetailsTranslate = true,
   showTextInNextLine = false,
   detailIconDisabled,
+  detailsTruncation = true,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(colors);
@@ -160,7 +161,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 regular
                 style={[dynamicStyles.copyText, detailTextStyle]}
                 text={detailText}
-                numberOfLines={isDetailsMoreThan30 ? 1 : 2}
+                numberOfLines={detailsTruncation && isDetailsMoreThan30 ? 1 : 2}
                 shouldTranslate={shouldDetailsTranslate}
               />
             )}

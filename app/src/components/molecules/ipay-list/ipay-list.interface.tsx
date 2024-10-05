@@ -208,4 +208,8 @@ export interface IPayListProps {
    * Need Details Icon Disabled
    */
   detailIconDisabled?: boolean;
+  /**
+   * disable or enable details text truncation
+   */
+  detailsTruncation?: boolean;
 }
