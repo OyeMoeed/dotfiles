@@ -120,6 +120,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
             btnText="SADAD.PAY_PARTIALLY"
             btnIconsDisabled
             onPress={onPressPartialPay}
+            btnStyle={styles.partialPayBtn}
           />
         ) : (
           <IPayView />
