@@ -74,30 +74,21 @@ const RequestListScreen: React.FC = () => {
   // functions
   const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
     setShowDetailSheet(false);
-    try {
-      rejectRequestRef.current?.hide();
+    rejectRequestRef.current?.hide();
 
-      const apiResponse = await cancelRejectRequestService(
-        walletInfo.walletNumber,
-        requestDetail?.id,
-        UpdateRequestType,
-      );
+    const apiResponse = await cancelRejectRequestService(walletInfo.walletNumber, requestDetail?.id, UpdateRequestType);
 
-      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
-        renderToast({
-          title: 'NOTIFICATION_CENTER.REQUEST_REJECTED',
-          toastType: ToastTypes.SUCCESS,
-        });
-        // remove the request from the pending list
-        const updatedRequests = pendingRequests.filter((request: any) => request.transactionId !== requestDetail?.id);
-        // update the state
-        setPendingRequests(updatedRequests);
-      }
-    } catch (error: any) {
-      throw new Error(`Error: ${error}`);
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      renderToast({
+        title: 'NOTIFICATION_CENTER.REQUEST_REJECTED',
+        toastType: ToastTypes.SUCCESS,
+      });
+      // remove the request from the pending list
+      const updatedRequests = pendingRequests.filter((request: any) => request.transactionId !== requestDetail?.id);
+      // update the state
+      setPendingRequests(updatedRequests);
     }
   };
-
   const onPressRejectActionSheet = async () => {
     onCallCancelOrRejectRequest(UpdateRequestTypes.reject);
   };

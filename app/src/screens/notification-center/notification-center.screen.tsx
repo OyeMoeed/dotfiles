@@ -29,7 +29,10 @@ import { IPayActionSheet } from '@app/components/organism';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayRequestDetails from '@app/components/templates/ipay-request-detail/ipay-request-detail.component';
 import { heightMapping } from '@app/components/templates/ipay-request-detail/ipay-request-detail.constant';
-import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
+import {
+  GetAllRequestsMockProps,
+  RequestItem,
+} from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
 import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
@@ -37,7 +40,7 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
 import getNotificationCenterStyles from './notification-center.styles';
-import { Notification } from './notification-center.interface';
+import { ApiResponse, Notification } from './notification-center.interface';
 
 /**
  * NoRequestComponent displays a message when there are no pending requests.
@@ -117,31 +120,18 @@ const NotificationCenterScreen: React.FC = () => {
       currentPage: 1,
       pageSize: 20,
     };
-    try {
-      const apiResponse = await getAllRecivedRequests(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        const data = apiResponse?.response?.requests || [];
+    const apiResponse = (await getAllRecivedRequests(payload)) as GetAllRequestsMockProps;
 
-        if (data.length > 0) {
-          const pendingRequestsData = data.filter((request) => request.transactionState === 'initiated');
-          const previousRequestsData = data.filter((request) => request.transactionState !== 'initiated');
-          setPendingRequests(pendingRequestsData);
-          setPreviousRequests(previousRequestsData);
-        }
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      const data = apiResponse?.response?.requests || [];
 
-        if (apiResponse?.status?.type === 'FAILURE') {
-          renderToast(apiResponse?.error);
-        }
-        if (apiResponse?.status?.type === 'apiResponseNotOk') {
-          renderToast({
-            title: 'ERROR.API_ERROR_RESPONSE',
-            toastType: 'WARNING',
-          });
-        }
+      if (data.length > 0) {
+        const pendingRequestsData = data.filter((request) => request.transactionState === 'initiated');
+        const previousRequestsData = data.filter((request) => request.transactionState !== 'initiated');
+        setPendingRequests(pendingRequestsData);
+        setPreviousRequests(previousRequestsData);
       }
-    } catch (error: any) {
-      renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
 
     return { data: [], hasMore: false };
@@ -155,20 +145,16 @@ const NotificationCenterScreen: React.FC = () => {
       messageId: id,
     };
 
-    try {
-      const apiResponse = await deleteSingleNotification(payload);
+    const apiResponse = await deleteSingleNotification(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        // remove the deleted notification from the list
-        setNotifications((prevNotifications) =>
-          prevNotifications?.filter((notification) => notification.messageId !== id),
-        );
-        return apiResponse;
-      }
-      return { apiResponseNotOk: true };
-    } catch (error: any) {
-      return { error: error.message || 'Unknown error' };
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      // remove the deleted notification from the list
+      setNotifications((prevNotifications) =>
+        prevNotifications?.filter((notification) => notification.messageId !== id),
+      );
+      return apiResponse;
     }
+    return { apiResponseNotOk: true };
   };
 
   /**
@@ -303,23 +289,20 @@ const NotificationCenterScreen: React.FC = () => {
   // functions
   const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
     setShowDetailSheet(false);
-    try {
-      rejectRequestRef.current?.hide();
 
-      const apiResponse = await cancelRejectRequestService(
-        walletInfo.walletNumber,
-        requestDetail?.id,
-        UpdateRequestType,
-      );
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        renderToast({
-          title: 'NOTIFICATION_CENTER.REQUEST_REJECTED',
-          toastType: 'SUCCESS',
-        });
-        getAllRecivedRequest();
-      }
-    } catch (error: any) {
-      throw new Error(error?.message || 'Unknown error');
+    rejectRequestRef.current?.hide();
+
+    const apiResponse: ApiResponse = await cancelRejectRequestService(
+      walletInfo.walletNumber,
+      requestDetail?.id,
+      UpdateRequestType,
+    );
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      renderToast({
+        title: 'NOTIFICATION_CENTER.REQUEST_REJECTED',
+        toastType: 'SUCCESS',
+      });
+      getAllRecivedRequest();
     }
   };
 
@@ -387,6 +370,44 @@ const NotificationCenterScreen: React.FC = () => {
     setShowDetailSheet(true);
   };
 
+  const renderContent = () => {
+    if (isBasicTier) {
+      return (
+        <IPayBannerAnimation
+          onVerify={() => {
+            dispatch(setNafathSheetVisibility(true));
+          }}
+        />
+      );
+    }
+
+    if (pendingRequests.length === 0) {
+      return (
+        <>
+          <IPaySectionHeader leftText="NOTIFICATION_CENTER.REQUESTS" />
+          <NoRequestComponent
+            colors={colors}
+            styles={styles}
+            pendingRequests={pendingRequests}
+            previousRequests={previousRequests}
+          />
+        </>
+      );
+    }
+
+    return (
+      <IPayRequestCard
+        id={pendingRequests[0].transactionId}
+        key={pendingRequests[0].transactionId}
+        isPending={pendingRequests[0].transactionState === 'initiated'}
+        description={`${pendingRequests[0].targetFullName} ${t('NOTIFICATION_CENTER.HAS_REQUESTED')} ${pendingRequests[0].targetAmount} ${t('NOTIFICATION_CENTER.SAR_FROM_YOU')} `}
+        dateTime={formatDate(pendingRequests[0].transactionTime)}
+        onPress={() => openBottomSheet(pendingRequests[0])}
+        status={pendingRequests[0].transactionState}
+      />
+    );
+  };
+
   return (
     <IPaySafeAreaView style={styles.safeArea}>
       <IPayHeader title="COMMON.NOTIFICATIONS" backBtn applyFlex />
@@ -404,33 +425,12 @@ const NotificationCenterScreen: React.FC = () => {
           }
           showRightIcon
         />
-        {isBasicTier && (
-          <IPayBannerAnimation
-            onVerify={() => {
-              dispatch(setNafathSheetVisibility(true));
-            }}
-          />
-        )}
-        {pendingRequests.length === 0 ? (
-          <>
-            <IPaySectionHeader leftText="NOTIFICATION_CENTER.REQUESTS" />
-            <NoRequestComponent colors={colors} styles={styles} />
-          </>
-        ) : (
-          <IPayRequestCard
-            id={pendingRequests[0].transactionId}
-            key={pendingRequests[0].transactionId}
-            isPending={pendingRequests[0].transactionState === 'initiated'}
-            description={`${pendingRequests[0].targetFullName} ${t('NOTIFICATION_CENTER.HAS_REQUESTED')} ${pendingRequests[0].targetAmount} ${t('NOTIFICATION_CENTER.SAR_FROM_YOU')} `}
-            dateTime={formatDate(pendingRequests[0].transactionTime)}
-            onPress={() => openBottomSheet(pendingRequests[0])}
-          />
-        )}
+        {renderContent()}
       </IPayView>
       <IPayActionSheet
         ref={rejectRequestRef}
         testID="reject-card-action-sheet"
-        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.REJECT_THIS_REQUEST')]}
+        options={['COMMON.CANCEL', 'REQUEST_MONEY.REJECT_THIS_REQUEST']}
         cancelButtonIndex={0}
         destructiveButtonIndex={1}
         showCancel

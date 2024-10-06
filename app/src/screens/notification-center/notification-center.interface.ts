@@ -6,3 +6,9 @@ export interface Notification {
   icon: any;
   read: boolean;
 }
+
+export interface ApiResponse {
+  status: {
+    type: string;
+  };
+}
