@@ -27,10 +27,4 @@ export interface SadadFooterComponentProps {
   shouldTranslateBtnText?: boolean;
   isRefund?: boolean;
   amount?: string | number;
-  showTopMessage?: boolean;
-  totalAmountStyle?: StyleProp<ViewStyle>;
-  totalAmountLeftIcon?: {
-    icon: string;
-    color?: string;
-  };
 }

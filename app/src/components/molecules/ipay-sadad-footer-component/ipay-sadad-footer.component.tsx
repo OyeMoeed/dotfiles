@@ -1,10 +1,4 @@
-import {
-  IPayFootnoteText,
-  IPayIcon,
-  IPayLinearGradientView,
-  IPaySubHeadlineText,
-  IPayView,
-} from '@app/components/atoms';
+import { IPayFootnoteText, IPayLinearGradientView, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -37,9 +31,6 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   gradientViewStyle,
   shouldTranslateBtnText,
   amount,
-  showTopMessage,
-  totalAmountStyle,
-  totalAmountLeftIcon,
 }) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
@@ -57,12 +48,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     if (checkIfSelectedCount) {
       return partialPay ? styles.countAndPartialPayStyles : styles.container;
     }
-
-    if (warningMessage) {
-      return styles.containerWithWarningStyles;
-    }
-
-    return totalAmount || showTopMessage ? styles.containerConditionalStyles : styles.footerWithWarning;
+    return totalAmount ? styles.containerConditionalStyles : styles.footerWithWarning;
   }, [checkIfSelectedCount, totalAmount, warning, warningMessage, partialPay]);
 
   if (showButtonOnly) {
@@ -104,17 +90,12 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
             dailySpendingLimit={Number(dailyOutgoingLimit)}
           />
         </IPayView>
-        {(!warningStatus && totalAmount) || showTopMessage ? (
-          <IPayView style={[styles.totalAmountView, totalAmountStyle]}>
-            {totalAmountLeftIcon?.icon ? (
-              <IPayView style={styles.iconAmountContainer}>
-                <IPayIcon color={totalAmountLeftIcon?.color} icon={totalAmountLeftIcon?.icon} />
-              </IPayView>
-            ) : null}
+        {!warningStatus && totalAmount ? (
+          <IPayView style={styles.totalAmountView}>
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText
               regular
-              text={totalAmount ? totalAmountInSAR : ''}
+              text={totalAmountInSAR}
               color={colors.primary.primary800}
               shouldTranslate={false}
             />
