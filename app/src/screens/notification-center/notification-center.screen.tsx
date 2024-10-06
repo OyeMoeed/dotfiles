@@ -25,6 +25,17 @@ import { isBasicTierSelector } from '@app/store/slices/wallet-info-slice';
 import { getAllRecivedRequests } from '@app/network/services/request-management/recevied-requests/recevied-requests.service';
 import IPayRequestCard from '@app/components/molecules/ipay-request-card/ipay-request-card.component';
 import { formatDate } from '@app/utilities';
+import { IPayActionSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import IPayRequestDetails from '@app/components/templates/ipay-request-detail/ipay-request-detail.component';
+import { heightMapping } from '@app/components/templates/ipay-request-detail/ipay-request-detail.constant';
+import { RequestItem } from '@app/network/services/request-management/recevied-requests/recevied-requests.interface';
+import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
+import UpdateRequestTypes from '@app/network/services/request-management/update-request.types';
+import cancelRejectRequestService from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.service';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
+import { isAndroidOS } from '@app/utilities/constants';
+import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 import { Notification } from './notification-center.interface';
 
@@ -111,8 +122,6 @@ const NotificationCenterScreen: React.FC = () => {
 
       if (apiResponse?.status?.type === 'SUCCESS') {
         const data = apiResponse?.response?.requests || [];
-
-        console.log('apiResponse', data);
 
         if (data.length > 0) {
           const pendingRequestsData = data.filter((request) => request.transactionState === 'initiated');
@@ -284,6 +293,100 @@ const NotificationCenterScreen: React.FC = () => {
     getAllRecivedRequest();
   }, []);
 
+  const rejectRequestRef = React.createRef<bottomSheetTypes>();
+
+  // states
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
+  const [requestDetail, setRequestDetail] = useState<IPayRequestMoneyProps | null>(null);
+  const [showDetailSheet, setShowDetailSheet] = useState<boolean>(false);
+
+  // functions
+  const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
+    setShowDetailSheet(false);
+    try {
+      rejectRequestRef.current?.hide();
+
+      const apiResponse = await cancelRejectRequestService(
+        walletInfo.walletNumber,
+        requestDetail?.id,
+        UpdateRequestType,
+      );
+      if (apiResponse?.status?.type === 'SUCCESS') {
+        renderToast({
+          title: 'NOTIFICATION_CENTER.REQUEST_REJECTED',
+          toastType: 'SUCCESS',
+        });
+        getAllRecivedRequest();
+      }
+    } catch (error: any) {
+      throw new Error(error?.message || 'Unknown error');
+    }
+  };
+
+  const onPressRejectActionSheet = async () => {
+    onCallCancelOrRejectRequest(UpdateRequestTypes.reject);
+  };
+
+  const closeRequestDetailsBottomSheet = () => {
+    setShowDetailSheet(false);
+  };
+
+  // function to open reject action sheet
+  const showRejectActionSheet = () => {
+    rejectRequestRef.current?.show();
+  };
+
+  const mapTransactionKeys = (item: any) => {
+    const baseMapping = {
+      id: item.transactionId,
+      title: item.targetFullName,
+      status: item.transactionState,
+      type: 'DR',
+      receiver_mobile_number: item.targetMobileNumber,
+      amount: item.targetAmount,
+      note: item.transactionDescription,
+      send_date: item.transactionTime,
+      request_date: item.transactionTime,
+    };
+
+    switch (item.transactionState) {
+      case MoneyRequestStatus.CANCEL:
+        return {
+          ...baseMapping,
+          cancellation_date: item.cancellation_date,
+        };
+      case MoneyRequestStatus.PAID:
+        return {
+          ...baseMapping,
+          payment_date: item.payment_date,
+          ref_number: item.transactionId,
+        };
+      case MoneyRequestStatus.PENDING:
+        return {
+          ...baseMapping,
+          ref_number: item.transactionId,
+        };
+      case MoneyRequestStatus.REJECTED:
+        return {
+          ...baseMapping,
+          rejection_date: item.rejection_date,
+          ref_number: item.transactionId,
+        };
+      default:
+        return baseMapping;
+    }
+  };
+  const openBottomSheet = (item: RequestItem) => {
+    const calculatedSnapPoint = [heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
+    setSnapPoint(calculatedSnapPoint);
+
+    // Map the item keys
+    const mappedItem = mapTransactionKeys(item);
+
+    setRequestDetail(mappedItem);
+    setShowDetailSheet(true);
+  };
+
   return (
     <IPaySafeAreaView style={styles.safeArea}>
       <IPayHeader title="COMMON.NOTIFICATIONS" backBtn applyFlex />
@@ -318,12 +421,37 @@ const NotificationCenterScreen: React.FC = () => {
             id={pendingRequests[0].transactionId}
             key={pendingRequests[0].transactionId}
             isPending={pendingRequests[0].transactionState === 'initiated'}
-            description={`${pendingRequests[0].targetFullName} has requested ${pendingRequests[0].targetAmount} SAR from you `}
+            description={`${pendingRequests[0].targetFullName} ${t('NOTIFICATION_CENTER.HAS_REQUESTED')} ${pendingRequests[0].targetAmount} ${t('NOTIFICATION_CENTER.SAR_FROM_YOU')} `}
             dateTime={formatDate(pendingRequests[0].transactionTime)}
-            onPress={() => {}}
+            onPress={() => openBottomSheet(pendingRequests[0])}
           />
         )}
       </IPayView>
+      <IPayActionSheet
+        ref={rejectRequestRef}
+        testID="reject-card-action-sheet"
+        options={[t('COMMON.CANCEL'), t('REQUEST_MONEY.REJECT_THIS_REQUEST')]}
+        cancelButtonIndex={0}
+        destructiveButtonIndex={1}
+        showCancel
+        onPress={onPressRejectActionSheet}
+      />
+      <IPayPortalBottomSheet
+        heading="REQUEST_MONEY.REQUEST_DETAILS"
+        simpleHeader
+        simpleBar
+        cancelBnt
+        bold
+        customSnapPoint={snapPoint}
+        onCloseBottomSheet={closeRequestDetailsBottomSheet}
+        isVisible={showDetailSheet}
+      >
+        <IPayRequestDetails
+          transaction={requestDetail}
+          onCloseBottomSheet={closeRequestDetailsBottomSheet}
+          showRejectActionSheet={showRejectActionSheet}
+        />
+      </IPayPortalBottomSheet>
       <IPayView style={styles.mainContainer}>
         <IPayView style={styles.headerContainer}>
           <IPaySectionHeader

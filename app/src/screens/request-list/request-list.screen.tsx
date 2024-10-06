@@ -1,12 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { IPayHeader } from '@app/components/molecules';
+import { IPayHeader, useToastContext } from '@app/components/molecules';
 import { IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import SectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
 import colors from '@app/styles/colors.const';
 import IPayRequestCard from '@app/components/molecules/ipay-request-card/ipay-request-card.component';
 import icons from '@app/assets/icons';
-import { FiltersType } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, FiltersType, ToastTypes } from '@app/utilities/enums.util';
 import { IPayActionSheet, IPayFilterBottomSheet } from '@app/components/organism';
 import SelectedFilters from '@app/components/molecules/ipay-selected-filters-list/ipay-selected-filters-list.component';
 import useConstantData from '@app/constants/use-constants';
@@ -29,6 +29,7 @@ import styles from './request-list.styles';
 const RequestListScreen: React.FC = () => {
   // hooks
   const filterSheetRef = useRef<bottomSheetTypes>(null);
+  const { showToast } = useToastContext();
   const constants = useConstantData();
   const { t } = useTranslation();
   const route = useRoute<any>();
@@ -43,10 +44,32 @@ const RequestListScreen: React.FC = () => {
   const [filters, setFilters] = useState<string[]>([]);
 
   // params
-  const { pendingRequests, previousRequests } = route.params;
+  const { previousRequests } = route.params;
+  const [pendingRequests, setPendingRequests] = useState(route.params.pendingRequests);
 
   // selectors
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+
+  // /**
+  //  * Render toast message
+  //  * @param title - Title of the toast
+  //  * @param subTitle - Subtitle of the toast
+  //  * @param icon - Icon to display in the toast
+  //  * @param toastType - Type of the toast
+  //  * @param displayTime - Duration to display the toast
+  //  */
+  const renderToast = ({ title, subTitle, icon, toastType, displayTime }: ToastRendererProps) => {
+    showToast(
+      {
+        title,
+        subTitle,
+        toastType,
+        isShowRightIcon: false,
+        leftIcon: icon || <IPayIcon icon={icons.trash} size={18} color={colors.natural.natural0} />,
+      },
+      displayTime,
+    );
+  };
 
   // functions
   const onCallCancelOrRejectRequest = async (UpdateRequestType: UpdateRequestTypes) => {
@@ -59,9 +82,19 @@ const RequestListScreen: React.FC = () => {
         requestDetail?.id,
         UpdateRequestType,
       );
-      console.log('apiResponse', apiResponse);
+
+      if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+        renderToast({
+          title: 'NOTIFICATION_CENTER.REQUEST_REJECTED',
+          toastType: ToastTypes.SUCCESS,
+        });
+        // remove the request from the pending list
+        const updatedRequests = pendingRequests.filter((request: any) => request.transactionId !== requestDetail?.id);
+        // update the state
+        setPendingRequests(updatedRequests);
+      }
     } catch (error: any) {
-      console.log('error', error);
+      throw new Error(`Error: ${error}`);
     }
   };
 
