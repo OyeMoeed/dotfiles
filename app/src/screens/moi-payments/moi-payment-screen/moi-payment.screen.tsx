@@ -132,7 +132,7 @@ const MoiPaymentScreen: React.FC = () => {
           type: DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE,
           requiredInPaymentOrRefund: 'BOTH',
           label: useID,
-          value: false,
+          value: true,
         },
       ];
 
