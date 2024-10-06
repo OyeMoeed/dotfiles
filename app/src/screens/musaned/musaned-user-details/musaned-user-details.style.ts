@@ -1,4 +1,4 @@
-import { moderateScale } from 'react-native-size-matters';
+import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
@@ -43,6 +43,23 @@ const musanedUserDetailsStyles = (theme: typeof colors) =>
       padding: moderateScale(10),
       borderRadius: moderateScale(15),
       alignSelf: 'center',
+    },
+    headingsContainer: {
+      alignItems: 'center',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      marginTop: verticalScale(12),
+      width: '100%',
+    },
+    commonContainerStyle: {
+      alignItems: 'center',
+      flexDirection: 'row',
+    },
+    viewAllButtonStyle: {
+      paddingEnd: 0,
+    },
+    footnoteTextStyle: {
+      color: theme.natural.natural500,
     },
   });
 

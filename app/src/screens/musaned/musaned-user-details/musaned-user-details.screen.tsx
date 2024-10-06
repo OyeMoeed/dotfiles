@@ -1,6 +1,8 @@
 import {
   IPayCaption1Text,
+  IPayFlatlist,
   IPayFootnoteText,
+  IPayIcon,
   IPayScrollView,
   IPaySubHeadlineText,
   IPayView,
@@ -14,11 +16,17 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
+import { isArabic } from '@app/utilities/constants';
 import { useRoute } from '@react-navigation/core';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import { isArabic } from '@app/utilities/constants';
 
+import icons from '@app/assets/icons';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
+import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import { useCallback } from 'react';
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
 import { MusanedUserDetailsRouteProps } from './musaned-user-details.interface';
 import musanedUserDetailsStyles from './musaned-user-details.style';
@@ -29,6 +37,7 @@ const MusanedUserDetails = () => {
   const { t } = useTranslation();
 
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const { currentCard } = useTypedSelector((state) => state.cardsReducer);
 
   const { params } = useRoute<MusanedUserDetailsRouteProps>();
   const {
@@ -53,6 +62,17 @@ const MusanedUserDetails = () => {
   const expirationDate = moment(poiExperationDate).format('DD/M/YYYY');
   const formattedLastPaidSalaryDate = `${lastPaidSalaryDate?.split(':')[1]}/${lastPaidSalaryDate?.split(':')[0]}`;
 
+  const { isLoadingTransactions, transactionsData } = useGetTransactions({
+    payload: {
+      walletNumber: walletInfo.walletNumber,
+      maxRecords: '10',
+      offset: '1',
+      cardIndex: currentCard?.cardIndex,
+      fromDate: '',
+      toDate: '',
+    },
+  });
+
   const userData = [
     // TODO: check for mobile number in the API response
     { text: 'MUSANED.MOBILE_NUMBER', details: borderNumber.toString() },
@@ -72,6 +92,13 @@ const MusanedUserDetails = () => {
   const onInvitePress = () => {
     bottomSheetShare(walletInfo?.userContactInfo?.mobileNumber, t);
   };
+
+  const ListEmptyComponent = useCallback(() => {
+    if (isLoadingTransactions) {
+      return <IPaySkeletonBuilder variation={IPaySkeletonEnums.TRANSACTION_LIST} isLoading={isLoadingTransactions} />;
+    }
+    return null;
+  }, [isLoadingTransactions]);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -93,25 +120,55 @@ const MusanedUserDetails = () => {
           <IPayLaborerInfo userData={userData} />
 
           {haveWallet && (
-            <IPayView style={styles.paymentInfoContainer}>
-              <IPayFootnoteText regular style={styles.containerHeadings} text="COMMON.PERSONAL_INFO" />
+            <>
+              <IPayView style={styles.paymentInfoContainer}>
+                <IPayFootnoteText regular style={styles.containerHeadings} text="COMMON.PERSONAL_INFO" />
 
-              <IPayView style={styles.paymentInfoCard}>
-                <IPayView>
-                  <IPayFootnoteText regular text="MUSANED.PAYMENT_STATUS" />
-                  <IPayCaption1Text
-                    regular
-                    text={`${t('MUSANED.LAST_PAYMENT')}: ${formattedLastPaidSalaryDate}`}
-                    shouldTranslate={false}
-                    color={colors.natural.natural500}
-                  />
-                </IPayView>
+                <IPayView style={styles.paymentInfoCard}>
+                  <IPayView>
+                    <IPayFootnoteText regular text="MUSANED.PAYMENT_STATUS" />
+                    <IPayCaption1Text
+                      regular
+                      text={`${t('MUSANED.LAST_PAYMENT')}: ${formattedLastPaidSalaryDate}`}
+                      shouldTranslate={false}
+                      color={colors.natural.natural500}
+                    />
+                  </IPayView>
 
-                <IPayView style={[styles.statusView, { backgroundColor }]}>
-                  <IPaySubHeadlineText regular text={text} color={color} style={styles.statusText} />
+                  <IPayView style={[styles.statusView, { backgroundColor }]}>
+                    <IPaySubHeadlineText regular text={text} color={color} style={styles.statusText} />
+                  </IPayView>
                 </IPayView>
               </IPayView>
-            </IPayView>
+
+              <IPayView style={styles.headingsContainer}>
+                <IPayView style={styles.commonContainerStyle}>
+                  <IPayFootnoteText style={styles.footnoteTextStyle} text="CARDS.CARD_TRANSACTIONS_HISTORY" />
+                </IPayView>
+                <IPayButton
+                  onPress={() =>
+                    navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, isShowAmount: true })
+                  }
+                  btnType={buttonVariants.LINK_BUTTON}
+                  hasRightIcon
+                  rightIcon={<IPayIcon icon={icons.arrow_right_square} color={colors.primary.primary600} size={14} />}
+                  medium
+                  textColor={colors.primary.primary600}
+                  btnText="COMMON.VIEW_ALL"
+                  btnStyle={styles.viewAllButtonStyle}
+                />
+              </IPayView>
+              <IPayFlatlist
+                testID="transaction"
+                data={transactionsData}
+                scrollEnabled={false}
+                keyExtractor={(_, index) => index.toString()}
+                renderItem={({ item, index }) => (
+                  <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />
+                )}
+                ListEmptyComponent={ListEmptyComponent}
+              />
+            </>
           )}
         </IPayView>
       </IPayScrollView>
