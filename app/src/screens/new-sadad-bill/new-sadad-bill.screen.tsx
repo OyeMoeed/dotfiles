@@ -70,7 +70,7 @@ const NewSadadBillScreen: React.FC = () => {
       isPayOnly: true,
       showBalanceBox: false,
       saveBill: watch(FormFields.SAVE_BILL),
-      billPaymentInfos: { billPaymentDetails: billDetailsData, totalAmount: totalAmountValue },
+      billPaymentInfos: { billPaymentDetails: billDetailsData, totalAmount },
     });
   };
 
@@ -97,7 +97,7 @@ const NewSadadBillScreen: React.FC = () => {
       billTitle: billNickname,
       vendor: billerName,
       vendorIcon: billerIcon,
-      billAmount: amount,
+      billAmount: amount || totalAmount,
     }));
 
   const removeBill = (index: number) => setBillDetailsData(billDetailsList?.filter((_, idx: number) => idx !== index));
