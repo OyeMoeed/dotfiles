@@ -167,23 +167,24 @@ const MusanedScreen: React.FC = () => {
   const onPressDetails = () => {
     refBottomSheet.current?.close?.();
 
-    navigate(ScreenNames.MUSANED_USER_DETAILS, { userInfo: requestDetail });
+    navigate(ScreenNames.MUSANED_USER_DETAILS, {
+      musnaedData: savedResponse,
+      userInfo: requestDetail,
+    });
   };
 
   const onCloseBottomSheet = () => {
     refBottomSheet?.current?.close();
   };
 
-  // TODO: This will be fixed in another PR
-  const renderHistory = () =>
-    false && (
-      <IPayPressable onPress={onPressHistory}>
-        <IPayView style={styles.headerRightContent}>
-          <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
-          <IPaySubHeadlineText regular color={colors.primary.primary500} text="COMMON.HISTORY" />
-        </IPayView>
-      </IPayPressable>
-    );
+  const renderHistory = () => (
+    <IPayPressable onPress={onPressHistory}>
+      <IPayView style={styles.headerRightContent}>
+        <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
+        <IPaySubHeadlineText regular color={colors.primary.primary500} text="COMMON.HISTORY" />
+      </IPayView>
+    </IPayPressable>
+  );
 
   return (
     <>

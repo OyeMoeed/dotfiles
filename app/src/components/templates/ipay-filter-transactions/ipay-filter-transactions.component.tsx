@@ -97,6 +97,9 @@ const IPayFilterTransactions = ({
   showAmountFilter,
   showDateFilter,
   showBeneficiaryFilter = false,
+  showMusanedFilter = false,
+  laborerList = [],
+  salaryTypes = [],
   showGiftFilters = false,
   onSubmit,
   defaultValues,
@@ -243,6 +246,9 @@ const IPayFilterTransactions = ({
 
       const transactionType = transactionTypes?.find((type: ListItem) => type?.key === data?.transactionType)?.value;
       if (transactionType) mapFilterTags.set(transactionType, { transactionType: '' });
+
+      const salaryType = salaryTypes?.find((type: ListItem) => type?.type === data?.salaryType)?.text;
+      if (salaryType) mapFilterTags.set(salaryType, { salaryType: '' });
 
       const dateRange = data?.dateFrom || data?.dateTo ? `${data?.dateFrom} - ${data?.dateTo}` : '';
       if (dateRange && dateRange.length > 0) mapFilterTags.set(dateRange, { dateFrom: '', dateTo: '' });
@@ -488,9 +494,54 @@ const IPayFilterTransactions = ({
     </>
   );
 
+  const renderMusanedFilters = () => (
+    <>
+      <Controller
+        control={control}
+        name={FiltersType.LABORER_NAME}
+        render={({ field: { onChange, value } }) => (
+          <IPayDropdownSelect
+            data={laborerList as ListItem[]}
+            selectedValue={value}
+            label="MUSANED.LABORER_NAME"
+            onSelectListItem={(selectedItem: string) => {
+              onChange(selectedItem);
+            }}
+            isSearchable
+            testID="laborer-name-dropdown"
+            labelKey="text"
+            valueKey="id"
+            containerStyle={styles.inputContainerStyle}
+            customSnapPoints={SNAP_POINT.MEDIUM_LARGE}
+          />
+        )}
+      />
+      <Controller
+        control={control}
+        name={FiltersType.SALARY_TYPE}
+        render={({ field: { onChange, value } }) => (
+          <IPayDropdownSelect
+            data={salaryTypes as ListItem[]}
+            selectedValue={value}
+            label="MUSANED.SALARY_TYPE"
+            onSelectListItem={(selectedItem: string) => {
+              onChange(selectedItem);
+            }}
+            testID="salary-type-dropdown"
+            labelKey="text"
+            valueKey="type"
+            containerStyle={styles.inputContainerStyle}
+            customSnapPoints={SNAP_POINT.SMALL}
+          />
+        )}
+      />
+    </>
+  );
+
   const renderFilters = () => (
     <IPayView style={styles.inputContainer}>
       {showBeneficiaryFilter && rendeBeneficiaryFilters()}
+      {showMusanedFilter && renderMusanedFilters()}
       {showTypeFilter && (
         <Controller
           control={control}

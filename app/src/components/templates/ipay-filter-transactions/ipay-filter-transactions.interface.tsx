@@ -1,4 +1,5 @@
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import { SelectedValue } from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.interface';
 
 export interface IPayFilterTransactionsProps {
   /**
@@ -56,4 +57,7 @@ export interface IPayFilterTransactionsProps {
 
   defaultValues: any;
   doneText?: string;
+  showMusanedFilter?: boolean;
+  laborerList?: Array<SelectedValue>;
+  salaryTypes?: Array<SelectedValue>;
 }

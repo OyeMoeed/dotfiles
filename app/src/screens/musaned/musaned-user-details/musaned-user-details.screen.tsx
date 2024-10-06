@@ -28,7 +28,7 @@ import useGetTransactions from '@app/network/services/core/transaction/useGetTra
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { useCallback } from 'react';
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
-import { MusanedUserDetailsRouteProps } from './musaned-user-details.interface';
+import MusanedUserDetailsRouteProps from './musaned-user-details.interface';
 import musanedUserDetailsStyles from './musaned-user-details.style';
 
 const MusanedUserDetails = () => {
@@ -37,7 +37,6 @@ const MusanedUserDetails = () => {
   const { t } = useTranslation();
 
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { currentCard } = useTypedSelector((state) => state.cardsReducer);
 
   const { params } = useRoute<MusanedUserDetailsRouteProps>();
   const {
@@ -54,6 +53,8 @@ const MusanedUserDetails = () => {
     name,
     lastPaidSalaryDate,
     paymentStatus,
+    mobileNumber,
+    walletNumber,
   } = params.userInfo;
   const haveWallet = haveWalletFlag;
 
@@ -65,11 +66,12 @@ const MusanedUserDetails = () => {
   const { isLoadingTransactions, transactionsData } = useGetTransactions({
     payload: {
       walletNumber: walletInfo.walletNumber,
-      maxRecords: '10',
+      maxRecords: '5',
       offset: '1',
-      cardIndex: currentCard?.cardIndex,
       fromDate: '',
       toDate: '',
+      mobileNumber,
+      targetWallet: walletNumber,
     },
   });
 
@@ -147,7 +149,10 @@ const MusanedUserDetails = () => {
                 </IPayView>
                 <IPayButton
                   onPress={() =>
-                    navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, isShowAmount: true })
+                    navigate(ScreenNames.MUSANED_HISTORY, {
+                      musnaedData: params.musnaedData || [],
+                      currentWalletNumber: params.userInfo.walletNumber,
+                    })
                   }
                   btnType={buttonVariants.LINK_BUTTON}
                   hasRightIcon

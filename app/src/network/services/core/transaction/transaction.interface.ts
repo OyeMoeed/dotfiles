@@ -85,6 +85,9 @@ interface TransactionsProp {
   trxCategory?: string;
   trxType?: 'DR' | 'CR';
   trxReqType?: string;
+  targetWallet?: string;
+  mobileNumber?: string;
+  salaryType?: string;
 }
 
 interface FilterFormDataProp {

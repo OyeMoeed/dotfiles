@@ -1,132 +1,279 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useRoute } from '@react-navigation/core';
 
 import icons from '@app/assets/icons';
-import { IPayIcon, IPayPressable } from '@app/components/atoms';
-import { IPayHeader } from '@app/components/molecules';
-import { IPayFilterBottomSheet } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
+import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
+import { IPayBottomSheet } from '@app/components/organism';
+import { IPayFilterTransactions, IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
+import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { FiltersType } from '@app/utilities/enums.util';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { SelectedValue } from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.interface';
+import { isAndroidOS } from '@app/utilities/constants';
+import { ApiResponseStatusType } from '@app/utilities/enums.util';
+import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import { heightMapping } from '@app/components/templates/ipay-request-detail/ipay-request-detail.constant';
 
-import IPayMusnaedSalaryTypeBottomSheet from '../components/ipay-musaned-salary-type-bottom-sheet';
+import transactionsStyles from './musaned-history.styles';
 
 const MusanedHistoryScreen: React.FC = () => {
+  const { t } = useTranslation();
   const { params } = useRoute();
-  const { musnaedData } = params || {};
-  const laborerNames = musnaedData.map((value) => ({ id: value.name, text: value.name }));
+  const { musnaedData, currentWalletNumber } = params || {};
+
+  const { transactionHistoryFilterDefaultValues, salaryTypes } = useConstantData();
+  const salaryTypeFilter = [
+    { id: 'All', text: 'All' },
+    ...salaryTypes.map((value) => ({
+      ...value,
+      text: t(value.text),
+    })),
+  ];
+  const laborerNames = musnaedData
+    .filter((value) => value.mobileNumber)
+    .map((value) => ({ id: value.mobileNumber, text: value.name }));
 
   const { colors } = useTheme();
-  const { t } = useTranslation();
-  const [, setIsLoading] = useState<boolean>(false);
-  const [filters, setFilters] = useState<Array<string>>([]);
-  const [selectSalaryType, setSelectSalaryType] = useState<SelectedValue | null>(null);
-  const [selectLaborerNames, setSelectLaborerNames] = useState<SelectedValue | null>(null);
+  const styles = transactionsStyles(colors);
 
-  const filterRef = useRef<bottomSheetTypes>(null);
-  const salaryTypeBottomSheetRef = useRef<any>(null);
-  const laborerNamesBottomSheetRef = useRef<any>(null);
+  const [filterTags, setFilterTags] = useState<Map<any, any>>();
+  const transactionRef = React.createRef<any>();
+  const [transaction, setTransaction] = useState<null>(null);
+  const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
+  const [appliedFilters, setAppliedFilters] = useState<null>(null);
+  const [filteredData, setFilteredData] = useState<null>(null);
+  const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
+  const [transactionsData, setTransactionsData] = useState<[]>([]);
+  const [isFilterSheetVisible, setIsFilterSheetVisible] = useState<boolean>(false);
 
-  const { musanedTransferHistoryFilterData, transferHistoryFilterDefaultValues } = useConstantData();
+  const headerTitle = 'COMMON.TRANSACTIONS_HISTORY';
 
-  const onPressSelectSalaryTypeItem = (item: SelectedValue) => {
-    setSelectSalaryType(item);
-    filterRef?.current?.setCurrentViewAndSearch(FiltersType.SALARY_TYPE, t(item.text));
-    salaryTypeBottomSheetRef?.current?.onHideSalaryType();
-  };
+  const getTransactionsData = async (filtersData?: any) => {
+    setIsLoading(true);
+    setFilteredData([]);
 
-  const onPressSelectLaborerNameItem = (item: SelectedValue) => {
-    setSelectLaborerNames(item);
-    filterRef?.current?.setCurrentViewAndSearch(FiltersType.LABORER_NAME, item.text);
-    laborerNamesBottomSheetRef?.current?.onHideSalaryType();
-  };
+    const payload: TransactionsProp = {
+      walletNumber,
+      maxRecords: '50',
+      offset: '1',
+      fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
+      toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
+      trxReqType: 'COUT_MUSANED',
+      fromAmount: filtersData ? filtersData?.amountFrom : '',
+      toAmount: filtersData ? filtersData?.amountTo : '',
+      targetWallet: currentWalletNumber,
+      mobileNumber: filtersData ? filtersData?.laborerName : '',
+      salaryType: filtersData ? filtersData?.salaryType : '',
+    };
 
-  const resetData = () => {
+    const apiResponse: any = await getTransactions(payload);
+
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      const transactionsResponse = apiResponse?.response?.transactions || [];
+      if (transactionsResponse?.length) {
+        setTransactionsData(transactionsResponse);
+      } else {
+        setTransactionsData([]);
+        setNoFilterResult(true);
+      }
+    }
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    requestAnimationFrame(() => {
-      resetData();
-    });
-  }, []);
-
-  const onPressFilters = () => {
-    filterRef.current?.showFilters();
+  const applyFilters = (filtersArray: any) => {
+    setNoFilterResult(false);
+    getTransactionsData(filtersArray);
   };
 
-  const onPressApplyFilters = () => {};
-
-  const onReset = () => {
-    setSelectSalaryType(null);
-    setSelectLaborerNames(null);
-    filterRef?.current?.setCurrentViewAndSearch(FiltersType.SALARY_TYPE, '');
-    filterRef?.current?.setCurrentViewAndSearch(FiltersType.LABORER_NAME, '');
+  const openBottomSheet = (item: any) => {
+    let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
+    const height = heightMapping[item.transactionRequestType as keyof typeof heightMapping];
+    if (height) {
+      calculatedSnapPoint = ['1%', height, isAndroidOS ? '95%' : '100%'];
+    }
+    setSnapPoint(calculatedSnapPoint);
+    setTransaction(item);
+    transactionRef.current?.present();
   };
 
-  const onClearFilters = () => {
-    setFilters([]);
-    onReset();
+  const closeBottomSheet = () => {
+    transactionRef.current?.forceClose();
   };
 
-  const handleCallbackForFilters = (sheetName: string) => {
-    if (sheetName === FiltersType.LABORER_NAME) {
-      laborerNamesBottomSheetRef?.current?.onShowSalaryType();
-    } else if (sheetName === FiltersType.SALARY_TYPE) {
-      salaryTypeBottomSheetRef?.current?.onShowSalaryType();
+  const handleSubmit = (data: any, filterTagsToRender: Map<any, any>) => {
+    setAppliedFilters(data);
+
+    setFilterTags(filterTagsToRender);
+
+    applyFilters(data);
+  };
+
+  const handleFiltersShow = () => {
+    // filterRef.current?.showFilters();
+    setIsFilterSheetVisible(true);
+  };
+
+  const removeFilter = (filter: string) => {
+    const filterTagKeys = filterTags;
+    const deletedFilterValues = filterTagKeys?.get(filter);
+
+    filterTagKeys?.delete(filter);
+
+    let updatedFilters = { ...appliedFilters };
+
+    updatedFilters = {
+      ...updatedFilters,
+      ...deletedFilterValues,
+    };
+
+    setAppliedFilters(updatedFilters);
+    applyFilters(updatedFilters);
+    setFilterTags(filterTagKeys);
+  };
+
+  const onPressClose = (text: string) => {
+    if (filterTags && filterTags?.size > 0) {
+      removeFilter(text);
+    } else {
+      setFilteredData(transactionsData);
     }
   };
 
+  useEffect(() => {
+    setFilteredData(transactionsData);
+  }, [transactionsData]);
+
+  useEffect(() => {
+    setNoFilterResult(false);
+
+    getTransactionsData();
+    return () => setNoFilterResult(false);
+  }, []);
+
+  const renderNoResult = () =>
+    noFilterResult ? (
+      <IPayNoResult textColor={colors.primary.primary800} message="TRANSACTION_HISTORY.NO_TRANSACTIONS_RESULT_FOUND" />
+    ) : (
+      <IPayNoResult
+        textColor={colors.primary.primary800}
+        message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
+      />
+    );
+
+  const renderTrxsList = () => (
+    <IPayView style={styles.listContainer}>
+      <IPayFlatlist
+        data={filteredData}
+        showsVerticalScrollIndicator={false}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => <IPayTransactionItem transaction={item} onPressTransaction={openBottomSheet} />}
+        ListEmptyComponent={
+          isLoading ? (
+            <IPaySkeletonBuilder isLoading={isLoading} variation={IPaySkeletonEnums.TRANSACTION_LIST} />
+          ) : (
+            renderNoResult()
+          )
+        }
+      />
+    </IPayView>
+  );
+
   return (
-    <IPaySafeAreaView>
+    <IPaySafeAreaView style={styles.container}>
       <IPayHeader
         testID="transaction-header"
         backBtn
-        title="COMMON.TRANSACTION_HISTORY"
+        title={headerTitle}
+        titleStyle={styles.cardTransactionsTitle}
         applyFlex
         rightComponent={
-          <IPayPressable onPress={onPressFilters}>
+          <IPayPressable onPress={() => handleFiltersShow()}>
             <IPayIcon
-              icon={icons.filter}
+              icon={filterTags && filterTags?.size > 0 ? icons.filter_edit_purple : icons.filter}
               size={20}
-              color={filters.length > 0 ? colors.secondary.secondary500 : colors.primary.primary500}
+              color={filterTags && filterTags?.size > 0 ? colors.secondary.secondary500 : colors.primary.primary500}
             />
           </IPayPressable>
         }
       />
 
-      <IPayFilterBottomSheet
-        testID="filters-bottom-sheet"
+      {filterTags && filterTags?.size > 0 ? (
+        <IPayView style={styles.filterWrapper}>
+          <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
+            <IPayView>
+              {Array.from(filterTags?.keys()).map((key) => (
+                <IPayChip
+                  key={key as string}
+                  containerStyle={styles.chipContainer}
+                  headingStyles={styles.chipHeading}
+                  textValue={key as string}
+                  icon={
+                    <IPayPressable onPress={() => onPressClose(key as string)}>
+                      <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                    </IPayPressable>
+                  }
+                />
+              ))}
+            </IPayView>
+          </IPayScrollView>
+        </IPayView>
+      ) : (
+        <IPayView />
+      )}
+
+      {renderTrxsList()}
+      <IPayBottomSheet
+        heading="TRANSACTION_HISTORY.TRANSACTION_DETAILS"
+        onCloseBottomSheet={closeBottomSheet}
+        customSnapPoint={snapPoint}
+        ref={transactionRef}
+        simpleHeader
+        simpleBar
+        cancelBnt
+        bold
+      >
+        <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
+      </IPayBottomSheet>
+
+      <IPayFilterTransactions
         heading="TRANSACTION_HISTORY.FILTER"
-        defaultValues={transferHistoryFilterDefaultValues}
         showAmountFilter
         showDateFilter
-        ref={filterRef}
-        filters={musanedTransferHistoryFilterData}
-        applySearchOn={[FiltersType.LABORER_NAME]}
-        customFiltersValue
-        onSubmit={onPressApplyFilters}
-        onClearFilters={onClearFilters}
-        handleCallback={handleCallbackForFilters}
-        onReset={onReset}
+        onSubmit={handleSubmit}
+        showMusanedFilter
+        defaultValues={transactionHistoryFilterDefaultValues}
+        isVisible={isFilterSheetVisible}
+        onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
+        laborerList={laborerNames}
+        salaryTypes={salaryTypeFilter}
       />
-      <IPayMusnaedSalaryTypeBottomSheet
-        onPressSelectSalaryTypeItem={onPressSelectSalaryTypeItem}
-        salaryType={selectSalaryType}
-        ref={salaryTypeBottomSheetRef}
-        isFilter
-      />
-      <IPayMusnaedSalaryTypeBottomSheet
-        onPressSelectSalaryTypeItem={onPressSelectLaborerNameItem}
-        salaryType={selectLaborerNames}
-        ref={laborerNamesBottomSheetRef}
-        anotherArray={laborerNames}
-        isFilter
+
+      <IPayAlert
+        icon={<IPayIcon icon={icons.clipboard_close} size={64} />}
+        visible={noFilterResult}
+        closeOnTouchOutside
+        transparentOverlay={false}
+        animationType="fade"
+        showIcon={false}
+        title="TRANSACTION_HISTORY.NO_RESULTS"
+        onClose={() => {
+          setNoFilterResult(false);
+        }}
+        message="TRANSACTION_HISTORY.NO_RESULTS_DETAIL"
+        primaryAction={{
+          text: t('TRANSACTION_HISTORY.GOT_IT'),
+          onPress: () => {
+            setNoFilterResult(false);
+          },
+        }}
       />
     </IPaySafeAreaView>
   );

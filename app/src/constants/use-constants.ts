@@ -907,9 +907,21 @@ const useConstantData = () => {
   ];
 
   const salaryTypes: SelectedValue[] = [
-    { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
-    { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
-    { id: SalaryCategories.Bonus_Salary, text: 'MUSANED.BONUS_SALARY' },
+    {
+      id: SalaryCategories.Monthly_Salary,
+      text: 'MUSANED.MONTHLY_SALARY',
+      type: SalaryCategories.TRX_JUSTIFICATION_Type_Monthly_Salary,
+    },
+    {
+      id: SalaryCategories.Advanced_Salary,
+      text: 'MUSANED.ADVANCED_SALARY',
+      type: SalaryCategories.TRX_JUSTIFICATION_Type_Advanced_Salary,
+    },
+    {
+      id: SalaryCategories.Bonus_Salary,
+      text: 'MUSANED.BONUS_SALARY',
+      type: SalaryCategories.TRX_JUSTIFICATION_Type_Bonus_Salary,
+    },
   ];
 
   const transferHistoryFilterDefaultValues = {
