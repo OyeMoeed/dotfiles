@@ -11,7 +11,7 @@ const IPayImage: React.FC<IPayImageProps> = ({ testID, style, image, resizeMode 
   // Determine the source of the image based on whether it is a local asset or a URL
 
   const source: ImageSourcePropType =
-    typeof image === 'string' && ((image as string).startsWith('http') || (image as string).startsWith('https'))
+    typeof image === 'string' && (image.startsWith('http') || image.startsWith('https'))
       ? { uri: image }
       : (image as ImageSourcePropType);
 

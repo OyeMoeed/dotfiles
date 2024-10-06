@@ -478,6 +478,7 @@ const RequestMoneyTransactionScreen: React.FC = () => {
         showDateFilter
         ref={filterRef}
         onSubmit={handleSubmit}
+        onReset={() => {}}
       />
     </IPaySafeAreaView>
   );

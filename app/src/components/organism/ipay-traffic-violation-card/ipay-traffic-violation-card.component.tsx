@@ -15,16 +15,19 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
   onSelectBill,
   showCheckBox,
 }) => {
-  const { violation_no: violationNo, amount, currency, description, selected } = billDetails;
+  const { violationNo, violatorId, amount, selected } = billDetails;
+  const violationNumber = violationNo || billDetails.violation_no;
   const { colors } = useTheme();
   const styles = trafficViolationCardStyles(colors);
   const { t } = useTranslation();
 
-  const billingAmount = `${amount} ${currency}`;
+  const billingAmount = `${amount} ${t('COMMON.SAR')}`;
 
   const onPressCheckBox = () => {
-    if (onSelectBill) onSelectBill(violationNo);
+    if (onSelectBill) onSelectBill(violationNumber);
   };
+
+  const titleText = violationNumber ? t('TRAFFIC_VIOLATION.VIOLATION_NUMBER') : t('TRAFFIC_VIOLATION.VIOLATOR_ID');
 
   return (
     <IPayView testID={`${testID}-traffic-violation`} style={[styles.container, style]}>
@@ -32,9 +35,9 @@ const IPayTrafficViolationCard: React.FC<IPaySadadBillProps> = ({
       <IPayView style={styles.contentView}>
         <IPayView>
           <IPayImage image={images.traffic} style={styles.vendorIcon} />
-          <IPaySubHeadlineText text={description} color={colors.natural.natural900} />
+          <IPaySubHeadlineText text="TRAFFIC_VIOLATION.TRAFFIC_VIOLATION" color={colors.natural.natural900} />
           <IPayCaption2Text
-            text={`${t('TRAFFIC_VIOLATION.VIOLATION_NUMBER')} ${violationNo}`}
+            text={`${titleText}. ${violationNumber || violatorId}`}
             color={colors.natural.natural900}
             style={styles.vendorText}
           />

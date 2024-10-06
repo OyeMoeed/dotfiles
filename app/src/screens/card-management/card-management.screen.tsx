@@ -29,6 +29,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import { verticalScale } from 'react-native-size-matters';
 import { useTranslation } from 'react-i18next';
 import checkUserAccess from '@app/utilities/check-user-access';
+import { retrieveData, storeData } from '@app/utilities/keychain.utils';
+import { EncryptedKey, EncryptedService } from '@app/utilities/enum/encrypted-keys.enum';
 import cardManagementStyles from './card-management.style';
 import IPayNoCardIndicatorComponenent from './ipay-no-card-indicator.component';
 
@@ -37,7 +39,7 @@ const CardManagementScreen: React.FC = () => {
   const { t } = useTranslation();
   const { showToast } = useToastContext();
   const [cards, setCards] = useState<any[]>([]);
-  const [defaultCardID, setDefaultCardID] = useState('1');
+  const [defaultCardID, setDefaultCardID] = useState('');
   const [selectedCardIndex, setSelectedCardIndex] = useState(0);
   const [currentCardID, setCurrentCardID] = useState('1');
   const actionSheetRef = useRef<any>(null);
@@ -65,6 +67,12 @@ const CardManagementScreen: React.FC = () => {
   };
 
   const getTopupCardsData = async () => {
+    const retrievedDefaultCard = await retrieveData(EncryptedService.CARDS, EncryptedKey.DEFAULT_CARD);
+
+    if (retrievedDefaultCard) {
+      setDefaultCardID(retrievedDefaultCard);
+    }
+
     const payload: WalletNumberProp = {
       walletNumber,
     };
@@ -90,9 +98,9 @@ const CardManagementScreen: React.FC = () => {
     getTopupCardsData();
   }, []);
 
-  const renderCardListItem = ({ index, item: { id, headerText, lastFourDigit, cardIcon, name } }) => (
+  const renderCardListItem = ({ index, item: { id, headerText, lastFourDigit, cardIcon, name, registrationId } }) => (
     <IPayView>
-      {id === defaultCardID && (
+      {registrationId === defaultCardID && (
         <IPayView style={styles.renderItemContainer}>
           <IPaySubHeadlineText regular color={colors.success.success500} text="CARD_MANAGEMENT.DEFAULT" />
         </IPayView>
@@ -100,7 +108,7 @@ const CardManagementScreen: React.FC = () => {
       <IPayCardListItem
         headerText={headerText}
         lastFourDigit={lastFourDigit}
-        isDefault={id === defaultCardID}
+        isDefault={registrationId === defaultCardID}
         cardIcon={cardIcon}
         onPressMore={async () => {
           await setCurrentCardID(id);
@@ -145,7 +153,8 @@ const CardManagementScreen: React.FC = () => {
 
   const onPressMenu = async (index: number) => {
     if (index === 0) {
-      setDefaultCardID(cards[selectedCardIndex].id);
+      setDefaultCardID(cards[selectedCardIndex].registrationId);
+      await storeData(EncryptedService.CARDS, EncryptedKey.DEFAULT_CARD, cards[selectedCardIndex].registrationId);
       hideBottomSheet();
     } else if (index === 1) {
       setShowDeleteAlert(true);

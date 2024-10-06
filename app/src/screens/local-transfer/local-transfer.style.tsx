@@ -30,17 +30,19 @@ const localTransferStyles = (themeColors: typeof colors) =>
       height: verticalScale(34),
       borderRadius: moderateScale(12),
     },
+    closeIcon: {
+      justifyContent: 'center',
+    },
     searchInputStyle: {
       height: verticalScale(36),
       marginTop: moderateScale(10),
       borderRadius: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
-      minWidth: '90%',
+      width: '95%',
     },
     contentContainer: {
       flex: 1,
       paddingHorizontal: moderateScale(24),
-      marginBottom: moderateScale(12),
     },
     tabWrapper: {
       backgroundColor: 'transparent',
@@ -85,7 +87,7 @@ const localTransferStyles = (themeColors: typeof colors) =>
     actionSheetStyle: {
       bottom: moderateScale(20),
     },
-    listContainer: { paddingHorizontal: moderateScale(12) },
+    listContainer: { paddingHorizontal: moderateScale(12), marginTop: moderateScale(8) },
     editStyles: {
       width: '85%',
       gap: moderateScale(12),

@@ -133,7 +133,7 @@ const IssueCardPinCreationScreen = ({
       cardType: issuanceDetails?.cardType,
       otp,
       otpRef,
-      physicalCard: isPhysicalCard ? true : false,
+      physicalCard: !!isPhysicalCard,
       transactionType: issuanceDetails.transactionType,
     };
     const apiResponse = await confirmIssueCard(walletNumber, body);

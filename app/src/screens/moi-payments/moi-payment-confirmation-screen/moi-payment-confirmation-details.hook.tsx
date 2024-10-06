@@ -8,7 +8,6 @@ import { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ValidateBillRes } from '../moi-payment-screen/moi-payment.interface';
 
-
 const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean) => {
   const { t } = useTranslation();
   const [otp, setOtp] = useState<string>('');
@@ -23,7 +22,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
 
   const onConfirm = async () => {
     const payLoad = {
-      billerId: billData?.billerId,
+      billerId: billData?.serviceProviderFromLOV?.code,
       serviceId: billData?.serviceTypeFromLOV?.code,
       dynamicFields: billData?.dynamicFields,
       billIdType: '',
@@ -74,6 +73,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
     setOtpRef,
     isOtpSheetVisible,
     setOtpSheetVisible,
+    onConfirm,
   };
 };
 
