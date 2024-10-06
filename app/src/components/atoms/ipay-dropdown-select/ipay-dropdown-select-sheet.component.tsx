@@ -46,7 +46,13 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
   };
 
   const renderListItems = ({ item }: { item: ListItem }) => (
-    <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item)}>
+    <IPayPressable
+      style={styles.titleView}
+      onPress={() => {
+        onPressListItem(item);
+        setSearchText('');
+      }}
+    >
       <IPayFootnoteText text={item[labelKey]} />
       {selectedItem === item[labelKey] ? listCheckIcon : <IPayView />}
     </IPayPressable>
@@ -67,7 +73,10 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
       simpleHeader
       simpleBar
       cancelBnt
-      onCloseBottomSheet={onCloseBottomSheet}
+      onCloseBottomSheet={() => {
+        setSearchText('');
+        onCloseBottomSheet();
+      }}
     >
       <IPayView style={styles.container}>
         {isSearchable && (
