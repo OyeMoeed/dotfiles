@@ -6,7 +6,7 @@ import icons from '@app/assets/icons';
 import { IPayMonthYearPicker, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayListView, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
-import { IPayBottomSheet, IPaySalaryPayDateSelector, IPaySalaryPayInformation } from '@app/components/organism';
+import { IPaySalaryPayDateSelector, IPaySalaryPayInformation } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -71,7 +71,9 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   const [payExtraFlag, setPayExtraFlag] = useState(false);
   const [selectedDateType, setSelectedDateType] = useState<'FROM_DATE' | 'TO_DATE'>('FROM_DATE');
 
-  const refBottomSheet = useRef<any>(null);
+  const [deductionReasonVisible, setDeductionReasonVisible] = useState(false);
+  const [monthBottomSheetVisible, setMonthBottomSheetVisible] = useState(false);
+  const refMonthsBottomSheet = useRef<any>(null);
   const salaryTypeBottomSheetRef = useRef<any>(null);
   const deductionReasonBottomSheetRef = useRef<any>(null);
 
@@ -130,6 +132,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onDeductionReasonCloseSheet = () => {
+    setDeductionReasonVisible(false);
     deductionReasonBottomSheetRef?.current?.close();
   };
 
@@ -148,6 +151,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
   };
 
   const onPressDeductionShow = () => {
+    setDeductionReasonVisible(true);
     deductionReasonBottomSheetRef?.current?.present();
   };
 
@@ -212,8 +216,13 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     }
   };
 
+  const onCloseDatePicker = () => {
+    setMonthBottomSheetVisible(false);
+  };
+
   const openDatePicker = () => {
-    refBottomSheet.current?.present();
+    setMonthBottomSheetVisible(true);
+    refMonthsBottomSheet.current?.present();
   };
 
   const onPressDeductFlag = () => {
@@ -229,11 +238,11 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
     const currentMonthData = moment().format('M');
     const currentFullDate = `${currentMonthData}/${currentYear}`;
 
-    if (selectedToDate) {
-      setSelectedPrevToDate(selectedToDate ?? currentFullDate);
+    if (selectedDateType === 'TO_DATE') {
+      setSelectedPrevToDate(selectedToDate || currentFullDate);
     }
-    if (selectedFromDate) {
-      setSelectedPrevDate(selectedFromDate ?? currentFullDate);
+    if (selectedDateType === 'FROM_DATE') {
+      setSelectedPrevDate(selectedFromDate || currentFullDate);
     }
   };
 
@@ -333,10 +342,11 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
         onPressSelectSalaryTypeItem={onPressSelectSalaryTypeItem}
       />
 
-      <IPayBottomSheet
-        heading="MUSANED.SALARY_TYPE"
+      <IPayPortalBottomSheet
+        heading="MUSANED.DEDUCTION_REASON"
         onCloseBottomSheet={onDeductionReasonCloseSheet}
-        customSnapPoint={['20%', '65%']}
+        customSnapPoint={['40%']}
+        isVisible={deductionReasonVisible}
         ref={deductionReasonBottomSheetRef}
         simpleHeader
         simpleBar
@@ -348,7 +358,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
           onPressListItem={onPressDeductionReasonItem}
           selectedListItem={selectedDeductionReason?.text}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
 
       <IPayPortalBottomSheet
         noGradient
@@ -365,15 +375,18 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
       >
         <IPayTopUpSelection testID="topUp-selection" topupItemSelected={topupItemSelected} />
       </IPayPortalBottomSheet>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         doneBtn={isAdvanceSalary ? !isToDateMoreThan6 && !isToDateLessThanFromDate : true}
         doneText="COMMON.DONE"
         onDone={onPressSelectDate}
         simpleBar
         heading="MUSANED.SELECT_MONTH"
-        ref={refBottomSheet}
-        isVisible
+        ref={refMonthsBottomSheet}
+        isVisible={monthBottomSheetVisible}
+        customSnapPoint={['50%']}
         cancelBnt
+        onCancel={onCloseDatePicker}
+        onCloseBottomSheet={onCloseDatePicker}
       >
         {isAdvanceSalary ? (
           <IPaySalaryPayDateSelector
@@ -404,7 +417,7 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
           withYear20
           withLongMonth
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

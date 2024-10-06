@@ -117,6 +117,9 @@ const salaryPayInformation = (themeColors: typeof colors) =>
     sarText: {
       fontSize: moderateScale(14),
     },
+    reasonsView: {
+      paddingHorizontal: moderateScale(4),
+    },
   });
 
 export default salaryPayInformation;
