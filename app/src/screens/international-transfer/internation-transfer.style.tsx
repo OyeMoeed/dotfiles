@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
+import { FONT_SIZE_17, FONT_WEIGHT_NORMAL } from '@app/styles/typography.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const internationalTransferStyles = (themeColors: typeof colors) =>
@@ -46,7 +47,9 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       justifyContent: 'space-between',
     },
     inputStyle: {
-      height: verticalScale(36),
+      fontSize: FONT_SIZE_17,
+      fontWeight: FONT_WEIGHT_NORMAL,
+      lineHeight: 22,
     },
     listWrapper: {
       marginTop: moderateScale(20),
@@ -97,7 +100,7 @@ const internationalTransferStyles = (themeColors: typeof colors) =>
       height: verticalScale(36),
       borderRadius: moderateScale(12),
       backgroundColor: themeColors.natural.natural0,
-      minWidth: '90%',
+      maxWidth: '95%',
     },
     listHeader: {
       flexDirection: 'row',

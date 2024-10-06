@@ -2,11 +2,12 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon } from '@app/components/atoms';
 import { IPayList } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
+import { InternationalBeneficiaryStatus } from '@app/enums/international-beneficiary-status.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import { BeneficiaryTypes } from '@app/utilities/enums.util';
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
+import { BeneficiaryTypes } from '@app/utilities';
 import localTransferStyles from '../../../screens/local-transfer/local-transfer.style';
 import { BeneficiariesSortSheetProps } from './beneficiaries-sort-sheet.interface';
 
@@ -20,6 +21,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
   setSortByActive,
   sortSheetRef,
   sortByActive = true,
+  isLocalTransfer,
 }) => {
   const { colors } = useTheme();
   const { t } = useTranslation();
@@ -28,15 +30,15 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
   const sortTypes = [
     {
       type: t('LOCAL_TRANSFER.ACTIVE_INACTIVE'),
-      isActiveToInactive: BeneficiaryTypes.ACTIVE,
+      isActiveToInactive: isLocalTransfer ? BeneficiaryTypes.ACTIVE : InternationalBeneficiaryStatus.ACTIVE,
     },
     {
       type: t('LOCAL_TRANSFER.INACTIVE_ACTIVE'),
-      isActiveToInactive: BeneficiaryTypes.INACTIVE,
+      isActiveToInactive: isLocalTransfer ? BeneficiaryTypes.ACTIVE : InternationalBeneficiaryStatus.INACTIVE,
     },
   ];
 
-  const onSelectSort = (sort: boolean) => {
+  const onSelectSort = (sort: string) => {
     setSortByActive(sort);
     setTimeout(() => {
       sortSheetRef?.current?.close();
@@ -56,7 +58,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
       bottomSheetBgStyles={styles.sheetBackground}
       doneBtn
       doneText="COMMON.RESET"
-      onDone={() => setSortByActive(BeneficiaryTypes.ACTIVE)}
+      onDone={() => setSortByActive(isLocalTransfer ? BeneficiaryTypes.ACTIVE : InternationalBeneficiaryStatus.ACTIVE)}
     >
       <IPayFlatlist
         style={styles.sheetContainer}
@@ -66,7 +68,7 @@ const IPayBeneficiariesSortSheet: FC<BeneficiariesSortSheetProps> = ({
             title={item.type}
             isShowIcon={sortByActive === item.isActiveToInactive}
             containerStyle={styles.listStyle}
-            onPress={() => onSelectSort(item.isActiveToInactive)}
+            onPress={() => onSelectSort(item?.isActiveToInactive)}
             icon={<IPayIcon size={18} icon={icons.tick_mark_default} color={colors.primary.primary500} />}
           />
         )}

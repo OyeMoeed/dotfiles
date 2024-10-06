@@ -31,10 +31,10 @@ import {
   ActivationMethods,
   activateInternationalBeneficiary,
 } from '@app/network/services/international-transfer/activate-international-beneficiary';
-import getAlinmaExpressBeneficiaries from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.service';
+import useGetAlinmaExpressBeneficiary from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.hook';
 import { deleteInternationalBeneficiary } from '@app/network/services/international-transfer/delete-international-beneficiary';
 import { WesternUnionBeneficiary } from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.interface';
-import getWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.service';
+import useGetWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/westren-union-beneficiary.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { ViewAllStatus } from '@app/types/global.types';
 import { ApiResponseStatusType, ToastTypes, alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
@@ -42,6 +42,7 @@ import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { ImageStyle } from 'react-native';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import internationalTransferStyles from './internation-transfer.style';
@@ -58,7 +59,7 @@ const InternationalTransferScreen: React.FC = () => {
   const sortSheetRef = useRef<bottomSheetTypes>(null);
   const actionSheetRef = useRef<any>(null);
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
-  const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetailsProps[]>();
+  const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetailsProps[]>([]);
   const [viewAllState, setViewAllState] = useState({
     active: false,
     inactive: false,
@@ -69,76 +70,18 @@ const InternationalTransferScreen: React.FC = () => {
   const [selectedNumber, setSelectedNumber] = useState<string>('');
   const [, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
-  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>([]);
+  const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>();
   const editBeneficiaryRef = useRef<any>(null);
-  const [apiError, setAPIError] = useState<string>('');
-  const [aeBeneficiaryData, setAEBeneficiaryData] = useState([]);
-  const [wuBeneficiaryData, setWUBeneficiaryData] = useState([]);
+
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const { showToast } = useToastContext();
+
+  const { data: aeBeneficiaryData } = useGetAlinmaExpressBeneficiary();
+  const { data: wuBeneficiaryData } = useGetWesternUnionBeneficiaries();
 
   useEffect(() => {
     setFilteredBeneficiaryData(aeBeneficiaryData);
   }, [aeBeneficiaryData]);
-
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
-  const getAEBeneficiariesData = async () => {
-    try {
-      const apiResponse = await getAlinmaExpressBeneficiaries();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setAEBeneficiaryData(apiResponse?.response?.beneficiaries);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError('ERROR.API_ERROR_RESPONSE');
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
-      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
-    }
-  };
-
-  const getWUBeneficiariesData = async () => {
-    try {
-      const apiResponse = await getWesternUnionBeneficiaries();
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          setWUBeneficiaryData(apiResponse?.response?.beneficiaries);
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError('ERROR.API_ERROR_RESPONSE');
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
-      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
-    }
-  };
-
-  useEffect(() => {
-    getWUBeneficiariesData();
-    getAEBeneficiariesData();
-  }, []);
 
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
@@ -171,42 +114,28 @@ const InternationalTransferScreen: React.FC = () => {
   }, []);
 
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
-    setNickName(item?.name ?? '');
+    setNickName(item?.nickname ?? '');
     setSelectedBeneficiary(item);
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
   };
+
   const onDeleteCancel = () => {
     setDeleteBeneficiary(false);
   };
 
   const handleDeleteBeneficiary = async () => {
-    try {
-      const apiResponse = await deleteInternationalBeneficiary(selectedBeneficiary?.beneficiaryCode);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          showToast({
-            title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
-            subTitle: `${selectedBeneficiary.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
-            containerStyle: styles.toast,
-            isShowRightIcon: false,
-            leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
-            toastType: ToastTypes.SUCCESS,
-          });
-          break;
-        case apiResponse?.apiResponseNotOk:
-          setAPIError('ERROR.API_ERROR_RESPONSE');
-          break;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          break;
-        default:
-          break;
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
-      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+    const apiResponse = await deleteInternationalBeneficiary(selectedBeneficiary?.beneficiaryCode || '');
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      showToast({
+        title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
+        subTitle: `${selectedBeneficiary?.fullName} | ${selectedBeneficiary?.beneficiaryBankDetail?.bankName}`,
+        containerStyle: styles.toast,
+        isShowRightIcon: false,
+        leftIcon: <IPayIcon icon={icons.trashtransparent} size={24} color={colors.natural.natural0} />,
+        toastType: ToastTypes.SUCCESS,
+      });
     }
     setDeleteBeneficiary(false);
   };
@@ -254,10 +183,10 @@ const InternationalTransferScreen: React.FC = () => {
               btnIconsDisabled
               btnStyle={styles.buttonStyle}
               btnColor={
-                beneficiaryStatus === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary100 : ''
+                beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary100 : ''
               }
               textColor={
-                beneficiaryStatus === InternationalBeneficiaryStatus.INACTIVE ? colors.secondary.secondary800 : ''
+                beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary800 : ''
               }
             />
             <IPayPressable onPress={() => onPressMenuOption(item)}>
@@ -283,8 +212,12 @@ const InternationalTransferScreen: React.FC = () => {
     }
   };
 
-  const getBeneficiariesByStatus = (status: string) =>
-    filteredBeneficiaryData?.filter((item) => item?.beneficiaryStatus === status);
+  const getBeneficiariesByStatus = (isActive: boolean) =>
+    filteredBeneficiaryData?.filter((item) => {
+      if (isActive) return item?.beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE;
+
+      return item?.beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE;
+    });
 
   const renderListHeader = (isActive: string, count: number, totalCount: number) => {
     const statusText = isActive === InternationalBeneficiaryStatus.ACTIVE ? 'COMMON.ACTIVE' : 'COMMON.INACTIVE';
@@ -321,7 +254,7 @@ const InternationalTransferScreen: React.FC = () => {
       <IPayView />
     );
 
-  const listBeneficiaries = (viewAll: boolean, isActive: string) =>
+  const listBeneficiaries = (viewAll: boolean, isActive: boolean) =>
     viewAll ? getBeneficiariesByStatus(isActive) : getBeneficiariesByStatus(isActive)?.slice(0, beneficiariesToShow);
 
   const onClearInput = () => {
@@ -353,6 +286,7 @@ const InternationalTransferScreen: React.FC = () => {
       actionSheetRef.current.show();
     }, 500);
   };
+
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);
@@ -364,25 +298,16 @@ const InternationalTransferScreen: React.FC = () => {
 
   const onPressActivateBeneficiary = async () => {
     const activateBeneficiaryPayload = {
-      beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
+      beneficiaryCode: selectedBeneficiary?.beneficiaryCode || '',
       activationMethod: ActivationMethods.IVR,
     };
-    try {
-      const apiResponse = await activateInternationalBeneficiary(activateBeneficiaryPayload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          return apiResponse?.status?.type;
-        case ApiResponseStatusType.FAILURE:
-          setAPIError(apiResponse?.error);
-          return '';
-        default:
-          return '';
-      }
-    } catch (error: any) {
-      setAPIError(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
-      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
-      return '';
+
+    const apiResponse = await activateInternationalBeneficiary(activateBeneficiaryPayload);
+    if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
+      return apiResponse?.status?.type;
     }
+
+    return '';
   };
 
   const handleReceiveCall = useCallback(async () => {
@@ -471,7 +396,7 @@ const InternationalTransferScreen: React.FC = () => {
       </IPayView>
       <IPayView style={styles.contentContainer}>
         <IPayTabs
-          imageStyle={styles.tabImg}
+          imageStyle={styles.tabImg as ImageStyle}
           customStyles={styles.tabWrapper}
           tabsIcon={tabOptions}
           onSelect={onSelectTab}
@@ -503,48 +428,47 @@ const InternationalTransferScreen: React.FC = () => {
                   <IPayView
                     style={[
                       styles.activeInactiveListWrapper,
-                      sortedByActive === InternationalBeneficiaryStatus.INACTIVE && styles.reverseList,
+                      sortedByActive === InternationalBeneficiaryStatus.INACTIVE ? styles.reverseList : {},
                     ]}
                   >
-                    {!!getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length && (
+                    {!!getBeneficiariesByStatus(true)?.length && (
                       <IPayFlatlist
                         scrollEnabled={false}
-                        data={listBeneficiaries(viewAllState.active, InternationalBeneficiaryStatus.ACTIVE)}
+                        data={listBeneficiaries(viewAllState.active, true)}
                         renderItem={renderBeneficiaryDetails}
                         keyExtractor={(item, index) => `${item.fullName}-active-status-${index}`}
                         ListHeaderComponent={() =>
                           renderListHeader(
                             InternationalBeneficiaryStatus.ACTIVE,
-                            listBeneficiaries(viewAllState.active, InternationalBeneficiaryStatus.ACTIVE)?.length ?? 0,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length ?? 0,
+                            listBeneficiaries(viewAllState.active, true)?.length ?? 0,
+                            getBeneficiariesByStatus(true)?.length ?? 0,
                           )
                         }
                         ListFooterComponent={() =>
                           renderFooter(
                             InternationalBeneficiaryStatus.ACTIVE,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.ACTIVE)?.length ?? 0,
+                            getBeneficiariesByStatus(true)?.length ?? 0,
                           )
                         }
                       />
                     )}
-                    {!!getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length && (
+                    {!!getBeneficiariesByStatus(false)?.length && (
                       <IPayFlatlist
                         scrollEnabled={false}
-                        data={listBeneficiaries(viewAllState.inactive, InternationalBeneficiaryStatus.INACTIVE)}
+                        data={listBeneficiaries(viewAllState.inactive, false)}
                         renderItem={renderBeneficiaryDetails}
                         keyExtractor={(item, index) => `${item.fullName}-inactive-status-${index}`}
                         ListHeaderComponent={() =>
                           renderListHeader(
                             InternationalBeneficiaryStatus.INACTIVE,
-                            listBeneficiaries(viewAllState.inactive, InternationalBeneficiaryStatus.INACTIVE)?.length ??
-                              0,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length ?? 0,
+                            listBeneficiaries(viewAllState.inactive, false)?.length ?? 0,
+                            getBeneficiariesByStatus(false)?.length ?? 0,
                           )
                         }
                         ListFooterComponent={() =>
                           renderFooter(
                             InternationalBeneficiaryStatus.INACTIVE,
-                            getBeneficiariesByStatus(InternationalBeneficiaryStatus.INACTIVE)?.length ?? 0,
+                            getBeneficiariesByStatus(false)?.length ?? 0,
                           )
                         }
                       />

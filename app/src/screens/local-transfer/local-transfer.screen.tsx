@@ -629,7 +629,12 @@ const LocalTransferScreen: React.FC = () => {
       >
         <IPayView style={styles.sheetContainerStyles}>{renderCurrentOption}</IPayView>
       </IPayPortalBottomSheet>
-      <IPayBeneficiariesSortSheet sortSheetRef={sortSheetRef} setSortByActive={setSortBy} sortByActive={sortBy} />
+      <IPayBeneficiariesSortSheet
+        sortSheetRef={sortSheetRef}
+        setSortByActive={setSortBy}
+        sortByActive={sortBy}
+        isLocalTransfer
+      />
       <IPayActionSheet
         ref={actionSheetRef}
         options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}

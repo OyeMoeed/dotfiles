@@ -28,7 +28,7 @@ const apiCall = async <T>({
   payload,
   headers = {},
   baseURL = undefined,
-}: ApiCallParams): Promise<ApiResponse<T> | undefined> => {
+}: ApiCallParams): Promise<ApiResponse<T>> => {
   const config: AxiosRequestConfig = {
     method,
     url: endpoint,

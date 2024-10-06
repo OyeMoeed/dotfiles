@@ -4,7 +4,7 @@ interface IPayReceiveCallProps {
   testID?: string;
   makeTransfer?: boolean;
   guideToReceiveCall: GuideStep[];
-  activateInternationalBeneficiary: () => Promise<ApiResponseStatusType | void>;
+  activateInternationalBeneficiary: () => Promise<ApiResponseStatusType | ''>;
   hanldePageNavigation: () => void;
 }
 

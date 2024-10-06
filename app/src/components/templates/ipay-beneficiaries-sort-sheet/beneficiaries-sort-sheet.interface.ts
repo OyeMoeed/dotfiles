@@ -17,4 +17,8 @@ export interface BeneficiariesSortSheetProps {
    * Reference to bottom sheet component.
    */
   sortSheetRef: Ref<bottomSheetTypes>;
+  /**
+   * is Local Transfer to customize logic.
+   */
+  isLocalTransfer?: boolean;
 }
