@@ -155,7 +155,7 @@ const SendGiftAmountScreen = ({ route }) => {
 
   const renderItem = ({ item }: { item: Contact }) => {
     const { givenName, recordID } = item;
-    const isAlinma = walletUtils.isItemHasWallet(item.phoneNumbers[0].number, activeFriends);
+    const isAlinma = walletUtils.isContactHasWallet(item.phoneNumbers[0].number, activeFriends);
 
     let detailText = `${topUpAmount || 0} ${t('COMMON.SAR')}`;
 

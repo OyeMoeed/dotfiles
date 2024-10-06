@@ -1,6 +1,6 @@
 import { IW2WActiveFriends } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
 
-const isItemHasWallet = (mobile: string, activeFriends: IW2WActiveFriends[]): boolean => {
+const isContactHasWallet = (mobile: string, activeFriends: IW2WActiveFriends[]): boolean => {
   const walletNumber = activeFriends?.filter(
     (activeFriend: IW2WActiveFriends) => activeFriend?.mobileNumber === mobile,
   )[0]?.walletNumber;
@@ -9,5 +9,5 @@ const isItemHasWallet = (mobile: string, activeFriends: IW2WActiveFriends[]): bo
 };
 
 export default {
-  isItemHasWallet,
+  isContactHasWallet,
 };

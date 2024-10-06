@@ -20,7 +20,6 @@ import {
   IPayRHFAnimatedTextInput,
   IPayTextInput,
 } from '@app/components/molecules';
-import { IPayContactsPermissionRefType } from '@app/components/molecules/ipay-contacts-permission-sheet/ipay-contacts-permission-sheet.interface';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
@@ -45,7 +44,6 @@ import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import useContacts from '@app/hooks/use-contacts';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
