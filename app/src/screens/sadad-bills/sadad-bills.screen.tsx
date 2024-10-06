@@ -255,8 +255,10 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
         setEditBillSuccessToast,
         billId: id,
       });
-    } else {
+    } else if (index === 1) {
       setActionSheetOptions(deleteBillOptions);
+    } else {
+      sadadActionSheetRef?.current?.hide();
     }
     sadadActionSheetRef?.current?.hide();
     showActionSheet();
