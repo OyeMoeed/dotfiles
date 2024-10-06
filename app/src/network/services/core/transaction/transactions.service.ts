@@ -44,19 +44,13 @@ const getTransactionTypes = async ({ hideSpinner }: { hideSpinner?: boolean }): 
 };
 
 const resetPinCode = async (payload: resetPinCodeProp): Promise<any> => {
-  try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.RESET_PINCODE(payload?.walletNumber, payload?.cardIndex),
-      method: requestType.POST,
-      payload: payload?.body,
-    });
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: CORE_URLS.RESET_PINCODE(payload?.walletNumber, payload?.cardIndex),
+    method: requestType.POST,
+    payload: payload?.body,
+  });
+
+  return apiResponse;
 };
 
 const changeStatus = async (payload: changeStatusProp): Promise<any> => {
