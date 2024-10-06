@@ -122,6 +122,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
               isShowIcon={false}
               textValue={billStatus}
               variant={statusVariant}
+              chipTextStyle={styles.chipTextStyle}
             />
           )}
           <IPaySubHeadlineText text={billingAmount} color={billingAmountColor} />

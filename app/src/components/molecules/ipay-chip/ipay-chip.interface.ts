@@ -48,4 +48,8 @@ export interface IPayChipProps {
    */
   fullWidth?: boolean;
   shouldTranslatedText?: boolean;
+  /**
+   * Style for the chip text
+   */
+  chipTextStyle?: StyleProp<TextStyle>;
 }
