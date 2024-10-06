@@ -104,6 +104,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
             rules={{ required: true, maxLength: 50 }}
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
+                maxLength={50}
                 testID="bill-nick-name-input"
                 label="NEW_SADAD_BILLS.BILL_NICK_NAME"
                 labelColor={colors.primary.primary500}
