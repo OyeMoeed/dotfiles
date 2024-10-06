@@ -4,7 +4,7 @@ interface WalletNumberProp {
   walletNumber: string;
 }
 // Define the TransactionItem interface
-interface TransactionItem {
+export interface TransactionItem {
   feesAmount: string;
   oneCardPriceAfterVat: number;
   showVatInvoice: boolean;

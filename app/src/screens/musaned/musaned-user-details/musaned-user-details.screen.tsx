@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
@@ -19,14 +19,15 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities';
+import { APIResponseType, buttonVariants } from '@app/utilities';
 import { isArabic } from '@app/utilities/constants';
 import { useRoute } from '@react-navigation/core';
 import icons from '@app/assets/icons';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
-import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
+import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { TransactionItem } from '@app/network/services/core/transaction/transaction.interface';
 
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
 import MusanedUserDetailsRouteProps from './musaned-user-details.interface';
@@ -38,6 +39,8 @@ const MusanedUserDetails = () => {
   const { t } = useTranslation();
 
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
+  const [isLoadingTransactions, setIsLoadingTransactions] = useState(false);
+  const [transactionsData, setTransactionsData] = useState<Array<TransactionItem>>([]);
 
   const { params } = useRoute<MusanedUserDetailsRouteProps>();
   const {
@@ -64,17 +67,26 @@ const MusanedUserDetails = () => {
   const expirationDate = moment(poiExperationDate).format('DD/M/YYYY');
   const formattedLastPaidSalaryDate = `${lastPaidSalaryDate?.split(':')[1]}/${lastPaidSalaryDate?.split(':')[0]}`;
 
-  const { isLoadingTransactions, transactionsData } = useGetTransactions({
-    payload: {
+  const getTransactionsDetails = async () => {
+    const apiResponse = await getTransactions({
       walletNumber: walletInfo.walletNumber,
       maxRecords: '5',
       offset: '1',
-      fromDate: '',
-      toDate: '',
       mobileNumber,
       targetWallet: walletNumber,
-    },
-  });
+      trxReqType: 'COUT_MUSANED',
+    });
+
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+      setTransactionsData(apiResponse.response?.transactions || []);
+    }
+    setIsLoadingTransactions(false);
+  };
+
+  useEffect(() => {
+    setIsLoadingTransactions(true);
+    getTransactionsDetails();
+  }, []);
 
   const userData = [
     // TODO: check for mobile number in the API response
