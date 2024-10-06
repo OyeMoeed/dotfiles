@@ -2,6 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
+import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
