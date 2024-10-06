@@ -55,20 +55,9 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
   const [transactionsData, setTransactionsData] = useState<IPayTransactionItemProps[]>([]);
-  const [selectedCard, setSelectedCard] = useState<any>(currentCard);
   const [isFilterSheetVisible, setIsFilterSheetVisible] = useState<boolean>(false);
 
   const headerTitle = currentCard ? 'CARDS.CARD_TRANSACTIONS_HISTORY' : 'COMMON.TRANSACTIONS_HISTORY';
-
-  const mappedCards = useMemo(
-    () =>
-      cards?.map((card: CardInterface) => ({
-        id: card.cardIndex,
-        key: card.cardIndex,
-        value: card?.maskedCardNumber || '',
-      })),
-    [cards],
-  );
 
   const getTransactionsData = async (filtersData?: any) => {
     setIsLoading(true);
@@ -326,7 +315,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         showAmountFilter={isShowAmount}
         showDateFilter
         showCardFilter={!isW2WTransactions}
-        cards={mappedCards ?? []}
         showContactsFilter={isW2WTransactions}
         contacts={contacts ?? []}
         showTypeFilter={!isW2WTransactions}
@@ -334,7 +322,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
         defaultValues={isW2WTransactions ? w2WFilterDefaultValues : transactionHistoryFilterDefaultValues}
         isVisible={isFilterSheetVisible}
         onCloseFilterSheet={() => setIsFilterSheetVisible(false)}
-        setSelectedCard={(card: any) => setSelectedCard(card)}
       />
 
       <IPayAlert
