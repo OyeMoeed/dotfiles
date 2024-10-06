@@ -1455,7 +1455,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 241003;
+				CURRENT_PROJECT_VERSION = 241006;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				ENABLE_BITCODE = NO;
@@ -1466,7 +1466,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.241003;
+				MARKETING_VERSION = 0.0.241006;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1495,7 +1495,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 241003;
+				CURRENT_PROJECT_VERSION = 241006;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				INFOPLIST_FILE = "AlinmaPayPreProd-Info.plist";
@@ -1505,7 +1505,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.241003;
+				MARKETING_VERSION = 0.0.241006;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1534,7 +1534,7 @@
 				CODE_SIGN_ENTITLEMENTS = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 241003;
+				CURRENT_PROJECT_VERSION = 241006;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				ENABLE_BITCODE = NO;
@@ -1544,7 +1544,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.241003;
+				MARKETING_VERSION = 0.0.241006;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -1573,7 +1573,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 241003;
+				CURRENT_PROJECT_VERSION = 241006;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = MLW6TX26D9;
 				INFOPLIST_FILE = "AlinmaPayUat-Info.plist";
@@ -1582,7 +1582,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.241003;
+				MARKETING_VERSION = 0.0.241006;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

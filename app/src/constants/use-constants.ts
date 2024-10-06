@@ -990,6 +990,8 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
+    [FiltersType.OCCASION]: '',
+    [FiltersType.STATUS]: '',
   };
 
   const merchantData = [
