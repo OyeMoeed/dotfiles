@@ -20,6 +20,7 @@ import { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } fro
 import { verticalScale } from 'react-native-size-matters';
 import { IPayCustomSheetProps } from './ipay-custom-sheet.interface';
 import customSheetStyles from './ipay-custom-sheet.style';
+import { useFocusEffect } from '@react-navigation/core';
 
 /**
  * calculated top header value for ios and android devices
@@ -72,6 +73,12 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
   useEffect(() => {
     closeSheet();
   }, [closeTrigger]);
+
+  useFocusEffect(
+    useCallback(() => {
+      closeSheet();
+    }, [closeSheet]),
+  );
 
   const panGestureHandler = Gesture.Pan()
     .onUpdate((event) => {
