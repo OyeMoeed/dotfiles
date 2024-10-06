@@ -208,21 +208,19 @@ const MusanedHistoryScreen: React.FC = () => {
       {filterTags && filterTags?.size > 0 ? (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <IPayView>
-              {Array.from(filterTags?.keys()).map((key) => (
-                <IPayChip
-                  key={key as string}
-                  containerStyle={styles.chipContainer}
-                  headingStyles={styles.chipHeading}
-                  textValue={key as string}
-                  icon={
-                    <IPayPressable onPress={() => onPressClose(key as string)}>
-                      <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                    </IPayPressable>
-                  }
-                />
-              ))}
-            </IPayView>
+            {Array.from(filterTags?.keys()).map((key) => (
+              <IPayChip
+                key={`${key}`}
+                containerStyle={styles.chipContainer}
+                headingStyles={styles.chipHeading}
+                textValue={key as string}
+                icon={
+                  <IPayPressable onPress={() => onPressClose(key as string)}>
+                    <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                  </IPayPressable>
+                }
+              />
+            ))}
           </IPayScrollView>
         </IPayView>
       ) : (

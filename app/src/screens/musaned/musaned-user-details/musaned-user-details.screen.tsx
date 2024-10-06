@@ -1,3 +1,7 @@
+import { useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
+
 import {
   IPayCaption1Text,
   IPayFlatlist,
@@ -18,15 +22,12 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
 import { isArabic } from '@app/utilities/constants';
 import { useRoute } from '@react-navigation/core';
-import moment from 'moment';
-import { useTranslation } from 'react-i18next';
-
 import icons from '@app/assets/icons';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import { useCallback } from 'react';
+
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
 import MusanedUserDetailsRouteProps from './musaned-user-details.interface';
 import musanedUserDetailsStyles from './musaned-user-details.style';
