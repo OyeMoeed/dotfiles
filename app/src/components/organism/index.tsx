@@ -35,6 +35,7 @@ import IPayFilterCards from './ipay-filters/ipay-filter-cards.component';
 import IPayFilterAmountRange from './ipay-filters/ipay-filter-amount-range.component';
 import IPayFilterBeneficiaries from './ipay-filters/ipay-filter-beneficiaries.component';
 import IPayFilterGifts from './ipay-filters/ipay-filter-gifts.component';
+import IPayMaintentanceSheet from './ipay-maintenance-sheet/ipay-maintenance-sheet.component';
 
 export {
   IPayActionSheet,
@@ -70,4 +71,5 @@ export {
   IPayFilterAmountRange,
   IPayFilterBeneficiaries,
   IPayFilterGifts,
+  IPayMaintentanceSheet,
 };

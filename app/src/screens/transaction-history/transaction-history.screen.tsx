@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayPressable, IPayScrollView, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
-import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
 import IPayCardDetailsBannerComponent from '@app/components/molecules/ipay-card-details-banner/ipay-card-details-banner.component';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayBottomSheet } from '@app/components/organism';
@@ -16,7 +15,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
@@ -40,7 +39,6 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   const styles = transactionsStyles(colors);
   const { t } = useTranslation();
   const TRANSACTION_TABS = [t('TRANSACTION_HISTORY.SEND_MONEY'), t('TRANSACTION_HISTORY.RECEIVED_MONEY')];
-  const cards = useTypedSelector((state) => state.cardsReducer.cards);
 
   const cardLastFourDigit = isShowCard && currentCard?.maskedCardNumber.slice(-4);
 
@@ -124,10 +122,11 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
     getTransactionsData(filtersArray);
   };
 
-  const openBottomSheet = (item: IPayTransactionItemProps) => {
+  const openBottomSheet = (item: any) => {
     let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
-    if (heightMapping[item.transactionRequestType]) {
-      calculatedSnapPoint = ['1%', heightMapping[item.transactionRequestType], isAndroidOS ? '95%' : '100%'];
+    const height = heightMapping[item.transactionRequestType as keyof typeof heightMapping];
+    if (height) {
+      calculatedSnapPoint = ['1%', height, isAndroidOS ? '95%' : '100%'];
     }
     setSnapPoint(calculatedSnapPoint);
     setTransaction(item);
@@ -270,19 +269,21 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       {filterTags && filterTags?.size > 0 && (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            {Array.from(filterTags?.keys()).map((key) => (
-              <IPayChip
-                key={key as string}
-                containerStyle={styles.chipContainer}
-                headingStyles={styles.chipHeading}
-                textValue={key as string}
-                icon={
-                  <IPayPressable onPress={() => onPressClose(key as string)}>
-                    <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
-                  </IPayPressable>
-                }
-              />
-            ))}
+            <IPayView>
+              {Array.from(filterTags?.keys()).map((key) => (
+                <IPayChip
+                  key={key as string}
+                  containerStyle={styles.chipContainer}
+                  headingStyles={styles.chipHeading}
+                  textValue={key as string}
+                  icon={
+                    <IPayPressable onPress={() => onPressClose(key as string)}>
+                      <IPayIcon icon={icons.CLOSE_SQUARE} size={16} color={colors.secondary.secondary500} />
+                    </IPayPressable>
+                  }
+                />
+              ))}
+            </IPayView>
           </IPayScrollView>
         </IPayView>
       )}

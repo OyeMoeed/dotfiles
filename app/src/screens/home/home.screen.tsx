@@ -31,6 +31,9 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import { setCards } from '@app/store/slices/cards-slice';
+// import useGetAppConfigurations, {
+//   ModulesNameEnum,
+// } from '@app/network/services/core/app-configurations/use-get-app-configurations.hook';
 import homeStyles from './home.style';
 
 const Home: React.FC = () => {
@@ -46,6 +49,8 @@ const Home: React.FC = () => {
   const [balanceBoxHeight, setBalanceBoxHeight] = useState<number>(0);
   const topUpSelectionRef = React.createRef<any>();
   const cardIssuanceSheetRef = useRef<BottomSheetModal>(null);
+
+  // const {  } = useGetAppConfigurations({ modules: [ModulesNameEnum.MUSANED_IS_NEW] });
 
   const dispatch = useTypedDispatch();
   const {

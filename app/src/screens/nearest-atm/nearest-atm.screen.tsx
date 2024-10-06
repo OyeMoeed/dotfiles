@@ -299,8 +299,8 @@ const NearestAtmScreen: React.FC = () => {
         cancelBnt
       >
         <IPayAtmDetails data={atmDetails as AtmDetailsProps} openGoogleMapsWeb={onOpenGoogleMaps} />
-        <IPayLocationPermissionSheet onLocationSelected={onLocationSelected} />
       </IPayBottomSheet>
+      <IPayLocationPermissionSheet onLocationSelected={onLocationSelected} />
     </IPaySafeAreaView>
   );
 };

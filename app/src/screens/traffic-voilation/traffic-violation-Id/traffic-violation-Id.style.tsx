@@ -1,5 +1,4 @@
 import colors from '@app/styles/colors.const';
-import { SCREEN_WIDTH } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { isTablet } from '@app/utilities/constants';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
@@ -34,8 +33,9 @@ const trafficViolationStyles = (themeColors: typeof colors) =>
     footerView: {
       position: 'absolute',
       bottom: 0,
-      width: SCREEN_WIDTH - moderateScale(48, 0.3),
-      marginBottom: moderateScale(33, 0.3),
+      marginBottom: moderateScale(24, 0.3),
+      width: '100%',
+      alignSelf: 'center',
     },
 
     footerViewSecondary: {

@@ -4,6 +4,7 @@ import { WuFeesInquiryResponse } from '@app/network/services/international-trans
 interface TransferDetails {
   selectedReason: {
     desc: string;
+    code?: string;
   };
   transferGateway: string;
   bankName: string;

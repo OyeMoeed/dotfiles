@@ -22,6 +22,8 @@ import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SNAP_POINT } from '@app/constants/constants';
+import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
+import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import IPayTransactionItem from '../transaction-history/component/ipay-transaction.component';
 import {
   BeneficiaryData,
@@ -69,7 +71,7 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     if (beneficiaryHistoryData?.length) {
       return beneficiaryHistoryData
         ?.filter((item) => item?.transactionType === transactionType[activeTab as keyof TransactionType])
-        ?.sort((a, b) => new Date(b?.transactionDateTime) - new Date(a?.transactionDateTime));
+        ?.sort((a, b) => new Date(b?.transactionDateTime).getTime() - new Date(a?.transactionDateTime).getTime());
     }
     return [];
   };
@@ -91,8 +93,8 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
       walletNumber,
       trxReqType,
       beneficiaryName: transferFilters?.beneficiaryName ?? '',
-      toDate: formatDate(transferFilters?.dateTo) ?? '',
-      fromDate: formatDate(transferFilters?.dateFrom) ?? '',
+      toDate: transferFilters?.dateTo ? formatDate(transferFilters.dateTo) : '',
+      fromDate: transferFilters?.dateFrom ? formatDate(transferFilters.dateFrom) : '',
       fromAmount: transferFilters?.amountFrom ?? '',
       toAmount: transferFilters?.amountTo ?? '',
     };
@@ -156,17 +158,24 @@ const BeneficiaryTransactionHistoryScreen: React.FC = () => {
     }
   };
 
-  const ListEmptyComponent = useCallback(
-    () => (
+  const ListEmptyComponent = useCallback(() => {
+    if (!beneficiaryHistoryData?.length) {
+      return (
+        <IPaySkeletonBuilder
+          isLoading={!beneficiaryHistoryData?.length}
+          variation={IPaySkeletonEnums.TRANSACTION_LIST}
+        />
+      );
+    }
+    return (
       <IPayNoResult
         testID="no-results"
         textColor={colors.primary.primary800}
         message="TRANSACTION_HISTORY.NO_RECORDS_TRANSACTIONS_HISTORY"
         showEmptyBox
       />
-    ),
-    [],
-  );
+    );
+  }, [beneficiaryHistoryData?.length, colors.primary.primary800]);
 
   return (
     <IPaySafeAreaView testID="transaction-section" style={styles.container}>

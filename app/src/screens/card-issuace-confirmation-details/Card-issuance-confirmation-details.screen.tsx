@@ -92,11 +92,11 @@ const CardIssuanceConfirmationScreen = () => {
     const { cardType } = issuanceDetails;
     switch (cardType) {
       case 'IPMC':
-        return 'VIRTUAL_CARD.CLASSIC';
+        return 'VIRTUAL_CARD.CLASSIC_DEBIT_CARD';
       case 'VPPC':
-        return 'VIRTUAL_CARD.PLATINUM';
+        return 'VIRTUAL_CARD.PLATINUM_CASHBACK_PREPAID_CARD';
       case 'VSCC':
-        return 'VIRTUAL_CARD.SIGNATURE';
+        return 'VIRTUAL_CARD.SIGNATURE_PREPAID_CARD';
       default:
         return '';
     }
@@ -154,7 +154,10 @@ const CardIssuanceConfirmationScreen = () => {
       title={item.title}
       detailText={item.detailText}
       style={item.style}
+      rightContainerStyles={styles.labelDetailsText}
+      containerStyle={styles.labelContainerStyle}
       showDetail
+      detailsTruncation={false}
     />
   );
 

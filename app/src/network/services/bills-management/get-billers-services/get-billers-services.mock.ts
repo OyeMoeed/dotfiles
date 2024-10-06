@@ -9,11 +9,23 @@ const getBillersServicesMockResponse = {
   response: {
     servicesList: [
       {
-        serviceId: '060',
-        serviceDesc: 'List Violations by providing the Issuing entity and category ID',
-        typeOfPayment: 'prepaid',
+        serviceId: '041',
+        serviceDesc: 'Query Traffic Violations by Violation Number',
+        typeOfPayment: 'postpaid',
         mainBillIdLabel: 'Violator ID',
-        mainBillIdHint: 'Violator ID',
+        mainBillIdHint: null,
+        billIdTypes: null,
+        applyTax: 'N',
+        amountLov: null,
+        amountHintAr: null,
+        amountHintEn: null,
+      },
+      {
+        serviceId: '040',
+        serviceDesc: 'Query Traffic Violations by the violator ID',
+        typeOfPayment: 'postpaid',
+        mainBillIdLabel: 'Violator ID',
+        mainBillIdHint: null,
         billIdTypes: null,
         applyTax: 'N',
         amountLov: null,
