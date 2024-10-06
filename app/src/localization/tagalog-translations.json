@@ -282,5 +282,10 @@
     "TITLE": "Hindi Kumpleto ang Serbisyo",
     "UNAVAILABLE_FEATURE": "Ang feature na binabantayan ay hindi kumuha sa kasalukuyan",
     "UNAVAILABLE_FEATURE_DESCRIPTION": "Maaari mong isang muli pag-subok ng feature na ito sa hinaharap.\nMaraming salamat sa iyong pag-unawa."
+  },
+  "MAINTENTANCE_SHEET": {
+    "SHEET_TITLE": "Pagpapabuti ng App",
+    "TITLE": "Ang app ay nasa\npagpapalaki ngayon",
+    "DESCRIPTION": "Ang mga pasensya para sa inyo at babalik kami kaagad.\nMaraming salamat!"
   }
 }

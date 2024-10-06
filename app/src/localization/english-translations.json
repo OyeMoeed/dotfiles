@@ -1566,5 +1566,10 @@
     "TITLE": "Service disabled",
     "UNAVAILABLE_FEATURE": "The feature you are trying to access is currently unavailable",
     "UNAVAILABLE_FEATURE_DESCRIPTION": "You may try this feature again later.\nThank you for your understanding."
+  },
+  "MAINTENTANCE_SHEET": {
+    "SHEET_TITLE": "App maintenance",
+    "TITLE": "The app is currently\nundergoing maintenance",
+    "DESCRIPTION": "We appreciate your patience and will be back shortly.\nThank you!"
   }
 }
