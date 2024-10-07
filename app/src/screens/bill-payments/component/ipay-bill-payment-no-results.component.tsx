@@ -43,7 +43,7 @@ const IPayBillPaymentNoResultsComponent: React.FC<IPayBillPaymentNoResultsCompon
             />
           </>
         ) : (
-          <IPaySpinner />
+          <IPaySpinner hasBackgroundColor={false} />
         )}
       </IPayView>
     </IPayView>
