@@ -10,9 +10,9 @@ const useGetWalletInfo = ({
   useQueryProps,
 }: {
   payload: WalletNumberProp;
-  useQueryProps: {
-    refetchOnWindowFocus: boolean;
-    enabled: boolean;
+  useQueryProps?: {
+    refetchOnWindowFocus?: boolean;
+    enabled?: boolean;
   };
 }) => {
   const dispatch = useTypedDispatch();
@@ -22,8 +22,8 @@ const useGetWalletInfo = ({
     onSuccess: (data) => {
       dispatch(setWalletInfo(data?.response));
     },
-    enabled: useQueryProps.enabled || !!payload?.walletNumber,
-    refetchOnWindowFocus: useQueryProps.refetchOnWindowFocus,
+    enabled: Object.keys(useQueryProps || {}).length ? useQueryProps?.enabled : !!payload?.walletNumber,
+    refetchOnWindowFocus: useQueryProps?.refetchOnWindowFocus,
   });
 
   return {

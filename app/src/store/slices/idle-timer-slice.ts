@@ -3,14 +3,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { SLICE_NAMES } from '../constants.store';
 
 export interface idleTimerInterface {
-  visible: boolean;
-  timer: string;
+  isSessionTimeout: boolean;
+  sessionTime: string;
   reset: boolean;
 }
 
 const initialState: idleTimerInterface = {
-  visible: false,
-  timer: '5',
+  isSessionTimeout: false,
+  sessionTime: '5', // Time per minutes
   reset: false,
 };
 
@@ -19,20 +19,21 @@ const idleTimerSlice = createSlice({
   initialState,
   reducers: {
     showIdleTimerBottomSheet: (state) => {
-      state.visible = true;
+      state.isSessionTimeout = true;
     },
     hideIdleTimerBottomSheet: (state) => {
-      state.visible = false;
+      state.isSessionTimeout = false;
     },
-    editTimer: (state, action) => {
-      state.timer = action.payload;
+    editSessionTime: (state, action) => {
+      state.sessionTime = action.payload;
     },
-    startTimer: (state, action) => {
+    restartSessionTimer: (state, action) => {
       state.reset = action.payload;
     },
   },
 });
 
-export const { startTimer, editTimer, showIdleTimerBottomSheet, hideIdleTimerBottomSheet } = idleTimerSlice.actions;
+export const { restartSessionTimer, editSessionTime, showIdleTimerBottomSheet, hideIdleTimerBottomSheet } =
+  idleTimerSlice.actions;
 
 export default idleTimerSlice.reducer;

@@ -1,15 +1,19 @@
-import { hideIdleTimerBottomSheet, showIdleTimerBottomSheet, startTimer } from '@app/store/slices/idle-timer-slice';
+import {
+  hideIdleTimerBottomSheet,
+  showIdleTimerBottomSheet,
+  restartSessionTimer,
+} from '@app/store/slices/idle-timer-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { useEffect, useRef } from 'react';
 
 const useIdleTimer = () => {
   const dispatch = useTypedDispatch();
   const timerId = useRef<any>();
-  const timeForInactivityInSecond = useTypedSelector((state) => state.idleTimerSlice.timer);
+  const timeForInactivityInMinutes = useTypedSelector((state) => state.idleTimerSlice.sessionTime);
   const isResetTimer = useTypedSelector((state) => state.idleTimerSlice.reset);
 
   const resetInactivityTimeout = () => {
-    dispatch(startTimer(false));
+    dispatch(restartSessionTimer(false));
     dispatch(hideIdleTimerBottomSheet());
 
     clearTimeout(timerId.current);
@@ -17,7 +21,7 @@ const useIdleTimer = () => {
       () => {
         dispatch(showIdleTimerBottomSheet());
       },
-      Number(timeForInactivityInSecond) * 60 * 1000,
+      Number(timeForInactivityInMinutes) * 60 * 1000,
     );
   };
 

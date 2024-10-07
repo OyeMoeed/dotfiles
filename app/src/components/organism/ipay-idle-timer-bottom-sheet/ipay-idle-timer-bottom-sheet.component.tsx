@@ -25,7 +25,7 @@ const IPayIdleTimerBottomSheet = () => {
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
-  const isIdleTimerVisible = useTypedSelector((state) => state.idleTimerSlice.visible);
+  const isIdleTimerVisible = useTypedSelector((state) => state.idleTimerSlice.isSessionTimeout);
   const isAuthenticated = useTypedSelector((state) => state.appDataReducer.appData.isAuthenticated);
   const showIdleBottomSheet = isAuthenticated && isIdleTimerVisible;
 
