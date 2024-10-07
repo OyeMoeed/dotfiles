@@ -88,7 +88,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   }, [dueDateTime]);
 
   const billingAmount = amount ? `${amount || 0} ${t('COMMON.SAR')}` : '';
-  const billingDueDate = `${t('SADAD.DUE')} ${getDateFormate(dueDateTime, dateTimeFormat.ShortDate)}`;
+  const billingDueDate = `${t('SADAD.DUE')} ${getDateFormate(dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace, dateTimeFormat.MonthDateFormat)}`;
 
   const onPressCheckBox = () => {
     if (onSelectBill) onSelectBill(billId);

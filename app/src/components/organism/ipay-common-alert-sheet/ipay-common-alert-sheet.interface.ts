@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { TextStyle, ViewStyle } from 'react-native';
 
 export interface IPayCommonAlertSheetProps {
@@ -15,4 +15,5 @@ export interface IPayCommonAlertSheetProps {
   onCloseBottomSheet?: () => void;
   buttonRightIcon?: React.JSX.Element;
   iconColor?: string;
+  extraComponent?: ReactElement<any> | undefined | null;
 }

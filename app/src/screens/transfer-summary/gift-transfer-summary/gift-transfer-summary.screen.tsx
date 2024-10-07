@@ -257,6 +257,8 @@ const TransferSummaryScreen: React.FC = () => {
     }
   };
 
+  const onResendCodePress = () => otpVerificationRef?.current?.resetInterval();
+
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
@@ -347,7 +349,7 @@ const TransferSummaryScreen: React.FC = () => {
           otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          onResendCodePress={() => {}}
+          onResendCodePress={onResendCodePress}
           timeout={otpConfig.sendGift.otpTimeout}
         />
       </IPayPortalBottomSheet>

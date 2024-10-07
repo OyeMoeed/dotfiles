@@ -42,6 +42,7 @@ import useDelinkDevice from '@app/hooks/useDeviceDelink';
 import IPayLocationPermissionSheet from '@app/components/organism/ipay-location-permission-sheet/ipay-location-permission-sheet.component';
 import { GeoCoordinates } from 'react-native-geolocation-service';
 import { showPermissionModal } from '@app/store/slices/permission-alert-slice';
+import { editSessionTime } from '@app/store/slices/idle-timer-slice';
 import ConfirmPasscodeComponent from '../forgot-passcode/confirm-passcode.compoennt';
 import SetPasscodeComponent from '../forgot-passcode/create-passcode.component';
 import { CallbackProps } from '../forgot-passcode/forget-passcode.interface';
@@ -213,6 +214,7 @@ const LoginViaPasscode: React.FC = () => {
       const prepareLoginApiResponse: any = await prepareLogin(prepareLoginPayload);
 
       if (prepareLoginApiResponse?.status.type === APIResponseType.SUCCESS) {
+        dispatch(editSessionTime(prepareLoginApiResponse?.response?.inactiveTimeoutPeriodInMins));
         dispatch(
           setAppData({
             transactionId: prepareLoginApiResponse?.authentication?.transactionId,

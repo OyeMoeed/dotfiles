@@ -22,6 +22,7 @@ const prepareLogin = async (payload: DeviceInfoProps, hideValue: boolean = false
       hide_error_response: hideValue,
     },
   });
+
   return apiResponse;
 };
 
