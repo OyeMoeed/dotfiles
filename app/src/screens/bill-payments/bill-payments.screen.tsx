@@ -130,7 +130,7 @@ const BillPaymentsScreen: React.FC = () => {
             />
           </IPayView>
         ) : (
-          !loadingBills && <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />
+          <IPayBillPaymentNoResultsComponent loadingBills={loadingBills} onPressViewAll={onPressAddNewBill} />
         )}
       </IPayView>
       <IPayBillPaymentsFooter

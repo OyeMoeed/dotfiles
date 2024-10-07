@@ -13,6 +13,7 @@ interface IPaySadadBillsHeaderProps extends CommonProps {
 }
 
 interface IPayBillPaymentNoResultsComponentProps extends CommonProps {
+  loadingBills?: boolean;
   onPressViewAll: () => void;
 }
 
