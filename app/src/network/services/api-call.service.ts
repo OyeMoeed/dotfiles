@@ -6,7 +6,7 @@ import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import axiosClient from '../client';
 import onRequestFulfilled from '../interceptors/request';
 import { onResponseFulfilled, onResponseReject } from '../interceptors/response';
-import { handleAxiosError, isErrorResponse } from '../utilities/error-handling-helper';
+import { handleAxiosError, handleResponseError, isErrorResponse } from '../utilities/error-handling-helper';
 import { handleApiResponse } from './api-call.interceptors';
 import { ApiResponse } from './services.interface';
 
@@ -39,11 +39,12 @@ const apiCall = async <T>({
   };
   if (baseURL) config.baseURL = baseURL;
   const hideErrorResponse = headers?.hide_error_response;
+  const hideSpinnerResponse = headers?.hide_spinner_loading;
 
   if (hideErrorResponse) {
     axiosClient.defaults.headers.x_hide_error_response = true;
   }
-  if (headers?.hide_spinner_loading) {
+  if (hideSpinnerResponse) {
     axiosClient.defaults.headers.x_hide_spinner_loading = true;
   }
 
@@ -53,15 +54,21 @@ const apiCall = async <T>({
 
   try {
     // show Spinner
-    if (!headers?.hide_spinner_loading) {
+    if (!hideSpinnerResponse) {
       store.dispatch(showSpinner());
     }
 
     const response: AxiosResponse<T> = await axiosClient(config);
+    const responseStatus = await handleResponseError(response);
+    if (responseStatus) {
+      axiosClient.defaults.headers.x_hide_error_response = true;
+    }
+
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
-      await handleAxiosError(response);
+      await handleAxiosError(response, responseStatus);
     }
+
     store.dispatch(hideSpinner());
     return handleApiResponse(response);
   } catch (error: any) {

@@ -70,6 +70,11 @@ interface ApiError {
   error: string;
 }
 
+enum ErrorStatus {
+  FORCE_UPDATE = 'E430995',
+  FORCE_MAINTENANCE = 'EC100001',
+}
+
 export {
   ApiError,
   ApiResponse,
@@ -79,4 +84,5 @@ export {
   MockAPIDataProps,
   MockAPIOkProp,
   MockAPIStatusProps,
+  ErrorStatus,
 };

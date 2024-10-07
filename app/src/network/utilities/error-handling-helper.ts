@@ -1,10 +1,12 @@
 import { AxiosError, AxiosResponse } from 'axios';
 import { showServiceCallErrorToast, showSessionTimeoutAlert } from '@app/store/slices/alert-slice';
 import { store } from '@app/store/store';
+import { showForceMaintenance } from '@app/store/slices/app-maintenance-slice';
 import clearSession from './network-session-helper';
 import constants from '../constants';
 import { mapApiError } from '../services/api-call.interceptors';
-import { ApiResponse } from '../services/services.interface';
+import { ApiResponse, ErrorStatus } from '../services/services.interface';
+import logOut from '../services/core/logout/logout.service';
 
 const hideErrorResponse = (response: AxiosResponse | AxiosError) => response?.config?.headers.hide_error_response;
 
@@ -17,7 +19,7 @@ const isErrorResponse = (response: AxiosResponse | ApiResponse<unknown>) => {
   return true;
 };
 
-const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
+const handleAxiosError = async (error: AxiosResponse | AxiosError, hideAlert: boolean = false) => {
   const { auth, alertReducer } = store.getState();
   const responseStatus = (error as AxiosError)?.response?.status || '';
 
@@ -33,10 +35,29 @@ const handleAxiosError = async (error: AxiosResponse | AxiosError) => {
     }
   }
   const mappedError = mapApiError(error);
+  if (hideAlert) return;
   if (hideErrorResponse(error)) return;
   if (mappedError?.status?.desc && !alertReducer?.serviceCallError) {
     store.dispatch(showServiceCallErrorToast(mappedError?.status.desc));
   }
 };
 
-export { hideErrorResponse, hideSpinnerLoading, isErrorResponse, handleAxiosError };
+const handleResponseError = async (response: AxiosResponse | AxiosError) => {
+  const responseCode = (response as any)?.data?.status?.code;
+  if (responseCode === ErrorStatus.FORCE_UPDATE) {
+    return false;
+  }
+  if (responseCode === ErrorStatus.FORCE_MAINTENANCE) {
+    const { isAuthorized } = store.getState().auth;
+    if (isAuthorized) {
+      await logOut();
+      clearSession(false);
+    }
+    store.dispatch(showForceMaintenance());
+    return true;
+  }
+
+  return false;
+};
+
+export { hideErrorResponse, hideSpinnerLoading, isErrorResponse, handleAxiosError, handleResponseError };
