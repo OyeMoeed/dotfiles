@@ -230,6 +230,11 @@ interface CardResponseInterface {
   };
 }
 
+enum TransactionTrxReqType {
+  MUSANED = 'COUT_MUSANED',
+  GIFT = 'COUT_GIFT',
+}
+
 export {
   CardListItem,
   CardListResponse,
@@ -247,4 +252,5 @@ export {
   renewCardProp,
   generateInvoiceProps,
   CardResponseInterface,
+  TransactionTrxReqType,
 };

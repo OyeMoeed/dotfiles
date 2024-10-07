@@ -4,6 +4,7 @@ import apiCall from '@network/services/api-call.service';
 import TRANSFERS_URLS from '../transfer.urls';
 import executeGiftMock from './execute-gift.mock';
 import executeGift from './execute-gift.service';
+import { TransactionTrxReqType } from '../../core/transaction/transaction.interface';
 
 jest.mock('@network/services/api-call.service');
 jest.mock('@app/constants/constants', () => ({
@@ -17,7 +18,7 @@ jest.mock('./execute-gift.mock', () => executeGiftMock);
 describe('executeGift', () => {
   const mockWalletNumber = '123456';
   const mockPayload = {
-    trxReqType: 'COUT_GIFT',
+    trxReqType: TransactionTrxReqType.GIFT,
     trxId: 'EPY08099J8M75',
     deviceInfo: {
       platformVersion: '10',

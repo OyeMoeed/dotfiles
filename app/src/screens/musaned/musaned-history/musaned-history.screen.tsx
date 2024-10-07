@@ -9,7 +9,11 @@ import { IPayChip, IPayHeader, IPayNoResult } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPayFilterTransactions, IPaySafeAreaView, IPayTransactionHistory } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
-import { TransactionsProp } from '@app/network/services/core/transaction/transaction.interface';
+import {
+  TransactionItem,
+  TransactionsProp,
+  TransactionTrxReqType,
+} from '@app/network/services/core/transaction/transaction.interface';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -21,10 +25,11 @@ import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loade
 import { heightMapping } from '@app/components/templates/ipay-request-detail/ipay-request-detail.constant';
 
 import transactionsStyles from './musaned-history.styles';
+import { MusanedHistoryScreenRouteProps } from './musaned-history.interface';
 
 const MusanedHistoryScreen: React.FC = () => {
   const { t } = useTranslation();
-  const { params } = useRoute();
+  const { params } = useRoute<MusanedHistoryScreenRouteProps>();
   const { musnaedData, currentWalletNumber } = params || {};
 
   const { transactionHistoryFilterDefaultValues, salaryTypes } = useConstantData();
@@ -35,7 +40,7 @@ const MusanedHistoryScreen: React.FC = () => {
       text: t(value.text),
     })),
   ];
-  const laborerNames = musnaedData
+  const laborerNames = (musnaedData || [])
     .filter((value) => value.mobileNumber)
     .map((value) => ({ id: value.mobileNumber, text: value.name }));
 
@@ -46,12 +51,12 @@ const MusanedHistoryScreen: React.FC = () => {
   const transactionRef = React.createRef<any>();
   const [transaction, setTransaction] = useState<null>(null);
   const [snapPoint, setSnapPoint] = useState<Array<string>>(['1%', isAndroidOS ? '95%' : '100%']);
-  const [appliedFilters, setAppliedFilters] = useState<null>(null);
+  const [appliedFilters, setAppliedFilters] = useState<any | null>(null);
   const [filteredData, setFilteredData] = useState<null>(null);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [noFilterResult, setNoFilterResult] = useState<boolean>(false);
-  const [transactionsData, setTransactionsData] = useState<[]>([]);
+  const [transactionsData, setTransactionsData] = useState<TransactionItem[]>([]);
   const [isFilterSheetVisible, setIsFilterSheetVisible] = useState<boolean>(false);
 
   const headerTitle = 'COMMON.TRANSACTIONS_HISTORY';
@@ -66,7 +71,7 @@ const MusanedHistoryScreen: React.FC = () => {
       offset: '1',
       fromDate: filtersData ? filtersData.dateFrom?.replaceAll('/', '-') : '',
       toDate: filtersData ? filtersData.dateTo?.replaceAll('/', '-') : '',
-      trxReqType: 'COUT_MUSANED',
+      trxReqType: TransactionTrxReqType.MUSANED,
       fromAmount: filtersData ? filtersData?.amountFrom : '',
       toAmount: filtersData ? filtersData?.amountTo : '',
       targetWallet: currentWalletNumber,
@@ -110,14 +115,11 @@ const MusanedHistoryScreen: React.FC = () => {
 
   const handleSubmit = (data: any, filterTagsToRender: Map<any, any>) => {
     setAppliedFilters(data);
-
     setFilterTags(filterTagsToRender);
-
     applyFilters(data);
   };
 
   const handleFiltersShow = () => {
-    // filterRef.current?.showFilters();
     setIsFilterSheetVisible(true);
   };
 

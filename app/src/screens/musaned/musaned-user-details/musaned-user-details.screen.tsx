@@ -27,7 +27,7 @@ import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
-import { TransactionItem } from '@app/network/services/core/transaction/transaction.interface';
+import { TransactionItem, TransactionTrxReqType } from '@app/network/services/core/transaction/transaction.interface';
 
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
 import MusanedUserDetailsRouteProps from './musaned-user-details.interface';
@@ -74,7 +74,7 @@ const MusanedUserDetails = () => {
       offset: '1',
       mobileNumber,
       targetWallet: walletNumber,
-      trxReqType: 'COUT_MUSANED',
+      trxReqType: TransactionTrxReqType.MUSANED,
     });
 
     if (apiResponse.status.type === APIResponseType.SUCCESS) {
