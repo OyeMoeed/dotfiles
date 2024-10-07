@@ -175,7 +175,7 @@ const IPayBillBalance: React.FC<IPayBillBalanceProps> = ({
           warning={balanceStatusVariants[accountBalanceStatus]?.warningText}
           btnText="COMMON.PAY"
           disableBtnIcons
-          btnDisbaled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
+          btnDisabled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
           showButtonOnly={eligibleToPay}
           totalAmount={totalAmount}
           testID="ipay-bill"

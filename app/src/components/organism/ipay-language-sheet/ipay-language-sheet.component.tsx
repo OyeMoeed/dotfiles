@@ -43,6 +43,8 @@ const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const changeMainLanguage = async () => {
+    setOpenAlert(false);
+
     const { language, isRTL, code } = selectChangedLanguage;
     const deviceInfo = await getDeviceInfo();
     if (isAuthorized) {
@@ -58,8 +60,8 @@ const IPayLanguageSheet = forwardRef<BottomSheetModal, IPayLanguageSheetProps>((
         deviceInfo,
       },
     };
-    await changeLanguage(payLoad);
 
+    await changeLanguage(payLoad);
     handleLanguagePress(language, isRTL, code);
   };
 

@@ -84,7 +84,11 @@ const CreateMoneyRequestSummaryScreen: React.FC = () => {
     };
 
     summeryArray.push(titleObject());
-    summeryArray.push({ id: '2', label: t('TRANSFER_SUMMARY.AMOUNT'), value: item.amount });
+    summeryArray.push({
+      id: '2',
+      label: t('TRANSFER_SUMMARY.AMOUNT'),
+      value: `${item?.amount || 0} ${t('COMMON.SAR')}`,
+    });
     if (transfersDetails.formInstances[index]?.selectedItem) {
       summeryArray.push({
         id: '3',

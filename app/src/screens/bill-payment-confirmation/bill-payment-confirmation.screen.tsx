@@ -42,7 +42,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     otpError,
     setOtpError,
     otpVerificationRef,
-    veriyOTPSheetRef,
+    verifyOTPSheetRef,
     setOtpRefAPI,
   } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos);
 
@@ -53,11 +53,11 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
-    veriyOTPSheetRef.current?.close();
+    verifyOTPSheetRef.current?.close();
   };
 
   const handleOnPressHelp = () => {
-    veriyOTPSheetRef.current?.close();
+    verifyOTPSheetRef.current?.close();
     helpCenterRef?.current?.present();
   };
 
@@ -73,7 +73,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     const apiResponse = await multiPaymentPrepareBillService(payload);
     if (apiResponse.successfulResponse) {
       setOtpRefAPI(apiResponse.response.otpRef);
-      veriyOTPSheetRef.current?.present();
+      verifyOTPSheetRef.current?.present();
     }
   };
 
@@ -155,7 +155,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           btnText="COMMON.CONFIRM"
           disableBtnIcons
           warning={checkLimit.warningMsg}
-          btnDisbaled={checkLimit.disabled}
+          btnDisabled={checkLimit.disabled}
           onPressBtn={onMultiPaymentPrepareBill}
         />
 
@@ -180,7 +180,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
         cancelBnt
         customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={veriyOTPSheetRef}
+        ref={verifyOTPSheetRef}
         headerContainerStyles={styles.sheetHeader}
         bgGradientColors={colors.sheetGradientPrimary10}
         bottomSheetBgStyles={styles.sheetBackground}

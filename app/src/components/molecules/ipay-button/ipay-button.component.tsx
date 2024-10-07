@@ -28,6 +28,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
   textColor,
   textStyle,
   shouldTranslateBtnText,
+  withAlinmaLogo = false,
 }: IPayButtonProps): JSX.Element => {
   const renderComponent = () => {
     const buttonTypes = constants.BUTTON_TYPES;
@@ -51,6 +52,7 @@ const IPayButton: React.FC<IPayButtonProps> = ({
             width={width}
             textColor={textColor}
             shouldTranslateBtnText={shouldTranslateBtnText}
+            withAlinmaLogo={withAlinmaLogo}
           />
         );
       case buttonTypes.OUTLINE:

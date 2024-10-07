@@ -23,12 +23,12 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
-  ApiResponseStatusType,
   APIResponseType,
+  ApiResponseStatusType,
   BillingStatus,
   BillsStatusTypes,
-  buttonVariants,
   ToastTypes,
+  buttonVariants,
 } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -255,7 +255,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
         setEditBillSuccessToast,
         billId: id,
       });
-    } else {
+    } else if (index === 1) {
       setActionSheetOptions(deleteBillOptions);
     }
     sadadActionSheetRef?.current?.hide();
@@ -430,8 +430,8 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
                 selectedItemsCount={selectedBillsCount}
                 onPressBtn={onPressFooterBtn}
                 btnRightIcon={renderButtonRightIcon()}
-                // partialPay={multipleBillsSelected}    TODO
-                // onPressPartialPay={onPressPartialPay}  TODO
+                partialPay={multipleBillsSelected}
+                onPressPartialPay={onPressPartialPay}
               />
             </IPayView>
           )}

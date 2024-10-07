@@ -196,6 +196,7 @@ const SendGiftAmountScreen = ({ route }) => {
                 currencyStyle={styles.currencyManual}
                 amount={contactAmounts[recordID] || ''}
                 onAmountChange={(number: number) => handleContactAmountChange(number, recordID)}
+                maxLength={5}
               />
             </IPayView>
             <IPayView style={styles.remove}>
