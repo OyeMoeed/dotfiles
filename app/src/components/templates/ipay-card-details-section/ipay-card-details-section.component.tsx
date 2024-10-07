@@ -6,7 +6,6 @@ import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -30,9 +29,13 @@ import {
 } from '@components/atoms';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { IPayTransactionItemProps } from '@app/screens/transaction-history/component/ipay-transaction.interface';
+import useGetCardsTransactions from '@app/network/services/core/transaction/useGetCardTransactions';
 import IPayFreezeConfirmationSheet from '../ipay-freeze-confirmation-sheet/ipay-freeze-confirmation-sheet.component';
 import { IPayCardDetailsSectionProps, Option } from './ipay-card-details-section.interface';
 import cardBalanceSectionStyles from './ipay-card-details-section.style';
+import IPayTransactionHistory from '../ipay-transaction-history/ipay-transaction-history.component';
 
 const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID, onOpenOTPSheet }) => {
   const { t } = useTranslation();
@@ -46,6 +49,31 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   const [cardStatusType, setCardStatusType] = useState<CardStatusType.ALERT | CardStatusType.WARNING>(
     CardStatusType.WARNING,
   ); // TODO will be updated on the basis of api
+  const transactionSheetRef = React.createRef<any>();
+  const [isTrxsDetailsSheetVisible, setTrxsDetailsSheetVisible] = useState<boolean>(false);
+  const [transaction, setTransaction] = useState<IPayTransactionItemProps | null>(null);
+
+  const openTransactionHistoryDetails = useCallback(
+    (item: any) => {
+      setTransaction(item);
+      setTrxsDetailsSheetVisible(true);
+      transactionSheetRef.current?.present();
+    },
+    [setTransaction, transactionSheetRef],
+  );
+
+  const closeBottomSheet = () => {
+    setTrxsDetailsSheetVisible(false);
+    transactionSheetRef.current?.forceClose();
+  };
+
+  const renderTrxsItem = ({ item, index }: { item: any; index: any }) => (
+    <IPayTransactionItem
+      onPressTransaction={openTransactionHistoryDetails}
+      key={`transaction-${index + 1}`}
+      transaction={item}
+    />
+  );
 
   useEffect(() => {
     if (currentCard?.reissueDue && currentCard?.cardStatus !== '450') {
@@ -100,7 +128,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
     },
   ];
 
-  const { isLoadingTransactions, transactionsData } = useGetTransactions({
+  const { isLoadingTransactions, transactionsData, refetchTransactions } = useGetCardsTransactions({
     payload: {
       walletNumber: walletInfo.walletNumber,
       maxRecords: '10',
@@ -112,6 +140,7 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
   });
 
   useEffect(() => {
+    refetchTransactions();
     setActiveCardStatus(currentCard?.frozen ? CardActiveStatus.UNFREEZE : CardActiveStatus.FREEZE);
   }, [currentCard]);
 
@@ -227,13 +256,27 @@ const IPayCardDetailsSection: React.FC<IPayCardDetailsSectionProps> = ({ testID,
       </IPayView>
       <IPayFlatlist
         testID="transaction"
-        data={transactionsData}
+        data={isLoadingTransactions ? [] : transactionsData}
         scrollEnabled={false}
         keyExtractor={(_, index) => index.toString()}
-        renderItem={({ item, index }) => <IPayTransactionItem key={`transaction-${index + 1}`} transaction={item} />}
+        renderItem={renderTrxsItem}
         ListEmptyComponent={ListEmptyComponent}
       />
       <IPayFreezeConfirmationSheet ref={actionSheetRef} setActiveCardStatus={setActiveCardStatus} />
+      <IPayPortalBottomSheet
+        heading="CARD_ISSUE.ISSUE_NEW_CARD"
+        onCloseBottomSheet={closeBottomSheet}
+        customSnapPoint={['95%', '100%']}
+        ref={transactionSheetRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        isVisible={isTrxsDetailsSheetVisible}
+        cancelBnt
+      >
+        <IPayTransactionHistory transaction={transaction} onCloseBottomSheet={closeBottomSheet} />
+      </IPayPortalBottomSheet>
     </IPayView>
   );
 };
