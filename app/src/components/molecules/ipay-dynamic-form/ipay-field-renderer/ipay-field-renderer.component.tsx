@@ -31,7 +31,13 @@ const DYNAMIC_FIELDS_CONFIGS = {
     keyboardType: 'numeric',
   },
 };
-const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, control, handleParentLovChange }) => {
+const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
+  field,
+  control,
+  myIdCheck,
+  myIdValue,
+  handleParentLovChange,
+}) => {
   const renderField = () => {
     // Replace "." with "_" to flatten the name
     const flatKey = field.index.replace(/\./g, '_');
@@ -54,12 +60,12 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
             render={({ field: { onChange, value }, formState: { errors } }) => (
               <IPayAnimatedTextInput
                 label={field.label}
-                value={value}
+                value={myIdCheck ? myIdValue : value}
                 maxLength={field.maxWidth}
                 onChangeText={onChange}
                 keyboardType={DYNAMIC_FIELDS_CONFIGS[field.type]?.keyboardType}
                 isError={!!get(errors, flatKey)}
-                editable
+                editable={!myIdCheck}
                 assistiveText={errorMessage as string}
                 testID={`${flatKey}-text-input`}
               />
@@ -92,11 +98,11 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({ field, cont
                   onChange(selectedItem);
                   if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
                 }}
-                isSearchable
+                isSearchable={field.isSearchable}
                 testID={`${flatKey}-dropdown`}
                 labelKey="desc"
                 valueKey="code"
-                disabled={field.lovList === null ? true : field.lovList.length === 0}
+                disabled={!field?.lovList ? true : field?.lovList?.length === 0}
                 errorMessage={errorMessage as string}
               />
             )}

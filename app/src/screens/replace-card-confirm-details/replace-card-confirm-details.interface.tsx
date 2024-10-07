@@ -11,4 +11,12 @@ export interface RouteParams {
     cardHeaderText: string;
     name: string;
   };
+
+  issuanceDetails: {
+    address: string;
+    replaceFee: string;
+    shippingFee: string;
+    totalFee: string;
+    balance: string;
+  };
 }

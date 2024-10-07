@@ -204,4 +204,12 @@ export interface IPayListProps {
    * custom style for subTitle container
    */
   subTitleContainerStyle?: StyleProp<ViewStyle>;
+  /**
+   * Need Details Icon Disabled
+   */
+  detailIconDisabled?: boolean;
+  /**
+   * disable or enable details text truncation
+   */
+  detailsTruncation?: boolean;
 }

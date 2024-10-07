@@ -42,8 +42,8 @@ const IPayControlledInput = ({ control, label, message, isError, name, required,
   const styles = filtersStyles(colors);
 
   const handleTextChange = (text: string, onChange: (value: string) => void) => {
-    // Allow only digits and decimal point on pasting
-    const filteredText = text.replace(/[^0-9.]/g, '');
+    // Allow only digits and one decimal point on pasting
+    const filteredText = text.replace(/[^0-9.]/g, '').replace(/(\.\d*)(\.)/g, '$1');
     onChange(filteredText);
   };
 
@@ -102,13 +102,14 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
           assistiveText={isError ? message : ''}
           onChangeText={onChange}
           showFocusStyle={showFocusStyle}
+          style={styles.dateInput}
         />
       )}
     />
   );
 };
 
-const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
+const IPayFilterBottomSheet = forwardRef<{}, IPayFilterProps>(
   (
     {
       onSubmit,
@@ -175,7 +176,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         return;
       }
 
-      if (+getValues(FiltersType.AMOUNT_TO) < +getValues(FiltersType.AMOUNT_FROM)) {
+      if (Number(getValues(FiltersType.AMOUNT_TO)) < Number(getValues(FiltersType.AMOUNT_FROM))) {
         setAmountError(t('ERROR.AMOUNT_ERROR'));
         return;
       }
@@ -218,7 +219,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       reset();
       setShowFromDatePicker(false);
       setShowToDatePicker(false);
-      onReset(true);
+      onReset?.(true);
     };
 
     const scrollToBottom = () => {
@@ -278,7 +279,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
 
     const getCurrentView = useCallback(
       (type: string) =>
-        customFiltersValue && (type === FiltersType.DELIVERY_TYPE || type === FiltersType.BENEFICIARY_NAME_LIST)
+        customFiltersValue &&
+        (type === FiltersType.DELIVERY_TYPE || type === FiltersType.BENEFICIARY_NAME_LIST || FiltersType.SALARY_TYPE)
           ? CurrentViewTypes.BOTTOM_SHEET
           : CurrentViewTypes.FILTER_VALUES,
       [customFiltersValue],
@@ -411,21 +413,28 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
             scrollEnabled={false}
             data={bottomFilters}
             renderItem={({ item: { type, label, icon, dropdownIcon, isRequired } }) => (
-              <IPayAnimatedTextInput
-                label={label}
-                editable={false}
-                value={getValues(type)}
-                containerStyle={styles.inputContainerStyle}
-                showRightIcon
-                customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
-                onClearInput={() => {
-                  setCategory(type);
-                  setCurrentView(CurrentViewTypes.FILTER_VALUES);
-                }}
-                isError={!!errors[type]}
-                assistiveText={errors[type] && t('COMMON.REQUIRED_FIELD')}
-                onChangeText={() => {}}
-                rightIcon={renderImage(type, icon)}
+              <Controller
+                control={control}
+                name={type}
+                rules={{ required: isRequired ?? true }}
+                render={() => (
+                  <IPayAnimatedTextInput
+                    label={label}
+                    editable={false}
+                    value={getValues(type)}
+                    containerStyle={styles.inputContainerStyle}
+                    showRightIcon
+                    customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}
+                    onClearInput={() => {
+                      setCategory(type);
+                      setCurrentView(CurrentViewTypes.FILTER_VALUES);
+                    }}
+                    isError={!!errors?.[type]}
+                    assistiveText={errors?.[type] && t('COMMON.REQUIRED_FIELD')}
+                    onChangeText={() => {}}
+                    rightIcon={renderImage(type, icon)}
+                  />
+                )}
               />
             )}
           />
@@ -448,7 +457,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               containerStyle={styles.searchInputStyle}
             />
           )}
-          {getFilteredData(currentFilter.filterValues).length ? (
+          {getFilteredData(currentFilter?.filterValues || []).length ? (
             <Controller
               control={control}
               render={({ field: { onChange, value } }) => {
@@ -508,8 +517,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       if (currentView === CurrentViewTypes.FILTER_VALUES) {
         return renderValues();
       }
+
       if (category === FiltersType.DELIVERY_TYPE) {
         handleCallback?.(FiltersType.DELIVERY_TYPE);
+      } else if (category === FiltersType.SALARY_TYPE) {
+        handleCallback?.(FiltersType.SALARY_TYPE);
+      } else if (category === FiltersType.LABORER_NAME) {
+        handleCallback?.(FiltersType.LABORER_NAME);
       } else {
         handleCallback?.(FiltersType.BENEFICIARY_NAME);
       }

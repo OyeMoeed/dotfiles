@@ -1,9 +1,7 @@
-import icons from '@app/assets/icons';
-import { IPayIcon, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import { ListProps } from '@app/components/molecules/ipay-list-view/ipay-list-view.interface';
-import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
 import { IPayBottomSheet, IPayTransferInformation } from '@app/components/organism';
 import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
 import { useKeyboardStatus } from '@app/hooks';
@@ -19,17 +17,16 @@ import { LocalTransferPreparePayloadTypes } from '@app/network/services/local-tr
 import localTransferPrepare from '@app/network/services/local-transfer/local-transfer-prepare/local-transfer-prepare.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
-import colors from '@app/styles/colors.const';
 import { regex } from '@app/styles/typography.styles';
 import { ApiResponseStatusType, APIResponseType, buttonVariants } from '@app/utilities/enums.util';
 import { removeCommas } from '@app/utilities/number-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
-import transferInformationStyles from './transfer-information.style';
-import { ReasonListItem } from './trasnfer-information.interface';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { SNAP_POINT } from '@app/constants/constants';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { BeneficiaryDetails } from '../local-transfer/local-transfer.interface';
+import transferInformationStyles from './transfer-information.style';
+import { ReasonListItem } from './trasnfer-information.interface';
 
 const TransferInformation: React.FC = () => {
   const styles = transferInformationStyles();
@@ -40,13 +37,10 @@ const TransferInformation: React.FC = () => {
 
   const [chipValue, setChipValue] = useState<string>('');
   const [transferAmount, setTransferAmount] = useState<string>('');
-  const [selectedReason, setSelectedReason] = useState<ReasonListItem>({});
+  const [selectedReason, setSelectedReason] = useState<ReasonListItem>();
   const [notes, setNotes] = useState<string>('');
-  const reasonsBottomSheetRef = useRef(null);
-  const [apiError, setAPIError] = useState<string>('');
+  const reasonsBottomSheetRef = useRef<any>(null);
   const [transferReason, setTransferReasonData] = useState<ListProps[]>([]);
-
-  const { showToast } = useToastContext();
 
   type RouteProps = RouteProp<
     {
@@ -103,14 +97,14 @@ const TransferInformation: React.FC = () => {
 
   const isTransferButtonDisabled = () => {
     const hasValidAmount = parseFloat(transferAmount) > 0 || parseFloat(transferAmount);
-    const hasValidReason = selectedReason?.text?.trim() !== '';
+    const hasValidReason = selectedReason !== undefined ? selectedReason?.text?.trim() !== '' : false;
     return !hasValidAmount || !hasValidReason;
   };
   const onCloseSheet = () => {
     reasonsBottomSheetRef?.current?.close();
   };
 
-  const onPressListItem = (item: ReasonListItem) => {
+  const onPressListItem = (item: any) => {
     setSelectedReason(item);
     onCloseSheet();
   };
@@ -119,37 +113,14 @@ const TransferInformation: React.FC = () => {
     reasonsBottomSheetRef?.current?.present();
   };
 
-  const renderToast = (toastMsg: string) => {
-    showToast({
-      title: toastMsg,
-      subTitle: apiError,
-      borderColor: colors.error.error25,
-      isShowRightIcon: false,
-      leftIcon: <IPayIcon icon={icons.warning} size={24} color={colors.natural.natural0} />,
-    });
-  };
-
   const getTransferFee = async () => {
     if (walletNumber) {
-      try {
-        const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
-        if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-          return apiResponse?.response;
-        }
-        if (apiResponse?.apiResponseNotOk) {
-          setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          return null;
-        }
-        setAPIError(apiResponse?.error);
-        return null;
-      } catch (error) {
-        setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-        renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-        return null;
+      const apiResponse = await getSarieTransferFees(walletNumber, bankCode, transferAmount);
+      if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+        return apiResponse?.response;
       }
-    } else {
-      return null;
     }
+    return null;
   };
 
   const getTotal = (feesAmount: string, vatAmount: string, amount: string) => {
@@ -161,49 +132,40 @@ const TransferInformation: React.FC = () => {
     if (transferAmount && selectedReason?.id && walletNumber) {
       const transferFees = await getTransferFee();
       if (transferFees) {
-        try {
-          const deviceInfo = await getDeviceInfo();
-          const payload: LocalTransferPreparePayloadTypes = {
-            beneficiaryCode,
-            transferPurpose: selectedReason?.id,
+        const deviceInfo = await getDeviceInfo();
+        const payload: LocalTransferPreparePayloadTypes = {
+          beneficiaryCode,
+          transferPurpose: selectedReason?.id,
+          feesAmount: transferFees.feeAmount,
+          vatAmount: transferFees.vatAmount,
+          bankFeesAmount: transferFees.bankFeeAmount,
+          bankVatAmount: transferFees.bankVatAmount,
+          amount: transferAmount,
+          note: notes,
+          bankCode,
+          transferNetwork,
+          deviceInfo: {
+            platform: deviceInfo?.platform,
+            platformVersion: deviceInfo?.platformVersion,
+            deviceName: deviceInfo?.deviceName,
+            deviceId: deviceInfo?.deviceId,
+          },
+        };
+        const apiResponse = await localTransferPrepare(walletNumber, payload);
+        if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
+          navigate(ScreenNames.TRANSFER_CONFIRMATION, {
+            amount: transferAmount,
+            beneficiaryNickName,
+            transferPurpose: selectedReason?.text,
+            instantTransferType: t('TRANSFER_SUMMARY.SARIE'),
+            note: notes,
+            otpRef: apiResponse.response.otpRef,
             feesAmount: transferFees.feeAmount,
             vatAmount: transferFees.vatAmount,
-            bankFeesAmount: transferFees.bankFeeAmount,
-            bankVatAmount: transferFees.bankVatAmount,
-            amount: transferAmount,
-            note: notes,
-            bankCode,
-            transferNetwork,
-            deviceInfo: {
-              platform: deviceInfo?.platform,
-              platformVersion: deviceInfo?.platformVersion,
-              deviceName: deviceInfo?.deviceName,
-              deviceId: deviceInfo?.deviceId,
-            },
-          };
-          const apiResponse = await localTransferPrepare(walletNumber, payload);
-          if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-            navigate(ScreenNames.TRANSFER_CONFIRMATION, {
-              amount: transferAmount,
-              beneficiaryNickName,
-              transferPurpose: selectedReason?.text,
-              instantTransferType: t('TRANSFER_SUMMARY.SARIE'),
-              note: notes,
-              otpRef: apiResponse.response.otpRef,
-              feesAmount: transferFees.feeAmount,
-              vatAmount: transferFees.vatAmount,
-              totalAmount: getTotal(transferFees.feeAmount, transferFees.vatAmount, transferAmount),
-              authentication: apiResponse?.authentication,
-              bankDetails,
-            });
-          } else if (apiResponse?.apiResponseNotOk) {
-            setAPIError(t('ERROR.API_ERROR_RESPONSE'));
-          } else {
-            setAPIError(apiResponse?.error);
-          }
-        } catch (error) {
-          setAPIError(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
-          renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
+            totalAmount: getTotal(transferFees.feeAmount, transferFees.vatAmount, transferAmount),
+            authentication: apiResponse?.authentication,
+            bankDetails,
+          });
         }
       }
     }
@@ -243,15 +205,6 @@ const TransferInformation: React.FC = () => {
 
   const topUpSelectionRef = createRef<any>();
 
-  const topupItemSelected = (routeName: string, params: {}) => {
-    closeBottomSheetTopUp();
-    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
-      navigateTOAktharPoints();
-    } else {
-      navigate(routeName, params);
-    }
-  };
-
   const navigateTOAktharPoints = async () => {
     const aktharPointsResponse = await getAktharPoints(walletNumber);
     if (
@@ -261,6 +214,15 @@ const TransferInformation: React.FC = () => {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
     } else {
       navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
     }
   };
 
@@ -275,13 +237,14 @@ const TransferInformation: React.FC = () => {
             hideBalance={appData?.hideBalance}
             showRemainingAmount
             onPressTopup={topUpSelectionBottomSheet}
+            monthlyIncomingLimit=""
           />
 
           <IPayView style={styles.bankDetailsView}>
             <IPayTransferInformation
               style={styles.transferContainer}
               amount={transferAmount}
-              currencyStyle={[styles.currency, transferAmount && styles.inputActiveStyle]}
+              currencyStyle={[styles.currency, transferAmount ? styles.inputActiveStyle : null]}
               setAmount={setAmount}
               selectedItem={selectedReason?.text}
               setNotes={setNotes}
@@ -291,6 +254,7 @@ const TransferInformation: React.FC = () => {
               transferInfoData={bankDetails}
               openReason={onPressSelectReason}
               inputFieldStyle={styles.inputFieldStyle}
+              setSelectedItem={() => {}}
             />
           </IPayView>
         </IPayView>
@@ -324,24 +288,20 @@ const TransferInformation: React.FC = () => {
       </IPayBottomSheet>
 
       <IPayPortalBottomSheet
-          noGradient
-          heading="TOP_UP.ADD_MONEY_USING"
-          onCloseBottomSheet={closeBottomSheetTopUp}
-          customSnapPoint={SNAP_POINT.XS_SMALL}
-          ref={topUpSelectionRef}
-          enablePanDownToClose
-          simpleHeader
-          simpleBar
-          bold
-          cancelBnt
-          isVisible={topUpOptionsVisible}
-        >
-          <IPayTopUpSelection
-            testID="topUp-selection"
-            closeBottomSheet={closeBottomSheetTopUp}
-            topupItemSelected={topupItemSelected}
-          />
-        </IPayPortalBottomSheet>
+        noGradient
+        heading="TOP_UP.ADD_MONEY_USING"
+        onCloseBottomSheet={closeBottomSheetTopUp}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
+        ref={topUpSelectionRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={topUpOptionsVisible}
+      >
+        <IPayTopUpSelection testID="topUp-selection" topupItemSelected={topupItemSelected} />
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };

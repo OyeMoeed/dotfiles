@@ -10,7 +10,6 @@ import {
   validateForgetPasscodeOtp,
 } from '@app/network/services/core/prepare-forget-passcode/prepare-forget-passcode.service';
 import { encryptData } from '@app/network/utilities';
-import { useLocationPermission } from '@app/services/location-permission.service';
 import { setAppData } from '@app/store/slices/app-data-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
@@ -33,7 +32,6 @@ const useLogin = () => {
     walletNumber: '',
   });
   const navigation = useNavigation();
-  const { checkAndHandlePermission } = useLocationPermission();
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [otpRef, setOtpRef] = useState<string>('');
   const [resendOtpPayload, setResendOtpPayload] = useState<PrepareForgetPasscodeProps>();
@@ -109,7 +107,6 @@ const useLogin = () => {
     setOtpRef,
     setResendOtpPayload,
     resendForgetPasscodeOtp,
-    checkAndHandlePermission,
     otp,
   };
 };

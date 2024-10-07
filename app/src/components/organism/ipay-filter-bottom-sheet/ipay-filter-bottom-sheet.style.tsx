@@ -55,6 +55,11 @@ const filtersStyles = (colors: typeof themeColors) =>
       fontSize: FONT_SIZE_8,
       height: verticalScale(55),
       borderRadius: moderateScale(16, 0.3),
+      paddingLeft: moderateScale(20),
+      paddingRight: moderateScale(13),
+    },
+    dateInput: {
+      padding: 0,
     },
     amountCard: {
       backgroundColor: colors.natural.natural0,
@@ -83,6 +88,7 @@ const filtersStyles = (colors: typeof themeColors) =>
     },
     dropdownIcon: {
       paddingLeft: scaleSize(2),
+      justifyContent: 'center',
     },
     datePickerContainer: {
       marginRight: scaleSize(-20),

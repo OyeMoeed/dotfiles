@@ -1,12 +1,9 @@
-import { useState, useEffect, useRef } from 'react';
-import { PermissionsStatus, PermissionTypes } from '@app/enums';
+import { useState, useCallback } from 'react';
 import Contacts, { Contact } from 'react-native-contacts';
 import { REGEX } from '@app/constants/app-validations';
-import usePermissions from './permissions.hook';
 
 const useContacts = () => {
-  const [contacts, setContacts] = useState([]);
-  const { permissionStatus } = usePermissions(PermissionTypes.CONTACTS, true);
+  const [contacts, setContacts] = useState<Contact[]>([]);
 
   const formatMobileNumber = (mobile: string): string => {
     const mobileWithoutSpaces = mobile.replace(/ /g, '');
@@ -22,38 +19,34 @@ const useContacts = () => {
     return mobileWithoutSpaces;
   };
 
-  useEffect(() => {
-    (async () => {
-      if (permissionStatus === PermissionsStatus.GRANTED) {
-        await Contacts.getAll().then((contactsList: Contact[]) => {
-          const flattenedArray = contactsList.reduce((acc, obj) => {
-            const mappedValues = obj.phoneNumbers.map((item) => ({
-              ...obj,
-              phoneNumbers: [
-                {
-                  ...item,
-                  number: formatMobileNumber(item.number),
-                },
-              ],
-            }));
-            return acc.concat(mappedValues);
-          }, []);
-          const saudiNumbers = flattenedArray.filter((item: Contact) => {
-            const isSaudiNumber = REGEX.saudiMobileNumber.test(item?.phoneNumbers[0]?.number);
-            return isSaudiNumber;
-          });
-          const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
-            ...item,
-            givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
-            recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
-          }));
-          setContacts(listWithUniqueId);
-        });
-      }
-    })();
-  }, [permissionStatus]);
+  const onPermissionGranted = useCallback(async () => {
+    await Contacts.getAll().then((contactsList: Contact[]) => {
+      const flattenedArray = contactsList.reduce((acc: Contact[], obj) => {
+        const mappedValues = obj.phoneNumbers.map((item) => ({
+          ...obj,
+          phoneNumbers: [
+            {
+              ...item,
+              number: formatMobileNumber(item.number),
+            },
+          ],
+        }));
+        return acc.concat(mappedValues);
+      }, []);
+      const saudiNumbers = flattenedArray.filter((item: Contact) => {
+        const isSaudiNumber = REGEX.saudiMobileNumber.test(item?.phoneNumbers[0]?.number);
+        return isSaudiNumber;
+      });
+      const listWithUniqueId = saudiNumbers.map((item: Contact) => ({
+        ...item,
+        givenName: `${item.givenName}${item.middleName ? ` ${item.middleName}` : ''}${item.familyName ? ` ${item.familyName}` : ''}`,
+        recordID: `${item?.recordID}#${item?.phoneNumbers[0]?.number}`,
+      }));
+      setContacts(listWithUniqueId);
+    });
+  }, []);
 
-  return contacts;
+  return { contacts, onPermissionGranted };
 };
 
 export default useContacts;

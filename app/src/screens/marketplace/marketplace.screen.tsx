@@ -27,12 +27,17 @@ import ScreenNames from '@app/navigation/screen-names.navigation';
 import getApVoucherCategories from '@app/network/services/market/ap-vouchers-categories/ap-vouchers-categories.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType } from '@app/utilities';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import useGetAppConfigurations, {
+  ModulesNameEnum,
+} from '@app/network/services/core/app-configurations/use-get-app-configurations.hook';
+import { useFocusEffect } from '@react-navigation/core';
 import { mapCategoriesByCode } from './marketplace.constant';
 import { MarketPlaceCategoriesProps } from './marketplace.interface';
 import marketplaceStyles from './marketplace.style';
 
 const MarketPlace: React.FC = () => {
+  const { triggerDisabledSheet } = useGetAppConfigurations({ modules: [ModulesNameEnum.MAZAYA_IS_ACTIVE] });
   const { colors } = useTheme();
   const styles = marketplaceStyles(colors);
 
@@ -42,6 +47,12 @@ const MarketPlace: React.FC = () => {
 
   const [search, setSearch] = useState<string>('');
   const [categories, setCategories] = useState<MarketPlaceCategoriesProps[]>([]);
+
+  useFocusEffect(
+    useCallback(() => {
+      triggerDisabledSheet(ModulesNameEnum.MAZAYA_IS_ACTIVE);
+    }, [triggerDisabledSheet]),
+  );
 
   const renderToast = (toastMsg: string) => {
     showToast({

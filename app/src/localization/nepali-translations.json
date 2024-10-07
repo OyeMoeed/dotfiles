@@ -54,6 +54,22 @@
     "CONTACT_SERVICE_TEAM": "हाम्रो ग्राहक सेवा टोलीलाई सम्पर्क गर्नुहोस्, 24/7",
     "CONTACT_US": "हामीलाई सम्पर्क गर्नुहोस"
   },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "इतिहास",
+    "SEND_TO_UNSAVED_NUMBER": "अनसेव नम्बरमा पठाउनुहोस्",
+    "UNSAVED_NUMBER": "अनसेव नम्बर",
+    "TYPE_MOBILE_NUMBER": "मोबाइल नंबर लेख्नुहोस्",
+    "CONTACTS": "सम्पर्क",
+    "CONTACT_NUMBER_OR_NAME": "सम्पर्क संख्या वा नाम",
+    "CONTACT_NAME": "सम्पर्क नाम",
+    "NO_RESULTS_FOUND": "को परिणामका खोज नहुन सके",
+    "CONTACT_LIMIT_REACHED": "सम्पर्क लिमिट पुगेको",
+    "CONTACT_LIMIT": "सम्पर्क सीमा पुगेको ",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "अपना सम्पर्कको पहुँच दिनुहोस्",
+    "CONTACTS_PERMISSION_TITLE": "कृपया अपना सम्पर्क वाच्छाल्ने अनुमति दिनुहोस्",
+    "CONTACTS_PERMISSION_DESCRIPTION": "आपले मुद्रा भेज्ने लागि संपर्क चुन्न सकिन्छ बिना आपको संपर्कको अनुमति नै के.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "संपर्क अनुमति दिनुहोस्"
+  },
   "HOME": {
     "WELCOME": "स्वागत छ",
     "ACCOUNT_BALANCE": "खाता रकम",
@@ -261,5 +277,15 @@
     "REGULAR_TITLE": "अब तपाईं",
     "BOLD_TITLE": "सहज रूपमा कार्ड जारी गर्नुहोस्",
     "DESCRIPTION": "आलिमा पे एप्पबाट उपलब्ध विभिन्न प्रकार और विशेषताहरु अन्वेषण गर्नुहोस्!"
+  },
+  "DISABLED_MODULES": {
+    "TITLE": "सेवा बंद भयो",
+    "UNAVAILABLE_FEATURE": "आपलै हाल हीँमा उपयोग गर्न सकेने वालो विशेषता हो",
+    "UNAVAILABLE_FEATURE_DESCRIPTION": "आपलै अन्य समयमा फेरि यह विशेषता आजमान पाएन।\nधन्यवाद आपको समझे।"
+  },
+  "MAINTENTANCE_SHEET": {
+    "SHEET_TITLE": "एप्लिकेशन मेंटेनेस",
+    "TITLE": "आफ्नो एप्लिकेशन\nभले ही वर्तमानमा\nसेवा बंद छ",
+    "DESCRIPTION": "आफ्नो सहनशीलताक लागि धन्यवाद र आफू भ्यापार फिर्तामा जाँदा छ।\nधन्यवाद!"
   }
 }

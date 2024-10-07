@@ -2,7 +2,7 @@ import icons from '@app/assets/icons';
 import { IPayCaption1Text, IPayIcon, IPayPressable, IPayView } from '@app/components/atoms';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { UseControllerProps, useController, useFormContext } from 'react-hook-form';
 import { Animated, StyleProp, TextInput, ViewStyle } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
@@ -17,7 +17,7 @@ interface ControlledInputProps extends AnimatedTextInputProps, UseControllerProp
   mainContainerStyles?: StyleProp<ViewStyle>;
 }
 
-const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<TextInput, ControlledInputProps>(
+const IPayRHFAnimatedTextInput = forwardRef<TextInput, ControlledInputProps>(
   (
     {
       name,
@@ -96,11 +96,10 @@ const IPayRHFAnimatedTextInput: React.FC<ControlledInputProps> = forwardRef<Text
       <IPayView style={mainContainerStyles} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
-            styles.container,
+            styles.containerWithoutPadding,
             !editable && styles.disabledContainer,
             isFocused && styles.focusedContainer,
             errors[name] && styles.errorContainer,
-
             containerStyle,
           ]}
         >

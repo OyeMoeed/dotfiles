@@ -1,4 +1,7 @@
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import { TrafficFormValues } from '@app/screens/traffic-voilation/traffic-voilation-case/traffic-voilation-case.interface';
 import React from 'react';
+import { FieldErrors } from 'react-hook-form';
 
 export interface FormValues {
   companyName: string;
@@ -82,4 +85,7 @@ export interface IPayTrafficDetailFormProps {
   errorMessage?: string;
   formSelectedTab: string;
   handleFormTabSelect: (text: string) => void;
+  fields: DynamicField[];
+  errors: FieldErrors<TrafficFormValues>;
+  myIdValue?: string;
 }

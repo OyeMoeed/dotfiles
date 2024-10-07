@@ -13,6 +13,7 @@ import {
 import {
   IPayButton,
   IPayChip,
+  IPayContactsPermission,
   IPayHeader,
   IPayLimitExceedBottomSheet,
   IPayNoResult,
@@ -61,7 +62,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
   const remainingLimitRef = useRef<any>();
   const [unSavedVisible, setUnSavedVisible] = useState(false);
   const [search, setSearch] = useState<string>('');
-  const contacts = useContacts();
+  const { onPermissionGranted, contacts } = useContacts();
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<Contact[]>([]);
@@ -95,6 +96,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
             break;
           case TRANSFERTYPE.REQUEST_MONEY:
             navigate(ScreenNames.SEND_MONEY_REQUEST, {
+              activeFriends: apiResponse.response?.friends,
               selectedContacts,
               setSelectedContacts,
               heading: t('REQUEST_MONEY.CREATE_REQUEST'),
@@ -267,7 +269,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
 
   const getSearchedContacts = () =>
     contacts.filter(
-      (item) =>
+      (item: any) =>
         item?.phoneNumbers[0]?.number?.includes(search) ||
         item?.givenName.toUpperCase()?.includes(search.toUpperCase()),
     );
@@ -458,6 +460,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         </IPayFormProvider>
       </IPayPortalBottomSheet>
       <IPayLimitExceedBottomSheet ref={remainingLimitRef} handleContinue={() => {}} />
+      <IPayContactsPermission onPermissionGranted={onPermissionGranted} />
     </IPaySafeAreaView>
   );
 };

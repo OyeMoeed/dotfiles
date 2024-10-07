@@ -226,6 +226,7 @@
     "FAQ_ANSWERS": "You cannot retrieve passwords due to safety and security reasons for the account owner. However, you can reset your password by verifying your identity."
   },
   "HOME": {
+    "MUSANED": "Musaned",
     "EHSAN": "Ehsan Donation",
     "CASHBACK_PROMO": "Cashback Promo",
     "RECEIVED_MONEY": "Received money",
@@ -535,7 +536,7 @@
     "REFUND_CAUTION_MESSAGE": "You’re about to refund the following International Transfer",
     "AMOUNT_WILL_REFUND_EXCLUDING_FEE_AND_VAT": "You will refund the sent amount excluding Fee and VAT",
     "MAKE_SURE_BENEFICIARY_NAME_MATCHES_ID": "Please make sure the name entered is the exact  same one in the beneficiary’s ID",
-    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name ",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nickname ",
     "TRANSFER_BY": "Transfer By",
     "SENDER_NICK_NAME": "Sender Nick Name",
     "TYPE": "Transaction Type",
@@ -613,6 +614,10 @@
     "SARIE": "Sarie"
   },
   "LOCATION": {
+    "LOCATION_ACCESS": "Location Access",
+    "ALLOW_LOCATION_ACCESS": "Allow Location Access",
+    "ALLOW_ALINMAPAY_LOCATION_ACCESS": "Allow “AlinmaPay” to \n access your location",
+    "PLEASE_ENABLE_LOCATION_ACCESS": "To ensure the security of your account, please enable location access for verification purposes",
     "ADDRESS_NOT_FOUND": "Address not found",
     "PERMISSION_REQUIRED": "Permission Required",
     "LOCATION_PERMISSION_REQUIRED": "Location permission is required to use this app. Please enable it in your settings.",
@@ -630,7 +635,11 @@
     "CONTACT_NAME": "Contact Name",
     "NO_RESULTS_FOUND": "No Results Found",
     "CONTACT_LIMIT_REACHED": "Contacts Limit Reached",
-    "CONTACT_LIMIT": "Contacts limit reached"
+    "CONTACT_LIMIT": "Contacts limit reached",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "Contacts Access Restriction",
+    "CONTACTS_PERMISSION_TITLE": "Please enable Contacts access to continue",
+    "CONTACTS_PERMISSION_DESCRIPTION": "You won't be able to select contacts to send money to without permission to access your contacts.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "Allow contacts permission"
   },
   "CARD_OPTIONS": {
     "CARD_OPTIONS": "Card Options",
@@ -672,9 +681,9 @@
   "CARD_ISSUE": {
     "ISSUE_NEW_CARD": "Issue New Card",
     "VIRTUAL_CARD": "Virtual Card",
-    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app and enjoy its features and safety.",
+    "VIRTUAL_DEATAILS": "Issue a virtual card immediately from the app\nand enjoy its features and safety.",
     "PHYSICAL_CARD": "Physical Card",
-    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to your different needs!",
+    "PHYSICAL_DETAILS": "Print your virtual card and accommodate to\nyour different needs!",
     "CHOOSE_PREFFERED": "Choose your preferred type"
   },
 
@@ -1025,7 +1034,7 @@
     "NEW_BENEFICIARY": "New Beneficiary",
     "ADD_BENEFICIARY": "Add Beneficiary",
     "BENEFECIARY_NAME": "Beneficiary Name",
-    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nick Name (Optional)",
+    "BENEFICIARY_NICK_NAME_OPTIONAL": "Beneficiary Nickname (Optional)",
     "BENEFICIARY_ADDED_SUCCESSFULLY": "Beneficiary Added Successfully",
     "YOU_NEED_ACTIVATE_BENEFICIARY": "You need to activate this Beneficiary before making international transfer",
     "ACTIVATE_BENEFICIARY": "Activate Beneficiary",
@@ -1124,7 +1133,7 @@
     "PLEASE_TRY_AGAIN_LATER": "Please try again later through transaction history page",
     "BENEFECIARY_DETAILS": "Beneficiary Details",
     "BENEFECIARY_INFORMATION": "Beneficiary Information",
-    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nickname",
     "BENEFICIARY_FULL_NAME": "Beneficiary Full Name",
     "RELATION_SHIP": "Relationship",
     "COUNTRY_NAME": "Country Name",
@@ -1138,7 +1147,7 @@
     "DELETE": "Delete",
     "DELETE_BENFICIARY": "Delete Beneficiary",
     "EDIT_NICK_NAME": "Edit Nick Name",
-    "BENEFICIARY_NICK_NAME": "Beneficiary Nick Name (optional)",
+    "BENEFICIARY_NICK_NAME": "Beneficiary Nickname (optional)",
     "NAME_CHANGED": "Beneficiary Nick name has been Changed",
     "DELETION_CONFIRMATION": "Deleting this beneficiary will result in the loss of all their previously entered data",
     "BENEFICIARY_DELETED": "The Beneficiary has been deleted",
@@ -1224,6 +1233,7 @@
     "SERVICE_TYPE": "Service type",
     "ACCOUNT_NUMBER": "Account Number",
     "PAYMENT_FAILED": "Payment Failed",
+    "REFUND_FAILED": "Refund Failed",
     "TRY_AGAIN_COMPLETE_PAYMENT": "Please try again to complete the Payment.",
     "SAVED_SUCCESS": "Your bill has been Saved Successfully",
     "VIEW_EDIT_DETAILS": "View and edit details",
@@ -1326,7 +1336,8 @@
     "REFUND_VIOLATION": "Refund violation",
     "VIOLATION": "Violation",
     "VIOLATIONS": "Violations",
-    "REF_NUMBER": "Ref. Number"
+    "REF_NUMBER": "Ref. Number",
+    "TRAFFIC_VIOLATION": "Traffic violation"
   },
   "SHOP": {
     "PURCHASED_AT": "Pubrchased at: ",
@@ -1550,6 +1561,89 @@
   "CARD_ISSUANCE_SHEET": {
     "REGULAR_TITLE": "You can now",
     "BOLD_TITLE": "Easily Issue Cards",
-    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
+    "DESCRIPTION": "Explore the exciting types and features available through AlinmaPay!"
+  },
+  "MUSANED": {
+    "HEADER": "Musaned",
+    "ALINMA_PAY_USERS": "AlinmaPay Users",
+    "OTHER_USERS": "Other Users",
+    "NO_LABORERS": "You currently have no laborers.\nPlease add them using Musaned App",
+    "UNPAID": "Unpaid",
+    "PAID": "Paid",
+    "SELECT": "Select",
+    "PAY_SALARY": "Pay Salary",
+    "VIEW_DETAILS": "View Details",
+    "INVITE_NOW": "Invite now",
+    "INVITE_LABORER": "Invite laborer",
+    "NOT_ALINMA_USERS_MESSAGE": "Laborers not using AlinmaPay have to create one to receive their salaries",
+    "SALARY_TYPE": "Salary Type",
+    "LABORER_DETAILS": "Laborer Details",
+    "BASIC_SALARY": "Basic Salary",
+    "MONTHLY_SALARY": "Monthly salary",
+    "ADVANCED_SALARY": "Advance Salary",
+    "BONUS_SALARY": "Bonus Salary",
+    "SELECT_MONTH": "Select Month",
+    "FROM_DATE": "From Date",
+    "TO_DATE": "To Date",
+    "DEDUCTION_REASON": "Deduction Reason",
+    "ENTER_DEDUCTION_AMOUNT": "Enter deduction amount",
+    "ENTER_BONUS_AMOUNT": "Enter Bonus amount",
+    "DEDUCT_FROM_AMOUNT": "Deduct from amount",
+    "PAY_EXTRA": "Pay Extra",
+    "DEDUCT_RENT": "Rent/Housing",
+    "DEDUCT_LOAN": "Loan",
+    "DEDUCT_OTHER": "Other",
+    "DEDUCTION_AMOUNT_NOTE": "Deduction Amount must be less than the salary amount.",
+    "NOTE": "Note",
+    "MOBILE_NUMBER": "Mobile Number",
+    "NATIONALITY": "Nationality",
+    "LABORER_ID": "Laborer ID",
+    "IQAMA_EXPIRY_DATE": "Iqama Expiry Date",
+    "LABORER_INFO": "Laborer Info",
+    "PAY": "Pay",
+    "PAYMENT_STATUS": "Payment Status",
+    "LAST_PAYMENT": "Last Payment",
+    "DEDUCTION_AMOUNT": "Deduction Amount",
+    "SELECTED_MONTH": "Selected Months",
+    "MONTHS": "Months",
+    "MAXIMUM_DURATION_MESSAGE": "The maximum duration is 6 months.",
+    "ENSURE_CORRECT_DATE": "Ensure the 'To Date' is after the 'From Date'",
+    "PAID_SALARY": "Paid Salary",
+    "TOTAL_SALARY": "Total Salary",
+    "PAYMENT_SUCCESS_MESSAGE": "Payment Successful",
+    "PAY_ANOTHER_LABORER": "Pay Another Laborer",
+    "EXTRA_AMOUNT": "Extra Amount",
+    "TOTAL_AMOUNT": "Total Amount",
+    "PAID_BONUS_AMOUNT": "Paid Bonus amount",
+    "LABORER_NAME": "Laborer Name"
+  },
+  "MONTHS": {
+    "JANUARY": "January",
+    "FEBRUARY": "February",
+    "MARCH": "March",
+    "APRIL": "April",
+    "MAY": "May",
+    "JUNE": "June",
+    "JULY": "July",
+    "AUGUST": "August",
+    "SEPTEMBER": "September",
+    "OCTOBER": "October",
+    "NOVEMBER": "November",
+    "DECEMBER": "December"
+  },
+  "DISABLED_MODULES": {
+    "TITLE": "Service disabled",
+    "UNAVAILABLE_FEATURE": "The feature you are trying to access is currently unavailable",
+    "UNAVAILABLE_FEATURE_DESCRIPTION": "You may try this feature again later.\nThank you for your understanding."
+  },
+  "MAINTENTANCE_SHEET": {
+    "SHEET_TITLE": "App maintenance",
+    "TITLE": "The app is currently\nundergoing maintenance",
+    "DESCRIPTION": "We appreciate your patience and will be back shortly.\nThank you!"
+  },
+  "IDLE_TIMER_SHEET": {
+    "SHEET_TITLE": "Inactive Timeout",
+    "TITLE": "Your online session will expire in",
+    "DESCRIPTION": "Please click 'Continue' to keep working or click 'Log Out' to end your session now."
   }
 }

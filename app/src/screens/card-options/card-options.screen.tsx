@@ -15,6 +15,15 @@ import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { queryClient } from '@app/network';
+import { CardStatusReq } from '@app/network/services/cards-management/card-status/card-status.interface';
+import changeCardStatus from '@app/network/services/cards-management/card-status/card-status.service';
+import { IssueCardFeesRes } from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.interface';
+import getCardIssuanceFees from '@app/network/services/cards-management/issue-card-fees/issue-card-fees.service';
+import {
+  CardType,
+  ICardIssuanceDetails,
+} from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.interface';
+import issueCardInquire from '@app/network/services/cards-management/issue-card-inquire/issue-card-inquire.service';
 import {
   CardStatus,
   changeStatusProp,
@@ -25,16 +34,13 @@ import {
   changeStatus,
   prepareResetCardPinCode,
   resetPinCode,
-  useGetCards,
 } from '@app/network/services/core/transaction/transactions.service';
 import { DeviceInfoProps } from '@app/network/services/services.interface';
 import { encryptData, getDeviceInfo } from '@app/network/utilities';
-import { setCards } from '@app/store/slices/cards-slice';
 import { setCashWithdrawalCardsList } from '@app/store/slices/wallet-info-slice';
 import { useTypedSelector } from '@app/store/store';
-import { filterCards, mapCardData } from '@app/utilities/cards.utils';
 import checkUserAccess from '@app/utilities/check-user-access';
-import { ApiResponseStatusType, ToastTypes } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, CardStatusNumber, ToastTypes } from '@app/utilities/enums.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { IPayOtpVerification, IPaySafeAreaView } from '@components/templates';
 import { useTranslation } from 'react-i18next';
@@ -77,30 +83,11 @@ const CardOptionsScreen: React.FC = () => {
   const [otp, setOtp] = useState<string>('');
   const [otpError, setOtpError] = useState<boolean>(false);
   const { otpConfig } = useConstantData();
-  const helpCenterRef = useRef(null);
+  const helpCenterRef = useRef<any>(null);
   const [otpRef, setOtpRef] = useState<string>('');
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const appData = useTypedSelector((state) => state.appDataReducer.appData);
   const [pin, setPin] = useState('');
-
-  const getCardsData = async (cardApiResponse: any) => {
-    if (cardApiResponse) {
-      const availableCards = filterCards(cardApiResponse?.response?.cards);
-
-      if (availableCards?.length) {
-        dispatch(setCards(mapCardData(availableCards)));
-      }
-    }
-  };
-
-  useGetCards({
-    payload: {
-      walletNumber,
-    },
-    onSuccess: getCardsData,
-    refetchOnWindowFocus: false,
-    enabled: false,
-  });
 
   const initOnlinePurchase = () => {
     if (currentCard?.cardStatus === CardStatus.ONLINE_PURCHASE_ENABLE) {
@@ -231,56 +218,92 @@ const CardOptionsScreen: React.FC = () => {
     deleteCardSheetRef.current.hide();
   };
 
+  const onReplaceCard = async () => {
+    // get the card index
+    const cardIndex = currentCard?.cardIndex;
+    const cardStatusPayload: CardStatusReq = {
+      status: CardStatusNumber.Stolen,
+      cardIndex,
+      deviceInfo: await getDeviceInfo(),
+    };
+
+    // change the card status to stolen
+    const apiResponse = await changeCardStatus(walletInfo.walletNumber, cardStatusPayload);
+
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      // get the card issuance details
+      const apiResponseCardInquire = await issueCardInquire(
+        walletInfo?.walletNumber,
+        currentCard?.cardType as CardType,
+      );
+      if (apiResponseCardInquire?.status?.type === 'SUCCESS') {
+        // get the card issuance fees
+        const feesApiResponse = await getCardIssuanceFees(
+          walletInfo?.walletNumber,
+          currentCard?.cardType as CardType,
+          apiResponseCardInquire?.response?.transactionType as string,
+        );
+        if (feesApiResponse?.status?.type === 'SUCCESS') {
+          const cardIssuanceDetails: ICardIssuanceDetails = {
+            cardType: currentCard?.cardType as CardType,
+            transactionType: apiResponseCardInquire?.response?.transactionType as string,
+            fees: feesApiResponse?.response as IssueCardFeesRes,
+            cardIndex: apiResponseCardInquire?.response?.cardIndex as string,
+            cardManageStatus: apiResponseCardInquire?.response?.cardManageStatus as string,
+          };
+          navigate(ScreenNames.REPLACE_CARD_CONFIRM_DETAILS, {
+            currentCard,
+            issuanceDetails: cardIssuanceDetails,
+          });
+        }
+      }
+    }
+  };
+
   const onNavigateToChooseAddress = () => {
     const hasAccess = checkUserAccess();
     if (hasAccess) {
-      navigate(ScreenNames.REPLACE_CARD_CHOOSE_ADDRESS, { currentCard });
+      if (currentCard?.physicalCard) {
+        onReplaceCard();
+      } else {
+        navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
+          currentCard,
+        });
+      }
     }
   };
 
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
   const resetPassCode = async () => {
-    try {
-      const payload: resetPinCodeProp = {
-        walletNumber,
-        cardIndex: currentCard?.cardIndex,
-        body: {
-          cardPinCode:
-            encryptData(
-              isExist(appData?.encryptionData?.passwordEncryptionPrefix) + pin,
-              isExist(appData?.encryptionData?.passwordEncryptionKey),
-            ) || '',
-          otp,
-          otpRef,
-          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-        },
-      };
-      const apiResponse: any = await resetPinCode(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          otpVerificationRef?.current?.resetInterval();
-          setOtpSheetVisible(false);
-          navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
-          break;
-        default:
-          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
-          break;
-      }
-    } catch (error: any) {
-      renderToast('ERROR.SOMETHING_WENT_WRONG', false, icons.warning, false);
+    const payload: resetPinCodeProp = {
+      walletNumber,
+      cardIndex: currentCard?.cardIndex,
+      body: {
+        cardPinCode:
+          encryptData(
+            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + pin,
+            isExist(appData?.encryptionData?.passwordEncryptionKey),
+          ) || '',
+        otp,
+        otpRef,
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      },
+    };
+    const apiResponse: any = await resetPinCode(payload);
+
+    if (apiResponse?.status?.type === ApiResponseStatusType?.SUCCESS) {
+      otpVerificationRef?.current?.resetInterval();
+      setOtpSheetVisible(false);
+      navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
+      setOtp('');
     }
   };
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
+    setOtp('');
   };
 
   const onConfirmOtp = (): void => {
@@ -326,12 +349,6 @@ const CardOptionsScreen: React.FC = () => {
     prepareOtp(false);
   };
 
-  useEffect(() => {
-    if (isOtpSheetVisible) {
-      setOtp('');
-    }
-  }, [isOtpSheetVisible]);
-
   return (
     <IPaySafeAreaView style={styles.container}>
       <IPayHeader title="CARD_OPTIONS.CARD_OPTIONS" backBtn applyFlex />
@@ -367,25 +384,13 @@ const CardOptionsScreen: React.FC = () => {
             onPress={() => navigate(ScreenNames.CARD_FEATURES)}
           />
 
-          {!currentCard?.physicalCard && (
-            <IPayCardOptionsIPayListDescription
-              leftIcon={icons.card_pos}
-              rightIcon={icons.arrow_right_1}
-              title="CARDS.PRINT_CARD"
-              subTitle="CARD_OPTIONS.ISSUE_A_PHSYICAL"
-              onPress={() =>
-                navigate(ScreenNames.PRINT_CARD_CONFIRMATION, {
-                  currentCard,
-                })
-              }
-            />
-          )}
-
           <IPayCardOptionsIPayListDescription
             leftIcon={icons.card_pos}
             rightIcon={icons.arrow_right_1}
-            title="CARD_OPTIONS.REPLACE_THE_CARD"
-            subTitle="CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES"
+            title={currentCard?.physicalCard ? 'CARD_OPTIONS.REPLACE_THE_CARD' : 'CARDS.PRINT_CARD'}
+            subTitle={
+              currentCard?.physicalCard ? 'CARD_OPTIONS.CARD_REPLACEMENT_INCLUDES' : 'CARD_OPTIONS.ISSUE_A_PHSYICAL'
+            }
             onPress={onNavigateToChooseAddress}
           />
 
@@ -445,7 +450,7 @@ const CardOptionsScreen: React.FC = () => {
       />
 
       <IPayPortalBottomSheet
-        heading="CARD_OPTIONS.CHANGE_PIN"
+        heading="CHANGE_PIN.CHANGE_PIN_CODE"
         enablePanDownToClose
         simpleBar
         bold

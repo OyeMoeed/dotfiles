@@ -30,6 +30,7 @@ const useCustomQuery = <TQueryFnData>({
     data: (data as any)?.data,
     res: data,
     error,
+    isSuccess,
     ...useQueryParams,
   };
 };

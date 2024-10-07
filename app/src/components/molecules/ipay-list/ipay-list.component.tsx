@@ -66,6 +66,8 @@ const IPayList: React.FC<IPayListProps> = ({
   shouldTranslateSubTitle = true,
   shouldDetailsTranslate = true,
   showTextInNextLine = false,
+  detailIconDisabled,
+  detailsTruncation = true,
 }) => {
   const { colors } = useTheme();
   const dynamicStyles = styles(colors);
@@ -82,7 +84,7 @@ const IPayList: React.FC<IPayListProps> = ({
         >
           {isShowLeftIcon ? leftIcon || <IPayIcon icon={icons.CHECKED} /> : <IPayView />}
         </IPayView>
-        <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles]}>
+        <IPayView style={[dynamicStyles.centerContainer, centerContainerStyles, dynamicStyles.leftTitle]}>
           {title && (
             <IPayView style={dynamicStyles.flexRow}>
               <IPayFootnoteText
@@ -133,19 +135,15 @@ const IPayList: React.FC<IPayListProps> = ({
             hasRightComponent() && !showTextInNextLine && dynamicStyles.rightIconContainerMargin,
           ]}
         >
-          <IPayView
-            style={[
-              dynamicStyles.rightIconWrapper,
-              isDetailsMoreThan30 && !showTextInNextLine ? dynamicStyles.detailTextConditionalStyle : {},
-            ]}
-          >
+          <IPayView style={dynamicStyles.rightIconWrapper}>
             {isShowIcon ? (
-              (icon && (
+              ((icon || detailText) && (
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}
                   btnText={detailText}
                   onPress={onPressIcon}
                   rightIcon={icon}
+                  btnIconsDisabled={detailIconDisabled}
                   textStyle={[dynamicStyles.copyText, detailTextStyle]}
                   btnStyle={dynamicStyles.rightIconContainer}
                 />
@@ -163,7 +161,7 @@ const IPayList: React.FC<IPayListProps> = ({
                 regular
                 style={[dynamicStyles.copyText, detailTextStyle]}
                 text={detailText}
-                numberOfLines={isDetailsMoreThan30 ? 1 : 2}
+                numberOfLines={detailsTruncation && isDetailsMoreThan30 ? 1 : 2}
                 shouldTranslate={shouldDetailsTranslate}
               />
             )}

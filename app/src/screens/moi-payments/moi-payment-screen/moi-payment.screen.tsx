@@ -34,7 +34,7 @@ const MoiPaymentScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = moiPaymentStyles(colors);
   const [serviceProviderValue, setServiceProviderValue] = useState<string | null>(null);
-  const [, setServiceTypeValue] = useState<string | null>(null);
+  const [serviceTypeValue, setServiceTypeValue] = useState<string | null>(null);
   const [selectedTab, setSelectedTab] = useState<string>(MoiPaymentTypes.PAYMENT);
   const [selectedBiller, setSelectedBiller] = useState<string>('');
   const [isInquired, setIsInquired] = useState<boolean>(false);
@@ -72,13 +72,14 @@ const MoiPaymentScreen: React.FC = () => {
         code: billerItem.billerId,
         desc: billerItem.billerDesc,
       }));
-      const updatedFields = [
+      const updatedFields: any[] = [
         {
           index: MoiPaymentFormFields.SERVICE_PROVIDER,
           integrationTagName: MoiPaymentFormFields.SERVICE_PROVIDER,
           label: 'BILL_PAYMENTS.SERVICE_PROVIDER',
           lovList: serviceProvider,
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
+          isSearchable: true,
         },
         {
           index: MoiPaymentFormFields.SERVICE_TYPE,
@@ -86,6 +87,7 @@ const MoiPaymentScreen: React.FC = () => {
           integrationTagName: MoiPaymentFormFields.SERVICE_TYPE,
           lovList: [],
           type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
+          isSearchable: true,
         },
       ];
       setServiceFields(updatedFields);
@@ -112,10 +114,10 @@ const MoiPaymentScreen: React.FC = () => {
     return null;
   };
 
-  const fetchFields = async (serviceProviderValue: string, selectedServiceType: string) => {
-    setSelectedBiller(serviceProviderValue);
-    setSelectedServiceType(selectedServiceType);
-    const response = await getDynamicFieldsService(serviceProviderValue, selectedServiceType, walletNumber);
+  const fetchFields = async (serviceProviderVal: string, serviceType: string) => {
+    setSelectedBiller(serviceProviderVal);
+    setSelectedServiceType(serviceType);
+    const response = await getDynamicFieldsService(serviceProviderVal, selectedServiceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
 
@@ -132,7 +134,7 @@ const MoiPaymentScreen: React.FC = () => {
           type: DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE,
           requiredInPaymentOrRefund: 'BOTH',
           label: useID,
-          value: false,
+          value: true,
         },
       ];
 
@@ -149,7 +151,7 @@ const MoiPaymentScreen: React.FC = () => {
         );
       });
 
-      const updatedFields = [...serviceFields, ...beneficiaryLabel, ...filteredFields];
+      const updatedFields: any[] = [...serviceFields, ...beneficiaryLabel, ...filteredFields];
       setFields(updatedFields);
     }
   };
@@ -181,6 +183,20 @@ const MoiPaymentScreen: React.FC = () => {
   useEffect(() => {
     if (serviceProviderValue) handleChange(serviceProviderValue);
   }, [serviceProviderValue]);
+
+  useEffect(() => {
+    if (serviceProviderValue) {
+      setIsInquired(false);
+      setFields(serviceFields);
+    }
+  }, [serviceProviderValue]);
+
+  useEffect(() => {
+    if (serviceTypeValue) {
+      setIsInquired(false);
+      setFields(serviceFields);
+    }
+  }, [serviceTypeValue]);
 
   const handleParentLovChange = useParentLovChange(fields, setFields);
 
@@ -233,7 +249,7 @@ const MoiPaymentScreen: React.FC = () => {
                 (field) => field.index === MoiPaymentFormFields.SERVICE_PROVIDER,
               );
               const serviceProviderFromLOV = serviceProviderField?.lovList?.find(
-                (lov) => lov?.billerId === serviceProviderValue,
+                (lov: any) => lov?.billerId === serviceProviderValue,
               );
               const serviceTypeFromLOV = serviceTypeField?.lovList?.find((lov) => lov.code === selectedServiceType);
               resetFields(reset);
@@ -254,22 +270,8 @@ const MoiPaymentScreen: React.FC = () => {
 
           const handleInquiry = () => {
             setIsInquired(true);
-            fetchFields(serviceProviderValue, serviceTypeValue);
+            fetchFields(serviceProviderValue ?? '', serviceTypeValue ?? '');
           };
-
-          useEffect(() => {
-            if (serviceProviderValue) {
-              setIsInquired(false);
-              setFields(serviceFields);
-            }
-          }, [serviceProviderValue]);
-
-          useEffect(() => {
-            if (serviceTypeValue) {
-              setIsInquired(false);
-              setFields(serviceFields);
-            }
-          }, [serviceTypeValue]);
 
           return (
             <IPaySafeAreaView>
@@ -310,7 +312,7 @@ const MoiPaymentScreen: React.FC = () => {
       <IPayBottomSheet
         heading="BILL_PAYMENTS.TRAFFIC_VIOLATIONS"
         customSnapPoint={SNAP_POINTS.SMALL}
-        onCloseBottomSheet={() => invoiceSheetRef.current.close()}
+        onCloseBottomSheet={() => invoiceSheetRef.current?.close()}
         ref={invoiceSheetRef}
         simpleBar
         cancelBnt
@@ -325,7 +327,7 @@ const MoiPaymentScreen: React.FC = () => {
           btnText="COMMON.TRY_AGAIN"
           isShowButton
           icon={<IPayIcon icon={icons.note_remove_warning} size={64} />}
-          onBtnPress={() => invoiceSheetRef.current.close()}
+          onBtnPress={() => invoiceSheetRef.current?.close()}
         />
       </IPayBottomSheet>
     </>

@@ -15,7 +15,7 @@ import {
 import { IPayChip } from '@app/components/molecules';
 import IPayGradientIcon from '@app/components/molecules/ipay-gradient-icon/ipay-gradient-icon.component';
 import useTheme from '@app/styles/hooks/theme.hook';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import CountryCurrencyBoxProps from './ipay-country-currency-box.interface';
 import countryCurrencyStyles from './ipay-country-currency-box.style';
@@ -52,8 +52,16 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
     remitterCurrency,
     beneficiaryCurrency,
   } = transferMethod;
+  const [exchangeSwitch, setExchangeSwitch] = useState(false);
 
   const showGradientBorder = isChecked ? colors.appGradient.gradientSecondary50 : colors.sheetGradientPrimary10;
+  const validBeneficiaryAmount = Number(beneficiaryCurrencyAmount) > 0;
+
+  useEffect(() => {
+    if (isChecked) {
+      setExchangeSwitch(false);
+    }
+  }, [isChecked]);
 
   return (
     <IPayLinearGradientView style={styles.gradientBox} locations={[0, 1, 1, 1]} gradientColors={showGradientBorder}>
@@ -114,8 +122,8 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
               locations={[0, 1, 1, 1]}
               gradientColors={colors.appGradient.gradientSecondary50}
             />
-            <IPayView style={styles.pointsAmountConversion}>
-              <IPayView>
+            <IPayView style={[styles.pointsAmountConversion, exchangeSwitch ? styles.switchConversion : {}]}>
+              <IPayView style={[styles.sendInputWrapper, exchangeSwitch ? styles.width50 : {}]}>
                 <IPayFootnoteText
                   color={colors.natural.natural700}
                   text="COMMON.YOU_SEND"
@@ -138,17 +146,17 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                   </IPayHeadlineText>
                 </IPayView>
               </IPayView>
-              <IPayView>
+              <IPayView style={styles.switchIconWrapper}>
                 <IPayLinearGradientView
                   style={styles.gradientLine}
                   locations={[0, 0.3, 0.6, 1]}
                   gradientColors={colors.appGradient.gradientSecondary50}
                 />
-                <IPayPressable style={styles.revertCycleIcon}>
+                <IPayPressable onPress={() => setExchangeSwitch(!exchangeSwitch)} style={styles.revertCycleIcon}>
                   <IPayGradientIcon icon={icons.repeat} />
                 </IPayPressable>
               </IPayView>
-              <IPayView>
+              <IPayView style={styles.receiveInputWrapper}>
                 <IPayFootnoteText
                   color={colors.natural.natural700}
                   text="COMMON.THEY_RECEIVE"
@@ -157,16 +165,15 @@ const IPayCountryCurrencyBox: React.FC<CountryCurrencyBoxProps> = ({
                 <IPayView style={styles.amountInput}>
                   <IPayInput
                     testID="receiver-input"
-                    text={beneficiaryCurrencyAmount ?? ''}
+                    text={validBeneficiaryAmount ? beneficiaryCurrencyAmount : '0'}
                     placeholder="0"
                     placeholderTextColor={colors.natural.natural300}
-                    style={[styles.inputTextAmount, beneficiaryCurrencyAmount ? styles.darkStyle : {}]}
+                    style={[styles.inputTextAmount, validBeneficiaryAmount ? styles.darkStyle : {}]}
                     keyboardType="numeric"
                     editable
                     onChangeText={onBeneficiaryAmountChange}
-                    maxLength={5}
                   />
-                  <IPayHeadlineText style={[styles.currencyText, beneficiaryCurrencyAmount ? styles.darkStyle : {}]}>
+                  <IPayHeadlineText style={[styles.currencyText, validBeneficiaryAmount ? styles.darkStyle : {}]}>
                     {beneficiaryCurrency}
                   </IPayHeadlineText>
                 </IPayView>

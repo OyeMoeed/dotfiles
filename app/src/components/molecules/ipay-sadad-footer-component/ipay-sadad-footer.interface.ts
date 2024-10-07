@@ -10,7 +10,7 @@ export interface SadadFooterComponentProps {
   totalAmountText?: string;
   selectedItemsCount?: number;
   btnText: string;
-  btnDisbaled?: boolean;
+  btnDisabled?: boolean;
   btnLeftIcon?: React.ReactElement;
   btnRightIcon?: React.ReactElement;
   disableBtnIcons?: boolean;
@@ -25,5 +25,6 @@ export interface SadadFooterComponentProps {
    */
   showButtonOnly?: boolean;
   shouldTranslateBtnText?: boolean;
+  isRefund?: boolean;
   amount?: string | number;
 }

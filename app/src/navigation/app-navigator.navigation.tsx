@@ -1,17 +1,14 @@
-import { IPayDropdownSheet } from '@app/components/atoms';
 import IPaySpinnerContainer from '@app/components/atoms/ipay-spinner/ipay-spinner.helper';
 import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
-import IPayPermissionAlert from '@app/components/molecules/ipay-permission-alert/ipay-permission-alert.component';
 import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
-import { IPayLanguageSheet } from '@app/components/organism';
+import { IPayIdleTimerBottomSheet, IPayLanguageSheet, IPayMaintentanceSheet } from '@app/components/organism';
 import IPayServiceErrorToast from '@app/components/organism/ipay-service-error-toast/ipay-service-error-toast.component';
+import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { hideDropdownSheet } from '@app/store/slices/dropdown-slice';
 import { hideLanguageSheet } from '@app/store/slices/language-slice';
-import { hidePermissionAlert } from '@app/store/slices/permission-alert-slice';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import AuthStackNavigator from '@navigation/stacks/auth/auth.stack';
 import MainStackNavigator from '@navigation/stacks/main/main.stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -19,17 +16,17 @@ import { useTypedSelector } from '@store/store';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
-import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
+import { useIdleTimer } from '@app/hooks';
 import { setTopLevelNavigator } from './navigation-service.navigation';
 
 const MainNavigation: React.FC = () => {
+  useIdleTimer();
   const isAuthorized = useTypedSelector((state) => state.auth.isAuthorized);
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
   const isSessionTimeout = useTypedSelector((state) => state.alertReducer.sessionTimeout);
   const isLanguageSheetVisible = useTypedSelector((state) => state.languageReducer.isLanguageSheetVisible);
   const isDropdownVisible = useTypedSelector((state) => state.dropdownReducer.isDropdownVisible);
-  const isPermissionVisible = useTypedSelector((state) => state.permissionAlertReducer.visible);
   const { visible: isSpinnerVisible, spinnerProps } = useTypedSelector((state) => state.spinnerReducer);
 
   const { i18n } = useTranslation();
@@ -37,7 +34,6 @@ const MainNavigation: React.FC = () => {
   const languageSheetRef = useRef<any>();
   const navigationRef = useRef<any>();
   const dispatch = useDispatch();
-  const dropdownRef = useRef<bottomSheetTypes>(null);
   const isConnected = useInternetConnectivity();
 
   useEffect(() => {
@@ -48,8 +44,7 @@ const MainNavigation: React.FC = () => {
   }, [dispatch, isLanguageSheetVisible]);
 
   useEffect(() => {
-    if (isDropdownVisible && dropdownRef.current) {
-      dropdownRef.current.present();
+    if (isDropdownVisible) {
       dispatch(hideDropdownSheet());
     }
   }, [dispatch, isDropdownVisible]);
@@ -74,9 +69,6 @@ const MainNavigation: React.FC = () => {
     }
   }, [isConnected, dispatch]);
 
-  const handlePermissionAlert = () => {
-    dispatch(hidePermissionAlert());
-  };
   const handleCloseAlert = () => {
     dispatch(hideAlert());
   };
@@ -96,13 +88,13 @@ const MainNavigation: React.FC = () => {
       <IPayLanguageSheet ref={languageSheetRef} />
 
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
-      <IPayPermissionAlert visible={isPermissionVisible} onClose={handlePermissionAlert} />
       <IPaySessionTimeoutAlert visible={isSessionTimeout} />
-      <IPayDropdownSheet ref={dropdownRef} />
       <IPayServiceErrorToast testID={navigationRef?.current?.getCurrentRoute().name} />
 
       <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />
       <IPayUpdateBottomSheet />
+      <IPayMaintentanceSheet />
+      <IPayIdleTimerBottomSheet />
     </>
   );
 };

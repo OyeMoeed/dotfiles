@@ -32,6 +32,10 @@ const generatedStyles = () =>
     btnTextView: {
       marginHorizontal: moderateScale(6, 0.3),
     },
+    logoIcon: {
+      height: verticalScale(22.5),
+      width: verticalScale(22.5),
+    },
   });
 
 export default generatedStyles;

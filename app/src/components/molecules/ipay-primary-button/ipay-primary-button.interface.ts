@@ -20,4 +20,5 @@ export interface IPayPrimaryButtonProps {
   textColor?: string;
   textStyle?: StyleProp<TextStyle>;
   shouldTranslateBtnText?: boolean;
+  withAlinmaLogo?: boolean;
 }

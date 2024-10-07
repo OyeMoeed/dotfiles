@@ -18,6 +18,8 @@ export const SLICE_NAMES = {
   BOTTOM_SHEET_SLICE: 'bottomSheetSlice',
   FORCE_UPDATE_SLICE: 'forceUpdateSlice',
   RATING_SLICE: 'ratingSlice',
+  DISABLED_MODULES: 'disabledModuleSlice',
+  IDLE_TIMER: 'idleTimerModuleSlice',
 };
 
 export const WHITELISTED_DATA = [

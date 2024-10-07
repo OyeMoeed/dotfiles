@@ -87,6 +87,22 @@
     "CARDS": "पत्ते",
     "MORE": "अधिक"
   },
+  "WALLET_TO_WALLET": {
+    "HISTORY": "इतिहास",
+    "SEND_TO_UNSAVED_NUMBER": "अनसेव नंबर पर भेजें",
+    "UNSAVED_NUMBER": "अनसेव नंबर",
+    "TYPE_MOBILE_NUMBER": "मोबाइल नंबर दर्ज करें",
+    "CONTACTS": "संपर्क",
+    "CONTACT_NUMBER_OR_NAME": "संपर्क संख्या या नाम",
+    "CONTACT_NAME": "संपर्क नाम",
+    "NO_RESULTS_FOUND": "कोई परिणाम नहीं पाया गया",
+    "CONTACT_LIMIT_REACHED": "संपर्क लिमिट पहुंच गई",
+    "CONTACT_LIMIT": "संपर्क सीमा पहुंच गई ",
+    "CONTACTS_PERMISSION_SHEET_TITLE": "अपने संपर्कों की पहुंच को अनुमति दें",
+    "CONTACTS_PERMISSION_TITLE": "कृपया अपने संपर्कों तक पहुँचने की अनुमति देने के लिए जारी रखे",
+    "CONTACTS_PERMISSION_DESCRIPTION": "आप मुद्रा भेजने के लिए संपर्क चुन सकते हैं बिना आपके संपर्क तक पहुंच की अनुमति के.",
+    "CONTACTS_PERMISSION_BUTTON_TITLE": "संपर्क अनुमति दें"
+  },
   "ID_RENEWAL": {
     "TITLE": "आईडी नवीनीकरण",
     "ID_ABOUT_EXPIRE": "आपकी आईडी समाप्त होने वाली है!",
@@ -271,5 +287,15 @@
     "REGULAR_TITLE": "अब आप",
     "BOLD_TITLE": "सहज रूप से कार्ड जारी करें",
     "DESCRIPTION": "अलिमा पे एप्प के माध्यम से उपलब्ध विभिन्न प्रकार और विशेषताओं को अन्वेषण करना!"
+  },
+  "DISABLED_MODULES": {
+    "TITLE": "सेवा बंद कर दी गई है",
+    "UNAVAILABLE_FEATURE": "आपको इस समय तक पहुंच नहीं है जिस विशेषता को आप आजमाने की कोशिश कर रहे हैं",
+    "UNAVAILABLE_FEATURE_DESCRIPTION": "आपको यह विशेषता बाद में फिर से आजमाने का प्रयास करना होगा।\nधन्यवाद आपकी समझदारी।"
+  },
+  "MAINTENTANCE_SHEET": {
+    "SHEET_TITLE": "अप्लिकेशन मेंटेनेंस",
+    "TITLE": "आपने एप्लिकेशन\nवर्तमान में व्यापार में है",
+    "DESCRIPTION": "आपकी स्वीकृति के लिए धन्यवाद और हम जल्द ही वापस आ जाएंगे।\nधन्यवाद!"
   }
 }

@@ -23,7 +23,6 @@ const cardIssueStyle = (themeColors: typeof colors) =>
       color: themeColors.natural.natural900,
     },
     subTitleContainerStyle: {
-      maxWidth: moderateScale(230),
       marginRight: moderateScale(16),
     },
     buttonContainer: {

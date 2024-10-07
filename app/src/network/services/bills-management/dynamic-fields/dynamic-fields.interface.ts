@@ -1,4 +1,5 @@
 export interface DynamicField {
+  isSearchable?: boolean;
   minAmount: number | null;
   parentIndex: number | null;
   onlyHijri: boolean | null;

@@ -49,7 +49,7 @@ const icons = {
   infoIcon2: 'info-circle',
   messageQuestion: 'message-question',
   arrowDown: 'arrow-down',
-  rightArrow: 'arrow-right',
+  rightArrow: isArabic ? "arrow-left": 'arrow-right',
   LeftArrow: 'arrow-left',
   refresh: 'refresh',
   backBtnIcon: isArabic ? 'arrow-right-1' : 'arrow-left-1',
@@ -124,6 +124,7 @@ const icons = {
   send_money: 'Custom-send-money-two-tone',
   money_request: 'Custom-money-request-two-tone',
   user_tag: 'user-tag',
+  people: 'people',
   calculator: 'calculator',
   scanner: 'scanner',
   receipt_item: 'receipt-item',
@@ -260,6 +261,9 @@ const icons = {
   addSquare2: 'add-square2',
   wallet_add_11: 'wallet-add-11',
   HeartGradientIcon,
+  exportIcon: 'export-3',
+  profileIcon: 'profile-2user-filled',
+  driverRefresh: 'driver-refresh1',
 };
 
 export default icons;

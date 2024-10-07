@@ -7,6 +7,9 @@ interface DynamicFormComponentProps {
   control: Control;
   errors: FieldErrors;
   containerStyle?: StyleProp<ViewStyle>;
+  handleChange?: (index?: string, value?: string) => void;
+  myIdValue?: string;
+  myIdCheck?: boolean;
   handleParentLovChange?: (fieldIndex: string, selectedValue: string) => Promise<void>;
 }
 

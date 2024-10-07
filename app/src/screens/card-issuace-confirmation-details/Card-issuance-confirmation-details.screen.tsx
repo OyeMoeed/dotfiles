@@ -19,9 +19,12 @@ import { useTypedSelector } from '@app/store/store';
 import { buttonVariants } from '@app/utilities';
 import { formatNumberWithCommas } from '@app/utilities/number-helper.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { IPayTopUpSelection } from '@app/components/templates';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { SNAP_POINT } from '@app/constants/constants';
 import IPaySafeAreaView from '../../components/templates/ipay-safe-area-view/ipay-safe-area-view.component';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import IssueCardPinCreation from '../issue-card-pin-creation/issue-card-pin-creation.screens';
@@ -36,6 +39,8 @@ const CardIssuanceConfirmationScreen = () => {
   const route = useRoute<RouteProps>();
   type RouteProps = RouteProp<{ params: { issuanceDetails: ICardIssuanceDetails } }, 'params'>;
   const { issuanceDetails } = route.params;
+  const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
+  const topUpSelectionRef = React.createRef<any>();
 
   const { walletNumber, fullName, availableBalance } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [isOtpVisible, setIsOtpVisible] = useState<boolean>(false);
@@ -87,11 +92,11 @@ const CardIssuanceConfirmationScreen = () => {
     const { cardType } = issuanceDetails;
     switch (cardType) {
       case 'IPMC':
-        return 'VIRTUAL_CARD.CLASSIC';
+        return 'VIRTUAL_CARD.CLASSIC_DEBIT_CARD';
       case 'VPPC':
-        return 'VIRTUAL_CARD.PLATINUM';
+        return 'VIRTUAL_CARD.PLATINUM_CASHBACK_PREPAID_CARD';
       case 'VSCC':
-        return 'VIRTUAL_CARD.SIGNATURE';
+        return 'VIRTUAL_CARD.SIGNATURE_PREPAID_CARD';
       default:
         return '';
     }
@@ -149,15 +154,49 @@ const CardIssuanceConfirmationScreen = () => {
       title={item.title}
       detailText={item.detailText}
       style={item.style}
+      rightContainerStyles={styles.labelDetailsText}
+      containerStyle={styles.labelContainerStyle}
       showDetail
+      detailsTruncation={false}
     />
   );
+
+  const navigateTOAktharPoints = async () => {
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(screenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(screenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+  const closeBottomSheetTopUp = () => {
+    setTopUpOptionsVisible(false);
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === screenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
+  };
 
   return (
     <IPaySafeAreaView>
       <IPayHeader backBtn title="TOPUP_CONFIRMATION.VIRTUAL_CARD" applyFlex />
       <IPayView style={styles.container}>
-        <IPayTopUpBox availableBalance={balance} isShowTopup />
+        <IPayTopUpBox
+          onTopUpPress={() => {
+            setTopUpOptionsVisible(true);
+          }}
+          availableBalance={balance}
+          isShowTopup
+        />
         <IPayView style={styles.gradientView}>
           <IPayView>
             <IPayFlatlist
@@ -217,6 +256,25 @@ const CardIssuanceConfirmationScreen = () => {
       >
         <HelpCenterComponent testID="help-center-bottom-sheet" />
       </IPayBottomSheet>
+      <IPayPortalBottomSheet
+        noGradient
+        heading="TOP_UP.ADD_MONEY_USING"
+        onCloseBottomSheet={closeBottomSheetTopUp}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
+        ref={topUpSelectionRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={topUpOptionsVisible}
+      >
+        <IPayTopUpSelection
+          testID="topUp-selection"
+          closeBottomSheet={closeBottomSheetTopUp}
+          topupItemSelected={topupItemSelected}
+        />
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };
