@@ -1,16 +1,7 @@
 import icons from '@app/assets/icons';
-import {
-  IPayFlag,
-  IPayFlatlist,
-  IPayFootnoteText,
-  IPayIcon,
-  IPayPressable,
-  IPayScrollView,
-  IPaySubHeadlineText,
-  IPayView,
-} from '@app/components/atoms';
+import { IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
 import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
-import { IPayButton, IPayHeader, IPayList, IPayNoResult, IPayTextInput } from '@app/components/molecules';
+import { IPayHeader } from '@app/components/molecules';
 import IPayGradientList from '@app/components/molecules/ipay-gradient-list/ipay-gradient-list.component';
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { useToastContext } from '@app/components/molecules/ipay-toast/context/ipay-toast-context';
@@ -22,6 +13,7 @@ import {
   IPayReceiveCall,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
+import IPayInternationalBeneficiaryList from '@app/components/templates/ipay-international-beneficiary-list/ipay-international-beneficiary-list.component';
 import { SNAP_POINTS } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { InternationalBeneficiaryStatus, TransferGatewayType } from '@app/enums/international-beneficiary-status.enum';
@@ -33,11 +25,9 @@ import {
 } from '@app/network/services/international-transfer/activate-international-beneficiary';
 import useGetAlinmaExpressBeneficiary from '@app/network/services/international-transfer/alinma-express-beneficiary/alinma-express-beneficiary.hook';
 import { deleteInternationalBeneficiary } from '@app/network/services/international-transfer/delete-international-beneficiary';
-import { WesternUnionBeneficiary } from '@app/network/services/international-transfer/western-union-beneficiary/western-union-beneficiary.interface';
 import useGetWesternUnionBeneficiaries from '@app/network/services/international-transfer/western-union-beneficiary/westren-union-beneficiary.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { ViewAllStatus } from '@app/types/global.types';
-import { ApiResponseStatusType, ToastTypes, alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, ToastTypes, alertType, alertVariant } from '@app/utilities/enums.util';
 import openPhoneNumber from '@app/utilities/open-phone-number.util';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -53,17 +43,15 @@ const InternationalTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = internationalTransferStyles(colors);
   const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<string>(TransferGatewayType.ALINMA_DIRECT);
-  const [search, setSearch] = useState<string>('');
-  const beneficiariesToShow = 4;
+
   const sortSheetRef = useRef<bottomSheetTypes>(null);
   const actionSheetRef = useRef<any>(null);
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
+
+  const [activeTab, setActiveTab] = useState<string>(TransferGatewayType.ALINMA_DIRECT);
+  const [search, setSearch] = useState<string>('');
   const [filteredBeneficiaryData, setFilteredBeneficiaryData] = useState<BeneficiaryDetailsProps[]>([]);
-  const [viewAllState, setViewAllState] = useState({
-    active: false,
-    inactive: false,
-  });
+
   const [sortedByActive, setSortedByActive] = useState<string>(InternationalBeneficiaryStatus.ACTIVE);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
@@ -76,12 +64,19 @@ const InternationalTransferScreen: React.FC = () => {
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const { showToast } = useToastContext();
 
-  const { data: aeBeneficiaryData } = useGetAlinmaExpressBeneficiary();
-  const { data: wuBeneficiaryData } = useGetWesternUnionBeneficiaries();
+  const { data: aeBeneficiaryData, isLoading: isLoadingAeBeneficiaries } = useGetAlinmaExpressBeneficiary({
+    onSuccess: (data) => {
+      setFilteredBeneficiaryData(data?.beneficiaries);
+    },
+  });
+
+  const { data: wuBeneficiaryData, isLoading: isLoadingWuBeneficiaries } = useGetWesternUnionBeneficiaries();
 
   useEffect(() => {
-    setFilteredBeneficiaryData(aeBeneficiaryData);
-  }, [aeBeneficiaryData]);
+    if (activeTab === TransferGatewayType.ALINMA_DIRECT && aeBeneficiaryData) {
+      setFilteredBeneficiaryData(aeBeneficiaryData);
+    }
+  }, []);
 
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
@@ -111,6 +106,7 @@ const InternationalTransferScreen: React.FC = () => {
         editBeneficiaryRef.current.hide();
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
@@ -140,64 +136,6 @@ const InternationalTransferScreen: React.FC = () => {
     setDeleteBeneficiary(false);
   };
 
-  const renderBeneficiaryDetails = ({ item }: { item: WesternUnionBeneficiary }) => {
-    const { remittanceTypeDesc, countryCode, countryDesc, beneficiaryStatus, fullName } = item;
-    const country = countryCode ? countryCode.toUpperCase() : '';
-    const btnText =
-      beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
-        ? 'INTERNATIONAL_TRANSFER.TRANSFER'
-        : 'INTERNATIONAL_TRANSFER.ACTIVATE';
-
-    const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
-      setSelectedBeneficiary(beneficiary);
-      if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
-        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
-          transferData: item,
-          transferGateway: activeTab,
-        });
-      } else {
-        handleActivateBeneficiary();
-      }
-    };
-
-    return (
-      <IPayList
-        shouldTranslateTitle={false}
-        key={fullName?.toString()}
-        style={styles.listItem}
-        title={fullName}
-        subTitle={countryDesc}
-        isShowSubTitle
-        isShowLeftIcon
-        centerContainerStyles={styles.listCenterContainer}
-        adjacentSubTitle={remittanceTypeDesc}
-        regularTitle={false}
-        leftIcon={<IPayFlag countryCode={country} />}
-        rightText={
-          <IPayView style={styles.moreButton}>
-            <IPayButton
-              onPress={() => onTransferAndActivate(item)}
-              btnText={btnText}
-              btnType={buttonVariants.PRIMARY}
-              small
-              btnIconsDisabled
-              btnStyle={styles.buttonStyle}
-              btnColor={
-                beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary100 : ''
-              }
-              textColor={
-                beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary800 : ''
-              }
-            />
-            <IPayPressable onPress={() => onPressMenuOption(item)}>
-              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
-            </IPayPressable>
-          </IPayView>
-        }
-      />
-    );
-  };
-
   const searchInBeneficiaries = (data: BeneficiaryDetailsProps[], searchText: string) => {
     const filteredData = data?.filter((item) => item?.fullName?.toLowerCase().includes(searchText.toLowerCase()));
     return setFilteredBeneficiaryData(filteredData);
@@ -211,51 +149,6 @@ const InternationalTransferScreen: React.FC = () => {
       searchInBeneficiaries(wuBeneficiaryData, text);
     }
   };
-
-  const getBeneficiariesByStatus = (isActive: boolean) =>
-    filteredBeneficiaryData?.filter((item) => {
-      if (isActive) return item?.beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE;
-
-      return item?.beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE;
-    });
-
-  const renderListHeader = (isActive: string, count: number, totalCount: number) => {
-    const statusText = isActive === InternationalBeneficiaryStatus.ACTIVE ? 'COMMON.ACTIVE' : 'COMMON.INACTIVE';
-
-    return totalCount ? (
-      <IPayView style={styles.listHeader}>
-        <IPayFootnoteText text={statusText} />
-        <IPayFootnoteText text={`(${count} ${t('HOME.OF')} ${totalCount})`} shouldTranslate={false} />
-      </IPayView>
-    ) : (
-      <IPayView />
-    );
-  };
-
-  const renderFooter = (statusKey: ViewAllStatus, totalCount: number) =>
-    totalCount > beneficiariesToShow ? (
-      <IPayPressable
-        style={styles.listFooter}
-        onPress={() => setViewAllState((prev) => ({ ...prev, [statusKey]: !prev[statusKey] }))}
-      >
-        <IPaySubHeadlineText
-          style={styles.capitalizeTitle}
-          color={colors.primary.primary500}
-          regular
-          text={viewAllState[statusKey] ? 'COMMON.CLOSE' : 'COMMON.VIEW_ALL'}
-        />
-        <IPayIcon
-          icon={viewAllState[statusKey] ? icons.arrowUp : icons.arrowDown}
-          size={14}
-          color={colors.primary.primary500}
-        />
-      </IPayPressable>
-    ) : (
-      <IPayView />
-    );
-
-  const listBeneficiaries = (viewAll: boolean, isActive: boolean) =>
-    viewAll ? getBeneficiariesByStatus(isActive) : getBeneficiariesByStatus(isActive)?.slice(0, beneficiariesToShow);
 
   const onClearInput = () => {
     setSearch('');
@@ -334,6 +227,7 @@ const InternationalTransferScreen: React.FC = () => {
       default:
         return <IPayActivateBeneficiary handleReceiveCall={handleReceiveCall} handleCallAlinma={handleCallAlinma} />;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentOption]);
 
   const hideContactUs = () => {
@@ -360,6 +254,10 @@ const InternationalTransferScreen: React.FC = () => {
 
   const onPressHistory = () => {
     navigate(ScreenNames.INTERNATIONAL_TRANSFER_HISTORY);
+  };
+
+  const handlePressSortButton = () => {
+    sortSheetRef?.current?.present();
   };
 
   const currentOptionText =
@@ -402,116 +300,23 @@ const InternationalTransferScreen: React.FC = () => {
           onSelect={onSelectTab}
           tabStyles={styles.tabStyles}
         />
-        <IPayView style={styles.beneficiaryList}>
-          <IPayView style={styles.listContentWrapper}>
-            <IPayView style={styles.searchWrapper}>
-              <IPayTextInput
-                text={search}
-                onChangeText={handleSearchChange}
-                placeholder="COMMON.SEARCH"
-                rightIcon={<IPayIcon icon={icons.SEARCH} size={20} color={colors.primary.primary500} />}
-                simpleInput
-                showLeftIcon={!!search}
-                style={styles.inputStyle}
-                leftIcon={<IPayIcon icon={icons.crossIcon} color={colors.natural.natural700} size={20} />}
-                containerStyle={styles.searchInputStyle}
-                onClearInput={onClearInput}
-                testID="transfer-search"
-              />
-              <IPayPressable onPress={() => sortSheetRef?.current?.present()}>
-                <IPayIcon icon={icons.arrow_updown1} size={24} />
-              </IPayPressable>
-            </IPayView>
-            {filteredBeneficiaryData?.length ? (
-              <IPayView style={styles.listWrapper}>
-                <IPayScrollView showsVerticalScrollIndicator={false} nestedScrollEnabled>
-                  <IPayView
-                    style={[
-                      styles.activeInactiveListWrapper,
-                      sortedByActive === InternationalBeneficiaryStatus.INACTIVE ? styles.reverseList : {},
-                    ]}
-                  >
-                    {!!getBeneficiariesByStatus(true)?.length && (
-                      <IPayFlatlist
-                        scrollEnabled={false}
-                        data={listBeneficiaries(viewAllState.active, true)}
-                        renderItem={renderBeneficiaryDetails}
-                        keyExtractor={(item, index) => `${item.fullName}-active-status-${index}`}
-                        ListHeaderComponent={() =>
-                          renderListHeader(
-                            InternationalBeneficiaryStatus.ACTIVE,
-                            listBeneficiaries(viewAllState.active, true)?.length ?? 0,
-                            getBeneficiariesByStatus(true)?.length ?? 0,
-                          )
-                        }
-                        ListFooterComponent={() =>
-                          renderFooter(
-                            InternationalBeneficiaryStatus.ACTIVE,
-                            getBeneficiariesByStatus(true)?.length ?? 0,
-                          )
-                        }
-                      />
-                    )}
-                    {!!getBeneficiariesByStatus(false)?.length && (
-                      <IPayFlatlist
-                        scrollEnabled={false}
-                        data={listBeneficiaries(viewAllState.inactive, false)}
-                        renderItem={renderBeneficiaryDetails}
-                        keyExtractor={(item, index) => `${item.fullName}-inactive-status-${index}`}
-                        ListHeaderComponent={() =>
-                          renderListHeader(
-                            InternationalBeneficiaryStatus.INACTIVE,
-                            listBeneficiaries(viewAllState.inactive, false)?.length ?? 0,
-                            getBeneficiariesByStatus(false)?.length ?? 0,
-                          )
-                        }
-                        ListFooterComponent={() =>
-                          renderFooter(
-                            InternationalBeneficiaryStatus.INACTIVE,
-                            getBeneficiariesByStatus(false)?.length ?? 0,
-                          )
-                        }
-                      />
-                    )}
-                  </IPayView>
-                </IPayScrollView>
-              </IPayView>
-            ) : (
-              <IPayView style={styles.noResultContainer}>
-                <IPayNoResult
-                  showIcon
-                  icon={icons.user_search}
-                  iconColor={colors.primary.primary800}
-                  iconSize={40}
-                  message="LOCAL_TRANSFER.NO_BENEFICIARIES"
-                  containerStyle={styles.noResult}
-                  testID="no-result"
-                />
-                <IPayButton
-                  testID="add-new-beneficiary"
-                  btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
-                  medium
-                  btnType={buttonVariants.PRIMARY}
-                  btnStyle={styles.btnStyle}
-                  onPress={handleAddNewBeneficiray}
-                  leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
-                />
-              </IPayView>
-            )}
-          </IPayView>
-          {filteredBeneficiaryData?.length ? (
-            <IPayButton
-              onPress={handleAddNewBeneficiray}
-              btnStyle={styles.addBeneficiaryBtn}
-              btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
-              btnType={buttonVariants.OUTLINED}
-              large
-              leftIcon={<IPayIcon icon={icons.add} size={24} color={colors.primary.primary500} />}
-            />
-          ) : (
-            <IPayView />
-          )}
-        </IPayView>
+
+        <IPayInternationalBeneficiaryList
+          search={search}
+          handleSearchChange={handleSearchChange}
+          onClearInput={onClearInput}
+          filteredBeneficiaryData={filteredBeneficiaryData}
+          handlePressSortButton={handlePressSortButton}
+          sortedByActive={sortedByActive}
+          setSelectedBeneficiary={setSelectedBeneficiary}
+          handleActivateBeneficiary={handleActivateBeneficiary}
+          activeTab={activeTab}
+          onPressMenuOption={onPressMenuOption}
+          handleAddNewBeneficiary={handleAddNewBeneficiray}
+          isLoading={
+            activeTab === TransferGatewayType.ALINMA_DIRECT ? isLoadingAeBeneficiaries : isLoadingWuBeneficiaries
+          }
+        />
       </IPayView>
       <IPayBeneficiariesSortSheet
         sortSheetRef={sortSheetRef}

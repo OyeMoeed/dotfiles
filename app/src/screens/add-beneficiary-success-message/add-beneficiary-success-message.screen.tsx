@@ -100,7 +100,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
         break;
     }
   }, []);
-  const hanldePageNavigation = () => {
+  const handlePageNavigation = () => {
     navigate(
       type === ScreenNames.INTERNATIONAL_TRANSFER || type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
         ? ScreenNames.INTERNATIONAL_TRANSFER
@@ -152,7 +152,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                     }
                     medium
                     btnIconsDisabled
-                    onPress={hanldePageNavigation}
+                    onPress={handlePageNavigation}
                   />
                 </IPayView>
               </IPayLinearGradientView>

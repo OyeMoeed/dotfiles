@@ -378,7 +378,7 @@ const LocalTransferScreen: React.FC = () => {
       case ActivateViewTypes.RECEIVE_CALL:
         return (
           <IPayReceiveCall
-            hanldePageNavigation={makeTransfer}
+            handlePageNavigation={makeTransfer}
             activateInternationalBeneficiary={onPressActivateBeneficiary}
             guideToReceiveCall={guideToReceiveCall}
             makeTransfer={false}

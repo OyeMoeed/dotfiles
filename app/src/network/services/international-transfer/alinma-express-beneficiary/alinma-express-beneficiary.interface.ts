@@ -42,5 +42,9 @@ interface AlinmaExpressBeneficiariesProps {
   successfulResponse: boolean;
 }
 
+interface UseGetAlinmaExpressBeneficiary {
+  onSuccess?: (data: AlinmaExpressResponse) => void;
+}
+
 export default AlinmaExpressBeneficiariesProps;
-export { AlinmaExpressBeneficiary };
+export { AlinmaExpressBeneficiary, UseGetAlinmaExpressBeneficiary, AlinmaExpressResponse };
