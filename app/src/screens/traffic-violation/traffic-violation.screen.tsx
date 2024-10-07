@@ -42,8 +42,8 @@ const TrafficViolationScreen: React.FC = () => {
         />
       </IPayView>
 
-      {billsData && billsData?.length > 0 ? (
-        <IPayView style={styles.container}>
+      <IPayView style={styles.container}>
+        {billsData && billsData?.length > 0 ? (
           <IPayView style={styles.listView}>
             <IPayFlatlist
               testID="ipay-flatlist"
@@ -61,47 +61,40 @@ const TrafficViolationScreen: React.FC = () => {
               )}
             />
           </IPayView>
-          {selectedBillsCount > 0 ? (
-            <IPayView style={styles.footerView}>
-              <SadadFooterComponent
-                textColor={colors.natural.natural500}
-                onPressBtn={handlePayButton}
-                btnText={`${t('COMMON.PAY')} (${selectedBillsAmount} ${t('COMMON.SAR')})`}
-                selectedItemsCount={selectedBillsCount}
-                disableBtnIcons
-              />
-            </IPayView>
-          ) : (
-            <IPayView style={styles.footerViewSecondary}>
-              <IPayButton
-                onPress={handleInquire}
-                btnText="TRAFFIC_VIOLATION.INQUIRE_ANOTHER"
-                btnType={buttonVariants.OUTLINED}
-                rightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.primary.primary500} />}
-                large
-              />
-            </IPayView>
-          )}
-        </IPayView>
-      ) : (
-        <IPayView style={styles.noResultView}>
-          <IPayNoResult
-            showIcon
-            icon={icons.note_remove}
-            iconColor={colors.primary.primary800}
-            iconSize={40}
-            iconViewStyles={styles.noResultIconView}
-            message="SADAD.NO_ACTIVE_BILLS"
-          />
-          <IPayButton
-            medium
-            btnType={buttonVariants.PRIMARY}
-            btnText="SADAD.ADD_NEW_BILL"
-            btnStyle={styles.addNewBillBtn}
-            leftIcon={<IPayIcon icon={icons.add_square} size={18} color={colors.natural.natural0} />}
-          />
-        </IPayView>
-      )}
+        ) : (
+          <IPayView style={styles.noResultView}>
+            <IPayNoResult
+              showIcon
+              icon={icons.note_remove}
+              iconColor={colors.primary.primary800}
+              iconSize={40}
+              iconViewStyles={styles.noResultIconView}
+              message="SADAD.NO_ACTIVE_BILLS"
+            />
+          </IPayView>
+        )}
+        {selectedBillsCount > 0 ? (
+          <IPayView style={styles.footerView}>
+            <SadadFooterComponent
+              textColor={colors.natural.natural500}
+              onPressBtn={handlePayButton}
+              btnText={`${t('COMMON.PAY')} (${selectedBillsAmount} ${t('COMMON.SAR')})`}
+              selectedItemsCount={selectedBillsCount}
+              disableBtnIcons
+            />
+          </IPayView>
+        ) : (
+          <IPayView style={styles.footerViewSecondary}>
+            <IPayButton
+              onPress={handleInquire}
+              btnText="TRAFFIC_VIOLATION.INQUIRE_ANOTHER"
+              btnType={buttonVariants.OUTLINED}
+              rightIcon={<IPayIcon icon={icons.rightArrow} size={20} color={colors.primary.primary500} />}
+              large
+            />
+          </IPayView>
+        )}
+      </IPayView>
     </IPaySafeAreaView>
   );
 };
