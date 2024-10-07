@@ -17,6 +17,7 @@ interface IPayBillPaymentNoResultsComponentProps extends CommonProps {
 }
 
 interface IPayBillPaymentsFooterProps extends CommonProps {
+  trafficUnpaidViolationsCount?: string;
   onPressBillPaymentOption?: (title: string) => void;
 }
 

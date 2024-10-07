@@ -10,7 +10,6 @@ import {
 } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import constants from '@app/constants/constants';
-import useTrafficViolation from '@app/screens/traffic-violation/traffic-violation.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
@@ -19,13 +18,17 @@ import { useTranslation } from 'react-i18next';
 import billPaymentsComponentsStyles from './ipay-bill-payment-components.style';
 import { IPayBillPaymentsFooterProps } from './ipay-bills-payment-components.interface';
 
-const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID, style, onPressBillPaymentOption }) => {
+const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({
+  testID,
+  style,
+  onPressBillPaymentOption,
+  trafficUnpaidViolationsCount,
+}) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
   const otherBills = constants.OTHER_BILL_TYPES;
-  const { billsData } = useTrafficViolation();
-  const unpaidCount = `(${billsData?.length} ${t('BILL_PAYMENTS.UNPAID')})`;
+  const unpaidCount = `(${trafficUnpaidViolationsCount} ${t('BILL_PAYMENTS.UNPAID')})`;
 
   const getIcon = (icon: string) => {
     const isImage = checkImage(icon);
