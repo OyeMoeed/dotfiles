@@ -1,5 +1,5 @@
 import icons from '@app/assets/icons';
-import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayView } from '@app/components/atoms';
+import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayNoResult, useToastContext } from '@app/components/molecules';
 import IPayBannerAnimation from '@app/components/molecules/ipay-banner-animation/ipay-banner-animation.component';
 import IPaySectionHeader from '@app/components/molecules/ipay-section-header/ipay-section-header.component';
@@ -41,35 +41,7 @@ import { isAndroidOS } from '@app/utilities/constants';
 import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
 import getNotificationCenterStyles from './notification-center.styles';
 import { ApiResponse, Notification } from './notification-center.interface';
-
-/**
- * NoRequestComponent displays a message when there are no pending requests.
- * @param {Object} props - Component props.
- * @param {Object} props.colors - Colors object.
- * @param {Object} props.styles - Styles object.
- */
-const NoRequestComponent: React.FC<{ colors: any; styles: any; pendingRequests: any; previousRequests: any }> = ({
-  colors,
-  styles,
-  pendingRequests,
-  previousRequests,
-}) => (
-  <IPayView style={styles.noRequestContainer}>
-    <IPayIcon size={24} icon={icons.empty_box_icon} />
-    <IPayCaption1Text style={styles.noRequestText} regular={false} text="NOTIFICATION_CENTER.ALL_CAUGHT_UP" />
-    <IPayCaption1Text style={styles.noPendingRequestText} text="NOTIFICATION_CENTER.NO_PENDING_REQUESTS" />
-    <IPayPressable
-      onPress={() =>
-        navigate(ScreenNames.REQUEST_LISTING_SCREEN, {
-          pendingRequests,
-          previousRequests,
-        })
-      }
-    >
-      <IPaySubHeadlineText color={colors.primary.primary500} regular text="NOTIFICATION_CENTER.SHOW_REQUESTS" />
-    </IPayPressable>
-  </IPayView>
-);
+import NoRequestComponent from './components/ipay-no-request/ipay-no-request.component';
 
 /**
  * NotificationCenterScreen
@@ -385,12 +357,7 @@ const NotificationCenterScreen: React.FC = () => {
       return (
         <>
           <IPaySectionHeader leftText="NOTIFICATION_CENTER.REQUESTS" />
-          <NoRequestComponent
-            colors={colors}
-            styles={styles}
-            pendingRequests={pendingRequests}
-            previousRequests={previousRequests}
-          />
+          <NoRequestComponent pendingRequests={pendingRequests} previousRequests={previousRequests} />
         </>
       );
     }
@@ -412,19 +379,21 @@ const NotificationCenterScreen: React.FC = () => {
     <IPaySafeAreaView style={styles.safeArea}>
       <IPayHeader title="COMMON.NOTIFICATIONS" backBtn applyFlex />
       <IPayView style={styles.bannerContainer}>
-        <IPaySectionHeader
-          subText={`( ${pendingNotificationsCount} ${t('NOTIFICATION_CENTER.PENDING')})`}
-          leftText="NOTIFICATION_CENTER.REQUESTS"
-          rightText={pendingRequests.length > 0 ? 'NOTIFICATION_CENTER.VIEW_ALL' : undefined}
-          rightIcon={pendingRequests.length > 0 ? icons.arrow_right_square : undefined}
-          onRightOptionPress={() =>
-            navigate(ScreenNames.REQUEST_LISTING_SCREEN, {
-              pendingRequests,
-              previousRequests,
-            })
-          }
-          showRightIcon
-        />
+        {pendingRequests.length > 0 && (
+          <IPaySectionHeader
+            subText={`( ${pendingNotificationsCount} ${t('NOTIFICATION_CENTER.PENDING')})`}
+            leftText="NOTIFICATION_CENTER.REQUESTS"
+            rightText={pendingRequests.length > 0 ? 'NOTIFICATION_CENTER.VIEW_ALL' : undefined}
+            rightIcon={pendingRequests.length > 0 ? icons.arrow_right_square : undefined}
+            onRightOptionPress={() =>
+              navigate(ScreenNames.REQUEST_LISTING_SCREEN, {
+                pendingRequests,
+                previousRequests,
+              })
+            }
+            showRightIcon
+          />
+        )}
         {renderContent()}
       </IPayView>
       <IPayActionSheet
