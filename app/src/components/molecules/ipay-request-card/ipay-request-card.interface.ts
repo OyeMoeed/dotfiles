@@ -11,8 +11,8 @@ export interface PendingRequestProps {
 
 export interface PreviousRequestProps {
   id?: string;
-  isPending: false;
-  status: StatusType;
+  isPending?: Boolean;
+  status?: StatusType;
   description: string;
   dateTime: string;
   onPress?: () => void;

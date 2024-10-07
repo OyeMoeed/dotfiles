@@ -39,8 +39,14 @@ import cancelRejectRequestService from '@app/network/services/request-management
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { isAndroidOS } from '@app/utilities/constants';
 import { IPayRequestMoneyProps } from '@app/components/templates/ipay-request-detail/iipay-request-detail.interface';
+import { UpdateRejectRequestResponseTypes } from '@app/network/services/request-management/cancel-reject-request/cancel-reject-request.interface';
 import getNotificationCenterStyles from './notification-center.styles';
-import { ApiResponse, Notification } from './notification-center.interface';
+import {
+  DeleteNotificationResponse,
+  GetAllRetainedMessagesResponse,
+  Notification,
+  ReadNotificationResponse,
+} from './notification-center.interface';
 import NoRequestComponent from './components/ipay-no-request/ipay-no-request.component';
 
 /**
@@ -79,7 +85,7 @@ const NotificationCenterScreen: React.FC = () => {
         subTitle,
         toastType,
         isShowRightIcon: false,
-        containerStyle: styles.toastStyle,
+
         leftIcon: icon || <IPayIcon icon={icons.copy_success} size={18} color={colors.natural.natural0} />,
       },
       displayTime,
@@ -117,7 +123,7 @@ const NotificationCenterScreen: React.FC = () => {
       messageId: id,
     };
 
-    const apiResponse = await deleteSingleNotification(payload);
+    const apiResponse: DeleteNotificationResponse = await deleteSingleNotification(payload);
 
     if (apiResponse?.status?.type === 'SUCCESS') {
       // remove the deleted notification from the list
@@ -142,20 +148,16 @@ const NotificationCenterScreen: React.FC = () => {
       },
     };
 
-    try {
-      const apiResponse = await readNotification(payload);
+    const apiResponse: ReadNotificationResponse = await readNotification(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        // mark the notification as read
-        setNotifications((prevNotifications) =>
-          prevNotifications?.map((notification) => ({ ...notification, read: true })),
-        );
-        return apiResponse;
-      }
-      return { apiResponseNotOk: true };
-    } catch (error: any) {
-      return { error: error.message || 'Unknown error' };
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      // mark the notification as read
+      setNotifications((prevNotifications) =>
+        prevNotifications?.map((notification) => ({ ...notification, read: true })),
+      );
+      return apiResponse;
     }
+    return { apiResponseNotOk: true };
   };
 
   /**
@@ -171,22 +173,18 @@ const NotificationCenterScreen: React.FC = () => {
       },
     };
 
-    try {
-      const apiResponse = await readNotification(payload);
+    const apiResponse = await readNotification(payload);
 
-      if (apiResponse?.status?.type === 'SUCCESS') {
-        // mark the notification as read
-        setNotifications((prevNotifications) =>
-          prevNotifications?.map((notification) =>
-            notification.messageId === id ? { ...notification, read: true } : notification,
-          ),
-        );
-        return apiResponse;
-      }
-      return { apiResponseNotOk: true };
-    } catch (error: any) {
-      return { error: error.message || 'Unknown error' };
+    if (apiResponse?.status?.type === 'SUCCESS') {
+      // mark the notification as read
+      setNotifications((prevNotifications) =>
+        prevNotifications?.map((notification) =>
+          notification.messageId === id ? { ...notification, read: true } : notification,
+        ),
+      );
+      return apiResponse;
     }
+    return { apiResponseNotOk: true };
   };
 
   /**
@@ -204,42 +202,28 @@ const NotificationCenterScreen: React.FC = () => {
       pageNumber: page,
       pageSize,
     };
-    try {
-      const apiResponse = await getAllRetainedMessages(payload);
 
-      switch (apiResponse?.status?.type) {
-        case 'SUCCESS': {
-          const newNotifications = apiResponse?.response?.retainedMessages || [];
-          const start = (page - 1) * pageSize;
-          const end = page * pageSize;
-          const paginatedData = newNotifications.slice(start, end);
-          const hasMore = newNotifications.length > end;
+    const apiResponse: GetAllRetainedMessagesResponse = await getAllRetainedMessages(payload);
 
-          if (page === 1) {
-            setNotifications(paginatedData);
-          } else {
-            setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
-          }
+    switch (apiResponse?.status?.type) {
+      case 'SUCCESS': {
+        const newNotifications = apiResponse?.response?.retainedMessages || [];
+        const start = (page - 1) * pageSize;
+        const end = page * pageSize;
+        const paginatedData = newNotifications.slice(start, end);
+        const hasMore = newNotifications.length > end;
 
-          return { data: paginatedData, hasMore };
+        if (page === 1) {
+          setNotifications(paginatedData);
+        } else {
+          setNotifications((prevNotifications) => [...(prevNotifications || []), ...paginatedData]);
         }
 
-        case 'apiResponseNotOk':
-          renderToast({
-            title: 'ERROR.API_ERROR_RESPONSE',
-            toastType: 'WARNING',
-          });
-          break;
-
-        case 'FAILURE':
-          renderToast(apiResponse?.error);
-          break;
-
-        default:
-          break;
+        return { data: paginatedData, hasMore };
       }
-    } catch (error: any) {
-      renderToast(error?.message || 'ERROR.SOMETHING_WENT_WRONG');
+
+      default:
+        break;
     }
 
     return { data: [], hasMore: false };
@@ -264,9 +248,9 @@ const NotificationCenterScreen: React.FC = () => {
 
     rejectRequestRef.current?.hide();
 
-    const apiResponse: ApiResponse = await cancelRejectRequestService(
+    const apiResponse: UpdateRejectRequestResponseTypes = await cancelRejectRequestService(
       walletInfo.walletNumber,
-      requestDetail?.id,
+      requestDetail ? requestDetail.id : '',
       UpdateRequestType,
     );
     if (apiResponse?.status?.type === 'SUCCESS') {
@@ -332,7 +316,10 @@ const NotificationCenterScreen: React.FC = () => {
     }
   };
   const openBottomSheet = (item: RequestItem) => {
-    const calculatedSnapPoint = [heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
+    const calculatedSnapPoint = [
+      heightMapping[item.transactionState as keyof typeof heightMapping],
+      isAndroidOS ? '95%' : '100%',
+    ];
     setSnapPoint(calculatedSnapPoint);
 
     // Map the item keys
@@ -367,7 +354,10 @@ const NotificationCenterScreen: React.FC = () => {
         id={pendingRequests[0].transactionId}
         key={pendingRequests[0].transactionId}
         isPending={pendingRequests[0].transactionState === 'initiated'}
-        description={`${pendingRequests[0].targetFullName} ${t('NOTIFICATION_CENTER.HAS_REQUESTED')} ${pendingRequests[0].targetAmount} ${t('NOTIFICATION_CENTER.SAR_FROM_YOU')} `}
+        description={
+          `${pendingRequests[0].targetFullName} ${t('NOTIFICATION_CENTER.HAS_REQUESTED')} ` +
+          `${pendingRequests[0].targetAmount} ${t('NOTIFICATION_CENTER.SAR_FROM_YOU')}`
+        }
         dateTime={formatDate(pendingRequests[0].transactionTime)}
         onPress={() => openBottomSheet(pendingRequests[0])}
         status={pendingRequests[0].transactionState}

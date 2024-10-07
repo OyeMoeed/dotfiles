@@ -24,6 +24,9 @@ import { RequestItem } from '@app/network/services/request-management/recevied-r
 import { heightMapping } from '@app/components/templates/ipay-request-detail/ipay-request-detail.constant';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import IPayRequestDetails from '@app/components/templates/ipay-request-detail/ipay-request-detail.component';
+import { ToastRendererProps } from '@app/components/molecules/ipay-toast/ipay-toast.interface';
+import { StatusType } from '@app/components/molecules/ipay-request-card/ipay-request-card.interface';
+import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import styles from './request-list.styles';
 
 const RequestListScreen: React.FC = () => {
@@ -76,7 +79,11 @@ const RequestListScreen: React.FC = () => {
     setShowDetailSheet(false);
     rejectRequestRef.current?.hide();
 
-    const apiResponse = await cancelRejectRequestService(walletInfo.walletNumber, requestDetail?.id, UpdateRequestType);
+    const apiResponse = await cancelRejectRequestService(
+      walletInfo.walletNumber,
+      requestDetail ? requestDetail?.id : '',
+      UpdateRequestType,
+    );
 
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       renderToast({
@@ -107,7 +114,7 @@ const RequestListScreen: React.FC = () => {
       id: item.transactionId,
       title: item.targetFullName,
       status: item.transactionState,
-      type: 'DR',
+      type: 'DR' as TransactionOperations,
       receiver_mobile_number: item.targetMobileNumber,
       amount: item.targetAmount,
       note: item.transactionDescription,
@@ -143,7 +150,10 @@ const RequestListScreen: React.FC = () => {
     }
   };
   const openBottomSheet = (item: RequestItem) => {
-    const calculatedSnapPoint = [heightMapping[item.transactionState], isAndroidOS ? '95%' : '100%'];
+    const calculatedSnapPoint = [
+      heightMapping[item.transactionState as keyof typeof heightMapping],
+      isAndroidOS ? '95%' : '100%',
+    ];
     setSnapPoint(calculatedSnapPoint);
 
     // Map the item keys
@@ -192,14 +202,18 @@ const RequestListScreen: React.FC = () => {
               isLeftTextRegular
               leftText={`${pendingRequests.length} ${t('NOTIFICATION_CENTER.PENDING_REQUESTS')}`}
             />
-            {pendingRequests.map((request) => (
+            {pendingRequests.map((request: RequestItem) => (
               <IPayRequestCard
                 id={request.transactionId}
                 key={request.transactionId}
                 isPending={request.transactionState === 'initiated'}
-                description={`${request.targetFullName} has requested ${request.targetAmount} SAR from you `}
+                description={
+                  `${request.targetFullName} ${t('NOTIFICATION_CENTER.HAS_REQUESTED')} ` +
+                  `${request.targetAmount} ${t('NOTIFICATION_CENTER.SAR_FROM_YOU')}`
+                }
                 dateTime={formatDate(request.transactionTime)}
                 onPress={() => openBottomSheet(request)}
+                status={request.transactionState as StatusType}
               />
             ))}
           </IPayView>
@@ -210,14 +224,17 @@ const RequestListScreen: React.FC = () => {
               isLeftTextRegular
               leftText="NOTIFICATION_CENTER.PREVIOUS_REQUESTS"
             />
-            {previousRequests.map((request) => (
+            {previousRequests.map((request: RequestItem) => (
               <IPayRequestCard
                 id={request.transactionId}
                 key={request.transactionId}
                 isPending={request.transactionState === 'initiated'}
-                description={`${request.targetFullName} has requested ${request.targetAmount} SAR from you `}
+                description={
+                  `${request.targetFullName} ${t('NOTIFICATION_CENTER.HAS_REQUESTED')} ` +
+                  `${request.targetAmount} ${t('NOTIFICATION_CENTER.SAR_FROM_YOU')}`
+                }
                 dateTime={formatDate(request.transactionTime)}
-                status={request.transactionState!}
+                status={request.transactionState! as StatusType}
               />
             ))}
           </IPayView>
