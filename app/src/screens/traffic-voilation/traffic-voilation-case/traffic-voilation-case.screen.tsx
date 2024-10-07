@@ -2,7 +2,6 @@ import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
 import { IPayButton, IPayContentNotFound, IPayHeader, IPayListView } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
-import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
 import { SNAP_POINTS } from '@app/constants/constants';
@@ -10,13 +9,7 @@ import useConstantData from '@app/constants/use-constants';
 
 import { TrafficPaymentFormFields } from '@app/enums/traffic-payment.enum';
 import useTheme from '@app/styles/hooks/theme.hook';
-import {
-  BillPaymentOptions,
-  MoiPaymentTypes,
-  TrafficTabPaymentTypes,
-  TrafficVoilationTypes,
-  buttonVariants,
-} from '@app/utilities/enums.util';
+import { BillPaymentOptions, MoiPaymentTypes, TrafficVoilationTypes, buttonVariants } from '@app/utilities/enums.util';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 
 import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
@@ -32,24 +25,20 @@ import getBillersService from '@app/network/services/bills-management/get-biller
 import validateBill from '@app/network/services/bills-management/validate-moi-bill/validate-moi-bill.service';
 import { useTypedSelector } from '@app/store/store';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import { UseFormReset } from 'react-hook-form';
-import { useTranslation } from 'react-i18next';
 import { TrafficFormValues } from './traffic-voilation-case.interface';
 import trafficPaymentStyles from './traffic-voilation-case.styles';
 
 const TrafficVoilationCasesScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = trafficPaymentStyles(colors);
-  const { t } = useTranslation();
+
   const { idTypes } = useConstantData();
-  const [isRefund, setIsRefund] = useState<boolean>(false);
   const [trafficViolationsData, setTrafficViolationsData] = useState<BillersTypes | undefined>({} as BillersTypes);
   const [trafficService, setTrafficService] = useState<BillersService>({} as BillersService);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const selectSheeRef = useRef<bottomSheetTypes>(null);
   const invoiceSheetRef = useRef<bottomSheetTypes>(null);
   const [fields, setFields] = useState<DynamicField[]>([]);
-  const tabs = [t('TRAFFIC_VIOLATION.INQUIRE'), t('TRAFFIC_VIOLATION.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const [trafficServiceType, setTrafficServiceType] = useState<BillersService[]>([]);
   const [myIdValue, setMyIdValue] = useState<string>('');
@@ -67,15 +56,6 @@ const TrafficVoilationCasesScreen: React.FC = () => {
       setTrafficService(trafficServiceType?.[1]);
     }
   }, [formSelectedTab, trafficServiceType]);
-
-  const handleTabSelect = useCallback((tab: string, reset: UseFormReset<TrafficFormValues>) => {
-    if (tab === TrafficTabPaymentTypes.REFUND) {
-      setIsRefund(true);
-    } else {
-      setIsRefund(false);
-    }
-    reset();
-  }, []);
 
   const handleFormTabSelect = useCallback((tab: string, reset) => {
     setFormSelectedTab(tab);
@@ -100,7 +80,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
     const isViolationID = formSelectedTab === TrafficVoilationTypes.BY_VIOLATION_ID;
     const payLoad = {
       walletNumber,
-      refund: isRefund,
+      refund: false,
       dynamicFields,
     };
 
@@ -113,7 +93,7 @@ const TrafficVoilationCasesScreen: React.FC = () => {
       return invoiceSheetRef.current?.present();
     }
     if (apiResponse?.successfulResponse) {
-      const violationNum = isRefund ? data.BeneficiaryId_OfficialId : data.TrafficViolationsByViolationID_ViolationID;
+      const violationNum = data.TrafficViolationsByViolationID_ViolationID;
       const violationDetails = {
         serviceId: trafficService?.serviceId,
         serviceDescription: trafficService?.serviceDesc,
@@ -225,7 +205,6 @@ const TrafficVoilationCasesScreen: React.FC = () => {
             <IPaySafeAreaView>
               <IPayHeader backBtn applyFlex title="BILL_PAYMENTS.TRAFFIC_VIOLATIONS" titleStyle={styles.screenTitle} />
               <IPayView style={styles.container}>
-                <IPayTabs tabs={tabs} onSelect={(tab) => handleTabSelect(tab, reset)} />
                 <IPayView style={styles.contentContainer}>
                   <IPayTrafficDetailForm
                     formSelectedTab={formSelectedTab}
