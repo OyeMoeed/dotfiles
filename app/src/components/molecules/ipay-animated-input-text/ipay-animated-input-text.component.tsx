@@ -3,9 +3,9 @@ import { IPayCaption1Text, IPayIcon, IPayPressable, IPaySubHeadlineText, IPayVie
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
 import React, { useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Animated, TextInput } from 'react-native';
 import { moderateScale } from 'react-native-size-matters';
-import { useTranslation } from 'react-i18next';
 import { AnimatedTextInputProps } from './ipay-animated-input-text.interface';
 import inputFieldStyles from './ipay-animated-input-text.styles';
 
@@ -29,6 +29,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   errorMessageViewStyle,
   errorMessageStyle,
   suffix,
+  maxLength,
   pointerEvents,
   extraComponent,
   withExtraPadding = true,
@@ -102,6 +103,7 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
               onBlur={handleBlur}
               blurOnSubmit
               editable={editable}
+              maxLength={maxLength}
             />
           </IPayView>
           {suffix && value && (

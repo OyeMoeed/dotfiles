@@ -33,6 +33,7 @@ interface PrePareLoginApiResponseProps extends MockAPIOkProp {
   passwordEncryptionPrefix: string;
   passwordEncryptionKey: string;
   data: PrePareLoginDataProps;
+  inactiveTimeoutPeriodInMins?: number | string;
 }
 
 interface PrePareLoginPayload {

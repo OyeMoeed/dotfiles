@@ -24,6 +24,7 @@ const IPayCommonAlertSheet = forwardRef<{}, IPayCommonAlertSheetProps>(
       onCloseBottomSheet = () => {},
       buttonRightIcon,
       iconColor,
+      extraComponent,
     },
     ref,
   ) => {
@@ -80,6 +81,7 @@ const IPayCommonAlertSheet = forwardRef<{}, IPayCommonAlertSheetProps>(
               rightIcon={buttonRightIcon}
             />
           )}
+          {extraComponent && extraComponent}
         </IPayView>
       </IPayPortalBottomSheet>
     );
