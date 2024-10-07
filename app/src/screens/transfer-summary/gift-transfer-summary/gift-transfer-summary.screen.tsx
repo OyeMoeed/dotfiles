@@ -348,7 +348,7 @@ const TransferSummaryScreen: React.FC = () => {
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           onResendCodePress={() => {}}
-          timeout={otpConfig.transaction.otpTimeout}
+          timeout={otpConfig.sendGift.otpTimeout}
         />
       </IPayPortalBottomSheet>
       <IPayBottomSheet
