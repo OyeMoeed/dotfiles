@@ -40,7 +40,7 @@ const useMoiPaymentConfirmation = (billData: ValidateBillRes, isRefund: boolean)
 
     setOtpSheetVisible(false);
     const apiResponse = await moiBillPayment(payLoad);
-    if (apiResponse?.successfulResponse) {
+    if (apiResponse?.response) {
       otpBottomSheetRef.current?.close();
       navigate(ScreenNames.MOI_PAYMENT_SUCCESS, {
         moiPaymentDetailes: billData,
