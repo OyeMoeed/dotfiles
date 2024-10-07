@@ -57,8 +57,6 @@ const IPayIdleTimerBottomSheet = () => {
     clearSession(false);
   };
 
-  useEffect(() => {}, [showIdleBottomSheet]); // The emp
-
   const handlePresentModalPress = useCallback(() => {
     bottomSheetModalRef.current?.present();
   }, []);
@@ -66,8 +64,6 @@ const IPayIdleTimerBottomSheet = () => {
   const handleClosePress = useCallback(() => {
     bottomSheetModalRef.current?.close();
   }, []);
-
-  // Cleanup the interval when the component unmounts
 
   useEffect(() => {
     // eslint-disable-next-line no-undef
