@@ -13,12 +13,12 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NewSadadBillProps } from './new-sadad-bill.interface';
-import newsadadBillStyles from './new-sadad-bill.style';
+import newSadadBillStyles from './new-sadad-bill.style';
 
 const NewSadadBillScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const styles = newsadadBillStyles(colors);
+  const styles = newSadadBillStyles(colors);
 
   const {
     walletNumber,
@@ -46,7 +46,7 @@ const NewSadadBillScreen: React.FC = () => {
     serviceDescription,
   } = route.params;
 
-  const [amount, setAmout] = useState(totalAmount);
+  const [amount, setAmount] = useState(totalAmount);
   const [warningMessage, setWarningMessage] = useState('');
 
   const getAmountWarning = () => {
@@ -88,7 +88,7 @@ const NewSadadBillScreen: React.FC = () => {
   };
 
   const onSetAmount = (value: string) => {
-    setAmout(value);
+    setAmount(value);
   };
 
   const billDetailsList = [
@@ -134,7 +134,7 @@ const NewSadadBillScreen: React.FC = () => {
         />
         {warningMessage ? (
           <SadadFooterComponent
-            btnDisbaled={warningMessage !== ''}
+            btnDisabled={warningMessage !== ''}
             btnStyle={styles.footerBtn}
             btnText="TOP_UP.PAY"
             disableBtnIcons

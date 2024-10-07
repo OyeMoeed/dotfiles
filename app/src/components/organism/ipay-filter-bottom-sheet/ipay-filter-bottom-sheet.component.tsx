@@ -109,7 +109,7 @@ const IPayControlledDatePicker: React.FC<ControlFormField> = ({
   );
 };
 
-const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
+const IPayFilterBottomSheet = forwardRef<{}, IPayFilterProps>(
   (
     {
       onSubmit,
@@ -176,7 +176,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
         return;
       }
 
-      if (+getValues(FiltersType.AMOUNT_TO) < +getValues(FiltersType.AMOUNT_FROM)) {
+      if (Number(getValues(FiltersType.AMOUNT_TO)) < Number(getValues(FiltersType.AMOUNT_FROM))) {
         setAmountError(t('ERROR.AMOUNT_ERROR'));
         return;
       }
@@ -219,7 +219,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       reset();
       setShowFromDatePicker(false);
       setShowToDatePicker(false);
-      onReset(true);
+      onReset?.(true);
     };
 
     const scrollToBottom = () => {
@@ -279,7 +279,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
 
     const getCurrentView = useCallback(
       (type: string) =>
-        customFiltersValue && (type === FiltersType.DELIVERY_TYPE || type === FiltersType.BENEFICIARY_NAME_LIST)
+        customFiltersValue &&
+        (type === FiltersType.DELIVERY_TYPE || type === FiltersType.BENEFICIARY_NAME_LIST || FiltersType.SALARY_TYPE)
           ? CurrentViewTypes.BOTTOM_SHEET
           : CurrentViewTypes.FILTER_VALUES,
       [customFiltersValue],
@@ -428,8 +429,8 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
                       setCategory(type);
                       setCurrentView(CurrentViewTypes.FILTER_VALUES);
                     }}
-                    isError={!!errors[type]}
-                    assistiveText={errors[type] && t('COMMON.REQUIRED_FIELD')}
+                    isError={!!errors?.[type]}
+                    assistiveText={errors?.[type] && t('COMMON.REQUIRED_FIELD')}
                     onChangeText={() => {}}
                     rightIcon={renderImage(type, icon)}
                   />
@@ -456,7 +457,7 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
               containerStyle={styles.searchInputStyle}
             />
           )}
-          {getFilteredData(currentFilter.filterValues).length ? (
+          {getFilteredData(currentFilter?.filterValues || []).length ? (
             <Controller
               control={control}
               render={({ field: { onChange, value } }) => {
@@ -516,8 +517,13 @@ const IPayFilterBottomSheet: React.FC<IPayFilterProps> = forwardRef(
       if (currentView === CurrentViewTypes.FILTER_VALUES) {
         return renderValues();
       }
+
       if (category === FiltersType.DELIVERY_TYPE) {
         handleCallback?.(FiltersType.DELIVERY_TYPE);
+      } else if (category === FiltersType.SALARY_TYPE) {
+        handleCallback?.(FiltersType.SALARY_TYPE);
+      } else if (category === FiltersType.LABORER_NAME) {
+        handleCallback?.(FiltersType.LABORER_NAME);
       } else {
         handleCallback?.(FiltersType.BENEFICIARY_NAME);
       }

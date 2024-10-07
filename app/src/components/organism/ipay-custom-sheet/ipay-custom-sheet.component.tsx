@@ -18,6 +18,7 @@ import { WINDOW_HEIGHT } from '@gorhom/bottom-sheet';
 import { Gesture } from 'react-native-gesture-handler';
 import { runOnJS, useAnimatedStyle, useSharedValue, withSpring, withTiming } from 'react-native-reanimated';
 import { verticalScale } from 'react-native-size-matters';
+import { useFocusEffect } from '@react-navigation/core';
 import { IPayCustomSheetProps } from './ipay-custom-sheet.interface';
 import customSheetStyles from './ipay-custom-sheet.style';
 
@@ -72,6 +73,12 @@ const IPayCustomSheet: React.FC<IPayCustomSheetProps> = ({
   useEffect(() => {
     closeSheet();
   }, [closeTrigger]);
+
+  useFocusEffect(
+    useCallback(() => {
+      closeSheet();
+    }, [closeSheet]),
+  );
 
   const panGestureHandler = Gesture.Pan()
     .onUpdate((event) => {
