@@ -882,6 +882,7 @@
     "LEARN_ATM_WITHDRAWAL_STEPS": "Learn ATM withdrawal Steps now!"
   },
   "ERROR": {
+    "TRAFFIC_REFUND": "Sorry, Traffic Violation can't be refund.",
     "API_ERROR_RESPONSE": "API response not OK!",
     "SOMETHING_WENT_WRONG": "Something went wrong!",
     "SPECIAL_CHARACTERS": "Can't use special characters",
