@@ -751,6 +751,7 @@ const NAFATH_APP = {
   IOS: 'nafath://home',
   IOS_ID: '1598909871',
 };
+const TRAFFIC_VIOLATIONS_ID = '093';
 
 const MAIN_APP_STORE_LINKS = Platform.select({
   ios: 'https://apps.apple.com/us/app/alinmapay-e-wallet/id1492900777?ls=1',
@@ -789,6 +790,7 @@ export {
   TERMS_AND_CONDITIONS_URLS,
   TOTAL_AMOUNT,
   TRAFFIC_VIOLATIONS,
+  TRAFFIC_VIOLATIONS_ID,
   VOILATOR_ID,
   WALLET_TIERS,
   WU_TRANSFER_TYPES,
