@@ -10,6 +10,7 @@ import {
 } from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import constants from '@app/constants/constants';
+import useTrafficViolation from '@app/screens/traffic-violation/traffic-violation.hook';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
 import checkImage from '@app/utilities/image-helper.util';
@@ -23,7 +24,8 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID,
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
   const otherBills = constants.OTHER_BILL_TYPES;
-  const unpaidCount = `(3 ${t('BILL_PAYMENTS.UNPAID')})`;
+  const { billsData } = useTrafficViolation();
+  const unpaidCount = `(${billsData?.length} ${t('BILL_PAYMENTS.UNPAID')})`;
 
   const getIcon = (icon: string) => {
     const isImage = checkImage(icon);
