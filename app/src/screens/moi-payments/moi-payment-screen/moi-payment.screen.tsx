@@ -324,7 +324,7 @@ const MoiPaymentScreen: React.FC = () => {
         }}
       </IPayFormProvider>
       <IPayBottomSheet
-        heading="BILL_PAYMENTS.TRAFFIC_VIOLATIONS"
+        heading="BILL_PAYMENTS.MOI_BILLS"
         customSnapPoint={SNAP_POINTS.SMALL}
         onCloseBottomSheet={() => invoiceSheetRef.current?.close()}
         ref={invoiceSheetRef}
