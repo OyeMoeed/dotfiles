@@ -87,7 +87,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
             </IPayView>
             {searchText && (
               <IPayButton
-              btnStyle={styles.cancel}
+                btnStyle={styles.cancel}
                 btnText="COMMON.CANCEL"
                 btnIconsDisabled
                 small
