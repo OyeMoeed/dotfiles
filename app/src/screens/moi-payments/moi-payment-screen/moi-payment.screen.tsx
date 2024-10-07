@@ -278,7 +278,7 @@ const MoiPaymentScreen: React.FC = () => {
           };
 
           const handleInquiry = () => {
-            if (serviceProviderValue === TRAFFIC_VIOLATIONS_ID) {
+            if (selectedTab === MoiPaymentTypes.REFUND && serviceProviderValue === TRAFFIC_VIOLATIONS_ID) {
               renderToast();
               resetFields(reset);
             } else {
