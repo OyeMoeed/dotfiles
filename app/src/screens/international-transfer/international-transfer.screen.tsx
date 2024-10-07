@@ -33,6 +33,8 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { ImageStyle } from 'react-native';
+import { queryClient } from '@app/network';
+import INTERNATIONAL_TRANSFERS_QUERY_KEYS from '@app/network/services/international-transfer/international-transfer.query-keys';
 import IPayBeneficiariesSortSheet from '../../components/templates/ipay-beneficiaries-sort-sheet/beneficiaries-sort-sheet.component';
 import ActivateViewTypes from '../add-beneficiary-success-message/add-beneficiary-success-message.enum';
 import internationalTransferStyles from './internation-transfer.style';
@@ -123,6 +125,7 @@ const InternationalTransferScreen: React.FC = () => {
 
   const handleDeleteBeneficiary = async () => {
     const apiResponse = await deleteInternationalBeneficiary(selectedBeneficiary?.beneficiaryCode || '');
+
     if (apiResponse?.status?.type === ApiResponseStatusType.SUCCESS) {
       showToast({
         title: 'BENEFICIARY_OPTIONS.BENEFICIARY_DELETED',
@@ -133,7 +136,10 @@ const InternationalTransferScreen: React.FC = () => {
         toastType: ToastTypes.SUCCESS,
       });
     }
+
     setDeleteBeneficiary(false);
+    queryClient.invalidateQueries(INTERNATIONAL_TRANSFERS_QUERY_KEYS.ALINMA_EXPRESS_BENEFICIARY);
+    queryClient.invalidateQueries(INTERNATIONAL_TRANSFERS_QUERY_KEYS.WESTERN_UNION_BENEFICIARY);
   };
 
   const searchInBeneficiaries = (data: BeneficiaryDetailsProps[], searchText: string) => {
