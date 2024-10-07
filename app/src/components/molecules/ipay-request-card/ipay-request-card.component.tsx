@@ -29,6 +29,7 @@ const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
   const styles = getRequestCardStyles(themeColors);
 
   const statusStyle = !isPending ? statusStyles[props?.status] : undefined;
+  const statusLabel = props?.status === 'executed' ? 'paid' : props?.status;
 
   return (
     <IPayView style={styles.cardContainer}>
@@ -54,7 +55,7 @@ const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
               <IPaySubHeadlineText
                 color={statusStyle?.textColor}
                 regular
-                text={`${props?.status.charAt(0).toUpperCase()}${props?.status?.slice(1)}`}
+                text={`${statusLabel.charAt(0).toUpperCase()}${statusLabel.slice(1)}`}
               />
             </IPayView>
           )

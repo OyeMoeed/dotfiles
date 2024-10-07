@@ -1,4 +1,4 @@
-export type StatusType = 'paid' | 'cancelled' | 'rejected';
+export type StatusType = 'paid' | 'executed' | 'cancelled' | 'rejected';
 
 export interface PendingRequestProps {
   id?: string;
@@ -6,6 +6,7 @@ export interface PendingRequestProps {
   description: string;
   dateTime: string;
   onPress: () => void;
+  status?: StatusType;
 }
 
 export interface PreviousRequestProps {
