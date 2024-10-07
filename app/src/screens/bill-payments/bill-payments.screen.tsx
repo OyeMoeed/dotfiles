@@ -121,7 +121,7 @@ const BillPaymentsScreen: React.FC = () => {
             />
           </IPayView>
         ) : (
-          <>{!loadingBills && <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />}</>
+          !loadingBills && <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />
         )}
       </IPayView>
       <IPayBillPaymentsFooter onPressBillPaymentOption={onPressBillPaymentOption} />

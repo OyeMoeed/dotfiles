@@ -379,6 +379,16 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     [sadadBills, activeBillsData, inactiveBillsData],
   );
 
+  const allHaveDueDate = useMemo(() => selectedBills.every((item) => item.amount), [selectedBills]);
+
+  const handlePress = () => {
+    if (allHaveDueDate) {
+      onPressFooterBtn();
+    } else {
+      onPressPartialPay();
+    }
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader
@@ -430,7 +440,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
                 btnText={renderButtonText()}
                 btnStyle={styles.btn}
                 selectedItemsCount={selectedBillsCount}
-                onPressBtn={onPressFooterBtn}
+                onPressBtn={handlePress}
                 btnRightIcon={renderButtonRightIcon()}
                 partialPay={multipleBillsSelected}
                 onPressPartialPay={onPressPartialPay}

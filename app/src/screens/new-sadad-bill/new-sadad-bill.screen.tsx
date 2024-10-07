@@ -40,7 +40,7 @@ const NewSadadBillScreen: React.FC = () => {
     walletNumber,
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
 
-  const route = useRoute<RouteProps>();
+  const { params } = useRoute<RouteProps>();
   type RouteProps = RouteProp<
     {
       params: NewSadadBillProps;
@@ -48,7 +48,7 @@ const NewSadadBillScreen: React.FC = () => {
     'params'
   >;
 
-  const { totalAmount, newBill, billDetailsList } = route.params;
+  const { totalAmount, newBill, billDetailsList } = params;
 
   const [amountValue, setAmoutValue] = useState(totalAmount);
   const [warningMessage, setWarningMessage] = useState('');

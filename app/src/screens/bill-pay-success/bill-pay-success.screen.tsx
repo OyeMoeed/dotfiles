@@ -166,7 +166,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
             </IPayView>
           }
         >
-          <IPayScrollView style={styles.successScrollView} showsVerticalScrollIndicator={false}>
+          <IPayScrollView nestedScrollEnabled style={styles.successScrollView} showsVerticalScrollIndicator={false}>
             {!isSaveOnly && (
               <IPayView style={styles.conatinerStyles}>
                 {isPayPartially && (
@@ -184,6 +184,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                 )}
 
                 <IPayFlatlist
+                  scrollEnabled={false}
                   data={billPaymentInfos}
                   keyExtractor={(item, index) => `${item.billNickname}-${index}-bill-info`}
                   renderItem={({ item }: BillPaymentItemProps) => (

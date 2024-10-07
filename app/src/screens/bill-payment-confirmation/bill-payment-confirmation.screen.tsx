@@ -18,6 +18,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { checkDateValidation, getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
+import { RouteProp, useRoute } from '@react-navigation/core';
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
@@ -25,14 +26,18 @@ import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interf
 import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
-const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
+const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = () => {
+  type RouteProps = RouteProp<any>;
+  const { params } = useRoute<RouteProps>();
+
   const {
     isPayPartially = false,
     isPayOnly,
     showBalanceBox = true,
     billPaymentInfos: { billPaymentDetails, totalAmount },
     saveBill,
-  } = route.params || {};
+  } = params || {};
+
   const {
     walletNumber,
     mobileNumber,
