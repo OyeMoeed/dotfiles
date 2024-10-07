@@ -1,9 +1,13 @@
+import React, { useState } from 'react';
+import { Platform } from 'react-native';
+import moment from 'moment';
+import { Picker } from 'react-native-wheel-pick';
+import { useTranslation } from 'react-i18next';
+
 import constants from '@app/constants/constants';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { formatYearToLastTwoDigits } from '@app/utilities/date-helper.util';
-import React, { useState } from 'react';
-import { Platform } from 'react-native';
-import { Picker } from 'react-native-wheel-pick';
+
 import IPayView from '../ipay-view/ipay-view.component';
 import { IPayMonthYearPickerProps } from './ipay-monthyear-picker.interface';
 import datePickerStyles from './ipay-monthyear-picker.styles';
@@ -19,8 +23,19 @@ import datePickerStyles from './ipay-monthyear-picker.styles';
  * @param {function} [props.onDateChange] - Callback function invoked when the date picker's date changes.
  * @returns {JSX.Element} - The rendered component.
  */
-const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle, onDateChange, value, testID }) => {
+const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({
+  androidStyle,
+  onDateChange,
+  value,
+  testID,
+  withYear20 = false,
+  withLongMonth,
+}) => {
+  const { t } = useTranslation();
   const { colors } = useTheme();
+
+  const currentYear = moment().format('YYYY');
+  const currentMonthData = moment().format('M');
 
   const generateYears = (startYear: number) => {
     const endYear = 2040;
@@ -32,28 +47,41 @@ const IPayMonthYearPicker: React.FC<IPayMonthYearPickerProps> = ({ androidStyle,
     return years;
   };
 
-  const initialDate = value?.split('/');
-  const years = generateYears(2024);
-  const [selectedMonth, setSelectedMonth] = useState(initialDate[0]);
-  const [selectedYear, setSelectedYear] = useState(`20${initialDate[1]}`);
+  const initialDate = ((value || '') as string)?.split('/');
+  const years = generateYears(Number(currentYear));
+  const monthValue = initialDate[0] || currentMonthData;
+  const [selectedMonth, setSelectedMonth] = useState(initialDate[0] || currentMonthData);
+  const [selectedYear, setSelectedYear] = useState(initialDate[1] ? initialDate[1] : currentYear);
+
+  const monthsPicker = constants.monthsString(t);
+  const checkCurrentYear = currentYear === selectedYear ? monthsPicker.slice(Number(monthValue) - 1) : monthsPicker;
+  const pickerData = withLongMonth ? checkCurrentYear : constants.months;
 
   const handleMonthChange = (month: string) => {
-    setSelectedMonth(month);
-    onDateChange?.(`${month}/${formatYearToLastTwoDigits(selectedYear)}`);
+    const mainIndex = monthsPicker.indexOf(month);
+    const currentMonth = withLongMonth ? constants.months[mainIndex] : month;
+    const formattedYear = formatYearToLastTwoDigits(selectedYear);
+    const formattedYearText = withYear20 ? `20${formattedYear}` : `${formattedYear}`;
+
+    setSelectedMonth(currentMonth);
+    onDateChange?.(`${currentMonth}/${formattedYearText}`);
   };
 
   const handleYearChange = (year: string) => {
-    const formatedYear = formatYearToLastTwoDigits(year);
-    setSelectedYear(formatedYear);
-    onDateChange?.(`${selectedMonth}/${formatedYear}`);
+    const formattedYear = formatYearToLastTwoDigits(year);
+    const formattedYearText = withYear20 ? `20${formattedYear}` : `${formattedYear}`;
+    setSelectedYear(formattedYearText);
+    onDateChange?.(`${selectedMonth}/${formattedYearText}`);
   };
+
   const styles = datePickerStyles(colors);
+
   return (
-    <IPayView testID={`${testID}-monthyearPicker`} style={styles.pickerContainer}>
+    <IPayView testID={`${testID}-monthYearPicker`} style={styles.pickerContainer}>
       <Picker
         style={[styles.picker, Platform.OS !== 'ios' && androidStyle]}
         selectedValue={selectedMonth}
-        pickerData={constants.months}
+        pickerData={pickerData}
         onValueChange={(index: string) => handleMonthChange(index)}
         textColor={colors.primary.primary500}
         accentColor={colors.primary.primary500}

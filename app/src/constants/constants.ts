@@ -8,6 +8,7 @@ import images from '@app/assets/images';
 import { FeatureSections } from '@app/enums';
 import { isArabic } from '@app/utilities/constants';
 import { BillStatus } from '@app/utilities/enums.util';
+import { TFunction } from 'i18next';
 import { Platform } from 'react-native';
 import Share from 'react-native-share';
 
@@ -117,6 +118,20 @@ const constants = {
   UNSAVED_NUMBER_LENGTH: 14,
   IQAMA_ID_NUMBER_LENGTH: 10,
   months: ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'],
+  monthsString: (t: TFunction<'translation', undefined>) => [
+    t('MONTHS.JANUARY'),
+    t('MONTHS.FEBRUARY'),
+    t('MONTHS.MARCH'),
+    t('MONTHS.APRIL'),
+    t('MONTHS.MAY'),
+    t('MONTHS.JUNE'),
+    t('MONTHS.JULY'),
+    t('MONTHS.AUGUST'),
+    t('MONTHS.SEPTEMBER'),
+    t('MONTHS.OCTOBER'),
+    t('MONTHS.NOVEMBER'),
+    t('MONTHS.DECEMBER'),
+  ],
   ATM_CARD_DATA: { title: 'Adam Ahmed', cardNumber: '2222 3333 4444 5555', cardType: 'Signature Prepaid Card' },
   QUICK_AMOUNT_CARD: [
     { value: 50, text: '50' },

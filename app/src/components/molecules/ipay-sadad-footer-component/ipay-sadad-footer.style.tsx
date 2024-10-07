@@ -9,6 +9,9 @@ const sadadFooterComponentStyles = (colors: any) =>
     containerConditionalStyles: {
       height: moderateScale(170, 0.3),
     },
+    containerWithWarningStyles: {
+      height: moderateScale(200, 0.3),
+    },
     countAndPartialPayStyles: {
       height: moderateScale(188, 0.3),
     },
@@ -43,6 +46,7 @@ const sadadFooterComponentStyles = (colors: any) =>
     partialPayBtn: {
       width: '100%',
     },
+    iconAmountContainer: { marginRight: 8 },
   });
 
 export default sadadFooterComponentStyles;

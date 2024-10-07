@@ -1,4 +1,3 @@
-import { IPayDropdownSheet } from '@app/components/atoms';
 import IPaySpinnerContainer from '@app/components/atoms/ipay-spinner/ipay-spinner.helper';
 import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
@@ -10,7 +9,6 @@ import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
 import { hideAlert, showAlert } from '@app/store/slices/alert-slice';
 import { hideDropdownSheet } from '@app/store/slices/dropdown-slice';
 import { hideLanguageSheet } from '@app/store/slices/language-slice';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import AuthStackNavigator from '@navigation/stacks/auth/auth.stack';
 import MainStackNavigator from '@navigation/stacks/main/main.stack';
 import { NavigationContainer } from '@react-navigation/native';
@@ -34,7 +32,6 @@ const MainNavigation: React.FC = () => {
   const languageSheetRef = useRef<any>();
   const navigationRef = useRef<any>();
   const dispatch = useDispatch();
-  const dropdownRef = useRef<bottomSheetTypes>(null);
   const isConnected = useInternetConnectivity();
 
   useEffect(() => {
@@ -45,8 +42,7 @@ const MainNavigation: React.FC = () => {
   }, [dispatch, isLanguageSheetVisible]);
 
   useEffect(() => {
-    if (isDropdownVisible && dropdownRef.current) {
-      dropdownRef.current.present();
+    if (isDropdownVisible) {
       dispatch(hideDropdownSheet());
     }
   }, [dispatch, isDropdownVisible]);
@@ -91,7 +87,6 @@ const MainNavigation: React.FC = () => {
 
       <IPayOfflineAlert visible={isAlertVisible} onClose={handleCloseAlert} />
       <IPaySessionTimeoutAlert visible={isSessionTimeout} />
-      <IPayDropdownSheet ref={dropdownRef} />
       <IPayServiceErrorToast testID={navigationRef?.current?.getCurrentRoute().name} />
 
       <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />

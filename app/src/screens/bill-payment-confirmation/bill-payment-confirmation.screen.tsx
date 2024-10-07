@@ -165,7 +165,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           btnText="COMMON.CONFIRM"
           disableBtnIcons
           warning={checkLimit.warningMsg}
-          btnDisbaled={checkLimit.disabled}
+          btnDisabled={checkLimit.disabled}
           onPressBtn={onMultiPaymentPrepareBill}
         />
 

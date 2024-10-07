@@ -20,12 +20,12 @@ import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { FormValues } from '../add-new-sadad-bill/add-new-sadad-bill.interface';
 import { NewSadadBillProps } from './new-sadad-bill.interface';
-import newsadadBillStyles from './new-sadad-bill.style';
+import newSadadBillStyles from './new-sadad-bill.style';
 
 const NewSadadBillScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const styles = newsadadBillStyles(colors);
+  const styles = newSadadBillStyles(colors);
 
   const validationSchema = Yup.object().shape({});
 

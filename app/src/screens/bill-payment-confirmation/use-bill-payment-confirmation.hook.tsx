@@ -47,9 +47,9 @@ const useBillPaymentConfirmation = (
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOtpSheetVisible, setIsOtpSheetVisible] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
+  const verifyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const [otpRefAPI, setOtpRefAPI] = useState<string>('');
-  const billPayDetailes: billPayDetail[] = [
+  const billPayDetails: billPayDetail[] = [
     {
       id: '2',
       label: t('PAY_BILL.SERVICE_TYPE'),
@@ -118,7 +118,7 @@ const useBillPaymentConfirmation = (
 
     const apiResponse: any = await saveBillService(payload);
     if (apiResponse.successfulResponse) {
-      veriyOTPSheetRef.current?.close();
+      verifyOTPSheetRef.current?.close();
       setIsOtpSheetVisible(false);
       otpRef?.current?.close();
       redirectToSuccess(billPayDetailsArr, paymentSuccessResponse);
@@ -129,7 +129,7 @@ const useBillPaymentConfirmation = (
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
       otp,
-      billPaymentInfos,
+      billPaymentInfos: billPaymentInfos || [],
     };
     setIsLoading(true);
     const apiResponse = await multiPaymentBillService(payload);
@@ -162,7 +162,7 @@ const useBillPaymentConfirmation = (
       if (saveBill) {
         onSaveBill(billPayDetailsArr, apiResponse);
       } else {
-        veriyOTPSheetRef.current?.close();
+        verifyOTPSheetRef.current?.close();
         setIsOtpSheetVisible(false);
         otpRef?.current?.close();
         redirectToSuccess(billPayDetailsArr, apiResponse);
@@ -182,7 +182,7 @@ const useBillPaymentConfirmation = (
   };
 
   return {
-    billPayDetailes,
+    billPayDetails,
     headerData,
     balanceData,
     handlePay,
@@ -193,7 +193,7 @@ const useBillPaymentConfirmation = (
     setOtpError,
     apiError,
     otpVerificationRef,
-    veriyOTPSheetRef,
+    verifyOTPSheetRef,
     setOtpRefAPI,
     isOtpSheetVisible,
     setIsOtpSheetVisible,

@@ -1,0 +1,3 @@
+interface MusanedPaymentSuccessfulScreenProps {}
+
+export default MusanedPaymentSuccessfulScreenProps;
