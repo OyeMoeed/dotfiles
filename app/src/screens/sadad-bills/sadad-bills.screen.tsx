@@ -106,6 +106,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   const billPaymentDetails = selectedBills?.map((bill) => ({
     billerId: bill.billerId,
     billNumOrBillingAcct: bill.billNumOrBillingAcct,
+    billAmount: Number(bill.amount || 0),
     amount: Number(bill.amount || 0),
     dueDateTime: bill.dueDateTime,
     billIdType: bill.billIdType,

@@ -105,19 +105,21 @@ const NewSadadBillScreen: React.FC = () => {
       isPayOnly: true,
       showBalanceBox: false,
       saveBill: watch(FormFields.SAVE_BILL),
-      billPaymentInfos: { billPaymentDetails: billDetailsData, totalAmount },
+      billPaymentInfos: { billPaymentDetails: billDetailsData, totalAmount: totalAmountValue },
     });
   };
 
   const onSetAmount = (value: string, index: number) => {
-    setAmoutValue(value);
-
     const newAmount = Number(value);
 
-    const newTotal = billDetailsData.reduce(
-      (acc, item, idx) => acc + (idx === index ? newAmount : Number(item?.amount || 0)),
-      0,
+    const updatedBillDetails = billDetailsData.map((item, idx) =>
+      idx === index ? { ...item, amount: newAmount } : item,
     );
+    setAmoutValue(value);
+    setBillDetailsData(updatedBillDetails);
+
+    const newTotal = updatedBillDetails.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
+
     setTotalAmountValue(newTotal);
   };
 
@@ -127,12 +129,12 @@ const NewSadadBillScreen: React.FC = () => {
   }, [billDetailsData]);
 
   const renderBillDetails = (data: BillsProps[]) =>
-    data?.map(({ billNickname, billerName, billerIcon, amount }) => ({
+    data?.map(({ billNickname, billerName, billerIcon, billAmount }) => ({
       currency: t('COMMON.SAR'),
       billTitle: billNickname,
       vendor: billerName,
       vendorIcon: billerIcon,
-      billAmount: amount || totalAmount,
+      billAmount,
     }));
 
   const removeBill = (index: number) => setBillDetailsData(billDetailsList?.filter((_, idx: number) => idx !== index));

@@ -52,7 +52,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     setOtpRefAPI,
     setIsOtpSheetVisible,
     isOtpSheetVisible,
-  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billPaymentDetails);
+  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billPaymentDetails, totalAmount);
 
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);

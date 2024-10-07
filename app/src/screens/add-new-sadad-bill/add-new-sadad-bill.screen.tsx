@@ -159,6 +159,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billNumOrBillingAcct: values.accountNumber,
         dueDateTime: apiResponse.response.dueDate,
         amount: apiResponse.response.dueAmount || '0',
+        billAmount: apiResponse.response.dueAmount || '0',
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,

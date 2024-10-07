@@ -38,6 +38,7 @@ const useBillPaymentConfirmation = (
   isPayOnly?: boolean,
   saveBill?: boolean,
   billPaymentInfos?: BillPaymentInfosTypes[],
+  totalAmount?: string,
 ) => {
   const { t } = useTranslation();
   const otpRef = useRef<bottomSheetTypes>(null);
@@ -91,7 +92,7 @@ const useBillPaymentConfirmation = (
       isPayOnly,
       isPayPartially,
       billPayDetailes: billPayDetailsArr,
-      totalAmount: billPaymentInfos?.[0].amount,
+      totalAmount,
       billPaymentInfos: billPaymentInfos?.map((el, index) => ({
         ...el,
         transactionId: getTransactionIds(apiResponse, index),
@@ -126,10 +127,14 @@ const useBillPaymentConfirmation = (
   };
 
   const onConfirm = async () => {
+    const updatedBillPayment = billPaymentInfos?.map((item) => {
+      const { billAmount, ...rest } = item;
+      return rest;
+    });
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
       otp,
-      billPaymentInfos: billPaymentInfos || [],
+      billPaymentInfos: updatedBillPayment || [],
     };
     setIsLoading(true);
     const apiResponse = await multiPaymentBillService(payload);

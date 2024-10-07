@@ -84,9 +84,14 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     if (apiResponse.successfulResponse) {
       customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
       navigate(ScreenNames.NEW_SADAD_BILL, {
-        billDetailsList: [billPaymentInfos],
-        dueDate: apiResponse?.response?.dueDate || '',
-        totalAmount: apiResponse?.response?.dueAmount || totalAmount,
+        billDetailsList: [
+          {
+            ...billPaymentInfos,
+            amount: apiResponse?.response?.dueAmount,
+            billAmount: apiResponse?.response?.dueAmount,
+            dueDateTime: apiResponse?.response?.dueDate,
+          },
+        ],
         isSaveOnly,
       });
     }
