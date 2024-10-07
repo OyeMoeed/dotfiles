@@ -12,13 +12,13 @@ import { FormFields } from '@app/enums/bill-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
+import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
 import { FormValues } from '../add-new-sadad-bill/add-new-sadad-bill.interface';
@@ -29,10 +29,12 @@ const NewSadadBillScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = newSadadBillStyles(colors);
+  const { serviceType, billName } = getValidationSchemas(t);
 
-  const validationSchema = Yup.object().shape({});
-
-  const { control, watch } = useForm();
+  const validationSchema = Yup.object().shape({
+    serviceType,
+    billName,
+  });
 
   const {
     availableBalance,
@@ -48,10 +50,9 @@ const NewSadadBillScreen: React.FC = () => {
     'params'
   >;
 
-  const { totalAmount, newBill, billDetailsList } = params;
+  const { totalAmount, billDetailsList } = params;
 
   const [amountValue, setAmoutValue] = useState(totalAmount);
-  const [warningMessage, setWarningMessage] = useState('');
   const [billDetailsData, setBillDetailsData] = useState<BillsProps[]>(billDetailsList || []);
   const [totalAmountValue, setTotalAmountValue] = useState(0);
 
@@ -86,26 +87,34 @@ const NewSadadBillScreen: React.FC = () => {
     }
   };
 
-  const getAmountWarning = () => {
-    if (Number(availableBalance) <= 0) {
-      setWarningMessage(t('NEW_SADAD_BILLS.NO_REMAINING_AMOUNT'));
-    } else if (Number(availableBalance) < Number(amountValue)) {
-      setWarningMessage(t('NEW_SADAD_BILLS.INSUFFICIENT_BALANCE'));
-    } else {
-      setWarningMessage('');
+  const checkLimit = useMemo(() => {
+    const totalBillingAmount = Number(totalAmount);
+    let warningMsg = '';
+    let disabled = false;
+    if (totalBillingAmount > Number(availableBalance)) {
+      warningMsg = 'NEW_SADAD_BILLS.INSUFFICIENT_BALANCE';
+      disabled = true;
     }
-  };
+    if (totalBillingAmount > Number(monthlyRemainingOutgoingAmount)) {
+      warningMsg = 'COMMON.MONTHLY_REMAINING_OUTGOING_AMOUNT';
+      disabled = true;
+    }
 
-  useEffect(() => {
-    getAmountWarning();
-  }, [amountValue]);
+    return { warningMsg, disabled };
+  }, [billDetailsData]);
 
-  const onNavigateToConfirm = () => {
+  const onNavigateToConfirm = (value) => {
+    const updatedBillData = billDetailsData?.map((item) =>
+      item?.billNickname ? item : { ...item, billNickname: value.billName },
+    );
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: false,
-      saveBill: watch(FormFields.SAVE_BILL),
-      billPaymentInfos: { billPaymentDetails: billDetailsData, totalAmount: totalAmountValue },
+      saveBill: value.saveBill,
+      billPaymentInfos: {
+        billPaymentDetails: updatedBillData,
+        totalAmount: totalAmountValue,
+      },
     });
   };
 
@@ -145,9 +154,10 @@ const NewSadadBillScreen: React.FC = () => {
         validationSchema={validationSchema}
         defaultValues={{
           saveBill: false,
+          billName: '',
         }}
       >
-        {() => (
+        {({ handleSubmit, control, watch }) => (
           <IPaySafeAreaView>
             <IPayHeader backBtn title="NEW_SADAD_BILLS.NEW_SADAD_BILLS" applyFlex />
             <IPayView style={styles.container}>
@@ -179,7 +189,7 @@ const NewSadadBillScreen: React.FC = () => {
                       showActionBtn={billDetailsData?.length > 1}
                       onPress={() => removeBill(index)}
                     />
-                    {index === billDetailsData.length - 1 && newBill && (
+                    {!billDetailsData?.[0]?.saveBill && (
                       <IPaySadadSaveBill
                         saveBillToggle={watch(FormFields.SAVE_BILL) || false}
                         billInputName={FormFields.BILL_NAME}
@@ -190,15 +200,14 @@ const NewSadadBillScreen: React.FC = () => {
                   </IPayView>
                 )}
               />
-
-              {warningMessage ? (
+              {totalAmountValue ? (
                 <SadadFooterComponent
-                  btnDisbaled={warningMessage !== ''}
+                  btnDisabled={watch(FormFields.SAVE_BILL) && !watch(FormFields.BILL_NAME)}
                   btnStyle={styles.footerBtn}
                   btnText="TOP_UP.PAY"
                   disableBtnIcons
-                  warning={warningMessage}
-                  onPressBtn={onNavigateToConfirm}
+                  warning={checkLimit.warningMsg}
+                  onPressBtn={handleSubmit(onNavigateToConfirm)}
                   amount={amountValue || totalAmount}
                   totalAmount={totalAmountValue ?? 0}
                 />
@@ -209,7 +218,7 @@ const NewSadadBillScreen: React.FC = () => {
                   btnIconsDisabled
                   btnText="TOP_UP.PAY"
                   disabled={Number(amountValue) === 0}
-                  onPress={onNavigateToConfirm}
+                  onPress={handleSubmit(onNavigateToConfirm)}
                   btnStyle={styles.payBtn}
                 />
               )}

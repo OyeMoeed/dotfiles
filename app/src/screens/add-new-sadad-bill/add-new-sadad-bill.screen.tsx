@@ -152,7 +152,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
     const apiResponse: any = await inquireBillService(payload);
     if (apiResponse.successfulResponse) {
       const billDetailsList = {
-        billNickname: values.billName,
+        billNickname: values.saveBill ? values.billName : '',
         billerName: values.companyName,
         billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(selectedBiller?.billerId || '001'),
         serviceType: values.serviceType,
@@ -163,6 +163,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,
+        saveBill: values.saveBill,
       };
       navigate(ScreenNames.NEW_SADAD_BILL, { newBill: true, billDetailsList: [billDetailsList] });
     } else {
