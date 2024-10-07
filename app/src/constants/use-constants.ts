@@ -6,6 +6,8 @@ import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/i
 import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
+import { SelectedValue } from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.interface';
+import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
@@ -858,6 +860,21 @@ const useConstantData = () => {
     },
   ];
 
+  const musanedTransferHistoryFilterData = [
+    {
+      id: '1',
+      label: t('MUSANED.LABORER_NAME'),
+      type: FiltersType.LABORER_NAME,
+      filterValues: [],
+    },
+    {
+      id: '2',
+      label: t('MUSANED.SALARY_TYPE'),
+      type: FiltersType.SALARY_TYPE,
+      filterValues: [],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -887,6 +904,12 @@ const useConstantData = () => {
         },
       ],
     },
+  ];
+
+  const salaryTypes: SelectedValue[] = [
+    { id: SalaryCategories.Monthly_Salary, text: 'MUSANED.MONTHLY_SALARY' },
+    { id: SalaryCategories.Advanced_Salary, text: 'MUSANED.ADVANCED_SALARY' },
+    { id: SalaryCategories.Bonus_Salary, text: 'MUSANED.BONUS_SALARY' },
   ];
 
   const transferHistoryFilterDefaultValues = {
@@ -1581,6 +1604,8 @@ const useConstantData = () => {
     westernUnionData,
     activeBillDetails,
     localTransferReasonData,
+    musanedTransferHistoryFilterData,
+    salaryTypes,
   };
 };
 
