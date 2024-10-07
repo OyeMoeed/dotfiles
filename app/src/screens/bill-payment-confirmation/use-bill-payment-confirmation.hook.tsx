@@ -100,6 +100,32 @@ const useBillPaymentConfirmation = (
     });
   };
 
+  const onSaveBill = async (
+    billPayDetailsArr: BillPayDetailsArrProps[],
+    paymentSuccessResponse: MultiPaymentBillResponseTypes,
+  ) => {
+    const { billNumOrBillingAcct, billerId, billIdType, billerName, billNickname }: BillPaymentInfosTypes =
+      billPaymentInfos?.[0] || {};
+    const deviceInfo = await getDeviceInfo();
+    const payload: SaveBillPayloadTypes = {
+      billerId,
+      billNumOrBillingAcct,
+      billIdType,
+      billerName,
+      deviceInfo,
+      billNickname,
+      walletNumber,
+    };
+
+    const apiResponse: any = await saveBillService(payload);
+    if (apiResponse.successfulResponse) {
+      verifyOTPSheetRef.current?.close();
+      setIsOtpSheetVisible(false);
+      otpRef?.current?.close();
+      redirectToSuccess(billPayDetailsArr, paymentSuccessResponse);
+    }
+  };
+
   const onConfirm = async () => {
     const updatedBillPayment = billPaymentInfos?.map((item) => {
       const { billAmount, ...rest } = item;
@@ -138,32 +164,16 @@ const useBillPaymentConfirmation = (
 
     setIsLoading(false);
     if (apiResponse.successfulResponse) {
-      verifyOTPSheetRef.current?.close();
-      setIsOtpSheetVisible(false);
-      otpRef?.current?.close();
-      redirectToSuccess(billPayDetailsArr, apiResponse);
+      if (saveBill) {
+        onSaveBill(billPayDetailsArr, apiResponse);
+      } else {
+        verifyOTPSheetRef.current?.close();
+        setIsOtpSheetVisible(false);
+        otpRef?.current?.close();
+        redirectToSuccess(billPayDetailsArr, apiResponse);
+      }
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));
-    }
-  };
-
-  const onSaveBill = async () => {
-    const { billNumOrBillingAcct, billerId, billIdType, billerName, billNickname }: BillPaymentInfosTypes =
-      billPaymentInfos?.[0] || {};
-    const deviceInfo = await getDeviceInfo();
-    const payload: SaveBillPayloadTypes = {
-      billerId,
-      billNumOrBillingAcct,
-      billIdType,
-      billerName,
-      deviceInfo,
-      billNickname,
-      walletNumber,
-    };
-
-    const apiResponse: any = await saveBillService(payload);
-    if (apiResponse.successfulResponse) {
-      onConfirm();
     }
   };
 
@@ -171,8 +181,6 @@ const useBillPaymentConfirmation = (
     if (otp === '' || otp.length < 4) {
       setOtpError(true);
       otpVerificationRef.current?.triggerToast(t('COMMON.INCORRECT_CODE'), false);
-    } else if (saveBill) {
-      onSaveBill();
     } else {
       onConfirm();
     }
