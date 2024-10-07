@@ -50,7 +50,6 @@ const IPayFilterStyles = (colors) =>
     date: {
       width: scaleSize(130),
       fontSize: FONT_SIZE_8,
-      //height: verticalScale(54),
       borderRadius: moderateScale(16, 0.3),
     },
     amountCard: {
