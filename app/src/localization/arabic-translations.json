@@ -658,6 +658,7 @@
     "HOLDERS_NAME": "اسم حامل البطاقة",
     "CARD_TYPE": "نوع البطاقة",
     "ISSUANCE_FEE": "رسوم الإصدار",
+    "ISSUANCE_VAT": "Issuance Vat",
     "MADA_DEBIT_CARD": "بطاقة خصم مدى",
     "HUNDERED_SAR": "100 ريال سعودي",
     "VIRTUAL_CARD": "بطاقة افتراضية",
