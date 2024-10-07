@@ -9,6 +9,7 @@ const sadadBillsStyles = () =>
     container: {
       flex: 1,
       marginHorizontal: moderateScale(24, 0.3),
+      paddingBottom: verticalScale(24),
     },
     headerStyle: {
       marginHorizontal: moderateScale(24, 0.3),

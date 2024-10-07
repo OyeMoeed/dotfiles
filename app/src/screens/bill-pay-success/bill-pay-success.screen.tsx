@@ -9,7 +9,7 @@ import inquireBillService from '@app/network/services/bills-management/inquire-b
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants, customInvalidateQuery, shortString, States } from '@app/utilities';
+import { buttonVariants, customInvalidateQuery, States } from '@app/utilities';
 import { checkDateValidation, getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
 import React from 'react';
@@ -50,16 +50,16 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
     const isoFormat = checkDateValidation(dueDateTime, dateTimeFormat.ISODate);
     if (isoFormat.isValid()) {
-      return getDateFormate(isoFormat, dateTimeFormat.DateMonthYearWithoutSpace);
+      return dueDateTime ? getDateFormate(isoFormat, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
     }
-    return getDateFormate(date, dateTimeFormat.DateMonthYearWithoutSpace);
+    return dueDateTime ? getDateFormate(date, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
   };
 
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
     {
       id: '1',
       label: t('PAY_BILL.SERVICE_TYPE'),
-      value: item.serviceDescription ? shortString(item.serviceDescription, 15) : '-',
+      value: item.serviceDescription ? item.serviceDescription : '-',
     },
     {
       id: '2',
