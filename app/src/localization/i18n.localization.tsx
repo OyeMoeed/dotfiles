@@ -21,7 +21,8 @@ class CustomBackend extends HttpBackend {
     const loadPath = this?.options?.loadPath || languageUrl;
     const url = (loadPath as string)?.replace('{{lng}}', language);
 
-    if (constants.MOCK_API_RESPONSE) {
+    // TODO: remove true condition once BE resolve the issues
+    if (constants.MOCK_API_RESPONSE || true) {
       callback(new Error(), false);
       return;
     }
