@@ -1,5 +1,3 @@
-import { ApiError, MockAPIStatusProps } from '../../services.interface';
-
 interface AlinmaExpressBanks {
   code: string;
   desc: string;
@@ -8,22 +6,13 @@ interface AlinmaExpressBanks {
   country: string;
 }
 
-interface Response {
+interface AEBanksResponseInterface {
   banks: AlinmaExpressBanks[];
 }
 
-interface AEBeneficiaryBanksProps {
-  status: MockAPIStatusProps;
-  response: Response;
-  successfulResponse: boolean;
-  ok: boolean;
-  apiResponseNotOk?: boolean;
-  error?: ApiError;
-}
-
 interface AEBeneficiaryBanksParam {
-  alinmaExpressType: string;
-  countryCode: string;
+  alinmaExpressType?: string;
+  countryCode?: string;
 }
 
-export { AEBeneficiaryBanksParam, AEBeneficiaryBanksProps, AlinmaExpressBanks };
+export { AEBeneficiaryBanksParam, AlinmaExpressBanks, AEBanksResponseInterface };

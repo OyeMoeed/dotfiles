@@ -1,6 +1,7 @@
-import AEBeneficiaryMetaDataProps from './ae-beneficiary-metadata.interface';
+import { ApiResponse } from '../../services.interface';
+import { AEBeneficiaryMetaDataInterface } from './ae-beneficiary-metadata.interface';
 
-const aeBeneficiaryMetaDataMock: AEBeneficiaryMetaDataProps = {
+const aeBeneficiaryMetaDataMock: ApiResponse<AEBeneficiaryMetaDataInterface> | undefined = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -21,8 +22,6 @@ const aeBeneficiaryMetaDataMock: AEBeneficiaryMetaDataProps = {
     ],
   },
   successfulResponse: true,
-  ok: true,
-  apiResponseNotOk: false,
 };
 
 export default aeBeneficiaryMetaDataMock;

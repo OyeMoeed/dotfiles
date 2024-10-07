@@ -1,6 +1,7 @@
-import { WuRemittanceTypesProps } from './wu-remittance-types.interface';
+import { ApiResponse } from '../../services.interface';
+import { WuRemittanceTypesResponseInterface } from './wu-remittance-types.interface';
 
-const wuRemittanceTypesMock: WuRemittanceTypesProps = {
+const wuRemittanceTypesMock: ApiResponse<WuRemittanceTypesResponseInterface> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -23,8 +24,6 @@ const wuRemittanceTypesMock: WuRemittanceTypesProps = {
     ],
   },
   successfulResponse: true,
-  ok: true,
-  apiResponseNotOk: false,
 };
 
 export default wuRemittanceTypesMock;

@@ -1,6 +1,7 @@
-import { BeneficiariesFieldsProps } from './beneficiaries-dynamic-fields.interface';
+import { ApiResponse } from '../../services.interface';
+import { DynamicFieldsResponse } from './beneficiaries-dynamic-fields.interface';
 
-const beneficiariesDynamicFieldsMock: BeneficiariesFieldsProps = {
+const beneficiariesDynamicFieldsMock: ApiResponse<DynamicFieldsResponse> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -45,11 +46,9 @@ const beneficiariesDynamicFieldsMock: BeneficiariesFieldsProps = {
     ],
   },
   successfulResponse: true,
-  ok: true,
-  apiResponseNotOk: false,
 };
 
-const beneficiariesAEDynamicFieldsMock: BeneficiariesFieldsProps = {
+const beneficiariesAEDynamicFieldsMock: ApiResponse<DynamicFieldsResponse> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -69,8 +68,6 @@ const beneficiariesAEDynamicFieldsMock: BeneficiariesFieldsProps = {
     ],
   },
   successfulResponse: true,
-  ok: true,
-  apiResponseNotOk: false,
 };
 
 export { beneficiariesAEDynamicFieldsMock, beneficiariesDynamicFieldsMock };

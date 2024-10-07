@@ -1,36 +1,43 @@
+import React from 'react';
+
+export interface DynamicFieldListType {
+  code: string;
+  addtionalAttribute1?: string;
+  desc: string;
+}
+
 export interface DynamicField {
-  minAmount: number | null;
-  parentIndex: number | null;
-  onlyHijri: boolean | null;
+  minAmount?: number | null;
+  parentIndex?: number | null;
+  onlyHijri?: boolean | null;
   type: string;
   disable?: boolean;
   dependsOn?: string;
-  required: boolean;
-  lovFilter3: string | null;
-  billIdType: string | null;
-  childIndex: number | null | string;
-  lovFilter2: string | null;
-  maxAmount: number | null;
-  value: string | null;
-  lovFilter1: string | null;
-  maxWidth: number;
-  allowedValues: string[] | null;
-  integrationTagName: string;
-  hintEn: string | null;
+  required?: boolean;
+  lovFilter3?: string | null;
+  billIdType?: string | null;
+  childIndex?: number | null | string;
+  lovFilter2?: string | null;
+  maxAmount?: number | null;
+  value?: string | null;
+  lovFilter1?: string | null;
+  maxWidth?: number;
+  allowedValues?: string[] | null;
+  integrationTagName?: string;
+  hintEn?: string | null;
   index: string;
-  minWidth: number;
+  minWidth?: number;
   label: string;
-  hintAr: string | null;
-  hijriType: string | null;
-  dateCompareOperation: string | null;
-  requiredInPaymentOrRefund: string;
-  orderIndex: string;
-  lovList: Array<{
-    code: string;
-    addtionalAttribute1?: string;
-    desc: string;
-  }> | null;
-  lOVType: string | null;
+  hintAr?: string | null;
+  hijriType?: string | null;
+  dateCompareOperation?: string | null;
+  requiredInPaymentOrRefund?: string;
+  orderIndex?: string;
+  lovList?: Array<DynamicFieldListType> | null;
+  lOVType?: string | null;
+  rightIcon?: React.JSX.Element;
+  isCountry?: boolean;
+  isCurrency?: boolean;
 }
 
 export interface GetDynamicFieldsResponseTypes {

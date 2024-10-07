@@ -1,6 +1,7 @@
-import { WUBeneficiaryCurrenciesProps } from './wu-beneficiary-currencies.interface';
+import { ApiResponse } from '../../services.interface';
+import { WUCurrenciesResponseInterface } from './wu-beneficiary-currencies.interface';
 
-const wuBeneficiaryCurrenciesMock: WUBeneficiaryCurrenciesProps = {
+const wuBeneficiaryCurrenciesMock: ApiResponse<WUCurrenciesResponseInterface> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -23,7 +24,6 @@ const wuBeneficiaryCurrenciesMock: WUBeneficiaryCurrenciesProps = {
     ],
   },
   successfulResponse: true,
-  ok: true,
 };
 
 export default wuBeneficiaryCurrenciesMock;

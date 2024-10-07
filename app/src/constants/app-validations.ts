@@ -8,6 +8,7 @@ const REGEX = {
   DIGITS_ONLY: /^\d+$/,
   combinedSaudiMobileNumber: /^(05\d{8}|(?:\+?9665|009665|9665)\d{8})$/,
   name: /[^a-zA-Z\s]/g,
+  withoutSpecialCharacters: "^[^$&+,،:;=?@#|'<>.^*()%!-]+$",
 };
 const STANDARD_MAX_LENGTH = 10;
 const STANDARD_TEXT_INPUT_MAX_LENGTH = 256;

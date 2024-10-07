@@ -1,4 +1,5 @@
-import { WesternUnionCountries } from '@app/network/services/international-transfer/wu-beneficiary-metadata/wu-beneficiary-metadata.interface';
+import { UseFormReturn } from 'react-hook-form';
+import { InternationTransferValue } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 
 interface ServiceData {
   recordID: string;
@@ -6,30 +7,27 @@ interface ServiceData {
   serviceLogo: string;
   type?: string;
   beneficiaryType?: string;
+  serviceValue?: InternationTransferValue;
 }
 
 interface AddBeneficiaryValues {
-  currency: string;
-  country: string;
-  transferType: string;
+  currency?: string;
+  country?: string;
+  transferType?: string;
+  remittanceType?: string;
+  nickname?: string;
+  deliveryType?: string;
+  bank?: string;
 }
 const AddBeneficiaryFields = {
   currency: 'currency',
   country: 'country',
   transferType: 'transferType',
 };
+
 interface ServiceDataProps {
   data: ServiceData;
-  selectedService: ServiceData | null;
-  setSelectedService: (service: ServiceData) => void;
-  countryCode: string | null;
-  setCountryCode: (code: string) => void;
-  beneficiaryMetaData: WesternUnionCountries[];
-  setCurrencyCode: (currency: string) => void;
-  setRemittanceType: (type: string) => void;
-  setAPIError: (error: string | null) => void;
-  renderToast: (message: string) => void;
-  isChecked: boolean;
+  formProps: UseFormReturn<AddBeneficiaryValues>;
 }
 
 export { AddBeneficiaryFields, AddBeneficiaryValues, ServiceData, ServiceDataProps };

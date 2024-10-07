@@ -40,7 +40,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
 }) => {
   const renderField = () => {
     // Replace "." with "_" to flatten the name
-    const flatKey = field.index.replace(/\./g, '_');
+    const flatKey = field?.index?.replace(/\./g, '_');
     // let errorMessage
     // Fetch the error message before the switch statement
     // eslint-disable-next-line no-underscore-dangle
@@ -63,7 +63,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                 value={myIdCheck ? myIdValue : value}
                 maxLength={field.maxWidth}
                 onChangeText={onChange}
-                keyboardType={DYNAMIC_FIELDS_CONFIGS[field.type]?.keyboardType}
+                keyboardType={DYNAMIC_FIELDS_CONFIGS?.[field.type]?.keyboardType}
                 isError={!!get(errors, flatKey)}
                 editable={!myIdCheck}
                 assistiveText={errorMessage as string}
@@ -91,7 +91,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
             defaultValue={field.value}
             render={({ field: { value, onChange } }) => (
               <IPayDropdownSelect
-                data={field.lovList}
+                data={field?.lovList || []}
                 selectedValue={value}
                 label={field.label}
                 onSelectListItem={(selectedItem: string) => {
@@ -104,6 +104,9 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                 valueKey="code"
                 disabled={!field?.lovList ? true : field?.lovList?.length === 0}
                 errorMessage={errorMessage as string}
+                rightIcon={field?.rightIcon}
+                isCountry={field?.isCountry}
+                isCurrency={field?.isCurrency}
               />
             )}
           />

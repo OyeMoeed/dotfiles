@@ -886,6 +886,7 @@
     "AMOUNT_ERROR": "Incorrect amount",
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
+    "INVALID_TEXT": "Invalid Input!",
     "TOO_LONG": "Too Long!",
     "INVALID_IBAN": "Invalid IBAN",
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "Cannot remove Biometric keys",

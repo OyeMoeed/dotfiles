@@ -15,7 +15,7 @@ const alinmaExpressTransferConfirm = async (
   }
   try {
     const apiResponse: ApiResponse<AETransferConfirmProps> = await apiCall({
-      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.alinma_express_transfer()}/${walletNumber ?? ''}/express/transfer/confirm`,
+      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.alinma_express}/${walletNumber ?? ''}/express/transfer/confirm`,
       method: requestType.POST,
       payload,
     });

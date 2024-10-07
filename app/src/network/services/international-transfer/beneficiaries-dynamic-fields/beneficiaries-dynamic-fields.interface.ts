@@ -6,10 +6,10 @@ interface DynamicField {
   label: string;
   type: string;
   required: boolean;
-  integrationTagName: string;
+  integrationTagName?: string;
 }
 
-interface DynamicFieldsResponse {
+export interface DynamicFieldsResponse {
   dynamicFields: DynamicField[];
 }
 

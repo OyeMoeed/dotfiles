@@ -6,23 +6,16 @@ import INTERNATIONAL_TRANSFERS_URLS from '../international-transfer.urls';
 import WUBeneficiaryMetaDataProps from './wu-beneficiary-metadata.interface';
 import wuBeneficiaryMetaDataMock from './wu-beneficiary-metadata.mock';
 
-const getWUBeneficiaryMetaData = async (serviceType: string): Promise<WUBeneficiaryMetaDataProps> => {
+const getWUBeneficiaryMetaData = async (): Promise<ApiResponse<WUBeneficiaryMetaDataProps> | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return wuBeneficiaryMetaDataMock;
   }
-  try {
-    const apiResponse: ApiResponse<WUBeneficiaryMetaDataProps> = await apiCall({
-      endpoint: INTERNATIONAL_TRANSFERS_URLS.get_western_union_beneficiaries_metadata(serviceType),
-      method: requestType.GET,
-    });
+  const apiResponse: ApiResponse<WUBeneficiaryMetaDataProps> | undefined = await apiCall({
+    endpoint: INTERNATIONAL_TRANSFERS_URLS.get_western_union_beneficiaries_metadata,
+    method: requestType.GET,
+  });
 
-    if (apiResponse?.successfulResponse) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true, ...apiResponse?.response };
-  } catch (error) {
-    return { error: error || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export default getWUBeneficiaryMetaData;

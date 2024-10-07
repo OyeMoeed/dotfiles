@@ -15,7 +15,7 @@ const alinmaExpressTransferPrepare = async (
   }
   try {
     const apiResponse: ApiResponse<AETransferPrepareProps> = await apiCall({
-      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.alinma_express_transfer()}/${walletNumber ?? ''}/express/transfer/prepare`,
+      endpoint: `${INTERNATIONAL_TRANSFERS_URLS.alinma_express}/${walletNumber ?? ''}/express/transfer/prepare`,
       method: requestType.POST,
       payload,
     });

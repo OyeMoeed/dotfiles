@@ -1,5 +1,3 @@
-import { ApiError, MockAPIStatusProps } from '../../services.interface';
-
 export interface WesternUnionCountries {
   code: string;
   desc: string;
@@ -8,17 +6,8 @@ export interface WesternUnionCountries {
   phoneCode: string;
 }
 
-interface Response {
+interface WUBeneficiaryMetaDataResponseInterface {
   westernUnionCountryList: WesternUnionCountries[];
 }
 
-interface WUBeneficiaryMetaDataProps {
-  status: MockAPIStatusProps;
-  response: Response;
-  successfulResponse: boolean;
-  ok?: boolean;
-  apiResponseNotOk?: boolean;
-  error?: ApiError;
-}
-
-export default WUBeneficiaryMetaDataProps;
+export default WUBeneficiaryMetaDataResponseInterface;

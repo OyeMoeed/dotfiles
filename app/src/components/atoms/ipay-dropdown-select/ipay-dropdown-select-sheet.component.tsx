@@ -1,6 +1,14 @@
 import icons from '@app/assets/icons';
 import { SearchNormalIcon } from '@app/assets/svgs';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
+import {
+  IPayFlag,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayInput,
+  IPayPressable,
+  IPayView,
+} from '@app/components/atoms';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import useTheme from '@app/styles/hooks/theme.hook';
 import React, { useEffect, useState } from 'react';
@@ -17,6 +25,8 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
   isVisible,
   onCloseBottomSheet,
   labelKey,
+  isCountry,
+  isCurrency,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -47,7 +57,12 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
 
   const renderListItems = ({ item }: { item: ListItem }) => (
     <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item)}>
-      <IPayFootnoteText text={item[labelKey]} />
+      <IPayView style={styles.flagTitleContainer}>
+        {!!(isCountry || isCurrency) && !!item?.code && (
+          <IPayFlag countryCode={item?.code} style={styles.flagStyle} isCurrency={isCurrency} />
+        )}
+        <IPayFootnoteText text={item[labelKey]} />
+      </IPayView>
       {selectedItem === item[labelKey] ? listCheckIcon : <IPayView />}
     </IPayPressable>
   );

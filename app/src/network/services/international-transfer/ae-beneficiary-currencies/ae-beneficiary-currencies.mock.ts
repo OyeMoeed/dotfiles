@@ -1,7 +1,7 @@
 import { ApiResponse } from '../../services.interface';
-import { AECountriesResponseInterface } from './ae-beneficiary-countries.interface';
+import { AECurrenciesInterface } from './ae-beneficiary-currencies.interface';
 
-const aeBeneficiaryCountriesMock: ApiResponse<AECountriesResponseInterface> = {
+const aeBeneficiaryCountriesMock: ApiResponse<AECurrenciesInterface> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -10,7 +10,7 @@ const aeBeneficiaryCountriesMock: ApiResponse<AECountriesResponseInterface> = {
     requestReference: '06851820381011026813',
   },
   response: {
-    countries: [
+    currencies: [
       {
         code: 'SA',
         desc: 'Saudi Arabia',

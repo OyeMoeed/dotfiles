@@ -25,6 +25,8 @@ export interface IPayDropdownSelectProps {
   customSnapPoints?: any[];
   containerStyle?: any;
   rightIcon?: any;
+  isCountry?: boolean;
+  isCurrency?: boolean;
 }
 
 export interface ListItem {
@@ -43,4 +45,6 @@ export interface IPayDropdownComponentSheetProps {
   labelKey: string;
   isVisible: boolean;
   onCloseBottomSheet: () => void;
+  isCountry?: boolean;
+  isCurrency?: boolean;
 }

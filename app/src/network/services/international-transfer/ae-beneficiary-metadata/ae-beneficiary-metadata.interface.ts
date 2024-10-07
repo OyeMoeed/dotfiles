@@ -5,13 +5,13 @@ export interface AETypeList {
   desc: string;
 }
 
-interface Response {
+export interface AEBeneficiaryMetaDataInterface {
   alinmaExpressTypeList: AETypeList[];
 }
 
 interface AEBeneficiaryMetaDataProps {
   status: MockAPIStatusProps;
-  response: Response;
+  response: AEBeneficiaryMetaDataInterface;
   successfulResponse: boolean;
   ok?: boolean;
   apiResponseNotOk?: boolean;

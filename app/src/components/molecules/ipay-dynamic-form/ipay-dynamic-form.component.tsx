@@ -14,7 +14,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
   myIdCheck,
   handleParentLovChange,
 }) => {
-  if (!fields.length) {
+  if (!fields?.length) {
     return null;
   }
   return (

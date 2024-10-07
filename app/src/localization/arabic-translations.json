@@ -808,6 +808,7 @@
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
+    "INVALID_TEXT": "إدخال غير صالح!",
     "TOO_LONG": "طويل جدا!",
     "INVALID_IBAN": "IBAN غير صالح",
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "لا يمكن إزالة مفاتيح القياس البيومترية",

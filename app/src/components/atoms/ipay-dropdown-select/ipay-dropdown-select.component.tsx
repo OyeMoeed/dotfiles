@@ -25,6 +25,8 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   containerStyle,
   customSnapPoints,
   rightIcon,
+  isCountry,
+  isCurrency,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -52,7 +54,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   };
 
   const getDisplayedValue = useMemo(
-    () => data.find((item) => item[valueKey] === selectedValue)?.[labelKey],
+    () => data?.find((item) => item[valueKey] === selectedValue)?.[labelKey],
     [data, labelKey, selectedValue, valueKey],
   );
 
@@ -86,6 +88,8 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
         onCloseBottomSheet={() => {
           setIsVisible(false);
         }}
+        isCountry={isCountry}
+        isCurrency={isCurrency}
       />
     </>
   );
