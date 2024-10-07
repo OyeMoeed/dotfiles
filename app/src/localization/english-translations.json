@@ -1640,5 +1640,10 @@
     "SHEET_TITLE": "App maintenance",
     "TITLE": "The app is currently\nundergoing maintenance",
     "DESCRIPTION": "We appreciate your patience and will be back shortly.\nThank you!"
+  },
+  "IDLE_TIMER_SHEET": {
+    "SHEET_TITLE": "Timeout",
+    "TITLE": "The App was idle for a while",
+    "DESCRIPTION": "session timeout"
   }
 }
