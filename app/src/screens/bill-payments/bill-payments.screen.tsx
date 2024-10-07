@@ -38,7 +38,7 @@ const BillPaymentsScreen: React.FC = () => {
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
   const getTrafficVoilationData = async () => {
     const apiResponse: any = await getTrafficViolationData();
-    const bills = apiResponse?.response?.trafficViolationList?.length;
+    const bills = apiResponse?.response?.trafficViolations?.length;
     setTrafficUnpaidViolationsCount(bills);
   };
   useEffect(() => {
