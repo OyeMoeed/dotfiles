@@ -30,6 +30,9 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
   errorMessageStyle,
   suffix,
   maxLength,
+  pointerEvents,
+  extraComponent,
+  withExtraPadding = true,
   ...props
 }) => {
   const { t } = useTranslation();
@@ -76,11 +79,11 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
     if (onChangeText) onChangeText(txt);
   };
 
-  return (
-    <IPayView testID={`${testID}-animated-input`}>
+  const renderInput = () => (
+    <>
       <IPayView
         style={[
-          styles.container,
+          withExtraPadding ? styles.containerWithoutPadding : styles.containerBox,
           isFocused && styles.focusedContainer,
           !editable && styles.disabledContainer,
           isError && styles.errorContainer,
@@ -116,6 +119,14 @@ const IPayAnimatedTextInput: React.FC<AnimatedTextInputProps> = ({
           </IPayPressable>
         )}
       </IPayView>
+      {extraComponent && extraComponent}
+    </>
+  );
+
+  return (
+    <IPayView testID={`${testID}-animated-input`} pointerEvents={pointerEvents}>
+      {!withExtraPadding ? <IPayView style={styles.container}>{renderInput()}</IPayView> : renderInput()}
+
       {assistiveText && (
         <IPayView style={[styles.errorTextView, errorMessageViewStyle]}>
           <IPayCaption1Text

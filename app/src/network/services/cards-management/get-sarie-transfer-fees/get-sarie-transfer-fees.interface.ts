@@ -8,6 +8,8 @@ export interface SarieTransferFeesTypes {
 }
 
 export interface GetSarieTransferFeesResponseTypes {
+  apiResponseNotOk: any;
+  error(error: any): unknown;
   status: MockAPIStatusProps;
   response: SarieTransferFeesTypes;
   successfulResponse: boolean;

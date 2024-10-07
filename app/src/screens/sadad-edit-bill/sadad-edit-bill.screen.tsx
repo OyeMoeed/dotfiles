@@ -123,7 +123,6 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
                 <IPaySubHeadlineText regular text={billerName} style={styles.inputValueText} />
               </IPayView>
             </IPayView>
-            <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.natural.natural500} />
           </IPayView>
 
           <IPayView style={styles.diabledCardView}>
@@ -131,7 +130,6 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
               <IPayCaption1Text text="NEW_SADAD_BILLS.SERVICE_TYPE" color={colors.natural.natural500} />
               <IPaySubHeadlineText regular text={serviceDescription} style={styles.inputValueText} />
             </IPayView>
-            <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.natural.natural500} />
           </IPayView>
 
           <IPayView style={styles.diabledCardView}>

@@ -27,7 +27,7 @@ const IPayListView: React.FC<IPayListViewProps> = ({
     <IPayView testID={`${testID}-list-view`} style={[styles.container, styles]}>
       <IPayFlatlist
         data={list}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => `${item.id.toString()}-${testID}-${index}`}
         renderItem={({ item }) => (
           <IPayList
             style={cardStyles}

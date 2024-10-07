@@ -1,0 +1,5 @@
+const MUSANED_QUERY_KEYS = Object.freeze({
+  GET_MUSANED_INQUIRY: 'GET_MUSANED_INQUIRY',
+});
+
+export default MUSANED_QUERY_KEYS;

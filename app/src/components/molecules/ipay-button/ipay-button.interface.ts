@@ -48,4 +48,8 @@ export interface IPayButtonProps {
    * Need translate the text.
    */
   shouldTranslateBtnText?: boolean;
+  /**
+   * Need to show alinma logo.
+   */
+  withAlinmaLogo?: boolean;
 }

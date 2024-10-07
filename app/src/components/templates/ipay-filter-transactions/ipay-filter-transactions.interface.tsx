@@ -32,8 +32,6 @@ export interface IPayFilterTransactionsProps {
 
   currentCard?: CardInterface;
 
-  cards?: any[] | undefined;
-
   contacts?: any[] | undefined;
 
   showDateFilter?: boolean;
@@ -45,14 +43,6 @@ export interface IPayFilterTransactionsProps {
   isVisible: boolean;
 
   onCloseFilterSheet: () => void;
-
-  setSelectedCard?: (card: any) => void;
-
-  // filters: FilterTypes[];
-
-  // bottomFilters?: FilterTypes[] | undefined;
-
-  // isBottomDropdowns?: boolean;
 
   defaultValues: any;
   doneText?: string;
