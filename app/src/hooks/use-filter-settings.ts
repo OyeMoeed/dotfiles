@@ -10,7 +10,6 @@ import LocalBeneficiaryMetaMockProps from '@app/network/services/local-transfer/
 import getlocalBeneficiaryMetaData from '@app/network/services/local-transfer/local-transfer-beneficiary-metadata/local-beneficiary-metadata.service';
 import getlocalTransferBeneficiaries from '@app/network/services/local-transfer/local-transfer-beneficiaries/local-transfer-beneficiaries.service';
 
-
 const useFilterSettings = (
   showTypeFilter?: boolean,
   showContactsFilter?: boolean,
