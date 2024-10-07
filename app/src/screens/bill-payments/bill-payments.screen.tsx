@@ -14,9 +14,9 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   ApiResponseStatusType,
-  BillingStatus,
   BillPaymentOptions,
   BillStatus,
+  BillingStatus,
   buttonVariants,
 } from '@app/utilities/enums.util';
 import { useFocusEffect } from '@react-navigation/core';
@@ -32,6 +32,7 @@ const BillPaymentsScreen: React.FC = () => {
   const [billsData, setBillsData] = useState<PaymentInfoProps[]>([]);
   const [sadadBills, setSadadBillsData] = useState<PaymentInfoProps[]>([]);
   const [unpaidBillsCount, setUnpaidBillsCount] = useState<number>(0);
+  const [loadingBills, setLoadingBill] = useState<boolean>(false);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
 
   const onPressViewAll = () => {
@@ -58,6 +59,7 @@ const BillPaymentsScreen: React.FC = () => {
   };
 
   const getBills = async () => {
+    setLoadingBill(true);
     const payload: GetSadadBillByStatusProps = {
       walletNumber,
       billStatus: BillingStatus.ENABLED,
@@ -72,6 +74,7 @@ const BillPaymentsScreen: React.FC = () => {
         setBillsData(updatedData);
       }
     }
+    setLoadingBill(false);
   };
 
   // Use useFocusEffect to call the function when the screen comes into focus
@@ -118,7 +121,7 @@ const BillPaymentsScreen: React.FC = () => {
             />
           </IPayView>
         ) : (
-          <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />
+          <> {!loadingBills && <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />} </>
         )}
       </IPayView>
       <IPayBillPaymentsFooter onPressBillPaymentOption={onPressBillPaymentOption} />
