@@ -13,7 +13,7 @@ import { IPayChip } from '@app/components/molecules';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dateTimeFormat } from '@app/utilities';
-import { getFormattedDate } from '@app/utilities/date-helper.util';
+import { getDateFormate } from '@app/utilities/date-helper.util';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
@@ -88,7 +88,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   }, [dueDateTime]);
 
   const billingAmount = amount ? `${amount || 0} ${t('COMMON.SAR')}` : '';
-  const billingDueDate = `${t('SADAD.DUE')} ${getFormattedDate(dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace, dateTimeFormat.MonthDateFormat)}`;
+  const billingDueDate = `${t('SADAD.DUE')} ${getDateFormate(dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace, dateTimeFormat.MonthDateFormat)}`;
 
   const onPressCheckBox = () => {
     if (onSelectBill) onSelectBill(billId);

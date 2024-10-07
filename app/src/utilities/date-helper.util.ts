@@ -27,9 +27,7 @@ const formatYearToLastTwoDigits = (year: string) => {
 };
 
 const formatTimeAndDate = (dateString: string) => moment(dateString).format(dateTimeFormat.TimeAndDate);
-const getFormattedDate = (date: string | Date, dateFormat: string, inputFormat?: string) => {
-  return inputFormat ? moment(date, inputFormat).format(dateFormat) : moment(date).format(dateFormat);
-};
+
 const formatCountdownTime = (seconds: number) => {
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
@@ -47,7 +45,8 @@ function minutesToSeconds(minutes: string | number) {
 
 const checkDateValidation = (date: string, dateFormate: string) => moment(date, dateFormate, true);
 
-const getDateFormate = (date: string | Date, dateFormate: string) => moment(date).format(dateFormate);
+const getDateFormate = (date: string | Date, dateFormate: string, inputFormat?: string) =>
+  inputFormat ? moment(date, inputFormat).format(dateFormate) : moment(date).format(dateFormate);
 
 /**
  * Format date string to 'DD/MM/YYYY - HH:mm'
@@ -87,7 +86,5 @@ export {
   formatTimeAndDate,
   formatYearToLastTwoDigits,
   getDateFormate,
-  getFormattedDate,
-  minutesToSeconds
+  minutesToSeconds,
 };
-
