@@ -24,6 +24,7 @@ import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import IPayInternationalBeneficiaryListProps from './ipay-international-beneficiary-list.interface';
 import internationalBeneficiaryListStyle from './ipay-international-beneficiary-list.style';
+import remittanceTypeDescKeysMapping from './ipay-international-beneficiary-list.utils';
 
 const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps> = ({
   search,
@@ -89,7 +90,7 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
         isShowSubTitle
         isShowLeftIcon
         centerContainerStyles={styles.listCenterContainer}
-        adjacentSubTitle={remittanceTypeDesc}
+        adjacentSubTitle={t(remittanceTypeDescKeysMapping(remittanceTypeDesc))}
         regularTitle={false}
         leftIcon={<IPayFlag countryCode={country} />}
         rightText={
@@ -108,7 +109,12 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
                 beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary800 : ''
               }
             />
-            <IPayPressable onPress={() => onPressMenuOption(item)}>
+            <IPayPressable
+              onPress={() => {
+                setSelectedBeneficiary(item);
+                onPressMenuOption();
+              }}
+            >
               <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
             </IPayPressable>
           </IPayView>

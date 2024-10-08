@@ -58,7 +58,6 @@ const InternationalTransferScreen: React.FC = () => {
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
   const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const [selectedNumber, setSelectedNumber] = useState<string>('');
-  const [, setNickName] = useState('');
   const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
   const [selectedBeneficiary, setSelectedBeneficiary] = useState<BeneficiaryDetailsProps>();
   const editBeneficiaryRef = useRef<any>(null);
@@ -78,6 +77,7 @@ const InternationalTransferScreen: React.FC = () => {
     if (activeTab === TransferGatewayType.ALINMA_DIRECT && aeBeneficiaryData) {
       setFilteredBeneficiaryData(aeBeneficiaryData);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleActivateBeneficiary = useCallback(() => {
@@ -91,29 +91,30 @@ const InternationalTransferScreen: React.FC = () => {
     editBeneficiaryRef.current.hide();
   };
 
-  const handleOnEditNickName = () => {
+  const handleEditBeneficiary = () => {
     editBeneficiaryRef.current.hide();
-    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, { selectedBeneficiary });
+    navigate(ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER, { beneficiary: selectedBeneficiary });
   };
 
-  const handleBeneficiaryActions = useCallback((index: number) => {
-    switch (index) {
-      case 1:
-        handleOnEditNickName();
-        break;
-      case 2:
-        handleDelete();
-        break;
-      default:
-        editBeneficiaryRef.current.hide();
-        break;
-    }
+  const handleBeneficiaryActions = useCallback(
+    (index: number) => {
+      switch (index) {
+        case 1:
+          handleEditBeneficiary();
+          break;
+        case 2:
+          handleDelete();
+          break;
+        default:
+          editBeneficiaryRef.current.hide();
+          break;
+      }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [selectedBeneficiary],
+  );
 
-  const onPressMenuOption = (item: BeneficiaryDetailsProps) => {
-    setNickName(item?.nickname ?? '');
-    setSelectedBeneficiary(item);
+  const onPressMenuOption = () => {
     setTimeout(() => {
       editBeneficiaryRef?.current?.show();
     }, 0);
@@ -174,7 +175,7 @@ const InternationalTransferScreen: React.FC = () => {
   const onPressPriceCalculator = () => {
     navigate(ScreenNames.PRICE_CALCULATOR);
   };
-  const handleAddNewBeneficiray = () => {
+  const handleAddNewBeneficiary = () => {
     navigate(ScreenNames.ADD_INTERNATIONAL_BENEFICIARY);
   };
 
@@ -215,6 +216,7 @@ const InternationalTransferScreen: React.FC = () => {
       setActivateHeight(SNAP_POINTS.LARGE);
       setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const renderCurrentOption = useMemo(() => {
@@ -256,6 +258,7 @@ const InternationalTransferScreen: React.FC = () => {
       default:
         break;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onPressHistory = () => {
@@ -318,7 +321,7 @@ const InternationalTransferScreen: React.FC = () => {
           handleActivateBeneficiary={handleActivateBeneficiary}
           activeTab={activeTab}
           onPressMenuOption={onPressMenuOption}
-          handleAddNewBeneficiary={handleAddNewBeneficiray}
+          handleAddNewBeneficiary={handleAddNewBeneficiary}
           isLoading={
             activeTab === TransferGatewayType.ALINMA_DIRECT ? isLoadingAeBeneficiaries : isLoadingWuBeneficiaries
           }

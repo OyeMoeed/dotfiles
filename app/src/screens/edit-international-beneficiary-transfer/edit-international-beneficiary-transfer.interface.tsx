@@ -9,6 +9,7 @@ const BeneficiaryFields = {
   BANK_NAME: 'bankName',
   RELATIONSHIP: 'relationship',
   CITY: 'city',
+  CURRENCY: 'currency',
   ADDRESS: 'address',
   BENEFICIARY_NICK_NAME: 'beneficiaryNickName',
   WALLET_TYPE: 'walletType',
@@ -17,6 +18,8 @@ const BeneficiaryFields = {
   THIRD_NAME: 'thirdName',
   LAST_NAME: 'lastName',
   BENEFICIARY_NATIONALITY: 'beneficiaryNationality',
+  COUNTRY: 'country',
+  REMITTANCE_TYPE: 'remittanceType',
 };
 enum TransferTypes {
   DIGITAL_WALLET = 'Digital Wallet',
@@ -31,12 +34,11 @@ interface BeneficiaryTransferFormValues {
   beneficiaryName: string;
   iban: string;
   bankName: string;
-  relationship: string;
+  remittanceType: string;
   city: string;
-  address: string;
   beneficiaryNickName?: string;
-  walletType: string;
-  beneficiaryNationality: string;
+  currency: string;
+  country: string;
   beneficiaryCode: string;
 }
 

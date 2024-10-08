@@ -11,7 +11,7 @@ interface IPayInternationalBeneficiaryListProps {
   setSelectedBeneficiary: Dispatch<SetStateAction<BeneficiaryDetailsProps | undefined>>;
   handleActivateBeneficiary: () => void;
   activeTab: string;
-  onPressMenuOption: (item: BeneficiaryDetailsProps) => void;
+  onPressMenuOption: () => void;
   handleAddNewBeneficiary: () => void;
   isLoading: boolean;
 }

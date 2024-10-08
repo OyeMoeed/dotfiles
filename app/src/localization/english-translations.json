@@ -1137,9 +1137,12 @@
     "RELATION_SHIP": "Relationship",
     "COUNTRY_NAME": "Country Name",
     "CITY_NAME": "City Name",
-    "DELIVERY_TYPE": "Delivery Type",
     "CURRENCY": "Currency",
-    "INCLUDE_FEES": "Include Fees"
+    "INCLUDE_FEES": "Include Fees",
+    "CASH": "CASH",
+    "TO_ACCOUNT": "TO ACCOUNT",
+    "REMITTANCE_TYPE": "Remittance type",
+    "NICKNAME_REQUIRED": "Beneficiary Nickname field is required"
   },
   "BENEFICIARY_OPTIONS": {
     "REVIEW_AND_EDIT": "Review & Edit",

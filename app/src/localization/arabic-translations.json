@@ -987,8 +987,12 @@
     "RELATION_SHIP": "علاقة",
     "COUNTRY_NAME": "اسم البلد",
     "CITY_NAME": "اسم المدينة",
-    "DELIVERY_TYPE": "نوع التسليم",
-    "CURRENCY": "العملة"
+    "CURRENCY": "العملة",
+    "INCLUDE_FEES": "تضمين الرسوم",
+    "CASH": "نقد",
+    "TO_ACCOUNT": "إلى الحساب",
+    "REMITTANCE_TYPE": "نوع الحوالة",
+    "NICKNAME_REQUIRED": "حقل اسم المستفيد مطلوب"
   },
   "BENEFICIARY_OPTIONS": {
     "DELETE_BENFICIARY": "حذف المستفيد",

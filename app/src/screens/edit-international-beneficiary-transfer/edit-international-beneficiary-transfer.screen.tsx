@@ -1,41 +1,50 @@
-import { IPayDropdown, IPayFootnoteText, IPayScrollView, IPayView } from '@app/components/atoms';
+import { IPayFootnoteText, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayRHFAnimatedTextInput as IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { BANKS, CURRENCIES, RELATIONSHIPS, SNAP_POINTS } from '@app/constants/constants';
+import remittanceTypeDescKeysMapping from '@app/components/templates/ipay-international-beneficiary-list/ipay-international-beneficiary-list.utils';
 import { goBack } from '@app/navigation/navigation-service.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
-import { useRoute } from '@react-navigation/core';
+import { RouteProp, useRoute } from '@react-navigation/core';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
+import { BeneficiaryDetailsProps } from '../international-transfer/international-transfer.interface';
 import useInternationalTransferHook from './edit-international-beneficiary-transfer.hook';
 import { BeneficiaryFields, BeneficiaryTransferFormValues } from './edit-international-beneficiary-transfer.interface';
 import beneficiaryTransferStyles from './edit-international-beneficiary-transfer.style';
 
 const EditIBeneficiaryTransferScreen: React.FC = () => {
-  const { params: { selectedBeneficiary } = {} } = useRoute();
+  const {
+    params: { beneficiary },
+  } = useRoute<RouteProps>();
+  type RouteProps = RouteProp<{ params: { beneficiary: BeneficiaryDetailsProps | undefined } }, 'params'>;
   const { colors } = useTheme();
+  const { t } = useTranslation();
 
   const styles = beneficiaryTransferStyles(colors);
-  const { onSubmit, cities } = useInternationalTransferHook();
+  const { onSubmit } = useInternationalTransferHook();
 
-  const validationSchema = Yup.object().shape({});
+  const validationSchema = Yup.object().shape({
+    [BeneficiaryFields.BENEFICIARY_NICK_NAME]: Yup.string()
+      .required(t('INTERNATIONAL_TRANSFER.NICKNAME_REQUIRED'))
+      .max(50, 'VALIDATION.MAX_LENGTH'),
+  });
 
   return (
     <IPayFormProvider<BeneficiaryTransferFormValues>
       validationSchema={validationSchema}
       defaultValues={{
-        beneficiaryName: selectedBeneficiary?.fullName,
-        iban: selectedBeneficiary?.beneficiaryAccountNumber,
-        bankName: selectedBeneficiary?.beneficiaryBankDetail?.bankName,
-        relationship: '',
-        city: '',
-        address: '',
-        beneficiaryNickName: selectedBeneficiary?.nickname,
-        walletType: '',
-        beneficiaryNationality: '',
-        beneficiaryCode: selectedBeneficiary?.beneficiaryCode,
+        beneficiaryName: beneficiary?.fullName,
+        iban: beneficiary?.beneficiaryAccountNumber,
+        bankName: beneficiary?.beneficiaryBankDetail?.bankName || '',
+        remittanceType: t(remittanceTypeDescKeysMapping(beneficiary?.remittanceTypeDesc || '')),
+        city: beneficiary?.beneficiaryBankDetail?.city || '',
+        beneficiaryNickName: beneficiary?.nickname,
+        currency: beneficiary?.currencyDesc,
+        country: beneficiary?.countryDesc,
+        beneficiaryCode: beneficiary?.beneficiaryCode,
       }}
     >
       {({ handleSubmit }) => (
@@ -52,30 +61,37 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
 
                 <IPayAnimatedTextInput
                   name={BeneficiaryFields.BENEFICIARY_NICK_NAME}
-                  label="NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL"
+                  label="INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME"
                 />
 
                 <>
                   <IPayAnimatedTextInput
                     name={BeneficiaryFields.BENEFICIARY_NAME}
                     label="NEW_BENEFICIARY.BENEFECIARY_FULL_NAME"
+                    editable={false}
+                    containerStyle={styles.disabledInput}
+                    labelColor={colors?.natural?.natural500}
                   />
-                  <IPayDropdown
-                    dropdownType="COMMON.RELATIONSHIP"
-                    data={RELATIONSHIPS}
-                    size={SNAP_POINTS.MID_LARGE}
-                    name={BeneficiaryFields.RELATIONSHIP}
-                    label="COMMON.RELATIONSHIP"
+
+                  <IPayAnimatedTextInput
+                    name={BeneficiaryFields.REMITTANCE_TYPE}
+                    label="INTERNATIONAL_TRANSFER.REMITTANCE_TYPE"
+                    editable={false}
+                    containerStyle={styles.disabledInput}
+                    labelColor={colors?.natural?.natural500}
                   />
-                  <IPayDropdown
-                    dropdownType="COMMON.CITY"
-                    data={cities}
-                    size={SNAP_POINTS.MID_LARGE}
-                    name={BeneficiaryFields.CITY}
-                    label="PROFILE.CITY_NAME"
-                    isSearchable
-                    disabled
+
+                  <IPayAnimatedTextInput
+                    name={BeneficiaryFields.COUNTRY}
+                    label="INTERNATIONAL_TRANSFER.COUNTRY"
+                    editable={false}
+                    containerStyle={styles.disabledInput}
+                    labelColor={colors?.natural?.natural500}
                   />
+
+                  {beneficiary?.beneficiaryBankDetail?.city && (
+                    <IPayAnimatedTextInput name={BeneficiaryFields.CITY} label="COMMON.CITY" editable={false} />
+                  )}
                 </>
 
                 <IPayFootnoteText
@@ -83,22 +99,31 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
                   style={styles.textStyle}
                   text="COMMON.BANK_DETAILS"
                 />
-                <IPayAnimatedTextInput name={BeneficiaryFields.IBAN} label="COMMON.IBAN" editable={false} />
-                <IPayDropdown
-                  dropdownType="INTERNATIONAL_TRANSFER.BANK_NAME"
-                  data={BANKS}
-                  size={SNAP_POINTS.MID_LARGE}
+
+                {beneficiary?.beneficiaryAccountNumber && (
+                  <IPayAnimatedTextInput
+                    name={BeneficiaryFields.IBAN}
+                    label="COMMON.IBAN"
+                    editable={false}
+                    containerStyle={styles.disabledInput}
+                    labelColor={colors?.natural?.natural500}
+                  />
+                )}
+
+                <IPayAnimatedTextInput
                   name={BeneficiaryFields.BANK_NAME}
                   label="INTERNATIONAL_TRANSFER.BANK_NAME"
-                  disabled
+                  editable={false}
+                  containerStyle={styles.disabledInput}
+                  labelColor={colors?.natural?.natural500}
                 />
 
-                <IPayDropdown
-                  dropdownType="NEW_BENEFICIARY.CHOOSE_CURRENCY"
-                  data={CURRENCIES}
-                  size={SNAP_POINTS.MID_LARGE}
-                  name={BeneficiaryFields.WALLET_TYPE}
+                <IPayAnimatedTextInput
+                  name={BeneficiaryFields.CURRENCY}
                   label="COMMON.CURRENCY"
+                  editable={false}
+                  containerStyle={styles.disabledInput}
+                  labelColor={colors?.natural?.natural500}
                 />
               </>
             </IPayScrollView>
