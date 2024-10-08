@@ -32,8 +32,9 @@ import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
-import { alertType, alertVariant, ApiResponseStatusType, buttonVariants } from '@app/utilities/enums.util';
+import { ApiResponseStatusType, alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
+import walletUtils from '@app/utilities/wallet.utils';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Contact } from 'react-native-contacts';
@@ -42,7 +43,7 @@ import sendGiftAmountStyles from './send-gift-amount.style';
 const defaultValue = '0.00';
 
 const SendGiftAmountScreen = ({ route }) => {
-  const { selectedContacts, giftDetails } = route.params;
+  const { selectedContacts, giftDetails, activeFriends } = route.params;
   const { t } = useTranslation();
   const [topUpAmount, setTopUpAmount] = useState('');
   const MAX_CONTACTS = 5;
@@ -153,7 +154,9 @@ const SendGiftAmountScreen = ({ route }) => {
   };
 
   const renderItem = ({ item }: { item: Contact }) => {
-    const { givenName, recordID, isAlinma } = item;
+    const { givenName, recordID } = item;
+    const isAlinma = walletUtils.isContactHasWallet(item.phoneNumbers[0].number, activeFriends);
+
     let detailText = `${topUpAmount || 0} ${t('COMMON.SAR')}`;
 
     if (selectedTab === t('SEND_GIFT.SPLIT') && contacts.length > 0) {

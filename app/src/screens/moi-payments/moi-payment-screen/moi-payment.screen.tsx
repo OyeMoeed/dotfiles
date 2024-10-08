@@ -117,7 +117,7 @@ const MoiPaymentScreen: React.FC = () => {
   const fetchFields = async (serviceProviderVal: string, serviceType: string) => {
     setSelectedBiller(serviceProviderVal);
     setSelectedServiceType(serviceType);
-    const response = await getDynamicFieldsService(serviceProviderVal, selectedServiceType, walletNumber);
+    const response = await getDynamicFieldsService(serviceProviderVal, serviceType, walletNumber);
     if (response) {
       const fetchedFields = response.response.dynamicFields;
 

@@ -206,7 +206,7 @@ const TransferSummaryScreen: React.FC = () => {
         requests: transfersDetails?.formInstances?.map((item) => ({
           mobileNumber: item.mobileNumber,
           amount: item.amount,
-          note: item.notes,
+          note: `${item.notes}#${giftDetails?.selectedCard?.id}`,
           giftCategory: giftDetails?.selectedCard?.id,
         })),
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
@@ -350,7 +350,7 @@ const TransferSummaryScreen: React.FC = () => {
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
           onResendCodePress={onResendCodePress}
-          timeout={otpConfig.transaction.otpTimeout}
+          timeout={otpConfig.sendGift.otpTimeout}
         />
       </IPayPortalBottomSheet>
       <IPayBottomSheet

@@ -300,7 +300,7 @@ const IPayFilterBottomSheet = forwardRef<{}, IPayFilterProps>(
                   label={label}
                   editable={editable}
                   value={value?.title ? extractTitleByValue(value?.title) : extractTitleByValue(value)}
-                  containerStyle={[styles.inputContainerStyle, inputStyle]}
+                  containerStyle={[styles.inputContainerStyle, styles.receiverName, inputStyle]}
                   inputStyle={styles.input}
                   showRightIcon
                   customIcon={listCheckIcon(dropdownIcon || icons.arrow_circle_down)}

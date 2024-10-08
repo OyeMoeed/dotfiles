@@ -1,3 +1,7 @@
+import { useCallback, useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import moment from 'moment';
+
 import {
   IPayCaption1Text,
   IPayFlatlist,
@@ -15,20 +19,18 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities';
+import { APIResponseType, buttonVariants } from '@app/utilities';
 import { isArabic } from '@app/utilities/constants';
 import { useRoute } from '@react-navigation/core';
-import moment from 'moment';
-import { useTranslation } from 'react-i18next';
-
 import icons from '@app/assets/icons';
 import IPaySkeletonBuilder from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.component';
 import { IPaySkeletonEnums } from '@app/components/molecules/ipay-skeleton-loader/ipay-skeleton-loader.interface';
-import useGetTransactions from '@app/network/services/core/transaction/useGetTransactions';
 import IPayTransactionItem from '@app/screens/transaction-history/component/ipay-transaction.component';
-import { useCallback } from 'react';
+import { getTransactions } from '@app/network/services/core/transaction/transactions.service';
+import { TransactionItem, TransactionTrxReqType } from '@app/network/services/core/transaction/transaction.interface';
+
 import { bottomSheetShare, getStatusStyles } from '../musaned.utils';
-import { MusanedUserDetailsRouteProps } from './musaned-user-details.interface';
+import MusanedUserDetailsRouteProps from './musaned-user-details.interface';
 import musanedUserDetailsStyles from './musaned-user-details.style';
 
 const MusanedUserDetails = () => {
@@ -37,7 +39,8 @@ const MusanedUserDetails = () => {
   const { t } = useTranslation();
 
   const { walletInfo } = useTypedSelector((state) => state.walletInfoReducer);
-  const { currentCard } = useTypedSelector((state) => state.cardsReducer);
+  const [isLoadingTransactions, setIsLoadingTransactions] = useState(false);
+  const [transactionsData, setTransactionsData] = useState<Array<TransactionItem>>([]);
 
   const { params } = useRoute<MusanedUserDetailsRouteProps>();
   const {
@@ -54,6 +57,8 @@ const MusanedUserDetails = () => {
     name,
     lastPaidSalaryDate,
     paymentStatus,
+    mobileNumber,
+    walletNumber,
   } = params.userInfo;
   const haveWallet = haveWalletFlag;
 
@@ -62,16 +67,26 @@ const MusanedUserDetails = () => {
   const expirationDate = moment(poiExperationDate).format('DD/M/YYYY');
   const formattedLastPaidSalaryDate = `${lastPaidSalaryDate?.split(':')[1]}/${lastPaidSalaryDate?.split(':')[0]}`;
 
-  const { isLoadingTransactions, transactionsData } = useGetTransactions({
-    payload: {
+  const getTransactionsDetails = async () => {
+    const apiResponse = await getTransactions({
       walletNumber: walletInfo.walletNumber,
-      maxRecords: '10',
+      maxRecords: '5',
       offset: '1',
-      cardIndex: currentCard?.cardIndex,
-      fromDate: '',
-      toDate: '',
-    },
-  });
+      mobileNumber,
+      targetWallet: walletNumber,
+      trxReqType: TransactionTrxReqType.MUSANED,
+    });
+
+    if (apiResponse.status.type === APIResponseType.SUCCESS) {
+      setTransactionsData(apiResponse.response?.transactions || []);
+    }
+    setIsLoadingTransactions(false);
+  };
+
+  useEffect(() => {
+    setIsLoadingTransactions(true);
+    getTransactionsDetails();
+  }, []);
 
   const userData = [
     // TODO: check for mobile number in the API response
@@ -147,7 +162,10 @@ const MusanedUserDetails = () => {
                 </IPayView>
                 <IPayButton
                   onPress={() =>
-                    navigate(ScreenNames.TRANSACTIONS_HISTORY, { currentCard, isShowCard: true, isShowAmount: true })
+                    navigate(ScreenNames.MUSANED_HISTORY, {
+                      musnaedData: params.musnaedData || [],
+                      currentWalletNumber: params.userInfo.walletNumber,
+                    })
                   }
                   btnType={buttonVariants.LINK_BUTTON}
                   hasRightIcon
