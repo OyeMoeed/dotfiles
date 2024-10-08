@@ -21,7 +21,9 @@ import {
 } from '@app/components/molecules';
 import IPaySegmentedControls from '@app/components/molecules/ipay-segmented-controls/ipay-segmented-controls.component';
 import { IPayRemainingAccountBalance } from '@app/components/organism';
-import { IPaySafeAreaView } from '@app/components/templates';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
+import { SNAP_POINT } from '@app/constants/constants';
 import { TransactionTypes } from '@app/enums/transaction-types.enum';
 import { goBack, navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -34,8 +36,7 @@ import useTheme from '@app/styles/hooks/theme.hook';
 import { regex } from '@app/styles/typography.styles';
 import { ApiResponseStatusType, alertType, alertVariant, buttonVariants } from '@app/utilities/enums.util';
 import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-helper.util';
-import walletUtils from '@app/utilities/wallet.utils';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Contact } from 'react-native-contacts';
 import sendGiftAmountStyles from './send-gift-amount.style';
@@ -48,8 +49,10 @@ const SendGiftAmountScreen = ({ route }) => {
   const [topUpAmount, setTopUpAmount] = useState('');
   const MAX_CONTACTS = 5;
   const [contacts, setContacts] = useState<Contact[]>([]);
+  const topUpSelectionRef = React.createRef<any>();
   const [contactAmounts, setContactAmounts] = useState<{ [key: string]: string }>({});
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
+  const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
   const GIFT_TABS = [
     t('SEND_GIFT.EQUALLY'),
@@ -381,6 +384,19 @@ const SendGiftAmountScreen = ({ route }) => {
     />
   );
 
+  const closeBottomSheetTopUp = () => {
+    setTopUpOptionsVisible(false);
+  };
+
+  const topupItemSelected = (routeName: string, params: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === screenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, params);
+    }
+  };
+
   return (
     <IPaySafeAreaView>
       <IPayHeader title="SEND_GIFT.TITLE" applyFlex backBtn />
@@ -392,6 +408,9 @@ const SendGiftAmountScreen = ({ route }) => {
               isShowTopup
               isShowRemaining
               isShowProgressBar
+              onTopUpPress={() => {
+                setTopUpOptionsVisible(true);
+              }}
               monthlyIncomingLimit={walletInfo.limitsDetails.monthlyIncomingLimit}
               monthlyRemainingIncommingAmount={walletInfo.limitsDetails.monthlyRemainingIncomingAmount}
             />
@@ -471,6 +490,25 @@ const SendGiftAmountScreen = ({ route }) => {
         }}
         type={alertType.SIDE_BY_SIDE}
       />
+      <IPayPortalBottomSheet
+        noGradient
+        heading="TOP_UP.ADD_MONEY_USING"
+        onCloseBottomSheet={closeBottomSheetTopUp}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
+        ref={topUpSelectionRef}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={topUpOptionsVisible}
+      >
+        <IPayTopUpSelection
+          testID="topUp-selection"
+          closeBottomSheet={closeBottomSheetTopUp}
+          topupItemSelected={topupItemSelected}
+        />
+      </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );
 };
