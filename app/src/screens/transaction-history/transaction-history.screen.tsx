@@ -269,7 +269,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
       {filterTags && filterTags?.size > 0 && (
         <IPayView style={styles.filterWrapper}>
           <IPayScrollView horizontal showsHorizontalScrollIndicator={false}>
-            <IPayView>
+            <>
               {Array.from(filterTags?.keys()).map((key) => (
                 <IPayChip
                   key={key as string}
@@ -283,7 +283,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
                   }
                 />
               ))}
-            </IPayView>
+            </>
           </IPayScrollView>
         </IPayView>
       )}
