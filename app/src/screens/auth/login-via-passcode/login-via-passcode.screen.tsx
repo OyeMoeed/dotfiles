@@ -211,10 +211,12 @@ const LoginViaPasscode: React.FC = () => {
         },
       };
 
-      const prepareLoginApiResponse: any = await prepareLogin(prepareLoginPayload);
+      const prepareLoginApiResponse = await prepareLogin(prepareLoginPayload);
 
       if (prepareLoginApiResponse?.status.type === APIResponseType.SUCCESS) {
-        dispatch(editSessionTime(prepareLoginApiResponse?.response?.inactiveTimeoutPeriodInMins));
+        const inactiveTimeoutPeriodInMins =
+          Number(prepareLoginApiResponse?.response?.inactiveTimeoutPeriodInMins) - 1.5;
+        dispatch(editSessionTime(inactiveTimeoutPeriodInMins));
         dispatch(
           setAppData({
             transactionId: prepareLoginApiResponse?.authentication?.transactionId,

@@ -47,7 +47,7 @@ interface IApiStatus {
   desc: string;
 }
 
-interface ApiResponse<T> {
+interface ApiResponse<T, Header = {}> {
   data?: DeleteBillResponse;
   status: IApiStatus;
   response?: T;
@@ -55,7 +55,7 @@ interface ApiResponse<T> {
   authentication?: {
     transactionId: string;
   };
-  headers?: {};
+  headers?: Header;
   paginationInfo?: {
     matchedRecords?: string;
     sentRecords: string;
@@ -70,6 +70,11 @@ interface ApiError {
   error: string;
 }
 
+enum ErrorStatus {
+  FORCE_UPDATE = 'E430995',
+  FORCE_MAINTENANCE = 'EC100001',
+}
+
 export {
   ApiError,
   ApiResponse,
@@ -79,4 +84,5 @@ export {
   MockAPIDataProps,
   MockAPIOkProp,
   MockAPIStatusProps,
+  ErrorStatus,
 };
