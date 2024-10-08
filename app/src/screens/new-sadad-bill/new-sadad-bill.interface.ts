@@ -1,3 +1,5 @@
+import { BillsProps } from '@app/components/organism/ipay-sadad-bill/ipay-sadad-bill.interface';
+
 export interface NewSadadBillProps {
   billNickname: string;
   billerName: string;
@@ -10,4 +12,6 @@ export interface NewSadadBillProps {
   billIdType: string;
   serviceDescription: string;
   newBill?: boolean;
+  billDetailsList: BillsProps[];
+  saveBill?: boolean;
 }

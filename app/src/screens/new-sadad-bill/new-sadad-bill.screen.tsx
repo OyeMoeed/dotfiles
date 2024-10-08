@@ -103,7 +103,7 @@ const NewSadadBillScreen: React.FC = () => {
     return { warningMsg, disabled };
   }, [billDetailsData]);
 
-  const onNavigateToConfirm = (value) => {
+  const onNavigateToConfirm = (value: FormValues) => {
     const updatedBillData = billDetailsData?.map((item) =>
       item?.billNickname ? item : { ...item, billNickname: value.billName },
     );
@@ -121,7 +121,7 @@ const NewSadadBillScreen: React.FC = () => {
   const onSetAmount = (value: string, index: number) => {
     const newAmount = Number(value);
 
-    const updatedBillDetails = billDetailsData.map((item, idx) =>
+    const updatedBillDetails = billDetailsData?.map((item, idx) =>
       idx === index ? { ...item, amount: newAmount } : item,
     );
     setAmoutValue(value);

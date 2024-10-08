@@ -18,11 +18,12 @@ import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { APIResponseType } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
-import { useRoute } from '@react-navigation/core';
+import { RouteProp, useRoute } from '@react-navigation/core';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import useBillPaymentConfirmation from './traffic-violation-payment.hook';
+import { TrafficViolationProps } from './traffic-violation-payment.interface';
 import billPaymentStyles from './traffic-violation-payment.styles';
 
 const TrafficViolationPaymentScreen: React.FC = () => {
@@ -33,7 +34,8 @@ const TrafficViolationPaymentScreen: React.FC = () => {
     (state) => state.walletInfoReducer.walletInfo,
   );
   const styles = billPaymentStyles();
-  const route = useRoute();
+  type RouteProps = RouteProp<{ params: TrafficViolationProps }, 'params'>;
+  const route = useRoute<RouteProps>();
   const [otpRefState, setOtpRefState] = useState<string>('');
   const [isSheetVisible, setIsSheetVisible] = useState(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
@@ -274,11 +276,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         cancelBnt
         isVisible={topUpOptionsVisible}
       >
-        <IPayTopUpSelection
-          testID="topUp-selection"
-          closeBottomSheet={closeBottomSheetTopUp}
-          topupItemSelected={topupItemSelected}
-        />
+        <IPayTopUpSelection testID="topUp-selection" topupItemSelected={topupItemSelected} />
       </IPayPortalBottomSheet>
     </IPaySafeAreaView>
   );

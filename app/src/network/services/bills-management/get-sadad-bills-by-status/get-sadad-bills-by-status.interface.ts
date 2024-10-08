@@ -3,7 +3,7 @@ import { MockAPIOkProp, MockAPIStatusProps } from '@network/services/services.in
 
 // Define the PaymentInfoProps interface
 interface PaymentInfoProps {
-  amount: string;
+  amount: string | number;
   dueDateTime: string; // Assuming date is in 'dd-mm-yyyy' format
   billCycle: string;
   billId: string;
@@ -19,6 +19,9 @@ interface PaymentInfoProps {
   billStatusCode: string;
   billStatusDesc: string;
   svcType: string;
+  billNickname?: string;
+  billerIcon?: string;
+  billAmount?: string;
 }
 
 // Define the PaginationInfoProps interface
