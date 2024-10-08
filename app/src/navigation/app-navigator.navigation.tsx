@@ -2,7 +2,7 @@ import IPaySpinnerContainer from '@app/components/atoms/ipay-spinner/ipay-spinne
 import { IPayBlurView } from '@app/components/molecules';
 import IPayOfflineAlert from '@app/components/molecules/ipay-offline-alert/ipay-offline-alert.component';
 import IPaySessionTimeoutAlert from '@app/components/molecules/ipay-session-timeout-alert/ipay-session-timeout-alert.component';
-import { IPayLanguageSheet, IPayMaintenanceSheet } from '@app/components/organism';
+import { IPayIdleTimerBottomSheet, IPayLanguageSheet, IPayMaintenanceSheet } from '@app/components/organism';
 import IPayServiceErrorToast from '@app/components/organism/ipay-service-error-toast/ipay-service-error-toast.component';
 import IPayUpdateBottomSheet from '@app/components/organism/ipay-update-bottom-sheet/ipay-update-bottom-sheet.component';
 import useInternetConnectivity from '@app/hooks/use-internet-connectivity.hook';
@@ -16,9 +16,11 @@ import { useTypedSelector } from '@store/store';
 import React, { useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
+import { useIdleTimer } from '@app/hooks';
 import { setTopLevelNavigator } from './navigation-service.navigation';
 
 const MainNavigation: React.FC = () => {
+  useIdleTimer();
   const isAuthorized = useTypedSelector((state) => state.auth.isAuthorized);
   const selectedLanguage = useTypedSelector((state) => state.languageReducer.selectedLanguage);
   const isAlertVisible = useTypedSelector((state) => state.alertReducer.visible);
@@ -92,6 +94,7 @@ const MainNavigation: React.FC = () => {
       <IPaySpinnerContainer visible={isSpinnerVisible} spinnerProps={spinnerProps} />
       <IPayUpdateBottomSheet />
       <IPayMaintenanceSheet />
+      <IPayIdleTimerBottomSheet />
     </>
   );
 };

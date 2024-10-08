@@ -6,7 +6,7 @@ const REQUEST_MANAGEMENT_URLS = {
   recevied_request_prepare: (walletNumber: string, transactionId: string) =>
     `transfer-management/v1/${walletNumber}/money-requests/${transactionId}/accept/prepare`,
   recevied_request_confirm: (walletNumber: string, transactionId: string) =>
-    `transfer-management/v1/${walletNumber}/money-requests/${{ transactionId }}/accept`,
+    `transfer-management/v1/${walletNumber}/money-requests/${transactionId}/accept`,
   cancelRejectRequest: (walletNumber: string, transactionId: string, type: UpdateRequestTypes) =>
     `transfer-management/v1/${walletNumber}/money-requests/${transactionId}/manage?function=${type}`,
   create_money_request: (walletNumber: string) => `transfer-management/v1/${walletNumber}/money-request`,

@@ -5,7 +5,7 @@ import { getTransactions } from './transactions.service';
 
 const useGetTransactions = ({ payload }: { payload: TransactionsProp }) => {
   const { isLoading, res, error, refetch } = useCustomQuery({
-    queryKey: TRANSACTION_QUERY_KEYS.GET_TRANSACTIONS,
+    queryKey: [TRANSACTION_QUERY_KEYS.GET_TRANSACTIONS, TRANSACTION_QUERY_KEYS.GET_TRANSACTIONS_MUSANED],
     queryFn: () => getTransactions(payload),
   });
 

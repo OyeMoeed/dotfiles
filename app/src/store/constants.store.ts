@@ -20,6 +20,7 @@ export const SLICE_NAMES = {
   RATING_SLICE: 'ratingSlice',
   DISABLED_MODULES: 'disabledModuleSlice',
   FORCE_MAINTENANCE_SLICE: 'forceMaintenanceSlice',
+  IDLE_TIMER: 'idleTimerModuleSlice',
 };
 
 export const WHITELISTED_DATA = [

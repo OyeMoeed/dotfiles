@@ -84,7 +84,14 @@ const CardIssuanceConfirmationScreen = () => {
   const getTotalFees = () => {
     const { fees } = issuanceDetails;
     // eslint-disable-next-line no-unsafe-optional-chaining
-    const totalFees = +fees?.bankFeeAmount + +fees?.bankVatAmount + +fees?.feeAmount + +fees?.vatAmount;
+    const totalFees = +fees?.bankFeeAmount + +fees?.feeAmount;
+    return totalFees.toString();
+  };
+
+  const getTotalVats = () => {
+    const { fees } = issuanceDetails;
+    // eslint-disable-next-line no-unsafe-optional-chaining
+    const totalFees = +fees?.bankVatAmount + +fees?.vatAmount;
     return totalFees.toString();
   };
 
@@ -117,6 +124,12 @@ const CardIssuanceConfirmationScreen = () => {
       id: '3',
       title: 'TOPUP_CONFIRMATION.ISSUANCE_FEE',
       detailText: `${getTotalFees()} ${t('COMMON.SAR')}`,
+      style: styles.upperListContainer,
+    },
+    {
+      id: '4',
+      title: 'TOPUP_CONFIRMATION.ISSUANCE_VAT',
+      detailText: `${getTotalVats()} ${t('COMMON.SAR')}`,
       style: styles.upperListContainer,
     },
   ];

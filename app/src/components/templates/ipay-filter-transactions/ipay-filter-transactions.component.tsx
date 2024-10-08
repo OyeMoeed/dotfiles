@@ -19,6 +19,7 @@ import {
   IPayFilterDateRange,
   IPayFilterGifts,
   IPayFilterTransactionTypes,
+  IPayMusanedFilter,
 } from '@app/components/organism';
 import { useFilterSettings } from '@app/hooks';
 import IPayFilterTransactionsStyles from './ipay-filter-transactions.styles';
@@ -33,6 +34,9 @@ const IPayFilterTransactions = ({
   showAmountFilter,
   showDateFilter,
   showBeneficiaryFilter = false,
+  showMusanedFilter = false,
+  laborerList = [],
+  salaryTypes = [],
   showGiftFilters = false,
   onSubmit,
   defaultValues,
@@ -119,6 +123,12 @@ const IPayFilterTransactions = ({
       const transactionType = transactionTypes?.find((type: ListItem) => type?.key === data?.transactionType)?.value;
       if (transactionType) mapFilterTags.set(transactionType, { transactionType: '' });
 
+      const salaryType = salaryTypes?.find((type: ListItem) => type?.type === data?.salaryType)?.text;
+      if (salaryType) mapFilterTags.set(salaryType, { salaryType: '' });
+
+      const laborerValue = laborerList?.find((type: ListItem) => type?.id === data?.[FiltersType.LABORER_NAME])?.text;
+      if (laborerValue) mapFilterTags.set(laborerValue, { [FiltersType.LABORER_NAME]: '' });
+
       const dateRange = data?.dateFrom || data?.dateTo ? `${data?.dateFrom} - ${data?.dateTo}` : '';
       if (dateRange && dateRange.length > 0) mapFilterTags.set(dateRange, { dateFrom: '', dateTo: '' });
 
@@ -168,6 +178,7 @@ const IPayFilterTransactions = ({
 
   const renderFilters = () => (
     <IPayView style={styles.inputContainer}>
+      {showMusanedFilter && <IPayMusanedFilter control={control} salaryTypes={salaryTypes} laborerList={laborerList} />}
       {showBeneficiaryFilter && (
         <IPayFilterBeneficiaries control={control} beneficiaryData={beneficiaryData} bankList={bankList} />
       )}

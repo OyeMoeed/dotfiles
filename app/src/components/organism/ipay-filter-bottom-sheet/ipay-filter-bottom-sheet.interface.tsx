@@ -5,11 +5,15 @@ import { FilterSelectedValue } from '@app/utilities';
 import React from 'react';
 import { Control, FieldValues } from 'react-hook-form';
 import { StyleProp, ViewStyle } from 'react-native';
+import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 
 export interface IPayFilterProps {
   /**
    * props for showing heading text
    */
+
+  ref: React.RefObject<bottomSheetTypes>;
+
   heading: string;
   /**
    * props for test id
@@ -21,8 +25,8 @@ export interface IPayFilterProps {
   onClearFilters?: () => void;
 
   onSubmit: (event: FilterSelectedValue) => void;
-  onWatch: (event: any, name: any, type: any) => void;
-  onReset: (event: boolean) => void;
+  onWatch?: (event: any, name: any, type: any) => void;
+  onReset?: (event: boolean) => void;
   /**
    * prop for showing amount filter
    */

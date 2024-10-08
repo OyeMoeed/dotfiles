@@ -123,7 +123,7 @@ const TransactionHistoryScreen: React.FC = ({ route }: any) => {
   };
 
   const openBottomSheet = (item: any) => {
-    let calculatedSnapPoint = ['1%', '70%', isAndroidOS ? '95%' : '100%'];
+    let calculatedSnapPoint = ['1%', isAndroidOS ? '95%' : '100%'];
     const height = heightMapping[item.transactionRequestType as keyof typeof heightMapping];
     if (height) {
       calculatedSnapPoint = ['1%', height, isAndroidOS ? '95%' : '100%'];
