@@ -42,7 +42,7 @@ const handleAxiosError = async (error: AxiosResponse | AxiosError, hideAlert: bo
   }
 };
 
-const handleResponseError = async (response: AxiosResponse | AxiosError) => {
+const checkBusinessError = async (response: AxiosResponse | AxiosError) => {
   const responseCode = (response as any)?.data?.status?.code;
   if (responseCode === ErrorStatus.FORCE_UPDATE) {
     return false;
@@ -60,4 +60,4 @@ const handleResponseError = async (response: AxiosResponse | AxiosError) => {
   return false;
 };
 
-export { hideErrorResponse, hideSpinnerLoading, isErrorResponse, handleAxiosError, handleResponseError };
+export { hideErrorResponse, hideSpinnerLoading, isErrorResponse, handleAxiosError, checkBusinessError };
