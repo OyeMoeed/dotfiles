@@ -27,6 +27,7 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import constants, { MAX_CONTACTS, SNAP_POINT } from '@app/constants/constants';
 import TRANSFERTYPE from '@app/enums/wallet-transfer.enum';
 import { useKeyboardStatus } from '@app/hooks';
+import useContacts from '@app/hooks/use-contacts';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import { IW2WCheckActiveReq } from '@app/network/services/transfers/wallet-to-wallet-check-active/wallet-to-wallet-check-active.interface';
@@ -43,7 +44,6 @@ import { useTranslation } from 'react-i18next';
 import { Keyboard, LayoutChangeEvent, NativeScrollEvent, NativeSyntheticEvent } from 'react-native';
 import { Contact } from 'react-native-contacts';
 import * as Yup from 'yup';
-import useContacts from '@app/hooks/use-contacts';
 import AddPhoneFormValues from './wallet-to-wallet-transfer.interface';
 import walletTransferStyles from './wallet-to-wallet-transfer.style';
 
@@ -104,6 +104,14 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
               showHistory: false,
             });
             break;
+          case TRANSFERTYPE.SEND_GIFT:
+            navigate(ScreenNames.SEND_GIFT_AMOUNT, {
+              activeFriends: apiResponse.response?.friends,
+              selectedContacts,
+              giftDetails,
+            });
+            break;
+
           default:
             break;
         }
@@ -117,7 +125,7 @@ const WalletToWalletTransferScreen: React.FC = ({ route }: any) => {
         getW2WActiveFriends();
         break;
       case TRANSFERTYPE.SEND_GIFT:
-        navigate(ScreenNames.SEND_GIFT_AMOUNT, { selectedContacts, giftDetails });
+        getW2WActiveFriends();
         break;
       case ScreenNames.TOP_UP_SUCCESS:
         setSelectedContacts([]);

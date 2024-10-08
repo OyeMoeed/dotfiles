@@ -206,7 +206,7 @@ const TransferSummaryScreen: React.FC = () => {
         requests: transfersDetails?.formInstances?.map((item) => ({
           mobileNumber: item.mobileNumber,
           amount: item.amount,
-          note: item.notes,
+          note: `${item.notes}#${giftDetails?.selectedCard?.id}`,
           giftCategory: giftDetails?.selectedCard?.id,
         })),
         deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
@@ -256,6 +256,8 @@ const TransferSummaryScreen: React.FC = () => {
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
     }
   };
+
+  const onResendCodePress = () => otpVerificationRef?.current?.resetInterval();
 
   const onConfirmOtp = () => {
     if (otp === '' || otp.length < 4) {
@@ -347,8 +349,8 @@ const TransferSummaryScreen: React.FC = () => {
           otp={otp}
           isBottomSheet={false}
           handleOnPressHelp={handleOnPressHelp}
-          onResendCodePress={() => {}}
-          timeout={otpConfig.transaction.otpTimeout}
+          onResendCodePress={onResendCodePress}
+          timeout={otpConfig.sendGift.otpTimeout}
         />
       </IPayPortalBottomSheet>
       <IPayBottomSheet

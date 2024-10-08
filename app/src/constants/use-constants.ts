@@ -1436,6 +1436,7 @@ const useConstantData = () => {
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
     akhtrPoints: { otpTimeout: 60 },
+    sendGift: { otpTimeout: 60 },
   };
 
   const allCategories = [

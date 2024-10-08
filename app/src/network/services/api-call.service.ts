@@ -3,6 +3,7 @@ import { store } from '@app/store/store';
 import { getValueFromAsyncStorage } from '@app/utilities';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { restartSessionTimer } from '@app/store/slices/idle-timer-slice';
 import axiosClient from '../client';
 import onRequestFulfilled from '../interceptors/request';
 import { onResponseFulfilled, onResponseReject } from '../interceptors/response';
@@ -63,6 +64,7 @@ const apiCall = async <T>({
       await handleAxiosError(response);
     }
     store.dispatch(hideSpinner());
+    store.dispatch(restartSessionTimer(true));
     return handleApiResponse(response);
   } catch (error: any) {
     await handleAxiosError(error);

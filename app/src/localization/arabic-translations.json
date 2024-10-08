@@ -658,6 +658,7 @@
     "HOLDERS_NAME": "اسم حامل البطاقة",
     "CARD_TYPE": "نوع البطاقة",
     "ISSUANCE_FEE": "رسوم الإصدار",
+    "ISSUANCE_VAT": "Issuance Vat",
     "MADA_DEBIT_CARD": "بطاقة خصم مدى",
     "HUNDERED_SAR": "100 ريال سعودي",
     "VIRTUAL_CARD": "بطاقة افتراضية",
@@ -1330,6 +1331,7 @@
     "PENDING": "قيد الانتظار",
     "PENDING_REQUESTS": "طلبات قيد الانتظار",
     "PREVIOUS_REQUESTS": "الطلبات السابقة",
+    "REQUEST_REJECTED": "تم رفض الطلب",
     "VIEW_ALL": "عرض الكل",
     "NOTIFICATIONS": "الإشعارات",
     "UNREAD": "غير مقروء",
@@ -1345,7 +1347,8 @@
     "FILTER": "تصفية",
     "MARK_AS_READ": "وضع علامة كمقروء",
     "DELETE_NOTIFICATION": "حذف الإشعار",
-    "CANCEL": "إلغاء"
+    "CANCEL": "إلغاء",
+    "SAR_FROM_YOU": "ريال سعودي منك"
   },
   "RATING": {
     "APP_RATING": "تقييم التطبيق",

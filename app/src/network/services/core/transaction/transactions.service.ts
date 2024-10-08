@@ -16,7 +16,7 @@ import {
   TransactionsMockProps,
 } from './transaction.interface';
 
-const getTransactions = async (payload: TransactionsProp): Promise<TransactionsMockProps> => {
+const getTransactions = async (payload: TransactionsProp, hideSpinner = true): Promise<TransactionsMockProps> => {
   if (constants.MOCK_API_RESPONSE) {
     return transactionMock;
   }
@@ -25,7 +25,7 @@ const getTransactions = async (payload: TransactionsProp): Promise<TransactionsM
     endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
     method: requestType.GET,
     headers: {
-      hide_spinner_loading: true,
+      hide_spinner_loading: hideSpinner,
     },
   });
   return apiResponse;

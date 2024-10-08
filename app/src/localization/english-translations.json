@@ -724,6 +724,7 @@
     "HOLDERS_NAME": "Holder's Name",
     "CARD_TYPE": "Card Type",
     "ISSUANCE_FEE": "Issuance Fee",
+    "ISSUANCE_VAT": "Issuance Vat",
     "MADA_DEBIT_CARD": "Mada Debit Card",
     "HUNDERED_SAR": "100 SAR",
     "VIRTUAL_CARD": "Virtual Card",
@@ -1517,6 +1518,7 @@
     "PENDING": "Pending",
     "PENDING_REQUESTS": "Pending Requests",
     "PREVIOUS_REQUESTS": "Previous Requests",
+    "REQUEST_REJECTED": "Request Rejected Successfully",
     "VIEW_ALL": "View All",
     "NOTIFICATIONS": "Notifications",
     "UNREAD": "Unread",
@@ -1532,7 +1534,9 @@
     "FILTER": "Filter",
     "MARK_AS_READ": "Mark as read",
     "DELETE_NOTIFICATION": "Remove this Notification",
-    "CANCEL": "Cancel"
+    "CANCEL": "Cancel",
+    "HAS_REQUESTED": "has requested",
+    "SAR_FROM_YOU": "SAR from you"
   },
   "BILL_ACTIVATION": {
     "ACTIVATION_MESSAGE": "The Bill has been activated",
@@ -1640,5 +1644,10 @@
     "SHEET_TITLE": "App maintenance",
     "TITLE": "The app is currently\nundergoing maintenance",
     "DESCRIPTION": "We appreciate your patience and will be back shortly.\nThank you!"
+  },
+  "IDLE_TIMER_SHEET": {
+    "SHEET_TITLE": "Inactive Timeout",
+    "TITLE": "Your online session will expire in",
+    "DESCRIPTION": "Please click 'Continue' to keep working or click 'Log Out' to end your session now."
   }
 }

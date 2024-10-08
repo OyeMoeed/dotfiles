@@ -97,8 +97,6 @@ const sectionStyles = (colors: any) =>
     },
     listContainer: {
       marginVertical: SCALE_16,
-      left: moderateScale(24),
-      width: scaleSize(300),
     },
     rearrangeContainerStyle: {
       justifyContent: 'center',
