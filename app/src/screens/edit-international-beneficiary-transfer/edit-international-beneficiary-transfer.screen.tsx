@@ -40,7 +40,6 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
         iban: beneficiary?.beneficiaryAccountNumber,
         bankName: beneficiary?.beneficiaryBankDetail?.bankName || '',
         remittanceType: t(remittanceTypeDescKeysMapping(beneficiary?.remittanceTypeDesc || '')),
-        city: beneficiary?.beneficiaryBankDetail?.city || '',
         beneficiaryNickName: beneficiary?.nickname,
         currency: beneficiary?.currencyDesc,
         country: beneficiary?.countryDesc,
@@ -88,10 +87,6 @@ const EditIBeneficiaryTransferScreen: React.FC = () => {
                     containerStyle={styles.disabledInput}
                     labelColor={colors?.natural?.natural500}
                   />
-
-                  {beneficiary?.beneficiaryBankDetail?.city && (
-                    <IPayAnimatedTextInput name={BeneficiaryFields.CITY} label="COMMON.CITY" editable={false} />
-                  )}
                 </>
 
                 <IPayFootnoteText

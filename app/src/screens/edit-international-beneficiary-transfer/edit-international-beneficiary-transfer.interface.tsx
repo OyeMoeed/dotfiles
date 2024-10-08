@@ -8,7 +8,6 @@ const BeneficiaryFields = {
   IBAN: 'iban',
   BANK_NAME: 'bankName',
   RELATIONSHIP: 'relationship',
-  CITY: 'city',
   CURRENCY: 'currency',
   ADDRESS: 'address',
   BENEFICIARY_NICK_NAME: 'beneficiaryNickName',
@@ -35,7 +34,6 @@ interface BeneficiaryTransferFormValues {
   iban: string;
   bankName: string;
   remittanceType: string;
-  city: string;
   beneficiaryNickName?: string;
   currency: string;
   country: string;

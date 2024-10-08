@@ -60,24 +60,24 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
   const listBeneficiaries = (viewAll: boolean, isActive: boolean) =>
     viewAll ? getBeneficiariesByStatus(isActive) : getBeneficiariesByStatus(isActive)?.slice(0, beneficiariesToShow);
 
+  const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
+    setSelectedBeneficiary(beneficiary);
+    if (beneficiary?.beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
+      navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
+        transferData: beneficiary,
+        transferGateway: activeTab,
+      });
+    } else {
+      handleActivateBeneficiary();
+    }
+  };
+
   const renderBeneficiaryDetailsRightText = (item: WesternUnionBeneficiary) => {
     const { beneficiaryStatus } = item;
     const btnText =
       beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
         ? 'INTERNATIONAL_TRANSFER.TRANSFER'
         : 'INTERNATIONAL_TRANSFER.ACTIVATE';
-
-    const onTransferAndActivate = (beneficiary: BeneficiaryDetailsProps) => {
-      setSelectedBeneficiary(beneficiary);
-      if (beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE) {
-        navigate(ScreenNames.INTERNATIONAL_TRANSFER_INFO, {
-          transferData: item,
-          transferGateway: activeTab,
-        });
-      } else {
-        handleActivateBeneficiary();
-      }
-    };
 
     return (
       <IPayView style={styles.moreButton}>
