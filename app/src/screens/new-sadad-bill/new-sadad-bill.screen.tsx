@@ -21,8 +21,7 @@ import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import * as Yup from 'yup';
-import { FormValues } from '../add-new-sadad-bill/add-new-sadad-bill.interface';
-import { NewSadadBillProps } from './new-sadad-bill.interface';
+import { NewSadadBillFormValues, NewSadadBillProps } from './new-sadad-bill.interface';
 import newSadadBillStyles from './new-sadad-bill.style';
 
 const NewSadadBillScreen: React.FC = () => {
@@ -103,7 +102,7 @@ const NewSadadBillScreen: React.FC = () => {
     return { warningMsg, disabled };
   }, [billDetailsData]);
 
-  const onNavigateToConfirm = (value: FormValues) => {
+  const onNavigateToConfirm = (value: NewSadadBillFormValues) => {
     const updatedBillData = billDetailsData?.map((item) =>
       item?.billNickname ? item : { ...item, billNickname: value.billName },
     );
@@ -150,7 +149,7 @@ const NewSadadBillScreen: React.FC = () => {
 
   return (
     <>
-      <IPayFormProvider<FormValues>
+      <IPayFormProvider<NewSadadBillFormValues>
         validationSchema={validationSchema}
         defaultValues={{
           saveBill: false,

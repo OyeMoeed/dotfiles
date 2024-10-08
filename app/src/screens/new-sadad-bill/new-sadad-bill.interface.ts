@@ -15,3 +15,15 @@ export interface NewSadadBillProps {
   billDetailsList: BillsProps[];
   saveBill?: boolean;
 }
+
+export interface NewSadadBillFormValues {
+  /**
+   * Name of the bill.
+   */
+  billName: string;
+
+  /**
+   * Whether to save the bill.
+   */
+  saveBill: boolean;
+}
