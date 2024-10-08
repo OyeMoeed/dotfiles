@@ -85,7 +85,7 @@ const getTransationIcon = (transactionRequestType: TransactionTypes, transaction
     // type #10
     case TransactionTypes.PAY_ONECARD:
       return icons.shopping_cart;
-      // type #11
+    // type #11
     case TransactionTypes.CIN_MAZAYA:
       return icons.akhtar;
 
