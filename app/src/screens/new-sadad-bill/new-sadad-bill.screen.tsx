@@ -50,7 +50,7 @@ const NewSadadBillScreen: React.FC = () => {
     'params'
   >;
 
-  const { totalAmount, billDetailsList } = params;
+  const { totalAmount, billDetailsList, saveBill } = params;
 
   const [amountValue, setAmoutValue] = useState(totalAmount);
   const [billDetailsData, setBillDetailsData] = useState<BillsProps[]>(billDetailsList || []);
@@ -189,7 +189,7 @@ const NewSadadBillScreen: React.FC = () => {
                       showActionBtn={billDetailsData?.length > 1}
                       onPress={() => removeBill(index)}
                     />
-                    {!billDetailsData?.[0]?.saveBill && (
+                    {!saveBill && (
                       <IPaySadadSaveBill
                         saveBillToggle={watch(FormFields.SAVE_BILL) || false}
                         billInputName={FormFields.BILL_NAME}

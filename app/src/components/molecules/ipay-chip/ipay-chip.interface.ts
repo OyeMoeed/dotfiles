@@ -29,7 +29,7 @@ export interface IPayChipProps {
    * boolean for icon to show.
    */
 
-  variant?: States;
+  variant?: States | string;
   /**
    * variant for the  component.
    */

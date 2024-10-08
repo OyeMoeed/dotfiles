@@ -46,10 +46,9 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
         default:
           return States.SUCCESS;
       }
-    } else {
-      return '';
     }
-  }, [billStatusCode]);
+    return '';
+  }, [billStatusCode, dueDateTime]);
 
   // Function to get the key from the value
   const getEnumKeyByValue = (enumObj: any, value: string): string | undefined =>
@@ -90,7 +89,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   const billingAmount = amount ? `${amount || 0} ${t('COMMON.SAR')}` : '';
 
   const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
-  const formattedDateTime = date.isValid() ? getDateFormate(date, dateTimeFormat.ShortDate) : '';
+  const formattedDateTime = date.isValid() ? getDateFormate(date.toDate(), dateTimeFormat.ShortDate) : '';
   const billingDueDate = `${t('SADAD.DUE')} ${formattedDateTime}`;
 
   const onPressCheckBox = () => {

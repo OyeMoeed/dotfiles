@@ -104,33 +104,37 @@ const useBillPaymentConfirmation = (
     billPayDetailsArr: BillPayDetailsArrProps[],
     paymentSuccessResponse: MultiPaymentBillResponseTypes,
   ) => {
-    const { billNumOrBillingAcct, billerId, billIdType, billerName, billNickname }: BillPaymentInfosTypes =
-      billPaymentInfos?.[0] || {};
-    const deviceInfo = await getDeviceInfo();
-    const payload: SaveBillPayloadTypes = {
-      billerId,
-      billNumOrBillingAcct,
-      billIdType,
-      billerName,
-      deviceInfo,
-      billNickname,
-      walletNumber,
-    };
+    const firstBillPaymentInfo = billPaymentInfos?.[0];
+    if (firstBillPaymentInfo) {
+      const { billNumOrBillingAcct, billerId, billIdType, billerName, billNickname }: BillPaymentInfosTypes =
+        firstBillPaymentInfo;
+      const deviceInfo = await getDeviceInfo();
+      const payload: SaveBillPayloadTypes = {
+        billerId,
+        billNumOrBillingAcct,
+        billIdType,
+        billerName,
+        deviceInfo,
+        billNickname,
+        walletNumber,
+      };
 
-    const apiResponse: any = await saveBillService(payload);
-    if (apiResponse.successfulResponse) {
-      verifyOTPSheetRef.current?.close();
-      setIsOtpSheetVisible(false);
-      otpRef?.current?.close();
-      redirectToSuccess(billPayDetailsArr, paymentSuccessResponse);
+      const apiResponse: any = await saveBillService(payload);
+      if (apiResponse.successfulResponse) {
+        verifyOTPSheetRef.current?.close();
+        setIsOtpSheetVisible(false);
+        otpRef?.current?.close();
+        redirectToSuccess(billPayDetailsArr, paymentSuccessResponse);
+      }
     }
   };
 
   const onConfirm = async () => {
-    const updatedBillPayment = billPaymentInfos?.map((item) => {
-      const { billAmount, ...rest } = item;
-      return rest;
-    });
+    const updatedBillPayment: BillPaymentInfosTypes[] =
+      billPaymentInfos?.map((item) => {
+        const { billAmount, ...rest } = item as { billAmount?: number };
+        return rest as BillPaymentInfosTypes;
+      }) || [];
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
       otp,

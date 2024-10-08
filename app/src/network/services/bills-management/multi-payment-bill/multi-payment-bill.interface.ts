@@ -48,6 +48,7 @@ interface MultiPaymentBillResponseTypes {
     billPaymentResponses: BillPaymentTypes[];
   };
   successfulResponse: true;
+  error?: string;
 }
 
 export {

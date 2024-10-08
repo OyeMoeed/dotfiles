@@ -163,9 +163,12 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         billerId: selectedBiller?.billerId,
         billIdType: selectedBiller?.billIdType,
         serviceDescription: selectedService?.serviceDesc,
-        saveBill: values.saveBill,
       };
-      navigate(ScreenNames.NEW_SADAD_BILL, { newBill: true, billDetailsList: [billDetailsList] });
+      navigate(ScreenNames.NEW_SADAD_BILL, {
+        newBill: true,
+        billDetailsList: [billDetailsList],
+        saveBill: values.saveBill,
+      });
     } else {
       invoiceSheetRef.current.present();
     }

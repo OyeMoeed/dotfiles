@@ -5,6 +5,7 @@ import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-o
 import { IPayPageWrapper } from '@app/components/templates';
 import { navigate, popAndReplace } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
+import { InquireBillPayloadProps } from '@app/network/services/bills-management/inquire-bill/inquire-bill.interface';
 import inquireBillService from '@app/network/services/bills-management/inquire-bill/inquire-bill.service';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import WALLET_QUERY_KEYS from '@app/network/services/core/get-wallet/get-wallet.query-keys';
@@ -50,9 +51,9 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
     const isoFormat = checkDateValidation(dueDateTime, dateTimeFormat.ISODate);
     if (isoFormat.isValid()) {
-      return dueDateTime ? getDateFormate(isoFormat, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
+      return dueDateTime ? getDateFormate(isoFormat.toDate(), dateTimeFormat.DateMonthYearWithoutSpace) : '-';
     }
-    return dueDateTime ? getDateFormate(date, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
+    return dueDateTime ? getDateFormate(date.toDate(), dateTimeFormat.DateMonthYearWithoutSpace) : '-';
   };
 
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
@@ -80,7 +81,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
   ];
 
   const onInquireBill = async () => {
-    const apiResponse: any = await inquireBillService(inquireBillPayload);
+    const apiResponse: any = await inquireBillService(inquireBillPayload as InquireBillPayloadProps);
     if (apiResponse.successfulResponse) {
       customInvalidateQuery([WALLET_QUERY_KEYS.GET_WALLET_INFO]);
       navigate(ScreenNames.NEW_SADAD_BILL, {
@@ -167,7 +168,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
           }
         >
           <IPayScrollView nestedScrollEnabled style={styles.successScrollView} showsVerticalScrollIndicator={false}>
-            {!isSaveOnly && (
+            {!isSaveOnly ? (
               <IPayView style={styles.conatinerStyles}>
                 {isPayPartially && (
                   <IPayList
@@ -194,7 +195,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                         companyDetails: item.billerName,
                         companyImage: item.billerIcon,
                       }}
-                      data={getBillInfoArray(item)}
+                      data={getBillInfoArray(item) as []}
                       style={styles.billContainer}
                       optionsStyles={styles.optionsStyle}
                     />
@@ -210,8 +211,10 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                   />
                 )}
               </IPayView>
+            ) : (
+              <IPayView />
             )}
-            {isSaveOnly && (
+            {isSaveOnly ? (
               <IPayView style={[styles.conatinerStyles, isSaveOnly && styles.saveContainer]}>
                 <IPayBillDetailsOption
                   headerData={{
@@ -223,7 +226,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                   showDetail
                   isShowIcon={false}
                   style={styles.billContainer}
-                  data={billPaymentData.slice(0, 2)}
+                  data={billPaymentData?.slice(0, 2) as []}
                   optionsStyles={styles.optionsStyle}
                 />
                 <IPayButton
@@ -234,6 +237,8 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
                   onPress={onInquireBill}
                 />
               </IPayView>
+            ) : (
+              <IPayView />
             )}
           </IPayScrollView>
         </IPayShareableImageView>

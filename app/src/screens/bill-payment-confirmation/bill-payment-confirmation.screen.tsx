@@ -122,9 +122,9 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ()
     const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
     const isoFormat = checkDateValidation(dueDateTime, dateTimeFormat.ISODate);
     if (isoFormat.isValid()) {
-      return dueDateTime ? getDateFormate(isoFormat, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
+      return dueDateTime ? getDateFormate(isoFormat.toDate(), dateTimeFormat.DateMonthYearWithoutSpace) : '-';
     }
-    return dueDateTime ? getDateFormate(date, dateTimeFormat.DateMonthYearWithoutSpace) : '-';
+    return dueDateTime ? getDateFormate(date.toDate(), dateTimeFormat.DateMonthYearWithoutSpace) : '-';
   };
 
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
