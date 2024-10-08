@@ -88,7 +88,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
         label: t('COMMON.DATE'),
         value: dateFormat(item.dueDateTime),
       },
-      ...[amountInfo],
+      amountInfo,
       {
         label: t('COMMON.REF_NUM'),
         value: item.transactionId,
