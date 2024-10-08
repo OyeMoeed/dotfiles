@@ -1331,6 +1331,7 @@
     "PENDING": "قيد الانتظار",
     "PENDING_REQUESTS": "طلبات قيد الانتظار",
     "PREVIOUS_REQUESTS": "الطلبات السابقة",
+    "REQUEST_REJECTED": "تم رفض الطلب",
     "VIEW_ALL": "عرض الكل",
     "NOTIFICATIONS": "الإشعارات",
     "UNREAD": "غير مقروء",
@@ -1346,7 +1347,8 @@
     "FILTER": "تصفية",
     "MARK_AS_READ": "وضع علامة كمقروء",
     "DELETE_NOTIFICATION": "حذف الإشعار",
-    "CANCEL": "إلغاء"
+    "CANCEL": "إلغاء",
+    "SAR_FROM_YOU": "ريال سعودي منك"
   },
   "RATING": {
     "APP_RATING": "تقييم التطبيق",
