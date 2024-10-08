@@ -32,9 +32,10 @@ const IPayCarousel = forwardRef(
     const { colors } = useTheme();
     const styles = carouselStyles();
     const [currentIndex, setCurrentIndex] = useState<number>(0);
+    const [currentPaginationIndex, setCurrentPaginationIndex] = useState<number>(0);
 
     const handleChangeIndex = (index: number) => {
-      setCurrentIndex(index);
+      setCurrentPaginationIndex(index);
       onChangeIndex?.(index);
     };
 
@@ -77,9 +78,11 @@ const IPayCarousel = forwardRef(
           mode={mode}
           pagingEnabled
           data={data}
-          onSnapToItem={handleChangeIndex}
           renderItem={renderItem}
           modeConfig={modeConfig}
+          onProgressChange={(_, absoluteProgress) => {
+            handleChangeIndex(Math.round(absoluteProgress));
+          }}
         />
         {pagination && (
           <IPayView style={styles.paginationContainer}>
@@ -90,9 +93,13 @@ const IPayCarousel = forwardRef(
                 onPress={() => handleChangeIndex(index)}
                 style={[
                   styles.paginationDot,
-                  { backgroundColor: index === currentIndex ? colors.primary.primary500 : colors.primary.primary200 },
+                  {
+                    backgroundColor:
+                      index === currentPaginationIndex ? colors.primary.primary500 : colors.primary.primary200,
+                  },
                   stylePagination,
                 ]}
+                hitSlop={{ top: 10, left: 10, bottom: 10, right: 10 }}
               />
             ))}
           </IPayView>
