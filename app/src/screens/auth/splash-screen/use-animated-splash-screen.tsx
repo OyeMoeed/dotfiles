@@ -4,7 +4,7 @@ import { navigateAndReset } from '@app/navigation/navigation-service.navigation'
 import screenNames from '@app/navigation/screen-names.navigation';
 import { setAuth } from '@app/store/slices/auth-slice';
 import prepareLogin from '@app/network/services/authentication/prepare-login/prepare-login.service';
-import { DeviceInfoProps } from '@app/network/services/services.interface';
+import { DeviceInfoProps, ErrorStatus } from '@app/network/services/services.interface';
 import { getDeviceInfo } from '@app/network/utilities';
 import { showForceUpdate } from '@app/store/slices/app-force-update-slice';
 import { useTypedDispatch, useTypedSelector } from '@app/store/store';
@@ -39,7 +39,7 @@ const useSplashAnimations = () => {
     if (apiResponse?.status.type === APIResponseType.SUCCESS && skipLoginAfterChange === 'false') {
       setToken(apiResponse?.headers?.authorization);
     }
-    if (apiResponse?.status?.code === 'E430995') {
+    if (apiResponse?.status?.code === ErrorStatus.FORCE_UPDATE) {
       dispatch(showForceUpdate());
     }
   }, [dispatch]);

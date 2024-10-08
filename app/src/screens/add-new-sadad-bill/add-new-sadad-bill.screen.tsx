@@ -161,7 +161,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
         amount: apiResponse.response.dueAmount || '0',
         billAmount: apiResponse.response.dueAmount || '0',
         billerId: selectedBiller?.billerId,
-        billIdType: selectedBiller?.billIdType,
+        billIdType: selectedBiller?.billerType,
         serviceDescription: selectedService?.serviceDesc,
       };
       navigate(ScreenNames.NEW_SADAD_BILL, {
@@ -228,7 +228,7 @@ const AddNewSadadBillScreen: FC<NewSadadBillProps> = ({ route }) => {
       billerId: selectedBiller?.billerId,
       billNumOrBillingAcct: values.accountNumber,
       serviceType: values.serviceType,
-      billIdType: selectedBiller?.billIdType,
+      billIdType: selectedBiller?.billerType,
       serviceDescription: selectedService?.serviceDesc,
       billerName: values.companyName,
       billNickname: values.billName,
