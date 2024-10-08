@@ -2,13 +2,14 @@ import { useCallback, useEffect, useRef } from 'react';
 
 import icons from '@app/assets/icons';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-
+import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
+
 import IPayCommonAlertSheet from '../ipay-common-alert-sheet/ipay-common-alert-sheet.component';
 
 const IPayUpdateBottomSheet = () => {
   const { colors } = useTheme();
-  const isUnderMaintenance = false;
+  const isUnderMaintenance = useTypedSelector((state) => state.forceMaintenanceSlice.visible);
   const bottomSheetModalRef = useRef<bottomSheetTypes>(null);
 
   const handlePresentModalPress = useCallback(() => {
@@ -22,9 +23,9 @@ const IPayUpdateBottomSheet = () => {
   useEffect(() => {
     if (isUnderMaintenance) {
       handlePresentModalPress();
+    } else {
+      handleClosePress();
     }
-
-    handleClosePress();
   }, [handleClosePress, handlePresentModalPress, isUnderMaintenance]);
 
   return (

@@ -104,6 +104,7 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
             rules={{ required: true, maxLength: 50 }}
             render={({ field: { onChange, value } }) => (
               <IPayAnimatedTextInput
+                maxLength={50}
                 testID="bill-nick-name-input"
                 label="NEW_SADAD_BILLS.BILL_NICK_NAME"
                 labelColor={colors.primary.primary500}
@@ -122,7 +123,6 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
                 <IPaySubHeadlineText regular text={billerName} style={styles.inputValueText} />
               </IPayView>
             </IPayView>
-            <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.natural.natural500} />
           </IPayView>
 
           <IPayView style={styles.diabledCardView}>
@@ -130,7 +130,6 @@ const SadadEditBillsScreen: React.FC<SadadEditBillsScreenProps> = ({ route }) =>
               <IPayCaption1Text text="NEW_SADAD_BILLS.SERVICE_TYPE" color={colors.natural.natural500} />
               <IPaySubHeadlineText regular text={serviceDescription} style={styles.inputValueText} />
             </IPayView>
-            <IPayIcon icon={icons.arrow_circle_down} size={24} color={colors.natural.natural500} />
           </IPayView>
 
           <IPayView style={styles.diabledCardView}>

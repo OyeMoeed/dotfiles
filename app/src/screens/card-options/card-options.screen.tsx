@@ -276,46 +276,34 @@ const CardOptionsScreen: React.FC = () => {
   const isExist = (checkStr: string | undefined) => checkStr || '';
 
   const resetPassCode = async () => {
-    try {
-      const payload: resetPinCodeProp = {
-        walletNumber,
-        cardIndex: currentCard?.cardIndex,
-        body: {
-          cardPinCode:
-            encryptData(
-              isExist(appData?.encryptionData?.passwordEncryptionPrefix) + pin,
-              isExist(appData?.encryptionData?.passwordEncryptionKey),
-            ) || '',
-          otp,
-          otpRef,
-          deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
-        },
-      };
-      const apiResponse: any = await resetPinCode(payload);
-      switch (apiResponse?.status?.type) {
-        case ApiResponseStatusType.SUCCESS:
-          otpVerificationRef?.current?.resetInterval();
-          setOtpSheetVisible(false);
-          navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
-          break;
-        case apiResponse?.apiResponseNotOk:
-          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
-          break;
-        case ApiResponseStatusType.FAILURE:
-          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
-          break;
-        default:
-          renderToast('ERROR.API_ERROR_RESPONSE', false, icons.warning, false);
-          break;
-      }
-    } catch (error: any) {
-      renderToast('ERROR.SOMETHING_WENT_WRONG', false, icons.warning, false);
+    const payload: resetPinCodeProp = {
+      walletNumber,
+      cardIndex: currentCard?.cardIndex,
+      body: {
+        cardPinCode:
+          encryptData(
+            isExist(appData?.encryptionData?.passwordEncryptionPrefix) + pin,
+            isExist(appData?.encryptionData?.passwordEncryptionKey),
+          ) || '',
+        otp,
+        otpRef,
+        deviceInfo: (await getDeviceInfo()) as DeviceInfoProps,
+      },
+    };
+    const apiResponse: any = await resetPinCode(payload);
+
+    if (apiResponse?.status?.type === ApiResponseStatusType?.SUCCESS) {
+      otpVerificationRef?.current?.resetInterval();
+      setOtpSheetVisible(false);
+      navigate(ScreenNames.CHANGE_PIN_SUCCESS, { currentCard });
+      setOtp('');
     }
   };
 
   const onOtpCloseBottomSheet = (): void => {
     otpVerificationRef?.current?.resetInterval();
     setOtpSheetVisible(false);
+    setOtp('');
   };
 
   const onConfirmOtp = (): void => {
@@ -360,12 +348,6 @@ const CardOptionsScreen: React.FC = () => {
   const onResendCodePress = () => {
     prepareOtp(false);
   };
-
-  useEffect(() => {
-    if (isOtpSheetVisible) {
-      setOtp('');
-    }
-  }, [isOtpSheetVisible]);
 
   return (
     <IPaySafeAreaView style={styles.container}>
@@ -468,7 +450,7 @@ const CardOptionsScreen: React.FC = () => {
       />
 
       <IPayPortalBottomSheet
-        heading="CARD_OPTIONS.CHANGE_PIN"
+        heading="CHANGE_PIN.CHANGE_PIN_CODE"
         enablePanDownToClose
         simpleBar
         bold

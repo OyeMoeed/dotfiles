@@ -10,17 +10,18 @@ import {
   PaymentInfoProps,
 } from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.interface';
 import getSadadBillsByStatus from '@app/network/services/bills-management/get-sadad-bills-by-status/get-sadad-bills-by-status.service';
+import getTrafficViolationData from '@app/network/services/core/traffic-violation/traffic-violation.service';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import {
   ApiResponseStatusType,
-  BillingStatus,
   BillPaymentOptions,
   BillStatus,
+  BillingStatus,
   buttonVariants,
 } from '@app/utilities/enums.util';
 import { useFocusEffect } from '@react-navigation/core';
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import billPaymentsStyles from './bill-payments.style';
 import IPayBillPaymentNoResultsComponent from './component/ipay-bill-payment-no-results.component';
 import IPayBillPaymentsFooter from './component/ipay-bill-payments-footer.component';
@@ -30,10 +31,19 @@ const BillPaymentsScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = billPaymentsStyles();
   const [billsData, setBillsData] = useState<PaymentInfoProps[]>([]);
+  const [trafficUnpaidViolationsCount, setTrafficUnpaidViolationsCount] = useState<string>('0');
   const [sadadBills, setSadadBillsData] = useState<PaymentInfoProps[]>([]);
   const [unpaidBillsCount, setUnpaidBillsCount] = useState<number>(0);
+  const [loadingBills, setLoadingBill] = useState<boolean>(false);
   const walletNumber = useTypedSelector((state) => state.walletInfoReducer.walletInfo.walletNumber);
-
+  const getTrafficVoilationData = async () => {
+    const apiResponse: any = await getTrafficViolationData();
+    const bills = apiResponse?.response?.trafficViolations?.length;
+    setTrafficUnpaidViolationsCount(bills);
+  };
+  useEffect(() => {
+    getTrafficVoilationData();
+  }, []);
   const onPressViewAll = () => {
     navigate(ScreenNames.SADAD_BILLS, { sadadBills: billsData });
   };
@@ -58,6 +68,7 @@ const BillPaymentsScreen: React.FC = () => {
   };
 
   const getBills = async () => {
+    setLoadingBill(true);
     const payload: GetSadadBillByStatusProps = {
       walletNumber,
       billStatus: BillingStatus.ENABLED,
@@ -72,6 +83,7 @@ const BillPaymentsScreen: React.FC = () => {
         setBillsData(updatedData);
       }
     }
+    setLoadingBill(false);
   };
 
   // Use useFocusEffect to call the function when the screen comes into focus
@@ -118,10 +130,13 @@ const BillPaymentsScreen: React.FC = () => {
             />
           </IPayView>
         ) : (
-          <IPayBillPaymentNoResultsComponent onPressViewAll={onPressAddNewBill} />
+          <IPayBillPaymentNoResultsComponent loadingBills={loadingBills} onPressViewAll={onPressAddNewBill} />
         )}
       </IPayView>
-      <IPayBillPaymentsFooter onPressBillPaymentOption={onPressBillPaymentOption} />
+      <IPayBillPaymentsFooter
+        trafficUnpaidViolationsCount={trafficUnpaidViolationsCount}
+        onPressBillPaymentOption={onPressBillPaymentOption}
+      />
     </IPaySafeAreaView>
   );
 };

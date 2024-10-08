@@ -3,10 +3,11 @@ import { store } from '@app/store/store';
 import { getValueFromAsyncStorage } from '@app/utilities';
 
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { restartSessionTimer } from '@app/store/slices/idle-timer-slice';
 import axiosClient from '../client';
 import onRequestFulfilled from '../interceptors/request';
 import { onResponseFulfilled, onResponseReject } from '../interceptors/response';
-import { handleAxiosError, isErrorResponse } from '../utilities/error-handling-helper';
+import { handleAxiosError, checkBusinessError, isErrorResponse } from '../utilities/error-handling-helper';
 import { handleApiResponse } from './api-call.interceptors';
 import { ApiResponse } from './services.interface';
 
@@ -39,11 +40,12 @@ const apiCall = async <T>({
   };
   if (baseURL) config.baseURL = baseURL;
   const hideErrorResponse = headers?.hide_error_response;
+  const hideSpinnerResponse = headers?.hide_spinner_loading;
 
   if (hideErrorResponse) {
     axiosClient.defaults.headers.x_hide_error_response = true;
   }
-  if (headers?.hide_spinner_loading) {
+  if (hideSpinnerResponse) {
     axiosClient.defaults.headers.x_hide_spinner_loading = true;
   }
 
@@ -53,16 +55,23 @@ const apiCall = async <T>({
 
   try {
     // show Spinner
-    if (!headers?.hide_spinner_loading) {
+    if (!hideSpinnerResponse) {
       store.dispatch(showSpinner());
     }
 
     const response: AxiosResponse<T> = await axiosClient(config);
+    const isBusinessError = await checkBusinessError(response);
+    if (isBusinessError) {
+      axiosClient.defaults.headers.x_hide_error_response = true;
+    }
+
     if (isErrorResponse(response)) {
       store.dispatch(hideSpinner());
-      await handleAxiosError(response);
+      await handleAxiosError(response, isBusinessError);
     }
+
     store.dispatch(hideSpinner());
+    store.dispatch(restartSessionTimer(true));
     return handleApiResponse(response);
   } catch (error: any) {
     await handleAxiosError(error);

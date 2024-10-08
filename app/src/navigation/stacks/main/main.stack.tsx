@@ -114,6 +114,14 @@ import Wallet from '@app/screens/wallet/wallet.screen';
 import { useNavigation } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useEffect } from 'react';
+import {
+  MusanedScreen,
+  MusanedHistoryScreen,
+  MusanedPaySalaryScreen,
+  MusanedUserDetails,
+  MusanedPaySalaryConfirmScreen,
+  MusanedPaymentSuccessfulScreen,
+} from '@app/screens/musaned';
 import { IPayRatingSheet } from '@app/components/organism';
 import { IPayDisabledModulesSheet } from '@app/components/molecules';
 
@@ -293,6 +301,12 @@ const MainStackNavigator = () => {
             component={CreateMoneyRequestSummaryScreen}
           />
           <MainStack.Screen name={screenNames.TERMS_AND_CONDITIONS} component={AppTermsAndConditions} />
+          <MainStack.Screen name={screenNames.MUSANED} component={MusanedScreen} />
+          <MainStack.Screen name={screenNames.MUSANED_HISTORY} component={MusanedHistoryScreen} />
+          <MainStack.Screen name={screenNames.MUSANED_PAY_SALARY} component={MusanedPaySalaryScreen} />
+          <MainStack.Screen name={screenNames.MUSANED_PAY_SALARY_CONFIRM} component={MusanedPaySalaryConfirmScreen} />
+          <MainStack.Screen name={screenNames.MUSANED_PAYMENT_SUCCESSFUL} component={MusanedPaymentSuccessfulScreen} />
+          <MainStack.Screen name={screenNames.MUSANED_USER_DETAILS} component={MusanedUserDetails} />
         </MainStack.Group>
       </MainStack.Navigator>
       <IPayRatingSheet />

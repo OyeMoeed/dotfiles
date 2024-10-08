@@ -16,7 +16,7 @@ import {
   TransactionsMockProps,
 } from './transaction.interface';
 
-const getTransactions = async (payload: TransactionsProp): Promise<TransactionsMockProps> => {
+const getTransactions = async (payload: TransactionsProp, hideSpinner = true): Promise<TransactionsMockProps> => {
   if (constants.MOCK_API_RESPONSE) {
     return transactionMock;
   }
@@ -25,13 +25,17 @@ const getTransactions = async (payload: TransactionsProp): Promise<TransactionsM
     endpoint: CORE_URLS.GET_HOME_TRANSACTIONS(payload),
     method: requestType.GET,
     headers: {
-      hide_spinner_loading: true,
+      hide_spinner_loading: hideSpinner,
     },
   });
   return apiResponse;
 };
 
 const getTransactionTypes = async ({ hideSpinner }: { hideSpinner?: boolean }): Promise<unknown> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return [];
+  }
+
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
     method: requestType.GET,
@@ -44,19 +48,13 @@ const getTransactionTypes = async ({ hideSpinner }: { hideSpinner?: boolean }): 
 };
 
 const resetPinCode = async (payload: resetPinCodeProp): Promise<any> => {
-  try {
-    const apiResponse = await apiCall({
-      endpoint: CORE_URLS.RESET_PINCODE(payload?.walletNumber, payload?.cardIndex),
-      method: requestType.POST,
-      payload: payload?.body,
-    });
-    if (apiResponse?.status?.type === APIResponseType.SUCCESS) {
-      return apiResponse;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error: any) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse = await apiCall({
+    endpoint: CORE_URLS.RESET_PINCODE(payload?.walletNumber, payload?.cardIndex),
+    method: requestType.POST,
+    payload: payload?.body,
+  });
+
+  return apiResponse;
 };
 
 const changeStatus = async (payload: changeStatusProp): Promise<any> => {

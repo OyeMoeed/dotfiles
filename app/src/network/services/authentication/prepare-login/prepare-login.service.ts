@@ -6,7 +6,7 @@ import AUTHENTICATION_URLS from '../authentication.urls';
 import { PrePareLoginApiResponseProps } from './prepare-login.interface';
 import prepareLoginMock from './prepare-login.mock';
 
-type LoginPrepareResponse = ApiResponse<PrePareLoginApiResponseProps> | undefined;
+type LoginPrepareResponse = ApiResponse<PrePareLoginApiResponseProps, { authorization?: string }> | undefined;
 
 const prepareLogin = async (payload: DeviceInfoProps, hideValue: boolean = false): Promise<LoginPrepareResponse> => {
   if (constants.MOCK_API_RESPONSE) {
@@ -22,6 +22,7 @@ const prepareLogin = async (payload: DeviceInfoProps, hideValue: boolean = false
       hide_error_response: hideValue,
     },
   });
+
   return apiResponse;
 };
 

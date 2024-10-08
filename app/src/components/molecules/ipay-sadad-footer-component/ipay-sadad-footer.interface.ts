@@ -10,7 +10,7 @@ export interface SadadFooterComponentProps {
   totalAmountText?: string;
   selectedItemsCount?: number;
   btnText: string;
-  btnDisbaled?: boolean;
+  btnDisabled?: boolean;
   btnLeftIcon?: React.ReactElement;
   btnRightIcon?: React.ReactElement;
   disableBtnIcons?: boolean;

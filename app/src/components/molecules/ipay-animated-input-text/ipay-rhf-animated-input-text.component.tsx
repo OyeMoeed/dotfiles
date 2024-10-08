@@ -96,11 +96,10 @@ const IPayRHFAnimatedTextInput = forwardRef<TextInput, ControlledInputProps>(
       <IPayView style={mainContainerStyles} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
-            styles.container,
+            styles.containerWithoutPadding,
             !editable && styles.disabledContainer,
             isFocused && styles.focusedContainer,
             errors[name] && styles.errorContainer,
-
             containerStyle,
           ]}
         >

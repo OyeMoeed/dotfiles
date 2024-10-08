@@ -66,6 +66,7 @@ const IPayList: React.FC<IPayListProps> = ({
   shouldTranslateSubTitle = true,
   shouldDetailsTranslate = true,
   showTextInNextLine = false,
+  detailIconDisabled,
   detailsTruncation = true,
 }) => {
   const { colors } = useTheme();
@@ -136,12 +137,13 @@ const IPayList: React.FC<IPayListProps> = ({
         >
           <IPayView style={dynamicStyles.rightIconWrapper}>
             {isShowIcon ? (
-              (icon && (
+              ((icon || detailText) && (
                 <IPayButton
                   btnType={buttonVariants.LINK_BUTTON}
                   btnText={detailText}
                   onPress={onPressIcon}
                   rightIcon={icon}
+                  btnIconsDisabled={detailIconDisabled}
                   textStyle={[dynamicStyles.copyText, detailTextStyle]}
                   btnStyle={dynamicStyles.rightIconContainer}
                 />

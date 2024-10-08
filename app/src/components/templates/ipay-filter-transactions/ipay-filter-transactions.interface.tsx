@@ -1,4 +1,5 @@
 import { CardInterface } from '@app/components/molecules/ipay-atm-card/ipay-atm-card.interface';
+import { SelectedValue } from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.interface';
 
 export interface IPayFilterTransactionsProps {
   /**
@@ -32,8 +33,6 @@ export interface IPayFilterTransactionsProps {
 
   currentCard?: CardInterface;
 
-  cards?: any[] | undefined;
-
   contacts?: any[] | undefined;
 
   showDateFilter?: boolean;
@@ -46,14 +45,9 @@ export interface IPayFilterTransactionsProps {
 
   onCloseFilterSheet: () => void;
 
-  setSelectedCard?: (card: any) => void;
-
-  // filters: FilterTypes[];
-
-  // bottomFilters?: FilterTypes[] | undefined;
-
-  // isBottomDropdowns?: boolean;
-
   defaultValues: any;
   doneText?: string;
+  showMusanedFilter?: boolean;
+  laborerList?: Array<SelectedValue>;
+  salaryTypes?: Array<SelectedValue>;
 }
