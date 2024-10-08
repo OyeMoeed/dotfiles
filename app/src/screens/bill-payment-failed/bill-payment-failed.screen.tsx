@@ -6,12 +6,16 @@ import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
+import { RouteProp, useRoute } from '@react-navigation/core';
 import React from 'react';
 import billFailedStyles from './bill-payment-failed.style';
 
 const BillPaymentFailedScreen: React.FC = () => {
   const { colors } = useTheme();
   const styles = billFailedStyles(colors);
+  const route = useRoute<RouteProps>();
+  type RouteProps = RouteProp<{ params: { navigationPath: string } }, 'params'>;
+  const { navigationPath } = route.params;
 
   return (
     <IPayPageWrapper>
@@ -30,7 +34,7 @@ const BillPaymentFailedScreen: React.FC = () => {
             btnType={buttonVariants.PRIMARY}
             large
             btnStyle={styles.btnStyle}
-            onPress={() => navigate(ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN)}
+            onPress={() => navigate(navigationPath)}
           />
           <IPayButton
             leftIcon={<IPayIcon testID="home-2-icon" icon={icons.HOME_2} color={colors.primary.primary500} size={20} />}

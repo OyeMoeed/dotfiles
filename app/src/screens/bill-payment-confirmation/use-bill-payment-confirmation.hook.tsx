@@ -178,6 +178,8 @@ const useBillPaymentConfirmation = (
       }
     } else {
       setAPIError(apiResponse?.error || t('ERROR.SOMETHING_WENT_WRONG'));
+      setIsOtpSheetVisible(false);
+      navigate(ScreenNames.BILL_PAYMENT_FAILED, { navigationPath: ScreenNames.BILL_PAYMENTS_SCREEN });
     }
   };
 

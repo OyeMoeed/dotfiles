@@ -102,7 +102,7 @@ const TrafficViolationPaymentScreen: React.FC = () => {
         }
       } else {
         renderToast(t('ERROR.API_ERROR_RESPONSE'));
-        navigate(ScreenNames.BILL_PAYMENT_FAILED);
+        navigate(ScreenNames.BILL_PAYMENT_FAILED, { navigationPath: ScreenNames.TRAFFIC_VOILATION_CASES_SCREEN });
       }
     } catch (error: any) {
       renderToast(error?.message || t('ERROR.SOMETHING_WENT_WRONG'));
