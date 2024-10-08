@@ -1,5 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayFlatlist, IPayIcon, IPayView } from '@app/components/atoms';
+import IPayAlert from '@app/components/atoms/ipay-alert/ipay-alert.component';
 import { IPayAccountBalance, IPayButton, IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-form-provider.component';
 import IPaySadadSaveBill from '@app/components/molecules/ipay-sadad-save-bill/ipay-sadad-save-bill.component';
@@ -15,7 +16,7 @@ import getAktharPoints from '@app/network/services/cards-management/mazaya-topup
 import { getValidationSchemas } from '@app/services';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { buttonVariants } from '@app/utilities';
+import { alertType, alertVariant, buttonVariants } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
 import { RouteProp, useRoute } from '@react-navigation/native';
 import React, { useEffect, useMemo, useState } from 'react';
@@ -54,6 +55,8 @@ const NewSadadBillScreen: React.FC = () => {
   const [amountValue, setAmoutValue] = useState(totalAmount);
   const [billDetailsData, setBillDetailsData] = useState<BillsProps[]>(billDetailsList || []);
   const [totalAmountValue, setTotalAmountValue] = useState(0);
+  const [deleteBeneficiary, setDeleteBeneficiary] = useState<boolean>(false);
+  const [billIdToDelete, setBillIdToDelete] = useState<number>();
 
   const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
 
@@ -120,14 +123,24 @@ const NewSadadBillScreen: React.FC = () => {
   const onSetAmount = (value: string, index: number) => {
     const newAmount = Number(value);
 
-    const updatedBillDetails = billDetailsData?.map((item, idx) =>
-      idx === index ? { ...item, amount: newAmount } : item,
-    );
+    const updatedBillDetails = billDetailsData.map((item, idx) => {
+      const isCurrentItem = idx === index;
+      const billAmount = Number(item.billAmount);
+      let remaining = {};
+      if (newAmount > billAmount) {
+        remaining = { overpaidAmount: newAmount - billAmount, isRemaining: false, isOverPaid: true };
+      } else if (newAmount < billAmount) {
+        remaining = { partiallyPaidAmount: billAmount - newAmount, isRemaining: true, isOverPaid: false };
+      } else {
+        remaining = { amount: item.billAmount, isRemaining: false, isOverPaid: false };
+      }
+      return isCurrentItem ? { ...item, amount: newAmount, ...remaining } : item;
+    });
+
     setAmoutValue(value);
     setBillDetailsData(updatedBillDetails);
 
-    const newTotal = updatedBillDetails.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
-
+    const newTotal = updatedBillDetails.reduce((acc, item) => acc + Number(item.amount || 0), 0);
     setTotalAmountValue(newTotal);
   };
 
@@ -145,7 +158,19 @@ const NewSadadBillScreen: React.FC = () => {
       billAmount,
     }));
 
-  const removeBill = (index: number) => setBillDetailsData(billDetailsList?.filter((_, idx: number) => idx !== index));
+  const onDeleteCancel = () => {
+    setDeleteBeneficiary(false);
+  };
+
+  const onPressRemove = (billId: number) => {
+    setBillIdToDelete(billId);
+    setDeleteBeneficiary(true);
+  };
+
+  const onDeleteBeneficiary = () => {
+    setBillDetailsData(billDetailsList?.filter((_, idx: number) => idx !== billIdToDelete));
+    setDeleteBeneficiary(false);
+  };
 
   return (
     <>
@@ -186,9 +211,9 @@ const NewSadadBillScreen: React.FC = () => {
                       handleAmountInputFromOutSide
                       onChangeAmountOutside={(val) => onSetAmount(val, index)}
                       showActionBtn={billDetailsData?.length > 1}
-                      onPress={() => removeBill(index)}
+                      onPress={() => onPressRemove(index)}
                     />
-                    {!saveBill && (
+                    {!saveBill && billDetailsData?.length === 1 && (
                       <IPaySadadSaveBill
                         saveBillToggle={watch(FormFields.SAVE_BILL) || false}
                         billInputName={FormFields.BILL_NAME}
@@ -239,6 +264,25 @@ const NewSadadBillScreen: React.FC = () => {
       >
         <IPayTopUpSelection testID="topUp-selection" topupItemSelected={topupItemSelected} />
       </IPayPortalBottomSheet>
+      <IPayAlert
+        visible={deleteBeneficiary}
+        onClose={onDeleteCancel}
+        title="SADAD.DELETE_NEW_BILL"
+        message=""
+        type={alertType.SIDE_BY_SIDE}
+        closeOnTouchOutside
+        variant={alertVariant.DESTRUCTIVE}
+        icon={<IPayIcon icon={icons.TRASH} size={64} />}
+        showIcon={false}
+        primaryAction={{
+          text: 'COMMON.CANCEL',
+          onPress: onDeleteCancel,
+        }}
+        secondaryAction={{
+          text: 'COMMON.DONE',
+          onPress: onDeleteBeneficiary,
+        }}
+      />
     </>
   );
 };

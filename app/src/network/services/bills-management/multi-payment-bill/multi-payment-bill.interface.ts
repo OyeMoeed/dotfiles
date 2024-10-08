@@ -21,6 +21,10 @@ interface BillPaymentInfosTypes {
   transactionId?: string;
   billPayDetailsArr?: BillPayDetailsArrProps;
   serviceType?: string;
+  partiallyPaidAmount?: string;
+  isOverPaid?: boolean;
+  isRemaining?: boolean;
+  overpaidAmount?: string;
 }
 
 interface MultiPaymentBillPayloadTypes {

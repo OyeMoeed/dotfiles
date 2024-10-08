@@ -56,29 +56,47 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
     return dueDateTime ? getDateFormate(date.toDate(), dateTimeFormat.DateMonthYearWithoutSpace) : '-';
   };
 
-  const getBillInfoArray = (item: BillPaymentInfosTypes) => [
-    {
-      id: '1',
-      label: t('PAY_BILL.SERVICE_TYPE'),
-      value: item.serviceDescription ? item.serviceDescription : '-',
-    },
-    {
-      id: '2',
-      label: t('PAY_BILL.ACCOUNT_NUMBER'),
-      value: item.billNumOrBillingAcct,
-    },
-    {
-      id: '3',
-      label: t('COMMON.DATE'),
-      value: dateFormat(item.dueDateTime),
-    },
-    {
-      id: '4',
-      label: t('COMMON.REF_NUM'),
-      value: item.transactionId,
-      icon: icons.copy,
-    },
-  ];
+  const getBillInfoArray = (item: BillPaymentInfosTypes) => {
+    let amountInfo;
+    if (item?.isRemaining) {
+      amountInfo = {
+        label: t('HOME.REMAINING_AMOUNT'),
+        value: `${item.partiallyPaidAmount} ${t('COMMON.SAR')}`,
+      };
+    } else if (item?.isOverPaid) {
+      amountInfo = {
+        label: t('COMMON.OVERPAID'),
+        value: `${item.overpaidAmount} ${t('COMMON.SAR')}`,
+      };
+    } else {
+      amountInfo = {
+        label: t('COMMON.AMOUNT'),
+        value: `${item.amount} ${t('COMMON.SAR')}`,
+      };
+    }
+
+    const billInfoArray = [
+      {
+        label: t('PAY_BILL.SERVICE_TYPE'),
+        value: item.serviceDescription || '-',
+      },
+      {
+        label: t('PAY_BILL.ACCOUNT_NUMBER'),
+        value: item.billNumOrBillingAcct,
+      },
+      {
+        label: t('COMMON.DATE'),
+        value: dateFormat(item.dueDateTime),
+      },
+      ...[amountInfo],
+      {
+        label: t('COMMON.REF_NUM'),
+        value: item.transactionId,
+        icon: icons.copy,
+      },
+    ];
+    return billInfoArray;
+  };
 
   const onInquireBill = async () => {
     const apiResponse: any = await inquireBillService(inquireBillPayload as InquireBillPayloadProps);

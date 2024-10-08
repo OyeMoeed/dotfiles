@@ -177,7 +177,8 @@
     "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
     "YES": "Yes",
     "NO": "No",
-    "AMOUNT": "Amount"
+    "AMOUNT": "Amount",
+    "OVERPAID": "Overpaid"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
