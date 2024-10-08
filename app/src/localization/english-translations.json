@@ -702,7 +702,7 @@
     "INVALID_PIN": "Invalid Pin",
     "PIN_NOT_MATCHING": "PIN Code not matching",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode.",
-    "OLD_PIN": "Old pin cannot be use as current pin",
+    "OLD_PIN": "Old PIN cannot be use as current PIN",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
     "CHANGE_PIN_CODE": "Change PIN Code"
   },
