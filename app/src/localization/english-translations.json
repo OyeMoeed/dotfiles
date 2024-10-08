@@ -177,7 +177,9 @@
     "CHANGES_SAVED_SUCCESSFULLY": "Changes Saved successfully",
     "YES": "Yes",
     "NO": "No",
-    "AMOUNT": "Amount"
+    "AMOUNT": "Amount",
+    "OTHERS": "Other",
+    "SELECT_DATE": "Select Date"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",
@@ -1544,7 +1546,8 @@
     "MAX_WIDTH": "{label} must be no more than {max}",
     "REQUIRED": "{label} is required",
     "MUST_BE_TEXT": "{label} must be valid text",
-    "MUST_BE_SELECTED": "{label} must be selected"
+    "MUST_BE_SELECTED": "{label} must be selected",
+    "ALPHA_NO_DIGITS": "Only English characters are allowed \nSpecial characters are not allowed"
   },
   "RATING": {
     "APP_RATING": "App Rating",

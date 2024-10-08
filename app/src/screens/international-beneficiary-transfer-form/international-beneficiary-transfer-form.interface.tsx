@@ -28,7 +28,7 @@ enum TransferService {
   ALINMAPAY_DIRECT = 'AlinmaPay Direct',
 }
 
-enum InternationTransferValue {
+enum InternationalTransferValue {
   WU = 'westernUnion',
   AE = 'alinmaExpress',
 }
@@ -55,5 +55,5 @@ export {
   BeneficiaryTransferFormValues,
   TransferService,
   TransferTypes,
-  InternationTransferValue,
+  InternationalTransferValue,
 };

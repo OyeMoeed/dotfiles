@@ -27,6 +27,7 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   rightIcon,
   isCountry,
   isCurrency,
+  returnFullValue,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -47,15 +48,18 @@ const IPayDropdownSelect: React.FC<IPayDropdownSelectProps> = ({
   };
 
   const handleSelectItem = (item: ListItem) => {
-    if (onSelectListItem) {
-      onSelectListItem(item[valueKey]);
+    if (onSelectListItem && item && item?.[valueKey]) {
+      onSelectListItem(returnFullValue ? item : item?.[valueKey]);
     }
     setIsVisible(false);
   };
 
   const getDisplayedValue = useMemo(
-    () => data?.find((item) => item[valueKey] === selectedValue)?.[labelKey],
-    [data, labelKey, selectedValue, valueKey],
+    () =>
+      data?.find((item) => item?.[valueKey] === (returnFullValue ? selectedValue?.[valueKey] : selectedValue))?.[
+        labelKey
+      ],
+    [data, labelKey, returnFullValue, selectedValue, valueKey],
   );
 
   return (

@@ -1,4 +1,5 @@
 import colors from '@app/styles/colors.const';
+import { BottomBarPadding } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -28,6 +29,7 @@ const beneficiaryTransferStyles = (theme: typeof colors) =>
     heading: {
       textAlign: 'center',
       color: theme.primary.primary900,
+      marginBottom: verticalScale(32),
     },
     caption: {
       textAlign: 'center',
@@ -43,6 +45,9 @@ const beneficiaryTransferStyles = (theme: typeof colors) =>
     innerContainer: {
       paddingVertical: verticalScale(8),
       gap: moderateScale(8),
+    },
+    scrollViewContent: {
+      paddingBottom: BottomBarPadding,
     },
   });
 

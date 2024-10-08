@@ -14,17 +14,13 @@ const activateInternationalBeneficiary = async (
   if (constants.MOCK_API_RESPONSE) {
     return activateBeneficiariesData;
   }
-  try {
-    const apiResponse = await apiCall({
-      endpoint: INTERNATIONAL_TRANSFERS_URLS.activate_beneficiary(),
-      method: requestType.PUT,
-      payload,
-    });
+  const apiResponse = await apiCall({
+    endpoint: INTERNATIONAL_TRANSFERS_URLS.activate_beneficiary,
+    method: requestType.PUT,
+    payload,
+  });
 
-    return apiResponse;
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export default activateInternationalBeneficiary;

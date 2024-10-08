@@ -687,9 +687,9 @@ const DASHBOARD_ITEMS = [
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export enum DYNAMIC_FIELDS_TYPES {
-  TEXT = 'TEXT',
-  LIST_OF_VALUE = 'LIST_OF_VALUE',
-  NUMBER = 'NUMBER',
+  TEXT = 'text',
+  LIST_OF_VALUE = 'listOfValue',
+  NUMBER = 'number',
   GREGORIAN_DATE = 'gregorianDate',
   GREGORIAN_DATE_PAST = 'gregorianDatePast',
   GREGORIAN_DATE_FUTURE = 'gregorianDateFuture',
@@ -703,7 +703,8 @@ export enum DYNAMIC_FIELDS_TYPES {
   ALPHA_NO_DIGITS = 'alphaNoDigits',
   ENGLISH_CHARACTERS = 'englishCharacters',
   ENGLISH_CHARACTERS_DIGITS = 'englishCharactersDigits',
-  LABEL = 'LABEL',
+  LABEL = 'label',
+  ENUMERATION = 'enumeration',
 }
 const TERMS_AND_CONDITIONS_URLS_NON_PROD = {
   ALINMAPAY_REG_TERMS_AR_URL:

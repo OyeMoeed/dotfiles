@@ -5,10 +5,8 @@ import { IPaySafeAreaView } from '@app/components/templates';
 import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
-import {
-  DynamicField,
-  DynamicFieldListType,
-} from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import { DynamicField } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
+import { ListItem } from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.interface';
 import getBeneficiariesDynamicFields from '@app/network/services/international-transfer/beneficiaries-dynamic-fields/beneficiaries-dynamic-fields.service';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { buttonVariants } from '@app/utilities/enums.util';
@@ -27,7 +25,7 @@ import { Controller } from 'react-hook-form';
 import useGetAECurrencies from '@app/network/services/international-transfer/ae-beneficiary-currencies/use-get-ae-countries.hook';
 import addBeneficiaryStyles from './add-international-beneficiary.style';
 import { AddBeneficiaryValues, ServiceDataProps } from './add-international-beneficiary.interface';
-import { InternationTransferValue } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
+import { InternationalTransferValue } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import useAddInternationalBenValidation from './add-international-beneficiary.factory';
 
 const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
@@ -42,7 +40,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
   const { colors } = useTheme();
   const styles = addBeneficiaryStyles(colors);
 
-  const isAlinmaPay = useMemo(() => values?.transferType === InternationTransferValue.AE, [values?.transferType]);
+  const isAlinmaPay = useMemo(() => values?.transferType === InternationalTransferValue.AE, [values?.transferType]);
   const isChecked = useMemo(() => !!values?.transferType, [values?.transferType]);
   const { serviceLogo, serviceName } = data;
 
@@ -65,14 +63,16 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
 
   const { aeMetadata } = useGetAEMetadata({ enabled: isAlinmaPay });
   const { aeCountries } = useGetAECountries({ enabled: isAlinmaPay, alinmaExpressType: values?.deliveryType });
+
   const { aeBanks } = useGETAEBanks({
     enabled: isAlinmaPay,
     alinmaExpressType: values?.deliveryType,
     countryCode: values?.country,
   });
+
   const { aeCurrencies } = useGetAECurrencies({
     enabled: isAlinmaPay,
-    bank: values?.bank,
+    bank: values?.bank?.correspondantBank,
     alinmaExpressType: values?.deliveryType,
   });
 
@@ -80,7 +80,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
     {
       index: 'bank',
       label: 'TRANSACTION_HISTORY.BANK_NAME',
-      lovList: wuBanks as DynamicFieldListType[],
+      lovList: wuBanks as ListItem[],
       type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
     },
   ];
@@ -91,7 +91,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
         return [
           {
             index: 'nickname',
-            label: 'NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL',
+            label: 'INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME',
             type: DYNAMIC_FIELDS_TYPES.TEXT,
           },
           {
@@ -117,6 +117,8 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
             label: 'TRANSACTION_HISTORY.BANK_NAME',
             lovList: aeBanks,
             type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
+            returnFullValue: true,
+            value: values?.bank?.code,
           },
           {
             index: 'currency',
@@ -130,7 +132,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
       return [
         {
           index: 'nickname',
-          label: 'NEW_BENEFICIARY.BENEFICIARY_NICK_NAME_OPTIONAL',
+          label: 'INTERNATIONAL_TRANSFER.BENEFICIARY_NICK_NAME',
           type: DYNAMIC_FIELDS_TYPES.TEXT,
         },
         {
@@ -187,7 +189,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
         />
       </IPayView>
       {values?.transferType === data?.serviceValue && (
-        <DynamicFormComponent fields={getFields()} control={control} errors={errors} />
+        <DynamicFormComponent fields={getFields()} control={control} errors={errors} watch={watch} />
       )}
     </IPayView>
   );
@@ -205,13 +207,16 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
       remittanceType: data.remittanceType,
       countryCode: data.country,
       currencyCode: data.currency,
+      deliveryType: '',
+      bank: data?.bank,
     };
     try {
       const apiResponse = await getBeneficiariesDynamicFields(payload);
       if (apiResponse?.successfulResponse) {
         navigate(ScreenNames.INTERNATIONAL_BENEFICIARY_TRANSFER_FORM, {
-          transferService: { ...data, ...payload },
+          data,
           dynamicFieldsData: apiResponse?.response?.dynamicFields,
+          transferService: data?.transferType === InternationalTransferValue.WU ? westernUnionData : alinmaDirectData,
         });
       }
     } catch {
@@ -229,7 +234,7 @@ const AddInternationalBeneficiaryScreen: React.FC = () => {
         remittanceType: '',
         nickname: '',
         deliveryType: '',
-        bank: '',
+        bank: undefined,
       }}
     >
       {(formProps) => {

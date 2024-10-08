@@ -1,9 +1,9 @@
 interface AlinmaExpressBanks {
   code: string;
   desc: string;
-  branch: string;
-  city: string;
-  country: string;
+  correspondantBank: string;
+  actualRemittanceType: string;
+  transferType: string;
 }
 
 interface AEBanksResponseInterface {

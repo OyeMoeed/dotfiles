@@ -1,81 +1,52 @@
-import { IPayCaption2Text, IPayDatePicker } from '@app/components/atoms';
+import { IPayCaption2Text } from '@app/components/atoms';
 import IPayDropdownSelect from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.component';
 import { DYNAMIC_FIELDS_TYPES } from '@app/constants/constants';
-import { DateFieldTypes } from '@app/utilities';
 import get from 'lodash/get';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Controller } from 'react-hook-form';
+import { ListItem } from '@app/components/atoms/ipay-dropdown-select/ipay-dropdown-select.interface';
+import { useTranslation } from 'react-i18next';
 import IPayAnimatedTextInput from '../../ipay-animated-input-text/ipay-animated-input-text.component';
 import IPayCheckboxTitle from '../../ipay-checkbox-title/ipay-chekbox-title.component';
 import DynamicFieldRendererProps from './ipay-field-renderer.interface';
+import IPayDatePickerSheet from '../../ipay-date-picker-sheet/ipay-date-picker-sheet.component';
 
-const DYNAMIC_FIELDS_CONFIGS = {
-  [DYNAMIC_FIELDS_TYPES.TEXT]: {
-    regex: /^[\s_a-z\u0621-\u064A@.\s0-9٠-٩]*$/i,
-    keyboardType: 'default',
-  },
-  [DYNAMIC_FIELDS_TYPES.ALPHA_NO_DIGITS]: {
-    regex: /^[\sa-z\u0621-\u064A]*$/i,
-    keyboardType: 'default',
-  },
-  [DYNAMIC_FIELDS_TYPES.ENGLISH_CHARACTERS]: {
-    regex: /^[\sa-z]*$/i,
-    keyboardType: 'default',
-  },
-  [DYNAMIC_FIELDS_TYPES.ENGLISH_CHARACTERS_DIGITS]: {
-    regex: /^[\sa-z0-9]*$/i,
-    keyboardType: 'default',
-  },
-  [DYNAMIC_FIELDS_TYPES.NUMBER]: {
-    regex: /^[\sa-z0-9]*$/i,
-    keyboardType: 'numeric',
-  },
-};
 const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
   field,
   control,
   myIdCheck,
   myIdValue,
   handleParentLovChange,
+  watch,
 }) => {
+  const { t } = useTranslation();
+
+  const customizedLabel = useMemo(() => {
+    if (field?.showOptional) {
+      return `${field?.label} (${t('COMMON.OPTIONAL')})`;
+    }
+    return field?.label;
+  }, [field?.label, field?.showOptional, t]);
+
   const renderField = () => {
-    // Replace "." with "_" to flatten the name
-    const flatKey = field?.index?.replace(/\./g, '_');
     // let errorMessage
     // Fetch the error message before the switch statement
     // eslint-disable-next-line no-underscore-dangle
-    const errorMessage = get(control?._formState?.errors, `${flatKey}.message`, '');
+    const errorMessage = get(control?._formState?.errors, `${field?.index}.message`, '');
+
+    if (
+      field?.dependent_key &&
+      watch?.([field?.dependent_key])?.[0] !== field?.dependent_value &&
+      watch?.([field?.dependent_key])?.[0]?.code !== field?.dependent_value
+    ) {
+      return null;
+    }
 
     switch (field.type) {
-      case DYNAMIC_FIELDS_TYPES.TEXT:
-      case DYNAMIC_FIELDS_TYPES.ALPHA_NO_DIGITS:
-      case DYNAMIC_FIELDS_TYPES.ENGLISH_CHARACTERS:
-      case DYNAMIC_FIELDS_TYPES.ENGLISH_CHARACTERS_DIGITS:
-      case DYNAMIC_FIELDS_TYPES.NUMBER:
-        return (
-          <Controller
-            name={flatKey} // Use the flattened key
-            control={control}
-            defaultValue={field.value}
-            render={({ field: { onChange, value }, formState: { errors } }) => (
-              <IPayAnimatedTextInput
-                label={field.label}
-                value={myIdCheck ? myIdValue : value}
-                maxLength={field.maxWidth}
-                onChangeText={onChange}
-                keyboardType={DYNAMIC_FIELDS_CONFIGS?.[field.type]?.keyboardType}
-                isError={!!get(errors, flatKey)}
-                editable={!myIdCheck}
-                assistiveText={errorMessage as string}
-                testID={`${flatKey}-text-input`}
-              />
-            )}
-          />
-        );
       case DYNAMIC_FIELDS_TYPES.LABEL:
         return (
           <Controller
-            name={flatKey} // Use the flattened key
+            name={field?.index} // Use the flattened key
             control={control}
             defaultValue={field.value}
             render={({ field: { value } }) => <IPayCaption2Text regular text={value} />}
@@ -83,23 +54,24 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
         );
 
       case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE_WITH_OTHER_OPTION:
+      case DYNAMIC_FIELDS_TYPES.ENUMERATION:
       case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE:
         return (
           <Controller
-            name={flatKey}
+            name={field?.index}
             control={control}
             defaultValue={field.value}
             render={({ field: { value, onChange } }) => (
               <IPayDropdownSelect
                 data={field?.lovList || []}
                 selectedValue={value}
-                label={field.label}
-                onSelectListItem={(selectedItem: string) => {
+                label={customizedLabel}
+                onSelectListItem={(selectedItem: string | ListItem) => {
                   onChange(selectedItem);
                   if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
                 }}
                 isSearchable
-                testID={`${flatKey}-dropdown`}
+                testID={`${field?.index}-dropdown`}
                 labelKey="desc"
                 valueKey="code"
                 disabled={!field?.lovList ? true : field?.lovList?.length === 0}
@@ -107,6 +79,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                 rightIcon={field?.rightIcon}
                 isCountry={field?.isCountry}
                 isCurrency={field?.isCurrency}
+                returnFullValue={field?.returnFullValue}
               />
             )}
           />
@@ -120,35 +93,32 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
       case DYNAMIC_FIELDS_TYPES.HIJRI_DATE_FUTURE:
         return (
           <Controller
-            name={flatKey}
+            name={field?.index}
             control={control}
             defaultValue={field.value}
-            render={({ field: { onChange, value }, formState: { errors } }) => {
-              const maximumDate = field?.type.includes(DateFieldTypes.Past) ? new Date() : null;
-              const minimumDate = field?.type.includes(DateFieldTypes.Future) ? new Date() : null;
-              return (
-                <IPayDatePicker
-                  maximumDate={maximumDate}
-                  minimumDate={minimumDate}
-                  value={value}
-                  isError={!!get(errors, flatKey)}
-                  onDateChange={onChange}
-                  assistiveText={errorMessage as string}
-                />
-              );
-            }}
+            render={({ field: { onChange, value }, formState: { errors } }) => (
+              <IPayDatePickerSheet
+                maximumDate={field?.maximumDate}
+                minimumDate={field?.minimumDate}
+                value={value}
+                isError={!!get(errors, field?.index)}
+                onChange={onChange}
+                errorMessage={errorMessage as string}
+                label={customizedLabel}
+              />
+            )}
           />
         );
 
       case DYNAMIC_FIELDS_TYPES.BOOLEAN_TYPE:
         return (
           <Controller
-            name={flatKey}
+            name={field?.index}
             control={control}
             defaultValue={field.value}
             render={({ field: { value, onChange } }) => (
               <IPayCheckboxTitle
-                heading={field.label}
+                heading={customizedLabel}
                 isCheck={value}
                 onPress={() => {
                   onChange(!value);
@@ -158,8 +128,33 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
           />
         );
 
+      case DYNAMIC_FIELDS_TYPES.TEXT:
+      case DYNAMIC_FIELDS_TYPES.ALPHA_NO_DIGITS:
+      case DYNAMIC_FIELDS_TYPES.ENGLISH_CHARACTERS:
+      case DYNAMIC_FIELDS_TYPES.ENGLISH_CHARACTERS_DIGITS:
+      case DYNAMIC_FIELDS_TYPES.NUMBER:
+      case DYNAMIC_FIELDS_TYPES.TEXT_ALTERNATIVE_LOV:
       default:
-        return null;
+        return (
+          <Controller
+            name={field?.index} // Use the flattened key
+            control={control}
+            defaultValue={field.value}
+            render={({ field: { onChange, value }, formState: { errors } }) => (
+              <IPayAnimatedTextInput
+                label={customizedLabel}
+                value={myIdCheck ? myIdValue : value}
+                maxLength={field.maxWidth}
+                onChangeText={onChange}
+                keyboardType={field?.keyboardType || 'default'}
+                isError={!!get(errors, field?.index)}
+                editable={!myIdCheck}
+                assistiveText={errorMessage as string}
+                testID={`${field?.index}-text-input`}
+              />
+            )}
+          />
+        );
     }
   };
 

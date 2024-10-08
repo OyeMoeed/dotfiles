@@ -7,14 +7,14 @@ export interface IPayDropdownSelectProps {
   testID?: string;
   style?: StyleProp<ViewStyle>;
   data: ListItem[];
-  onSelectListItem?: (item: string) => void;
+  onSelectListItem?: (item: string | ListItem) => void;
   // Prop for searchable dropdown
   isSearchable?: boolean;
   disabled?: boolean;
   // Which key should be used as label
-  labelKey: string;
+  labelKey: keyof ListItem;
   // Which key should be used as value
-  valueKey: string;
+  valueKey: keyof ListItem;
   // Selected value
   selectedValue?: any;
   errorMessage?: string;
@@ -27,10 +27,16 @@ export interface IPayDropdownSelectProps {
   rightIcon?: any;
   isCountry?: boolean;
   isCurrency?: boolean;
+  returnFullValue?: boolean;
+  value?: string | ListItem;
 }
 
 export interface ListItem {
-  [key: string]: any;
+  code?: string;
+  desc?: string;
+  title?: string;
+  id?: string;
+  otherValue?: string;
 }
 
 export interface IPayDropdownComponentSheetProps {

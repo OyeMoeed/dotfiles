@@ -1,8 +1,11 @@
 import { DURATIONS, INITIAL_TIMER, PROGRESS_INCREMENT_FACTOR } from '@app/constants/constants';
+import { ActivationMethods } from '@app/network/services/international-transfer/activate-international-beneficiary';
 import { ApiResponseStatusType } from '@app/utilities/enums.util';
 import { useCallback, useEffect, useState } from 'react';
 
-const useCallReceiverTimer = (activateInternationalBeneficiary: () => Promise<ApiResponseStatusType | void>) => {
+const useCallReceiverTimer = (
+  activateInternationalBeneficiary: (activationMethod: ActivationMethods) => Promise<ApiResponseStatusType | void>,
+) => {
   const [gradientWidth, setGradientWidth] = useState('0%');
   const [timeLeft, setTimeLeft] = useState(INITIAL_TIMER);
   const [expired, setExpired] = useState(false);
@@ -31,7 +34,7 @@ const useCallReceiverTimer = (activateInternationalBeneficiary: () => Promise<Ap
   }, [DURATIONS.LONG]);
 
   const handleRequestAgain = useCallback(async () => {
-    const response = await activateInternationalBeneficiary();
+    const response = await activateInternationalBeneficiary(ActivationMethods.CB);
 
     if (response === ApiResponseStatusType.SUCCESS) {
       setExpired(false);

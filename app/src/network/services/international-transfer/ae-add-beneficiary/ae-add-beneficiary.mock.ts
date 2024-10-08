@@ -1,6 +1,7 @@
-import { AEAddBeneficiaryProps } from './ae-add-beneficiary.interface';
+import { ApiResponse } from '../../services.interface';
+import { BeneficiaryDetailsRes } from './ae-add-beneficiary.interface';
 
-const aeAddBeneficiaryMock: AEAddBeneficiaryProps = {
+const aeAddBeneficiaryMock: ApiResponse<BeneficiaryDetailsRes> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -13,8 +14,6 @@ const aeAddBeneficiaryMock: AEAddBeneficiaryProps = {
     beneficiaryStatus: 'newBeneficiary',
   },
   successfulResponse: true,
-  ok: false,
-  apiResponseNotOk: false,
 };
 
 export default aeAddBeneficiaryMock;

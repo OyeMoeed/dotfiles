@@ -30,7 +30,6 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   // TODO: fix NodeJs types
   // eslint-disable-next-line no-undef
   let interval: NodeJS.Timeout;
-
   const { gradientWidth, timeLeft, expired, startTimer, handleRequestAgain } = useCallReceiverTimer(
     activateInternationalBeneficiary,
   );
@@ -42,6 +41,10 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
       clearInterval(interval);
     };
   }, [expired]);
+
+  useEffect(() => {
+    handleRequestAgain();
+  }, [handleRequestAgain]);
 
   const renderGuideStepItem = ({ item: { title, extraText, pressNumber, stepNumber } }: { item: GuideStep }) => (
     <IPayList

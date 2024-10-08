@@ -1,5 +1,6 @@
 import { UseFormReturn } from 'react-hook-form';
-import { InternationTransferValue } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
+import { AlinmaExpressBanks } from '@app/network/services/international-transfer/ae-beneficiary-banks/ae-beneficiary-banks.interface';
+import { InternationalTransferValue } from '../international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 
 interface ServiceData {
   recordID: string;
@@ -7,7 +8,7 @@ interface ServiceData {
   serviceLogo: string;
   type?: string;
   beneficiaryType?: string;
-  serviceValue?: InternationTransferValue;
+  serviceValue?: InternationalTransferValue;
 }
 
 interface AddBeneficiaryValues {
@@ -17,7 +18,7 @@ interface AddBeneficiaryValues {
   remittanceType?: string;
   nickname?: string;
   deliveryType?: string;
-  bank?: string;
+  bank?: AlinmaExpressBanks;
 }
 const AddBeneficiaryFields = {
   currency: 'currency',

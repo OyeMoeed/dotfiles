@@ -1,6 +1,7 @@
-import { AddWUBeneficiaryProps } from './beneficiaries-wu.interface';
+import { ApiResponse } from '../../services.interface';
+import { BeneficiaryDetailsRes } from './beneficiaries-wu.interface';
 
-const addWUBeneficiaryMock: AddWUBeneficiaryProps = {
+const addWUBeneficiaryMock: ApiResponse<BeneficiaryDetailsRes> = {
   response: {
     beneficiaryCode: '10587981-7',
     beneficiaryStatus: 'newBeneficiary',
@@ -13,8 +14,6 @@ const addWUBeneficiaryMock: AddWUBeneficiaryProps = {
     requestReference: '08432016497290053087',
   },
   successfulResponse: true,
-  ok: true,
-  apiResponseNotOk: false,
 };
 
 export default addWUBeneficiaryMock;

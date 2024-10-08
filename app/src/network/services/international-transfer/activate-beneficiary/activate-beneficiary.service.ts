@@ -10,19 +10,11 @@ const getAlinmaExpressBeneficiaries = async (): Promise<AlinmaExpressBeneficiari
   if (constants.MOCK_API_RESPONSE) {
     return alinmaExpressBeneficiariesData;
   }
-  try {
-    const apiResponse: ApiResponse<AlinmaExpressBeneficiariesProps> = await apiCall({
-      endpoint: INTERNATIONAL_TRANSFERS_URLS.get_alinma_express_beneficiaries,
-      method: requestType.GET,
-    });
-
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
-    }
-    return { apiResponseNotOk: true };
-  } catch (error) {
-    return { error: error.message || 'Unknown error' };
-  }
+  const apiResponse: ApiResponse<AlinmaExpressBeneficiariesProps> = await apiCall({
+    endpoint: INTERNATIONAL_TRANSFERS_URLS.get_alinma_express_beneficiaries,
+    method: requestType.GET,
+  });
+  return apiResponse;
 };
 
 export default getAlinmaExpressBeneficiaries;

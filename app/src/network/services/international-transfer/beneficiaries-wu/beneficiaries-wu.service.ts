@@ -3,27 +3,22 @@ import requestType from '@app/network/request-types.network';
 import apiCall from '@network/services/api-call.service';
 import { ApiResponse } from '../../services.interface';
 import INTERNATIONAL_TRANSFERS_URLS from '../international-transfer.urls';
-import { AddWUBeneficiaryProps, AddWUBeneficiaryReq } from './beneficiaries-wu.interface';
+import { AddWUBeneficiaryReq, BeneficiaryDetailsRes } from './beneficiaries-wu.interface';
 import addWUBeneficiaryMock from './beneficiaries-wu.mock';
 
-const addWUbeneficiary = async (payload: AddWUBeneficiaryReq): Promise<AddWUBeneficiaryProps> => {
+const addWUbeneficiary = async (
+  payload: AddWUBeneficiaryReq,
+): Promise<ApiResponse<BeneficiaryDetailsRes> | undefined> => {
   if (constants.MOCK_API_RESPONSE) {
     return addWUBeneficiaryMock;
   }
-  try {
-    const apiResponse: ApiResponse<AddWUBeneficiaryProps> = await apiCall({
-      endpoint: INTERNATIONAL_TRANSFERS_URLS.post_beneficiaries_wu(),
-      method: requestType.POST,
-      payload,
-    });
+  const apiResponse: ApiResponse<BeneficiaryDetailsRes> | undefined = await apiCall({
+    endpoint: INTERNATIONAL_TRANSFERS_URLS.post_beneficiaries_wu(),
+    method: requestType.POST,
+    payload,
+  });
 
-    if (apiResponse?.response?.ok) {
-      return apiResponse?.response;
-    }
-    return { apiResponseNotOk: true, ...apiResponse?.response };
-  } catch (error) {
-    return { error: error || 'Unknown error' };
-  }
+  return apiResponse;
 };
 
 export default addWUbeneficiary;

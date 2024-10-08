@@ -13,6 +13,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
   myIdValue,
   myIdCheck,
   handleParentLovChange,
+  watch,
 }) => {
   if (!fields?.length) {
     return null;
@@ -30,6 +31,7 @@ const DynamicFormComponent: React.FC<DynamicFormComponentProps> = ({
             myIdValue={myIdValue}
             myIdCheck={field?.label === TrafficViolationFields.VIOLATOR_ID && myIdCheck}
             handleParentLovChange={handleParentLovChange}
+            watch={watch}
           />
         </IPayView>
       ))}

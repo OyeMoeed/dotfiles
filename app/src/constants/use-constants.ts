@@ -6,7 +6,7 @@ import { FilterTypes } from '@app/components/organism/ipay-filter-bottom-sheet/i
 import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
-import { InternationTransferValue } from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
+import { InternationalTransferValue } from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
@@ -675,7 +675,7 @@ const useConstantData = () => {
     serviceName: 'AlinmaPay Direct',
     serviceLogo: images.alinmaPayDirectLogo,
     type: 'Bank Transfer',
-    serviceValue: InternationTransferValue.AE,
+    serviceValue: InternationalTransferValue.AE,
   };
   const westernUnionData = {
     recordID: '113',
@@ -683,7 +683,7 @@ const useConstantData = () => {
     serviceLogo: images.westernUnionLogo,
     type: 'Cash Pickup',
     beneficiaryType: 'westernUnion',
-    serviceValue: InternationTransferValue.WU,
+    serviceValue: InternationalTransferValue.WU,
   };
 
   const transactionHistoryFilterDefaultValuesWithoudCard = {
