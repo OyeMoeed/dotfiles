@@ -81,7 +81,7 @@ const IPayRHFAnimatedTextInput = forwardRef<TextInput, ControlledInputProps>(
       }),
       color: animatedIsFocused.interpolate({
         inputRange: [0, 1],
-        outputRange: [colors.natural.natural500, colors.primary.primary500],
+        outputRange: [colors.natural.natural500, labelColor ?? colors.primary.primary500],
       }),
     };
 

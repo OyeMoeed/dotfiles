@@ -39,8 +39,6 @@ interface WesternUnionBeneficiariesProps {
   paginationInfo: PaginationInfo;
   response: WesternUnionBeneficiaryResponse;
   successfulResponse: boolean;
-  ok?: boolean;
-  apiResponseNotOk?: boolean;
 }
 
 export default WesternUnionBeneficiariesProps;

@@ -10,6 +10,7 @@ const styles = (space?: number) =>
     },
     mainContainer: {
       gap: space || 0,
+      height: '100%',
     },
   });
 

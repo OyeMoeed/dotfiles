@@ -14,11 +14,12 @@ import useConstantData from '@app/constants/use-constants';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants, openPhoneNumber } from '@app/utilities';
 import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import { useRoute } from '@react-navigation/core';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { buttonVariants, openPhoneNumber } from '@app/utilities';
 import { useTranslation } from 'react-i18next';
+import { ImageStyle } from 'react-native';
 import ActivateViewTypes from './add-beneficiary-success-message.enum';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
@@ -50,6 +51,8 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
     }, 500);
   };
   const type = (route?.params as { type: string })?.type || '';
+  const isInternationalEdit = type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER;
+
   const closeActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.close();
   }, []);
@@ -100,9 +103,9 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
         break;
     }
   }, []);
-  const hanldePageNavigation = () => {
+  const handlePageNavigation = () => {
     navigate(
-      type === ScreenNames.INTERNATIONAL_TRANSFER || type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+      type === ScreenNames.INTERNATIONAL_TRANSFER || isInternationalEdit
         ? ScreenNames.INTERNATIONAL_TRANSFER
         : ScreenNames.LOCAL_TRANSFER,
     );
@@ -112,7 +115,7 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
     <IPaySafeAreaView linearGradientColors={colors.appGradient.gradientSecondary40}>
       {showBackground ? (
         <>
-          <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles} />} />
+          <IPayHeader centerIcon={<IPayImage image={images.logoSmall} style={styles.logoStyles as ImageStyle} />} />
           <IPayView style={styles.container}>
             <IPayView style={styles.linearGradientView}>
               <IPayLinearGradientView
@@ -124,35 +127,36 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
                   headingStyle={styles.headingStyle}
                   descriptionStyle={styles.descriptionStyle}
                   headingText={
-                    type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                    isInternationalEdit
                       ? 'NEW_BENEFICIARY.BENEFECIARY_UPDATED'
                       : 'NEW_BENEFICIARY.BENEFICIARY_ADDED_SUCCESSFULLY'
                   }
                   descriptionText={
-                    type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                    isInternationalEdit
                       ? 'NEW_BENEFICIARY.NOW_MAKE_TRANSFER'
                       : 'NEW_BENEFICIARY.YOU_NEED_ACTIVATE_BENEFICIARY'
                   }
                 />
                 <IPayView style={styles.buttonWrapper}>
+                  {!isInternationalEdit && (
+                    <IPayButton
+                      btnType={buttonVariants.PRIMARY}
+                      btnText="NEW_BENEFICIARY.ACTIVATE_BENEFICIARY"
+                      medium
+                      btnIconsDisabled
+                      onPress={handleActivateBeneficiary}
+                    />
+                  )}
                   <IPayButton
-                    btnType={buttonVariants.PRIMARY}
-                    btnText="NEW_BENEFICIARY.ACTIVATE_BENEFICIARY"
-                    medium
-                    btnIconsDisabled
-                    onPress={handleActivateBeneficiary}
-                  />
-                  <IPayButton
-                    btnType={buttonVariants.OUTLINED}
+                    btnType={isInternationalEdit ? buttonVariants.PRIMARY : buttonVariants.OUTLINED}
                     btnText={
-                      type === ScreenNames.INTERNATIONAL_TRANSFER ||
-                      type === ScreenNames.EDIT_INTERNATIONAL_BENEFICIARY_TRANSFER
+                      type === ScreenNames.INTERNATIONAL_TRANSFER || isInternationalEdit
                         ? 'NEW_BENEFICIARY.INTERNATIONAL_TRANSFER_PAGE'
                         : 'NEW_BENEFICIARY.LOCAL_TRANSFER_PAGE'
                     }
                     medium
                     btnIconsDisabled
-                    onPress={hanldePageNavigation}
+                    onPress={handlePageNavigation}
                   />
                 </IPayView>
               </IPayLinearGradientView>

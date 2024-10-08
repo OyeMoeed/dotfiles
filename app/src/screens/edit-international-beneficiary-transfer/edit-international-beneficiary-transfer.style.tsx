@@ -47,6 +47,9 @@ const beneficiaryTransferStyles = (theme: typeof colors) =>
       paddingVertical: verticalScale(8),
       gap: moderateScale(8),
     },
+    disabledInput: {
+      borderWidth: 0,
+    },
   });
 
 export default beneficiaryTransferStyles;

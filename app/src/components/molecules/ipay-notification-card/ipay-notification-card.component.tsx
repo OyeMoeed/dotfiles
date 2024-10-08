@@ -28,15 +28,26 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
   };
 
   const handleActionSheetPress = (index: number) => {
-    if (index === 0) {
-      onMarkAsRead(id);
-    } else if (index === 1) {
+    if (!isRead) {
+      if (index === 0) {
+        onMarkAsRead(id);
+      } else if (index === 1) {
+        onDeleteNotification(id);
+      }
+    } else if (index === 0) {
       onDeleteNotification(id);
     }
     actionSheetRef.current.hide();
   };
 
   const dateColor = isRead ? colors.natural.natural500 : colors.secondary.secondary500;
+
+  const options = isRead
+    ? ['NOTIFICATION_CENTER.DELETE_NOTIFICATION', 'COMMON.CANCEL']
+    : ['NOTIFICATION_CENTER.MARK_AS_READ', 'NOTIFICATION_CENTER.DELETE_NOTIFICATION', 'COMMON.CANCEL'];
+
+  const cancelButtonIndex = isRead ? 1 : 2;
+  const destructiveButtonIndex = isRead ? 0 : 1;
 
   return (
     <IPayView testID={`${testID}-notifation-card`} style={styles.cardContainer}>
@@ -60,9 +71,9 @@ const IPayNotificationCard: React.FC<IPayNotificationCardProps> = ({
       </IPayView>
       <IPayActionSheet
         ref={actionSheetRef}
-        options={['NOTIFICATION_CENTER.MARK_AS_READ', 'NOTIFICATION_CENTER.DELETE_NOTIFICATION', 'COMMON.CANCEL']}
-        cancelButtonIndex={2}
-        destructiveButtonIndex={1}
+        options={options}
+        cancelButtonIndex={cancelButtonIndex}
+        destructiveButtonIndex={destructiveButtonIndex}
         onPress={handleActionSheetPress}
       />
     </IPayView>
