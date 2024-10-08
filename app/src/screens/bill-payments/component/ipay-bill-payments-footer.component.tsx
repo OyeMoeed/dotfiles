@@ -28,9 +28,7 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
   const otherBills = constants.OTHER_BILL_TYPES;
-  const unpaidCount = trafficUnpaidViolationsCount
-    ? `(${trafficUnpaidViolationsCount} ${t('BILL_PAYMENTS.UNPAID')})`
-    : '';
+  const unpaidCount = `(${trafficUnpaidViolationsCount || '0'} ${t('BILL_PAYMENTS.UNPAID')})`;
 
   const getIcon = (icon: string) => {
     const isImage = checkImage(icon);
