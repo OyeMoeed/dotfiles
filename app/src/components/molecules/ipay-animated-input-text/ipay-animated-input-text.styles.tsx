@@ -21,7 +21,7 @@ const inputFieldStyles = (colors: typeof themeColors) =>
     inputLineHeight: {
       lineHeight: typography.FONT_VARIANTS.SUB_HEADLINE.LINE_HEIGHT,
     },
-    container: {
+    containerWithoutPadding: {
       height: moderateScale(54, 0.35),
       borderRadius: scaleFont(16),
       borderWidth: scaleFont(1),
@@ -33,6 +33,21 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       justifyContent: 'space-between',
       width: '100%',
       backgroundColor: colors.natural.natural0,
+    },
+    container: {
+      borderRadius: scaleFont(16),
+      borderWidth: scaleFont(1),
+      borderColor: colors.primary.primary100,
+      backgroundColor: colors.natural.natural0,
+    },
+    containerBox: {
+      paddingHorizontal: scaleFont(20, 0.3),
+      paddingVertical: scaleFont(8),
+      height: moderateScale(54, 0.35),
+      alignItems: 'center',
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
     },
     label: {
       color: colors.primary.primary600,
@@ -80,6 +95,9 @@ const inputFieldStyles = (colors: typeof themeColors) =>
       backgroundColor: 'transparent',
       paddingVertical: scaleFont(10),
       paddingLeft: scaleFont(6),
+    },
+    extraPadding: {
+      paddingHorizontal: scaleFont(20, 0.3),
     },
   });
 

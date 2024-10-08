@@ -51,6 +51,9 @@ const getTransationIcon = (transactionRequestType: TransactionTypes, transaction
     case TransactionTypes.PAY_VCARD_POS_NAQD_VISA:
     case TransactionTypes.PAY_VCARD_POS_NAQD:
     case TransactionTypes.COUT_ATM:
+    case TransactionTypes.CARD_VCB_ISSUE:
+    case TransactionTypes.CARD_VCB_REISSUE:
+    case TransactionTypes.CARD_VCB_REPLACE:
       return icons.card;
 
     // type #6
@@ -82,6 +85,9 @@ const getTransationIcon = (transactionRequestType: TransactionTypes, transaction
     // type #10
     case TransactionTypes.PAY_ONECARD:
       return icons.shopping_cart;
+    // type #11
+    case TransactionTypes.CIN_MAZAYA:
+      return icons.akhtar;
 
     // type #4
     default:

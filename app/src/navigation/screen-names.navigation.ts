@@ -127,6 +127,12 @@ const enum ScreenNames {
   CHOOSE_BENEFICIARY = 'ChooseBeneficiary',
   SEND_MONEY_REQUEST = 'SendMoneyRequest',
   TERMS_AND_CONDITIONS = 'TermsAndConditions',
+  MUSANED = 'Musaned',
+  MUSANED_HISTORY = 'MusanedHistory',
+  MUSANED_PAY_SALARY = 'MusanedPaySalary',
+  MUSANED_PAY_SALARY_CONFIRM = 'MusanedPaySalaryConfirm',
+  MUSANED_PAYMENT_SUCCESSFUL = 'MusanedPaymentSuccessful',
+  MUSANED_USER_DETAILS = 'MusanedUserDetails',
 }
 
 export default ScreenNames;

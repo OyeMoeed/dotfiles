@@ -22,6 +22,8 @@ import walletInfoReducer from './slices/wallet-info-slice';
 import forceUpdateReducer from './slices/app-force-update-slice';
 import ratingReducer from './slices/rating.slice';
 import disabledModulesSlice from './slices/disabled-module-slice';
+import forceMaintenanceSlice from './slices/app-maintenance-slice';
+import idleTimerSlice from './slices/idle-timer-slice';
 
 import reactotron from '../../../ReactotronConfig';
 
@@ -45,6 +47,8 @@ const reducers = {
   forceUpdateReducer,
   ratingReducer,
   disabledModulesReducer: disabledModulesSlice,
+  forceMaintenanceSlice,
+  idleTimerSlice,
 };
 
 /**

@@ -1,6 +1,7 @@
 /**
  * i18n is a library for internationalization (i18n) in JavaScript applications.
  */
+import constants from '@app/constants/constants';
 import { translations } from '@app/localization/translations.localization';
 import { CallbackProps } from '@app/network/services/localization/localization-channels/localization-channels.interface';
 import getLocalizationChannels from '@app/network/services/localization/localization-channels/localization-channels.service';
@@ -19,6 +20,12 @@ class CustomBackend extends HttpBackend {
   read(language: string, namespace: string, callback: CallbackProps) {
     const loadPath = this?.options?.loadPath || languageUrl;
     const url = (loadPath as string)?.replace('{{lng}}', language);
+
+    // TODO: remove true condition once BE resolve the issues
+    if (constants.MOCK_API_RESPONSE || true) {
+      callback(new Error(), false);
+      return;
+    }
 
     getLocalizationChannels({
       url,

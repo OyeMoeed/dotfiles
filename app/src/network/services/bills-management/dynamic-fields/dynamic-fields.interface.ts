@@ -3,9 +3,10 @@ import React from 'react';
 import { KeyboardTypeOptions } from 'react-native';
 
 export interface DynamicField {
-  minAmount?: number | null;
   parentIndex?: string | null;
-  onlyHijri?: boolean | null;
+  isSearchable?: boolean;
+  minAmount: number | null;
+  onlyHijri: boolean | null;
   type: string;
   disable?: boolean;
   dependsOn?: string;

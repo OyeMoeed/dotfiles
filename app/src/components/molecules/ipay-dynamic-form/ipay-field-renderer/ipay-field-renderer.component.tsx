@@ -70,7 +70,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                   onChange(selectedItem);
                   if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
                 }}
-                isSearchable
+                isSearchable={field?.isSearchable}
                 testID={`${field?.index}-dropdown`}
                 labelKey="desc"
                 valueKey="code"

@@ -108,7 +108,7 @@ const MoiPaymentConfirmationScreen: React.FC = ({ route }) => {
         <SadadFooterComponent
           onPressBtn={onPressCompletePayment}
           btnText={isRefund ? 'COMMON.CONFIRM' : 'SADAD.PAY'}
-          totalAmount={billData?.totalFeeAmount ?? 0}
+          totalAmount={isRefund ? '0.00' : billData?.totalFeeAmount ?? 0}
           backgroundGradient={['transparent', 'transparent']}
           gradientViewStyle={styles.sadadFooterGradient}
           btnStyle={styles.sadadBtn}

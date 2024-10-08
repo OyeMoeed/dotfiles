@@ -137,6 +137,8 @@ enum FiltersType {
   OFFER_CATEGORY = 'offerCategory',
   OFFER_AVAILABILITY = 'offerAvailability',
   DELIVERY_TYPE = 'deliveryType',
+  SALARY_TYPE = 'salaryType',
+  LABORER_NAME = 'laborerName',
 }
 
 enum TopupStatus {
@@ -218,6 +220,8 @@ enum DashboardOptions {
   QR_ACCEPTANCE = 'QR acceptance',
   SPENDING_LIMIT = 'Spending limit',
   MY_ACCOUNT = 'My account',
+  MUSANED = 'Musaned',
+  EHSAN = 'ehsan',
 }
 
 enum TopUpStates {
@@ -331,6 +335,11 @@ enum BillingStatus {
   NOT_ENABLED = 'NOT_ENABLED',
 }
 
+enum MusanedStatus {
+  UNPAIED = 'Unpaid',
+  PAID = 'Paid',
+}
+
 enum TrafficViolationFields {
   VIOLATION_NUMBER = 'Violation Number',
   VIOLATOR_ID = 'Violator ID',
@@ -390,4 +399,5 @@ export {
   alertType,
   alertVariant,
   buttonVariants,
+  MusanedStatus,
 };

@@ -29,6 +29,8 @@ const images = {
   gradientLogo: require('./gradient_logo.png'),
   scannerMarker: require('./scanner-marker.png'),
   alinmaP: require('./logo-icon-gradient.png'),
+  alinmaPx3: require('./logo-icon-gradientx3.png'),
+  alinmaPBlack: require('./logo-icon-black.png'),
   visa: require('./visa.png'),
   visaWhite: require('./visa-white.png'),
   textLogoLight: require('./text-logo-light.png'),

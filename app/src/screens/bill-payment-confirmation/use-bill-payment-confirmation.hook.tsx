@@ -40,9 +40,9 @@ const useBillPaymentConfirmation = (
   const [apiError, setAPIError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
-  const veriyOTPSheetRef = useRef<bottomSheetTypes>(null);
+  const verifyOTPSheetRef = useRef<bottomSheetTypes>(null);
   const [otpRefAPI, setOtpRefAPI] = useState<string>('');
-  const billPayDetailes: billPayDetail[] = [
+  const billPayDetails: billPayDetail[] = [
     {
       id: '2',
       label: t('PAY_BILL.SERVICE_TYPE'),
@@ -80,7 +80,7 @@ const useBillPaymentConfirmation = (
     const payload: MultiPaymentBillPayloadTypes = {
       otpRef: otpRefAPI,
       otp,
-      billPaymentInfos,
+      billPaymentInfos: billPaymentInfos || [],
     };
     setIsLoading(true);
     const apiResponse = await multiPaymentBillService(payload);
@@ -110,7 +110,7 @@ const useBillPaymentConfirmation = (
 
     setIsLoading(false);
     if (apiResponse.successfulResponse) {
-      veriyOTPSheetRef.current?.close();
+      verifyOTPSheetRef.current?.close();
       otpRef?.current?.close();
       navigate(ScreenNames.PAY_BILL_SUCCESS, {
         isPayOnly,
@@ -137,7 +137,7 @@ const useBillPaymentConfirmation = (
   };
 
   return {
-    billPayDetailes,
+    billPayDetails,
     headerData,
     balanceData,
     handlePay,
@@ -148,7 +148,7 @@ const useBillPaymentConfirmation = (
     setOtpError,
     apiError,
     otpVerificationRef,
-    veriyOTPSheetRef,
+    verifyOTPSheetRef,
     setOtpRefAPI,
   };
 };

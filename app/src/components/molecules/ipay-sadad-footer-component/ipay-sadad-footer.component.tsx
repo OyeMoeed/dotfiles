@@ -15,7 +15,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   totalAmount,
   selectedItemsCount,
   btnText,
-  btnDisbaled,
+  btnDisabled,
   btnLeftIcon,
   btnRightIcon,
   disableBtnIcons,
@@ -42,7 +42,6 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     availableBalance,
     limitsDetails: { monthlyRemainingOutgoingAmount, dailyOutgoingLimit },
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
-  const [warningStatus, setWarningStatus] = useState<string>('');
 
   const getFooterStyles = useCallback(() => {
     if (checkIfSelectedCount) {
@@ -55,7 +54,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
     return (
       <IPayButton
         large
-        disabled={!!warningMessage || btnDisbaled}
+        disabled={!!warningMessage || btnDisabled}
         btnType={buttonVariants.PRIMARY}
         btnText={btnText}
         leftIcon={btnLeftIcon}
@@ -81,16 +80,8 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         ) : (
           <IPayView />
         )}
-        <IPayView style={styles.chipView}>
-          <IPayBalanceStatusChip
-            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-            currentBalance={Number(availableBalance)}
-            amount={Number(totalAmount)}
-            setWarningStatus={setWarningStatus}
-            dailySpendingLimit={Number(dailyOutgoingLimit)}
-          />
-        </IPayView>
-        {!warningStatus && totalAmount ? (
+
+        {!warningMessage && totalAmount ? (
           <IPayView style={styles.totalAmountView}>
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText
@@ -114,7 +105,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         </IPayView>
         <IPayButton
           large
-          disabled={!!warningMessage || btnDisbaled}
+          disabled={!!warningMessage || btnDisabled}
           btnType={buttonVariants.PRIMARY}
           btnText={btnText}
           leftIcon={btnLeftIcon}

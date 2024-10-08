@@ -36,6 +36,9 @@ const CORE_URLS = {
     `${payload.trxType ? `&trx-type=${payload.trxType}` : ''}` +
     `${payload.fromAmount ? `&from-amount=${payload.fromAmount}` : ''}` +
     `${payload.toAmount ? `&to-amount=${payload.toAmount}` : ''}` +
+    `${payload.targetWallet ? `&target-wallet=${payload.targetWallet}` : ''}` +
+    `${payload.mobileNumber ? `&mobile-number=${payload.mobileNumber}` : ''}` +
+    `${payload.salaryType ? `&salary-type=${payload.salaryType}` : ''}` +
     `${payload.trxReqType ? `&trx-req-type=${payload.trxReqType}` : ''}`,
 
   GET_HOME_OFFERS: (walletNumber: string) => `core-management/v1/${walletNumber}/offers`,

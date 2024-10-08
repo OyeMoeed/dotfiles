@@ -7,6 +7,8 @@ import { GiftStatus } from '@app/enums/gift-status.enum';
 import { MoneyRequestStatus } from '@app/enums/money-request-status.enum';
 import { TransactionOperations } from '@app/enums/transaction-types.enum';
 import { InternationalTransferValue } from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
+import { SelectedValue } from '@app/screens/add-new-sadad-bill/add-new-sadad-bill.interface';
+import { SalaryCategories } from '@app/screens/musaned/musaned-pay-salary/musaned-pay-salary.interface';
 
 import useTheme from '@app/styles/hooks/theme.hook';
 import { FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
@@ -862,6 +864,21 @@ const useConstantData = () => {
     },
   ];
 
+  const musanedTransferHistoryFilterData = [
+    {
+      id: '1',
+      label: t('MUSANED.LABORER_NAME'),
+      type: FiltersType.LABORER_NAME,
+      filterValues: [],
+    },
+    {
+      id: '2',
+      label: t('MUSANED.SALARY_TYPE'),
+      type: FiltersType.SALARY_TYPE,
+      filterValues: [],
+    },
+  ];
+
   const sendGiftFilterData = [
     {
       id: '1',
@@ -890,6 +907,24 @@ const useConstantData = () => {
           description: '+9711133339900',
         },
       ],
+    },
+  ];
+
+  const salaryTypes: SelectedValue[] = [
+    {
+      id: SalaryCategories.Monthly_Salary,
+      text: 'MUSANED.MONTHLY_SALARY',
+      type: SalaryCategories.TRX_JUSTIFICATION_Type_Monthly_Salary,
+    },
+    {
+      id: SalaryCategories.Advanced_Salary,
+      text: 'MUSANED.ADVANCED_SALARY',
+      type: SalaryCategories.TRX_JUSTIFICATION_Type_Advanced_Salary,
+    },
+    {
+      id: SalaryCategories.Bonus_Salary,
+      text: 'MUSANED.BONUS_SALARY',
+      type: SalaryCategories.TRX_JUSTIFICATION_Type_Bonus_Salary,
     },
   ];
 
@@ -971,6 +1006,8 @@ const useConstantData = () => {
     [FiltersType.AMOUNT_TO]: '',
     [FiltersType.DATE_TO]: '',
     [FiltersType.DATE_FROM]: '',
+    [FiltersType.OCCASION]: '',
+    [FiltersType.STATUS]: '',
   };
 
   const merchantData = [
@@ -1403,6 +1440,7 @@ const useConstantData = () => {
     forgetPasscode: { otpTimeout: 60 },
     transaction: { otpTimeout: 120 },
     akhtrPoints: { otpTimeout: 60 },
+    sendGift: { otpTimeout: 60 },
   };
 
   const allCategories = [
@@ -1583,6 +1621,8 @@ const useConstantData = () => {
     westernUnionData,
     activeBillDetails,
     localTransferReasonData,
+    musanedTransferHistoryFilterData,
+    salaryTypes,
   };
 };
 

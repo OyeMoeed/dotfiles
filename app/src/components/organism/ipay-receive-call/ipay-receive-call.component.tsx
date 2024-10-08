@@ -21,7 +21,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
   testID,
   guideToReceiveCall,
   activateInternationalBeneficiary,
-  hanldePageNavigation,
+  handlePageNavigation,
   makeTransfer = true,
 }) => {
   const { colors } = useTheme();
@@ -121,7 +121,7 @@ const IPayReceiveCall: React.FC<IPayReceiveCallProps> = ({
           btnText="ACTIVATE_BENEFICIARY.MAKE_A_TRANSFER"
           btnIconsDisabled
           btnStyle={styles.makeTransferStyles}
-          onPress={hanldePageNavigation}
+          onPress={handlePageNavigation}
         />
       )}
     </IPayView>

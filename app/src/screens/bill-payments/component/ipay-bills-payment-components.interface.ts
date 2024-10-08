@@ -13,10 +13,12 @@ interface IPaySadadBillsHeaderProps extends CommonProps {
 }
 
 interface IPayBillPaymentNoResultsComponentProps extends CommonProps {
+  loadingBills?: boolean;
   onPressViewAll: () => void;
 }
 
 interface IPayBillPaymentsFooterProps extends CommonProps {
+  trafficUnpaidViolationsCount?: string;
   onPressBillPaymentOption?: (title: string) => void;
 }
 

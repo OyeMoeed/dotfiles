@@ -18,12 +18,17 @@ import { useTranslation } from 'react-i18next';
 import billPaymentsComponentsStyles from './ipay-bill-payment-components.style';
 import { IPayBillPaymentsFooterProps } from './ipay-bills-payment-components.interface';
 
-const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID, style, onPressBillPaymentOption }) => {
+const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({
+  testID,
+  style,
+  onPressBillPaymentOption,
+  trafficUnpaidViolationsCount,
+}) => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const styles = billPaymentsComponentsStyles(colors);
   const otherBills = constants.OTHER_BILL_TYPES;
-  const unpaidCount = `(3 ${t('BILL_PAYMENTS.UNPAID')})`;
+  const unpaidCount = `(${trafficUnpaidViolationsCount || '0'} ${t('BILL_PAYMENTS.UNPAID')})`;
 
   const getIcon = (icon: string) => {
     const isImage = checkImage(icon);
@@ -46,12 +51,12 @@ const IPayBillPaymentsFooter: React.FC<IPayBillPaymentsFooterProps> = ({ testID,
           showsHorizontalScrollIndicator={false}
           keyExtractor={(_, index) => index.toString()}
           itemSeparatorStyle={styles.itemSeparatorStyle}
-          renderItem={({ item: { title, icon } }) => (
+          renderItem={({ item: { id, title, icon } }) => (
             <IPayView style={styles.footerCardView}>
               <IPayView style={styles.moiIconView}>{getIcon(icon)}</IPayView>
               <IPayFootnoteText regular={false} text={title} style={styles.footerTitleText} />
               <IPayView style={styles.footerBtnView}>
-                <IPayCaption2Text text={unpaidCount} color={colors.warning.warning500} />
+                <IPayCaption2Text text={id !== 1 ? unpaidCount : ''} color={colors.warning.warning500} />
                 <IPayButton
                   medium
                   onPress={() => onPressItem(title)}

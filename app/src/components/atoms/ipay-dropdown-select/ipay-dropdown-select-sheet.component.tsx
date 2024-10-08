@@ -9,8 +9,10 @@ import {
   IPayPressable,
   IPayView,
 } from '@app/components/atoms';
+import { IPayButton } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import useTheme from '@app/styles/hooks/theme.hook';
+import { buttonVariants } from '@app/utilities';
 import React, { useEffect, useState } from 'react';
 import { IPayDropdownComponentSheetProps, ListItem } from './ipay-dropdown-select.interface';
 import dropdownStyles from './ipay-dropdown-select.styles';
@@ -40,7 +42,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
       setFilteredListItems(data || []);
     } else {
       const lowerSearchText = searchText.trim().toLowerCase();
-      const filtered = data?.filter((item) => item[labelKey].toLowerCase().includes(lowerSearchText)) || []; // Use dynamic labelKey for filtering
+      const filtered = data?.filter((item) => item?.[labelKey]?.toLowerCase()?.includes(lowerSearchText)) || []; // Use dynamic labelKey for filtering
       setFilteredListItems(filtered);
     }
   };
@@ -56,14 +58,20 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
   };
 
   const renderListItems = ({ item }: { item: ListItem }) => (
-    <IPayPressable style={styles.titleView} onPress={() => onPressListItem(item)}>
+    <IPayPressable
+      style={styles.titleView}
+      onPress={() => {
+        onPressListItem(item);
+        setSearchText('');
+      }}
+    >
       <IPayView style={styles.flagTitleContainer}>
         {!!(isCountry || isCurrency) && !!item?.code && (
           <IPayFlag countryCode={item?.code} style={styles.flagStyle} isCurrency={isCurrency} />
         )}
-        <IPayFootnoteText text={item[labelKey]} />
+        <IPayFootnoteText text={item?.[labelKey]} />
       </IPayView>
-      {selectedItem === item[labelKey] ? listCheckIcon : <IPayView />}
+      {selectedItem === item?.[labelKey] ? listCheckIcon : <IPayView />}
     </IPayPressable>
   );
 
@@ -82,20 +90,35 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
       simpleHeader
       simpleBar
       cancelBnt
-      onCloseBottomSheet={onCloseBottomSheet}
+      onCloseBottomSheet={() => {
+        setSearchText('');
+        onCloseBottomSheet();
+      }}
     >
       <IPayView style={styles.container}>
         {isSearchable && (
-          <IPayView style={styles.searchBarView}>
-            <SearchNormalIcon style={styles.searchIcon} color={colors.primary.primary500} />
-            <IPayInput
-              onChangeText={setSearchText}
-              text={searchText}
-              placeholder="COMMON.SEARCH"
-              placeholderTextColor={colors.natural.natural500}
-              style={styles.searchInputText}
-              selectionColor={undefined}
-            />
+          <IPayView style={styles.searchInputWrapper}>
+            <IPayView style={styles.searchBarView}>
+              <SearchNormalIcon style={styles.searchIcon} color={colors.primary.primary500} />
+              <IPayInput
+                onChangeText={setSearchText}
+                text={searchText}
+                placeholder="COMMON.SEARCH"
+                placeholderTextColor={colors.natural.natural500}
+                style={styles.searchInputText}
+                selectionColor={undefined}
+              />
+            </IPayView>
+            {searchText && (
+              <IPayButton
+                btnStyle={styles.cancel}
+                btnText="COMMON.CANCEL"
+                btnIconsDisabled
+                small
+                btnType={buttonVariants.LINK_BUTTON}
+                onPress={() => setSearchText('')}
+              />
+            )}
           </IPayView>
         )}
         {filteredListItems?.length === 0 ? (

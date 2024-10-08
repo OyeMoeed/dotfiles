@@ -11,6 +11,10 @@ const dropdownStyles = (colors: typeof themeColors) =>
       paddingHorizontal: moderateScale(24, 0.3),
       paddingBottom: verticalScale(30),
     },
+    searchInputWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
     inputContainerStyle: {
       width: '100%',
       paddingLeft: spacing.CUSTOME_SCALE(20),
@@ -29,6 +33,13 @@ const dropdownStyles = (colors: typeof themeColors) =>
       overflow: 'hidden',
       backgroundColor: colors.natural.natural0,
       borderRadius: moderateScale(12),
+      paddingHorizontal: moderateScale(12, 0.3),
+      marginBottom: verticalScale(18),
+      flex: 1,
+    },
+    cancel: {
+      height: verticalScale(35),
+      alignItems: 'center',
       paddingHorizontal: moderateScale(12, 0.3),
       marginBottom: verticalScale(18),
     },

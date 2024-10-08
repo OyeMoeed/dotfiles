@@ -46,7 +46,7 @@ const IPayBalanceStatusChip: FC<IPayBalanceStatusChipProps> = ({
 
   useEffect(() => {
     checkAccountBalanceStatus();
-  }, [amount]);
+  }, [amount, currentBalance]);
 
   const limitExceedText = (text: string) => `${text} ${formatNumberWithCommas(exceededAmount)} ${t('COMMON.SAR')}`;
 

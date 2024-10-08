@@ -48,7 +48,7 @@ export interface IPayDropdownComponentSheetProps {
   heading: string;
   snapPoints: string[];
   valueKey: string;
-  labelKey: string;
+  labelKey: keyof ListItem;
   isVisible: boolean;
   onCloseBottomSheet: () => void;
   isCountry?: boolean;

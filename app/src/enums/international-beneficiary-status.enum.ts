@@ -4,6 +4,7 @@
 enum InternationalBeneficiaryStatus {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
+  NEW_BENEFICIARY = 'newBeneficiary',
 }
 
 /**

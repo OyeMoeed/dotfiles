@@ -126,7 +126,7 @@ const MoiPaymentSuccess: React.FC = ({ route }) => {
       <IPayLinearGradientView style={styles.innerLinearGradientView} gradientColors={gradientColors}>
         <IPaySuccess
           headingText={successMessage}
-          subHeadingText={`${moiPaymentDetailes.totalFeeAmount} ${t('COMMON.SAR')}`}
+          subHeadingText={`${isRefund ? '0.0' : moiPaymentDetailes.totalFeeAmount}  ${t('COMMON.SAR')}`}
           style={StyleSheet.flatten(styles.headerView)}
         />
 

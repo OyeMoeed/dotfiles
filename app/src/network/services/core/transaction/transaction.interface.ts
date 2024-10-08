@@ -4,7 +4,7 @@ interface WalletNumberProp {
   walletNumber: string;
 }
 // Define the TransactionItem interface
-interface TransactionItem {
+export interface TransactionItem {
   feesAmount: string;
   oneCardPriceAfterVat: number;
   showVatInvoice: boolean;
@@ -85,6 +85,9 @@ interface TransactionsProp {
   trxCategory?: string;
   trxType?: 'DR' | 'CR';
   trxReqType?: string;
+  targetWallet?: string;
+  mobileNumber?: string;
+  salaryType?: string;
 }
 
 interface FilterFormDataProp {
@@ -227,6 +230,11 @@ interface CardResponseInterface {
   };
 }
 
+enum TransactionTrxReqType {
+  MUSANED = 'COUT_MUSANED',
+  GIFT = 'COUT_GIFT',
+}
+
 export {
   CardListItem,
   CardListResponse,
@@ -244,4 +252,5 @@ export {
   renewCardProp,
   generateInvoiceProps,
   CardResponseInterface,
+  TransactionTrxReqType,
 };

@@ -80,7 +80,7 @@ const IPayRHFAnimatedTextInput = forwardRef<TextInput, ControlledInputProps>(
       }),
       color: animatedIsFocused.interpolate({
         inputRange: [0, 1],
-        outputRange: [colors.natural.natural500, colors.primary.primary500],
+        outputRange: [colors.natural.natural500, labelColor ?? colors.primary.primary500],
       }),
     };
 
@@ -96,18 +96,17 @@ const IPayRHFAnimatedTextInput = forwardRef<TextInput, ControlledInputProps>(
       <IPayView style={mainContainerStyles} testID={`${testID}-animated-input`}>
         <IPayView
           style={[
-            styles.container,
+            styles.containerWithoutPadding,
             !editable && styles.disabledContainer,
             isFocused && styles.focusedContainer,
             errors[name] && styles.errorContainer,
-
             containerStyle,
           ]}
         >
           <IPayView style={styles.iconAndInputStyles}>
             {rightIcon}
             <IPayView style={styles.outerView}>
-              <Animated.Text style={[labelStyle, labelColor]}>{t(label)}</Animated.Text>
+              <Animated.Text style={labelStyle}>{t(label)}</Animated.Text>
               <TextInput
                 ref={ref}
                 {...props}
