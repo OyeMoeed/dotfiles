@@ -6,7 +6,6 @@ import clearSession from './network-session-helper';
 import constants from '../constants';
 import { mapApiError } from '../services/api-call.interceptors';
 import { ApiResponse, ErrorStatus } from '../services/services.interface';
-import logOut from '../services/core/logout/logout.service';
 
 const hideErrorResponse = (response: AxiosResponse | AxiosError) => response?.config?.headers.hide_error_response;
 
@@ -50,7 +49,6 @@ const checkBusinessError = async (response: AxiosResponse | AxiosError) => {
   if (responseCode === ErrorStatus.FORCE_MAINTENANCE) {
     const { isAuthorized } = store.getState().auth;
     if (isAuthorized) {
-      await logOut();
       clearSession(false);
     }
     store.dispatch(showForceMaintenance());
