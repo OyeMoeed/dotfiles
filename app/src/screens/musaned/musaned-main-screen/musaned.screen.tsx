@@ -42,7 +42,7 @@ const MusanedScreen: React.FC = () => {
 
   const alinmaPayData = savedResponse.filter((value) => value.haveWalletFlag);
   const nonAlinmaPayData = savedResponse.filter((value) => !value.haveWalletFlag);
-  const dataForPaginatedFLatlist = selectedTab === ALINMA_PAY_USERS ? alinmaPayData : nonAlinmaPayData;
+  const musnaedResponseData = selectedTab === ALINMA_PAY_USERS ? alinmaPayData : nonAlinmaPayData;
   const walletInfo = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const detailsData = isArabic ? requestDetail?.occupationAr : requestDetail?.occupationEn;
 
@@ -167,22 +167,26 @@ const MusanedScreen: React.FC = () => {
   const onPressDetails = () => {
     refBottomSheet.current?.close?.();
 
-    navigate(ScreenNames.MUSANED_USER_DETAILS, { userInfo: requestDetail });
+    navigate(ScreenNames.MUSANED_USER_DETAILS, {
+      musnaedData: savedResponse,
+      userInfo: requestDetail,
+    });
   };
 
   const onCloseBottomSheet = () => {
     refBottomSheet?.current?.close();
   };
 
-  // TODO: This will be fixed in another PR
   const renderHistory = () =>
-    false && (
+    musnaedResponseData?.length ? (
       <IPayPressable onPress={onPressHistory}>
         <IPayView style={styles.headerRightContent}>
           <IPayIcon icon={icons.clock_1} size={20} color={colors.primary.primary500} />
           <IPaySubHeadlineText regular color={colors.primary.primary500} text="COMMON.HISTORY" />
         </IPayView>
       </IPayPressable>
+    ) : (
+      <IPayView />
     );
 
   return (
@@ -207,7 +211,7 @@ const MusanedScreen: React.FC = () => {
             showsVerticalScrollIndicator={false}
             keyExtractor={(item: RequestItem, index: number) => `${item?.targetFullName}-${index}`}
             renderItem={renderItem}
-            data={dataForPaginatedFLatlist}
+            data={musnaedResponseData}
             ListEmptyComponent={noResult}
           />
         </IPayView>

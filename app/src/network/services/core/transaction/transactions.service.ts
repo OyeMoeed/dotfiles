@@ -32,6 +32,10 @@ const getTransactions = async (payload: TransactionsProp, hideSpinner = true): P
 };
 
 const getTransactionTypes = async ({ hideSpinner }: { hideSpinner?: boolean }): Promise<unknown> => {
+  if (constants.MOCK_API_RESPONSE) {
+    return [];
+  }
+
   const apiResponse: any = await apiCall({
     endpoint: CORE_URLS.GET_TRANSACTION_TYPES,
     method: requestType.GET,
