@@ -132,7 +132,12 @@ const useBillPaymentConfirmation = (
   const onConfirm = async () => {
     const updatedBillPayment: BillPaymentInfosTypes[] =
       billPaymentInfos?.map((item) => {
-        const { billAmount, ...rest } = item as { billAmount?: number };
+        const { billAmount, isRemaining, partiallyPaidAmount, isOverPaid, ...rest } = item as {
+          billAmount?: number;
+          isRemaining?: boolean;
+          partiallyPaidAmount?: string;
+          isOverPaid?: boolean;
+        };
         return rest as BillPaymentInfosTypes;
       }) || [];
     const payload: MultiPaymentBillPayloadTypes = {
