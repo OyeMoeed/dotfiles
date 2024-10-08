@@ -703,7 +703,7 @@
     "INVALID_PIN": "Invalid Pin",
     "PIN_NOT_MATCHING": "PIN Code not matching",
     "PLEASE_ENSURE_PASSCODE": "Please ensure you enter the correct passcode.",
-    "OLD_PIN": "Old pin cannot be use as current pin",
+    "OLD_PIN": "Old PIN cannot be use as current PIN",
     "ENSURE_YOU_WRITE": "Ensure you write the same number as before.",
     "CHANGE_PIN_CODE": "Change PIN Code"
   },
@@ -1140,9 +1140,12 @@
     "RELATION_SHIP": "Relationship",
     "COUNTRY_NAME": "Country Name",
     "CITY_NAME": "City Name",
-    "DELIVERY_TYPE": "Delivery Type",
     "CURRENCY": "Currency",
-    "INCLUDE_FEES": "Include Fees"
+    "INCLUDE_FEES": "Include Fees",
+    "CASH": "CASH",
+    "TO_ACCOUNT": "TO ACCOUNT",
+    "REMITTANCE_TYPE": "Remittance type",
+    "NICKNAME_REQUIRED": "Beneficiary Nickname field is required"
   },
   "BENEFICIARY_OPTIONS": {
     "REVIEW_AND_EDIT": "Review & Edit",

@@ -19,9 +19,12 @@ interface AlinmaExpressBeneficiary {
   beneficiaryStatus: string;
   nickname?: string;
   fullName: string;
-  beneficiaryAccountNumber: string;
+  beneficiaryAccountNumber?: string;
   isIBAN: boolean;
   beneficiaryBankDetail: BeneficiaryBankDetail;
+  currency?: string;
+  currencyDesc?: string;
+  remittanceType?: string;
   countryDesc?: string;
   countryFlag?: string;
   remittanceTypeDesc?: string;
@@ -37,8 +40,11 @@ interface AlinmaExpressBeneficiariesProps {
   paginationInfo: PaginationInfo;
   response: AlinmaExpressResponse;
   successfulResponse: boolean;
-  ok?: boolean;
-  apiResponseNotOk?: boolean;
+}
+
+interface UseGetAlinmaExpressBeneficiary {
+  onSuccess?: (data: AlinmaExpressResponse) => void;
 }
 
 export default AlinmaExpressBeneficiariesProps;
+export { AlinmaExpressBeneficiary, UseGetAlinmaExpressBeneficiary, AlinmaExpressResponse };
