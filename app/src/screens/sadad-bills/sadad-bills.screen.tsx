@@ -126,6 +126,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     navigate(ScreenNames.NEW_SADAD_BILL, {
       selectedBills,
       isPayPartially: true,
+      saveBill: true,
       billDetailsList: billPaymentDetails,
       totalAmount: selectedBillAmount,
     });
@@ -337,6 +338,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: true,
+      saveBill: true,
       billPaymentInfos: { billPaymentDetails, totalAmount: selectedBillAmount },
     });
   };

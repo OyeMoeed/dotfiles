@@ -111,7 +111,7 @@ const PayBillScreen: React.FC<BillPaySuccessProps> = ({ route }) => {
             dueDateTime: apiResponse?.response?.dueDate,
           },
         ],
-        isSaveOnly,
+        saveBill: isSaveOnly,
       });
     }
   };

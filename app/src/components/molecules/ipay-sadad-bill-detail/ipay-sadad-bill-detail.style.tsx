@@ -18,7 +18,6 @@ const sadadBillDetailStyles = (themeColors: typeof colors) =>
     greyInputStyle: {
       backgroundColor: themeColors.natural.natural200,
     },
-    labelStyle: { width: '100%' },
   });
 
 export default sadadBillDetailStyles;
