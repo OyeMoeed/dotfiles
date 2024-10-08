@@ -60,9 +60,8 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
   const listBeneficiaries = (viewAll: boolean, isActive: boolean) =>
     viewAll ? getBeneficiariesByStatus(isActive) : getBeneficiariesByStatus(isActive)?.slice(0, beneficiariesToShow);
 
-  const renderBeneficiaryDetails = ({ item }: { item: WesternUnionBeneficiary }) => {
-    const { remittanceTypeDesc, countryCode, countryDesc, beneficiaryStatus, fullName } = item;
-    const country = countryCode ? countryCode.toUpperCase() : '';
+  const renderBeneficiaryDetailsRightText = (item: WesternUnionBeneficiary) => {
+    const { beneficiaryStatus } = item;
     const btnText =
       beneficiaryStatus === InternationalBeneficiaryStatus.ACTIVE
         ? 'INTERNATIONAL_TRANSFER.TRANSFER'
@@ -81,6 +80,34 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
     };
 
     return (
+      <IPayView style={styles.moreButton}>
+        <IPayButton
+          onPress={() => onTransferAndActivate(item)}
+          btnText={btnText}
+          btnType={buttonVariants.PRIMARY}
+          small
+          btnIconsDisabled
+          btnStyle={styles.buttonStyle}
+          btnColor={beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary100 : ''}
+          textColor={beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary800 : ''}
+        />
+        <IPayPressable
+          onPress={() => {
+            setSelectedBeneficiary(item);
+            onPressMenuOption();
+          }}
+        >
+          <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
+        </IPayPressable>
+      </IPayView>
+    );
+  };
+
+  const renderBeneficiaryDetails = ({ item }: { item: WesternUnionBeneficiary }) => {
+    const { remittanceTypeDesc, countryCode, countryDesc, fullName } = item;
+    const country = countryCode ? countryCode.toUpperCase() : '';
+
+    return (
       <IPayList
         shouldTranslateTitle={false}
         key={fullName?.toString()}
@@ -93,32 +120,7 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
         adjacentSubTitle={t(remittanceTypeDescKeysMapping(remittanceTypeDesc))}
         regularTitle={false}
         leftIcon={<IPayFlag countryCode={country} />}
-        rightText={
-          <IPayView style={styles.moreButton}>
-            <IPayButton
-              onPress={() => onTransferAndActivate(item)}
-              btnText={btnText}
-              btnType={buttonVariants.PRIMARY}
-              small
-              btnIconsDisabled
-              btnStyle={styles.buttonStyle}
-              btnColor={
-                beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary100 : ''
-              }
-              textColor={
-                beneficiaryStatus !== InternationalBeneficiaryStatus.ACTIVE ? colors.secondary.secondary800 : ''
-              }
-            />
-            <IPayPressable
-              onPress={() => {
-                setSelectedBeneficiary(item);
-                onPressMenuOption();
-              }}
-            >
-              <IPayIcon icon={icons.more_option} size={20} color={colors.natural.natural500} />
-            </IPayPressable>
-          </IPayView>
-        }
+        rightText={renderBeneficiaryDetailsRightText(item)}
       />
     );
   };
@@ -158,6 +160,79 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
       <IPayView />
     );
 
+  const renderActiveBeneficiariesList = () => {
+    if (getBeneficiariesByStatus(true)?.length) {
+      return (
+        <IPayFlatlist
+          scrollEnabled={false}
+          data={listBeneficiaries(viewAllState.active, true)}
+          renderItem={renderBeneficiaryDetails}
+          keyExtractor={(item, index) => `${item.fullName}-active-status-${index}`}
+          ListHeaderComponent={() =>
+            renderListHeader(
+              InternationalBeneficiaryStatus.ACTIVE,
+              listBeneficiaries(viewAllState.active, true)?.length ?? 0,
+              getBeneficiariesByStatus(true)?.length ?? 0,
+            )
+          }
+          ListFooterComponent={() =>
+            renderFooter(InternationalBeneficiaryStatus.ACTIVE, getBeneficiariesByStatus(true)?.length ?? 0)
+          }
+        />
+      );
+    }
+
+    return <IPayView />;
+  };
+
+  const renderInActiveBeneficiariesList = () => {
+    if (getBeneficiariesByStatus(false)?.length) {
+      return (
+        <IPayFlatlist
+          scrollEnabled={false}
+          data={listBeneficiaries(viewAllState.inactive, false)}
+          renderItem={renderBeneficiaryDetails}
+          keyExtractor={(item, index) => `${item.fullName}-inactive-status-${index}`}
+          ListHeaderComponent={() =>
+            renderListHeader(
+              InternationalBeneficiaryStatus.INACTIVE,
+              listBeneficiaries(viewAllState.inactive, false)?.length ?? 0,
+              getBeneficiariesByStatus(false)?.length ?? 0,
+            )
+          }
+          ListFooterComponent={() =>
+            renderFooter(InternationalBeneficiaryStatus.INACTIVE, getBeneficiariesByStatus(false)?.length ?? 0)
+          }
+        />
+      );
+    }
+
+    return <IPayView />;
+  };
+
+  const renderNoBeneficiaries = () => (
+    <IPayView style={styles.noResultContainer}>
+      <IPayNoResult
+        showIcon
+        icon={icons.user_search}
+        iconColor={colors.primary.primary800}
+        iconSize={40}
+        message="LOCAL_TRANSFER.NO_BENEFICIARIES"
+        containerStyle={styles.noResult}
+        testID="no-result"
+      />
+      <IPayButton
+        testID="add-new-beneficiary"
+        btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
+        medium
+        btnType={buttonVariants.PRIMARY}
+        btnStyle={styles.btnStyle}
+        onPress={handleAddNewBeneficiary}
+        leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
+      />
+    </IPayView>
+  );
+
   const renderList = () => {
     if (isLoading) {
       return (
@@ -177,70 +252,15 @@ const IPayInternationalBeneficiaryList: FC<IPayInternationalBeneficiaryListProps
                 sortedByActive !== InternationalBeneficiaryStatus.ACTIVE ? styles.reverseList : {},
               ]}
             >
-              {!!getBeneficiariesByStatus(true)?.length && (
-                <IPayFlatlist
-                  scrollEnabled={false}
-                  data={listBeneficiaries(viewAllState.active, true)}
-                  renderItem={renderBeneficiaryDetails}
-                  keyExtractor={(item, index) => `${item.fullName}-active-status-${index}`}
-                  ListHeaderComponent={() =>
-                    renderListHeader(
-                      InternationalBeneficiaryStatus.ACTIVE,
-                      listBeneficiaries(viewAllState.active, true)?.length ?? 0,
-                      getBeneficiariesByStatus(true)?.length ?? 0,
-                    )
-                  }
-                  ListFooterComponent={() =>
-                    renderFooter(InternationalBeneficiaryStatus.ACTIVE, getBeneficiariesByStatus(true)?.length ?? 0)
-                  }
-                />
-              )}
-              {!!getBeneficiariesByStatus(false)?.length && (
-                <IPayFlatlist
-                  scrollEnabled={false}
-                  data={listBeneficiaries(viewAllState.inactive, false)}
-                  renderItem={renderBeneficiaryDetails}
-                  keyExtractor={(item, index) => `${item.fullName}-inactive-status-${index}`}
-                  ListHeaderComponent={() =>
-                    renderListHeader(
-                      InternationalBeneficiaryStatus.INACTIVE,
-                      listBeneficiaries(viewAllState.inactive, false)?.length ?? 0,
-                      getBeneficiariesByStatus(false)?.length ?? 0,
-                    )
-                  }
-                  ListFooterComponent={() =>
-                    renderFooter(InternationalBeneficiaryStatus.INACTIVE, getBeneficiariesByStatus(false)?.length ?? 0)
-                  }
-                />
-              )}
+              {renderActiveBeneficiariesList()}
+              {renderInActiveBeneficiariesList()}
             </IPayView>
           </IPayScrollView>
         </IPayView>
       );
     }
 
-    return (
-      <IPayView style={styles.noResultContainer}>
-        <IPayNoResult
-          showIcon
-          icon={icons.user_search}
-          iconColor={colors.primary.primary800}
-          iconSize={40}
-          message="LOCAL_TRANSFER.NO_BENEFICIARIES"
-          containerStyle={styles.noResult}
-          testID="no-result"
-        />
-        <IPayButton
-          testID="add-new-beneficiary"
-          btnText="LOCAL_TRANSFER.ADD_NEW_BENEFICIARY"
-          medium
-          btnType={buttonVariants.PRIMARY}
-          btnStyle={styles.btnStyle}
-          onPress={handleAddNewBeneficiary}
-          leftIcon={<IPayIcon icon={icons.add_square} color={colors.natural.natural0} size={18} />}
-        />
-      </IPayView>
-    );
+    return renderNoBeneficiaries();
   };
 
   return (
