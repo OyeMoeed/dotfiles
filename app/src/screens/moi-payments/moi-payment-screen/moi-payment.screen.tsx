@@ -1,6 +1,6 @@
 import icons from '@app/assets/icons';
 import { IPayIcon, IPayView } from '@app/components/atoms';
-import { IPayButton, IPayContentNotFound, IPayHeader } from '@app/components/molecules';
+import { IPayButton, IPayContentNotFound, IPayHeader, useToastContext } from '@app/components/molecules';
 import DynamicFormComponent from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.component';
 import useDynamicForm from '@app/components/molecules/ipay-dynamic-form/ipay-dynamic-form.hook';
 import useParentLovChange from '@app/components/molecules/ipay-dynamic-form/useParentLovChange.hook';
@@ -8,7 +8,7 @@ import IPayFormProvider from '@app/components/molecules/ipay-form-provider/ipay-
 import IPayTabs from '@app/components/molecules/ipay-tabs/ipay-tabs.component';
 import { IPayBottomSheet } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
-import { DYNAMIC_FIELDS_TYPES, SNAP_POINTS } from '@app/constants/constants';
+import { DYNAMIC_FIELDS_TYPES, SNAP_POINTS, TRAFFIC_VIOLATIONS_ID } from '@app/constants/constants';
 import { MoiPaymentFormFields } from '@app/enums/moi-payment.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
 import ScreenNames from '@app/navigation/screen-names.navigation';
@@ -42,6 +42,7 @@ const MoiPaymentScreen: React.FC = () => {
   const [fields, setFields] = useState<DynamicField[]>([]);
   const [serviceFields, setServiceFields] = useState<DynamicField[]>([]);
   const { t } = useTranslation();
+  const { showToast } = useToastContext();
   const tabs = [t('BILL_PAYMENTS.PAYMENT'), t('BILL_PAYMENTS.REFUND')];
   const { walletNumber } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
   const invoiceSheetRef = useRef<bottomSheetTypes>(null);
@@ -268,9 +269,22 @@ const MoiPaymentScreen: React.FC = () => {
             }
           };
 
+          const renderToast = () => {
+            showToast({
+              title: t('ERROR.TRAFFIC_REFUND'),
+              isShowRightIcon: false,
+              leftIcon: <IPayIcon icon={icons.warning3} size={18} color={colors.natural.natural0} />,
+            });
+          };
+
           const handleInquiry = () => {
-            setIsInquired(true);
-            fetchFields(serviceProviderValue ?? '', serviceTypeValue ?? '');
+            if (selectedTab === MoiPaymentTypes.REFUND && serviceProviderValue === TRAFFIC_VIOLATIONS_ID) {
+              renderToast();
+              resetFields(reset);
+            } else {
+              setIsInquired(true);
+              fetchFields(serviceProviderValue ?? '', serviceTypeValue ?? '');
+            }
           };
 
           return (
@@ -310,7 +324,7 @@ const MoiPaymentScreen: React.FC = () => {
         }}
       </IPayFormProvider>
       <IPayBottomSheet
-        heading="BILL_PAYMENTS.TRAFFIC_VIOLATIONS"
+        heading="BILL_PAYMENTS.MOI_BILLS"
         customSnapPoint={SNAP_POINTS.SMALL}
         onCloseBottomSheet={() => invoiceSheetRef.current?.close()}
         ref={invoiceSheetRef}

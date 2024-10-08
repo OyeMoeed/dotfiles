@@ -41,7 +41,7 @@ const useTrafficViolation = () => {
 
   const getTrafficVoilationData = async () => {
     const apiResponse: any = await getTrafficViolationData();
-    const bills = apiResponse?.response?.trafficViolationList;
+    const bills = apiResponse?.response?.trafficViolations;
     setBillsData(bills.map((bill: BillDetailsProps) => ({ ...bill, selected: false })));
   };
 

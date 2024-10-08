@@ -3,7 +3,7 @@ const trafficVoilationMock = {
     referenceNumber: 'FT40123XFN10',
     totalCount: '1',
     totalAmount: '100',
-    trafficViolationList: [
+    trafficViolations: [
       {
         type: 'signal ',
         amount: '200',
