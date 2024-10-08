@@ -2,7 +2,6 @@ import React, { createRef, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
 
-import icons from '@app/assets/icons';
 import { IPayMonthYearPicker, IPayScrollView, IPayView } from '@app/components/atoms';
 import { IPayHeader, IPayListView, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
@@ -323,14 +322,8 @@ const MusanedPaySalaryScreen: React.FC<MusanedPaySalaryScreenProps> = () => {
           disableBtnIcons
           btnDisabled={balanceStatusVariants[accountBalanceStatus]?.disabledBtn || disabledBtn()}
           testID="ipay-bill"
-          showTopMessage
           totalAmountText={balanceStatusVariants[accountBalanceStatus]?.warningText}
-          totalAmountStyle={styles.nextBtn}
           showButtonOnly={!balanceStatusVariants[accountBalanceStatus]?.disabledBtn}
-          totalAmountLeftIcon={{
-            icon: icons.sheild_cross,
-            color: colors.natural.natural1000,
-          }}
           onPressBtn={onLocalTransferPrepare}
           partialPay
         />

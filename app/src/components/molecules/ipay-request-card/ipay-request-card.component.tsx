@@ -9,7 +9,7 @@ import { IPayRequestCardProps } from './ipay-request-card.interface';
 import getRequestCardStyles from './ipay-request-card.styles';
 
 const statusStyles = {
-  paid: {
+  executed: {
     backgroundColor: colors.success.success25,
     textColor: colors.success.success500,
   },
@@ -24,11 +24,12 @@ const statusStyles = {
 };
 
 const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
-  const { isPending, description, dateTime } = props;
+  const { isPending, description, dateTime, onPress } = props;
   const { colors: themeColors } = useTheme();
   const styles = getRequestCardStyles(themeColors);
 
   const statusStyle = !isPending ? statusStyles[props?.status] : undefined;
+  const statusLabel = props?.status === 'executed' ? 'paid' : props?.status;
 
   return (
     <IPayView style={styles.cardContainer}>
@@ -45,6 +46,7 @@ const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
             btnType={buttonVariants.PRIMARY}
             btnText="NOTIFICATION_CENTER.VIEW"
             small
+            onPress={onPress}
             rightIcon={<IPayIcon icon={icons.ARROW_RIGHT} size={16} color={themeColors.natural.natural0} />}
           />
         ) : (
@@ -53,7 +55,7 @@ const IPayRequestCard: React.FC<IPayRequestCardProps> = (props) => {
               <IPaySubHeadlineText
                 color={statusStyle?.textColor}
                 regular
-                text={`${props?.status.charAt(0).toUpperCase()}${props?.status?.slice(1)}`}
+                text={`${statusLabel.charAt(0).toUpperCase()}${statusLabel.slice(1)}`}
               />
             </IPayView>
           )

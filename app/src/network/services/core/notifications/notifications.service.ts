@@ -1,5 +1,9 @@
 import constants from '@app/constants/constants';
 import requestType from '@app/network/request-types.network';
+import {
+  DeleteNotificationResponse,
+  ReadNotificationResponse,
+} from '@app/screens/notification-center/notification-center.interface';
 import { WalletNumberProp } from './notifications.interface';
 import { deleteSingleNotificationMock, getAllRetainedMessagesMock, readNotificationsMock } from './notifications.mock';
 import apiCall from '../../api-call.service';
@@ -12,7 +16,7 @@ import { DeviceInfoProps } from '../../services.interface';
  * @param {WalletNumberProp} payload - The payload containing the wallet number.
  * @returns {Promise<unknown>} - A promise that resolves to the API response or mock data.
  */
-const getAllRetainedMessages = async (payload: WalletNumberProp): Promise<unknown> => {
+const getAllRetainedMessages = async (payload: WalletNumberProp): Promise<any> => {
   if (constants.MOCK_API_RESPONSE) {
     return getAllRetainedMessagesMock;
   }
@@ -41,7 +45,7 @@ const readNotification = async (payload: {
     deviceInfo: DeviceInfoProps;
     messageIds: string[];
   };
-}): Promise<unknown> => {
+}): Promise<ReadNotificationResponse> => {
   if (constants.MOCK_API_RESPONSE) {
     return readNotificationsMock;
   }
@@ -54,7 +58,10 @@ const readNotification = async (payload: {
   return apiResponse;
 };
 
-const deleteSingleNotification = async (payload: { walletNumber: string; messageId: string }): Promise<unknown> => {
+const deleteSingleNotification = async (payload: {
+  walletNumber: string;
+  messageId: string;
+}): Promise<DeleteNotificationResponse> => {
   if (constants.MOCK_API_RESPONSE) {
     return deleteSingleNotificationMock;
   }
