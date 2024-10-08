@@ -39,6 +39,8 @@ import { formatNumberWithCommas, removeCommas } from '@app/utilities/number-help
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Contact } from 'react-native-contacts';
+import walletUtils from '@app/utilities/wallet.utils';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import sendGiftAmountStyles from './send-gift-amount.style';
 
 const defaultValue = '0.00';
@@ -384,13 +386,25 @@ const SendGiftAmountScreen = ({ route }) => {
     />
   );
 
+  const navigateTOAktharPoints = async () => {
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
   const closeBottomSheetTopUp = () => {
     setTopUpOptionsVisible(false);
   };
 
   const topupItemSelected = (routeName: string, params: {}) => {
     closeBottomSheetTopUp();
-    if (routeName === screenNames.POINTS_REDEMPTIONS) {
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
       navigateTOAktharPoints();
     } else {
       navigate(routeName, params);
