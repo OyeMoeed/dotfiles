@@ -1368,9 +1368,16 @@
   },
   "RATING": {
     "APP_RATING": "تقييم التطبيق",
-    "SATISFACTION": "كم هو درجة رضاك",
-    "ALINMA_PAY_APP": "بخصوص تطبيق ألما باي؟",
-    "RATE_APP_NOW": "أعطنا تقييم"
+    "SATISFACTION": "ما مدى رضاك",
+    "ALINMA_PAY_APP": "عن تطبيق ألما باي؟",
+    "RATE_APP_NOW": "قيّم التطبيق الآن",
+    "SATISFIED": "راضٍ",
+    "NOT_SATISFIED": "غير راضٍ",
+    "WITH_THE_APP": "عن التطبيق",
+    "THANK_YOU": "شكرًا لك!",
+    "REVIEW_IN_STORE": "هل ترغب في تقييم التطبيق \n على المتجر؟",
+    "WE_APOLOGIZE_FOR_DISSATISFACTION": "نعتذر عن أي عدم رضا",
+    "CONTINUALLY_IMPROVING": "ونريدك أن تعرف أننا نعمل باستمرار على تحسين خدماتنا من أجلك."
   },
   "UPDATE": {
     "HEADER": "",

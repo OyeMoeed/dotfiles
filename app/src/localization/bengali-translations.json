@@ -275,8 +275,15 @@
   "RATING": {
     "APP_RATING": "অ্যাপ রেটিং",
     "SATISFACTION": "আপনি কীভাবে সন্তুষ্ট",
-    "ALINMA_PAY_APP": "এর সাথে Alinma Pay app?",
-    "RATE_APP_NOW": "আমাদের রেট করুন"
+    "ALINMA_PAY_APP": "এর সাথে Alinma Pay অ্যাপ?",
+    "RATE_APP_NOW": "আমাদের রেট করুন",
+    "SATISFIED": "সন্তুষ্ট",
+    "NOT_SATISFIED": "অসন্তুষ্ট",
+    "WITH_THE_APP": "অ্যাপের সাথে",
+    "THANK_YOU": "ধন্যবাদ!",
+    "REVIEW_IN_STORE": "আপনি কি স্টোরে অ্যাপটি রেট করতে চান?",
+    "WE_APOLOGIZE_FOR_DISSATISFACTION": "কোনো অসন্তুষ্টির জন্য আমরা দুঃখিত",
+    "CONTINUALLY_IMPROVING": "এবং আমরা আপনাকে জানাতে চাই যে আমরা আপনার জন্য আমাদের পরিষেবাগুলি উন্নত করতে ক্রমাগত কাজ করছি।"
   },
   "CARD_ISSUANCE_SHEET": {
     "REGULAR_TITLE": "আপনি এখন",
