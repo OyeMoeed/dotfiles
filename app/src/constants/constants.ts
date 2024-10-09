@@ -703,6 +703,7 @@ const DASHBOARD_ITEMS = [
 // eslint-disable-next-line @typescript-eslint/naming-convention
 export enum DYNAMIC_FIELDS_TYPES {
   TEXT = 'text',
+  API_LIST_OF_VALUE = 'LIST_OF_VALUE',
   LIST_OF_VALUE = 'listOfValue',
   NUMBER = 'number',
   GREGORIAN_DATE = 'gregorianDate',

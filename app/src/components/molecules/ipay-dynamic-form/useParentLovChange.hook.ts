@@ -17,10 +17,12 @@ const useParentLovChange = (
 
       if (currentSelectedField && currentSelectedField.childIndex && currentSelectedField.lOVType && returnedValue) {
         try {
+          const childIndex = fields.findIndex((f) => f.index === currentSelectedField.childIndex);
+          const currentChild = fields[childIndex];
           // Calling the service to get child LOVs based on the selected parent value
           const response = await getDynamicFieldLovList({
-            lovType: currentSelectedField.lOVType,
-            filter1: returnedValue,
+            lovType: currentChild.lOVType || '',
+            filter1: currentChild?.orderIndex ? `0${currentChild?.orderIndex}` : returnedValue,
           });
 
           if (response?.successfulResponse) {

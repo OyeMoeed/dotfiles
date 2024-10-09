@@ -56,6 +56,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
       case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE_WITH_OTHER_OPTION:
       case DYNAMIC_FIELDS_TYPES.ENUMERATION:
       case DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE:
+      case DYNAMIC_FIELDS_TYPES.API_LIST_OF_VALUE:
         return (
           <Controller
             name={field?.index}
@@ -68,7 +69,7 @@ const DynamicFieldRenderer: React.FC<DynamicFieldRendererProps> = ({
                 label={customizedLabel}
                 onSelectListItem={(selectedItem: string | ListItem) => {
                   onChange(selectedItem);
-                  if (handleParentLovChange) handleParentLovChange(field.index, selectedItem);
+                  handleParentLovChange?.(field.index, selectedItem);
                 }}
                 isSearchable={field?.isSearchable}
                 testID={`${field?.index}-dropdown`}
