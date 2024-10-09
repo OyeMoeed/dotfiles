@@ -178,6 +178,7 @@
     "YES": "Yes",
     "NO": "No",
     "AMOUNT": "Amount",
+    "SURE": "Sure",
     "OVERPAID": "Overpaid"
   },
   "ONBOARDING": {
@@ -1559,7 +1560,14 @@
     "APP_RATING": "App Rating",
     "SATISFACTION": "How satisfied are you",
     "ALINMA_PAY_APP": "with the AlinmaPay app?",
-    "RATE_APP_NOW": "Rate Us"
+    "RATE_APP_NOW": "Rate Us",
+    "SATISFIED": "Satisfied",
+    "NOT_SATISFIED": "Not Satisfied",
+    "WITH_THE_APP": "with the app",
+    "THANK_YOU": "Thank you!",
+    "REVIEW_IN_STORE": "Would you like to rate the app \n on the store?",
+    "WE_APOLOGIZE_FOR_DISSATISFACTION": "We apologize for any dissatisfaction",
+    "CONTINUALLY_IMPROVING": "and want you to know we're continually working to improve our services for you."
   },
   "UPDATE": {
     "HEADER": "Update the app",

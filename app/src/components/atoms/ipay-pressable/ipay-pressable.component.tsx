@@ -18,7 +18,7 @@ const IPayPressable: React.FC<IPayPressableProps> = ({
   onPressIn,
   onPressOut,
   onLongPress,
-  hitSlop
+  hitSlop,
 }: IPayPressableProps): JSX.Element => (
   <Pressable
     testID={`${testID}-pressable`}

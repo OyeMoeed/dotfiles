@@ -1002,7 +1002,6 @@ const useConstantData = () => {
           key: 'New',
           value: 'New',
         },
-        ,
       ],
     },
   ];

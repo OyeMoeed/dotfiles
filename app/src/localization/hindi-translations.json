@@ -274,8 +274,15 @@
   "RATING": {
     "APP_RATING": "एप्प रेटिंग",
     "SATISFACTION": "आपकी संतुष्टि क्या है",
-    "ALINMA_PAY_APP": "आलिमा पे एप्प के बारे में?",
-    "RATE_APP_NOW": "हमें रेट करें"
+    "ALINMA_PAY_APP": "अलिन्मा पे एप्प के बारे में?",
+    "RATE_APP_NOW": "हमें रेट करें",
+    "SATISFIED": "संतुष्ट",
+    "NOT_SATISFIED": "असंतुष्ट",
+    "WITH_THE_APP": "एप्प के साथ",
+    "THANK_YOU": "धन्यवाद!",
+    "REVIEW_IN_STORE": "क्या आप स्टोर पर एप्प को रेट करना चाहेंगे?",
+    "WE_APOLOGIZE_FOR_DISSATISFACTION": "किसी भी असंतोष के लिए हम क्षमा चाहते हैं",
+    "CONTINUALLY_IMPROVING": "और हम आपको यह बताना चाहते हैं कि हम आपकी सेवा को लगातार सुधारने के लिए काम कर रहे हैं।"
   },
   "UPDATE": {
     "HEADER": "",

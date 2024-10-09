@@ -268,10 +268,17 @@
     "GOT_IT": "Nakuha ko"
   },
   "RATING": {
-    "APP_RATING": "Ratings ng App",
-    "SATISFACTION": "Paano ka nakakasagot sa iyong pagkakaantig",
+    "APP_RATING": "Mga Rating ng App",
+    "SATISFACTION": "Paano mo masusuri ang iyong kasiyahan",
     "ALINMA_PAY_APP": "sa Alinma Pay app?",
-    "RATE_APP_NOW": "Isama natin sa rating"
+    "RATE_APP_NOW": "I-rate ang app ngayon",
+    "SATISFIED": "Nasiyahan",
+    "NOT_SATISFIED": "Hindi Nasiyahan",
+    "WITH_THE_APP": "sa app",
+    "THANK_YOU": "Salamat!",
+    "REVIEW_IN_STORE": "Gusto mo bang i-rate ang app \n sa store?",
+    "WE_APOLOGIZE_FOR_DISSATISFACTION": "Humihingi kami ng paumanhin para sa anumang hindi kasiyahan",
+    "CONTINUALLY_IMPROVING": "at nais naming malaman mo na patuloy kaming nagsusumikap na pagbutihin ang aming mga serbisyo para sa iyo."
   },
   "CARD_ISSUANCE_SHEET": {
     "REGULAR_TITLE": "Kaya nyo na",
