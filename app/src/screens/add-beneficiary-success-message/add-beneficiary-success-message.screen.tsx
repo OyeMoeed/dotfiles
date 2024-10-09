@@ -5,6 +5,7 @@ import {
   IPayActionSheet,
   IPayActivateBeneficiary,
   IPayActivationCall,
+  IPayBottomSheet,
   IPayReceiveCall,
 } from '@app/components/organism';
 import { IPaySafeAreaView } from '@app/components/templates';
@@ -21,8 +22,8 @@ import {
   activateInternationalBeneficiary,
   ActivationMethods,
 } from '@app/network/services/international-transfer/activate-international-beneficiary';
-import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { ImageStyle } from 'react-native';
+import { SNAP_POINTS } from '@app/constants/constants';
 import ActivateViewTypes from './add-beneficiary-success-message.enum';
 import beneficiarySuccessStyles from './add-beneficiary-success-message.style';
 
@@ -34,11 +35,13 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   const styles = beneficiarySuccessStyles(colors);
   const activateBeneficiary = useRef<bottomSheetTypes>(null);
   const [currentOption, setCurrentOption] = useState<ActivateViewTypes>(ActivateViewTypes.ACTIVATE_OPTIONS);
+  const [activateHeight, setActivateHeight] = useState(SNAP_POINTS.SMALL);
   const { contactList, guideStepsToCall, guideToReceiveCall } = useConstantData();
   const [showBackground, setShowBackground] = useState(true);
 
   const handleActivateBeneficiary = useCallback(() => {
     activateBeneficiary?.current?.present();
+    setActivateHeight(SNAP_POINTS.SMALL);
     setCurrentOption(ActivateViewTypes.ACTIVATE_OPTIONS);
   }, []);
   const actionSheetRef = useRef<any>(null);
@@ -59,10 +62,12 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
   }, []);
 
   const handleReceiveCall = useCallback(() => {
+    setActivateHeight(SNAP_POINTS.LARGE);
     setCurrentOption(ActivateViewTypes.RECEIVE_CALL);
   }, []);
 
   const handleCallAlinma = useCallback(() => {
+    setActivateHeight(SNAP_POINTS.LARGE);
     setCurrentOption(ActivateViewTypes.CALL_ALINMA);
   }, []);
 
@@ -204,24 +209,23 @@ const AddBeneficiarySuccessScreen: React.FC = () => {
         ) : (
           <IPayView />
         )}
+        <IPayBottomSheet
+          heading={
+            currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
+              ? 'ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS'
+              : 'ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE'
+          }
+          onCloseBottomSheet={closeActivateBeneficiary}
+          customSnapPoint={activateHeight}
+          ref={activateBeneficiary}
+          simpleHeader
+          simpleBar
+          bold
+          cancelBnt
+        >
+          <IPayView style={styles.sheetContainerStyles}>{renderCurrentOption}</IPayView>
+        </IPayBottomSheet>
       </IPaySafeAreaView>
-      <IPayPortalBottomSheet
-        heading={
-          currentOption === ActivateViewTypes.ACTIVATE_OPTIONS
-            ? 'ACTIVATE_BENEFICIARY.ACTIVATE_OPTIONS'
-            : 'ACTIVATE_BENEFICIARY.CALL_TO_ACTIVATE'
-        }
-        onCloseBottomSheet={closeActivateBeneficiary}
-        ref={activateBeneficiary}
-        enableDynamicSizing
-        simpleHeader
-        simpleBar
-        bold
-        cancelBnt
-        overrideContainerStyle={styles.portalSheet}
-      >
-        <IPayView style={styles.sheetContainerStyles}>{renderCurrentOption}</IPayView>
-      </IPayPortalBottomSheet>
       <IPayActionSheet
         ref={actionSheetRef}
         options={[`${t('MENU.CALL')} ${selectedNumber}`, t('COMMON.CANCEL')]}

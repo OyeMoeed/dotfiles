@@ -20,6 +20,8 @@ import {
   FormValuesType,
 } from '@app/network/services/bills-management/dynamic-fields/dynamic-fields.interface';
 import { ImageStyle, StyleProp } from 'react-native';
+import INTERNATIONAL_TRANSFERS_QUERY_KEYS from '@app/network/services/international-transfer/international-transfer.query-keys';
+import { useQueryClient } from 'react-query';
 import { InternationalTransferValue } from './international-beneficiary-transfer-form.interface';
 import beneficiaryTransferStyles from './international-beneficiary-transfer-form.style';
 import {
@@ -37,6 +39,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
   const { colors } = useTheme();
   const { transferService, dynamicFieldsData, data: payloadData } = route.params;
   const styles = beneficiaryTransferStyles(colors);
+  const queryClient = useQueryClient();
 
   const { defaultValues, validationSchema, getSubmittedValues, parsedFields, handleParentLovChange } = useDynamicForm(
     dynamicFieldsData,
@@ -51,6 +54,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
           type: ScreenNames.INTERNATIONAL_TRANSFER,
           beneficiaryCode: apiResponse?.response?.beneficiaryCode,
         });
+        queryClient.invalidateQueries(INTERNATIONAL_TRANSFERS_QUERY_KEYS.WESTERN_UNION_BENEFICIARY);
       }
     } catch {
       /* empty */
@@ -65,6 +69,7 @@ const IBeneficiaryTransferScreen: React.FC = () => {
           type: ScreenNames.INTERNATIONAL_TRANSFER,
           beneficiaryCode: apiResponse?.response?.beneficiaryCode,
         });
+        queryClient.invalidateQueries(INTERNATIONAL_TRANSFERS_QUERY_KEYS.ALINMA_EXPRESS_BENEFICIARY);
       }
     } catch {
       /* empty */
