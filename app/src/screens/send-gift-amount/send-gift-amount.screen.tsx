@@ -332,8 +332,11 @@ const SendGiftAmountScreen = ({ route }) => {
     notes: giftDetails?.message,
     mobileNumber: contact?.phoneNumbers[0].number,
     transferPurpose: giftDetails?.occasion,
-    walletNumber: 781232, // TODO will update this
-    totalAmount: amountToShow || topUpAmount,
+    walletNumber,
+    totalAmount:
+      selectedTab === t('SEND_GIFT.EQUALLY')
+        ? parseFloat(amountToShow) * (selectedContacts?.length ?? 0)
+        : amountToShow || topUpAmount,
   }));
 
   const transfersDetails = {
