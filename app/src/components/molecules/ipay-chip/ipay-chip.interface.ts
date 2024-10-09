@@ -29,7 +29,7 @@ export interface IPayChipProps {
    * boolean for icon to show.
    */
 
-  variant?: States;
+  variant?: States | string;
   /**
    * variant for the  component.
    */
@@ -48,4 +48,8 @@ export interface IPayChipProps {
    */
   fullWidth?: boolean;
   shouldTranslatedText?: boolean;
+  /**
+   * Style for the chip text
+   */
+  chipTextStyle?: StyleProp<TextStyle>;
 }

@@ -1,4 +1,4 @@
-import { ImageResizeMode, ImageSourcePropType, ImageStyle, StyleProp } from 'react-native';
+import { ImageResizeMode, ImageSourcePropType, ImageStyle, StyleProp, ViewStyle } from 'react-native';
 
 /**
  * Props for the RNImage component.
@@ -11,7 +11,7 @@ export interface IPayImageProps {
   /**
    * Style for the image.
    */
-  style?: StyleProp<ImageStyle>;
+  style?: StyleProp<ImageStyle | ViewStyle>;
   /**
    * Source of the image. It can be a local asset or a URL.
    */

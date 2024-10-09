@@ -76,6 +76,7 @@ const IPaySadadBillDetailForm: React.FC<SadadBillDetailFormProps> = ({
           editable
           name={accountInputName}
           containerStyle={[styles.inputContainerStyle]}
+          lableNumberOfLines={1}
         />
       )}
     </IPayView>
