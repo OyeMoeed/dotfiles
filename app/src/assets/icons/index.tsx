@@ -49,7 +49,7 @@ const icons = {
   infoIcon2: 'info-circle',
   messageQuestion: 'message-question',
   arrowDown: 'arrow-down',
-  rightArrow: isArabic ? "arrow-left": 'arrow-right',
+  rightArrow: isArabic ? 'arrow-left' : 'arrow-right',
   LeftArrow: 'arrow-left',
   refresh: 'refresh',
   backBtnIcon: isArabic ? 'arrow-right-1' : 'arrow-left-1',
@@ -264,6 +264,9 @@ const icons = {
   exportIcon: 'export-3',
   profileIcon: 'profile-2user-filled',
   driverRefresh: 'driver-refresh1',
+  thumbs_up: 'thumbs-up',
+  thumbs_down: 'thumbs-down',
+  heart_slash1: 'heart-slash1',
 };
 
 export default icons;

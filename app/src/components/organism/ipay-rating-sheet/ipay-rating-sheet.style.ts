@@ -1,7 +1,7 @@
 import type { Colors } from '@app/styles/colors.const';
 import { BottomBarPadding } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { scale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const styles = (colors: Colors) =>
   createStyleSheet({
@@ -21,7 +21,7 @@ const styles = (colors: Colors) =>
       textAlign: 'center',
     },
     sheetHeadercontainerStyle: {
-      height: 0,
+      height: verticalScale(20),
     },
     rateButtonStyle: {
       backgroundColor: colors.primary.primary500,
@@ -37,6 +37,23 @@ const styles = (colors: Colors) =>
     mainViewStyle: {
       paddingBottom: BottomBarPadding,
       paddingHorizontal: scale(24),
+    },
+    button: {
+      flex: 1,
+      borderRadius: moderateScale(16),
+      backgroundColor: colors.natural.natural0,
+      padding: moderateScale(16),
+      gap: moderateScale(28),
+    },
+    row: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      gap: moderateScale(12),
+    },
+    buttonTitle: {
+      fontSize: moderateScale(14),
+      marginTop: verticalScale(8),
     },
   });
 

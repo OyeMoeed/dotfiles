@@ -932,10 +932,17 @@
     "REJECT_THIS_REQUEST": "اس درخواست کو مسترد کریں"
   },
   "RATING": {
-    "APP_RATING": "تطبيق کی درجہ بندی",
-    "SATISFACTION": "آپ کس درجے تک سنیاسی ہیں",
-    "ALINMA_PAY_APP": "کے بارے میں Alinma Pay اپ?",
-    "RATE_APP_NOW": "آپ کو راٹنگ"
+    "APP_RATING": "ایپ کی درجہ بندی",
+    "SATISFACTION": "آپ کتنے مطمئن ہیں",
+    "ALINMA_PAY_APP": "Alinma Pay ایپ کے بارے میں؟",
+    "RATE_APP_NOW": "ابھی ایپ کی درجہ بندی کریں",
+    "SATISFIED": "مطمئن",
+    "NOT_SATISFIED": "غیر مطمئن",
+    "WITH_THE_APP": "ایپ کے ساتھ",
+    "THANK_YOU": "شکریہ!",
+    "REVIEW_IN_STORE": "کیا آپ اسٹور پر ایپ کی درجہ بندی کرنا چاہیں گے؟",
+    "WE_APOLOGIZE_FOR_DISSATISFACTION": "ہم کسی بھی عدم اطمینان کے لیے معذرت خواہ ہیں",
+    "CONTINUALLY_IMPROVING": "اور ہم آپ کو بتانا چاہتے ہیں کہ ہم آپ کے لیے اپنی خدمات کو بہتر بنانے کے لیے مسلسل کام کر رہے ہیں۔"
   },
   "CARD_ISSUANCE_SHEET": {
     "REGULAR_TITLE": "اب آپ",

@@ -271,7 +271,14 @@
     "APP_RATING": "एप्प रेटिंग",
     "SATISFACTION": "तपाईंले कसै खुसी हुनु",
     "ALINMA_PAY_APP": "आलिमा पे एप्प?",
-    "RATE_APP_NOW": "हामीलाई रेट करू"
+    "RATE_APP_NOW": "हामीलाई रेट करू",
+    "SATISFIED": "सन्तुष्ट",
+    "NOT_SATISFIED": "असन्तुष्ट",
+    "WITH_THE_APP": "एपसँग",
+    "THANK_YOU": "धन्यवाद!",
+    "REVIEW_IN_STORE": "के तपाईं एपलाई स्टोरमा रेट गर्न चाहनुहुन्छ?",
+    "WE_APOLOGIZE_FOR_DISSATISFACTION": "हामी कुनै पनि असन्तुष्टिको लागि माफी चाहन्छौं",
+    "CONTINUALLY_IMPROVING": "र तपाईंलाई थाहा दिन चाहन्छौं कि हामी तपाईंको लागि हाम्रो सेवाहरू सुधार गर्न निरन्तर काम गरिरहेका छौं।"
   },
   "CARD_ISSUANCE_SHEET": {
     "REGULAR_TITLE": "अब तपाईं",
