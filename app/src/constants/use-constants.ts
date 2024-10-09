@@ -992,6 +992,17 @@ const useConstantData = () => {
           key: 'Birthday',
           value: 'Birthday',
         },
+        {
+          id: '3',
+          key: 'Congratulations',
+          value: 'Congratulations',
+        },
+        {
+          id: '4',
+          key: 'New',
+          value: 'New',
+        },
+        ,
       ],
     },
   ];
