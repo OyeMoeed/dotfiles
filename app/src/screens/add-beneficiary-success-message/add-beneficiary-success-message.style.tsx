@@ -1,4 +1,4 @@
-import { BottomBarPadding, scaleFont, scaleSize } from '@app/styles/mixins';
+import { scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -52,7 +52,6 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
       alignItems: 'flex-start',
       width: '100%',
       paddingHorizontal: moderateScale(24),
-      paddingBottom: BottomBarPadding,
     },
     descriptionStyles: {
       color: colors.primary.primary900,

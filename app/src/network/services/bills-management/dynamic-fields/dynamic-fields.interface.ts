@@ -5,8 +5,8 @@ import { KeyboardTypeOptions } from 'react-native';
 export interface DynamicField {
   parentIndex?: string | null;
   isSearchable?: boolean;
-  minAmount: number | null;
-  onlyHijri: boolean | null;
+  minAmount?: number | null;
+  onlyHijri?: boolean | null;
   type: string;
   disable?: boolean;
   dependsOn?: string;

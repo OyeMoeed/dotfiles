@@ -13,7 +13,6 @@ const activateBeneficiaryStyles = (colors: typeof themeColors) =>
       color: colors.primary.primary900,
       marginVertical: verticalScale(8),
     },
-    callBtn: { width: '100%' },
     callIcon: {
       width: moderateScale(20),
       height: moderateScale(20),

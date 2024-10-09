@@ -82,6 +82,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
       label: 'TRANSACTION_HISTORY.BANK_NAME',
       lovList: wuBanks as ListItem[],
       type: DYNAMIC_FIELDS_TYPES.LIST_OF_VALUE,
+      isSearchable: true,
     },
   ];
 
@@ -111,6 +112,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
               <IPayView />
             ),
             isCountry: true,
+            isSearchable: true,
           },
           {
             index: 'bank',
@@ -146,6 +148,7 @@ const TransferMethods = ({ data, formProps }: ServiceDataProps) => {
             <IPayView />
           ),
           isCountry: true,
+          isSearchable: true,
         },
         {
           index: 'currency',
