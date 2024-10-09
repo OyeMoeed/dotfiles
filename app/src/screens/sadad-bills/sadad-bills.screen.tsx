@@ -103,15 +103,33 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     }
   }, []);
 
-  const renderButtonText = () => {
-    const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
+  const billPaymentDetails = selectedBills?.map((bill) => ({
+    billerId: bill.billerId,
+    billNumOrBillingAcct: bill.billNumOrBillingAcct,
+    billAmount: Number(bill.amount || 0),
+    amount: Number(bill.amount || 0),
+    dueDateTime: bill.dueDateTime,
+    billIdType: bill.billIdType,
+    billingCycle: bill.billCycle,
+    billIndex: bill.billId,
+    serviceDescription: bill.serviceDescription,
+    billerName: bill.billerName,
+    walletNumber,
+    billNickname: bill.billDesc,
+    billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(bill.billerId),
+  }));
 
-    return `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
-  };
+  const selectedBillAmount = selectedBills?.reduce((acc, item) => acc + Number(item?.amount || 0), 0);
+  const renderButtonText = () => `${t('NEW_SADAD_BILLS.PAY_TOTAL_AMOUNT')} (${selectedBillAmount})`;
 
-  /// TODO there is API dependency for this and that is in progress, this will be update as soon as the API issue gets resolved.
-  // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
-  const onPressPartialPay = () => navigate(ScreenNames.NEW_SADAD_BILL, { selectedBills, isPayPartially: true });
+  const onPressPartialPay = () =>
+    navigate(ScreenNames.NEW_SADAD_BILL, {
+      selectedBills,
+      isPayPartially: true,
+      saveBill: true,
+      billDetailsList: billPaymentDetails,
+      totalAmount: selectedBillAmount,
+    });
 
   const renderButtonRightIcon = () =>
     !multipleBillsSelected ? (
@@ -317,25 +335,11 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
   };
 
   const onPressFooterBtn = () => {
-    const billPaymentDetails = selectedBills?.map((bill) => ({
-      billerId: bill.billerId,
-      billNumOrBillingAcct: bill.billNumOrBillingAcct,
-      amount: Number(bill.amount || 0),
-      dueDateTime: bill.dueDateTime,
-      billIdType: bill.billIdType,
-      billingCycle: bill.billCycle,
-      billIndex: bill.billId,
-      serviceDescription: bill.serviceDescription,
-      billerName: bill.billerName,
-      walletNumber,
-      billNickname: bill.billDesc,
-      billerIcon: BILLS_MANAGEMENT_URLS.GET_BILLER_IMAGE(bill.billerId),
-    }));
-
     navigate(ScreenNames.BILL_PAYMENT_CONFIRMATION, {
       isPayOnly: true,
       showBalanceBox: true,
-      billPaymentInfos: billPaymentDetails,
+      saveBill: true,
+      billPaymentInfos: { billPaymentDetails, totalAmount: selectedBillAmount },
     });
   };
 
@@ -376,6 +380,16 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
     () => (selectedTab === BillsStatusTypes.ACTIVE_BILLS ? activeBillsData : inactiveBillsData),
     [sadadBills, activeBillsData, inactiveBillsData],
   );
+
+  const allHaveDueDate = useMemo(() => selectedBills.every((item) => item.amount), [selectedBills]);
+
+  const handlePress = () => {
+    if (allHaveDueDate) {
+      onPressFooterBtn();
+    } else {
+      onPressPartialPay();
+    }
+  };
 
   return (
     <IPaySafeAreaView>
@@ -428,7 +442,7 @@ const SadadBillsScreen: React.FC<SadadBillsScreenProps> = ({ route }) => {
                 btnText={renderButtonText()}
                 btnStyle={styles.btn}
                 selectedItemsCount={selectedBillsCount}
-                onPressBtn={onPressFooterBtn}
+                onPressBtn={handlePress}
                 btnRightIcon={renderButtonRightIcon()}
                 partialPay={multipleBillsSelected}
                 onPressPartialPay={onPressPartialPay}

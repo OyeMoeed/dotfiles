@@ -178,7 +178,8 @@
     "YES": "Yes",
     "NO": "No",
     "AMOUNT": "Amount",
-    "SURE": "Sure"
+    "SURE": "Sure",
+    "OVERPAID": "Overpaid"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",

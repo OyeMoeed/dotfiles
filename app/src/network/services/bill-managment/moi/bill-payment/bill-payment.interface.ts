@@ -23,7 +23,7 @@ interface MOIBillPaymentMockProps extends MockAPIOkProp {
 
 // Define the MOIBillPaymentPayloadProps interface that has all required parameters for API call
 interface MOIBillPaymentPayloadProps {
-  walletNumber?: string; // e.g., "10587981"
+  walletNumber: string; // e.g., "10587981"
   moiBillPaymentType?: string; // e.g., "PAYMENT"
   otp?: string; // e.g., "1234"
   otpRef?: string; // e.g., "OTP2335924H0K"

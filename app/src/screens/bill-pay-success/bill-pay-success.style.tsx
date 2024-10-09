@@ -1,6 +1,7 @@
 import colors from '@app/styles/colors.const';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { FONT_SIZE_15, FONT_WEIGHT_BOLD } from '@app/styles/typography.styles';
+import { Platform } from 'react-native';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
 const ipayBillSuccessStyles = (themeColors: typeof colors) =>
@@ -65,6 +66,17 @@ const ipayBillSuccessStyles = (themeColors: typeof colors) =>
     },
     footerView: {
       marginTop: verticalScale(12),
+    },
+    successScrollView: {
+      flex: 0,
+      ...Platform.select({
+        ios: {
+          height: verticalScale(230),
+        },
+        android: {
+          height: verticalScale(280),
+        },
+      }),
     },
   });
 

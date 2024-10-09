@@ -27,34 +27,33 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
   onPressPartialPay,
   showButtonOnly,
   textColor,
-  totalAmountText,
   gradientViewStyle,
   shouldTranslateBtnText,
-  amount,
+  totalAmountText,
 }) => {
-  const { t } = useTranslation();
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const styles = sadadFooterComponentStyles(colors);
-  const [warningMessage, setWarningMessage] = useState<string>('');
   const checkIfSelectedCount = selectedItemsCount && selectedItemsCount > 0;
-  const totalAmountInSAR = `${totalAmount} ${t('COMMON.SAR')}`;
   const {
     availableBalance,
     limitsDetails: { monthlyRemainingOutgoingAmount, dailyOutgoingLimit },
   } = useTypedSelector((state) => state.walletInfoReducer.walletInfo);
+  const [warningStatus, setWarningStatus] = useState<string>('');
+  const totalAmountInSAR = `${totalAmount} ${t('COMMON.SAR')}`;
 
   const getFooterStyles = useCallback(() => {
     if (checkIfSelectedCount) {
       return partialPay ? styles.countAndPartialPayStyles : styles.container;
     }
     return totalAmount ? styles.containerConditionalStyles : styles.footerWithWarning;
-  }, [checkIfSelectedCount, totalAmount, warning, warningMessage, partialPay]);
+  }, [checkIfSelectedCount, totalAmount, warning, warningStatus, partialPay]);
 
   if (showButtonOnly) {
     return (
       <IPayButton
         large
-        disabled={!!warningMessage || btnDisabled}
+        disabled={!!warningStatus || btnDisabled}
         btnType={buttonVariants.PRIMARY}
         btnText={btnText}
         leftIcon={btnLeftIcon}
@@ -80,8 +79,16 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         ) : (
           <IPayView />
         )}
-
-        {!warningMessage && totalAmount ? (
+        <IPayView style={styles.chipView}>
+          <IPayBalanceStatusChip
+            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
+            currentBalance={Number(availableBalance)}
+            amount={Number(totalAmount)}
+            setWarningStatus={setWarningStatus}
+            dailySpendingLimit={Number(dailyOutgoingLimit)}
+          />
+        </IPayView>
+        {!warningStatus && totalAmount ? (
           <IPayView style={styles.totalAmountView}>
             <IPayFootnoteText text={totalAmountText || 'LOCAL_TRANSFER.AMOUNT'} color={colors.natural.natural900} />
             <IPaySubHeadlineText
@@ -94,18 +101,9 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
         ) : (
           <IPayView />
         )}
-        <IPayView style={warningMessage ? styles.chipView : {}}>
-          <IPayBalanceStatusChip
-            amount={Number(amount || totalAmount)}
-            monthlySpendingLimit={Number(monthlyRemainingOutgoingAmount)}
-            currentBalance={Number(availableBalance)}
-            setWarningStatus={setWarningMessage}
-            dailySpendingLimit={Number(dailyOutgoingLimit)}
-          />
-        </IPayView>
         <IPayButton
           large
-          disabled={!!warningMessage || btnDisabled}
+          disabled={!!warningStatus || btnDisabled}
           btnType={buttonVariants.PRIMARY}
           btnText={btnText}
           leftIcon={btnLeftIcon}
@@ -122,6 +120,7 @@ const SadadFooterComponent: React.FC<SadadFooterComponentProps> = ({
             btnText="SADAD.PAY_PARTIALLY"
             btnIconsDisabled
             onPress={onPressPartialPay}
+            btnStyle={styles.partialPayBtn}
           />
         ) : (
           <IPayView />

@@ -14,6 +14,7 @@ interface BillDetailsProps {
   violation_no: string | number;
   accountNumber: string;
   serviceType?: string;
+  billNickname?: string;
 }
 
 type SelectedProp = {

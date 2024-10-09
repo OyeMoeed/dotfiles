@@ -5,6 +5,7 @@ interface BillPaymentConfirmationParams {
   isPayPartially?: boolean;
   showBalanceBox: boolean;
   billPaymentInfos: BillPaymentInfosTypes[];
+  saveBill?: boolean;
 }
 
 export interface detailsArrayItem {
