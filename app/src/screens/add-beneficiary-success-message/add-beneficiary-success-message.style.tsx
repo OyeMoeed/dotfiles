@@ -1,4 +1,4 @@
-import { scaleFont, scaleSize } from '@app/styles/mixins';
+import { BottomBarPadding, scaleFont, scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import themeColors from '@app/styles/theming/theme-colors';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
@@ -50,9 +50,9 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
     },
     sheetContainerStyles: {
       alignItems: 'flex-start',
-      flex: 1,
       width: '100%',
       paddingHorizontal: moderateScale(24),
+      paddingBottom: BottomBarPadding,
     },
     descriptionStyles: {
       color: colors.primary.primary900,
@@ -65,6 +65,11 @@ const beneficiarySuccessStyles = (colors: typeof themeColors) =>
     },
     callBtn: { width: '100%' },
     bodyStyle: { bottom: verticalScale(8) },
+    portalSheet: {
+      flex: undefined,
+      alignItems: undefined,
+      minHeight: 10,
+    },
   });
 
 export default beneficiarySuccessStyles;

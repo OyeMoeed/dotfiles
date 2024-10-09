@@ -1,6 +1,7 @@
+import { ApiResponse } from '../../services.interface';
 import WUBeneficiaryMetaDataProps from './wu-beneficiary-metadata.interface';
 
-const wuBeneficiaryMetaDataMock: WUBeneficiaryMetaDataProps = {
+const wuBeneficiaryMetaDataMock: ApiResponse<WUBeneficiaryMetaDataProps> = {
   status: {
     code: 'I000000',
     type: 'SUCCESS',
@@ -20,7 +21,6 @@ const wuBeneficiaryMetaDataMock: WUBeneficiaryMetaDataProps = {
     ],
   },
   successfulResponse: true,
-  ok: true,
 };
 
 export default wuBeneficiaryMetaDataMock;

@@ -43,6 +43,11 @@ const dropdownStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       justifyContent: 'space-between',
     },
+    titleWrapper: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: moderateScale(16),
+    },
     itemSeparatorStyle: {
       height: verticalScale(8),
     },

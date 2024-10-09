@@ -1,7 +1,7 @@
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { spacing } from '@app/styles/spacing.const';
 import themeColors from '@app/styles/theming/theme-colors';
-import { moderateScale, verticalScale } from 'react-native-size-matters';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const dropdownStyles = (colors: typeof themeColors) =>
   createStyleSheet({
@@ -56,6 +56,11 @@ const dropdownStyles = (colors: typeof themeColors) =>
       alignItems: 'center',
       justifyContent: 'space-between',
     },
+    flagTitleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      gap: scale(12),
+    },
     itemSeparatorStyle: {
       height: verticalScale(8),
     },
@@ -69,6 +74,10 @@ const dropdownStyles = (colors: typeof themeColors) =>
     searchIcon: {
       height: moderateScale(20),
       width: moderateScale(20),
+    },
+    flagStyle: {
+      width: scale(22),
+      height: scale(22),
     },
   });
 

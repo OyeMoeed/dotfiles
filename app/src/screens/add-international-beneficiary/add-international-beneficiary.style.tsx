@@ -1,4 +1,5 @@
 import colors from '@app/styles/colors.const';
+import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
 import { moderateScale, verticalScale } from 'react-native-size-matters';
 
@@ -44,6 +45,10 @@ const addBeneficiaryStyles = (themeColors: typeof colors) =>
     },
     outerContainer: {
       marginHorizontal: moderateScale(10),
+    },
+    flagStyle: {
+      width: scaleSize(22),
+      height: verticalScale(22),
     },
   });
 

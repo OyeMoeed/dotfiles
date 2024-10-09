@@ -178,6 +178,8 @@
     "YES": "Yes",
     "NO": "No",
     "AMOUNT": "Amount",
+    "OTHERS": "Other",
+    "SELECT_DATE": "Select Date",
     "SURE": "Sure",
     "OVERPAID": "Overpaid"
   },
@@ -891,6 +893,7 @@
     "AMOUNT_ERROR": "Incorrect amount",
     "DATE_ERROR": "Ensure the \"To Date\" is after the \"From Date\"",
     "REQUIRED_VALIDATION_MESSAGE": "This field is required",
+    "INVALID_TEXT": "Invalid Input!",
     "TOO_LONG": "Too Long!",
     "INVALID_IBAN": "Invalid IBAN",
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "Cannot remove Biometric keys",
@@ -1554,7 +1557,8 @@
     "MAX_WIDTH": "{label} must be no more than {max}",
     "REQUIRED": "{label} is required",
     "MUST_BE_TEXT": "{label} must be valid text",
-    "MUST_BE_SELECTED": "{label} must be selected"
+    "MUST_BE_SELECTED": "{label} must be selected",
+    "ALPHA_NO_DIGITS": "Only English characters are allowed \nSpecial characters are not allowed"
   },
   "RATING": {
     "APP_RATING": "App Rating",

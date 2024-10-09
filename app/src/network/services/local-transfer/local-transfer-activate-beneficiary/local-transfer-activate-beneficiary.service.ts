@@ -16,7 +16,7 @@ const activateLocalBeneficiary = async (
     return activateBeneficiariesData;
   }
   const apiResponse: ApiResponse<ActivateBeneficiaryResponse> | undefined = await apiCall({
-    endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary(),
+    endpoint: LOCAL_TRANSFERS_URLS.activate_beneficiary,
     method: requestType.PUT,
     payload,
   });

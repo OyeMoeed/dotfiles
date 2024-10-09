@@ -27,6 +27,12 @@ enum TransferService {
   WESTERN_UNIION = 'Western Union',
   ALINMAPAY_DIRECT = 'AlinmaPay Direct',
 }
+
+enum InternationalTransferValue {
+  WU = 'westernUnion',
+  AE = 'alinmaExpress',
+}
+
 interface BeneficiaryTransferFormValues {
   beneficiaryName: string;
   iban: string;
@@ -43,4 +49,11 @@ interface BeneficiaryTransferFormValues {
   beneficiaryNationality: string;
 }
 
-export { BeneficiaryFields, BeneficiaryInformation, BeneficiaryTransferFormValues, TransferService, TransferTypes };
+export {
+  BeneficiaryFields,
+  BeneficiaryInformation,
+  BeneficiaryTransferFormValues,
+  TransferService,
+  TransferTypes,
+  InternationalTransferValue,
+};

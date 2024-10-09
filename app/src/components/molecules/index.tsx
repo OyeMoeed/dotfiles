@@ -70,6 +70,7 @@ import IPayTermsAndConditionBanner from './ipay-terms-and-condition-banner/ipay-
 import IPayUserAvatar from './ipay-user-avatar/ipay-user-avatar.component';
 import IPayContactsPermission from './ipay-contacts-permission-sheet/ipay-contacts-permission-sheet.component';
 import IPayDisabledModulesSheet from './ipay-disabled-modules-sheet/ipay-disabled-modules-sheet.component';
+import IPayDatePickerSheet from './ipay-date-picker-sheet/ipay-date-picker-sheet.component';
 
 export {
   FlipCard,
@@ -138,4 +139,5 @@ export {
   useToastContext,
   IPayContactsPermission,
   IPayDisabledModulesSheet,
+  IPayDatePickerSheet,
 };

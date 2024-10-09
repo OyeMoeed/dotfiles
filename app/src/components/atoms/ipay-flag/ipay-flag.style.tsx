@@ -1,12 +1,13 @@
-import { scaleSize } from '@app/styles/mixins';
 import createStyleSheet from '@app/styles/scaled-sheet.styles';
-import { verticalScale } from 'react-native-size-matters';
+import { scale } from 'react-native-size-matters';
 
 const styles = createStyleSheet({
   container: {
-    width: scaleSize(24),
-    height: verticalScale(24),
+    width: scale(24),
+    height: scale(24),
     resizeMode: 'contain',
+    borderRadius: scale(12),
+    overflow: 'hidden',
   },
 });
 

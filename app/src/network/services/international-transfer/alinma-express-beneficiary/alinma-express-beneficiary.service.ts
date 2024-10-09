@@ -12,7 +12,7 @@ const getAlinmaExpressBeneficiaries = async (): Promise<AlinmaExpressResponse | 
   }
 
   const apiResponse: ApiResponse<AlinmaExpressResponse> = await apiCall({
-    endpoint: INTERNATIONAL_TRANSFERS_URLS.get_alinma_express_beneficiaries(),
+    endpoint: INTERNATIONAL_TRANSFERS_URLS.get_alinma_express_beneficiaries,
     method: requestType.GET,
   });
 

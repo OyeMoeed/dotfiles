@@ -17,7 +17,9 @@ import {
 } from '@app/components/atoms';
 import { IPayAnimatedTextInput, IPayButton, IPayHeader } from '@app/components/molecules';
 import { IPayBottomSheet } from '@app/components/organism';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
 import { BeneficiariesDetails, LocalizationKeysMapping } from '@app/enums/international-beneficiary-status.enum';
 import { navigate } from '@app/navigation/navigation-service.navigation';
@@ -47,6 +49,7 @@ import HelpCenterComponent from '@app/screens/auth/forgot-passcode/help-center.c
 import { TransferService } from '@app/screens/international-beneficiary-transfer-form/international-beneficiary-transfer-form.interface';
 import beneficiaryKeysMapping from '@app/screens/international-transfer-info/international-transfer-info.constant';
 import { InternationalTransferSuccessData } from '@app/screens/international-transfer-success/international-transfer-success.interface';
+import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { isAndroidOS } from '@app/utilities/constants';
@@ -55,11 +58,8 @@ import { bottomSheetTypes } from '@app/utilities/types-helper.util';
 import React, { useMemo, useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 import { ImageStyle } from 'react-native';
-import { setTermsConditionsVisibility } from '@app/store/slices/bottom-sheets-slice';
-import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
-import { SNAP_POINT } from '@app/constants/constants';
+import { useDispatch } from 'react-redux';
 import useInternationalTransferData from './internation-transfer-confirmation.hook';
 import {
   FeesInquiryData,
@@ -77,7 +77,6 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   const [isError, setIsError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>('');
   const [promoMatchSuccessfuly, setPromoMatchSuccessfuly] = useState<boolean>(false);
-  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
   const [isHelpCenterVisible, setHelpCenterVisible] = useState<boolean>(false);
   const promoCodeBottomSheetRef = useRef<any>(null);
   const helpCenterRef = useRef<any>(null);
@@ -100,6 +99,7 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
   const [transferConfirmData, setTransferConfirmData] = useState<WUTransferDetails | AETransferConfirmDetails>();
   const [otpError, setOtpError] = useState<boolean>(false);
   const [otp, setOtp] = useState<string>('');
+  const [isOtpSheetVisible, setOtpSheetVisible] = useState<boolean>(false);
 
   const otpVerificationRef = useRef<bottomSheetTypes>(null);
 
@@ -390,7 +390,7 @@ const InternationalTransferConfirmation: React.FC<InternationalTransferConfirmat
               <IPayFootnoteText text="LOCAL_TRANSFER.TOTAL_AMOUNT" color={colors.natural.natural900} />
               <IPayView style={styles.amountView}>
                 <IPaySubHeadlineText regular text={promoAmount} style={styles.strikethroughText} />
-                <IPaySubHeadlineText regular text={totalAmount()} color={colors.primary.primary800} />
+                <IPaySubHeadlineText regular text={totalAmount() ?? 0} color={colors.primary.primary800} />
               </IPayView>
             </IPayView>
 

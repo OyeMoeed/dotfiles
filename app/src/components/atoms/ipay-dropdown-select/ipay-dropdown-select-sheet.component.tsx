@@ -1,6 +1,14 @@
 import icons from '@app/assets/icons';
 import { SearchNormalIcon } from '@app/assets/svgs';
-import { IPayFlatlist, IPayFootnoteText, IPayIcon, IPayInput, IPayPressable, IPayView } from '@app/components/atoms';
+import {
+  IPayFlag,
+  IPayFlatlist,
+  IPayFootnoteText,
+  IPayIcon,
+  IPayInput,
+  IPayPressable,
+  IPayView,
+} from '@app/components/atoms';
 import { IPayButton } from '@app/components/molecules';
 import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
 import useTheme from '@app/styles/hooks/theme.hook';
@@ -19,6 +27,8 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
   isVisible,
   onCloseBottomSheet,
   labelKey,
+  isCountry,
+  isCurrency,
 }) => {
   const { colors } = useTheme();
   const styles = dropdownStyles(colors);
@@ -32,7 +42,7 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
       setFilteredListItems(data || []);
     } else {
       const lowerSearchText = searchText.trim().toLowerCase();
-      const filtered = data?.filter((item) => item[labelKey].toLowerCase().includes(lowerSearchText)) || []; // Use dynamic labelKey for filtering
+      const filtered = data?.filter((item) => item?.[labelKey]?.toLowerCase()?.includes(lowerSearchText)) || []; // Use dynamic labelKey for filtering
       setFilteredListItems(filtered);
     }
   };
@@ -55,8 +65,13 @@ const IPayDropdownSheet: React.FC<IPayDropdownComponentSheetProps> = ({
         setSearchText('');
       }}
     >
-      <IPayFootnoteText text={item[labelKey]} />
-      {selectedItem === item[labelKey] ? listCheckIcon : <IPayView />}
+      <IPayView style={styles.flagTitleContainer}>
+        {!!(isCountry || isCurrency) && !!item?.code && (
+          <IPayFlag countryCode={item?.code} style={styles.flagStyle} isCurrency={isCurrency} />
+        )}
+        <IPayFootnoteText text={item?.[labelKey]} />
+      </IPayView>
+      {selectedItem === item?.[labelKey] ? listCheckIcon : <IPayView />}
     </IPayPressable>
   );
 

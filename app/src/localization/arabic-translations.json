@@ -159,7 +159,9 @@
     "INSUFFICIENT_BALANCE": "الرصيد غير كافي للتحويل",
     "SORT_BY": "فرز حسب",
     "CHANGES_SAVED_SUCCESSFULLY": "تم حفظ التغييرات بنجاح",
-    "YES": "نعم"
+    "YES": "نعم",
+    "OTHERS": "أخرى",
+    "SELECT_DATE": "حدد التاريخ"
   },
   "WALLET_TO_WALLET": {
     "HISTORY": "التاريخ",
@@ -318,6 +320,15 @@
     "REMOVE_PHOTO": "إزالة صورتك",
     "REMOVE_CONFIRM": "هل أنت متأكد أنك تريد إزالة صورة ملفك الشخصي؟",
     "PROFILE_UPLOAD_SUCCESS_MESSAGE": ""
+  },
+  "VALIDATION": {
+    "MUST_BE_NUMBER": "يجب أن يكون {label} رقمًا صالحًا",
+    "MIN_WIDTH": "يجب أن يكون {label} على الأقل {min}",
+    "MAX_WIDTH": "يجب ألا يزيد {label} عن {max}",
+    "REQUIRED": "مطلوب{label}",
+    "MUST_BE_TEXT": "يجب أن يكون {label} نصًا صالحًا",
+    "MUST_BE_SELECTED": "يجب تحديد {label}",
+    "ALPHA_NO_DIGITS": "يُسمح بالأحرف الإنجليزية فقط \nلا يُسمح بالأحرف الخاصة"
   },
   "SETTINGS": {
     "CHANGE_LANGUAGE": "تغيير اللغة",
@@ -810,6 +821,7 @@
     "AMOUNT_ERROR": "يجب أن يكون المبلغ أعلى من المبلغ المحدد الأول",
     "DATE_ERROR": "تأكد من أن تاريخ إلى يقع بعد تاريخ من",
     "REQUIRED_VALIDATION_MESSAGE": "هذا الحقل مطلوب",
+    "INVALID_TEXT": "إدخال غير صالح!",
     "TOO_LONG": "طويل جدا!",
     "INVALID_IBAN": "IBAN غير صالح",
     "CANNOT_REMOVE_BIOMETRIC_KEYS": "لا يمكن إزالة مفاتيح القياس البيومترية",
