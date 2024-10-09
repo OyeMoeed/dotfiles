@@ -24,6 +24,6 @@ return {
         async = false,
         timeout_ms = 500,
       })
-    end, { desc = "Format Using Conform" })
+    end, { desc = "Format Using Prettier" })
   end,
 }
