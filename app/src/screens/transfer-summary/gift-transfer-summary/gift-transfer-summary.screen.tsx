@@ -65,7 +65,7 @@ const TransferSummaryScreen: React.FC = () => {
   const sendMoneyBottomSheetRef = useRef<any>();
   const otpVerificationRef = useRef(null);
   const helpCenterRef = useRef(null);
-  const otpSheetHeading = transactionType === TransactionTypes.SEND_GIFT ? 'HOME.SEND_GIFT' : 'HOME.SEND_MONEY';
+  const otpSheetHeading = transactionType === TransactionTypes.SEND_GIFT ? 'HOME.SEND_GIFT' : 'LOCAL_TRANSFER.TRANSFER';
 
   const toggleExpandMessage = () => setExpandMsg(!expandMsg);
 
