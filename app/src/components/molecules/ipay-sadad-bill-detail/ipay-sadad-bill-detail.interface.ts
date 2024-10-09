@@ -4,6 +4,8 @@ export interface FormValues {
   companyName: string;
   serviceType: string;
   accountNumber: string;
+  saveBill: boolean;
+  billName: string;
 }
 
 export interface SadadBillDetailFormProps {

@@ -1,3 +1,5 @@
+import { BillPaymentOptions } from '@app/utilities';
+
 interface TrafficFormValues {
   serviceProvider: string;
   serviceType: string;
@@ -19,5 +21,9 @@ interface ViolationDetails {
   paymentId?: string;
   moiBillPaymentType?: string;
   amount?: string;
+  violatorId: string;
+  violationNo: string;
+  serviceProvider: BillPaymentOptions;
+  serviceType: string;
 }
 export { TrafficFormValues, ViolationDetails };

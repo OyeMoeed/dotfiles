@@ -179,7 +179,8 @@
     "NO": "No",
     "AMOUNT": "Amount",
     "OTHERS": "Other",
-    "SELECT_DATE": "Select Date"
+    "SELECT_DATE": "Select Date",
+    "OVERPAID": "Overpaid"
   },
   "ONBOARDING": {
     "TITLE_ONBOARDING_ONE": "Unlimited Cards,\nInfinite Opportunities",

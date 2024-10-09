@@ -35,6 +35,7 @@ const sadadBillStyles = (colors: any) =>
       alignSelf: 'flex-end',
       marginBottom: moderateScale(12, 0.3),
       top: -moderateScale(1.5),
+      width: moderateScale(90, 0.3),
     },
     moreOptionView: {
       marginEnd: moderateScale(4, 0.3),
@@ -50,6 +51,9 @@ const sadadBillStyles = (colors: any) =>
     },
     condtionalWidthSubtitle: {
       width: '50%',
+    },
+    chipTextStyle: {
+      textAlign: 'right',
     },
   });
 

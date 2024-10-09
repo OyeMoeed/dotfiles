@@ -2,30 +2,42 @@ import { IPayFlatlist, IPayView } from '@app/components/atoms';
 import { IPayHeader, SadadFooterComponent } from '@app/components/molecules';
 import IPayAccountBalance from '@app/components/molecules/ipay-account-balance/ipay-account-balance.component';
 import IPayBillDetailsOption from '@app/components/molecules/ipay-bill-details-option/ipay-bill-details-option.component';
-import { IPayBottomSheet } from '@app/components/organism';
-import { IPayOtpVerification, IPaySafeAreaView } from '@app/components/templates';
-import { SNAP_POINTS } from '@app/constants/constants';
+import IPayPortalBottomSheet from '@app/components/organism/ipay-bottom-sheet/ipay-portal-bottom-sheet.component';
+import { IPayOtpVerification, IPaySafeAreaView, IPayTopUpSelection } from '@app/components/templates';
+import { SNAP_POINT } from '@app/constants/constants';
 import useConstantData from '@app/constants/use-constants';
+import { navigate } from '@app/navigation/navigation-service.navigation';
+import ScreenNames from '@app/navigation/screen-names.navigation';
 import { BillPaymentInfosTypes } from '@app/network/services/bills-management/multi-payment-bill/multi-payment-bill.interface';
 import { MultiPaymentPrepareBillPayloadTypes } from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.interface';
 import multiPaymentPrepareBillService from '@app/network/services/bills-management/multi-payment-prepare-bill/multi-payment-prepare-bill.service';
+import getAktharPoints from '@app/network/services/cards-management/mazaya-topup/get-points/get-points.service';
 import { getDeviceInfo } from '@app/network/utilities';
 import { useTypedSelector } from '@app/store/store';
 import useTheme from '@app/styles/hooks/theme.hook';
-import { shortString } from '@app/utilities';
 import getBalancePercentage from '@app/utilities/calculate-balance-percentage.util';
-import { getDateFormate } from '@app/utilities/date-helper.util';
+import { checkDateValidation, getDateFormate } from '@app/utilities/date-helper.util';
 import dateTimeFormat from '@app/utilities/date.const';
-import { bottomSheetTypes } from '@app/utilities/types-helper.util';
-import React, { useMemo, useRef } from 'react';
+import { RouteProp, useRoute } from '@react-navigation/core';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import HelpCenterComponent from '../auth/forgot-passcode/help-center.component';
 import { BillPaymentConfirmationProps } from './bill-payment-confirmation.interface';
 import billPaymentStyles from './bill-payment-confirmation.styles';
 import useBillPaymentConfirmation from './use-bill-payment-confirmation.hook';
 
-const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({ route }) => {
-  const { isPayPartially = false, isPayOnly, showBalanceBox = true, billPaymentInfos } = route.params || {};
+const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = () => {
+  type RouteProps = RouteProp<any>;
+  const { params } = useRoute<RouteProps>();
+
+  const {
+    isPayPartially = false,
+    isPayOnly,
+    showBalanceBox = true,
+    billPaymentInfos: { billPaymentDetails, totalAmount },
+    saveBill,
+  } = params || {};
+
   const {
     walletNumber,
     mobileNumber,
@@ -42,26 +54,55 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     otpError,
     setOtpError,
     otpVerificationRef,
-    verifyOTPSheetRef,
     setOtpRefAPI,
-  } = useBillPaymentConfirmation(isPayPartially, isPayOnly, billPaymentInfos);
+    setIsOtpSheetVisible,
+    isOtpSheetVisible,
+  } = useBillPaymentConfirmation(walletNumber, isPayPartially, isPayOnly, saveBill, billPaymentDetails, totalAmount);
 
   const { colors } = useTheme();
   const styles = billPaymentStyles(colors);
-  const helpCenterRef = useRef<bottomSheetTypes>(null);
   const { otpConfig } = useConstantData();
+  const [helpCenterVisible, setHelpCenterVisible] = useState(false);
 
   const onCloseBottomSheet = () => {
     otpVerificationRef?.current?.resetInterval();
-    verifyOTPSheetRef.current?.close();
+    setIsOtpSheetVisible(false);
   };
 
   const handleOnPressHelp = () => {
-    verifyOTPSheetRef.current?.close();
-    helpCenterRef?.current?.present();
+    setHelpCenterVisible(true);
   };
 
-  const getTotalAmountToBePiad = () => billPaymentInfos.reduce((sum, item) => sum + item.amount, 0);
+  const [topUpOptionsVisible, setTopUpOptionsVisible] = useState<boolean>(false);
+
+  const topUpSelectionBottomSheet = () => {
+    setTopUpOptionsVisible(true);
+  };
+
+  const closeBottomSheetTopUp = () => {
+    setTopUpOptionsVisible(false);
+  };
+
+  const navigateTOAktharPoints = async () => {
+    const aktharPointsResponse = await getAktharPoints(walletNumber);
+    if (
+      aktharPointsResponse?.status?.type === 'SUCCESS' &&
+      aktharPointsResponse?.response?.mazayaStatus !== 'USER_DOES_NOT_HAVE_MAZAYA_ACCOUNT'
+    ) {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { aktharPointsInfo: aktharPointsResponse?.response, isEligible: true });
+    } else {
+      navigate(ScreenNames.POINTS_REDEMPTIONS, { isEligible: false });
+    }
+  };
+
+  const topupItemSelected = (routeName: string, paramsTopup: {}) => {
+    closeBottomSheetTopUp();
+    if (routeName === ScreenNames.POINTS_REDEMPTIONS) {
+      navigateTOAktharPoints();
+    } else {
+      navigate(routeName, paramsTopup);
+    }
+  };
 
   const onMultiPaymentPrepareBill = async () => {
     const deviceInfo = await getDeviceInfo();
@@ -73,15 +114,24 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     const apiResponse = await multiPaymentPrepareBillService(payload);
     if (apiResponse.successfulResponse) {
       setOtpRefAPI(apiResponse.response.otpRef);
-      verifyOTPSheetRef.current?.present();
+      setIsOtpSheetVisible(true);
     }
+  };
+
+  const dateFormat = (dueDateTime: string) => {
+    const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
+    const isoFormat = checkDateValidation(dueDateTime, dateTimeFormat.ISODate);
+    if (isoFormat.isValid()) {
+      return dueDateTime ? getDateFormate(isoFormat.toDate(), dateTimeFormat.DateMonthYearWithoutSpace) : '-';
+    }
+    return dueDateTime ? getDateFormate(date.toDate(), dateTimeFormat.DateMonthYearWithoutSpace) : '-';
   };
 
   const getBillInfoArray = (item: BillPaymentInfosTypes) => [
     {
       id: '1',
       label: t('PAY_BILL.SERVICE_TYPE'),
-      value: item.serviceDescription ? shortString(item.serviceDescription, 15) : '-',
+      value: item.serviceDescription ? item.serviceDescription : '-',
     },
     {
       id: '2',
@@ -91,14 +141,12 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     {
       id: '3',
       label: t('COMMON.DUE_DATE'),
-      value: getDateFormate(item.dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace),
+      value: dateFormat(item.dueDateTime),
     },
   ];
 
-  const totalAmount = useMemo(() => getTotalAmountToBePiad() || '0', [billPaymentInfos]);
-
   const checkLimit = useMemo(() => {
-    const totalBillingAmount = Number(getTotalAmountToBePiad());
+    const totalBillingAmount = Number(totalAmount);
     let warningMsg = '';
     let disabled = false;
     if (totalBillingAmount > Number(availableBalance)) {
@@ -111,7 +159,7 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
     }
 
     return { warningMsg, disabled };
-  }, [billPaymentInfos]);
+  }, [billPaymentDetails]);
 
   return (
     <>
@@ -132,11 +180,12 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
               gradientWidth={`${getBalancePercentage(Number(monthlyOutgoingLimit), Number(monthlyRemainingOutgoingAmount))}%`}
               monthlyIncomingLimit={monthlyRemainingOutgoingAmount}
               availableBalance={monthlyOutgoingLimit}
+              onPressTopup={topUpSelectionBottomSheet}
             />
           )}
           <IPayFlatlist
             contentContainerStyle={styles.contentContainerStyle}
-            data={billPaymentInfos}
+            data={billPaymentDetails}
             renderItem={({ item }) => (
               <IPayBillDetailsOption
                 headerData={{
@@ -159,31 +208,32 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           onPressBtn={onMultiPaymentPrepareBill}
         />
 
-        <IPayBottomSheet
+        <IPayPortalBottomSheet
           heading="PAY_BILL.HEADER"
           enablePanDownToClose
           simpleBar
           backBtn
-          customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
-          ref={helpCenterRef}
+          customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
+          isVisible={helpCenterVisible}
           headerContainerStyles={styles.sheetHeader}
           bgGradientColors={colors.sheetGradientPrimary10}
           bottomSheetBgStyles={styles.sheetBackground}
+          onCloseBottomSheet={() => setHelpCenterVisible(false)}
         >
           <HelpCenterComponent />
-        </IPayBottomSheet>
+        </IPayPortalBottomSheet>
       </IPaySafeAreaView>
-      <IPayBottomSheet
+      <IPayPortalBottomSheet
         heading="PAY_BILL.HEADER"
         enablePanDownToClose
         simpleBar
         cancelBnt
-        customSnapPoint={SNAP_POINTS.MEDIUM_LARGE}
+        customSnapPoint={SNAP_POINT.MEDIUM_LARGE}
         onCloseBottomSheet={onCloseBottomSheet}
-        ref={verifyOTPSheetRef}
         headerContainerStyles={styles.sheetHeader}
         bgGradientColors={colors.sheetGradientPrimary10}
         bottomSheetBgStyles={styles.sheetBackground}
+        isVisible={isOtpSheetVisible}
       >
         <IPayOtpVerification
           ref={otpVerificationRef}
@@ -197,9 +247,23 @@ const BillPaymentConfirmationScreen: React.FC<BillPaymentConfirmationProps> = ({
           showHelp
           timeout={otpConfig.login.otpTimeout}
           handleOnPressHelp={handleOnPressHelp}
-          onResendCodePress={() => {}}
+          onResendCodePress={() => otpVerificationRef?.current?.resetInterval()}
         />
-      </IPayBottomSheet>
+      </IPayPortalBottomSheet>
+      <IPayPortalBottomSheet
+        noGradient
+        heading="TOP_UP.ADD_MONEY_USING"
+        onCloseBottomSheet={closeBottomSheetTopUp}
+        customSnapPoint={SNAP_POINT.XS_SMALL}
+        enablePanDownToClose
+        simpleHeader
+        simpleBar
+        bold
+        cancelBnt
+        isVisible={topUpOptionsVisible}
+      >
+        <IPayTopUpSelection testID="topUp-selection" topupItemSelected={topupItemSelected} />
+      </IPayPortalBottomSheet>
     </>
   );
 };

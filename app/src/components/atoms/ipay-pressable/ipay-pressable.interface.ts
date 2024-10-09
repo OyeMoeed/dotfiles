@@ -53,4 +53,8 @@ export interface IPayPressableProps {
    * AccessiblilityLable
    */
   accessibilityLabel?: string;
+  /**
+   * hitSlop for the Pressable.
+   */
+  hitSlop?: number | { top?: number; left?: number; bottom?: number; right?: number };
 }

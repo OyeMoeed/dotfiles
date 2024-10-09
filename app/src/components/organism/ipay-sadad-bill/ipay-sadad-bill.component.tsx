@@ -13,7 +13,7 @@ import { IPayChip } from '@app/components/molecules';
 import BILLS_MANAGEMENT_URLS from '@app/network/services/bills-management/bills-management.urls';
 import useTheme from '@app/styles/hooks/theme.hook';
 import { dateTimeFormat } from '@app/utilities';
-import { getDateFormate } from '@app/utilities/date-helper.util';
+import { checkDateValidation, getDateFormate } from '@app/utilities/date-helper.util';
 import { BillStatus, States } from '@app/utilities/enums.util';
 import moment from 'moment';
 import React, { useCallback, useMemo } from 'react';
@@ -46,10 +46,9 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
         default:
           return States.SUCCESS;
       }
-    } else {
-      return '';
     }
-  }, [billStatusCode]);
+    return '';
+  }, [billStatusCode, dueDateTime]);
 
   // Function to get the key from the value
   const getEnumKeyByValue = (enumObj: any, value: string): string | undefined =>
@@ -88,7 +87,10 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
   }, [dueDateTime]);
 
   const billingAmount = amount ? `${amount || 0} ${t('COMMON.SAR')}` : '';
-  const billingDueDate = `${t('SADAD.DUE')} ${getDateFormate(dueDateTime, dateTimeFormat.DateMonthYearWithoutSpace, dateTimeFormat.MonthDateFormat)}`;
+
+  const date = checkDateValidation(dueDateTime, dateTimeFormat.ShortDateWithDash);
+  const formattedDateTime = date.isValid() ? getDateFormate(date.toDate(), dateTimeFormat.ShortDate) : '';
+  const billingDueDate = `${t('SADAD.DUE')} ${formattedDateTime}`;
 
   const onPressCheckBox = () => {
     if (onSelectBill) onSelectBill(billId);
@@ -119,6 +121,7 @@ const IPaySadadBill: React.FC<IPaySadadBillProps> = ({
               isShowIcon={false}
               textValue={billStatus}
               variant={statusVariant}
+              chipTextStyle={styles.chipTextStyle}
             />
           )}
           <IPaySubHeadlineText text={billingAmount} color={billingAmountColor} />
