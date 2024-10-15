@@ -47,7 +47,7 @@ return {
   {
     "rcarriga/nvim-notify",
     opts = {
-      timeout = 1000,
+      timeout = 5000,
       background_colour = "#000000",
       render = "minimal",
       stages = "slide",
@@ -81,5 +81,16 @@ return {
         show_close_icon = false,
       },
     },
+  },
+
+  -- Animate
+  {
+    "echasnovski/mini.animate",
+    event = "VeryLazy",
+    opts = function(_, opts)
+      opts.scroll = {
+        enable = false,
+      }
+    end,
   },
 }
