@@ -15,14 +15,10 @@ require("lazy").setup({
     -- import any extras modules here
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.ui.mini-animate" },
     -- import/override with your plugins
     { import = "plugins" },
-    -- Merge conflicts
-    { "akinsho/git-conflict.nvim", version = "*", config = true },
 
     -- add okuuva/auto-save.nvim plugin
-    -- example lazy.nvim install setup
     {
       "okuuva/auto-save.nvim",
       cmd = "ASToggle", -- optional for lazy loading on command
@@ -41,20 +37,6 @@ require("lazy").setup({
       opts = {
         enabled = true, -- or any other configurations specific to blamer.nvim
         -- your other configurations go here
-      },
-    },
-    ---focus
-    {
-      "nvim-focus/focus.nvim",
-      version = "*",
-      enabled = true,
-      commands = true,
-      opts = {
-        autoresize = { width = 150, minwidth = 30 },
-        ui = {
-          number = true, -- Display line numbers in the focussed window only
-          relativenumber = true, -- Display relative line numbers in the focussed window only
-        },
       },
     },
   },
