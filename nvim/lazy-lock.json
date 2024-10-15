@@ -46,6 +46,5 @@
   "tokyonight.nvim": { "branch": "main", "commit": "2cd12582c98a3552032824ffa67fd44b4d81184a" },
   "trouble.nvim": { "branch": "main", "commit": "40c5317a6e90fe3393f07b0fee580d9e93a216b4" },
   "ts-comments.nvim": { "branch": "main", "commit": "79e4337e4231ff8ca33dab85162b5ee8e78f22ce" },
-  "which-key.nvim": { "branch": "main", "commit": "fb070344402cfc662299d9914f5546d840a22126" },
-  "zen-mode.nvim": { "branch": "main", "commit": "04b52674b8c800f8b7d4609e8bd8d0212e3ffa79" }
+  "which-key.nvim": { "branch": "main", "commit": "fb070344402cfc662299d9914f5546d840a22126" }
 }
