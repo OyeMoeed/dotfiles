@@ -23,8 +23,22 @@ require("lazy").setup({
     -- import/override with your plugins
     { import = "plugins" },
 
-    -- add okuuva/auto-save.nvim plugin
+    ---focus
+    {
+      "nvim-focus/focus.nvim",
+      version = "*",
+      enabled = true,
+      commands = true,
+      opts = {
+        autoresize = { width = 150, minwidth = 30 },
+        ui = {
+          number = true, -- Display line numbers in the focussed window only
+          relativenumber = true, -- Display relative line numbers in the focussed window only
+        },
+      },
+    },
 
+    -- add okuuva/auto-save.nvim plugin
     {
       "okuuva/auto-save.nvim",
       cmd = "ASToggle", -- optional for lazy loading on command
