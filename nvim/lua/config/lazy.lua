@@ -38,6 +38,10 @@ require("lazy").setup({
       },
     },
 
+    -- Test
+    {
+      "mattkubej/jest.nvim",
+    },
     -- add okuuva/auto-save.nvim plugin
     {
       "okuuva/auto-save.nvim",
