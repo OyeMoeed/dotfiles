@@ -6,15 +6,15 @@ return {
 
     conform.setup({
       formatters_by_ft = {
-        javascript = { "prettier" },
-        typescript = { "prettier" },
-        javasciptreact = { "prettier" },
-        typescriptreact = { "prettier" },
+        javascript = { "prettier", "eslint_d" },
+        typescript = { "prettier", "eslint_d" },
+        javasciptreact = { "prettier", "eslint_d" },
+        typescriptreact = { "prettier", "eslint_d" },
         lua = { "stylua" },
         json = { "prettier" },
       },
       format_on_save = {
-        async = false,
+        async = true,
         timeout_ms = 500,
       },
     })
