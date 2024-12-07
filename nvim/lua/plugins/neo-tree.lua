@@ -9,6 +9,7 @@ return {
   config = function()
     require("neo-tree").setup({
       window = {
+        position = "right",
         width = 25, -- Set the width of the Neo-Tree window
       },
       visible = true,

@@ -15,10 +15,9 @@ require("lazy").setup({
     -- import any extras modules here
     { import = "lazyvim.plugins.extras.linting.eslint" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
-    { import = "lazyvim.plugins.extras.coding.neogen" },
-    { import = "lazyvim.plugins.extras.coding.codeium" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
+    { import = "lazyvim.plugins.extras.test.core" },
 
     -- import/override with your plugins
     { import = "plugins" },
@@ -38,9 +37,9 @@ require("lazy").setup({
       },
     },
 
-    -- Test
     {
-      "mattkubej/jest.nvim",
+      "karb94/neoscroll.nvim",
+      opts = {},
     },
     -- add okuuva/auto-save.nvim plugin
     {
@@ -49,7 +48,7 @@ require("lazy").setup({
       event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
       opts = {
         enabled = true,
-        delay = 100,
+        delay = 1000,
         -- your config goes here
         -- or just leave it empty :)
       },

@@ -43,16 +43,6 @@ return {
       opts.presets.lsp_doc_border = true
     end,
   },
-  --Notify
-  {
-    "rcarriga/nvim-notify",
-    opts = {
-      timeout = 5000,
-      background_colour = "#000000",
-      render = "minimal",
-      stages = "slide",
-    },
-  },
   -- buffer line
   {
     "akinsho/bufferline.nvim",
