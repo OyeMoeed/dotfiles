@@ -8,3 +8,5 @@ vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.writebackup = false
 vim.o.showtabline = 0
+vim.opt.wildignore:append({ "*/node_modules/*" })
+vim.opt.scrolloff = 10

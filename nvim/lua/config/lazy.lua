@@ -33,7 +33,7 @@ require("lazy").setup({
       end,
     },
 
-    { "echasnovski/mini.icons", version = "*" },
+    -- { "echasnovski/mini.icons", version = "*" },
 
     -- add okuuva/auto-save.nvim plugin
     {
@@ -47,16 +47,8 @@ require("lazy").setup({
         -- or just leave it empty :)
       },
     },
-    -- add blamer.nvim plugin
-    -- {
-    --   "braxtons12/blame_line.nvim",
-    --   event = "BufReadPost", -- optional for lazy loading on event
-    --   opts = {
-    --     enabled = true, -- or any other configurations specific to blamer.nvim
-    --     -- your other configurations go here
-    --   },
-    -- },
   },
+
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
@@ -69,18 +61,16 @@ require("lazy").setup({
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
+      -- disable some rtp plugins
       disabled_plugins = {
-        "gzip", -- Compression plugin
-        "matchit", -- Syntax matching plugin
-        "matchparen", -- Parentheses matching plugin
-        "netrwPlugin", -- File explorer
-        "tarPlugin", -- Tar file plugin
-        "tohtml", -- HTML conversion
-        "tutor", -- Built-in tutorial
-        "zipPlugin", -- ZIP file plugin
-        "manpager", -- Man page plugin (if not needed)
-        "vimballPlugin", -- Vimball plugin (if not using Vimballs)
-        "2html_plugin", -- 2html plugin (HTML generation)
+        "gzip",
+        -- "matchit",
+        -- "matchparen",
+        -- "netrwPlugin",
+        "tarPlugin",
+        "tohtml",
+        "tutor",
+        "zipPlugin",
       },
     },
   },
