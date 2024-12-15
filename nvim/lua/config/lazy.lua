@@ -22,25 +22,21 @@ require("lazy").setup({
     -- import/override with your plugins
     { import = "plugins" },
 
-    ---focus
-    {
-      "nvim-focus/focus.nvim",
-      version = "*",
-      enabled = true,
-      commands = true,
-      opts = {
-        autoresize = { width = 150, minwidth = 30 },
-        ui = {
-          number = true, -- Display line numbers in the focussed window only
-          relativenumber = true, -- Display relative line numbers in the focussed window only
-        },
-      },
-    },
+    { "echasnovski/mini.animate", version = "*" },
 
     {
-      "karb94/neoscroll.nvim",
-      opts = {},
+      "kylechui/nvim-surround",
+      version = "*", -- Use for stability; omit to use `main` branch for the latest features
+      event = "VeryLazy",
+      config = function()
+        require("nvim-surround").setup({
+          -- Configuration here, or leave empty to use defaults
+        })
+      end,
     },
+
+    { "echasnovski/mini.icons", version = "*" },
+
     -- add okuuva/auto-save.nvim plugin
     {
       "okuuva/auto-save.nvim",
@@ -54,14 +50,14 @@ require("lazy").setup({
       },
     },
     -- add blamer.nvim plugin
-    {
-      "braxtons12/blame_line.nvim",
-      event = "BufReadPost", -- optional for lazy loading on event
-      opts = {
-        enabled = true, -- or any other configurations specific to blamer.nvim
-        -- your other configurations go here
-      },
-    },
+    -- {
+    --   "braxtons12/blame_line.nvim",
+    --   event = "BufReadPost", -- optional for lazy loading on event
+    --   opts = {
+    --     enabled = true, -- or any other configurations specific to blamer.nvim
+    --     -- your other configurations go here
+    --   },
+    -- },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
@@ -75,16 +71,18 @@ require("lazy").setup({
   checker = { enabled = true }, -- automatically check for plugin updates
   performance = {
     rtp = {
-      -- disable some rtp plugins
       disabled_plugins = {
-        "gzip",
-        -- "matchit",
-        -- "matchparen",
-        "netrwPlugin",
-        "tarPlugin",
-        "tohtml",
-        "tutor",
-        "zipPlugin",
+        "gzip", -- Compression plugin
+        "matchit", -- Syntax matching plugin
+        "matchparen", -- Parentheses matching plugin
+        "netrwPlugin", -- File explorer
+        "tarPlugin", -- Tar file plugin
+        "tohtml", -- HTML conversion
+        "tutor", -- Built-in tutorial
+        "zipPlugin", -- ZIP file plugin
+        "manpager", -- Man page plugin (if not needed)
+        "vimballPlugin", -- Vimball plugin (if not using Vimballs)
+        "2html_plugin", -- 2html plugin (HTML generation)
       },
     },
   },
