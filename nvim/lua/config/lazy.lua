@@ -22,8 +22,6 @@ require("lazy").setup({
     -- import/override with your plugins
     { import = "plugins" },
 
-    { "echasnovski/mini.animate", version = "*" },
-
     {
       "kylechui/nvim-surround",
       version = "*", -- Use for stability; omit to use `main` branch for the latest features
