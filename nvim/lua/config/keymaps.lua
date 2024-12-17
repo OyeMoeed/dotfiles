@@ -77,6 +77,9 @@ keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
 
+-- Key binding to toggle Zen Mode
+vim.api.nvim_set_keymap("n", "<Leader>z", ":ZenMode<CR>", { noremap = true, silent = true })
+
 -- Diagnostics
 keymap.set("n", "<C-j>", function()
   vim.diagnostic.goto_next()

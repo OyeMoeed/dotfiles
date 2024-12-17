@@ -14,6 +14,7 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import any extras modules here
     { import = "lazyvim.plugins.extras.linting.eslint" },
+    { import = "lazyvim.plugins.extras.ai.codeium" },
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
@@ -33,7 +34,26 @@ require("lazy").setup({
       end,
     },
 
-    -- { "echasnovski/mini.icons", version = "*" },
+    {
+      "folke/snacks.nvim",
+      priority = 1000,
+      lazy = false,
+      ---@type snacks.Config
+      opts = {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+        bigfile = { enabled = true },
+        dashboard = { enabled = true },
+        indent = { enabled = true },
+        input = { enabled = true },
+        notifier = { enabled = true },
+        quickfile = { enabled = true },
+        scroll = { enabled = true },
+        statuscolumn = { enabled = true },
+        words = { enabled = true },
+      },
+    },
 
     -- add okuuva/auto-save.nvim plugin
     {
@@ -45,6 +65,16 @@ require("lazy").setup({
         delay = 1000,
         -- your config goes here
         -- or just leave it empty :)
+      },
+    },
+
+    -- ZenMode
+    {
+      "folke/zen-mode.nvim",
+      opts = {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
       },
     },
   },
