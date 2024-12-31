@@ -4,6 +4,7 @@ return {
   requires = {
     "nvim-lua/plenary.nvim",
     "echasnovski/mini.icons",
+    "3rd/image.nvim",
     "MunifTanjim/nui.nvim",
   },
   config = function()
