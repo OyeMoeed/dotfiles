@@ -14,7 +14,6 @@ require("lazy").setup({
     { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import any extras modules here
     { import = "lazyvim.plugins.extras.linting.eslint" },
-
     { import = "lazyvim.plugins.extras.formatting.prettier" },
     { import = "lazyvim.plugins.extras.lang.typescript" },
     { import = "lazyvim.plugins.extras.lang.json" },
@@ -120,7 +119,7 @@ require("lazy").setup({
       event = { "InsertLeave", "TextChanged" }, -- optional for lazy loading on trigger events
       opts = {
         enabled = true,
-        delay = 1000,
+        delay = 3000,
         -- your config goes here
         -- or just leave it empty :)
       },
