@@ -3,6 +3,26 @@ return {
   "folke/snacks.nvim",
   ---@type snacks.Config
   opts = {
+    image = {
+      viewer = "kitty",
+      enabled = true,
+      doc = {
+        -- enable image viewer for documents
+        -- a treesitter parser must be available for the enabled languages.
+        -- supported language injections: markdown, html
+        -- render the image inline in the buffer
+        -- if your env doesn't support unicode placeholders, this will be disabled
+        -- takes precedence over `opts.float` on supported terminals
+        inline = false,
+        -- render the image in a floating window
+        -- only used if `opts.inline` is disabled
+        float = true,
+        max_width = 80,
+        max_height = 40,
+      },
+      img_dirs = { "img", "images", "assets", "static", "public", "media", "attachments" },
+    },
+
     dashboard = {
       width = 60,
       row = nil, -- dashboard position. nil for center
